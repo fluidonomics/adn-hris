@@ -1,0 +1,542 @@
+<div class="m-content">
+		<div class="m-portlet m-portlet--mobile">
+			<div class="m-portlet__body">
+				<!--begin: Search Form -->
+				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+					<div class="row align-items-center">
+						<div class="col-xl-8 order-2 order-xl-1">
+							<div class="form-group m-form__group row align-items-center">
+								<div class="col-md-4">
+									<div class="m-input-icon m-input-icon--left">
+										<!--<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="generalSearch">
+										 <span class="m-input-icon__icon m-input-icon__icon--left">
+											<span>
+												<i class="la la-search"></i>
+											</span>
+										</span> -->
+										<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="filter">
+										<span class="m-input-icon__icon m-input-icon__icon--left">
+											<span>
+												<i class="la la-search"></i>
+											</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+							<!-- <a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+								<span>
+									<i class="la la-cart-plus"></i>
+									<span>
+										New Order
+									</span>
+								</span>
+							</a>
+							<div class="m-separator m-separator--dashed d-xl-none"></div> -->
+						</div>
+					</div>
+				</div>
+				<!--end: Search Form -->  		<!--begin: Datatable -->
+				<table id="html_table" width="100%">
+					<thead>
+						<tr>
+							<th title="Field #0">
+							</th>
+							<th title="Field #1">
+								Order ID
+							</th>
+							<th title="Field #2">
+								Owner
+							</th>
+							<th title="Field #3">
+								Contact
+							</th>
+							<th title="Field #4">
+								Car Make
+							</th>
+							<th title="Field #5">
+								Car Model
+							</th>
+							<th title="Field #6">
+								Color
+							</th>
+							<th title="Field #7">
+								Deposit Paid
+							</th>
+							<th title="Field #8">
+								Order Date
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="cursor:pointer">
+								<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+									<i class="fa fa-expand"></i>
+								</a>
+							</td>
+							<td>
+								16590-107
+							</td>
+							<td>
+								Zandra Fisbburne
+							</td>
+							<td>
+								(916) 6137523
+							</td>
+							<td>
+								Pontiac
+							</td>
+							<td>
+								Grand Am
+							</td>
+							<td>
+								Puce
+							</td>
+							<td>
+								$75343.80
+							</td>
+							<td>
+								2016-09-08
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								58232-0517
+							</td>
+							<td>
+								Mela Ord
+							</td>
+							<td>
+								(331) 6613809
+							</td>
+							<td>
+								Lamborghini
+							</td>
+							<td>
+								Gallardo
+							</td>
+							<td>
+								Aquamarine
+							</td>
+							<td>
+								$46031.10
+							</td>
+							<td>
+								2016-08-21
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								67296-0590
+							</td>
+							<td>
+								Benyamin Boerderman
+							</td>
+							<td>
+								(248) 3715044
+							</td>
+							<td>
+								Lexus
+							</td>
+							<td>
+								LX
+							</td>
+							<td>
+								Green
+							</td>
+							<td>
+								$86721.38
+							</td>
+							<td>
+								2017-11-17
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								61957-1005
+							</td>
+							<td>
+								Melva Whiteford
+							</td>
+							<td>
+								(765) 5831579
+							</td>
+							<td>
+								Land Rover
+							</td>
+							<td>
+								Freelander
+							</td>
+							<td>
+								Fuscia
+							</td>
+							<td>
+								$99239.55
+							</td>
+							<td>
+								2016-11-20
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								60660-7787
+							</td>
+							<td>
+								Tara Gow
+							</td>
+							<td>
+								(661) 8838768
+							</td>
+							<td>
+								Audi
+							</td>
+							<td>
+								S5
+							</td>
+							<td>
+								Puce
+							</td>
+							<td>
+								$81068.37
+							</td>
+							<td>
+								2017-05-19
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								43353-839
+							</td>
+							<td>
+								Jeannie Leech
+							</td>
+							<td>
+								(464) 1467700
+							</td>
+							<td>
+								Chevrolet
+							</td>
+							<td>
+								Camaro
+							</td>
+							<td>
+								Teal
+							</td>
+							<td>
+								$54172.96
+							</td>
+							<td>
+								2017-02-28
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								49304-0018
+							</td>
+							<td>
+								Craggy Muzzlewhite
+							</td>
+							<td>
+								(849) 3931687
+							</td>
+							<td>
+								Ford
+							</td>
+							<td>
+								Freestar
+							</td>
+							<td>
+								Puce
+							</td>
+							<td>
+								$34581.44
+							</td>
+							<td>
+								2017-08-19
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								63304-436
+							</td>
+							<td>
+								Lorie Bointon
+							</td>
+							<td>
+								(888) 8512009
+							</td>
+							<td>
+								Nissan
+							</td>
+							<td>
+								Altima
+							</td>
+							<td>
+								Yellow
+							</td>
+							<td>
+								$43010.64
+							</td>
+							<td>
+								2017-07-30
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								53603-1005
+							</td>
+							<td>
+								Perren Illingworth
+							</td>
+							<td>
+								(640) 8089210
+							</td>
+							<td>
+								Ford
+							</td>
+							<td>
+								Expedition EL
+							</td>
+							<td>
+								Fuscia
+							</td>
+							<td>
+								$39020.81
+							</td>
+							<td>
+								2017-12-07
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								58118-3750
+							</td>
+							<td>
+								Gerri Haverson
+							</td>
+							<td>
+								(993) 2745169
+							</td>
+							<td>
+								Chevrolet
+							</td>
+							<td>
+								Astro
+							</td>
+							<td>
+								Purple
+							</td>
+							<td>
+								$99551.01
+							</td>
+							<td>
+								2017-02-13
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								61787-482
+							</td>
+							<td>
+								Seumas Parlott
+							</td>
+							<td>
+								(653) 6455420
+							</td>
+							<td>
+								Ford
+							</td>
+							<td>
+								Tempo
+							</td>
+							<td>
+								Mauv
+							</td>
+							<td>
+								$23592.86
+							</td>
+							<td>
+								2016-01-14
+							</td>
+						</tr>
+						<tr>
+								<td>
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: 1 }">
+											<i class="fa fa-expand"></i>
+										</a>
+									</td>
+							<td>
+								36987-1887
+							</td>
+							<td>
+								Dorelle Phillps
+							</td>
+							<td>
+								(827) 7291094
+							</td>
+							<td>
+								Chevrolet
+							</td>
+							<td>
+								Malibu
+							</td>
+							<td>
+								Pink
+							</td>
+							<td>
+								$76838.03
+							</td>
+							<td>
+								2017-01-12
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+
+
+                <!-- <table id="allEmployee">
+                    <thead>
+						<tr>
+							<th><th>
+                            <th (click)="sort(title)" *ngFor="let title of (employeeData| Keys)" [title]="title">
+								<span>
+									{{title}}
+									<i *ngIf="key == title" [ngClass]="{'la la-arrow-up':reverse,'la la-arrow-down':!reverse}">></i>
+								<span>	
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let employee of employeeData | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p2 }; let i = index">
+							 <td>
+						       <a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: tableTitle[i][emp_Id] }">
+							 	   <i class="fa fa-expand"></i>
+							   </a>
+						     </td>
+							 <td *ngFor="let empkey of (employeeData| keys)">
+                                 {{tableTitle[empkey]}}
+						     <td>
+						</tr>
+						<tr *ngIf="employeeData.length==0">
+                           No Data
+					    <tr>
+					</tbody>
+				</table>
+				<pagination-template #p="paginationApi" (pageChange)="p2 = $event"> 
+                      <div>
+							<div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+								<a *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </a>
+							</div>
+							<div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+								<a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+									<span>{{ page.label }}</span>
+								</a>
+								<div *ngIf="p.getCurrent() === page.value">
+									<span>{{ page.label }}</span>
+								</div>
+							</div>
+							<div class="pagination-next" [class.disabled]="p.isLastPage()">
+								<a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+							</div>
+						</div>
+				</pagination-template>
+			    -->
+				<!--end: Datatable -->
+				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+					<table class="m-datatable__table">
+							<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+									<th class="m-datatable__cell m-datatable__cell--sort">#</th>
+									<th class="m-datatable__cell m-datatable__cell--sort" (click)="sort('name')">Name
+										<span class="glyphicon sort-icon" *ngIf="key =='name'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+									</th>
+									<th class="m-datatable__cell m-datatable__cell--sort" (click)="sort('genre')">Genre
+										<span class="glyphicon sort-icon" *ngIf="key =='genre'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+									</th>
+									</tr>
+								</thead>
+								<tbody>
+										<tr *ngFor="let game of games | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+										<td>{{i}}</td>
+										<td>{{game.name}}</td>
+										<td>{{game.genre}}</td>
+										</tr>
+								</tbody>
+					</table>
+					<!-- <pagination-template #p="paginationApi" (pageChange)="p2 = $event"> 
+							<div>
+								<div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+									<a *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </a>
+								</div>
+								<div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+									<a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+										<span>{{ page.label }}</span>
+									</a>
+									<div *ngIf="p.getCurrent() === page.value">
+										<span>{{ page.label }}</span>
+									</div>
+								</div>
+								<div class="pagination-next" [class.disabled]="p.isLastPage()">
+									<a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+								</div>
+							</div>
+					</pagination-template> -->
+				</div>
+			</div>
+		</div>
+</div>
+	
