@@ -15,7 +15,7 @@ export interface RegisterData {
 
 export interface RegisterData {
     [key: string]: string;
-};
+}
 
 export interface UpdatePasswordData {
     password: string;

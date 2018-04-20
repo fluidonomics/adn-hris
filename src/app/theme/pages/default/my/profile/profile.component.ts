@@ -8,6 +8,7 @@ import { CommonService } from "../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../base/_services/authService.service";
 import { MyService } from "../my.service";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { BankInfo, AcademicInfo } from "../../../../../base/_interface/user.model"
 declare var mApp;
 declare var $;
 
@@ -45,7 +46,7 @@ export class ProfileComponent implements OnInit {
     personalInfo: any = {}
     address: any = {}
     documents: any = {}
-    academicInfo: any = {}
+    academicInfo:Array<AcademicInfo>=[];
     joiningDetails: any = {}
     certificationsandTrainingInfo: any = {}
     previousEmploymentDetails: any = {}
@@ -53,7 +54,7 @@ export class ProfileComponent implements OnInit {
     officeInfo: any = {}
     positionDetails: any = {}
     performanceDiary: any = {}
-    bankDetails: any = {}
+    bankDetails = <BankInfo>{} 
     salaryDetails: any = {}
 
     // otherBenefitDetails: any= {}
@@ -508,17 +509,18 @@ export class ProfileComponent implements OnInit {
     }
 
     loadAcademicInfoTabData() {
-        //this._authService.getEducation(this.empProfile.empId)
-        // .subscribe(
-        // data => {
-        //     this.empProfile.personalInfo=data.json() || {};
-        // },
-        // error => {
-        // });
+        this._myService.getAcademicInfo(this._currentEmpId)
+        .subscribe(
+        res => {
+            this.academicInfo=res.json().data || [];
+        },
+        error => {
+            this.academicInfo=[];
+        });
     }
 
     loadCertificateAndTraningInfoTabData() {
-        //this._authService.getEducation(this.empProfile.empId)
+        //this._myService.getEducation(this.empProfile.empId)
         // .subscribe(
         // data => {
         //     this.empProfile.personalInfo=data.json() || {};
@@ -741,7 +743,7 @@ export class ProfileComponent implements OnInit {
                 this.bankDetails = data.json() || {};
             },
             error => {
-                this.bankDetails = {};
+                this.bankDetails=<BankInfo>{};
             });
     }
 
