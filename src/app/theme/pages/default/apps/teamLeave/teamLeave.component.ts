@@ -6,7 +6,7 @@ const now = new Date();
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: "./apps.component.html",
+    templateUrl: "./teamLeave.component.html",
     encapsulation: ViewEncapsulation.None,
 })
 export class TeamLeaveComponent implements OnInit {

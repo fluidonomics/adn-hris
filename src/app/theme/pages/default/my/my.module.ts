@@ -8,9 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
-import { LearningComponent } from './workflows/learning/learning.component'
-import { PapComponent } from './workflows/pap/pap.component'
-import { PipComponent } from './workflows/pip/pip.component'
+import { MyLearningComponent } from './workflows/learning/learning.component'
+import { MyPapComponent } from './workflows/pap/pap.component'
+import { MyPipComponent } from './workflows/pip/pip.component'
 import { ApplyComponent } from './leaves/apply/apply.component';
 import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
@@ -38,9 +38,9 @@ import { MyService } from "./my.service"
     ], declarations: [
         MyComponent,
         ProfileComponent,
-        LearningComponent,
-        PapComponent,
-        PipComponent,
+        MyLearningComponent,
+        MyPapComponent,
+        MyPipComponent,
         ApplyComponent,
         HolidaysComponent,
         CalenderComponent,

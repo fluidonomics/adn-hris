@@ -340,7 +340,7 @@
 								<a href="#" class="m-nav__link m-dropdown__toggle">
 									<span class="m-topbar__userpic">
 										<!-- <img src="./assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt=""/> -->
-										<img *ngIf="authService.profileImage; else noImage" src="{{authService.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered" alt="">
+										<img *ngIf="authService.atCurrentUserData?.profileImage; else noImage" src="{{authService.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered" alt="">
 									    <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded m--marginless m--img-centered"></ng-template>
 									</span>
 									<span class="m-topbar__username">
@@ -353,7 +353,7 @@
 										<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/custom/misc/notification_bg1.jpg); background-size: cover;">
 											<div class="m-card-user m-card-user--skin-dark">
 												<div class="m-card-user__pic">
-														<img *ngIf="authService.profileImage; else noImage" src="{{authService?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless" alt="">
+														<img *ngIf="authService.atCurrentUserData?.profileImage; else noImage" src="{{authService?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless" alt="">
 														<ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded m--marginless"></ng-template>
 												</div>
 												<div class="m-card-user__details">

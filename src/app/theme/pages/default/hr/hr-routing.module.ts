@@ -8,9 +8,9 @@ import { BulkEmailComponent } from './email/bulkemail/bulkemail.component'
 import { BroadCastComponent } from './email/broadcast/broadcast.component'
 import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
-import { LearningComponent } from './workFlows/learning/learning.component';
-import { PapComponent } from './workFlows/pap/pap.component';
-import { PipComponent } from './workFlows/pip/pip.component';
+import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { HrPapComponent } from './workFlows/pap/pap.component';
+import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
 
@@ -23,9 +23,9 @@ const routes: Routes = [{
         { path: 'employee/add', component: AddEmployeeComponent },
         { path: 'employee/all', component: AllEmployeeComponent },
         { path: 'employee/edit', component: EditEmployeeComponent },
-        { path: 'workflows/learning', component: LearningComponent },
-        { path: 'workflows/pap', component: PapComponent },
-        { path: 'workflows/pip', component: PipComponent },
+        { path: 'workflows/learning', component: HrLearningComponent },
+        { path: 'workflows/pap', component: HrPapComponent },
+        { path: 'workflows/pip', component: HrPipComponent },
         { path: 'directory', component: DirectoryComponent },
     ]
 

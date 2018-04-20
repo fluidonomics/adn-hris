@@ -13,6 +13,9 @@ const now = new Date();
 export class BulkEmailComponent implements OnInit {
 
 
+    Mode:any;
+    item:any;
+    disabled:boolean=false;
     @Input()
     public isCollapsed = false;
     public datepickerModel: NgbDateStruct;

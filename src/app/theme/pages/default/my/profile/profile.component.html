@@ -396,7 +396,7 @@
                                        <div class="md-checkbox-inline">
                                           <div class="md-checkbox">
                                              <label class="m-checkbox m-checkbox--success">
-                                             <input type="checkbox" name="isSameAsCurrent" [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;setPermentAddress(sameAddress.checked)">
+                                             <input type="checkbox" name="isSameAsCurrent" #sameAddress [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;setPermentAddress(sameAddress.checked)">
                                              Same as Current Address
                                              <span class="box" id="addressCheck1"></span>
                                              </label>
@@ -431,7 +431,7 @@
                                                </label>
 
                                                <ng-select class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)" bindLabel="locationName"  bindValue="_id" placeholder="Select Division" [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false" #permanentAddressDivision="ngModel" required></ng-select>
-                                               <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDivisionData.valid ">
+                                               <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDivision.valid ">
                                                 This field is required.
                                                </div>
 
@@ -470,7 +470,7 @@
                                             </div>   -->
 
                                             <ng-select  class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName"  bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required></ng-select>
-                                            <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThanaData.valid ">
+                                            <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
                                                      This field is required.
                                             </div>
                                         </div>
@@ -621,7 +621,7 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_10_body" role="tabpanel" aria-labelledby="m_accordion_5_item_10_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <form class="m-form m-form--fit m-form--label-align-right" #facademicInfo="ngForm" novalidate="novalidate">
+                               <!-- <form class="m-form m-form--fit m-form--label-align-right" #facademicInfo="ngForm" novalidate="novalidate">
                                   <div class="form-group m-form__group m--margin-top-10">
                                   </div>
                                   <div class="row">
@@ -731,7 +731,7 @@
                                   </div>
                                   <div class="m-portlet__foot m-portlet__foot--fit">
                                      <div class="m-form__actions">
-                                        <button class="btn btn-accent" (click)="addAcademicInfoHtml()"><i class="fa fa-plus"></i>
+                                        <button class="btn btn-accent"><i class="fa fa-plus"></i>
                                           Add
                                         </button>
                                         <button class="btn btn-info" type="save">
@@ -739,7 +739,7 @@
                                         </button>
                                      </div>
                                   </div>
-                               </form>
+                               </form> -->
                             </div>
                          </div>
                       </div>
@@ -1578,11 +1578,11 @@
                                            <input type="text" name="bankDetailsemp_id"  [(ngModel)]="bankDetails.emp_id" #bankDetailsemp_id="ngModel"  class="form-control m-input m-input--air"/>
                                         </div>
                                      </div>
-                                     <div class="col-md-6 adn-form__group" hidden="true">
+                                     <!-- <div class="col-md-6 adn-form__group" hidden="true">
                                         <div class="form-group m-form__group">
                                            <input type="text" name="bankDetailsstatus"  [(ngModel)]="bankDetails.status" #bankDetailsstatus="ngModel"  class="form-control m-input m-input--air"/>
                                         </div>
-                                     </div>
+                                     </div> -->
                                   </div>
                                   <div class="row">
                                      <div class="col-md-6 adn-form__group">

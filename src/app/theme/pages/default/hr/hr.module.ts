@@ -12,9 +12,9 @@ import { BroadCastComponent } from './email/broadcast/broadcast.component'
 import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.component';
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
-import { LearningComponent } from './workFlows/learning/learning.component';
-import { PapComponent } from './workFlows/pap/pap.component';
-import { PipComponent } from './workFlows/pip/pip.component';
+import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { HrPapComponent } from './workFlows/pap/pap.component';
+import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { HrRoutingModule } from './hr-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -47,9 +47,9 @@ import { HrService } from './hr.service';
         BroadCastComponent,
         AllEmployeeComponent,
         AddEmployeeComponent,
-        LearningComponent,
-        PapComponent,
-        PipComponent,
+        HrLearningComponent,
+        HrPapComponent,
+        HrPipComponent,
         DirectoryComponent,
         EditEmployeeComponent,
         OnlyNumberDirective,

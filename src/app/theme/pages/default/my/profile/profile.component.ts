@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
     personalInfo: any = {}
     address: any = {}
     documents: any = {}
-    academicInfo:Array<AcademicInfo>=[];
+    academicInfo: Array<AcademicInfo> = [];
     joiningDetails: any = {}
     certificationsandTrainingInfo: any = {}
     previousEmploymentDetails: any = {}
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
     officeInfo: any = {}
     positionDetails: any = {}
     performanceDiary: any = {}
-    bankDetails = <BankInfo>{} 
+    bankDetails = <BankInfo>{}
     salaryDetails: any = {}
 
     // otherBenefitDetails: any= {}
@@ -510,13 +510,13 @@ export class ProfileComponent implements OnInit {
 
     loadAcademicInfoTabData() {
         this._myService.getAcademicInfo(this._currentEmpId)
-        .subscribe(
-        res => {
-            this.academicInfo=res.json().data || [];
-        },
-        error => {
-            this.academicInfo=[];
-        });
+            .subscribe(
+            res => {
+                this.academicInfo = res.json().data || [];
+            },
+            error => {
+                this.academicInfo = [];
+            });
     }
 
     loadCertificateAndTraningInfoTabData() {
@@ -696,6 +696,136 @@ export class ProfileComponent implements OnInit {
     }
 
 
+    //load Vertical Dropdown By department_id 
+    loadVertical(department_id?: number) {
+        // this._commonService.getVertical(department_id)
+        //     .subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.verticalData = res.json()
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+     //load SubVertical Dropdown By vertical_id 
+     loadSubVertical(vertical_id?: number) {
+        // this._commonService.getSubVertical(vertical_id)
+        //     .subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.subverticalData = res.json()
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+   //load Employment Type By managementType_id 
+   loadEmploymentType(managementType_id?: number) {
+    // this._commonService.getEmploymentType(managementType_id)
+    //     .subscribe(
+    //     res => {
+    //         if (res.ok) {
+    //             this.gradeData = [];
+    //             this.supervisorData = [];
+    //             this.designationData = [];
+
+    //             this.addemp.employmentType_id = null;
+    //             this.addemp.grade_id = null;
+    //             this.addemp.primarySupervisorEmp_id = null;
+    //             this.addemp.designation_id = null;
+
+
+    //             this.employmentTypeData = res.json()
+    //         }
+    //     },
+    //     error => {
+    //     });
+   }
+
+    //load Grade Dropdown By managementType_id  && employmentType_id
+    loadGrade(managementType_id?: number, employmentType_id?: number) {
+        // this._commonService.getGrade(managementType_id, employmentType_id)
+        //     .subscribe(
+        //     res => {
+        //         if (res.ok) {
+
+        //             this.supervisorData = [];
+        //             this.designationData = [];
+
+        //             this.addemp.grade_id = null;
+        //             this.addemp.primarySupervisorEmp_id = null;
+        //             this.addemp.designation_id = null;
+
+        //             this.gradeData = res.json();
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+    //load Supervisor By grade_id
+    loadSupervisor(grade_id?: number) {
+        // this._commonService.getSupervisor(grade_id)
+        //     .subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.addemp.primarySupervisorEmp_id = null;
+        //             this.supervisorData = res.json()
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+     //load Group Hr Head By hrspoc_id
+     loadGroupHrHead(businessHrHead_id?: number) {
+        // this._commonService.getHrSpoce(this.addemp.company_id, businessHrHead_id).subscribe(
+        //     res => {
+        //         if (res.ok) {
+
+        //             this.addemp.groupHrHead_id = null;
+        //             this.groupHrHeadData = res.json()
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+      //load Designation By grade_id
+    loadDesignation(grade_id?: number) {
+        // this._commonService.getDesignation(grade_id).subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.addemp.designation_id = null;
+        //             this.designationData = res.json()
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
+     //load Department Dropdown By divisonId 
+     loadDepartment(division_id?: number) {
+        // this._commonService.getDepartment(division_id)
+        //     .subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.addemp.department_id = null;
+        //             this.addemp.vertical_id = null;
+        //             this.addemp.subVertical_id = null;
+
+        //             this.verticalData = [];
+        //             this.subverticalData = [];
+        //             this.deparmentData = res.json();
+        //         }
+        //     },
+        //     error => {
+        //     });
+    }
+
 
     loadPositionDetailsTabData() {
         this.loadCompanies();
@@ -743,7 +873,7 @@ export class ProfileComponent implements OnInit {
                 this.bankDetails = data.json() || {};
             },
             error => {
-                this.bankDetails=<BankInfo>{};
+                this.bankDetails = <BankInfo>{};
             });
     }
 
