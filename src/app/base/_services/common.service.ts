@@ -8,8 +8,6 @@ import 'rxjs/add/operator/catch';
 import {
     currency,
     nationality,
-    levelofEducation,
-    examDegreeTitle,
     results,
     bloodGroup,
     separationType,
@@ -19,9 +17,9 @@ import {
     hospitalizationScheme,
     martialStatus,
     confirmationStatus,
-    relation,
     religion,
-    country
+    country,
+    levelofEducation,examDegreeTitle
 } from "../_jsonData/dropDownData";
 import { AuthService } from "../_services/authService.service"
 
@@ -223,6 +221,35 @@ export class CommonService {
 
     getCountry() {
         return country;
+        // let url=this.ApiPath+"/getNationality";
+        // return this.http.get(url).map((response: Response) => response.json());
+    }
+
+    getResults() {
+        return results;
+        // let url=this.ApiPath+"/getNationality";
+        // return this.http.get(url).map((response: Response) => response.json());
+    }
+
+    
+    getEducation(parent_id?:number) {
+        let url = "common/getEducation";
+        if(parent_id)
+        {
+           url = "common/getEducation?parent_id="+parent_id;
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+     
+    }
+
+    getLevelOfEducation() {
+        return levelofEducation;
+        // let url=this.ApiPath+"/getNationality";
+        // return this.http.get(url).map((response: Response) => response.json());
+    }
+
+    getExamDegreeTitle() {
+        return examDegreeTitle;
         // let url=this.ApiPath+"/getNationality";
         // return this.http.get(url).map((response: Response) => response.json());
     }

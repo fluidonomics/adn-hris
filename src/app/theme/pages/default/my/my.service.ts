@@ -63,28 +63,28 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getBankDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getBankDetails?emp_id=" + emp_id;
+    getBankInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getBankInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getSalaryDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getSalaryDetails?emp_id=" + emp_id;
+    getSalaryInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getSalaryInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getAddressDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getAddressDetails?emp_id=" + emp_id;
+    getAddressInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getAddressInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getDocuments(emp_id?: number): Observable<Response> {
-        let url = "user/getDocuments?emp_id=" + emp_id;
+    getDocumentsInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getDocumentsInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getCarDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getCarDetails?emp_id=" + emp_id;
+    getCarInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getCarInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     getAcademicInfo(emp_id?: number): Observable<Response> {
@@ -93,42 +93,32 @@ export class MyService {
     }
 
     getPositionDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getPositionDetails?emp_id=" + emp_id;
+        let url = "user/getPositionInfo?emp_id=" + emp_id;
         return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
     }
 
-    getCertifications(emp_id?: number): Observable<Response> {
-        let url = "user/getCertifications?emp_id=" + emp_id;
+    getCertificationInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getCertificationInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+ 
+    getPreviousEmploymentInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getPreviousEmploymentInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getTraniningInfo(emp_id?: number): Observable<Response> {
-        let url = "user/getTraniningInfo?emp_id=" + emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    getEmployementDetails(emp_id?: number): Observable<Response> {
-        let url = "user/getPreviousEmployementHistory?emp_id=" + emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    getFamilyDetails(emp_id?: number): Observable<Response> {
-        let url = "user/familyDetails?emp_id=" + emp_id;
+    getFamilyInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getFamilyInfo?emp_id=" + emp_id;
         return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
     }
 
     getOfficeDetails(emp_id?: number): Observable<Response> {
-        let url = "user/officeDetails?emp_id=" + emp_id;
+        let url = "user/getOfficeInfo?emp_id=" + emp_id;
         return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
     }
 
-    getPayrollDetails(emp_id?: number): Observable<Response> {
-        let url = "user/payrollDetails?emp_id=" + emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
     getSeperationDetails(emp_id?: number): Observable<Response> {
-        let url = "user/seperationDetails?emp_id=" + emp_id;
+        let url = "user/seperationInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -144,9 +134,9 @@ export class MyService {
 
     saveBankDetails(data: any): Observable<Response> {
         {
-            let url = "user/addBank"
+            let url = "user/addBankInfo"
             if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateBank";
+                url = "user/updateBankInfo";
             }
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
@@ -163,14 +153,74 @@ export class MyService {
     }
 
     saveCarDetails(data: any): Observable<Response> {
-        {
-            let url = "user/addCarDetails"
+            let url = "user/addCarInfo"
             if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateCarDetails";
+                url = "user/updateCarInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+
+
+    saveAcademicInfo(data:any): Observable<Response>
+    {
+        let url = "user/addAcademicInfo"
+        if (data._id != null && data._id != "" && data._id != undefined) {
+            url = "user/updateAcademicInfo";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    saveCertificationInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addCertificationInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateCertificationInfo";
             }
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
+    
+    savePreviousEmploymentInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addPreviousEmploymentInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updatePreviousEmploymentInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveFamilyInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addFamilyInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateFamilyInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+
+    deleteAcademicInfo(_id:number)
+    {
+        let url = "user/deleteAcademicInfo?_id="+_id;
+        return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
+
+    deletePreviousEmploymentInfo(_id:number)
+    {
+        let url = "user/deletePreviousEmploymentInfo?_id="+_id;
+        return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
+
+    deleteFamilyInfo(_id:number)
+    {
+        let url = "user/deleteFamilyInfo?_id="+_id;
+        return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
+
+
 
 
     private extractData(res: Response) {

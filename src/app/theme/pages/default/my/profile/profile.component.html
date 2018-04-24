@@ -491,7 +491,7 @@
                                  </div>
                                  <div class="m-form__actions">
                                         <button type="submit" class="btn btn-accent">{{address._id ? 'Update':'Save'}}</button>
-                                        <button type="reset" *ngIf="!address._id" class="btn btn-secondary">Cancel</button>
+                                        <!-- <button type="reset" *ngIf="!address._id" class="btn btn-secondary">Cancel</button> -->
                                  </div>
                               </form>
                            </div>
@@ -621,125 +621,125 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_10_body" role="tabpanel" aria-labelledby="m_accordion_5_item_10_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <!-- <form class="m-form m-form--fit m-form--label-align-right" #facademicInfo="ngForm" novalidate="novalidate">
-                                  <div class="form-group m-form__group m--margin-top-10">
-                                  </div>
-                                  <div class="row">
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="personal_id" [(ngModel)]="academicInfo._id" #personal_id="ngModel"  class="form-control m-input m-input--air"/>
-                                            </div>
-                                         </div>
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="emp_id"  [(ngModel)]="academicInfo.emp_id" #emp_id="ngModel"  class="form-control m-input m-input--air"/>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="status"  [(ngModel)]="academicInfo.status" #status="ngModel"  class="form-control m-input m-input--air"/>
-                                            </div>
-                                         </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="levelOfEducation">Level of Education 
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>                                                           
-                                            <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select Level of Education" [(ngModel)]="academicInfo.levelOfEducation" [clearable]="false"  #levelOfEducation="ngModel" required></ng-select>
-                                            <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid ">
-                                               This field is required.
-                                            </div>
-                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="examDegreeTitle">Exam Degree Title 
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>                                                           
-                                              <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select Level of Education" [(ngModel)]="academicInfo.examDegreeTitle" [clearable]="false"  #examDegreeTitle="ngModel" required></ng-select>
-                                              <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
-                                               This field is required.
-                                              </div>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="concentrationMajorGroup">Concentration/Major/Group
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="academicInfo.concentrationMajorGroup" #concentrationMajorGroup="ngModel" id="concentrationMajorGroup" name="concentrationMajorGroup" placeholder="Enter concentration/major/goup" type="text">
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="instituteName">Institute Name 
-                                           </label>
-                                           <input type="text" [(ngModel)]="academicInfo.instituteName" #instituteName="ngModel" name="instituteName" placeholder="Enter Institute Name" id="instituteName" class="form-control m-input m-input--air">
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="result">Result
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>                                                           
-                                              <ng-select class="m-input m-input--air" name="result" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select Result" [(ngModel)]="academicInfo.result" [clearable]="false"  #result="ngModel" required></ng-select>
-                                              <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
-                                               This field is required.
-                                              </div>
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="marks">Marks in % 
-                                           </label>
-                                           <input type="text" name="marks" [(ngModel)]="academicInfo.marks" maxlength="4"  #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air">
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="yearOfPassing">Year of Passing 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" maxlength="4"  [(ngModel)]="academicInfo.yearOfPassing" #yearOfPassing="ngModel" id="yearOfPassing" name="yearofpassing" placeholder="Enter year of passing" type="text">
-                                        </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="duration">Duration (In Years) 
-                                           </label>
-                                           <input type="text" name="duration" [(ngModel)]="academicInfo.duration"  #duration="ngModel" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air"  OnlyNumber="true" required>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-12 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="achievements">Achievements 
-                                           </label>
-                                           <textarea class="form-control m-input m-input--air" [(ngModel)]="academicInfo.achievements" #achievements="ngModel" id="achievements" name="achievements" placeholder="Enter achievements" type="text" rows="3"></textarea>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="m-form__actions">
-                                     <button  type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
-                                  </div>
-                                  <div class="m-portlet__foot m-portlet__foot--fit">
-                                     <div class="m-form__actions">
-                                        <button class="btn btn-accent"><i class="fa fa-plus"></i>
-                                          Add
-                                        </button>
-                                        <button class="btn btn-info" type="save">
-                                            Save
-                                        </button>
-                                     </div>
-                                  </div>
-                               </form> -->
+                                <div *ngFor="let academic of academicInfo ;let i=index">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #facademicInfo="ngForm" (ngSubmit)="facademicInfo.valid && saveAcademicInfo(academic,i)" novalidate="novalidate" >
+                                                <div class="form-group m-form__group m--margin-top-10">
+                                                </div>
+                                                <div class="row">
+                                                        <div class="col-md-6 adn-form__group" hidden="true">
+                                                            <div class="form-group m-form__group">
+                                                                <input type="text" name="personal_id" [(ngModel)]="academic._id" #personal_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 adn-form__group" hidden="true">
+                                                            <div class="form-group m-form__group">
+                                                                <input type="text" name="emp_id"  [(ngModel)]="academic.emp_id" #emp_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 adn-form__group" hidden="true">
+                                                            <div class="form-group m-form__group">
+                                                                <input type="text" name="status"  [(ngModel)]="academic.status" #status="ngModel"  class="form-control m-input m-input--air"/>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="levelOfEducation">Level of Education 
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            </label>                                                           
+                                                            <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id)" [(ngModel)]="academic.levelOfEducation_id" [clearable]="false"  #levelOfEducation="ngModel" required></ng-select>
+                                                            <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid">
+                                                                This field is required.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="examDegreeTitle">Exam Degree Title 
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            </label>                                                           
+                                                                <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="examDegreeTitleData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id" [clearable]="false"  #examDegreeTitle="ngModel" required></ng-select>
+                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
+                                                                This field is required.
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="concentrationMajorGroup">Concentration/Major/Group
+                                                            </label>
+                                                            <input class="form-control m-input m-input--air" [(ngModel)]="academic.concentrationMajorGroup" #concentrationMajorGroup="ngModel" id="concentrationMajorGroup" name="concentrationMajorGroup" placeholder="Enter concentration/major/goup" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="instituteName">Institute Name 
+                                                            </label>
+                                                            <input type="text" [(ngModel)]="academic.instituteName" #instituteName="ngModel" name="instituteName" placeholder="Enter Institute Name" id="instituteName" class="form-control m-input m-input--air">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="result">Result
+                                                            <span class="required" aria-required="true"> * </span>
+                                                            </label>                                                           
+                                                                <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text"  bindValue="id" placeholder="Select Result" [(ngModel)]="academic.result" [clearable]="false"  #result="ngModel" required></ng-select>
+                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
+                                                                This field is required.
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="marks">Marks in % 
+                                                            </label>
+                                                            <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4"  #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="yearOfPassing">Year of Passing 
+                                                            </label>
+                                                            <input class="form-control m-input m-input--air" maxlength="4"  [(ngModel)]="academic.yearOfPassing" #yearOfPassing="ngModel" id="yearOfPassing" name="yearofpassing" placeholder="Enter year of passing" OnlyNumber="true" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="duration">Duration (In Years) 
+                                                            </label>
+                                                            <input type="text" name="duration" [(ngModel)]="academic.duration"  #duration="ngModel" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air"  OnlyNumber="true">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="achievements">Achievements 
+                                                            </label>
+                                                            <textarea class="form-control m-input m-input--air" [(ngModel)]="academic.achievements" #achievements="ngModel" id="achievements" name="achievements" placeholder="Enter achievements" type="text" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__actions">
+                                                        <button type="button" class="btn btn-danger" *ngIf="academic._id" (click)="deleteAcademicInfo(academic._id)"><i class="fa fa-close"></i>Delete</button>
+                                                        <button type="submit" class="btn btn-accent">{{academic._id ? 'Update':'Save'}}</button>
+                                                </div>
+                                    </form>
+                                </div> 
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                           <button class="btn btn-accent" [disabled]="isAdded('academicInfo')" (click)="addNewHtmlContain('academicInfo')"><i class="fa fa-plus"></i>
+                                              Add
+                                           </button>
+                                    </div>
+                                </div>
                             </div>
                          </div>
                       </div>
@@ -754,64 +754,89 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_11_body" role="tabpanel" aria-labelledby="m_accordion_5_item_11_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <form class="m-form m-form--fit m-form--label-align-right" #fcertificationsandTrainingInfo="ngForm" novalidate="novalidate">
-                                  <div class="form-group m-form__group m--margin-top-10">
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="certificationTrainingTitle">Certification/ Training Title 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="certificationsandTrainingInfo.certificationTrainingTitle" #certificationTrainingTitle="ngModel" id="certificationTrainingTitle" name="certificationTrainingTitle" placeholder="Enter certification / training title" type="text">
+                                <div *ngFor="let certifications of certificationsandTrainingInfo ;let i=index">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fcertificationsandTrainingInfo="ngForm" (ngSubmit)="fcertificationsandTrainingInfo.valid && saveCertificationsandTrainingInfo(certifications,i)"  novalidate="novalidate">
+                                        <div class="form-group m-form__group m--margin-top-10">
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="location">Location 
-                                           </label>
-                                           <input type="text" [(ngModel)]="certificationsandTrainingInfo.location" #location="ngModel" name="location" placeholder="Enter location" id="location" class="form-control m-input m-input--air">
+                                        <div class="row">
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="certifications_id" [(ngModel)]="certifications._id" #certifications_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="emp_id"  [(ngModel)]="certifications.emp_id" #emp_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="status"  [(ngModel)]="certifications.status" #status="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div> -->
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="institution">Institution 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="certificationsandTrainingInfo.institution" #institution="ngModel" id="institution" name="institution" placeholder="Enter institution" type="text">
+                                        <div class="row">
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                    <label for="certificationTrainingTitle">Certification/ Training Title 
+                                                    </label>
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <input class="form-control m-input m-input--air" [(ngModel)]="certifications.certificationTitle" #certificationTrainingTitle="ngModel" id="certificationTrainingTitle" name="certificationTrainingTitle" placeholder="Enter certification / training title" required type="text">
+                                                    <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !certificationTrainingTitle.valid ">
+                                                            This field is required.
+                                                    </div>
+                                               </div>
+                                            </div>
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="location">Location 
+                                                </label>
+                                                <input type="text" [(ngModel)]="certifications.location" #location="ngModel" name="location" placeholder="Enter location" id="location" class="form-control m-input m-input--air">
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="durationInMonths">Duration in Months  
-                                           </label>
-                                           <input type="text" [(ngModel)]="certificationsandTrainingInfo.durationInMonths" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months" id="durationInMonths" class="form-control m-input m-input--air" OnlyNumber="true">
+                                        <div class="row">
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="institution">Institution 
+                                                </label>
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="certifications.institution" #institution="ngModel" id="institution" name="institution" placeholder="Enter institution" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                    <label for="durationInMonths">Duration in Months  
+                                                    </label>
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months" id="durationInMonths" class="form-control m-input m-input--air" OnlyNumber="true" required>
+                                                    <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !durationInMonths.valid ">
+                                                            This field is required.
+                                                    </div>
+                                              </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-12 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="topicsCovered">Topics Covered  
-                                           </label>
-                                           <textarea class="form-control m-input m-input--air" [(ngModel)]="certificationsandTrainingInfo.topicsCovered" #topicsCovered="ngModel" id="topicsCovered" name="topicsCovered" placeholder="Enter topics covered" type="text" rows="3"></textarea>
+                                        <div class="row">
+                                            <div class="col-md-12 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="topicsCovered">Topics Covered  
+                                                </label>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="certifications.topicsCovered" #topicsCovered="ngModel" id="topicsCovered" name="topicsCovered" placeholder="Enter topics covered" type="text" rows="3"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="m-form__actions">
-                                     <button type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
-                                  </div>
-                                  <div class="m-portlet__foot m-portlet__foot--fit">
-                                     <div class="m-form__actions">
-                                        <button class="btn btn-accent"><i class="fa fa-plus"></i>
-                                        Add
+                                        <div class="m-form__actions">
+                                            <button type="button" class="btn btn-danger" *ngIf="certifications._id" (click)="deleteAcademicInfo(certifications._id)"><i class="fa fa-close"></i>Delete</button>
+                                            <button type="submit" class="btn btn-accent">{{certifications._id ? 'Update':'Save'}}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <button class="btn btn-accent" [disabled]="isAdded('certificationAndTrainingInfo')"  (click)="addNewHtmlContain('certificationAndTrainingInfo')"><i class="fa fa-plus"></i>
+                                             Add
                                         </button>
-                                        <button class="btn btn-info" type="save">
-                                        Save
-                                        </button>
-                                     </div>
-                                  </div>
-                               </form>
+                                    </div>
+                                </div>
                             </div>
                          </div>
                       </div>
@@ -828,129 +853,129 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_12_body" role="tabpanel" aria-labelledby="m_accordion_5_item_12_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <form class="m-form m-form--fit m-form--label-align-right" #fpreviousEmploymentDetails="ngForm" novalidate="novalidate">
-                                  <div class="form-group m-form__group m--margin-top-10">
-                                  </div>
-                                  <div class="row">
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="previousEmploymentDetails_id" [(ngModel)]="previousEmploymentDetails._id" #personal_id="ngModel"  class="form-control m-input m-input--air"/>
+                                <div *ngFor="let previousEmployment of previousEmploymentDetails ;let i=index">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fpreviousEmploymentDetails="ngForm" (ngSubmit)="fpreviousEmploymentDetails.valid && savePerviousEmploymentDetails(previousEmployment,i)" novalidate="novalidate">
+                                        <div class="form-group m-form__group m--margin-top-10">
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="previousEmploymentDetails_id" [(ngModel)]="previousEmployment._id" #previousEmploymentDetails_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="emp_id"  [(ngModel)]="previousEmployment.emp_id" #emp_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                    <div class="form-group m-form__group">
+                                                    <input type="text" name="status"  [(ngModel)]="previousEmployment.status" #status="ngModel"  class="form-control m-input m-input--air"/>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="companyName">Company Name
+                                                <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyName" #companyName="ngModel" id="companyName" name="companyName" placeholder="Enter company name" type="text" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                    </div>
+                                                </div>
                                             </div>
-                                         </div>
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="emp_id"  [(ngModel)]="previousEmploymentDetails.emp_id" #emp_id="ngModel"  class="form-control m-input m-input--air"/>
-                                            </div>
-                                         </div>
-                                         <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="status"  [(ngModel)]="previousEmploymentDetails.status" #status="ngModel"  class="form-control m-input m-input--air"/>
-                                            </div>
-                                         </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="companyName">Company Name
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="previousEmploymentDetails.companyName" #companyName="ngModel" id="companyName" name="companyName" placeholder="Enter company name" type="text" required>
-                                           <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyName.valid ">
-                                            This field is required.
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="companyBusiness">Company Business 
+                                                <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business" id="companyBusiness" class="form-control m-input m-input--air" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
+                                                    This field is required.
+                                                </div>
+                                                </div>
                                             </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="companyBusiness">Company Business 
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>
-                                           <input type="text" [(ngModel)]="previousEmploymentDetails.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business" id="companyBusiness" class="form-control m-input m-input--air" required>
-                                           <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
-                                            This field is required.
-                                           </div>
+                                        <div class="row">
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="prevDesignation">Previous Designation 
+                                                <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <input type="text" [(ngModel)]="previousEmployment.designation" #prevDesignation="ngModel" name="prevDesignation" placeholder="Enter Previous Designation " id="prevDesignation" class="form-control m-input m-input--air" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !prevDesignation.valid ">
+                                                    This field is required.
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="department">Department  
+                                                </label>
+                                                <input type="text" [(ngModel)]="previousEmployment.department" #department="ngModel" name="department" placeholder="Enter department" id="department" class="form-control m-input m-input--air">
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="prevDesignation">Previous Designation 
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>
-                                           <input type="text" [(ngModel)]="previousEmploymentDetails.prevDesignation" #prevDesignation="ngModel" name="prevDesignation" placeholder="Enter Previous Designation " id="prevDesignation" class="form-control m-input m-input--air" required>
-                                           <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !prevDesignation.valid ">
-                                            This field is required.
-                                           </div>
+                                        <div class="row">
+                                            <div class="col-md-3 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="epf">Employment Period From 
+                                                </label>
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d6.open()" name="epf" [(ngModel)]="previousEmployment.employmentPeriodFrom" #epf="ngModel" ngbDatepicker #d6="ngbDatepicker">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="ept">Employment Period To
+                                                </label>
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="ped.open()" name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo" #ept="ngModel" ngbDatepicker #ped="ngbDatepicker">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="companyLocation">Company Location 
+                                                </label>
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyLocation" #companyLocation="ngModel" id="companyLocation" name="companyLocation" placeholder="Enter company location" type="text">
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="department">Department  
-                                           </label>
-                                           <input type="text" [(ngModel)]="previousEmploymentDetails.department" #department="ngModel" name="department" placeholder="Enter department" id="department" class="form-control m-input m-input--air">
+                                        <div class="row">
+                                            <div class="col-md-12 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="areaofExperience">Area of Experience
+                                                <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.areaOfExperience" #areaofExperience="ngModel" id="areaofExperience" name="areaofExperience" placeholder="Enter area of experience" type="text" rows="3" required></textarea>
+                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !areaofExperience.valid ">
+                                                    This field is required.
+                                                </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-3 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="epf">Employment Period From 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d6.open()" name="epf" [(ngModel)]="previousEmploymentDetails.epf" #epf="ngModel" ngbDatepicker #d6="ngbDatepicker" required>
+                                        <div class="row">
+                                            <div class="col-md-12 adn-form__group">
+                                                <div class="form-group m-form__group">
+                                                <label for="responsibility">Responsibility 
+                                                </label>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.responsibility" #responsibility="ngModel" id="responsibility" name="responsibility" placeholder="Enter responsibility" type="text" rows="3"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-3 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="ept">Employment Period To
-                                           </label>
-                                           <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="ped.open()" name="ept" [(ngModel)]="previousEmploymentDetails.ept" #ept="ngModel" ngbDatepicker #ped="ngbDatepicker" required>
+                                        <div class="m-form__actions">
+                                                <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id" (click)="deletePreviousEmployment(previousEmployment._id)"><i class="fa fa-close"></i>Delete</button>
+                                                <button type="submit" class="btn btn-accent">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="companyLocation">Company Location 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="previousEmploymentDetails.companyLocation" #companyLocation="ngModel" id="companyLocation" name="companyLocation" placeholder="Enter company location" type="text">
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-12 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="areaofExperience">Area of Experience
-                                           <span class="required" aria-required="true"> * </span>
-                                           </label>
-                                           <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmploymentDetails.areaofExperience" #areaofExperience="ngModel" id="areaofExperience" name="areaofExperience" placeholder="Enter area of experience" type="text" rows="3" required></textarea>
-                                           <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !areaofExperience.valid ">
-                                            This field is required.
-                                           </div>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-12 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="responsibility">Responsibility 
-                                           </label>
-                                           <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmploymentDetails.responsibility" #responsibility="ngModel" id="responsibility" name="responsibility" placeholder="Enter responsibility" type="text" rows="3"></textarea>
-                                        </div>
-                                     </div>
-                                  </div>
-                                  <div class="m-form__actions">
-                                     <button type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
-                                  </div>
-                                  <div class="m-portlet__foot m-portlet__foot--fit">
-                                     <div class="m-form__actions">
-                                        <button class="btn btn-accent"><i class="fa fa-plus"></i>
-                                        Add
-                                        </button>
-                                        <button class="btn btn-info" type="save">
-                                        Save
-                                        </button>
-                                     </div>
-                                  </div>
-                               </form>
+                                    </form>
+                                    <div class="m-portlet__foot m-portlet__foot--fit">
+                                            <div class="m-form__actions">
+                                                   <button class="btn btn-accent" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i>
+                                                      Add
+                                                   </button>
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
                          </div>
                       </div>
@@ -967,83 +992,85 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_13_body" role="tabpanel" aria-labelledby="m_accordion_5_item_13_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <form class="m-form m-form--fit m-form--label-align-right" #ffamilyInfo="ngForm" novalidate="novalidate">
-                                  <div class="form-group m-form__group m--margin-top-10">
-                                  </div>
-                                  <div class="row">
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="familyInfo_id" [(ngModel)]="familyInfo._id" #familyInfo_id="ngModel"  class="form-control m-input m-input--air"/>
+                                <div *ngFor="let family of familyInfo ;let i=index">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #ffamilyInfo="ngForm" (ngSubmit)="ffamilyInfo.valid && saveFamilyInfo(family,i)"  novalidate="novalidate">
+                                    <div class="form-group m-form__group m--margin-top-10">
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                <input type="text" name="familyInfo_id" [(ngModel)]="family._id" #familyInfo_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                </div>
                                             </div>
-                                         </div>
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="familyInfoemp_id"  [(ngModel)]="familyInfo.emp_id" #familyInfoemp_id="ngModel"  class="form-control m-input m-input--air"/>
+                                            <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                <input type="text" name="familyInfoemp_id"  [(ngModel)]="family.emp_id" #familyInfoemp_id="ngModel"  class="form-control m-input m-input--air"/>
+                                                </div>
                                             </div>
-                                         </div>
-                                         <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                               <input type="text" name="familyInfostatus"  [(ngModel)]="familyInfo.status" #familyInfostatus="ngModel"  class="form-control m-input m-input--air"/>
+                                            <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                <input type="text" name="familyInfostatus"  [(ngModel)]="family.status" #familyInfostatus="ngModel"  class="form-control m-input m-input--air"/>
+                                                </div>
                                             </div>
-                                         </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="familyName">Name
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="familyInfo.familyName" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="form-group m-form__group">
+                                                <label for="familyName">Name
+                                                </label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !familyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="relation">Relation 
-                                           </label>                                                           
-                                           <ng-select name="relation" [items]="exampleData"
-                                           bindLabel="text"
-                                           bindValue="id"
-                                           placeholder="Select relation"
-                                           [(ngModel)]="personalInfo.relation">
-                                           </ng-select>
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="form-group m-form__group">
+                                                <label for="relation">Relation 
+                                                </label> 
+                                                <span class="required" aria-required="true"> * </span>                                                       
+                                                <ng-select name="relation" [items]="relationData"
+                                                bindLabel="relationName"
+                                                bindValue="_id"
+                                                placeholder="Select relation"
+                                                [(ngModel)]="family.relation_id" #relation="ngModel" required>
+                                                </ng-select>
+
+                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !relation.valid ">
+                                                        This field is required.
+                                                </div>
+                                            </div>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="row">
-                                     <div class="col-md-6 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="fmobileNumber">Mobile Number 
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="familyInfo.fmobileNumber" #fmobileNumber="ngModel" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="form-group m-form__group">
+                                            <label for="fmobileNumber">Mobile Number 
+                                            </label>
+                                            <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #fmobileNumber="ngModel" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text">
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-3 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="fbirthDate">Birth Date</label>
-                                           <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d7.open()" name="fbirthDate" [(ngModel)]="familyInfo.fbirthDate" #fbirthDate="ngModel" ngbDatepicker #d7="ngbDatepicker" required>
+                                        <div class="col-md-3 adn-form__group">
+                                            <div class="form-group m-form__group">
+                                            <label for="fbirthDate">Birth Date</label>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d7.open()" name="fbirthDate" [(ngModel)]="family.dateOfBirth" #fbirthDate="ngModel" ngbDatepicker #d7="ngbDatepicker">
+                                            </div>
                                         </div>
-                                     </div>
-                                     <div class="col-md-3 adn-form__group">
-                                        <div class="form-group m-form__group">
-                                           <label for="age">Age
-                                           </label>
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="familyInfo.age" #age="ngModel" id="age" name="age" placeholder="Enter age" type="text">
+                                    </div>
+                                    <div class="m-form__actions">
+                                            <button type="button" class="btn btn-danger" *ngIf="family._id" (click)="deleteFamilyInfo(family._id)"><i class="fa fa-close"></i>Delete</button>
+                                            <button type="submit" class="btn btn-accent">{{family._id ? 'Update':'Save'}}</button>
+                                    </div>
+                                </form>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                        <div class="m-form__actions">
+                                               <button class="btn btn-accent" [disabled]="isAdded('family')" (click)="addNewHtmlContain('family')"><i class="fa fa-plus"></i>
+                                                  Add
+                                               </button>
                                         </div>
-                                     </div>
-                                  </div>
-                                  <div class="m-form__actions">
-                                     <button type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
-                                  </div>
-                                  <div class="m-portlet__foot m-portlet__foot--fit">
-                                     <div class="m-form__actions">
-                                        <button class="btn btn-accent"><i class="fa fa-plus"></i>
-                                        Add
-                                        </button>
-                                        <button class="btn btn-info" type="save">
-                                        Save
-                                        </button>
-                                     </div>
-                                  </div>
-                               </form>
+                                </div>
                             </div>
                          </div>
                       </div>
@@ -1061,7 +1088,7 @@
                          </div>
                          <div class="m-accordion__item-body collapse" id="m_accordion_5_item_6_body" role="tabpanel" aria-labelledby="m_accordion_5_item_6_head" data-parent="#m_accordion_5">
                             <div class="m-accordion__item-content">
-                               <form class="m-form m-form--fit m-form--label-align-right" #fofficeInfo="ngForm" novalidate="novalidate">
+                               <form class="m-form m-form--fit m-form--label-align-right" #fofficeInfo="ngForm" (ngSubmit)="saveOfficeInfo()" novalidate="novalidate">
                                   <div class="form-group m-form__group m--margin-top-10">
                                   </div>
                                   <div class="row">
@@ -1114,7 +1141,7 @@
                                            <label for="officePhoneNumber">Office Phone Number
                                            <span class="required" aria-required="true"> * </span>
                                            </label>    
-                                           <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.officePhoneNumber" #officePhoneNumber="ngModel" maxlength="10" id="officePhoneNumber" name="officePhoneNumber" placeholder="Enter office phone no" type="text" OnlyNumber="true" required>
+                                           <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.officePhone" #officePhoneNumber="ngModel" maxlength="10" id="officePhoneNumber" name="officePhoneNumber" placeholder="Enter office phone no" type="text" OnlyNumber="true" required>
                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
                                             This field is required.
                                            </div>
@@ -1126,14 +1153,14 @@
                                         <div class="form-group m-form__group">
                                            <label for="officeMobileNumber">Office Mobile Number
                                            </label>    
-                                           <input name="officeMobileNumber" [(ngModel)]="fofficeInfo.officeMobileNumber" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" >                                                           
+                                           <input name="officeMobileNumber" [(ngModel)]="fofficeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" >                                                           
                                            </div>
                                     </div>
                                     <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                            <label for="officeEmailId">Office Email ID
                                            </label>    
-                                           <input id="officeEmailId" [(ngModel)]="officeInfo.officeEmailId" #officeEmailId="ngModel" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" aria-invalid="true" aria-describedby="email-error">     
+                                           <input id="officeEmailId" [(ngModel)]="officeInfo.officeEmail" #officeEmailId="ngModel" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" aria-invalid="true" aria-describedby="email-error">     
                                         </div>
                                      </div>
                                  </div>
@@ -1153,7 +1180,7 @@
                                         <div class="form-group m-form__group">
                                            <label for="city">City
                                            </label>    
-                                           <input name="city" id="city" [(ngModel)]="officeInfo.city" #city="ngModel" type="text" class="form-control m-input m-input--air" placeholder="Enter city">                                                           
+                                           <input name="city" id="city" [(ngModel)]="officeInfo.city_id" #city="ngModel" type="text" class="form-control m-input m-input--air" placeholder="Enter city">                                                           
                                         </div>
                                      </div>
                                   </div>
@@ -1166,7 +1193,7 @@
                                            bindLabel="text"
                                            bindValue="id"
                                            placeholder="Select Country"
-                                           [(ngModel)]="personalInfo.country">
+                                           [(ngModel)]="personalInfo.country_id">
                                            </ng-select>
                                         </div>
                                      </div>
@@ -1174,20 +1201,75 @@
                                         <div class="form-group m-form__group">
                                            <label for="costCenter">Cost Center
                                            </label>
-                                           <input name="costCenter" [(ngModel)]="personalInfo.costCenter" #costCenter="ngModel" placeholder="Enter cost center" id="costCenter" type="text" class="form-control m-input m-input--air">
+                                           <input name="costCenter" [(ngModel)]="personalInfo.costCentre" #costCenter="ngModel" placeholder="Enter cost center" id="costCenter" type="text" class="form-control m-input m-input--air">
                                         </div>
                                      </div>
                                   </div>
+
+                                  <div class="row">
+                                    <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="dateOfJoining">Date of Joining</label>
+                                          <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d1.open()" name="dateOfJoining" [(ngModel)]="officeInfo.dateOfJoining" #dateOfJoining="ngModel" ngbDatepicker #d1="ngbDatepicker" required>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="dateOfConfermation">Date of Confirmation</label>
+                                          <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="dateOfConfermation.open()" name="dateOfConfermation" [(ngModel)]="officeInfo.dateOfConfirmation" #dateOfConfermation="ngModel" ngbDatepicker #d2="ngbDatepicker" required>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <!-- <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="confirmationStatus">Confirmation Status
+                                          </label>                                                           
+                                          <ng-select name="confirmationstatus" [items]="exampleData"
+                                          bindLabel="text"
+                                          bindValue="id"
+                                          placeholder="Select Confirmation Status"
+                                          [(ngModel)]="officeInfo.confermationStatus">
+                                          </ng-select>
+                                       </div>
+                                    </div> -->
+                                    <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="workPermitNumber">Work Permit Number
+                                          <span class="required" aria-required="true"> * </span>
+                                          </label>
+                                          <input type="text" [(ngModel)]="officeInfo.workPermitNumber" #workPermitNumber="ngModel" name="workPermitNumber" placeholder="Enter work permit no" id="idCardNumber" maxlength="10" class="form-control m-input m-input--air" required>
+                                          <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !workPermitNumber.valid ">
+                                           This field is required.
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="effectiveDate">Work Permit Effective Date</label>
+                                          <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="d10.open()" name="effectiveDate" [(ngModel)]="officeInfo.workPermitEffectiveDate" #doj="ngModel" ngbDatepicker #d10="ngbDatepicker" required>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6 adn-form__group">
+                                       <div class="form-group m-form__group">
+                                          <label for="expiryDate">Work Permit Expiry Date</label>
+                                          <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" (focus)="wped.open()" name="expiryDate" [(ngModel)]="officeInfo.workPermitExpiryDate" #expiryDate="ngModel" ngbDatepicker #wped="ngbDatepicker" required>
+                                       </div>
+                                    </div>
+                                 </div>
+
                                   <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{personalInfo._id ? 'Update':'Save'}}</button>
-                                        <button type="reset" *ngIf="!personalInfo._id" class="btn btn-secondary">Cancel</button>
+                                        <button type="submit" class="btn btn-accent">{{officeInfo._id ? 'Update':'Save'}}</button>
+                                        <!-- <button type="reset" *ngIf="!officeInfo._id" class="btn btn-secondary">Cancel</button> -->
                                   </div>
                                </form>
                             </div>
                          </div>
                       </div>
                       <!--begin::Item-->
-                      <div class="m-accordion__item m-accordion__item--info">
+                      <!-- <div class="m-accordion__item m-accordion__item--info">
                          <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_7_head" data-toggle="collapse" href="#m_accordion_5_item_7_body" aria-expanded="false">
                             <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                             <span class="m-accordion__item-title">Joining Details</span>
@@ -1275,7 +1357,7 @@
                                </form>
                             </div>
                          </div>
-                      </div>
+                      </div> -->
                       <div class="m-accordion__item m-accordion__item--info">
                          <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_8_head" data-toggle="collapse" href="#m_accordion_5_item_8_body" aria-expanded="false">
                             <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
@@ -1493,7 +1575,7 @@
                                 </div>
                                 <div class="m-form__actions">
                                         <button type="submit" class="btn btn-accent">{{positionDetails._id ? 'Update':'Save'}}</button>
-                                        <button type="reset" *ngIf="!positionDetails._id" class="btn btn-secondary">Cancel</button>
+                                        <!-- <button type="reset" *ngIf="!positionDetails._id" class="btn btn-secondary">Cancel</button> -->
                                 </div>
                                </form>
                             </div>
@@ -1633,7 +1715,7 @@
                                   </div>
                                   <div class="m-form__actions">
                                     <button type="submit" class="btn btn-accent">{{bankDetails._id ? 'Update':'Save'}}</button>
-                                    <button type="reset" *ngIf="!bankDetails._id" class="btn btn-secondary">Cancel</button>
+                                    <!-- <button type="reset" *ngIf="!bankDetails._id" class="btn btn-secondary">Cancel</button> -->
                                   </div>
                                </form>
                             </div>
@@ -1652,6 +1734,7 @@
                             <div class="m-accordion__item-content">
                                <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="fsalaryDetails.valid && saveSalaryDetails()" #fsalaryDetails="ngForm" novalidate="novalidate">
                                   <div class="form-group m-form__group m--margin-top-10">
+                                      <button type="reset" class="btn btn-secondary">Hike</button>
                                   </div>
                                   <div class="row">
                                     <div class="col-md-6 adn-form__group" hidden="true">
@@ -1832,7 +1915,7 @@
 
                                   <div class="m-form__actions">
                                     <button type="submit" class="btn btn-accent">{{salaryDetails._id ? 'Update':'Save'}}</button>
-                                    <button type="reset" *ngIf="!salaryDetails._id" class="btn btn-secondary">Cancel</button>
+                                    <!-- <button type="reset" *ngIf="!salaryDetails._id" class="btn btn-secondary">Cancel</button> -->
                                   </div>
                                </form>
                             </div>
