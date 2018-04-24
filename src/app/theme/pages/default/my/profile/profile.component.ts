@@ -643,7 +643,11 @@ export class ProfileComponent implements OnInit {
         this._commonService.getEducation(parent_id).subscribe(
             res => {
                 if (res.ok) {
-                    this.examDegreeTitleData = res.json();
+                    this.academicInfo[index].examDegreeTitleData = res.json();
+                    if(!onLoad)
+                    {
+                        this.academicInfo[index].examDegreeTitle_id=null;
+                    }
                 }
             },
             error => {
@@ -653,12 +657,9 @@ export class ProfileComponent implements OnInit {
     //Load Academic Info Tab Data
     loadAcademicInfoTabData() {
          this.resultsData = this._commonService.getResults();
-
         //  this.levelOfEducationData = this._commonService.getLevelOfEducation();
         //  this.examDegreeTitleData = this._commonService.getExamDegreeTitle();
-
         this.loadlevelOfEducation();
-        
         this._myService.getAcademicInfo(this._currentEmpId)
             .subscribe(
             res => {
@@ -671,7 +672,7 @@ export class ProfileComponent implements OnInit {
                 {
                   for(let i=0;i < this.academicInfo.length;i++)
                   {
-                     this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id,i);
+                     this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id,i,"init");
                   }
                 }
             },
@@ -679,6 +680,7 @@ export class ProfileComponent implements OnInit {
                 this.academicInfo = [];
             });
     }
+
     //Load Certification & Traning Tab Data
     loadCertificateAndTraningInfoTabData() {
         this._myService.getCertificationInfo(this._currentEmpId)
@@ -780,7 +782,6 @@ export class ProfileComponent implements OnInit {
             });
 
     }
-
     //load Emoloyement Status Dropdown Data init
     loadEmploymentStatus() {
         this._commonService.getEmploymentStatus()
@@ -822,22 +823,24 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Grade Dropdown
-    loadManagementType() {
+    loadManagementType(onLoad?:string) {
         this._commonService.getManagementType()
             .subscribe(
             res => {
                 if (res.ok) {
+                   if(!onLoad)
+                   {
+                        this.employmentTypeData = [];
+                        this.gradeData = [];
+                        this.supervisorData = [];
+                        this.designationData = [];
 
-                    this.employmentTypeData = [];
-                    this.gradeData = [];
-                    this.supervisorData = [];
-                    this.designationData = [];
-
-                    //   this.addemp.managementType_id=null
-                    //   this.addemp.employmentType_id=null;
-                    //   this.addemp.grade_id=null;
-                    //   this.addemp.primarySupervisorEmp_id=null;
-                    //   this.addemp.designation_id=null;
+                        this.positionDetails.managementType_id=null
+                        this.positionDetails.employmentType_id=null;
+                        this.positionDetails.grade_id=null;
+                        this.positionDetails.primarySupervisorEmp_id=null;
+                        this.positionDetails.designation_id=null;
+                   }
                     this.managementTypeData = res.json()
                 }
             },
@@ -853,9 +856,9 @@ export class ProfileComponent implements OnInit {
                     if (!onLoad) {
                         this.buisnessHrHeadData = [];
                         this.groupHrHeadData = [];
-                        this.officeInfo.hrspoc_id = null;
-                        this.officeInfo.businessHrHead_id = null;
-                        this.officeInfo.groupHrHead_id = null;
+                        this.positionDetails.hrspoc_id = null;
+                        this.positionDetails.businessHrHead_id = null;
+                        this.positionDetails.groupHrHead_id = null;
                     }
                     this.hrspocData = res.json() || [];
                 }
@@ -881,134 +884,150 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Vertical Dropdown By department_id 
-    loadVertical(department_id?: number) {
-        // this._commonService.getVertical(department_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.verticalData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadVertical(department_id?: number,onLoad?: string) {
+        this._commonService.getVertical(department_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.verticalData = res.json()
+                }
+            },
+            error => {
+            });
     }
     //load SubVertical Dropdown By vertical_id 
-    loadSubVertical(vertical_id?: number) {
-        // this._commonService.getSubVertical(vertical_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.subverticalData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadSubVertical(vertical_id?: number,onLoad?: string) {
+        this._commonService.getSubVertical(vertical_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.subverticalData = res.json()
+                }
+            },
+            error => {
+            });
     }
     //load Employment Type By managementType_id 
-    loadEmploymentType(managementType_id?: number) {
-        // this._commonService.getEmploymentType(managementType_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.gradeData = [];
-        //             this.supervisorData = [];
-        //             this.designationData = [];
+    loadEmploymentType(managementType_id?: number,onLoad?: string) {
+        this._commonService.getEmploymentType(managementType_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    if(!onLoad)
+                    {
+                        this.gradeData = [];
+                        this.supervisorData = [];
+                        this.designationData = [];
 
-        //             this.addemp.employmentType_id = null;
-        //             this.addemp.grade_id = null;
-        //             this.addemp.primarySupervisorEmp_id = null;
-        //             this.addemp.designation_id = null;
-
-
-        //             this.employmentTypeData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+                        this.positionDetails.employmentType_id = null;
+                        this.positionDetails.grade_id = null;
+                        this.positionDetails.primarySupervisorEmp_id = null;
+                        this.positionDetails.designation_id = null;
+                    }
+                    this.employmentTypeData = res.json()
+                }
+            },
+            error => {
+            });
     }
     //load Grade Dropdown By managementType_id  && employmentType_id
-    loadGrade(managementType_id?: number, employmentType_id?: number) {
-        // this._commonService.getGrade(managementType_id, employmentType_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
+    loadGrade(managementType_id?: number, employmentType_id?: number,onLoad?: string) {
+        this._commonService.getGrade(managementType_id, employmentType_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                   if(!onLoad)
+                   {
+                        this.supervisorData = [];
+                        this.designationData = [];
 
-        //             this.supervisorData = [];
-        //             this.designationData = [];
-
-        //             this.addemp.grade_id = null;
-        //             this.addemp.primarySupervisorEmp_id = null;
-        //             this.addemp.designation_id = null;
-
-        //             this.gradeData = res.json();
-        //         }
-        //     },
-        //     error => {
-        //     });
+                        this.positionDetails.grade_id = null;
+                        this.positionDetails.primarySupervisorEmp_id = null;
+                        this.positionDetails.designation_id = null;
+                   }
+                    this.gradeData = res.json();
+                }
+            },
+            error => {
+            });
     }
     //load Supervisor By grade_id
-    loadSupervisor(grade_id?: number) {
-        // this._commonService.getSupervisor(grade_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.addemp.primarySupervisorEmp_id = null;
-        //             this.supervisorData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadSupervisor(grade_id?: number,onLoad?: string) {
+        this._commonService.getSupervisor(grade_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    if(!onLoad)
+                    {
+                      this.positionDetails.primarySupervisorEmp_id = null;
+                    }
+                    this.supervisorData = res.json()
+                }
+            },
+            error => {
+            });
     }
      //load Group Hr Head By hrspoc_id
-    loadGroupHrHead(businessHrHead_id?: number) {
-        // this._commonService.getHrSpoce(this.addemp.company_id, businessHrHead_id).subscribe(
-        //     res => {
-        //         if (res.ok) {
-
-        //             this.addemp.groupHrHead_id = null;
-        //             this.groupHrHeadData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadGroupHrHead(businessHrHead_id?: number,onLoad?: string) {
+        this._commonService.getHrSpoce(this.positionDetails.company_id, businessHrHead_id).subscribe(
+            res => {
+                if (res.ok) {
+                    if(!onLoad)
+                    {
+                      this.positionDetails.groupHrHead_id = null;
+                    }
+                    this.groupHrHeadData = res.json()
+                }
+            },
+            error => {
+            });
     }
+
     //load Designation By grade_id
-    loadDesignation(grade_id?: number) {
-        // this._commonService.getDesignation(grade_id).subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.addemp.designation_id = null;
-        //             this.designationData = res.json()
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadDesignation(grade_id?: number,onLoad?:string) {
+        this._commonService.getDesignation(grade_id).subscribe(
+            res => {
+                if (res.ok) {
+                    if(!onLoad)
+                    {
+                      this.positionDetails.designation_id = null;
+                    }
+                    this.designationData = res.json()
+                }
+            },
+            error => {
+            });
     }
     //load Department Dropdown By divisonId 
-    loadDepartment(division_id?: number) {
-        // this._commonService.getDepartment(division_id)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.addemp.department_id = null;
-        //             this.addemp.vertical_id = null;
-        //             this.addemp.subVertical_id = null;
+    loadDepartment(division_id?:number,onLoad?:string) {
+        this._commonService.getDepartment(division_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    if(!onLoad)
+                    {
+                        this.positionDetails.department_id = null;
+                        this.positionDetails.vertical_id = null;
+                        this.positionDetails.subVertical_id = null;
 
-        //             this.verticalData = [];
-        //             this.subverticalData = [];
-        //             this.deparmentData = res.json();
-        //         }
-        //     },
-        //     error => {
-        //     });
+                        this.verticalData = [];
+                        this.subverticalData = [];
+                    }
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+            });
     }
 
     loadPositionDetailsTabData() {
+
         this.loadCompanies();
         this.loadDivision();
-        this.loadManagementType();
+        this.loadManagementType('init');
         this.loadEmploymentStatus();
         this.loadRoles();
+
         //    this._myService.getPositionDetails(this._currentEmpId)
         //    .subscribe(
         //    data => {
@@ -1017,6 +1036,14 @@ export class ProfileComponent implements OnInit {
         //        {
         //           this.loadHRSpoce(this.positionDetails.company_id,"init");
         //           this.loadBuisnessHrHead(this.positionDetails.hrspoc_id,"init")
+        //           this.loadGroupHrHead(this.positionDetails.businessHrHead_id,"init") 
+        //           this.loadVertical(this.positionDetails.department_id,"init")
+        //           this.loadSubVertical(this.positionDetails.vertical_id,"init")
+        //           this.loadEmploymentType(this.positionDetails.managementType_id,"init")
+        //           this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id,"init")
+        //           this.loadSupervisor(this.positionDetails.grade_id,"init")
+        //           this.loadDesignation(this.positionDetails.grade_id,"init")
+        //           this.loadDepartment(this.positionDetails.division_id,"init")
         //        }
         //    },
         //    error => {

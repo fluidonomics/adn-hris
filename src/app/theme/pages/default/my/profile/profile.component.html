@@ -648,7 +648,7 @@
                                                             <label for="levelOfEducation">Level of Education 
                                                             <span class="required" aria-required="true"> * </span>
                                                             </label>                                                           
-                                                            <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id)" [(ngModel)]="academic.levelOfEducation_id" [clearable]="false"  #levelOfEducation="ngModel" required></ng-select>
+                                                            <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)" [(ngModel)]="academic.levelOfEducation_id" [clearable]="false"  #levelOfEducation="ngModel" required></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid">
                                                                 This field is required.
                                                             </div>
@@ -659,7 +659,7 @@
                                                             <label for="examDegreeTitle">Exam Degree Title 
                                                             <span class="required" aria-required="true"> * </span>
                                                             </label>                                                           
-                                                                <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="examDegreeTitleData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id" [clearable]="false"  #examDegreeTitle="ngModel" required></ng-select>
+                                                                <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="academic.examDegreeTitleData" bindLabel="educationName"  bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id" [clearable]="false"  #examDegreeTitle="ngModel" required></ng-select>
                                                                 <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
                                                                 This field is required.
                                                                 </div>
@@ -1382,7 +1382,7 @@
                                         <div class="form-group m-form__group">
                                            <input type="text" name="positionDetailsstatus"  [(ngModel)]="positionDetails.status" #positionDetailsstatus="ngModel"  class="form-control m-input m-input--air"/>
                                         </div>
-                                     </div>
+                               /      </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 adn-form__group">
