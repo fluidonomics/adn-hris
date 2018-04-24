@@ -95,6 +95,7 @@ export class ProfileComponent implements OnInit {
 
     relationData=[];
 
+    
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -637,7 +638,7 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    loadExamDegreeTitle(parent_id:number,onLoad?:string)
+    loadExamDegreeTitle(parent_id:number,index:number,onLoad?:string)
     {
         this._commonService.getEducation(parent_id).subscribe(
             res => {
@@ -668,7 +669,10 @@ export class ProfileComponent implements OnInit {
                 }
                 else
                 {
-                  this.loadExamDegreeTitle(1);
+                  for(let i=0;i < this.academicInfo.length;i++)
+                  {
+                     this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id,i);
+                  }
                 }
             },
             error => {

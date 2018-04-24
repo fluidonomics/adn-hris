@@ -1,8 +1,8 @@
 export class AcademicInfo {
     _id: number = null;
     emp_id: number = null;
-    levelOfEducation: string = null;
-    examDegreeTitle: string = null;
+    levelOfEducation_id: number = null;
+    examDegreeTitle_id: number = null;
     concentration: string = null;
     instituteName: string = null;
     marks: number = null;
@@ -12,6 +12,7 @@ export class AcademicInfo {
     yearOfPassing: string = null;
     duration: number = null;
     achievements: string = null;
+    examDegreeTitleData:any={}
 }
 export class AddressInfo {
     _id: number = null;
