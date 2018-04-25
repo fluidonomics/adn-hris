@@ -9,6 +9,7 @@ import { AuthService } from "../../../../../base/_services/authService.service";
 import { MyService } from "../my.service";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 import { BankInfo, AcademicInfo,CarInfo,CertificationInfo,PreviousEmploymentInfo,FamilyInfo } from "../../../../../base/_interface/user.model"
+import { environment } from "../../../../../../environments/environment.prod";
 declare var mApp;
 declare var $;
 
@@ -115,6 +116,24 @@ export class ProfileComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
     }
+
+    onUploadOutput(output: UploadOutput): void {
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+          // uncomment this if you want to auto upload files when added
+          const event: UploadInput = {
+            type: 'uploadAll',
+            url: environment.api_base.apiBase + '/'+environment.api_base.apiPath +'/image',
+            fieldName:"",
+            headers:{},
+            method: 'POST',
+         
+          };
+          this.uploadInput.emit(event);
+        } else if (output.type === 'done') {
+          //this.dragOver = false;
+          //output.file.response
+        }
+      }
 
     ngOnInit() {
         this.exampleData = [
@@ -749,13 +768,13 @@ export class ProfileComponent implements OnInit {
     }
 
     loadOfficeInfoTabData() {
-        //this._authService.getOfficeDetails(this.empProfile.empId)
-        // .subscribe(
-        // data => {
-        //     this.empProfile.personalInfo=data.json() || {};
-        // },
-        // error => {
-        // });
+        this._myService.getOfficeDetails(this._currentEmpId)
+        .subscribe(
+        data => {
+            this.officeInfo=data.json() || {};
+        },
+        error => {
+        });
     }
 
     loadJoiningDetailsTabData() {
@@ -1063,7 +1082,7 @@ export class ProfileComponent implements OnInit {
 
     loadOfficeDetails() {
         this.loadOfficeInfoTabData();
-        this.loadJoiningDetailsTabData();
+        //this.loadJoiningDetailsTabData();
         this.loadPositionDetailsTabData();
         this.loadPerformanceDairyTabData();
     }
