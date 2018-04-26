@@ -1,19 +1,19 @@
-<div class="m-content">
+<!-- <div class="m-content">
 		<div class="m-portlet m-portlet--mobile">
 			<div class="m-portlet__body">
-                <!-- <table id="allEmployee">
+                 <table id="allEmployee">
                     <thead>
 						<tr>
-							<th><th>
-                            <th (click)="sort(title)" *ngFor="let title of (employeeData| Keys)" [title]="title">
+							<th></th>
+                            <th (click)="sort(title)" *ngFor="let title of (employeeData| keys)">
 								<span>
 									{{title}}
-									<i *ngIf="key == title" [ngClass]="{'la la-arrow-up':reverse,'la la-arrow-down':!reverse}">></i>
+									 <i *ngIf="keys == title" [ngClass]="{'la la-arrow-up':reverse,'la la-arrow-down':!reverse}"></i>
 								<span>	
 							</th>
 						</tr>
 					</thead>
-					<tbody>
+				 <tbody>
 						<tr *ngFor="let employee of employeeData | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p2 }; let i = index">
 							 <td>
 						       <a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: tableTitle[i][emp_Id] }">
@@ -29,7 +29,7 @@
 					    <tr>
 					</tbody>
 				</table>
-				<pagination-template #p="paginationApi" (pageChange)="p2 = $event"> 
+				 <pagination-template #p="paginationApi" (pageChange)="p2 = $event"> 
                       <div>
 							<div class="pagination-previous" [class.disabled]="p.isFirstPage()">
 								<a *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </a>
@@ -47,9 +47,9 @@
 							</div>
 						</div>
 				</pagination-template>
-			    -->
-				<!--end: Datatable -->
+			    
+			
 			</div>
 		</div>
 </div>
-	
+	 -->
