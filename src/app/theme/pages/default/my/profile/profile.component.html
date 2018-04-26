@@ -137,7 +137,7 @@
                                             <label for="birthDate">Birth Date
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
+                                            <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #birthDate="ngModel" required>
                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !birthDate.valid">
                                                 This field is required.
                                             </div>
@@ -165,6 +165,10 @@
                                             <label for="homePhonNo">Home Phone No.
                                             </label>
                                             <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel" placeholder="Enter home phone" type="text" class="form-control m-input m-input--air">
+                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
+                                                <span *ngIf="homePhonNo.errors?.minlength">Please enter your 10 digit number</span>
+                                                <span *ngIf="homePhonNo.errors?.maxlength">Please enter your 10 digit number</span>
+                                            </div>
                                         </div>
                                         </div>
                                     </div>
