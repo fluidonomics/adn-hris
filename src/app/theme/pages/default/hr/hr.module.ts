@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '../../../layouts/layout.module';
 
@@ -33,7 +33,7 @@ import { HrService } from './hr.service';
     imports: [
         CommonModule,
         LayoutModule,
-        NgbModule.forRoot(),
+        //NgbModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         HrRoutingModule,

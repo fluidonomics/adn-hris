@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { Helpers } from '../../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../../_services/script-loader.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
+import { HrService } from '../../hr.service';
 declare var $;
 
 @Component({
@@ -68,30 +69,30 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
 
     constructor(private _script: ScriptLoaderService,
-        private _common: CommonService) {
+        private _hrService:HrService) {
 
     }
     ngOnInit() {
-        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
-        $('#html_table').mDatatable({
-            search: {
-                input: $('#generalSearch'),
-            },
-        });
+        // this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
+        // $('#html_table').mDatatable({
+        //     search: {
+        //         input: $('#generalSearch'),
+        //     },
+        // });
         this.loadAllEmployee();
     }
-    ngAfterViewInit() {
 
+    ngAfterViewInit() {
     }
 
     loadAllEmployee() {
-        // this._authService.getAllEmployee()
-        // .subscribe(
-        // data => {
-        //     this.employeeData=data.json()
-        // },
-        // error => {
-        // });
+        this._hrService.getAllEmployee()
+        .subscribe(
+        data => {
+            this.employeeData=data.json().data ||[];
+        },
+        error => {
+        });
     }
 
     sort(key) {

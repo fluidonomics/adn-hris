@@ -3,7 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { HrService } from "../../hr.service";
 declare var $

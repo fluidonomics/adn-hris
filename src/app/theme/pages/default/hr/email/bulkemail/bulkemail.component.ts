@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const now = new Date();
 
@@ -18,7 +18,6 @@ export class BulkEmailComponent implements OnInit {
     disabled:boolean=false;
     @Input()
     public isCollapsed = false;
-    public datepickerModel: NgbDateStruct;
     public date: { year: number, month: number };
     public modalClose: string;
     public page = 4;
@@ -65,16 +64,12 @@ export class BulkEmailComponent implements OnInit {
     // };
 
 
-    constructor(private formBuilder: FormBuilder,
-        private modalService: NgbModal) {
-    }
+
 
     ngOnInit() {
     }
 
-    datepickerToday() {
-        this.datepickerModel = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-    }
+
 
     // modalOpen(content) {
     //     this.modalService.open(content).result.then((result) => {

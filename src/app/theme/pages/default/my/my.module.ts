@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LayoutModule } from '../../../layouts/layout.module';
@@ -29,12 +30,13 @@ import { MyService } from "./my.service"
     imports: [
         CommonModule,
         LayoutModule,
-        NgbModule.forRoot(),
+        //NgbModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
         MyRoutingModule,
         NgSelectModule,
-        NgUploaderModule
+        NgUploaderModule,
+        BsDatepickerModule.forRoot(),
     ], declarations: [
         MyComponent,
         ProfileComponent,

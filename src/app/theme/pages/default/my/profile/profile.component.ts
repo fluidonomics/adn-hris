@@ -1,5 +1,5 @@
 import { FormBuilder } from "@angular/forms";
-import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -249,13 +249,21 @@ export class ProfileComponent implements OnInit {
     }
     //save Address Info
     saveAcademicInfo(objAcademicInfo:any,index:number) {
+        mApp.block('#m_accordion_5_item_10_body', {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
        objAcademicInfo.emp_id = objAcademicInfo.emp_id != null ? objAcademicInfo.emp_id : (this._currentEmpId || this.param_emp_id)
        this._myService.saveAcademicInfo(objAcademicInfo)
         .subscribe(
         data => {
+            mApp.unblock('#m_accordion_5_item_10_body');
             this.academicInfo[index]=data.json();
         },
         error => {
+            mApp.unblock('#m_accordion_5_item_10_body');
         });
     }
      //save CertificationAndTraningInfo Info

@@ -15,6 +15,12 @@ export class HrService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
+    getAllEmployee()
+    {
+        let url = "user/getAllEmployee";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
