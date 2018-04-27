@@ -22,7 +22,7 @@ import { OnlyNumberDirective } from "../../../../base/_directive/only-number.dir
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchPipe } from "../../../../base/_pipes/search.pipes";
 import { OrderPipe } from "../../../../base/_pipes/order.pipes";
-import { KeysPipe} from "../../../../base/_pipes/key.pipes"
+import { KeysPipe } from "../../../../base/_pipes/key.pipes"
 
 import { SummernoteComponent } from "../../../../base/_components/summernote.component"
 import { TagInputModule } from 'ngx-chips';

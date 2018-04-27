@@ -101,7 +101,7 @@ export class MyService {
         let url = "user/getCertificationInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
- 
+
     getPreviousEmploymentInfo(emp_id?: number): Observable<Response> {
         let url = "user/getPreviousEmploymentInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
@@ -153,17 +153,16 @@ export class MyService {
     }
 
     saveCarDetails(data: any): Observable<Response> {
-            let url = "user/addCarInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateCarInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        let url = "user/addCarInfo"
+        if (data._id != null && data._id != "" && data._id != undefined) {
+            url = "user/updateCarInfo";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
 
 
-    saveAcademicInfo(data:any): Observable<Response>
-    {
+    saveAcademicInfo(data: any): Observable<Response> {
         let url = "user/addAcademicInfo"
         if (data._id != null && data._id != "" && data._id != undefined) {
             url = "user/updateAcademicInfo";
@@ -180,7 +179,7 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-    
+
     savePreviousEmploymentInfo(data: any): Observable<Response> {
         {
             let url = "user/addPreviousEmploymentInfo"
@@ -202,21 +201,18 @@ export class MyService {
     }
 
 
-    deleteAcademicInfo(_id:number)
-    {
-        let url = "user/deleteAcademicInfo?_id="+_id;
+    deleteAcademicInfo(_id: number) {
+        let url = "user/deleteAcademicInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
 
-    deletePreviousEmploymentInfo(_id:number)
-    {
-        let url = "user/deletePreviousEmploymentInfo?_id="+_id;
+    deletePreviousEmploymentInfo(_id: number) {
+        let url = "user/deletePreviousEmploymentInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
 
-    deleteFamilyInfo(_id:number)
-    {
-        let url = "user/deleteFamilyInfo?_id="+_id;
+    deleteFamilyInfo(_id: number) {
+        let url = "user/deleteFamilyInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
 

@@ -9,7 +9,6 @@ const now = new Date();
     templateUrl: "./reports.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ReportsComponent  {
+export class ReportsComponent {
 
 }
-    

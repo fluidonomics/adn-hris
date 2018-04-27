@@ -533,7 +533,7 @@ export class AuthService implements CanActivate {
             sessionStorage.setItem('uid', authData.uid);
 
             if (this.atCurrentUserType != null)
-            sessionStorage.setItem('userType', this.atCurrentUserType.name);
+                sessionStorage.setItem('userType', this.atCurrentUserType.name);
 
         }
     }

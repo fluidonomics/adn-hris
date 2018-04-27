@@ -10,6 +10,7 @@ import { AuthService } from "../base/_services/authService.service";
 // import { LoginCustom } from "./_helpers/login-custom";
 import { Helpers } from "../helpers";
 import { CommonService } from "../base/_services/common.service";
+import { StylesCompileDependency } from "@angular/compiler";
 
 
 @Component({

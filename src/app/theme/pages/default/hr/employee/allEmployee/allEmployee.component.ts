@@ -69,7 +69,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
 
     constructor(private _script: ScriptLoaderService,
-        private _hrService:HrService) {
+        private _hrService: HrService) {
 
     }
     ngOnInit() {
@@ -87,12 +87,12 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     loadAllEmployee() {
         this._hrService.getAllEmployee()
-        .subscribe(
-        data => {
-            this.employeeData=data.json().data ||[];
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.employeeData = data.json().data || [];
+            },
+            error => {
+            });
     }
 
     sort(key) {

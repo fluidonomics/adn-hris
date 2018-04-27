@@ -12,11 +12,10 @@ const now = new Date();
 export class ConfigureComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
-        ) {
+    ) {
     }
 
     ngOnInit() {
-       
+
     }
 }
- 

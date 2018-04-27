@@ -9,17 +9,17 @@ const now = new Date();
     templateUrl: "./masterData.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class MasterDataComponent  {
+export class MasterDataComponent {
 
     constructor(private formBuilder: FormBuilder,
-       ) {
+    ) {
     }
     // constructor(private formBuilder: FormBuilder,
     //     private modalService: NgbModal) {
     // }
 
     ngOnInit() {
-   
+
     }
 }
 
