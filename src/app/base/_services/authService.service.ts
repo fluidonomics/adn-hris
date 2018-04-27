@@ -222,11 +222,11 @@ export class AuthService implements CanActivate {
     signOut() {
         //let observ = this.delete(this.getUserPath() + this.atOptions.signOutPath);
 
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('client');
-        localStorage.removeItem('expiry');
-        localStorage.removeItem('tokenType');
-        localStorage.removeItem('uid');
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('client');
+        sessionStorage.removeItem('expiry');
+        sessionStorage.removeItem('tokenType');
+        sessionStorage.removeItem('uid');
 
         this.atCurrentAuthData = null;
         this.atCurrentUserType = null;
@@ -439,7 +439,7 @@ export class AuthService implements CanActivate {
     // Try to load auth data
     private tryLoadAuthData(): void {
 
-        let userType = this.getUserTypeByName(localStorage.getItem('userType'));
+        let userType = this.getUserTypeByName(sessionStorage.getItem('userType'));
 
         if (userType)
             this.atCurrentUserType = userType;
@@ -485,11 +485,11 @@ export class AuthService implements CanActivate {
     private getAuthDataFromStorage(): void {
 
         let authData: AuthData = {
-            accessToken: localStorage.getItem('accessToken'),
-            client: localStorage.getItem('client'),
-            expiry: localStorage.getItem('expiry'),
-            tokenType: localStorage.getItem('tokenType'),
-            uid: localStorage.getItem('uid')
+            accessToken: sessionStorage.getItem('accessToken'),
+            client: sessionStorage.getItem('client'),
+            expiry: sessionStorage.getItem('expiry'),
+            tokenType: sessionStorage.getItem('tokenType'),
+            uid: sessionStorage.getItem('uid')
         };
 
         if (this.checkAuthData(authData))
@@ -526,14 +526,14 @@ export class AuthService implements CanActivate {
 
             this.atCurrentAuthData = authData;
 
-            localStorage.setItem('accessToken', authData.accessToken);
-            localStorage.setItem('client', authData.client);
-            localStorage.setItem('expiry', authData.expiry);
-            localStorage.setItem('tokenType', authData.tokenType);
-            localStorage.setItem('uid', authData.uid);
+            sessionStorage.setItem('accessToken', authData.accessToken);
+            sessionStorage.setItem('client', authData.client);
+            sessionStorage.setItem('expiry', authData.expiry);
+            sessionStorage.setItem('tokenType', authData.tokenType);
+            sessionStorage.setItem('uid', authData.uid);
 
             if (this.atCurrentUserType != null)
-                localStorage.setItem('userType', this.atCurrentUserType.name);
+            sessionStorage.setItem('userType', this.atCurrentUserType.name);
 
         }
     }
