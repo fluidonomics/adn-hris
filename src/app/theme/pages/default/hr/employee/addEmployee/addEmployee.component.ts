@@ -33,7 +33,7 @@ export class AddEmployeeComponent implements OnInit {
     buisnessHrHeadData: any = [];
     groupHrHeadData: any = [];
     designationData: any = [];
-    rolesData: any = [];
+    //rolesData: any = [];
     managementTypeData: any = [];
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -62,22 +62,22 @@ export class AddEmployeeComponent implements OnInit {
         this.loadDivision();
         this.loadManagementType();
         this.loadEmploymentStatus();
-        this.loadRoles();
+        //this.loadRoles();
     }
 
     //load Roles Dropdown Data init
-    loadRoles() {
-        this._commonService.getRole().subscribe(
-            res => {
-                if (res.ok) {
-                    this.rolesData = res.json() || [];
-                }
-            },
-            error => {
-                this.rolesData = [];
-            });
+    // loadRoles() {
+    //     this._commonService.getRole().subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 this.rolesData = res.json() || [];
+    //             }
+    //         },
+    //         error => {
+    //             this.rolesData = [];
+    //         });
 
-    }
+    // }
 
     //load Emoloyement Status Dropdown Data init
     loadEmploymentStatus() {
@@ -333,6 +333,8 @@ export class AddEmployeeComponent implements OnInit {
                 state: 'success',
                 // message: 'Please wait...'
             });
+            //default roles of employee
+            this.addemp.roles=[5];
             this._hrService.addEmployee(this.addemp).subscribe(
                 data => {
                     if (data.ok) {
