@@ -1622,8 +1622,8 @@
                                 </div>
                                 <div class="m-accordion__item-content">
                                     <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="fsalaryDetails.valid && saveSalaryDetails()" #fsalaryDetails="ngForm" novalidate="novalidate">
-                                    <div class="form-group m-form__group m--margin-top-10">
-                                        <button type="reset" class="btn btn-secondary">Hike</button>
+                                    <div class="form-group m-form__group m--margin-top-10 accordian-refresh">
+                                        <button type="reset" class="btn btn-secondary ">Hike</button>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 adn-form__group" hidden="true">
@@ -1812,7 +1812,7 @@
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_19_head" data-toggle="collapse" href="#m_accordion_5_item_19_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fas fa-car"></i></span>
-                                <span class="m-accordion__item-title">Company Car Details</span>
+                                <span class="m-accordion__item-title">Car Details</span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_19_body" role="tabpanel" aria-labelledby="m_accordion_5_item_19_head" data-parent="#m_accordion_5">
@@ -1824,9 +1824,8 @@
                                 </div>
                                 <div class="m-accordion__item-content">
                                     <form class="m-form m-form--fit m-form--label-align-right" #fcarDetails="ngForm" (ngSubmit)="fcarDetails.valid && saveCarDetails()" novalidate="novalidate">
-                                    <div class="form-group m-form__group m--margin-top-10">
-                                    </div>
-                                    <div class="row">
+                                        <h5 class="m--font-success">Company Car</h5>
+                                    <div class="row adn-form__group">
                                         <div class="col-md-6 adn-form__group" hidden="true">
                                         <div class="form-group m-form__group">
                                             <input type="text" name="companyCarDetails_id" [(ngModel)]="carDetails._id" #companyCarDetails_id="ngModel" class="form-control m-input m-input--air" />
@@ -1858,15 +1857,15 @@
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="effectiveDate">Effective Date</label>
-                                            <!-- <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="effectiveDate" [(ngModel)]="carDetails.companyEffectiveDate" #ed="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  > -->
-                                        </div>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="effectiveDate" [(ngModel)]="carDetails.companyEffectiveDate" #ed="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  >
+                                        </div> 
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="expiryDate1">Expiry Date</label>
-                                            <!-- <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="expiryDate1" [(ngModel)]="carDetails.companyExpiryDate" #companyExpiryDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  > -->
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="expiryDate1" [(ngModel)]="carDetails.companyExpiryDate" #companyExpiryDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  >
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -1902,6 +1901,10 @@
                                         </div>
                                         </div>
                                     </div>
+                                    <div class="form-group m-form__group m--margin-top-5">
+                                        </div>
+                                        <h5 class="m--font-success .adn-form-title">Personal Car</h5>
+                                    
                                     <div class="row">
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
@@ -1934,7 +1937,7 @@
                                     </div>
                                     <div class="m-form__actions">
                                         <button type="submit" class="btn btn-success">{{carDetails._id ? 'Update':'Save'}}</button>
-                                        <button type="reset" *ngIf="!carDetails._id" class="btn btn-secondary">Cancel</button>
+                                        <!-- <button type="reset" *ngIf="!carDetails._id" class="btn btn-secondary">Cancel</button> -->
                                     </div>
                                     </form>
                                 </div>
