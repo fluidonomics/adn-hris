@@ -131,6 +131,16 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
+    
+    saveAddressInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addAddressInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateAddressInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
 
     saveBankDetails(data: any): Observable<Response> {
         {
@@ -215,7 +225,13 @@ export class MyService {
         let url = "user/deleteFamilyInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
+    
+    deleteCertificationInfo(_id: number) {
+        let url = "user/deleteCertificationInfo?_id=" + _id;
+        return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
 
+    
 
 
 
