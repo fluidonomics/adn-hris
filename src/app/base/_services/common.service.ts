@@ -46,7 +46,7 @@ export class CommonService {
     getSupervisor(grade_id?: number): Observable<Response> {
         let url = "common/getSupervisor";
         if (grade_id) {
-            url = "common/getSupervisor?grade_id" + grade_id;
+            url = "common/getSupervisor?grade_id=" + grade_id;
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }

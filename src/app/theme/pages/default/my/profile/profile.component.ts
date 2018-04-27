@@ -97,12 +97,9 @@ export class ProfileComponent implements OnInit {
     relationData = [];
 
 
-<<<<<<< HEAD
     countryData=[];
 
     
-=======
->>>>>>> origin/master
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,

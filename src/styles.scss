@@ -66,10 +66,39 @@
   color: #424242;
 }
 
+.m-nav > .m-nav__item > .m-nav__link .m-nav__link-text:hover {
+  color: #198F4A;
+  font-weight: 400;
+}
+
+.m-nav > .m-nav__item > .m-nav__link .m-nav__link-icon:hover {
+  color: #198F4A;
+}
+
+a {
+  color: #198F4A;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
 
 
 
 /*****************************Menu*****************************/
+
+
+.m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-topbar__username {
+  display: table-cell;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  color: #757575;
+  padding-left: 14px
+}
+
 .m-menu__link-icon{
     color: #26C281 !important;
 }
@@ -108,6 +137,7 @@
   background-color: #198F4A;
   border-color: #198F4A;
 }
+
 
 .m-portlet.m-portlet--warning.m-portlet--head-solid-bg .m-portlet__head .m-portlet__head-text {
   color: #ffffff;
@@ -666,7 +696,7 @@
         text-transform: none;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
-        font-smoothing: antialiased;
+
         font-size: 1.3rem; }
         .m-accordion .m-accordion__item .m-accordion__item-head .m-accordion__item-mode:before {
           content: ""; }
@@ -677,7 +707,7 @@
         text-transform: none;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
-        font-smoothing: antialiased; }
+ }
         .m-accordion .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode:before {
           content: ""; }
       .m-accordion .m-accordion__item .m-accordion__item-head:hover {
@@ -751,7 +781,6 @@
     text-transform: none;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
     font-size: 1.3rem; }
     .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head .m-accordion__item-mode:before {
       content: ""; }
@@ -763,7 +792,7 @@
     text-transform: none;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased; }
+}
     .m-accordion.m-accordion--toggle-arrow .m-accordion__item .m-accordion__item-head.collapsed .m-accordion__item-mode:before {
       content: ""; }
   
