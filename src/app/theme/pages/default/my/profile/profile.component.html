@@ -137,7 +137,7 @@
                                             <label for="birthDate">Birth Date
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #birthDate="ngModel" required>
+                                            <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #birthDate="ngModel" required>
                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !birthDate.valid">
                                                 This field is required.
                                             </div>
@@ -914,14 +914,14 @@
                                             <div class="form-group m-form__group">
                                                 <label for="epf">Employment Period From
                                                 </label>
-                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="epf" [(ngModel)]="previousEmployment.employmentPeriodFrom" #epf="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="epf" [(ngModel)]="previousEmployment.employmentPeriodFrom" #epf="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  (bsValueChange)="previousEmployment.employmentPeriodTo=''" [maxDate]="currentDate">
                                             </div>
                                         </div>
                                         <div class="col-md-3 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="ept">Employment Period To
                                                 </label>
-                                               <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo" #ept="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" >
+                                               <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo" #ept="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="previousEmployment.employmentPeriodFrom" [maxDate]="currentDate" >
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -1106,14 +1106,14 @@
                                         <div class="form-group m-form__group">
                                             <label for="employeeName">Employee Name
                                             </label>
-                                            <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.employeeName" #employeeName="ngModel" id="employeeName" name="employeeName" placeholder="Enter employee name" type="text">
+                                            <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.fullName" #employeeName="ngModel" id="employeeName" name="employeeName" placeholder="Enter employee name" type="text">
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="employeeId">Employee ID
                                             </label>
-                                            <input type="text" name="employeeId" [(ngModel)]="officeInfo.employeeId" #employeeId="ngModel" placeholder="Enter employee ID" id="employeeId" class="form-control m-input m-input--air">
+                                            <input type="text" name="employeeId" [(ngModel)]="officeInfo.userName" #employeeId="ngModel" placeholder="Enter employee ID" id="employeeId" class="form-control m-input m-input--air">
                                         </div>
                                         </div>
                                     </div>
@@ -1182,7 +1182,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="country">Country
                                             </label>
-                                            <ng-select name="country" [items]="exampleData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="personalInfo.country_id">
+                                            <ng-select name="country" [items]="countryData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="personalInfo.country_id">
                                             </ng-select>
                                         </div>
                                         </div>
@@ -1198,13 +1198,13 @@
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="dateOfJoining">Date of Joining</label>
-                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="dateOfJoining" [(ngModel)]="officeInfo.dateOfJoining" #dateOfJoining="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  required>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="dateOfJoining" [(ngModel)]="officeInfo.dateOfJoining" (bsValueChange)="officeInfo.dateOfConfirmation=''" #dateOfJoining="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  required>
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="dateOfConfermation">Date of Confirmation</label>
-                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="dateOfConfermation" [(ngModel)]="officeInfo.dateOfConfirmation" #dateOfConfermation="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  required>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="dateOfConfermation" [minDate]="officeInfo.dateOfJoining"  [(ngModel)]="officeInfo.dateOfConfirmation" #dateOfConfermation="ngModel"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  required>
                                         </div>
                                         </div>
                                     </div>
@@ -1225,13 +1225,13 @@
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="effectiveDate">Work Permit Effective Date</label>
-                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="effectiveDate" [(ngModel)]="officeInfo.workPermitEffectiveDate" #doj="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="effectiveDate" [(ngModel)]="officeInfo.workPermitEffectiveDate" (bsValueChange)="officeInfo.workPermitExpiryDate=''" #doj="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="expiryDate">Work Permit Expiry Date</label>
-                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="expiryDate" [(ngModel)]="officeInfo.workPermitExpiryDate" #expiryDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
+                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="expiryDate" [(ngModel)]="officeInfo.workPermitExpiryDate" [minDate]="officeInfo.workPermitEffectiveDate" #expiryDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
                                         </div>
                                         </div>
                                     </div>

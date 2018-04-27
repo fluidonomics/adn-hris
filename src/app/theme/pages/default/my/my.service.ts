@@ -94,7 +94,7 @@ export class MyService {
 
     getPositionDetails(emp_id?: number): Observable<Response> {
         let url = "user/getPositionInfo?emp_id=" + emp_id;
-        return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getCertificationInfo(emp_id?: number): Observable<Response> {
@@ -109,12 +109,12 @@ export class MyService {
 
     getFamilyInfo(emp_id?: number): Observable<Response> {
         let url = "user/getFamilyInfo?emp_id=" + emp_id;
-        return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getOfficeDetails(emp_id?: number): Observable<Response> {
         let url = "user/getOfficeInfo?emp_id=" + emp_id;
-        return this.authService.get(url + emp_id).map(this.extractData).catch(this.handleError);
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getSeperationDetails(emp_id?: number): Observable<Response> {

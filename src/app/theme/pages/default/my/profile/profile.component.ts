@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
     uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
 
+    currentDate:any;
 
     //Local Variable for Profile 
     personalInfo: any = {}
@@ -96,6 +97,8 @@ export class ProfileComponent implements OnInit {
 
     relationData=[];
 
+    countryData=[];
+
     
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -115,6 +118,7 @@ export class ProfileComponent implements OnInit {
 
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
+        this.currentDate=new Date();
     }
 
     onUploadOutput(output: UploadOutput): void {
@@ -776,6 +780,7 @@ export class ProfileComponent implements OnInit {
     }
 
     loadOfficeInfoTabData() {
+        this.countryData=this._commonService.getCountry();
         this._myService.getOfficeDetails(this._currentEmpId)
         .subscribe(
         data => {
