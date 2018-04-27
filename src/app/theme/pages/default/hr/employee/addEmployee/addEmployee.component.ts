@@ -8,7 +8,7 @@ import { CommonService } from "../../../../../../base/_services/common.service";
 import { HrService } from "../../hr.service";
 declare var $
 declare var mApp;
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--addemployee",
@@ -325,6 +325,7 @@ export class AddEmployeeComponent implements OnInit {
 
     //Submit Add Employee Form
     onAddEmpSubmit(form) {
+        swal("New Employee Created.", "Username: Welcome Email Sent!", "success");
         if (form.valid) {
             mApp.block('#m_tabs_9_1', {
                 overlayColor: '#000000',
