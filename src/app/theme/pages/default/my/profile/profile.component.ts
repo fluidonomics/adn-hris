@@ -8,7 +8,7 @@ import { CommonService } from "../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../base/_services/authService.service";
 import { MyService } from "../my.service";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
-import { BankInfo, AcademicInfo,CarInfo,CertificationInfo,PreviousEmploymentInfo,FamilyInfo } from "../../../../../base/_interface/user.model"
+import { BankInfo, AcademicInfo, CarInfo, CertificationInfo, PreviousEmploymentInfo, FamilyInfo } from "../../../../../base/_interface/user.model"
 import { environment } from "../../../../../../environments/environment.prod";
 declare var mApp;
 declare var $;
@@ -16,8 +16,7 @@ declare var $;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile",
     templateUrl: "./profile.component.html",
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ["./profile.component.css"]
+    encapsulation: ViewEncapsulation.None    
 })
 
 export class ProfileComponent implements OnInit {
@@ -31,17 +30,17 @@ export class ProfileComponent implements OnInit {
     personalInfo: any = {}
     address: any = {}
     documents: any = {}
-    academicInfo= [];
+    academicInfo = [];
     joiningDetails: any = {}
-    certificationsandTrainingInfo=[];
-    previousEmploymentDetails=[];
+    certificationsandTrainingInfo = [];
+    previousEmploymentDetails = [];
     familyInfo: any = []
     officeInfo: any = {}
     positionDetails: any = {}
     performanceDiary: any = {}
-    bankDetails:any ={} 
+    bankDetails: any = {}
     salaryDetails: any = {}
-    carDetails:any={};
+    carDetails: any = {};
 
     exampleData: any = [];
     tabName = "personal";
@@ -65,9 +64,9 @@ export class ProfileComponent implements OnInit {
     permanentAddressDivisionData = [];
 
     //Academic Tab Dropdown Variable
-    resultsData =[];
-    levelOfEducationData=[];
-    examDegreeTitleData=[];
+    resultsData = [];
+    levelOfEducationData = [];
+    examDegreeTitleData = [];
 
     //Postion Details Tab Dropdown Variable 
     companiesData: any = [];
@@ -95,11 +94,15 @@ export class ProfileComponent implements OnInit {
     festivalAllowanceData = [];
     hospitalizationSchemeData = [];
 
-    relationData=[];
+    relationData = [];
 
+
+<<<<<<< HEAD
     countryData=[];
 
     
+=======
+>>>>>>> origin/master
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -123,21 +126,21 @@ export class ProfileComponent implements OnInit {
 
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
-          // uncomment this if you want to auto upload files when added
-          const event: UploadInput = {
-            type: 'uploadAll',
-            url: environment.api_base.apiBase + '/'+environment.api_base.apiPath +'/image',
-            fieldName:"",
-            headers:{},
-            method: 'POST',
-         
-          };
-          this.uploadInput.emit(event);
+            // uncomment this if you want to auto upload files when added
+            const event: UploadInput = {
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/image',
+                fieldName: "",
+                headers: {},
+                method: 'POST',
+
+            };
+            this.uploadInput.emit(event);
         } else if (output.type === 'done') {
-          //this.dragOver = false;
-          //output.file.response
+            //this.dragOver = false;
+            //output.file.response
         }
-      }
+    }
 
     ngOnInit() {
         this.exampleData = [
@@ -252,57 +255,57 @@ export class ProfileComponent implements OnInit {
         // });
     }
     //save Address Info
-    saveAcademicInfo(objAcademicInfo:any,index:number) {
+    saveAcademicInfo(objAcademicInfo: any, index: number) {
         mApp.block('#m_accordion_5_item_10_body', {
             overlayColor: '#000000',
             type: 'loader',
             state: 'success',
             // message: 'Please wait...'
         });
-       objAcademicInfo.emp_id = objAcademicInfo.emp_id != null ? objAcademicInfo.emp_id : (this._currentEmpId || this.param_emp_id)
-       this._myService.saveAcademicInfo(objAcademicInfo)
-        .subscribe(
-        data => {
-            mApp.unblock('#m_accordion_5_item_10_body');
-            this.academicInfo[index]=data.json();
-        },
-        error => {
-            mApp.unblock('#m_accordion_5_item_10_body');
-        });
+        objAcademicInfo.emp_id = objAcademicInfo.emp_id != null ? objAcademicInfo.emp_id : (this._currentEmpId || this.param_emp_id)
+        this._myService.saveAcademicInfo(objAcademicInfo)
+            .subscribe(
+            data => {
+                mApp.unblock('#m_accordion_5_item_10_body');
+                this.academicInfo[index] = data.json();
+            },
+            error => {
+                mApp.unblock('#m_accordion_5_item_10_body');
+            });
     }
-     //save CertificationAndTraningInfo Info
-    saveCertificationAndTraningInfo(objCertification:any,index:number) {
+    //save CertificationAndTraningInfo Info
+    saveCertificationAndTraningInfo(objCertification: any, index: number) {
         objCertification.emp_id = objCertification.emp_id != null ? objCertification.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveCertificationInfo(objCertification)
-        .subscribe(
-        data => {
-             this.certificationsandTrainingInfo[index]=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.certificationsandTrainingInfo[index] = data.json();
+            },
+            error => {
+            });
     }
     //save EmploymentDetils Info
-    savePerviousEmploymentDetails(objPerviousEmployment:any,index:number) {
+    savePerviousEmploymentDetails(objPerviousEmployment: any, index: number) {
         objPerviousEmployment.emp_id = objPerviousEmployment.emp_id != null ? objPerviousEmployment.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
-        .subscribe(
-        data => {
-             this.previousEmploymentDetails[index]=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.previousEmploymentDetails[index] = data.json();
+            },
+            error => {
+            });
 
     }
     //save Family Info
-    saveFamilyInfo(objFamily:any,index:number) {
-         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
+    saveFamilyInfo(objFamily: any, index: number) {
+        objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
-        .subscribe(
-        data => {
-            this.familyInfo[index]=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.familyInfo[index] = data.json();
+            },
+            error => {
+            });
     }
     //save Office Info
     saveOfficeInfo() {
@@ -356,70 +359,64 @@ export class ProfileComponent implements OnInit {
                 this.carDetails = data.json();
             },
             error => {
-                 this.carDetails = {};;
+                this.carDetails = {};;
                 //mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
     //save Seperation Info
     saveSeperationInfo() {
-            // this._authService.saveSeperationInfo(this.empProfile.address)
-            // .subscribe(
-            // data => {
-            //     this.empProfile.address=data.json();
-            // },
-            // error => {
-            // });
+        // this._authService.saveSeperationInfo(this.empProfile.address)
+        // .subscribe(
+        // data => {
+        //     this.empProfile.address=data.json();
+        // },
+        // error => {
+        // });
     }
     //delete Academic Info
-    deleteAcademicInfo(academicInfo_id:number)
-    {
+    deleteAcademicInfo(academicInfo_id: number) {
         this._myService.deleteAcademicInfo(academicInfo_id)
-        .subscribe(
-        data => {
-             if(data.ok)
-             {
-                this.removeHtmlContain("academicInfo",academicInfo_id);
-             }
-        },
-        error => {
-            //mApp.unblock('#m_accordion_5_item_1_body');
-        });
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("academicInfo", academicInfo_id);
+                }
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     //delete Previous Employment
-    deletePreviousEmployment(previousEmployment_id:number)
-    {
+    deletePreviousEmployment(previousEmployment_id: number) {
         this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
-        .subscribe(
-        data => {
-             if(data.ok)
-             {
-                this.removeHtmlContain("employment",previousEmployment_id);
-             }
-        },
-        error => {
-            //mApp.unblock('#m_accordion_5_item_1_body');
-        });
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("employment", previousEmployment_id);
+                }
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     //delete Family Info
-    deleteFamilyInfo(family_id:number)
-    {
+    deleteFamilyInfo(family_id: number) {
         this._myService.deleteFamilyInfo(family_id)
-        .subscribe(
-        data => {
-             if(data.ok)
-             {
-                this.removeHtmlContain("family",family_id);
-             }
-        },
-        error => {
-            //mApp.unblock('#m_accordion_5_item_1_body');
-        });
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("family", family_id);
+                }
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     // addNewAcademicInfoHtml()
     // {
     //   this.academicInfo.push(new AcademicInfo());
     // }
-    
+
     // removeAcademicInfo(academicInfo_id)
     // {
     //   this.academicInfo=this.academicInfo.filter(x=>x._id!=academicInfo_id);
@@ -437,86 +434,75 @@ export class ProfileComponent implements OnInit {
     //     }
     //     return true ;
     // }
-  
+
     //Add New Html on Click of Add Button 
-    addNewHtmlContain(subTabName:string)
-    {
+    addNewHtmlContain(subTabName: string) {
         switch (subTabName) {
             case "academicInfo":
-              this.academicInfo.push(new AcademicInfo());
-            break;
+                this.academicInfo.push(new AcademicInfo());
+                break;
             case "certificationAndTrainingInfo":
-            this.academicInfo.push(new CertificationInfo());
-            break;
+                this.academicInfo.push(new CertificationInfo());
+                break;
             case "employment":
-            this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
-            break;
+                this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
+                break;
             case "family":
-            this.officeInfo.push(new FamilyInfo());
-            break;
-            
+                this.officeInfo.push(new FamilyInfo());
+                break;
+
         }
     }
     //Remove Html on After Delete 
-    removeHtmlContain(subTabName:string,_id:number)
-    { 
+    removeHtmlContain(subTabName: string, _id: number) {
         switch (subTabName) {
             case "academicInfo":
-            this.academicInfo=this.academicInfo.filter(x=>x._id!=_id);
-            if(this.academicInfo.length==0)
-            {
-                 this.addNewHtmlContain(subTabName);
-            }
-            break;
+                this.academicInfo = this.academicInfo.filter(x => x._id != _id);
+                if (this.academicInfo.length == 0) {
+                    this.addNewHtmlContain(subTabName);
+                }
+                break;
             case "certificationAndTrainingInfo":
-            this.certificationsandTrainingInfo=this.certificationsandTrainingInfo.filter(x=>x._id!=_id);
-            if(this.certificationsandTrainingInfo.length==0)
-            {
-                this.addNewHtmlContain(subTabName);
-            }
-            break;
+                this.certificationsandTrainingInfo = this.certificationsandTrainingInfo.filter(x => x._id != _id);
+                if (this.certificationsandTrainingInfo.length == 0) {
+                    this.addNewHtmlContain(subTabName);
+                }
+                break;
             case "employment":
-            this.previousEmploymentDetails=this.previousEmploymentDetails.filter(x=>x._id!=_id);
-            if(this.previousEmploymentDetails.length==0)
-            {
-                this.addNewHtmlContain(subTabName);
-            }
-            break;
+                this.previousEmploymentDetails = this.previousEmploymentDetails.filter(x => x._id != _id);
+                if (this.previousEmploymentDetails.length == 0) {
+                    this.addNewHtmlContain(subTabName);
+                }
+                break;
             case "family":
-            this.familyInfo=this.familyInfo.filter(x=>x._id!=_id);
-            if(this.familyInfo.length==0)
-            {
-                this.addNewHtmlContain(subTabName);
-            }
-            break;
+                this.familyInfo = this.familyInfo.filter(x => x._id != _id);
+                if (this.familyInfo.length == 0) {
+                    this.addNewHtmlContain(subTabName);
+                }
+                break;
         }
     }
     //Check wheather HTML is Added or Not
-    isAdded(subTabName:string)
-    {
+    isAdded(subTabName: string) {
         switch (subTabName) {
             case "academicInfo":
-              if(this.academicInfo.filter(x=>x._id==null || x._id==undefined).length == 0)
-              {
-                return false;
-              }
-              return true;
+                if (this.academicInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
+                    return false;
+                }
+                return true;
             case "certificationAndTrainingInfo":
-                if(this.certificationsandTrainingInfo.filter(x=>x._id==null || x._id==undefined).length == 0)
-                {
-                  return false;
+                if (this.certificationsandTrainingInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
+                    return false;
                 }
                 return true;
             case "employment":
-                if(this.previousEmploymentDetails.filter(x=>x._id==null || x._id==undefined).length == 0)
-                {
-                  return false;
+                if (this.previousEmploymentDetails.filter(x => x._id == null || x._id == undefined).length == 0) {
+                    return false;
                 }
                 return true;
             case "family":
-                if(this.familyInfo.filter(x=>x._id==null || x._id==undefined).length == 0)
-                {
-                  return false;
+                if (this.familyInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
+                    return false;
                 }
                 return true;
         }
@@ -657,8 +643,7 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    loadlevelOfEducation()
-    {
+    loadlevelOfEducation() {
         this._commonService.getEducation().subscribe(
             res => {
                 if (res.ok) {
@@ -669,15 +654,13 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    loadExamDegreeTitle(parent_id:number,index:number,onLoad?:string)
-    {
+    loadExamDegreeTitle(parent_id: number, index: number, onLoad?: string) {
         this._commonService.getEducation(parent_id).subscribe(
             res => {
                 if (res.ok) {
                     this.academicInfo[index].examDegreeTitleData = res.json();
-                    if(!onLoad)
-                    {
-                        this.academicInfo[index].examDegreeTitle_id=null;
+                    if (!onLoad) {
+                        this.academicInfo[index].examDegreeTitle_id = null;
                     }
                 }
             },
@@ -687,7 +670,7 @@ export class ProfileComponent implements OnInit {
 
     //Load Academic Info Tab Data
     loadAcademicInfoTabData() {
-         this.resultsData = this._commonService.getResults();
+        this.resultsData = this._commonService.getResults();
         //  this.levelOfEducationData = this._commonService.getLevelOfEducation();
         //  this.examDegreeTitleData = this._commonService.getExamDegreeTitle();
         this.loadlevelOfEducation();
@@ -695,16 +678,13 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             res => {
                 this.academicInfo = res.json().data;
-                if(this.academicInfo.length==0)
-                {
-                  this.academicInfo.push(new AcademicInfo());
+                if (this.academicInfo.length == 0) {
+                    this.academicInfo.push(new AcademicInfo());
                 }
-                else
-                {
-                  for(let i=0;i < this.academicInfo.length;i++)
-                  {
-                     this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id,i,"init");
-                  }
+                else {
+                    for (let i = 0; i < this.academicInfo.length; i++) {
+                        this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id, i, "init");
+                    }
                 }
             },
             error => {
@@ -715,66 +695,61 @@ export class ProfileComponent implements OnInit {
     //Load Certification & Traning Tab Data
     loadCertificateAndTraningInfoTabData() {
         this._myService.getCertificationInfo(this._currentEmpId)
-        .subscribe(
-        res => {
-            this.certificationsandTrainingInfo = res.json().data;
-            if(this.certificationsandTrainingInfo.length==0)
-            {
-              this.certificationsandTrainingInfo.push(new CertificationInfo());
-            }
-        },
-        error => {
-        });
+            .subscribe(
+            res => {
+                this.certificationsandTrainingInfo = res.json().data;
+                if (this.certificationsandTrainingInfo.length == 0) {
+                    this.certificationsandTrainingInfo.push(new CertificationInfo());
+                }
+            },
+            error => {
+            });
     }
     //Load Education Page Data
     loadEducation() {
         this.loadAcademicInfoTabData();
         this.loadCertificateAndTraningInfoTabData();
     }
-   
+
     loadEmploymentDetails() {
         this._myService.getPreviousEmploymentInfo(this._currentEmpId)
-        .subscribe(
-        res => {
-            this.previousEmploymentDetails=res.json().data;
-            if(this.previousEmploymentDetails.length==0)
-            {
-              this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
-            }
-        },
-        error => {
-        });
+            .subscribe(
+            res => {
+                this.previousEmploymentDetails = res.json().data;
+                if (this.previousEmploymentDetails.length == 0) {
+                    this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
+                }
+            },
+            error => {
+            });
     }
 
-    loadRelation()
-    {
+    loadRelation() {
         this._commonService.getRelation()
-        .subscribe(
-        res => {
-            if (res.ok) {
-                this.relationData = res.json() || [];
-            }
-        },
-        error => {
-        });
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.relationData = res.json() || [];
+                }
+            },
+            error => {
+            });
     }
 
     loadFamilyInfo() {
         this._myService.getFamilyInfo(this._currentEmpId)
-        .subscribe(
-        res => {
-            this.familyInfo=res.json().data;
-            if(this.familyInfo.length==0)
-            {
-              this.familyInfo.push(new FamilyInfo());
-            }
-        },
-        error => {
-        });
+            .subscribe(
+            res => {
+                this.familyInfo = res.json().data;
+                if (this.familyInfo.length == 0) {
+                    this.familyInfo.push(new FamilyInfo());
+                }
+            },
+            error => {
+            });
     }
 
-    loadFamilyInfoTabData()
-    {
+    loadFamilyInfoTabData() {
         this.loadRelation();
         this.loadFamilyInfo();
     }
@@ -782,12 +757,12 @@ export class ProfileComponent implements OnInit {
     loadOfficeInfoTabData() {
         this.countryData=this._commonService.getCountry();
         this._myService.getOfficeDetails(this._currentEmpId)
-        .subscribe(
-        data => {
-            this.officeInfo=data.json() || {};
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.officeInfo = data.json() || {};
+            },
+            error => {
+            });
     }
 
     loadJoiningDetailsTabData() {
@@ -855,24 +830,23 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Grade Dropdown
-    loadManagementType(onLoad?:string) {
+    loadManagementType(onLoad?: string) {
         this._commonService.getManagementType()
             .subscribe(
             res => {
                 if (res.ok) {
-                   if(!onLoad)
-                   {
+                    if (!onLoad) {
                         this.employmentTypeData = [];
                         this.gradeData = [];
                         this.supervisorData = [];
                         this.designationData = [];
 
-                        this.positionDetails.managementType_id=null
-                        this.positionDetails.employmentType_id=null;
-                        this.positionDetails.grade_id=null;
-                        this.positionDetails.primarySupervisorEmp_id=null;
-                        this.positionDetails.designation_id=null;
-                   }
+                        this.positionDetails.managementType_id = null
+                        this.positionDetails.employmentType_id = null;
+                        this.positionDetails.grade_id = null;
+                        this.positionDetails.primarySupervisorEmp_id = null;
+                        this.positionDetails.designation_id = null;
+                    }
                     this.managementTypeData = res.json()
                 }
             },
@@ -916,7 +890,7 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Vertical Dropdown By department_id 
-    loadVertical(department_id?: number,onLoad?: string) {
+    loadVertical(department_id?: number, onLoad?: string) {
         this._commonService.getVertical(department_id)
             .subscribe(
             res => {
@@ -928,7 +902,7 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load SubVertical Dropdown By vertical_id 
-    loadSubVertical(vertical_id?: number,onLoad?: string) {
+    loadSubVertical(vertical_id?: number, onLoad?: string) {
         this._commonService.getSubVertical(vertical_id)
             .subscribe(
             res => {
@@ -940,13 +914,12 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Employment Type By managementType_id 
-    loadEmploymentType(managementType_id?: number,onLoad?: string) {
+    loadEmploymentType(managementType_id?: number, onLoad?: string) {
         this._commonService.getEmploymentType(managementType_id)
             .subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
+                    if (!onLoad) {
                         this.gradeData = [];
                         this.supervisorData = [];
                         this.designationData = [];
@@ -963,20 +936,19 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Grade Dropdown By managementType_id  && employmentType_id
-    loadGrade(managementType_id?: number, employmentType_id?: number,onLoad?: string) {
+    loadGrade(managementType_id?: number, employmentType_id?: number, onLoad?: string) {
         this._commonService.getGrade(managementType_id, employmentType_id)
             .subscribe(
             res => {
                 if (res.ok) {
-                   if(!onLoad)
-                   {
+                    if (!onLoad) {
                         this.supervisorData = [];
                         this.designationData = [];
 
                         this.positionDetails.grade_id = null;
                         this.positionDetails.primarySupervisorEmp_id = null;
                         this.positionDetails.designation_id = null;
-                   }
+                    }
                     this.gradeData = res.json();
                 }
             },
@@ -984,14 +956,13 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Supervisor By grade_id
-    loadSupervisor(grade_id?: number,onLoad?: string) {
+    loadSupervisor(grade_id?: number, onLoad?: string) {
         this._commonService.getSupervisor(grade_id)
             .subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
-                      this.positionDetails.primarySupervisorEmp_id = null;
+                    if (!onLoad) {
+                        this.positionDetails.primarySupervisorEmp_id = null;
                     }
                     this.supervisorData = res.json()
                 }
@@ -999,14 +970,13 @@ export class ProfileComponent implements OnInit {
             error => {
             });
     }
-     //load Group Hr Head By hrspoc_id
-    loadGroupHrHead(businessHrHead_id?: number,onLoad?: string) {
+    //load Group Hr Head By hrspoc_id
+    loadGroupHrHead(businessHrHead_id?: number, onLoad?: string) {
         this._commonService.getHrSpoce(this.positionDetails.company_id, businessHrHead_id).subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
-                      this.positionDetails.groupHrHead_id = null;
+                    if (!onLoad) {
+                        this.positionDetails.groupHrHead_id = null;
                     }
                     this.groupHrHeadData = res.json()
                 }
@@ -1016,13 +986,12 @@ export class ProfileComponent implements OnInit {
     }
 
     //load Designation By grade_id
-    loadDesignation(grade_id?: number,onLoad?:string) {
+    loadDesignation(grade_id?: number, onLoad?: string) {
         this._commonService.getDesignation(grade_id).subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
-                      this.positionDetails.designation_id = null;
+                    if (!onLoad) {
+                        this.positionDetails.designation_id = null;
                     }
                     this.designationData = res.json()
                 }
@@ -1031,13 +1000,12 @@ export class ProfileComponent implements OnInit {
             });
     }
     //load Department Dropdown By divisonId 
-    loadDepartment(division_id?:number,onLoad?:string) {
+    loadDepartment(division_id?: number, onLoad?: string) {
         this._commonService.getDepartment(division_id)
             .subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
+                    if (!onLoad) {
                         this.positionDetails.department_id = null;
                         this.positionDetails.vertical_id = null;
                         this.positionDetails.subVertical_id = null;
@@ -1108,12 +1076,11 @@ export class ProfileComponent implements OnInit {
                 this.bankDetails = data.json() || {};
             },
             error => {
-                this.bankDetails ={};
+                this.bankDetails = {};
             });
     }
 
-    loadSalaryInfoDropdownData()
-    {
+    loadSalaryInfoDropdownData() {
         this.providentFundMemberShipData = this._commonService.getProvidentFundMemberShip();
         this.groupLifeInsuranceData = this._commonService.getGroupLifeInsurance();
         this.festivalAllowanceData = this._commonService.getFestivalAllowance();
@@ -1131,8 +1098,7 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    loadSalaryInfoTabData()
-    {
+    loadSalaryInfoTabData() {
         this.loadSalaryInfoDropdownData();
         this.loadSalaryInfo();
     }

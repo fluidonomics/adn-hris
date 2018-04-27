@@ -5,7 +5,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
     templateUrl: "./pip.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class MyPipComponent{
+export class MyPipComponent {
 
 }
 

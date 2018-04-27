@@ -9,6 +9,6 @@ import { FormBuilder } from "@angular/forms";
     templateUrl: "./calender.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class CalenderComponent  {
+export class CalenderComponent {
 
 }

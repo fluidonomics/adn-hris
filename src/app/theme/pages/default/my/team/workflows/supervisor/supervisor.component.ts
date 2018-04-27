@@ -9,6 +9,6 @@
 //     encapsulation: ViewEncapsulation.None,
 // })
 // export class SupervisorComponent {
-    
+
 // }
 

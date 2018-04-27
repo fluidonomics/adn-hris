@@ -15,8 +15,7 @@ export class HrService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getAllEmployee()
-    {
+    getAllEmployee() {
         let url = "user/getAllEmployee";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }

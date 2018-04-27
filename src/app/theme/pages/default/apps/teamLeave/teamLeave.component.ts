@@ -9,6 +9,6 @@ const now = new Date();
     templateUrl: "./teamLeave.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class TeamLeaveComponent  {
+export class TeamLeaveComponent {
 
 }

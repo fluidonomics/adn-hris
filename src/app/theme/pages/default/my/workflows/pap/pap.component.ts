@@ -6,7 +6,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
     templateUrl: "./pap.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class MyPapComponent  {
+export class MyPapComponent {
 
-  
+
 }

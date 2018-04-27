@@ -12,7 +12,7 @@ export class AcademicInfo {
     yearOfPassing: string = null;
     duration: number = null;
     achievements: string = null;
-    examDegreeTitleData:any=[]
+    examDegreeTitleData: any = []
 }
 export class AddressInfo {
     _id: number = null;

@@ -8,6 +8,6 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class HrLearningComponent {
 
-  
+
 }
 

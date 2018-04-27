@@ -60,7 +60,7 @@
                 <div class="tab-content">
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='personal'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                                 <span class="m-accordion__item-title">Personal Info</span>
@@ -258,14 +258,14 @@
                                         </div>
                                     </div>
                                     <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{personalInfo._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{personalInfo._id ? 'Update':'Save'}}</button>
                                         <button type="reset" *ngIf="!personalInfo._id" class="btn btn-secondary">Cancel</button>
                                     </div>
                                     </form>
                                 </div>
                             </div>
                             </div>
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_2_head" data-toggle="collapse" href="#m_accordion_5_item_2_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="flaticon-map-location"></i></span>
                                 <span class="m-accordion__item-title">Address</span>
@@ -470,7 +470,7 @@
                                         <br/>
                                         </div>
                                         <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{address._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{address._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!address._id" class="btn btn-secondary">Cancel</button> -->
                                         </div>
                                     </form>
@@ -481,7 +481,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='documents'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_9_head" data-toggle="collapse" href="#m_accordion_5_item_9_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fas fa-certificate"></i></span>
                                 <span class="m-accordion__item-title">Documents</span>
@@ -595,7 +595,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='education'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_10_head" data-toggle="collapse" href="#m_accordion_5_item_10_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fa-graduation-cap"></i></span>
                                 <span class="m-accordion__item-title">Academic Info</span>
@@ -717,13 +717,13 @@
                                         </div>
                                         <div class="m-form__actions">
                                         <button type="button" class="btn btn-danger" *ngIf="academic._id" (click)="deleteAcademicInfo(academic._id)"><i class="fa fa-close"></i>Delete</button>
-                                        <button type="submit" class="btn btn-accent">{{academic._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{academic._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
                                         <div class="m-form__actions">
-                                        <button class="btn btn-accent" [disabled]="isAdded('academicInfo')" (click)="addNewHtmlContain('academicInfo')"><i class="fa fa-plus"></i> Add
+                                        <button class="btn btn-success" [disabled]="isAdded('academicInfo')" (click)="addNewHtmlContain('academicInfo')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
                                     </div>
@@ -732,7 +732,7 @@
                             </div>
                         </div>
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_11_head" data-toggle="collapse" href="#m_accordion_5_item_11_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                                 <span class="m-accordion__item-title">Certifications And Training Info</span>
@@ -813,13 +813,13 @@
                                         </div>
                                         <div class="m-form__actions">
                                         <button type="button" class="btn btn-danger" *ngIf="certifications._id" (click)="deleteAcademicInfo(certifications._id)"><i class="fa fa-close"></i>Delete</button>
-                                        <button type="submit" class="btn btn-accent">{{certifications._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{certifications._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
                                         <div class="m-form__actions">
-                                        <button class="btn btn-accent" [disabled]="isAdded('certificationAndTrainingInfo')" (click)="addNewHtmlContain('certificationAndTrainingInfo')"><i class="fa fa-plus"></i> Add
+                                        <button class="btn btn-success" [disabled]="isAdded('certificationAndTrainingInfo')" (click)="addNewHtmlContain('certificationAndTrainingInfo')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
                                     </div>
@@ -830,7 +830,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='employment'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_12_head" data-toggle="collapse" href="#m_accordion_5_item_12_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                                 <span class="m-accordion__item-title">Previous Employment Details</span>
@@ -956,12 +956,12 @@
                                         </div>
                                         <div class="m-form__actions">
                                         <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id" (click)="deletePreviousEmployment(previousEmployment._id)"><i class="fa fa-close"></i>Delete</button>
-                                        <button type="submit" class="btn btn-accent">{{previousEmployment._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                         <div class="m-portlet__foot m-portlet__foot--fit">
                                         <div class="m-form__actions">
-                                            <button class="btn btn-accent" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
+                                            <button class="btn btn-success" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
                                             </button>
                                         </div>
                                         </div>
@@ -973,7 +973,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='family'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_13_head" data-toggle="collapse" href="#m_accordion_5_item_13_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fa-group"></i></span>
                                 <span class="m-accordion__item-title">Family Info</span>
@@ -1050,13 +1050,13 @@
                                         </div>
                                         <div class="m-form__actions">
                                         <button type="button" class="btn btn-danger" *ngIf="family._id" (click)="deleteFamilyInfo(family._id)"><i class="fa fa-close"></i>Delete</button>
-                                        <button type="submit" class="btn btn-accent">{{family._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{family._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
                                         <div class="m-form__actions">
-                                        <button class="btn btn-accent" [disabled]="isAdded('family')" (click)="addNewHtmlContain('family')"><i class="fa fa-plus"></i> Add
+                                        <button class="btn btn-success" [disabled]="isAdded('family')" (click)="addNewHtmlContain('family')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
                                     </div>
@@ -1067,7 +1067,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='office'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_6_head" data-toggle="collapse" href="#m_accordion_5_item_6_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fas fa-briefcase"></i></span>
                                 <span class="m-accordion__item-title">Office Info</span>
@@ -1236,14 +1236,14 @@
                                         </div>
                                     </div>
                                     <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{officeInfo._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{officeInfo._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!officeInfo._id" class="btn btn-secondary">Cancel</button> -->
                                     </div>
                                     </form>
                                 </div>
                             </div>
                             </div>
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_8_head" data-toggle="collapse" href="#m_accordion_5_item_8_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                                 <span class="m-accordion__item-title">Position Details</span>
@@ -1457,14 +1457,14 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{positionDetails._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{positionDetails._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!positionDetails._id" class="btn btn-secondary">Cancel</button> -->
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             </div>
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_15_head" data-toggle="collapse" href="#m_accordion_5_item_15_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa flaticon-user-ok"></i></span>
                                 <span class="m-accordion__item-title">Performance Diary</span>
@@ -1515,7 +1515,7 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{performanceDiary._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{performanceDiary._id ? 'Update':'Save'}}</button>
                                         <button type="reset" *ngIf="!performanceDiary._id" class="btn btn-secondary">Cancel</button>
                                         </div>
                                     </form>
@@ -1526,7 +1526,7 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='payroll'}">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_16_head" data-toggle="collapse" href="#m_accordion_5_item_16_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="flaticon-piggy-bank"></i></span>
                                 <span class="m-accordion__item-title">Bank Details</span>
@@ -1598,7 +1598,7 @@
                                         </div>
                                     </div>
                                     <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{bankDetails._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{bankDetails._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!bankDetails._id" class="btn btn-secondary">Cancel</button> -->
                                     </div>
                                     </form>
@@ -1607,7 +1607,7 @@
                             </div>
                         </div>
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_17_head" data-toggle="collapse" href="#m_accordion_5_item_17_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="flaticon-piggy-bank"></i></span>
                                 <span class="m-accordion__item-title">Salary Details (Monthly)</span>
@@ -1800,7 +1800,7 @@
                                         </div>
                                     </div>
                                     <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{salaryDetails._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{salaryDetails._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!salaryDetails._id" class="btn btn-secondary">Cancel</button> -->
                                     </div>
                                     </form>
@@ -1809,7 +1809,7 @@
                             </div>
                         </div>
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                            <div class="m-accordion__item m-accordion__item--info">
+                            <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_19_head" data-toggle="collapse" href="#m_accordion_5_item_19_body" aria-expanded="false">
                                 <span class="m-accordion__item-icon"><i class="fa fas fa-car"></i></span>
                                 <span class="m-accordion__item-title">Company Car Details</span>
@@ -1933,7 +1933,7 @@
                                         </div>
                                     </div>
                                     <div class="m-form__actions">
-                                        <button type="submit" class="btn btn-accent">{{carDetails._id ? 'Update':'Save'}}</button>
+                                        <button type="submit" class="btn btn-success">{{carDetails._id ? 'Update':'Save'}}</button>
                                         <button type="reset" *ngIf="!carDetails._id" class="btn btn-secondary">Cancel</button>
                                     </div>
                                     </form>
