@@ -325,7 +325,6 @@ export class AddEmployeeComponent implements OnInit {
 
     //Submit Add Employee Form
     onAddEmpSubmit(form) {
-        swal("New Employee Created.", "Username: Welcome Email Sent!", "success");
         if (form.valid) {
             mApp.block('#m_tabs_9_1', {
                 overlayColor: '#000000',
