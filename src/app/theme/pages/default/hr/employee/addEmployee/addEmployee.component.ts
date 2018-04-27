@@ -145,6 +145,7 @@ export class AddEmployeeComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
+                    this.addemp.subVertical_id=null;
                     this.subverticalData = res.json()
                 }
             },
