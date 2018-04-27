@@ -104,7 +104,7 @@ export class CommonService {
     getSubVertical(verticalId?: number): Observable<Response> {
         let url = "common/getSubVertical";
         if (verticalId) {
-            url = "common/getSubVertical?verticalId=" + verticalId;
+            url = "common/getSubVertical?vertical_id=" + verticalId;
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
