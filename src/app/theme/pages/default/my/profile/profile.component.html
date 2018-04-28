@@ -518,13 +518,14 @@
                                                 <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change</button>
+                                                   <button type="button" class="btn green" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change
+                                                        <input type="file" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartNationalId')" [uploadInput]="uploadInput">
+                                                   </button>
                                                     <button type="button" class="btn green" tabindex="-1" id="viewNationalIdSmartCard" name="viewNationalIdSmartCard" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" tabindex="-1" id="deleteNationalIdSmartCard" name="deleteNationalIdSmartCard" style="margin-right: 6px;"><i class="fa fa-close"></i></button>
                                                     <a class="btn default documentPreviewBtn" id="downloadNationalIdSmartCard" name="downloadNationalIdSmartCard" data-toggle="modal" href="#full" hidden="hidden" style="display: inline;"> View</a>
                                                     </div>
                                                 </div>
-                                                <!--<input type="file" class="choosefile hidden" accept="image/*" style="padding-top: 5px" id="fileNationalIdSmartCard" name="fileNationalIdSmartCard">-->
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -535,7 +536,9 @@
                                                 <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID (old format)">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change</button>
+                                                    <button type="button" class="btn green" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change
+                                                            <input type="file" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'oldNationalId')" [uploadInput]="uploadInput">
+                                                    </button>
                                                     <button type="button" class="btn green" tabindex="-1" id="viewNationalIDOldFormat" name="viewNationalIDOldFormat" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" tabindex="-1" id="deleteNationalIDOldFormat" name="deleteNationalIDOldFormat" style="margin-right: 6px;"><i class="fa fa-close"></i></button>
                                                     <a class="btn default documentPreviewBtn" id="downloadNationalIDOldFormat" name="downloadNationalIDOldFormat" data-toggle="modal" href="#full" hidden="hidden" style="display: inline;"> View</a>
@@ -554,7 +557,9 @@
                                                 <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter birth registration number">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green" tabindex="-1" id="changeBirthRegistrationNumber" name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change</button>
+                                                    <button type="button" class="btn green" tabindex="-1" id="changeBirthRegistrationNumber" name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
+                                                            <input type="file" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput">
+                                                    </button>
                                                     <button type="button" class="btn green" tabindex="-1" id="viewBirthRegistrationNumber" name="viewBirthRegistrationNumber" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" tabindex="-1" id="deleteBirthRegistrationNumber" name="deleteBirthRegistrationNumber" style="margin-right: 6px;"><i class="fa fa-close"></i></button>
                                                     <a class="btn default documentPreviewBtn" id="downloadBirthRegistrationNumber" name="downloadBirthRegistrationNumber" data-toggle="modal" href="#full" hidden="hidden" style="display: inline;"> View</a>
@@ -571,7 +576,9 @@
                                                 <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter passport number">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green" tabindex="-1" id="changePassportNumber" name="changePassportNumber" style="margin-right: 6px;">Change</button>
+                                                    <button type="button" class="btn green" tabindex="-1" id="changePassportNumber" name="changePassportNumber" style="margin-right: 6px;">Change
+                                                        <input type="file" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput">
+                                                    </button>
                                                     <button type="button" class="btn green" tabindex="-1" id="viewPassportNumber" name="viewPassportNumber" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" tabindex="-1" id="deletePassportNumber" name="deletePassportNumber" style="margin-right: 6px;"><i class="fa fa-close"></i></button>
                                                     <a class="btn default documentPreviewBtn" id="downloadPassportNumber" name="downloadPassportNumber" data-toggle="modal" href="#full" hidden="hidden" style="display: inline;">View</a>
@@ -1617,7 +1624,7 @@
                                 <div class="m-accordion__item-content">
                                     <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="fsalaryDetails.valid && saveSalaryDetails()" #fsalaryDetails="ngForm" novalidate="novalidate">
                                     <div class="form-group m-form__group m--margin-top-10 accordian-refresh">
-                                        <button type="reset" class="btn btn-secondary ">Hike</button>
+                                        <button type="button" class="btn btn-secondary" (click)="isHikeSalary(fsalaryDetails);">Hike</button>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 adn-form__group" hidden="true">

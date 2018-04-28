@@ -11,6 +11,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { BankInfo, AcademicInfo, CarInfo, CertificationInfo, PreviousEmploymentInfo, FamilyInfo } from "../../../../../base/_interface/user.model"
 import { environment } from "../../../../../../environments/environment.prod";
 import { initDomAdapter } from "@angular/platform-browser/src/browser";
+import swal from 'sweetalert2';
 declare var mApp;
 declare var $;
 
@@ -22,7 +23,9 @@ declare var $;
 
 export class ProfileComponent implements OnInit {
 
+    options:UploaderOptions;
     uploadInput: EventEmitter<UploadInput>;
+
     humanizeBytes: Function;
 
     currentDate:any;
@@ -122,6 +125,7 @@ export class ProfileComponent implements OnInit {
         this.currentDate=new Date();
     }
 
+    
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // uncomment this if you want to auto upload files when added
@@ -752,6 +756,7 @@ export class ProfileComponent implements OnInit {
             });
     }
 
+
     loadRelation() {
         this._commonService.getRelation()
             .subscribe(
@@ -1128,6 +1133,23 @@ export class ProfileComponent implements OnInit {
     loadSalaryInfoTabData() {
         this.loadSalaryInfoDropdownData();
         this.loadSalaryInfo();
+    }
+
+    isHikeSalary(form)
+    {
+      swal({
+        title: 'Are you sure?',
+        text: "You want add new salary details!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#66BB6A',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.value) {
+            form.resetForm();
+        }
+      })
     }
 
     loadCarDetails() {
