@@ -200,27 +200,33 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    setPermentAddress(sameAddress) {
-        if (sameAddress) {
-            this.address.permanentAddressLine1 = this.address.currentAddressPostCode;
+    setPermentAddress() {
+        if (this.address.isSameAsCurrent) {
+            this.address.permanentAddressLine1 = this.address.currentAddressLine1;
             this.address.permanentAddressLine2 = this.address.currentAddressLine2;
-            this.address.permanentAddressThana = this.address.currentAddressThana;
-            this.address.permanentAddressDistrict = this.address.currentAddressDistrict;
-            this.address.permanentAddressDivision = this.address.currentAddressDivision;
+            this.address.permanentAddressDistrict_id = this.address.currentAddressDistrict_id;
+            this.address.permanentAddressDivision_id = this.address.currentAddressDivision_id;
+            this.address.permanentAddressThana_id = this.address.currentAddressThana_id;
             this.address.permanentAddressPostCode = this.address.currentAddressPostCode;
-        }
-        else {
-            this.resetPermentAddress();
+
+            // this.loadpermanentAddressDistrictData(this.address.currentAddressDivision_id,"init");
+            // this.loadpermanentAddressThanaData(this.address.currentAddressDistrict_id,"init");
         }
     }
 
     resetPermentAddress() {
-        this.address.permanentAddressLine1 = null;
-        this.address.permanentAddressLine2 = null;
-        this.address.permanentAddressThana = null;
-        this.address.permanentAddressDistrict = null;
-        this.address.permanentAddressDivision = null;
-        this.address.permanentAddressPostCode = null;
+        if(!this.address.isSameAsCurrent)
+        {
+            this.address.permanentAddressLine1 = null;
+            this.address.permanentAddressLine2 = null;
+            this.address.permanentAddressDistrict_id = null;
+            this.address.permanentAddressDivision_id = null;
+            this.address.permanentAddressThana_id = null;
+            this.address.permanentAddressPostCode = null;
+
+            this.permanentAddressDistrictData=[];
+            this.permanentAddressThanaData=[];
+        }
     }
 
     //save Personal Info
@@ -243,6 +249,10 @@ export class ProfileComponent implements OnInit {
     }
     //save Address Info
     saveAddressInfo() {
+        if(this.address.isSameAsCurrent)
+        {
+          this.setPermentAddress();
+        }
         this.address.emp_id=this.address.emp_id !=null?this.address.emp_id:(this._currentEmpId || this.param_emp_id)
         this._myService.saveAddressInfo(this.address)
         .subscribe(
@@ -543,23 +553,19 @@ export class ProfileComponent implements OnInit {
     }
     //Load Address Tab Data.
     loadAddressTabData() {
-        this._myService.getAddressInfo(1)
+        this.loadcurrentDivison();
+        this.loadpermanentDivison();
+        this._myService.getAddressInfo(this._currentEmpId)
             .subscribe(
             data => {
                 this.address = data.json() || {};
-
-                this.loadcurrentDivison();
                 if (data.json()) {
                     this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
                     this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id);
-                }
 
-                this.loadpermanentDivison();
-                if (data.json()) {
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
-                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id);
+                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id,"init");
                 }
-
             },
             error => {
             });
@@ -595,10 +601,14 @@ export class ProfileComponent implements OnInit {
             });
     }
     //Load Permanent Thana Dropdown Data 
-    loadpermanentAddressThanaData(district_id: number) {
+    loadpermanentAddressThanaData(district_id: number,onLoad?:string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
+                    if(!onLoad)
+                    {
+                        this.address.permanentAddressThana_id=null;
+                    }
                     this.permanentAddressThanaData = res.json()
                 }
             },

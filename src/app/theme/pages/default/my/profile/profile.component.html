@@ -329,7 +329,7 @@
                                                     <label for="division">Division
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="currentAddressDivision" [items]="currentAddressDivisionData" (change)="loadcurrentAddressDistrictData(address.currentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.currentAddressDivision_id" [clearable]="false" #currentAddressDivision="ngModel" required></ng-select>
+                                                    <ng-select class="m-input m-input--air" #currentDivision name="currentAddressDivision" [items]="currentAddressDivisionData" (change)="loadcurrentAddressDistrictData(address.currentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.currentAddressDivision_id" [clearable]="false" #currentAddressDivision="ngModel" required></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressDivision.valid ">
                                                     This field is required.
                                                     </div>
@@ -340,7 +340,7 @@
                                                     <label for="currentAddressDistrict">District
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="currentAddressDistrict" (change)="loadcurrentAddressThanaData(address.currentAddressDistrict_id)" [items]="currentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.currentAddressDistrict_id" [clearable]="false" #currentAddressDistrict="ngModel" required></ng-select>
+                                                    <ng-select class="m-input m-input--air" #currentDistrict name="currentAddressDistrict" (change)="loadcurrentAddressThanaData(address.currentAddressDistrict_id)" [items]="currentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.currentAddressDistrict_id" [clearable]="false" #currentAddressDistrict="ngModel" required></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressDistrict.valid ">
                                                     This field is required.
                                                     </div>
@@ -353,7 +353,7 @@
                                                     <label for="thane">Thane
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="currentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required></ng-select>
+                                                    <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressthane.valid ">
                                                     This field is required.
                                                     </div>
@@ -364,7 +364,7 @@
                                                     <label for="currentAddressPostCode">Post Code
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" required>
+                                                    <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required>
                                                     <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressPostCode.valid ">
                                                     This field is required.
                                                     </div>
@@ -381,7 +381,8 @@
                                             <div class="md-checkbox-inline">
                                                 <div class="md-checkbox">
                                                     <label class="m-checkbox m-checkbox--success">
-                                                    <input type="checkbox" name="isSameAsCurrent" #sameAddress [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;setPermentAddress(sameAddress.checked)"> Same as Current Address
+                                                            
+                                                    <input type="checkbox" name="isSameAsCurrent" #sameAddress [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;resetPermentAddress()"> Same as Current Address
                                                     <span class="box" id="addressCheck1"></span>
                                                     </label>
                                                 </div>
@@ -393,8 +394,9 @@
                                                     <label for="permanentAddressLine1">Address Line 1
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" [readonly]="address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine1" #permanentAddressLine1="ngModel" placeholder="Enter Permanent Address Line 1" class="form-control m-input m-input--air" id="permanentAddressLine1" name="permanentAddressLine1" required>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressLine1.valid ">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine1}}</span>
+                                                    <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine1" #permanentAddressLine1="ngModel" placeholder="Enter Permanent Address Line 1" class="form-control m-input m-input--air" id="permanentAddressLine1" name="permanentAddressLine1" required>
+                                                    <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressLine1.valid ">
                                                     This field is required.
                                                     </div>
                                                 </div>
@@ -403,7 +405,8 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="permanentAddressLine2">Address Line 2
                                                     </label>
-                                                    <input type="text" [readonly]="address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine2" #permanentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Permanent Address Line 2" id="permanentAddressLine2" name="permanentAddressLine2">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine2}}</span>
+                                                    <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine2" #permanentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Permanent Address Line 2" id="permanentAddressLine2" name="permanentAddressLine2">
                                                 </div>
                                             </div>
                                         </div>
@@ -413,14 +416,11 @@
                                                     <label for="permanentAddressDivision">Division
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false" #permanentAddressDivision="ngModel" required></ng-select>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDivision.valid ">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDivision?.selectedItems[0]?.label}}</span>
+                                                    <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false" #permanentAddressDivision="ngModel" required></ng-select>
+                                                    <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressDivision.valid ">
                                                     This field is required.
                                                     </div>
-                                                    <!-- <input type="text" [readonly]="address.isSameAsCurrent"  [(ngModel)]="address.permanentAddressDivision_id" #permanentAddressDivision="ngModel" placeholder="Enter Permanent Division" class="form-control m-input m-input--air" id="permanentAddressDivision" name="permanentAddressDivision" required> 
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDivision.valid ">
-                                                        This field is required.
-                                                        </div>   -->
                                                 </div>
                                             </div>
                                             <div class="col-md-6 adn-form__group">
@@ -428,12 +428,9 @@
                                                     <label for="permanentAddressDistrict">District
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <!-- <input type="text" [readonly]="address.isSameAsCurrent" [(ngModel)]="address.permanentAddressDistrict_id" #permanentAddressDistrict="ngModel" placeholder="Enter Permanent District" class="form-control m-input m-input--air" id="permanentAddressDistrict" name="permanentAddressDistrict" required>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDistrict.valid ">
-                                                        This field is required.
-                                                        </div>   -->
-                                                    <ng-select class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required></ng-select>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDistrict.valid ">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDistrict?.selectedItems[0]?.label}}</span>
+                                                    <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required></ng-select>
+                                                    <div  class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressDistrict.valid ">
                                                     This field is required.
                                                     </div>
                                                 </div>
@@ -445,12 +442,8 @@
                                                     <label for="permanentAddressThana">Thana
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <!-- <input type="text" [readonly]="address.isSameAsCurrent" [(ngModel)]="address.permanentAddressThana_id" #permanentAddressThana="ngModel" placeholder="Enter Permanent Thana" class="form-control m-input m-input--air" id="permanentAddressThana" name="permanentAddressThana" required>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
-                                                        This field is required.
-                                                        </div>   -->
-                                                    <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required></ng-select>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>                                                 <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required></ng-select>
+                                                    <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressThana.valid ">
                                                     This field is required.
                                                     </div>
                                                 </div>
@@ -460,8 +453,9 @@
                                                     <label for="permanentAddressPostCode">Post Code
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" [readonly]="address.isSameAsCurrent" maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" required>
-                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressPostCode.valid ">
+                                                    <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
+                                                    <input *ngIf="!address.isSameAsCurrent" type="text" [readonly]="address.isSameAsCurrent" maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required>
+                                                    <div  class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressPostCode.valid ">
                                                     This field is required.
                                                     </div>
                                                 </div>
