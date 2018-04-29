@@ -1,55 +1,92 @@
-<!-- <div class="m-content">
+<div class="m-content">
 		<div class="m-portlet m-portlet--mobile">
 			<div class="m-portlet__body">
-                 <table id="allEmployee">
-                    <thead>
-						<tr>
-							<th></th>
-                            <th (click)="sort(title)" *ngFor="let title of (employeeData| keys)">
-								<span>
-									{{title}}
-									 <i *ngIf="keys == title" [ngClass]="{'la la-arrow-up':reverse,'la la-arrow-down':!reverse}"></i>
-								<span>	
-							</th>
-						</tr>
-					</thead>
-				 <tbody>
-						<tr *ngFor="let employee of employeeData | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p2 }; let i = index">
-							 <td>
-						       <a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: tableTitle[i][emp_Id] }">
-							 	   <i class="fa fa-expand"></i>
-							   </a>
-						     </td>
-							 <td *ngFor="let empkey of (employeeData| keys)">
-                                 {{tableTitle[empkey]}}
-						     <td>
-						</tr>
-						<tr *ngIf="employeeData.length==0">
-                           No Data
-					    <tr>
-					</tbody>
-				</table>
-				 <pagination-template #p="paginationApi" (pageChange)="p2 = $event"> 
-                      <div>
-							<div class="pagination-previous" [class.disabled]="p.isFirstPage()">
-								<a *ngIf="!p.isFirstPage()" (click)="p.previous()"> < </a>
-							</div>
-							<div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-								<a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-									<span>{{ page.label }}</span>
-								</a>
-								<div *ngIf="p.getCurrent() === page.value">
-									<span>{{ page.label }}</span>
+				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+							<div class="row align-items-center">
+								<div class="col-xl-8 order-2 order-xl-1">
+									<div class="form-group m-form__group row align-items-center">
+										<div class="col-md-4">
+											<div class="m-input-icon m-input-icon--left">
+												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
+												<span class="m-input-icon__icon m-input-icon__icon--left">
+													<span>
+														<i class="la la-search"></i>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="pagination-next" [class.disabled]="p.isLastPage()">
-								<a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
-							</div>
+				</div>
+				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+					<table class="m-datatable__table">
+						<thead class="m-datatable__head">
+							<tr class="m-datatable__row">
+								<th class="m-datatable__cell"></th>
+								<th (click)="sort(title)" class="m-datatable__cell m-datatable__cell--sort" *ngFor="let title of (employeeData[0] | keys)">
+									<span>
+										{{getColumnName(title)}}
+										<i class="la" *ngIf="key == title" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									</span>
+								</th>
+							</tr>
+						</thead>
+					    <tbody class="m-datatable__body">
+							<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
+								<td class="m-datatable__cell m-datatable__cell--sort">
+										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: employee._id }">
+											<i class="fa fa-expand"></i>
+									   </a>
+								</td>
+								<td class="m-datatable__cell" *ngFor="let empkey of employee | keys ">
+									<span>{{employee[empkey]}}</span>
+								<td>
+							</tr>
+						</tbody>
+					</table>
+					<pagination-template #p="paginationApi" (pageChange)="p2 = $event">
+						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+								<li>
+									<a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
+										<i class="la la-angle-double-left"></i>
+									</a>
+								</li>
+								<li>
+									<a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
+										<i class="la la-angle-left"></i>
+									</a>
+								</li>
+								<li *ngFor="let page of p.pages">
+									<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+										{{ page.label }}
+									</a>
+								</li>
+								<li>
+									<a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+										<i class="la la-angle-right"></i>
+									</a>
+								</li>
+								<li>
+									<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()">
+										<i class="la la-angle-double-right"></i>
+									</a>
+								</li>
+							</ul>
 						</div>
-				</pagination-template>
-			    
-			
+					</pagination-template>
+					  <!-- {{ (p2 / ((employeeData | filter:search).length +1)  | ceil) * ((employeeData | filter:search).length +1) }}
+					  {{ ((p2 / ((employeeData | filter:search).length +1) | ceil) * ((employeeData | filter:search).length +1))- ((employeeData | filter:search).length +1)  }} -->
+
+				    <!-- {{p2 / {{(employeeData | filter:search).length}} | number:0}} * {{(employeeData | filter:search).length}}
+				    {{({{p2 / {{(employeeData | filter:search).length}} | number:0}} * {{(employeeData | filter:search).length}} - {{(employeeData | filter:search).length}})}} -->
+					<!-- Displaying 1 - {{ (employeeData | filter:search).length }} of {{ (employeeData | filter:search).length }} records -->
+					<!-- var end = Math.ceil(currentPage / option.pagesNumber) *
+					option.pagesNumber;
+				var start = end - option.pagesNumber; -->
+					
+				</div>
 			</div>
 		</div>
 </div>
-	 -->

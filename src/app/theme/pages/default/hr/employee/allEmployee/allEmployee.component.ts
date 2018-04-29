@@ -16,7 +16,9 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
+    
 
+    search:any;
     games = [
         {
             "id": "1",
@@ -94,6 +96,11 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
             error => {
             });
     }
+
+    getColumnName(column){
+        return column.replace(/([A-Z][a-z])/g, " $1").replace("_"," ").toUpperCase();
+      }
+  
 
     sort(key) {
         this.key = key;

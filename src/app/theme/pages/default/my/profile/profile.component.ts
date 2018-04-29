@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
 
     options:UploaderOptions;
     uploadInput: EventEmitter<UploadInput>;
-
     humanizeBytes: Function;
 
     currentDate:any;
@@ -126,21 +125,44 @@ export class ProfileComponent implements OnInit {
     }
 
     
-    onUploadOutput(output: UploadOutput): void {
+    onUploadOutput(output: UploadOutput,fileName:string): void {
+      let atCurrentAuthData=this._authService.currentAuthData;
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // uncomment this if you want to auto upload files when added
             const event: UploadInput = {
                 type: 'uploadAll',
-                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/image',
-                fieldName: "",
-                headers: {},
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
                 method: 'POST',
-
             };
             this.uploadInput.emit(event);
         } else if (output.type === 'done') {
             //this.dragOver = false;
             //output.file.response
+        //   switch (fileName) {
+        //       case 'smartNationalId':
+        //           this.documents.
+        //           break;
+        //       case 'oldNationalId':
+        //           this.documents.
+        //           break;  
+        //       case 'birth':
+        //           this.documents.
+        //           break;
+        //       case 'passport':
+        //           this.documents.
+        //           break;  
+          
+        //       default:
+        //           break;
+        //   }
+
         }
     }
 
