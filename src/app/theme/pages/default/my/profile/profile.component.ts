@@ -348,14 +348,29 @@ export class ProfileComponent implements OnInit {
     }
     //save Office Info
     saveOfficeInfo() {
-        // this._authService.saveOfficeInfo(this.empProfile.address)
-        // .subscribe(
-        // data => {
-        //     this.empProfile.address=data.json();
-        // },
-        // error => {
-        // });
+        this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
+        this._myService.saveOfficeInfo(this.officeInfo)
+        .subscribe(
+        data => {
+            this.officeInfo.address=data.json();
+        },
+        error => {
+        });
     }
+    //save Office Info
+    savePositionInfo() {
+        this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
+        this._myService.savePositionInfo(this.positionDetails)
+        .subscribe(
+        data => {
+            this.officeInfo.address=data.json();
+        },
+        error => {
+        });
+    }
+
+    
+
     //save Bank Info
     saveBankDetails() {
         mApp.block('#m_accordion_5_item_16_body', {

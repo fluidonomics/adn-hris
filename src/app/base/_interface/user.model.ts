@@ -114,8 +114,8 @@ export class OfficeInfo {
     officePhone: number = null;
     officeMobile: number = null;
     facility: string = null;
-    city_id: number = null;
-    country_id: number = null;
+    city: string = null;
+    country: string = null;
     costCentre: number = null;
     dateOfJoining: Date = null;
     dateOfConfirmation: Date = null;

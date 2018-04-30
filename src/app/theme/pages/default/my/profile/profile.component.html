@@ -1082,7 +1082,7 @@
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
-                                    <form class="m-form m-form--fit m-form--label-align-right" #fofficeInfo="ngForm" (ngSubmit)="saveOfficeInfo()" novalidate="novalidate">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fofficeInfo="ngForm" (ngSubmit)="fofficeInfo.valid && saveOfficeInfo()" novalidate="novalidate">
                                     <div class="form-group m-form__group m--margin-top-10">
                                     </div>
                                     <div class="row">
@@ -1147,7 +1147,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="officeMobileNumber">Office Mobile Number
                                             </label>
-                                            <input name="officeMobileNumber" [(ngModel)]="fofficeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no">
+                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no">
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -1174,7 +1174,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="city">City
                                             </label>
-                                            <input name="city" id="city" [(ngModel)]="officeInfo.city_id" #city="ngModel" type="text" class="form-control m-input m-input--air" placeholder="Enter city">
+                                            <input name="city" id="city" [(ngModel)]="officeInfo.city" #city="ngModel" type="text" class="form-control m-input m-input--air" placeholder="Enter city">
                                         </div>
                                         </div>
                                     </div>
@@ -1183,7 +1183,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="country">Country
                                             </label>
-                                            <ng-select name="country" [items]="countryData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="personalInfo.country_id">
+                                            <ng-select name="country" [items]="countryData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="officeInfo.country_id">
                                             </ng-select>
                                         </div>
                                         </div>
@@ -1258,7 +1258,7 @@
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
-                                    <form class="m-form m-form--fit m-form--label-align-right" #fpositionDetails="ngForm" novalidate="novalidate">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fpositionDetails="ngForm" (ngSubmit)="fpositionDetails.valid && savePositionInfo()"  novalidate="novalidate">
                                         <div class="row">
                                         <div class="col-md-6 adn-form__group" hidden="true">
                                             <div class="form-group m-form__group">

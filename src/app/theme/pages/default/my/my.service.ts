@@ -142,6 +142,26 @@ export class MyService {
         }
     }
 
+    saveOfficeInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addOfficeInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateOfficeInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+    
+    savePositionInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addPositionInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updatePositionInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
     saveBankDetails(data: any): Observable<Response> {
         {
             let url = "user/addBankInfo"
