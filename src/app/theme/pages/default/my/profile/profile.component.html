@@ -1039,13 +1039,18 @@
                                             <div class="form-group m-form__group">
                                                 <label for="fmobileNumber">Mobile Number
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #fmobileNumber="ngModel" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text" OnlyNumber="true">
+                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
+                                                    <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
+                                                            Please enter your 10 digit number
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="fbirthDate">Birth Date</label>
-                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="fbirthDate" [(ngModel)]="family.dateOfBirth" #fbirthDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" >
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="fbirthDate" [(ngModel)]="family.dateOfBirth" #fbirthDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [maxDate]="currentDate" >
                                             </div>
                                         </div>
                                         </div>
