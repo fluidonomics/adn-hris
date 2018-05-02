@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
 
-    currentDate:any;
+    currentDate:any=new Date();
 
     //Local Variable for Profile 
     personalInfo: any = {}
@@ -35,8 +35,8 @@ export class ProfileComponent implements OnInit {
     documents: any = {}
     academicInfo = [];
     joiningDetails: any = {}
-    certificationsandTrainingInfo = [];
-    previousEmploymentDetails = [];
+    certificationsandTrainingInfo:any = [];
+    previousEmploymentDetails:any = [];
     familyInfo: any = []
     officeInfo: any = {}
     positionDetails: any = {}
@@ -268,6 +268,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 mApp.unblock('#m_accordion_5_item_1_body');
                 this.personalInfo = data.json() || {};
+                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
             },
             error => {
                 mApp.unblock('#m_accordion_5_item_1_body');
@@ -353,6 +354,10 @@ export class ProfileComponent implements OnInit {
         .subscribe(
         data => {
             this.officeInfo.address=data.json();
+            this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
+            this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
+            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
+            this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
         },
         error => {
         });
@@ -411,6 +416,10 @@ export class ProfileComponent implements OnInit {
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
                 this.carDetails = data.json();
+                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};;
@@ -588,6 +597,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 this.personalInfo = data.json() || {};
+                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
             },
             error => {
             });
@@ -788,6 +798,12 @@ export class ProfileComponent implements OnInit {
                 if (this.previousEmploymentDetails.length == 0) {
                     this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
                 }
+                else{
+                    for (let index = 0; index < this.previousEmploymentDetails.length; index++) {
+                        this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):null;
+                        this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):null;
+                     }
+                }
             },
             error => {
             });
@@ -813,6 +829,11 @@ export class ProfileComponent implements OnInit {
                 this.familyInfo = res.json().data;
                 if (this.familyInfo.length == 0) {
                     this.familyInfo.push(new FamilyInfo());
+                }
+                else{
+                   for (let index = 0; index < this.familyInfo.length; index++) {
+                      this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):null;
+                   }
                 }
             },
             error => {
