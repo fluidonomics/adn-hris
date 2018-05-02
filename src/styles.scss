@@ -990,3 +990,22 @@ a {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+
+/******************************Rotate Icon****************************************/
+input:-moz-read-only { /* For Firefox */
+  background-color: yellow;
+}
+
+input:read-only { 
+  background-color: yellow;
+}
+
+/******************************lable height****************************************/
+.adn-label{
+  min-height:38px;  
+}
+
+/******************************Readonly****************************************/
+.form-control[readonly] {
+  background-color: #ECECF5;
+}
