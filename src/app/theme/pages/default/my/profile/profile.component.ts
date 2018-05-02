@@ -1216,6 +1216,10 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 this.carDetails = data.json() || {};
+                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};
