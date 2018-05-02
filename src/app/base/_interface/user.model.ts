@@ -166,7 +166,7 @@ export class PreviousEmploymentInfo {
     responsibility: string = null;
     companyLocation: string = null;
     employmentPeriodFrom: Date = null;
-    employmentPeriodTo:Date = null;
+    employmentPeriodTo: Date = null;
     areaOfExperience: string = null;
 }
 export class ProbationInfo {

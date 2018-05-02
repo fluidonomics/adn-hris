@@ -1,10 +1,10 @@
 // round.pipe.ts
-import {Pipe, PipeTransform} from "@angular/core";
- 
+import { Pipe, PipeTransform } from "@angular/core";
+
 /**
  *
  */
-@Pipe({name: 'ceil'})
+@Pipe({ name: 'ceil' })
 export class CeilPipe implements PipeTransform {
     /**
      *

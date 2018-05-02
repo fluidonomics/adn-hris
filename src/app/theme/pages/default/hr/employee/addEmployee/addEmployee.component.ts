@@ -132,7 +132,7 @@ export class AddEmployeeComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
-                    this.addemp.vertical_id=null;
+                    this.addemp.vertical_id = null;
                     this.verticalData = res.json()
                 }
             },
@@ -335,7 +335,7 @@ export class AddEmployeeComponent implements OnInit {
                 // message: 'Please wait...'
             });
             //default roles of employee
-            this.addemp.roles=[5];
+            this.addemp.roles = [5];
             this._hrService.addEmployee(this.addemp).subscribe(
                 data => {
                     if (data.ok) {
