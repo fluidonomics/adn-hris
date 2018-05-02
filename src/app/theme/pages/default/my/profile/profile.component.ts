@@ -851,6 +851,10 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 this.officeInfo = data.json() || {};
+                this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
+                this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
+                this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
+                this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
             },
             error => {
             });

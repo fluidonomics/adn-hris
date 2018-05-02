@@ -1188,7 +1188,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="country">Country
                                             </label>
-                                            <ng-select name="country" [items]="countryData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="officeInfo.country_id">
+                                            <ng-select name="country" [items]="countryData" bindLabel="text" bindValue="id" placeholder="Select Country" [(ngModel)]="officeInfo.country">
                                             </ng-select>
                                         </div>
                                         </div>
@@ -1196,7 +1196,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="costCenter">Cost Center
                                             </label>
-                                            <input name="costCenter" [(ngModel)]="personalInfo.costCentre" #costCenter="ngModel" placeholder="Enter cost center" id="costCenter" type="text" class="form-control m-input m-input--air">
+                                            <input name="costCenter" [(ngModel)]="officeInfo.costCentre" #costCenter="ngModel" placeholder="Enter cost center" id="costCenter" type="text" class="form-control m-input m-input--air">
                                         </div>
                                         </div>
                                     </div>
