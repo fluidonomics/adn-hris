@@ -18,7 +18,6 @@ import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { HrRoutingModule } from './hr-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { OnlyNumberDirective } from "../../../../base/_directive/only-number.directive"
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchPipe } from "../../../../base/_pipes/search.pipes";
 import { OrderPipe } from "../../../../base/_pipes/order.pipes";
@@ -53,7 +52,6 @@ import { HrService } from './hr.service';
         HrPipComponent,
         DirectoryComponent,
         EditEmployeeComponent,
-        OnlyNumberDirective,
         SearchPipe,
         OrderPipe,
         KeysPipe,

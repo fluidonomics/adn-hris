@@ -164,7 +164,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="homePhonNo">Home Phone No.
                                             </label>
-                                            <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel" placeholder="Enter home phone" type="text" class="form-control m-input m-input--air">
+                                            <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel" placeholder="Enter home phone" type="text" OnlyNumber="true" class="form-control m-input m-input--air">
                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
                                                 <span *ngIf="homePhonNo.errors?.minlength">Please enter your 10 digit number</span>
                                                 <span *ngIf="homePhonNo.errors?.maxlength">Please enter your 10 digit number</span>
@@ -250,7 +250,7 @@
                                             <label class="emergencyContactNo">Emergency Contact No.
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber" #emergencyContactNo="ngModel" placeholder="Enter emergency contact no" type="text" class="form-control m-input m-input--air" required>
+                                            <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber" #emergencyContactNo="ngModel" placeholder="Enter emergency contact no" type="text" class="form-control m-input m-input--air" OnlyNumber="true" required>
                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactNo.valid ">
                                                 This field is required.
                                             </div>
@@ -703,7 +703,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="duration">Duration (In Years)
                                                 </label>
-                                                <input type="text" name="duration" [(ngModel)]="academic.duration" #duration="ngModel" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air" OnlyNumber="true">
+                                                <input type="text" name="duration" [(ngModel)]="academic.duration" #duration="ngModel" maxlength="4" minlength="1" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air" OnlyNumber="true">
                                             </div>
                                         </div>
                                         </div>
@@ -1152,7 +1152,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="officeMobileNumber">Office Mobile Number
                                             </label>
-                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no">
+                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" OnlyNumber="true">
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">

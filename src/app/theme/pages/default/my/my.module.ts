@@ -17,6 +17,7 @@ import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
 import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
+import { OnlyNumberDirective } from "../../../../base/_directive/only-number.directive"
 //import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 //import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
 
@@ -48,6 +49,7 @@ import { MyService } from "./my.service"
         CalenderComponent,
         LeaveListComponent,
         ReportsComponent,
+        OnlyNumberDirective,
         //ReviewerComponent,
         //SupervisorComponent
     ],
