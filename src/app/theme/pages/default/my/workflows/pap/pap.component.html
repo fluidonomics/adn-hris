@@ -1,0 +1,351 @@
+<div class="m-content">
+    <div class="row">
+       <div class="col-md-12">
+          <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+             <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                   <div class="m-portlet__head-title">
+                      <h3 class="m-portlet__head-text">
+                         Submit KRA
+                         <small>
+                         </small>
+                      </h3>
+                   </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                   <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                      <li class="nav-item m-tabs__item">
+                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false">
+                         <i class="la la-print"></i>
+                         Print
+                         </a>
+                      </li>
+                      <!-- <li class="nav-item dropdown m-tabs__item">
+                         <a aria-expanded="true" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ng-reflect-href="#">
+                         <i class="la la-user"></i> Options
+                         </a>
+                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-26px, 56px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item active" data-toggle="tab" href="#m_tabs_9_1" ng-reflect-href="#m_tabs_9_1">
+                            Print
+                            </a>								
+                         </div>
+                      </li> -->
+                   </ul>
+                </div>
+             </div>
+             <div class="m-portlet__body">
+                <div class="m-section">
+                   <div class="m-section__content">
+                      <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onKraSubmit(kra)" novalidate  #kra="ngForm">  
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        KRA
+                                    </th>
+                                    <th style="width: 170px;">
+                                        KRA Category
+                                    </th>
+                                    <th>
+                                        Weightage
+                                    </th>
+                                    <th>
+                                        Unit of Success
+                                    </th>
+                                    <th>
+                                        Measure of Success
+                                    </th>
+                                    <th>
+                                        Supervisor
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            1
+                                        </th>
+                                        <td>
+                                            <textarea required style="resize:none"  name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kraOne" #kraOne="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                            <!-- <p class="form-control-feedback has-danger" *ngIf="fkra.submitted && !kraOne.valid ">
+                                                    This field is required.
+                                            </p> -->
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategoryOne" id="kraCategoryOne" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategoryOne" [clearable]="false" #kraCategoryOne="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageOne" id="kraWeightageOne" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageOne" [clearable]="false" #kraWeightageOne="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessOne" id="unitOfSuccessOne" [(ngModel)]="kraInfo.unitOfSuccessOne" #unitOfSuccessOne="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessOne" id="measureOfSuccessOne" [(ngModel)]="kraInfo.measureOfSuccessOne" #measureOfSuccessOne="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorOne" id="supervisorOne" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorOne" [clearable]="false" #supervisorOne="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            2
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraTwo" id="kraTwo" [(ngModel)]="kraInfo.kraTwo" #kraTwo="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategoryTwo" id="kraCategoryTwo" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategoryTwo" [clearable]="false" #kraCategoryTwo="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageTwo" id="kraWeightageTwo" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageTwo" [clearable]="false" #kraWeightageTwo="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessTwo" id="unitOfSuccessTwo" [(ngModel)]="kraInfo.unitOfSuccessTwo" #unitOfSuccessTwo="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessTwo" id="measureOfSuccessTwo" [(ngModel)]="kraInfo.measureOfSuccessTwo" #measureOfSuccessTwo="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorTwo" id="supervisorTwo" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorTwo" [clearable]="false" #supervisorTwo="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            3
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraThree" id="kraThree" [(ngModel)]="kraInfo.kraThree" #kraThree="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategoryThree" id="kraCategoryThree" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategoryThree" [clearable]="false" #kraCategoryThree="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageThree" id="kraWeightageThree" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageThree" [clearable]="false" #kraWeightageThree="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessThree" id="unitOfSuccessThree" [(ngModel)]="kraInfo.unitOfSuccessThree" #unitOfSuccessThree="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessThree" id="measureOfSuccessThree" [(ngModel)]="kraInfo.measureOfSuccessThree" #measureOfSuccessThree="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorThree" id="supervisorThree" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorThree" [clearable]="false" #supervisorThree="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            4
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraFour" id="kraFour" [(ngModel)]="kraInfo.kraFour" #kraFour="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategoryFour" id="kraCategoryFour" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategoryFour" [clearable]="false" #kraCategoryFour="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageFour" id="kraWeightageFour" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageFour" [clearable]="false" #kraWeightageFour="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessFour" id="unitOfSuccessFour" [(ngModel)]="kraInfo.unitOfSuccessFour" #unitOfSuccessFour="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessFour" id="measureOfSuccessFour" [(ngModel)]="kraInfo.measureOfSuccessFour" #measureOfSuccessFour="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorFour" id="supervisorFour" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorFour" [clearable]="false" #supervisorFour="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            5
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraFive" id="kraFive" [(ngModel)]="kraInfo.kraFive" #kraFive="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategoryFive" id="kraCategoryFive" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategoryFive" [clearable]="false" #kraCategoryFive="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageFive" id="kraWeightageFive" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageFive" [clearable]="false" #kraWeightageFive="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessFive" id="unitOfSuccessFive" [(ngModel)]="kraInfo.unitOfSuccessFive" #unitOfSuccessFive="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessFive" id="measureOfSuccessFive" [(ngModel)]="kraInfo.measureOfSuccessFive" #measureOfSuccessFive="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorFive" id="supervisorFive" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorFive" [clearable]="false" #supervisorFive="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            6
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraSix" id="kraSix" [(ngModel)]="kraInfo.kraSix" #kraSix="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategorySix" id="kraCategorySix" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategorySix" [clearable]="false" #kraCategorySix="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageSix" id="kraWeightageSix" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageSix" [clearable]="false" #kraWeightageSix="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessSix" id="unitOfSuccessSix" [(ngModel)]="kraInfo.unitOfSuccessSix" #unitOfSuccessSix="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessSix" id="measureOfSuccessSix" [(ngModel)]="kraInfo.measureOfSuccessSix" #measureOfSuccessSix="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorSix" id="supervisorSix" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorSix" [clearable]="false" #supervisorSix="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            7
+                                        </th>
+                                        <td>
+                                            <textarea style="resize:none" name="kraSeven" id="kraSeven" [(ngModel)]="kraInfo.kraSeven" #kraSeven="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategorySeven" id="kraCategorySeven" [items]="exampleData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.kraCategorySeven" [clearable]="false" #kraCategorySeven="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightageSeven" id="kraWeightageSeven" [items]="weightageData" bindLabel="text"  bindValue="id" placeholder="Weightage" [(ngModel)]="kraInfo.kraWeightageSeven" [clearable]="false" #kraWeightageSeven="ngModel" required></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccessSeven" id="unitOfSuccessSeven" [(ngModel)]="kraInfo.unitOfSuccessSeven" #unitOfSuccessSeven="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccessSeven" id="measureOfSuccessSeven" [(ngModel)]="kraInfo.measureOfSuccessSeven" #measureOfSuccessSeven="ngModel" class="form-control m-input m-input--air" rows="1"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisorSeven" id="supervisorSeven" [items]="supervisorData" bindLabel="text"  bindValue="id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisorSeven" [clearable]="false" #supervisorSeven="ngModel" required></ng-select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <button class="btn btn-success m-btn--air" type="submit" id="submitKra">
+                        Submit
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-metal m-btn--air" type="reset">
+                        Save as Draft
+                        </button>
+                      </form>
+                   </div><br><br>
+                    <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered">
+                        <div class="tab-content">
+                            <div class="m-widget3">
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="hrName">
+                                                Test HR
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time" id="dateTime">
+                                                2 day ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--success m-badge--wide" id="kraStatus">
+                                            accepted
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-success" id="kraTimeline">
+                                            Your KRA has been Accepted.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="supervisorName">
+                                                Test Supervisor
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                1 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--info m-badge--wide">
+                                            initiated
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-info" >
+                                            Your KRA has been Initiated.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="hrName">
+                                                Test HR
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                               2 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--danger m-badge--wide">
+                                            rejected
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-danger">
+                                            Your KRA has been rejected.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="supervisorName">
+                                                Test Supervisor
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                3 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--info m-badge--wide">
+                                            initiated
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-info">
+                                            Your KRA has been Initiated.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
