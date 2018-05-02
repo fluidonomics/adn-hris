@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
     buisnessHrHeadData: any = [];
     groupHrHeadData: any = [];
     designationData: any = [];
-    rolesData: any = [];
+    //rolesData: any = [];
     managementTypeData: any = [];
 
     //Bank Details Tab Dropdown Variable
@@ -868,18 +868,19 @@ export class ProfileComponent implements OnInit {
 
     //load Roles Dropdown Data init
 
-    loadRoles() {
-        this._commonService.getRole().subscribe(
-            res => {
-                if (res.ok) {
-                    this.rolesData = res.json() || [];
-                }
-            },
-            error => {
-                this.rolesData = [];
-            });
+    // loadRoles() {
+    //     this._commonService.getRole().subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 this.rolesData = res.json() || [];
+    //             }
+    //         },
+    //         error => {
+    //             this.rolesData = [];
+    //         });
 
-    }
+    // }
+
     //load Emoloyement Status Dropdown Data init
     loadEmploymentStatus() {
         this._commonService.getEmploymentStatus()
@@ -1117,7 +1118,7 @@ export class ProfileComponent implements OnInit {
         this.loadDivision();
         this.loadManagementType('init');
         this.loadEmploymentStatus();
-        this.loadRoles();
+        //this.loadRoles();
            this._myService.getPositionDetails(this._currentEmpId)
            .subscribe(
            data => {
