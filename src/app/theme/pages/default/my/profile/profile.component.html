@@ -477,7 +477,7 @@
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_9_head" data-toggle="collapse" href="#m_accordion_5_item_9_body" aria-expanded="false">
-                                <span class="m-accordion__item-icon"><i class="fa fas fa-certificate"></i></span>
+                                <span class="m-accordion__item-icon"><i class="fa fa-file"></i></span>
                                 <span class="m-accordion__item-title">Documents</span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
@@ -1026,7 +1026,7 @@
                                                 <label for="relation">Relation
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select name="relation" [items]="relationData" bindLabel="relationName" bindValue="_id" placeholder="Select relation" [(ngModel)]="family.relation_id" #relation="ngModel" required>
+                                                <ng-select name="relation" [items]="relationData" bindLabel="relationName" bindValue="_id" placeholder="Select relation" [(ngModel)]="family.relation_id" #relation="ngModel"  [clearable]="false" required >
                                                 </ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !relation.valid ">
                                                     This field is required.
@@ -1445,18 +1445,18 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <!-- <div class="row">
-                                            <div class="col-md-6 adn-form__group">
-                                                <div class="m-form__group form-group">
-                                                    <label for="form_control_1">User Role</label>
-                                                    <span class="required" aria-required="true">* </span>
-                                                    <ng-select class="m-input m-input--air" name="role" [items]="rolesData" [multiple]="true" bindLabel="roleName" bindValue="_id" placeholder="Select User Role" [(ngModel)]="positionDetails.roles" #role="ngModel" required></ng-select>
-                                                    <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !role.valid ">
-                                                        This field is required.
-                                                    </div>
+                                        <div class="row">
+                                        <!-- <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">User Role</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="role" [items]="rolesData" [multiple]="true" bindLabel="roleName" bindValue="_id" placeholder="Select User Role" [(ngModel)]="positionDetails.roles" #role="ngModel" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !role.valid ">
+                                                    This field is required.
                                                 </div>
                                             </div>
                                         </div> -->
+                                        </div>
                                         <div class="m-form__actions">
                                         <button type="submit" class="btn btn-success">{{positionDetails._id ? 'Update':'Save'}}</button>
                                         <!-- <button type="reset" *ngIf="!positionDetails._id" class="btn btn-secondary">Cancel</button> -->
@@ -1529,7 +1529,7 @@
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_16_head" data-toggle="collapse" href="#m_accordion_5_item_16_body" aria-expanded="false">
-                                <span class="m-accordion__item-icon"><i class="flaticon-piggy-bank"></i></span>
+                                <span class="m-accordion__item-icon"><i class="fa fa-university"></i></span>
                                 <span class="m-accordion__item-title">Bank Details</span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
@@ -1610,7 +1610,7 @@
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_17_head" data-toggle="collapse" href="#m_accordion_5_item_17_body" aria-expanded="false">
-                                <span class="m-accordion__item-icon"><i class="flaticon-piggy-bank"></i></span>
+                                <span class="m-accordion__item-icon"><i class="fa fa-money"></i></span>
                                 <span class="m-accordion__item-title">Salary Details (Monthly)</span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
