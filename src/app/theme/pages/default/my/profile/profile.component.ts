@@ -568,7 +568,7 @@ export class ProfileComponent implements OnInit {
                     return false;
                 }
                 return true;
-            case "certificationAndTrainingInfo":
+            case "certification":
                 if (this.certificationsandTrainingInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
                     return false;
                 }
