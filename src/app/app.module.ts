@@ -20,7 +20,7 @@ import { AccessDeniedComponent } from './accessDenied/accessDenied.component';
 import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
 import { EqualValidator } from "./base/_directive/equalValidator.directive"
-
+import { OnlyNumberDirective } from "./base/_directive/only-number.directive"
 
 @NgModule({
     declarations: [
@@ -30,7 +30,8 @@ import { EqualValidator } from "./base/_directive/equalValidator.directive"
         ForgetPasswordComponent,
         ResetPasswordComponent,
         AccessDeniedComponent,
-        EqualValidator
+        EqualValidator,
+        OnlyNumberDirective
     ],
     imports: [
         LayoutModule,
