@@ -15,12 +15,12 @@
                 </div>
                 <div class="m-portlet__head-tools">
                     <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
-                        <li class="nav-item dropdown m-tabs__item">
+                        <li class="nav-item dropdown m-tabs__item" >
                             <a aria-expanded="true" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ng-reflect-href="#">
                             <i class="la la-user"></i> Personal Info
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-26px, 56px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a class="dropdown-item" data-toggle="tab" routerLink="/my/profile" [queryParams]="{'tabName':'personal'}" [ngClass]="{'active':tabName=='personal'}">
+                            <a class="dropdown-item" data-toggle="tab"  routerLink="/my/profile" [queryParams]="{'tabName':'personal'}" [ngClass]="{'active':tabName=='personal'}">
                             Personal
                             </a>
                             <a class="dropdown-item" data-toggle="tab" routerLink="/my/profile" [queryParams]="{'tabName':'documents'}" [ngClass]="{'active':tabName=='documents'}">
@@ -37,7 +37,7 @@
                             </a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown m-tabs__item">
+                        <li class="nav-item dropdown m-tabs__item" *ngIf="officeInfo.isCompleted && positionDetails.isCompleted && performanceDiary.isCompleted && bankDetails.isCompleted && salaryDetails.isCompleted && carDetails.isCompleted">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ng-reflect-href="#">
                             <i class="la la-desktop"></i> Office Info
                             </a>
@@ -820,7 +820,7 @@
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
                                         <div class="m-form__actions">
-                                        <button class="btn btn-success" [disabled]="isAdded('certificationAndTrainingInfo')" (click)="addNewHtmlContain('certificationAndTrainingInfo')"><i class="fa fa-plus"></i> Add
+                                        <button class="btn btn-success" [disabled]="isAdded('certification')" (click)="addNewHtmlContain('certification')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
                                     </div>
@@ -1158,8 +1158,12 @@
                                         <div class="col-md-6 adn-form__group">
                                         <div class="form-group m-form__group">
                                             <label for="officeEmailId">Office Email ID
+                                                <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input id="officeEmailId" [(ngModel)]="officeInfo.officeEmail" #officeEmailId="ngModel" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" aria-invalid="true" aria-describedby="email-error">
+                                            <input  [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" email required>
+                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officeEmail.valid ">
+                                                    This field is required.
+                                            </div>
                                         </div>
                                         </div>
                                     </div>
