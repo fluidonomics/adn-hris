@@ -8,7 +8,7 @@ const now = new Date();
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./bulkemail.component.html",
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ["./bulkemail.component.scss"]
+    //styleUrls: ["./bulkemail.component.scss"]
 })
 export class BulkEmailComponent implements OnInit {
 
