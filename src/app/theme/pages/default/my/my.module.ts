@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
 import { MyPapComponent } from './workflows/pap/pap.component'
 import { MyPipComponent } from './workflows/pip/pip.component'
@@ -19,6 +20,7 @@ import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
 //import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 //import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
+
 
 import { MyRoutingModule } from './my-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -48,6 +50,7 @@ import { MyService } from "./my.service"
         CalenderComponent,
         LeaveListComponent,
         ReportsComponent,
+        ProfileEditComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],

@@ -241,11 +241,19 @@ export class CommonService {
 
     }
 
+    checkTabCompleted(empId:number,tabName?: string) {
+        let url = "common/checkTabCompleted?emp_id="+empId +"&tab="+tabName;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    
+
     getLevelOfEducation() {
         return levelofEducation;
         // let url=this.ApiPath+"/getNationality";
         // return this.http.get(url).map((response: Response) => response.json());
     }
+
+
 
     getExamDegreeTitle() {
         return examDegreeTitle;

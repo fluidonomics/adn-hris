@@ -35,7 +35,7 @@
 					    <tbody class="m-datatable__body">
 							<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
 								<td class="m-datatable__cell m-datatable__cell--sort">
-										<a align="center" routerLink="/hr/employee/edit" [queryParams]="{ id: employee._id }">
+										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
 											<i class="fa fa-expand"></i>
 									   </a>
 								</td>

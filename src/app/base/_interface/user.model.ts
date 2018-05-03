@@ -12,7 +12,8 @@ export class AcademicInfo {
     yearOfPassing: string = null;
     duration: number = null;
     achievements: string = null;
-    examDegreeTitleData: any = []
+    examDegreeTitleData: any = null;
+    isCompleted:boolean=false;
 }
 export class AddressInfo {
     _id: number = null;
@@ -137,6 +138,7 @@ export class OfficeInfo {
     employeeCategory: string = null;
     reviewer_id: number = null;
     hrspoc_id: number = null;
+    isCompleted:boolean=false;
 }
 export class PersonalInfo {
     _id: number = null;
@@ -154,7 +156,7 @@ export class PersonalInfo {
     maritialStatus: string = null;
     emergencyContactPerson: string = null;
     emergencyContactNumber: number = null;
-    isCompleted: string = null;
+    isCompleted:boolean=false;
 }
 export class PreviousEmploymentInfo {
     _id: number = null;
@@ -200,6 +202,7 @@ export class SalaryInfo {
     groupLifeInsurance: string = null;
     hospitalizationScheme: string = null;
     isSalaryHike: boolean = null;
+    isCompleted:boolean=false;
 }
 export class SeparationInfo {
     _id: number = null;

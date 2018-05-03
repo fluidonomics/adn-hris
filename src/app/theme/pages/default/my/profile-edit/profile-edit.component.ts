@@ -1,5 +1,4 @@
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -15,13 +14,11 @@ declare var mApp;
 declare var $;
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile",
-    templateUrl: "./profile.component.html",
-    encapsulation: ViewEncapsulation.None    
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
+    templateUrl: "./profile-edit.component.html",
+    encapsulation: ViewEncapsulation.None,
 })
-
-export class ProfileComponent implements OnInit {
-
+export class ProfileEditComponent implements OnInit {
     options:UploaderOptions;
     uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
@@ -45,8 +42,7 @@ export class ProfileComponent implements OnInit {
     carDetails: any = {};
 
     exampleData: any = [];
-    tabName = "personal";
-    params = "";
+    tabName = "office";
 
     _currentEmpId: number;
     param_emp_id: number;
@@ -101,8 +97,6 @@ export class ProfileComponent implements OnInit {
 
     countryData=[];
 
-    
-    isOfficeTabCompleted=false;
     isPersonalTabCompleted=false;
 
     
@@ -171,35 +165,21 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.exampleData = [
-            {
-                id: 'basic1',
-                text: 'Basic 1'
-            },
-            {
-                id: 'basic2',
-                text: 'Basic 2'
-            },
-            {
-                id: 'basic3',
-                text: 'Basic 3'
-            },
-            {
-                id: 'basic4',
-                text: 'Basic 4'
-            },
-        ];
         this._route.queryParams.subscribe(params => {
             if (params['tabName']) {
                 this.tabName = params['tabName'];
             }
-            this._authService.validateToken().subscribe(
-                res => {
-                    this._currentEmpId = this._authService.currentUserData._id;
-                    this.initData();
-                    this.checkTabCompleted('office');
-                    this.checkTabCompleted('personal');
-                });
+            if(params['id'])
+            {
+              this._currentEmpId = params['id'];
+              this.initData();
+              //this.checkTabCompleted('personal');
+            }
+            // this._authService.validateToken().subscribe(
+            //     res => {
+            //         this._currentEmpId = this._authService.currentUserData._id;
+            //         this.checkTabCompleted('office');
+            //});
         });
     }
 
@@ -240,9 +220,6 @@ export class ProfileComponent implements OnInit {
             this.address.permanentAddressDivision_id = this.address.currentAddressDivision_id;
             this.address.permanentAddressThana_id = this.address.currentAddressThana_id;
             this.address.permanentAddressPostCode = this.address.currentAddressPostCode;
-
-            // this.loadpermanentAddressDistrictData(this.address.currentAddressDivision_id,"init");
-            // this.loadpermanentAddressThanaData(this.address.currentAddressDistrict_id,"init");
         }
     }
 
@@ -268,10 +245,7 @@ export class ProfileComponent implements OnInit {
         data => {
             if(data.ok)
             {
-              if(tabName=="office")
-              this.isOfficeTabCompleted=data.json();
-              else
-              this.isPersonalTabCompleted=data.json();
+             this.isPersonalTabCompleted=data.json();
             }
         },  
         error => {
@@ -462,105 +436,56 @@ export class ProfileComponent implements OnInit {
     }
     //delete Academic Info
     deleteAcademicInfo(academicInfo_id: number) {
-        swal({
-            title: 'Are you sure?',
-            text: "You want to delete !",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#66BB6A',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-          }).then((result) => {
-            if (result.value) {
-                this._myService.deleteAcademicInfo(academicInfo_id)
-                .subscribe(
-                data => {
-                    if (data.ok) {
-                        this.removeHtmlContain("academicInfo", academicInfo_id);
-                    }
-                },
-                error => {
-                    //mApp.unblock('#m_accordion_5_item_1_body');
-                });
-            }
-          })
-      
+        this._myService.deleteAcademicInfo(academicInfo_id)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("academicInfo", academicInfo_id);
+                }
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     //delete Previous Employment
     deletePreviousEmployment(previousEmployment_id: number) {
-        swal({
-                title: 'Are you sure?',
-                text: "You want to delete !",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#66BB6A',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-              }).then((result) => {
-                if (result.value) {
-                    this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
-                    .subscribe(
-                    data => {
-                        if (data.ok) {
-                            this.removeHtmlContain("employment", previousEmployment_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+        this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("employment", previousEmployment_id);
                 }
-              })
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     //delete Family Info
     deleteFamilyInfo(family_id: number) {
-        swal({
-            title: 'Are you sure?',
-            text: "You want to delete !",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#66BB6A',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-          }).then((result) => {
-            if (result.value) {
-                this._myService.deleteFamilyInfo(family_id)
-                .subscribe(
-                data => {
-                    if (data.ok) {
-                        this.removeHtmlContain("family", family_id);
-                    }
-                },
-                error => {
-                    //mApp.unblock('#m_accordion_5_item_1_body');
-                });
-            }
-          })
+        this._myService.deleteFamilyInfo(family_id)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("family", family_id);
+                }
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
     
      //delete Family Info
      deleteCertificationInfo(certification_id: number) {
-        swal({
-                title: 'Are you sure?',
-                text: "You want to delete !",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#66BB6A',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-              }).then((result) => {
-                if (result.value) {
-                    this._myService.deleteCertificationInfo(certification_id)
-                    .subscribe(
-                    data => {
-                        if (data.ok) {
-                            this.removeHtmlContain("certification", certification_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+        this._myService.deleteCertificationInfo(certification_id)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.removeHtmlContain("certification", certification_id);
                 }
-              })
+            },
+            error => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
     }
 
     // addNewAcademicInfoHtml()
@@ -637,7 +562,7 @@ export class ProfileComponent implements OnInit {
     isAdded(subTabName: string) {
         switch (subTabName) {
             case "academicInfo":
-                if (this.academicInfo.filter(x => x._id == null || x._id == undefined && x.isCompleted==true).length == 0) {
+                if (this.academicInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
                     return false;
                 }
                 return true;
