@@ -6,15 +6,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import swal from 'sweetalert2';
 
-const now = new Date();
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./bulkemail.component.html",
-    encapsulation: ViewEncapsulation.None,
-    //styleUrls: ["./bulkemail.component.scss"]
+    encapsulation: ViewEncapsulation.None
+  
 })
 export class BulkEmailComponent implements OnInit {
 
@@ -22,7 +21,9 @@ export class BulkEmailComponent implements OnInit {
 
     disabled: boolean = false;
 
-    objemail:any={}
+    bulkemail:any={}
+
+  
   
     options = {
         toolbar: [
@@ -93,14 +94,15 @@ export class BulkEmailComponent implements OnInit {
     }
 
 
-    sendEmail()
+    sendEmail(form)
     {
-        this._commonService.sendEmail(this.objemail)
+        this._commonService.sendEmail(this.bulkemail)
         .subscribe(
         data => {
             if(data.ok)
             {
-                alert("Email Send");
+                swal("Mail Send Successfully!","", "success");
+                form.resetForm();
             }
         },
         error => {

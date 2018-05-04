@@ -30,13 +30,13 @@ export class ForgetPasswordComponent {
         //     });
     }
 
-    forgetPassword() {
+    forgetPassword(form) {
         //this.loading = true;
         this._authService.forget(this.forgetModel)
             .subscribe(
             data => {
                 if (data.ok) {
-
+                    form.resetFrom();
                 }
                 //this._router.navigate([this.returnUrl]);
             },
