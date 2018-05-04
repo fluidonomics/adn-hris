@@ -101,6 +101,11 @@ export class ProfileComponent implements OnInit {
 
     countryData=[];
 
+
+    profileProcess={
+        isOfficeProfileCompleted:false,
+        isPersonalProfileCompleted:true
+    }
     
     isOfficeTabCompleted=false;
     isPersonalTabCompleted=false;
@@ -171,24 +176,6 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.exampleData = [
-            {
-                id: 'basic1',
-                text: 'Basic 1'
-            },
-            {
-                id: 'basic2',
-                text: 'Basic 2'
-            },
-            {
-                id: 'basic3',
-                text: 'Basic 3'
-            },
-            {
-                id: 'basic4',
-                text: 'Basic 4'
-            },
-        ];
         this._route.queryParams.subscribe(params => {
             if (params['tabName']) {
                 this.tabName = params['tabName'];
@@ -197,8 +184,9 @@ export class ProfileComponent implements OnInit {
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
-                    this.checkTabCompleted('office');
-                    this.checkTabCompleted('personal');
+                    //this.checkTabCompleted('office');
+                    //this.checkTabCompleted('personal');
+                    this.loadProcessStatusInfoDetails();
                 });
         });
     }
@@ -279,6 +267,22 @@ export class ProfileComponent implements OnInit {
         });
      
     }
+
+    loadProcessStatusInfoDetails()
+    {
+        this._commonService.getProfileProcessStatus(this._currentEmpId)
+        .subscribe(
+        data => {
+            if(data.ok)
+            {
+              this.profileProcess=data.json();
+            }
+        },  
+        error => {
+            
+        });
+    }
+
     //save Personal Info
     savePersonalInfo() {
         mApp.block('#m_accordion_5_item_1_body', {

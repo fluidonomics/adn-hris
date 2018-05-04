@@ -245,6 +245,16 @@ export class CommonService {
         let url = "common/checkTabCompleted?emp_id="+empId +"&tab="+tabName;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
+    
+    getProfileProcessStatus(empId?:number) {
+        let url = "common/getProfileProcessStatus" 
+        if(empId)
+        {
+           url = "common/getProfileProcessStatus?emp_id="+empId 
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     
 
     getLevelOfEducation() {

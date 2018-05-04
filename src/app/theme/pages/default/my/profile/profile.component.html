@@ -11,6 +11,7 @@
                             <small>
                             </small>
                         </h3>
+                        <button *ngIf="!profileProcess.isPersonalProfileCompleted">Submit</button>
                     </div>
                 </div>
                 <div class="m-portlet__head-tools">
@@ -37,7 +38,7 @@
                             </a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown m-tabs__item" *ngIf="isOfficeTabCompleted">
+                        <li class="nav-item dropdown m-tabs__item" *ngIf="profileProcess.officeProfileStatus=='Approved'">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
                             <i class="la la-desktop"></i> Office Info
                             </a>
@@ -58,7 +59,7 @@
                 </div>
                 <div class="m-portlet__body">
                 <div class="tab-content">
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='personal'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='personal'}" *ngIf="tabName=='personal'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                                 <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body" aria-expanded="false">
@@ -67,7 +68,7 @@
                                     <span class="m-accordion__item-mode"></span>
                                 </div>
                                 <div class="m-accordion__item-body collapse" id="m_accordion_5_item_1_body" role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_5">
-                                    <div class="row" *ngIf="!isPersonalTabCompleted">
+                                    <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh" >
                                             <button class="btn btn-secondary" type="button" (click)="loadPersonalInfoTabData()"> <i class="fa fa-refresh"></i> </button>
@@ -99,14 +100,14 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="fatherName">Father's Name
                                                     </label>
-                                                    <input type="text" name="fatherName"  [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" id="fatherName" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" name="fatherName"  [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" id="fatherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 adn-form__group">
                                                 <div class="form-group m-form__group">
                                                     <label for="motherName">Mother's Name
                                                     </label>
-                                                    <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" id="motherName" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" id="motherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </div>
                                             </div>
                                         </div>
@@ -118,15 +119,15 @@
                                                     </label>
                                                     <div class="m-radio-inline">
                                                         <label class="m-radio">
-                                                        <input name="gender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel" [disabled]="isPersonalTabCompleted"> Male
+                                                        <input name="gender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel" [disabled]="profileProcess.isPersonalProfileCompleted"> Male
                                                         <span></span>
                                                         </label>
                                                         <label class="m-radio">
-                                                        <input name="gender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" [disabled]="isPersonalTabCompleted"> Female
+                                                        <input name="gender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" [disabled]="profileProcess.isPersonalProfileCompleted"> Female
                                                         <span></span>
                                                         </label>
                                                         <label class="m-radio">
-                                                        <input name="gender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" [disabled]="isPersonalTabCompleted"> Other
+                                                        <input name="gender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" [disabled]="profileProcess.isPersonalProfileCompleted"> Other
                                                         <span></span>
                                                         </label>
                                                     </div>
@@ -137,7 +138,7 @@
                                                     <label for="birthDate">Birth Date
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #birthDate="ngModel" required [disabled]="isPersonalTabCompleted">
+                                                    <input name="birthDate" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="personalInfo.dob" bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #birthDate="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !birthDate.valid">
                                                         This field is required.
                                                     </div>
@@ -150,7 +151,7 @@
                                                     <label for="mobileNo">Mobile No.
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true" minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true" minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !mobileNo.valid">
                                                         This field is required.
                                                     </div>
@@ -164,7 +165,7 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="homePhonNo">Home Phone No.
                                                     </label>
-                                                    <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel" placeholder="Enter home phone" type="text" OnlyNumber="true" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                    <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel" placeholder="Enter home phone" type="text" OnlyNumber="true" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
                                                         <span *ngIf="homePhonNo.errors?.minlength">Please enter your 10 digit number</span>
                                                         <span *ngIf="homePhonNo.errors?.maxlength">Please enter your 10 digit number</span>
@@ -178,7 +179,7 @@
                                                     <label for="personalEmail">Personal Email
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" #personalEmail="ngModel" placeholder="Enter email" type="email" required [disabled]="isPersonalTabCompleted">
+                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" #personalEmail="ngModel" placeholder="Enter email" type="email" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !personalEmail.valid ">
                                                         This field is required.
                                                     </div>
@@ -191,7 +192,7 @@
                                                     <label for="bloodGroup">Blood Group
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="bloodGroup" [items]="bloodGropData" bindLabel="text" bindValue="id" placeholder="Select Blood Group" [(ngModel)]="personalInfo.bloodGroup" [clearable]="false" #bloodGroup="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="bloodGroup" [items]="bloodGropData" bindLabel="text" bindValue="id" placeholder="Select Blood Group" [(ngModel)]="personalInfo.bloodGroup" [clearable]="false" #bloodGroup="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !bloodGroup.valid ">
                                                         This field is required.
                                                     </div>
@@ -202,7 +203,7 @@
                                                     <label for="religion">Religion
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="religion" [items]="religionData" bindLabel="text" bindValue="id" placeholder="Select Religion" [(ngModel)]="personalInfo.religion" [clearable]="false" #religion="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="religion" [items]="religionData" bindLabel="text" bindValue="id" placeholder="Select Religion" [(ngModel)]="personalInfo.religion" [clearable]="false" #religion="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !religion.valid ">
                                                         This field is required.
                                                     </div>
@@ -215,7 +216,7 @@
                                                     <label for="maritalStatus">Marital Status
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="maritalStatus" [items]="maritialStatusData" bindLabel="text" bindValue="id" placeholder="Select maritalStatus" [(ngModel)]="personalInfo.maritialStatus" [clearable]="false" #maritalStatus="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="maritalStatus" [items]="maritialStatusData" bindLabel="text" bindValue="id" placeholder="Select maritalStatus" [(ngModel)]="personalInfo.maritialStatus" [clearable]="false" #maritalStatus="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !maritalStatus.valid ">
                                                         This field is required.
                                                     </div>
@@ -226,7 +227,7 @@
                                                     <label for="nationality">Nationality
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="nationality" [items]="nationalityData" bindLabel="text" bindValue="id" placeholder="Select maritalStatus" [(ngModel)]="personalInfo.nationality" [clearable]="false" #nationality="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="nationality" [items]="nationalityData" bindLabel="text" bindValue="id" placeholder="Select maritalStatus" [(ngModel)]="personalInfo.nationality" [clearable]="false" #nationality="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !nationality.valid ">
                                                         This field is required.
                                                     </div>
@@ -239,7 +240,7 @@
                                                     <label for="emergencyContactName">Emergency Contact Name
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" placeholder="Enter emergency contact name" id="emergencyContactName" data-required="1" class="form-control m-input m-input--air" required [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" placeholder="Enter emergency contact name" id="emergencyContactName" data-required="1" class="form-control m-input m-input--air" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactName.valid ">
                                                         This field is required.
                                                     </div>
@@ -250,14 +251,14 @@
                                                 <label class="emergencyContactNo">Emergency Contact No.
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber" #emergencyContactNo="ngModel" placeholder="Enter emergency contact no" type="text" class="form-control m-input m-input--air" OnlyNumber="true" required [disabled]="isPersonalTabCompleted">
+                                                <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber" #emergencyContactNo="ngModel" placeholder="Enter emergency contact no" type="text" class="form-control m-input m-input--air" OnlyNumber="true" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactNo.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
                                             </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                             <button type="submit"  class="btn btn-success">{{personalInfo._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
@@ -271,7 +272,7 @@
                                     <span class="m-accordion__item-mode"></span>
                                 </div>
                                 <div class="m-accordion__item-body collapse" id="m_accordion_5_item_2_body" role="tabpanel" aria-labelledby="m_accordion_5_item_2_head" data-parent="#m_accordion_5">
-                                    <div class="row" *ngIf="!isPersonalTabCompleted">
+                                    <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh">
                                             <button class="btn btn-secondary" type="button" (click)="loadAddressTabData();"> <i class="fa fa-refresh"></i> </button>
@@ -308,7 +309,7 @@
                                                         <label for="addressLine1">Address Line 1
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <input class="form-control m-input m-input--air" id="addressLine1" name="addressLine1" [(ngModel)]="address.currentAddressLine1" #addressLine1="ngModel" placeholder="Enter address line 1" type="text" required [disabled]="isPersonalTabCompleted">
+                                                        <input class="form-control m-input m-input--air" id="addressLine1" name="addressLine1" [(ngModel)]="address.currentAddressLine1" #addressLine1="ngModel" placeholder="Enter address line 1" type="text" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                         <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !addressLine1.valid ">
                                                         This field is required.
                                                         </div>
@@ -318,7 +319,7 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="currentAddressLine2">Address Line 2
                                                         </label>
-                                                        <input type="text" [(ngModel)]="address.currentAddressLine2" #currentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Address Line 2" id="currentAddressLine2" name="currentAddressLine2" required [disabled]="isPersonalTabCompleted">
+                                                        <input type="text" [(ngModel)]="address.currentAddressLine2" #currentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Address Line 2" id="currentAddressLine2" name="currentAddressLine2" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,7 +329,7 @@
                                                         <label for="division">Division
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <ng-select class="m-input m-input--air" #currentDivision name="currentAddressDivision" [items]="currentAddressDivisionData" (change)="loadcurrentAddressDistrictData(address.currentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.currentAddressDivision_id" [clearable]="false" #currentAddressDivision="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <ng-select class="m-input m-input--air" #currentDivision name="currentAddressDivision" [items]="currentAddressDivisionData" (change)="loadcurrentAddressDistrictData(address.currentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.currentAddressDivision_id" [clearable]="false" #currentAddressDivision="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressDivision.valid ">
                                                         This field is required.
                                                         </div>
@@ -339,7 +340,7 @@
                                                         <label for="currentAddressDistrict">District
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <ng-select class="m-input m-input--air" #currentDistrict name="currentAddressDistrict" (change)="loadcurrentAddressThanaData(address.currentAddressDistrict_id)" [items]="currentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.currentAddressDistrict_id" [clearable]="false" #currentAddressDistrict="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <ng-select class="m-input m-input--air" #currentDistrict name="currentAddressDistrict" (change)="loadcurrentAddressThanaData(address.currentAddressDistrict_id)" [items]="currentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.currentAddressDistrict_id" [clearable]="false" #currentAddressDistrict="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressDistrict.valid ">
                                                         This field is required.
                                                         </div>
@@ -352,7 +353,7 @@
                                                         <label for="thane">Thane
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressthane.valid ">
                                                         This field is required.
                                                         </div>
@@ -363,7 +364,7 @@
                                                         <label for="currentAddressPostCode">Post Code
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="isPersonalTabCompleted">
+                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                         <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressPostCode.valid ">
                                                         This field is required.
                                                         </div>
@@ -381,7 +382,7 @@
                                                     <div class="md-checkbox">
                                                         <label class="m-checkbox m-checkbox--success">
                                                                 
-                                                        <input type="checkbox" name="isSameAsCurrent" #sameAddress [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;resetPermentAddress()" [disabled]="isPersonalTabCompleted"> Same as Current Address
+                                                        <input type="checkbox" name="isSameAsCurrent" #sameAddress [(ngModel)]="address.isSameAsCurrent" (click)="address.isSameAsCurrent=!address.isSameAsCurrent;resetPermentAddress()" [disabled]="profileProcess.isPersonalProfileCompleted"> Same as Current Address
                                                         <span class="box" id="addressCheck1"></span>
                                                         </label>
                                                     </div>
@@ -394,7 +395,7 @@
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine1}}</span>
-                                                        <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine1" #permanentAddressLine1="ngModel" placeholder="Enter Permanent Address Line 1" class="form-control m-input m-input--air" id="permanentAddressLine1" name="permanentAddressLine1" required [disabled]="isPersonalTabCompleted">
+                                                        <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine1" #permanentAddressLine1="ngModel" placeholder="Enter Permanent Address Line 1" class="form-control m-input m-input--air" id="permanentAddressLine1" name="permanentAddressLine1" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                         <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressLine1.valid ">
                                                         This field is required.
                                                         </div>
@@ -405,7 +406,7 @@
                                                         <label for="permanentAddressLine2">Address Line 2
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine2}}</span>
-                                                        <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine2" #permanentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Permanent Address Line 2" id="permanentAddressLine2" name="permanentAddressLine2" [disabled]="isPersonalTabCompleted">
+                                                        <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine2" #permanentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Permanent Address Line 2" id="permanentAddressLine2" name="permanentAddressLine2" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </div>
                                                 </div>
                                             </div>
@@ -416,7 +417,7 @@
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDivision?.selectedItems[0]?.label}}</span>
-                                                        <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false" #permanentAddressDivision="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)" bindLabel="locationName" bindValue="_id" placeholder="Select Division" [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false" #permanentAddressDivision="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressDivision.valid ">
                                                         This field is required.
                                                         </div>
@@ -428,7 +429,7 @@
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDistrict?.selectedItems[0]?.label}}</span>
-                                                        <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div  class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressDistrict.valid ">
                                                         This field is required.
                                                         </div>
@@ -441,7 +442,7 @@
                                                         <label for="permanentAddressThana">Thana
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>                                                 <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                        <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>                                                 <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressThana.valid ">
                                                         This field is required.
                                                         </div>
@@ -453,7 +454,7 @@
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
-                                                        <input *ngIf="!address.isSameAsCurrent" type="text" [readonly]="address.isSameAsCurrent" maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="isPersonalTabCompleted">
+                                                        <input *ngIf="!address.isSameAsCurrent" type="text" [readonly]="address.isSameAsCurrent" maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                         <div  class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressPostCode.valid ">
                                                         This field is required.
                                                         </div>
@@ -462,7 +463,7 @@
                                             </div>
                                             <br/>
                                             </div>
-                                            <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                            <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                             <button type="submit" class="btn btn-success">{{address._id ? 'Update':'Save'}}</button>
                                             <!-- <button type="reset" *ngIf="!address._id" class="btn btn-secondary">Cancel</button> -->
                                             </div>
@@ -472,7 +473,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='documents'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='documents'}" *ngIf="tabName=='documents'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_9_head" data-toggle="collapse" href="#m_accordion_5_item_9_body" aria-expanded="false">
@@ -481,7 +482,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_9_body" role="tabpanel" aria-labelledby="m_accordion_5_item_9_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!isPersonalTabCompleted">
+                                <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();"> <i class="fa fa-refresh"></i> </button>
@@ -514,7 +515,7 @@
                                                 <label for="txtNationalIdSmartCard">
                                                 National ID Smart Card
                                                 </label>
-                                                <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number" [disabled]="isOfficeTabCompleted">
+                                                <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number" [disabled]="isOfficeProfileCompleted">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                    <button type="button" class="btn green" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change
@@ -532,7 +533,7 @@
                                                 <label for="txtNationalIDOldFormat">
                                                 National ID (Old Format)
                                                 </label>
-                                                <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" [disabled]="isOfficeTabCompleted">
+                                                <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat" data-required="1" class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" >
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn green" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change
@@ -552,7 +553,7 @@
                                                 <label for="txtBirthRegistrationNumber">
                                                 Birth Registration Number
                                                 </label>
-                                                <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="isOfficeTabCompleted">
+                                                <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter birth registration number" >
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn green" tabindex="-1" id="changeBirthRegistrationNumber" name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
@@ -570,7 +571,7 @@
                                                 <label for="txtPassportNumber">
                                                 Passport Number
                                                 </label>
-                                                <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="isOfficeTabCompleted">
+                                                <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber" data-required="1" class="form-control m-input m-input--air" placeholder="Enter passport number">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn green" tabindex="-1" id="changePassportNumber" name="changePassportNumber" style="margin-right: 6px;">Change
@@ -591,7 +592,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='education'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='education'}" *ngIf="tabName=='education'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_10_head" data-toggle="collapse" href="#m_accordion_5_item_10_body" aria-expanded="false">
@@ -600,7 +601,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_10_body" role="tabpanel" aria-labelledby="m_accordion_5_item_10_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!isPersonalTabCompleted">
+                                <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadAcademicInfoTabData();"> <i class="fa fa-refresh"></i> </button>
@@ -634,7 +635,7 @@
                                                     <label for="levelOfEducation">Level of Education
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName" bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)" [(ngModel)]="academic.levelOfEducation_id" [clearable]="false" #levelOfEducation="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName" bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)" [(ngModel)]="academic.levelOfEducation_id" [clearable]="false" #levelOfEducation="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid">
                                                         This field is required.
                                                     </div>
@@ -645,7 +646,7 @@
                                                     <label for="examDegreeTitle">Exam Degree Title
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="academic.examDegreeTitleData" bindLabel="educationName" bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id" [clearable]="false" #examDegreeTitle="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="academic.examDegreeTitleData" bindLabel="educationName" bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id" [clearable]="false" #examDegreeTitle="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
                                                         This field is required.
                                                     </div>
@@ -657,14 +658,14 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="concentrationMajorGroup">Concentration/Major/Group
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" [(ngModel)]="academic.concentration" #concentrationMajorGroup="ngModel" id="concentrationMajorGroup" name="concentrationMajorGroup" placeholder="Enter concentration/major/goup" type="text" [disabled]="isPersonalTabCompleted">
+                                                    <input class="form-control m-input m-input--air" [(ngModel)]="academic.concentration" #concentrationMajorGroup="ngModel" id="concentrationMajorGroup" name="concentrationMajorGroup" placeholder="Enter concentration/major/goup" type="text" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 adn-form__group">
                                                 <div class="form-group m-form__group">
                                                     <label for="instituteName">Institute Name
                                                     </label>
-                                                    <input type="text" [(ngModel)]="academic.instituteName" #instituteName="ngModel" name="instituteName" placeholder="Enter Institute Name" id="instituteName" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" [(ngModel)]="academic.instituteName" #instituteName="ngModel" name="instituteName" placeholder="Enter Institute Name" id="instituteName" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </div>
                                             </div>
                                         </div>
@@ -674,7 +675,7 @@
                                                     <label for="result">Result
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result" [(ngModel)]="academic.result" [clearable]="false" #result="ngModel" required [disabled]="isPersonalTabCompleted"></ng-select>
+                                                    <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result" [(ngModel)]="academic.result" [clearable]="false" #result="ngModel" required [disabled]="profileProcess.isPersonalProfileCompleted"></ng-select>
                                                     <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
                                                         This field is required.
                                                     </div>
@@ -684,7 +685,7 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="marks">Marks in %
                                                     </label>
-                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </div>
                                             </div>
                                         </div>
@@ -693,14 +694,14 @@
                                             <div class="form-group m-form__group">
                                                 <label for="yearOfPassing">Year of Passing
                                                 </label>
-                                                <input class="form-control m-input m-input--air" maxlength="4" [(ngModel)]="academic.yearOfPassing" #yearOfPassing="ngModel" id="yearOfPassing" name="yearofpassing" placeholder="Enter year of passing" OnlyNumber="true" type="text" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" maxlength="4" [(ngModel)]="academic.yearOfPassing" #yearOfPassing="ngModel" id="yearOfPassing" name="yearofpassing" placeholder="Enter year of passing" OnlyNumber="true" type="text" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="duration">Duration (In Years)
                                                 </label>
-                                                <input type="text" name="duration" [(ngModel)]="academic.duration" #duration="ngModel" maxlength="4" minlength="1" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air" OnlyNumber="true" [disabled]="isPersonalTabCompleted">
+                                                <input type="text" name="duration" [(ngModel)]="academic.duration" #duration="ngModel" maxlength="4" minlength="1" placeholder="Enter Duration" id="duration" class="form-control m-input m-input--air" OnlyNumber="true" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         </div>
@@ -709,18 +710,18 @@
                                             <div class="form-group m-form__group">
                                                 <label for="achievements">Achievements
                                                 </label>
-                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="academic.achievements" #achievements="ngModel" id="achievements" name="achievements" placeholder="Enter achievements" type="text" rows="3" [disabled]="isPersonalTabCompleted"></textarea>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="academic.achievements" #achievements="ngModel" id="achievements" name="achievements" placeholder="Enter achievements" type="text" rows="3" [disabled]="profileProcess.isPersonalProfileCompleted"></textarea>
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button type="button" class="btn btn-danger" *ngIf="academic._id" (click)="deleteAcademicInfo(academic._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{academic._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit" >
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button class="btn btn-success" [disabled]="isAdded('academicInfo')" (click)="addNewHtmlContain('academicInfo')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
@@ -737,7 +738,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_11_body" role="tabpanel" aria-labelledby="m_accordion_5_item_11_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!isPersonalTabCompleted">
+                                <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadCertificateAndTraningInfoTabData();"> <i class="fa fa-refresh"></i> </button>
@@ -766,7 +767,7 @@
                                                 <label for="certificationTrainingTitle">Certification/ Training Title
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="certifications.certificationTitle" #certificationTrainingTitle="ngModel" id="certificationTrainingTitle" name="certificationTrainingTitle" placeholder="Enter certification / training title" required type="text" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="certifications.certificationTitle" #certificationTrainingTitle="ngModel" id="certificationTrainingTitle" name="certificationTrainingTitle" placeholder="Enter certification / training title" required type="text" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !certificationTrainingTitle.valid ">
                                                     This field is required.
                                                 </div>
@@ -776,7 +777,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="location">Location
                                                 </label>
-                                                <input type="text" [(ngModel)]="certifications.location" #location="ngModel" name="location" placeholder="Enter location" id="location" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                <input type="text" [(ngModel)]="certifications.location" #location="ngModel" name="location" placeholder="Enter location" id="location" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         </div>
@@ -785,7 +786,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="institution">Institution
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="certifications.institution" #institution="ngModel" id="institution" name="institution" placeholder="Enter institution" type="text" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="certifications.institution" #institution="ngModel" id="institution" name="institution" placeholder="Enter institution" type="text" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -793,7 +794,7 @@
                                                 <label for="durationInMonths">Duration in Months
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months" id="durationInMonths" class="form-control m-input m-input--air" OnlyNumber="true" required [disabled]="isPersonalTabCompleted">
+                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months" id="durationInMonths" class="form-control m-input m-input--air" OnlyNumber="true" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !durationInMonths.valid ">
                                                     This field is required.
                                                 </div>
@@ -805,18 +806,18 @@
                                             <div class="form-group m-form__group">
                                                 <label for="topicsCovered">Topics Covered
                                                 </label>
-                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="certifications.topicsCovered" #topicsCovered="ngModel" id="topicsCovered" name="topicsCovered" placeholder="Enter topics covered" type="text" rows="3" [disabled]="isPersonalTabCompleted"></textarea>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="certifications.topicsCovered" #topicsCovered="ngModel" id="topicsCovered" name="topicsCovered" placeholder="Enter topics covered" type="text" rows="3" [disabled]="profileProcess.isPersonalProfileCompleted"></textarea>
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button type="button" class="btn btn-danger" *ngIf="certifications._id" (click)="deleteCertificationInfo(certifications._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{certifications._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button class="btn btn-success" [disabled]="isAdded('certification')" (click)="addNewHtmlContain('certification')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
@@ -826,7 +827,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='employment'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='employment'}" *ngIf="tabName=='employment'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_12_head" data-toggle="collapse" href="#m_accordion_5_item_12_body" aria-expanded="false">
@@ -835,7 +836,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_12_body" role="tabpanel" aria-labelledby="m_accordion_5_item_12_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!isPersonalTabCompleted">
+                                <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadEmploymentDetails();"> <i class="fa fa-refresh"></i> </button>
@@ -869,7 +870,7 @@
                                                 <label for="companyName">Company Name
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyName" #companyName="ngModel" id="companyName" name="companyName" placeholder="Enter company name" type="text" required [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyName" #companyName="ngModel" id="companyName" name="companyName" placeholder="Enter company name" type="text" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyName.valid ">
                                                     This field is required.
                                                 </div>
@@ -880,7 +881,7 @@
                                                 <label for="companyBusiness">Company Business
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business" id="companyBusiness" class="form-control m-input m-input--air" required [disabled]="isPersonalTabCompleted">
+                                                <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business" id="companyBusiness" class="form-control m-input m-input--air" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
                                                     This field is required.
                                                 </div>
@@ -893,7 +894,7 @@
                                                 <label for="prevDesignation">Previous Designation
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <input type="text" [(ngModel)]="previousEmployment.designation" #prevDesignation="ngModel" name="prevDesignation" placeholder="Enter Previous Designation " id="prevDesignation" class="form-control m-input m-input--air" required [disabled]="isPersonalTabCompleted">
+                                                <input type="text" [(ngModel)]="previousEmployment.designation" #prevDesignation="ngModel" name="prevDesignation" placeholder="Enter Previous Designation " id="prevDesignation" class="form-control m-input m-input--air" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !prevDesignation.valid ">
                                                     This field is required.
                                                 </div>
@@ -903,7 +904,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="department">Department
                                                 </label>
-                                                <input type="text" [(ngModel)]="previousEmployment.department" #department="ngModel" name="department" placeholder="Enter department" id="department" class="form-control m-input m-input--air" [disabled]="isPersonalTabCompleted">
+                                                <input type="text" [(ngModel)]="previousEmployment.department" #department="ngModel" name="department" placeholder="Enter department" id="department" class="form-control m-input m-input--air" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         </div>
@@ -912,21 +913,21 @@
                                             <div class="form-group m-form__group">
                                                 <label for="epf">Employment Period From
                                                 </label>
-                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="epf" [ngModel]="previousEmployment.employmentPeriodFrom" (ngModelChange)="previousEmployment.employmentPeriodFrom=$event;previousEmployment.employmentPeriodTo=''" #epf="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  [maxDate]="currentDate" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="epf" [ngModel]="previousEmployment.employmentPeriodFrom" (ngModelChange)="previousEmployment.employmentPeriodFrom=$event;previousEmployment.employmentPeriodTo=''" #epf="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  [maxDate]="currentDate" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         <div class="col-md-3 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="ept">Employment Period To
                                                 </label>
-                                               <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo" #ept="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="previousEmployment.employmentPeriodFrom" [maxDate]="currentDate" [disabled]="isPersonalTabCompleted">
+                                               <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo" #ept="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="previousEmployment.employmentPeriodFrom" [maxDate]="currentDate" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="companyLocation">Company Location
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyLocation" #companyLocation="ngModel" id="companyLocation" name="companyLocation" placeholder="Enter company location" type="text" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyLocation" #companyLocation="ngModel" id="companyLocation" name="companyLocation" placeholder="Enter company location" type="text" [disabled]="profileProcess.isPersonalProfileCompleted">
                                             </div>
                                         </div>
                                         </div>
@@ -936,7 +937,7 @@
                                                 <label for="areaofExperience">Area of Experience
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.areaOfExperience" #areaofExperience="ngModel" id="areaofExperience" name="areaofExperience" placeholder="Enter area of experience" type="text" rows="3" required [disabled]="isPersonalTabCompleted"></textarea>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.areaOfExperience" #areaofExperience="ngModel" id="areaofExperience" name="areaofExperience" placeholder="Enter area of experience" type="text" rows="3" required [disabled]="profileProcess.isPersonalProfileCompleted"></textarea>
                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !areaofExperience.valid ">
                                                     This field is required.
                                                 </div>
@@ -948,17 +949,17 @@
                                             <div class="form-group m-form__group">
                                                 <label for="responsibility">Responsibility
                                                 </label>
-                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.responsibility" #responsibility="ngModel" id="responsibility" name="responsibility" placeholder="Enter responsibility" type="text" rows="3" [disabled]="isPersonalTabCompleted"></textarea>
+                                                <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.responsibility" #responsibility="ngModel" id="responsibility" name="responsibility" placeholder="Enter responsibility" type="text" rows="3" [disabled]="profileProcess.isPersonalProfileCompleted"></textarea>
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id" (click)="deletePreviousEmployment(previousEmployment._id)"><i class="fa fa-close" ></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                         <div class="m-portlet__foot m-portlet__foot--fit">
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                             <button class="btn btn-success" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
                                             </button>
                                         </div>
@@ -969,7 +970,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='family'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='family'}"  *ngIf="tabName=='family'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_13_head" data-toggle="collapse" href="#m_accordion_5_item_13_body" aria-expanded="false">
@@ -978,7 +979,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_13_body" role="tabpanel" aria-labelledby="m_accordion_5_item_13_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!isPersonalTabCompleted">
+                                <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadFamilyInfoTabData();"> <i class="fa fa-refresh"></i> </button>
@@ -1012,7 +1013,7 @@
                                                 <label for="familyName">Name
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !familyName.valid ">
                                                     This field is required.
                                                 </div>
@@ -1023,7 +1024,7 @@
                                                 <label for="relation">Relation
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select name="relation" [items]="relationData" bindLabel="relationName" bindValue="_id" placeholder="Select relation" [(ngModel)]="family.relation_id" #relation="ngModel"  [clearable]="false" required [disabled]="isPersonalTabCompleted">
+                                                <ng-select name="relation" [items]="relationData" bindLabel="relationName" bindValue="_id" placeholder="Select relation" [(ngModel)]="family.relation_id" #relation="ngModel"  [clearable]="false" required [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 </ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !relation.valid ">
                                                     This field is required.
@@ -1036,7 +1037,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="fmobileNumber">Mobile Number
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text" OnlyNumber="true" [disabled]="isPersonalTabCompleted">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text" OnlyNumber="true" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
                                                             Please enter your 10 digit number
@@ -1047,18 +1048,18 @@
                                         <div class="col-md-6 adn-form__group">
                                             <div class="form-group m-form__group">
                                                 <label for="fbirthDate">Birth Date</label>
-                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="fbirthDate" [(ngModel)]="family.dateOfBirth" #fbirthDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [maxDate]="currentDate" [disabled]="isPersonalTabCompleted" >
+                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true"  name="fbirthDate" [(ngModel)]="family.dateOfBirth" #fbirthDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [maxDate]="currentDate" [disabled]="profileProcess.isPersonalProfileCompleted" >
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button type="button" class="btn btn-danger" *ngIf="family._id" (click)="deleteFamilyInfo(family._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{family._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
                                     <div class="m-portlet__foot m-portlet__foot--fit">
-                                        <div class="m-form__actions" *ngIf="!isPersonalTabCompleted">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <button class="btn btn-success" [disabled]="isAdded('family')" (click)="addNewHtmlContain('family')"><i class="fa fa-plus"></i> Add
                                         </button>
                                         </div>
@@ -1068,7 +1069,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='office'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='office'}"  *ngIf="tabName=='office' && profileProcess.officeProfileStatus=='Approved'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_6_head" data-toggle="collapse" href="#m_accordion_5_item_6_body" aria-expanded="false">
@@ -1531,7 +1532,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='payroll'}">
+                    <div class="tab-pane"  [ngClass]="{'active show':tabName=='payroll'}" *ngIf="tabName=='payroll' && profileProcess.officeProfileStatus=='Approved'">
                         <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                             <div class="m-accordion__item m-accordion__item--success">
                             <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_16_head" data-toggle="collapse" href="#m_accordion_5_item_16_body" aria-expanded="false">

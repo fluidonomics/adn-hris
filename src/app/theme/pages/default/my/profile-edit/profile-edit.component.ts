@@ -98,7 +98,11 @@ export class ProfileEditComponent implements OnInit {
     countryData=[];
 
     isPersonalTabCompleted=false;
-
+ 
+    profileProcess={
+        isOfficeProfileCompleted:false,
+        isPersonalProfileCompleted:true
+    }
     
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -173,6 +177,7 @@ export class ProfileEditComponent implements OnInit {
             {
               this._currentEmpId = params['id'];
               this.initData();
+              this.loadProcessStatusInfoDetails();
               //this.checkTabCompleted('personal');
             }
             // this._authService.validateToken().subscribe(
@@ -253,6 +258,22 @@ export class ProfileEditComponent implements OnInit {
         });
      
     }
+
+    loadProcessStatusInfoDetails()
+    {
+        this._commonService.getProfileProcessStatus(this._currentEmpId)
+        .subscribe(
+        data => {
+            if(data.ok)
+            {
+              this.profileProcess=data.json();
+            }
+        },  
+        error => {
+            
+        });
+    }
+
     //save Personal Info
     savePersonalInfo() {
         mApp.block('#m_accordion_5_item_1_body', {

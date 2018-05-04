@@ -11,11 +11,12 @@
 									<small>
 									</small>
 								</h3>
+								<button>Submit</button>
 							</div>
 						</div>
 						<div class="m-portlet__head-tools">
 							<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
-								<li class="nav-item dropdown m-tabs__item" *ngIf="isPersonalTabCompleted">
+								<li class="nav-item dropdown m-tabs__item" *ngIf="profileProcess.isPersonalProfileCompleted">
 									<a aria-expanded="true" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ng-reflect-href="#">
 									<i class="la la-user"></i> Personal Info
 									</a>
@@ -55,7 +56,7 @@
 					</div>
 					<div class="m-portlet__body">
 						<div class="tab-content">
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='personal'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='personal'}" *ngIf="profileProcess.isPersonalProfileCompleted && tabName=='personal'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body" aria-expanded="false">
@@ -468,7 +469,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='documents'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='documents'}" *ngIf="profileProcess.isPersonalProfileCompleted && tabName=='documents'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_9_head" data-toggle="collapse" href="#m_accordion_5_item_9_body" aria-expanded="false">
@@ -586,7 +587,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='education'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='education'}" *ngIf="profileProcess.isPersonalProfileCompleted && tabName=='education'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_10_head" data-toggle="collapse" href="#m_accordion_5_item_10_body" aria-expanded="false">
@@ -821,7 +822,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='employment'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='employment'}" *ngIf="profileProcess.isPersonalProfileCompleted && tabName=='employment'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_12_head" data-toggle="collapse" href="#m_accordion_5_item_12_body" aria-expanded="false">
@@ -964,7 +965,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='family'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='family'}" *ngIf="profileProcess.isPersonalProfileCompleted && tabName=='family'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_13_head" data-toggle="collapse" href="#m_accordion_5_item_13_body" aria-expanded="false">
@@ -1063,7 +1064,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='office'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='office'}" *ngIf="tabName=='office'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_6_head" data-toggle="collapse" href="#m_accordion_5_item_6_body" aria-expanded="false">
@@ -1514,7 +1515,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='payroll'}">
+							<div class="tab-pane" role="tabpanel" [ngClass]="{'active show':tabName=='payroll'}" *ngIf="tabName=='payroll'">
 								<div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
 									<div class="m-accordion__item m-accordion__item--success">
 									<div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_16_head" data-toggle="collapse" href="#m_accordion_5_item_16_body" aria-expanded="false">
