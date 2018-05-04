@@ -16,7 +16,7 @@
                 <div class="m-portlet__body">
                     <div class="m-section">
                         <div class="m-section__content">
-                            <form class="m-form m-form--label-align-right">
+                            <form class="m-form m-form--label-align-right" (ngSubmit)="femail.valid && sendEmail()" #femail="ngForm" novalidate="novalidate">
                                 <div class="m-form__section m-form__section--first">   
                                     <div class="form-group m-form__group row">
                                         <label class="col-lg-2 col-form-label">
@@ -24,12 +24,12 @@
                                         </label>
                                         <div class="col-lg-8">
 											<!-- <textarea style="resize:none" class="form-control m-input m-input--air" id="exampleTextarea" placeholder="separate emails by (,)" rows="3"></textarea> -->
-											<tag-input  name="t"
-														[ngModel]="item"
-														[editable]="true"
-														[errorMessages]="errorMessages"
-														[validators]="validators">
-											</tag-input>
+											<!-- <tag-input  name="t"
+														([ngModel])="bulkemail.toemail"
+														>
+                                            </tag-input> -->
+                                            
+                                            <input class="form-control m-input m-input--air" [(ngModel]]="objemail.toemail" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                             Subject
                                         </label>
                                         <div class="col-lg-8">
-                                            <input class="form-control m-input m-input--air"  type="email">
+                                            <input class="form-control m-input m-input--air" [(ngModel]]="objemail.subject" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -49,10 +49,11 @@
                                                 Message
                                             </label>
                                             <div class="col-lg-8">
-												<summernote name="test" [(ngModel)]="Mode" [options]="options" [disabled]="disabled"></summernote>
+												<summernote name="test" [(ngModel]]="objemail.htmlBody" [options]="options" [disabled]="disabled"></summernote>
                                             </div>
                                         </div>
                                     </div>
+                                    <button type="submit" >Send</button>
                                 <div class="m-form__seperator m-form__seperator--dashed"></div>
                             </form>
                         </div>

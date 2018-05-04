@@ -256,6 +256,11 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     
+    sendEmail(data:any)
+    {
+        let url = "common/sendEmail" 
+        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    }
 
     getLevelOfEducation() {
         return levelofEducation;

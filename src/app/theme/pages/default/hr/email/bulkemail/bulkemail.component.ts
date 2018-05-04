@@ -1,5 +1,11 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component,PLATFORM_ID, Input, OnInit, Inject,ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Meta, Title } from "@angular/platform-browser";
+import { CommonService } from "../../../../../../base/_services/common.service";
+import { AuthService } from "../../../../../../base/_services/authService.service";
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const now = new Date();
@@ -13,23 +19,11 @@ const now = new Date();
 export class BulkEmailComponent implements OnInit {
 
 
-    Mode: any;
-    item: any;
-    disabled: boolean = false;
-    @Input()
-    public isCollapsed = false;
-    public date: { year: number, month: number };
-    public modalClose: string;
-    public page = 4;
-    public name = 'World';
-    public ratingSelected = 0;
-    public ratingHovered = 0;
-    public ratingReadonly = false;
-    public timepickerTime = { hour: 13, minute: 30 };
-    public timepickerMeridian = true;
-    public checkboxModel = { left: true, middle: false, right: false };
 
-    public hovered;
+    disabled: boolean = false;
+
+    objemail:any={}
+  
     options = {
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -62,14 +56,23 @@ export class BulkEmailComponent implements OnInit {
     //             ['help', ['help']]
     //     ]
     // };
-
-
-
+    constructor(@Inject(PLATFORM_ID) private platformId: Object,
+    meta: Meta, title: Title,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    public _authService: AuthService,
+    private _commonService: CommonService,
+   ) {
+    title.setTitle('ADN HRIS | My Profile');
+    meta.addTags([
+        { name: 'author', content: '' },
+        { name: 'keywords', content: 'Add new employee' },
+        { name: 'description', content: 'Add new employee.' }
+    ]);
+}
 
     ngOnInit() {
     }
-
-
 
     // modalOpen(content) {
     //     this.modalService.open(content).result.then((result) => {
@@ -79,9 +82,6 @@ export class BulkEmailComponent implements OnInit {
     //     });
     // }
 
-    timepickerToggle() {
-        this.timepickerMeridian = !this.timepickerMeridian;
-    }
 
     // email validation here
     private emailValidator(control: FormControl) {
@@ -93,18 +93,18 @@ export class BulkEmailComponent implements OnInit {
     }
 
 
-    public onTagEdited(item) {
-        console.log('tag edited: current value is ' + item);
+    sendEmail()
+    {
+        this._commonService.sendEmail(this.objemail)
+        .subscribe(
+        data => {
+            if(data.ok)
+            {
+                alert("Email Send");
+            }
+        },
+        error => {
+        });
     }
-
-    public errorMessages = {
-        'emailValidator': 'You must enter a correct email'
-    };
-
-    public validators = [this.emailValidator];
-
-    //public asyncValidators = [this.validateAsync];
-
-
 }
 
