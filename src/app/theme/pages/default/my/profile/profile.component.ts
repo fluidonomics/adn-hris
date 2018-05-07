@@ -104,7 +104,12 @@ export class ProfileComponent implements OnInit {
 
     profileProcess={
         isOfficeProfileCompleted:false,
-        isPersonalProfileCompleted:true
+
+        //Change for demo make value true Remove approved
+        isPersonalProfileCompleted:false,
+        officeProfileStatus:"Approved"
+
+        //
     }
     
     isOfficeTabCompleted=false;
@@ -270,17 +275,19 @@ export class ProfileComponent implements OnInit {
 
     loadProcessStatusInfoDetails()
     {
-        this._commonService.getProfileProcessStatus(this._currentEmpId)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-              this.profileProcess=data.json();
-            }
-        },  
-        error => {
+        //change for demo 
+
+        // this._commonService.getProfileProcessStatus(this._currentEmpId)
+        // .subscribe(
+        // data => {
+        //     if(data.ok)
+        //     {
+        //       this.profileProcess=data.json();
+        //     }
+        // },  
+        // error => {
             
-        });
+        // });
     }
 
     //save Personal Info
