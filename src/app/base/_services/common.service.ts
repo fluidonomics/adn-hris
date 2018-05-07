@@ -269,6 +269,12 @@ export class CommonService {
     }
 
 
+    getKraDetailsData(emp_id)
+    {
+        let url = "kra/getKraDetailsData?emp_id="+ emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError); 
+    }
+
 
     getExamDegreeTitle() {
         return examDegreeTitle;
