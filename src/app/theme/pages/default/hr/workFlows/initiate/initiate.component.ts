@@ -59,7 +59,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     savekraWorkFlowDetails(emp_id:number)
     {
-        this._hrService.savekraWorkFlowDetails({emp_id:emp_id,status:'initated'})
+        this._hrService.savekraWorkFlowDetails({emp_id:emp_id,status:'initiated'})
             .subscribe(
             res => {
                 if(res.ok)

@@ -70,8 +70,8 @@
 										<span>{{employee.Supervisor}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="5%" >
-                                        <button class="btn m-btn--pill m-btn--air btn-outline-success" type="button" (click)="savekraWorkFlowDetails(employee._id)">
-                                                Initiate KRA
+                                        <button class="btn m-btn--pill m-btn--air btn-outline-success" type="button" (click)="savekraWorkFlowDetails(employee._id);employee.status='initiated'" [disabled]="employee.status=='initiated'">
+                                                {{employee.status=='initiated' ? 'Initiated KRA':'Initiate KRA'}}
                                         </button>
                                     </td>
 							  </tr>
