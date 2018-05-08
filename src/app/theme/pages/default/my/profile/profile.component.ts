@@ -385,6 +385,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 swal("Saved", "Successfully", "success");
                 this.familyInfo[index] = data.json();
+                this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):this.familyInfo[index].dateOfBirth;
             },
             error => {
             });
