@@ -48,26 +48,26 @@
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
-										<th class="m-datatable__cell"></th>
-										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort">
+										<th class="m-datatable__cell" width="5%" ></th>
+										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
 											<span>
 											 NAME
 											<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort">
+										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
 											<span>
 											EMAIL
 											<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort">
+										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
 											<span>
 											DESIGNATION 
 											<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort">
+										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
 												<span>
 														SUPERVISOR  
 												<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
@@ -77,24 +77,24 @@
 							</thead>
 							<tbody class="m-datatable__body">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
-								   <td class="m-datatable__cell" >
+								   <td class="m-datatable__cell" width="5%" >
 										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
-										  <img *ngIf="employee?.ProfileImage; else noImage" src="{{employee?.ProfileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered" alt="">
-									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded m--marginless m--img-centered"></ng-template>
+										  <img *ngIf="employee?.ProfileImage; else noImage" src="{{employee?.ProfileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									    </a>
-									<td>
-								    <td class="m-datatable__cell">
+									</td>
+								    <td class="m-datatable__cell" width="25%" >
 										<span>{{employee.FullName}}</span>
-									<td>
-									<td class="m-datatable__cell">
+									</td>
+									<td class="m-datatable__cell" width="25%" >
 										<span>{{employee.OfficeEmail}}</span>
-									<td>
-									<td class="m-datatable__cell">
+									</td>
+									<td class="m-datatable__cell" width="20%" >
 										<span>{{employee.Designation}}</span>
-									<td>
-								    <td class="m-datatable__cell">
+									</td>
+								    <td class="m-datatable__cell" width="25%" >
 										<span>{{employee.Supervisor}}</span>
-								    <td>
+									</td>
 							  </tr>
 							  <tr *ngIf="!employeeData.length > 0">
 								  <th colspan="5">
@@ -103,7 +103,7 @@
 							  </tr>
 							</tbody>
 					</table>
-					<pagination-template #p="paginationApi" (pageChange)="p2 = $event">
+					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
 						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
 							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 								<li>
@@ -127,7 +127,7 @@
 									</a>
 								</li>
 								<li>
-									<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()">
+									<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
 										<i class="la la-angle-double-right"></i>
 									</a>
 								</li>
