@@ -20,13 +20,14 @@ import { DirectoryComponent } from './directory/directory.component';
 import { HrRoutingModule } from './hr-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SearchPipe } from "../../../../base/_pipes/search.pipes";
-import { OrderPipe } from "../../../../base/_pipes/order.pipes";
-import { KeysPipe } from "../../../../base/_pipes/key.pipes"
-import { CeilPipe } from "../../../../base/_pipes/ceil.pipes"
-import { SummernoteComponent } from "../../../../base/_components/summernote.component"
+// import { SearchPipe } from "../../../../base/_pipes/search.pipes";
+// import { OrderPipe } from "../../../../base/_pipes/order.pipes";
+// import { KeysPipe } from "../../../../base/_pipes/key.pipes"
+// import { CeilPipe } from "../../../../base/_pipes/ceil.pipes"
+// import { SummernoteComponent } from "../../../../base/_components/summernote.component"
 import { TagInputModule } from 'ngx-chips';
 import { HrService } from './hr.service';
+import { BaseModule } from '../../../../base/base.module';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { HrService } from './hr.service';
         HrRoutingModule,
         NgSelectModule,
         NgxPaginationModule,
-        TagInputModule
+        TagInputModule,
+        BaseModule
     ], declarations: [
         HrComponent,
         DashboardComponent,
@@ -52,12 +54,7 @@ import { HrService } from './hr.service';
         HrPipComponent,
         DirectoryComponent,
         EditEmployeeComponent,
-        SearchPipe,
-        OrderPipe,
-        KeysPipe,
-        CeilPipe,
-        SummernoteComponent,
-        HrInitiateComponent
+        HrInitiateComponent,
     ],
     providers: [HrService]
 })
