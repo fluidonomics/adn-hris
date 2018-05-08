@@ -20,6 +20,12 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    savekraWorkFlowDetails(data:any)
+    {
+        let url = "kra/addKraWorkFlowInfo";
+        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

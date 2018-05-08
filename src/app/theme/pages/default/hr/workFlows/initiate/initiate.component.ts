@@ -5,6 +5,7 @@ import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { HrService } from '../../hr.service';
 declare var $;
+import swal from 'sweetalert2';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--krainitiate",
@@ -56,10 +57,23 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             });
     }
 
+    savekraWorkFlowDetails(emp_id:number)
+    {
+        this._hrService.savekraWorkFlowDetails({emp_id:emp_id,status:'initated'})
+            .subscribe(
+            res => {
+                if(res.ok)
+                {
+                    swal("Initiate KRA", "Successfully", "success");
+                }
+            },
+            error => {
+            });
+    }
+
     getColumnName(column) {
         return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
     }
-
 
     sort(key) {
         this.key = key;
