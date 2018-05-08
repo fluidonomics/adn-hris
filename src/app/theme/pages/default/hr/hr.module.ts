@@ -27,6 +27,7 @@ import { SummernoteComponent } from "../../../../base/_components/summernote.com
 import { TagInputModule } from 'ngx-chips';
 
 import { HrService } from './hr.service';
+import { InitiateComponent } from './workflows/initiate/initiate.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { HrService } from './hr.service';
         OrderPipe,
         KeysPipe,
         CeilPipe,
-        SummernoteComponent
+        SummernoteComponent,
+        InitiateComponent
     ],
     providers: [HrService]
 })
