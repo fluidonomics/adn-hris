@@ -9,6 +9,7 @@ declare var $;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
     templateUrl: "./allEmployee.component.html",
+    styleUrls: ['./allEmployee.component.css'],
     encapsulation: ViewEncapsulation.None,
 })
 export class AllEmployeeComponent implements OnInit, AfterViewInit {
