@@ -31,8 +31,8 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.loadAllEmployee();
             });
-        this.loadAllEmployee();
     }
 
     ngAfterViewInit() {

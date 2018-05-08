@@ -958,12 +958,12 @@
                                         <button type="submit" class="btn btn-success">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
-                                        <div class="m-portlet__foot m-portlet__foot--fit">
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
-                                            <button class="btn btn-success" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
-                                            </button>
-                                        </div>
-                                        </div>
+                                    </div>
+                                    <div class="m-portlet__foot m-portlet__foot--fit">
+                                            <div class="m-form__actions" *ngIf="!profileProcess.isPersonalProfileCompleted">
+                                                <button class="btn btn-success" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
+                                                </button>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
