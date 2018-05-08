@@ -26,6 +26,9 @@ import { MyRoutingModule } from './my-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { MyService } from "./my.service"
+import { BaseModule } from '../../../../base/base.module';
+
+
 
 
 @NgModule({
@@ -39,6 +42,7 @@ import { MyService } from "./my.service"
         NgSelectModule,
         NgUploaderModule,
         BsDatepickerModule.forRoot(),
+        BaseModule
     ], declarations: [
         MyComponent,
         ProfileComponent,
@@ -50,7 +54,7 @@ import { MyService } from "./my.service"
         CalenderComponent,
         LeaveListComponent,
         ReportsComponent,
-        ProfileEditComponent
+        ProfileEditComponent,
         //ReviewerComponent,
         //SupervisorComponent
     ],

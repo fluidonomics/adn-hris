@@ -289,7 +289,6 @@ export class ProfileComponent implements OnInit {
             
         // });
     }
-
     //save Personal Info
     savePersonalInfo() {
         mApp.block('#m_accordion_5_item_1_body', {
@@ -302,6 +301,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_1_body');
+                swal("Saved", "Successfully", "success");
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
             },
@@ -319,6 +319,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveAddressInfo(this.address)
         .subscribe(
         data => {
+            swal("Saved", "Successfully", "success");
             this.address=data.json()||{};
         },
         error => {
@@ -337,6 +338,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_10_body');
+                swal("Saved", "Successfully", "success");
                 this.academicInfo[index] = data.json();
                 if(this.academicInfo[index].levelOfEducation_id)
                 {
@@ -353,6 +355,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveCertificationInfo(objCertification)
             .subscribe(
             data => {
+                swal("Saved", "Successfully", "success");
                 this.certificationsandTrainingInfo[index] = data.json();
             },
             error => {
@@ -365,7 +368,10 @@ export class ProfileComponent implements OnInit {
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
             .subscribe(
             data => {
+                swal("Saved", "Successfully", "success");
                 this.previousEmploymentDetails[index] = data.json();
+                this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):this.previousEmploymentDetails[index].employmentPeriodFrom;
+                this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):this.previousEmploymentDetails[index].employmentPeriodTo;
             },
             error => {
             });
@@ -377,6 +383,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(
             data => {
+                swal("Saved", "Successfully", "success");
                 this.familyInfo[index] = data.json();
             },
             error => {
@@ -388,11 +395,12 @@ export class ProfileComponent implements OnInit {
         this._myService.saveOfficeInfo(this.officeInfo)
         .subscribe(
         data => {
-            this.officeInfo.address=data.json();
+            swal("Saved", "Successfully", "success");
+            this.officeInfo=data.json();
             this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
             this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
             this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
+            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
         },
         error => {
         });
@@ -403,14 +411,12 @@ export class ProfileComponent implements OnInit {
         this._myService.savePositionInfo(this.positionDetails)
         .subscribe(
         data => {
-            this.officeInfo.address=data.json();
+            swal("Saved", "Successfully", "success");
+            this.positionDetails=data.json();
         },
         error => {
         });
     }
-
-    
-
     //save Bank Info
     saveBankDetails() {
         mApp.block('#m_accordion_5_item_16_body', {
@@ -424,6 +430,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_16_body');
+                swal("Saved", "Successfully", "success");
                 this.bankDetails = data.json();
             },
             error => {
@@ -437,6 +444,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 // mApp.unblock('#m_accordion_5_item_1_body');
+                swal("Saved", "Successfully", "success");
                 this.salaryDetails = data.json();
             },
             error => {
@@ -450,6 +458,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
+                swal("Saved", "Successfully", "success");
                 this.carDetails = data.json();
                 this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
                 this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
@@ -475,12 +484,12 @@ export class ProfileComponent implements OnInit {
     deleteAcademicInfo(academicInfo_id: number) {
         swal({
             title: 'Are you sure?',
-            text: "You want to delete !",
+            text: "Do you want to delete it?",
             type: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#66BB6A',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
           }).then((result) => {
             if (result.value) {
                 this._myService.deleteAcademicInfo(academicInfo_id)
@@ -501,18 +510,19 @@ export class ProfileComponent implements OnInit {
     deletePreviousEmployment(previousEmployment_id: number) {
         swal({
                 title: 'Are you sure?',
-                text: "You want to delete !",
+                text: "Do you want to delete it?",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#66BB6A',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#9a9caf',
+                confirmButtonText: 'Delete'
               }).then((result) => {
                 if (result.value) {
                     this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
                     .subscribe(
                     data => {
                         if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
                             this.removeHtmlContain("employment", previousEmployment_id);
                         }
                     },
@@ -526,18 +536,19 @@ export class ProfileComponent implements OnInit {
     deleteFamilyInfo(family_id: number) {
         swal({
             title: 'Are you sure?',
-            text: "You want to delete !",
+            text: "Do you want to delete it?",
             type: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#66BB6A',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
           }).then((result) => {
             if (result.value) {
                 this._myService.deleteFamilyInfo(family_id)
                 .subscribe(
                 data => {
                     if (data.ok) {
+                        swal("Deleted", "Successfully", "success");
                         this.removeHtmlContain("family", family_id);
                     }
                 },
@@ -551,19 +562,20 @@ export class ProfileComponent implements OnInit {
      //delete Family Info
      deleteCertificationInfo(certification_id: number) {
         swal({
-                title: 'Are you sure?',
-                text: "You want to delete !",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#66BB6A',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
+                    title: 'Are you sure?',
+                    text: "Do you want to delete it?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#9a9caf',
+                    confirmButtonText: 'Delete'
               }).then((result) => {
                 if (result.value) {
                     this._myService.deleteCertificationInfo(certification_id)
                     .subscribe(
                     data => {
                         if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
                             this.removeHtmlContain("certification", certification_id);
                         }
                     },
@@ -572,6 +584,24 @@ export class ProfileComponent implements OnInit {
                     });
                 }
               })
+    }
+
+    showHideWaitingCircle(_id:string,isHide?:boolean)
+    {
+        if(!isHide)
+        mApp.block(_id, {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
+       else 
+        mApp.unblock(_id);
+    }
+
+    saveSuccessMesssage()
+    {
+        swal("Saved", "Successfully", "success");
     }
 
     // addNewAcademicInfoHtml()
@@ -682,6 +712,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+
             },
             error => {
             });
@@ -1290,7 +1321,7 @@ export class ProfileComponent implements OnInit {
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#66BB6A',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: '#9a9caf',
         confirmButtonText: 'Yes'
       }).then((result) => {
         if (result.value) {
