@@ -9,6 +9,7 @@ import { BroadCastComponent } from './email/broadcast/broadcast.component'
 import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
 import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrPapComponent } from './workFlows/pap/pap.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
@@ -23,6 +24,7 @@ const routes: Routes = [{
         { path: 'employee/add', component: AddEmployeeComponent },
         { path: 'employee/all', component: AllEmployeeComponent },
         { path: 'employee/edit', component: EditEmployeeComponent },
+        { path: 'workflows/initiate', component: HrInitiateComponent },
         { path: 'workflows/learning', component: HrLearningComponent },
         { path: 'workflows/pap', component: HrPapComponent },
         { path: 'workflows/pip', component: HrPipComponent },

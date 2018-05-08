@@ -1,19 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+
 
 @Component({
-  selector: 'app-initiate',
-  template: `
-    <p>
-      initiate works!
-    </p>
-  `,
-  styles: []
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    templateUrl: "./initiate.component.html",
+    encapsulation: ViewEncapsulation.None,
 })
-export class InitiateComponent implements OnInit {
+export class HrInitiateComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }
+
