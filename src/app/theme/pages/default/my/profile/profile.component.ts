@@ -370,6 +370,8 @@ export class ProfileComponent implements OnInit {
             data => {
                 swal("Saved", "Successfully", "success");
                 this.previousEmploymentDetails[index] = data.json();
+                this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):this.previousEmploymentDetails[index].employmentPeriodFrom;
+                this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):this.previousEmploymentDetails[index].employmentPeriodTo;
             },
             error => {
             });
@@ -394,11 +396,11 @@ export class ProfileComponent implements OnInit {
         .subscribe(
         data => {
             swal("Saved", "Successfully", "success");
-            this.officeInfo.address=data.json();
+            this.officeInfo=data.json();
             this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
             this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
             this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
+            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
         },
         error => {
         });
@@ -410,7 +412,7 @@ export class ProfileComponent implements OnInit {
         .subscribe(
         data => {
             swal("Saved", "Successfully", "success");
-            this.officeInfo.address=data.json();
+            this.positionDetails=data.json();
         },
         error => {
         });
@@ -710,6 +712,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+
             },
             error => {
             });
