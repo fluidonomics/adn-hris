@@ -1,5 +1,4 @@
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -17,7 +16,10 @@ declare var $;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile",
     templateUrl: "./profile.component.html",
-    encapsulation: ViewEncapsulation.None    
+    encapsulation: ViewEncapsulation.None ,
+    styles:[`input[type="file"]{
+        opacity: 0;
+    }`]
 })
 
 export class ProfileComponent implements OnInit {
@@ -98,7 +100,6 @@ export class ProfileComponent implements OnInit {
 
     relationData = [];
 
-
     countryData=[];
 
 
@@ -114,6 +115,8 @@ export class ProfileComponent implements OnInit {
     
     isOfficeTabCompleted=false;
     isPersonalTabCompleted=false;
+
+  
 
     
 
@@ -136,8 +139,6 @@ export class ProfileComponent implements OnInit {
         this.humanizeBytes = humanizeBytes;
         this.currentDate=new Date();
     }
-
-    
     
     onUploadOutput(output: UploadOutput,fileName:string): void {
       let atCurrentAuthData=this._authService.currentAuthData;
@@ -189,8 +190,7 @@ export class ProfileComponent implements OnInit {
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
-                    //this.checkTabCompleted('office');
-                    //this.checkTabCompleted('personal');
+                    this.checkTabCompleted('personal');
                     this.loadProcessStatusInfoDetails();
                 });
         });
@@ -261,16 +261,12 @@ export class ProfileComponent implements OnInit {
         data => {
             if(data.ok)
             {
-              if(tabName=="office")
-              this.isOfficeTabCompleted=data.json();
-              else
               this.isPersonalTabCompleted=data.json();
             }
         },  
         error => {
             
         });
-     
     }
 
     loadProcessStatusInfoDetails()
@@ -605,29 +601,6 @@ export class ProfileComponent implements OnInit {
         swal("Saved", "Successfully", "success");
     }
 
-    // addNewAcademicInfoHtml()
-    // {
-    //   this.academicInfo.push(new AcademicInfo());
-    // }
-
-    // removeAcademicInfo(academicInfo_id)
-    // {
-    //   this.academicInfo=this.academicInfo.filter(x=>x._id!=academicInfo_id);
-    //   if(this.academicInfo.length==0)
-    //   {
-    //      this.addNewAcademicInfoHtml();
-    //   }
-    // }
-
-    // isAddAcademicInfo()
-    // {
-    //     if(this.academicInfo.filter(x=>x._id==null || x._id==undefined).length == 0)
-    //     {
-    //       return false;
-    //     }
-    //     return true ;
-    // }
-
     //Add New Html on Click of Add Button 
     addNewHtmlContain(subTabName: string) {
         switch (subTabName) {
@@ -700,6 +673,7 @@ export class ProfileComponent implements OnInit {
                 return true;
         }
     }
+
     //Load Personal Info Tab Data;
     loadPersonalInfoTabData() {
         //Init Data Personal Info Tab
@@ -732,6 +706,9 @@ export class ProfileComponent implements OnInit {
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
                     this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id,"init");
+                }
+                else{
+                    this.address.isSameAsCurrent=false;
                 }
             },
             error => {
