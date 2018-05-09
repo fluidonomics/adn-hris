@@ -142,6 +142,16 @@ export class MyService {
         }
     }
 
+    saveDocumentsInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addDocumentsInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateDocumentsInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
     saveOfficeInfo(data: any): Observable<Response> {
         {
             let url = "user/addOfficeInfo"
