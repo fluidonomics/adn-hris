@@ -321,6 +321,28 @@ export class ProfileComponent implements OnInit {
         error => {
         });
     }
+
+    saveDocumentsInfo()
+    {
+        mApp.block('#m_accordion_5_item_9_body', {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
+        this._myService.saveDocumentsInfo(this.documents)
+            .subscribe(
+            data => {
+                mApp.unblock('#m_accordion_5_item_9_body');
+                swal("Saved", "Successfully", "success");
+                this.documents = data.json() || {};
+            },
+            error => {
+                mApp.unblock('#m_accordion_5_item_9_body');
+            });
+
+    }
+    
     //save Address Info
     saveAcademicInfo(objAcademicInfo: any, index: number) {
         mApp.block('#m_accordion_5_item_10_body', {

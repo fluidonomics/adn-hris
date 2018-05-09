@@ -499,8 +499,8 @@
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();"> <i class="fa fa-refresh"></i> </button>
                                     </div>
                                 </div>
-                                <div class="m-accordion__item-content">
-                                    <form class="m-form m-form--fit m-form--label-align-right" #fdocuments="ngForm"  novalidate="novalidate">
+                                <div class="m-accordion__item-content">/
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fdocuments="ngForm" (ngSubmit)="saveDocumentsInfo()" novalidate="novalidate">
                                         <div class="form-group m-form__group m--margin-top-10">
                                         </div>
                                         <div class="row">
