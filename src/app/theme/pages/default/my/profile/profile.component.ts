@@ -145,6 +145,7 @@ export class ProfileComponent implements OnInit {
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             // uncomment this if you want to auto upload files when added
             const event: UploadInput = {
+                fieldName:'profileDocuments',
                 type: 'uploadAll',
                 url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
                 headers: {
@@ -158,26 +159,27 @@ export class ProfileComponent implements OnInit {
             };
             this.uploadInput.emit(event);
         } else if (output.type === 'done') {
-            //this.dragOver = false;
-            //output.file.response
-        //   switch (fileName) {
-        //       case 'smartNationalId':
-        //           this.documents.
-        //           break;
-        //       case 'oldNationalId':
-        //           this.documents.
-        //           break;  
-        //       case 'birth':
-        //           this.documents.
-        //           break;
-        //       case 'passport':
-        //           this.documents.
-        //           break;  
-          
-        //       default:
-        //           break;
-        //   }
-
+               if(output.file.responseStatus==200){
+                    switch (fileName) {
+                            case 'smartNationalId':
+                                this.documents.nationalIdSmartCardDocURL=output.file.response.key||'';
+                                break;
+                            case 'oldNationalId':
+                                this.documents.nationalIDOldFormatDocURL=output.file.response.key||'';
+                                break;  
+                            case 'birth':
+                                this.documents.birthRegistrationNumberDocURL=output.file.response.key||'';
+                                break;
+                            case 'passport':
+                                this.documents.passportNumberDocURL=output.file.response.key||'';
+                                break;  
+                            default:
+                                break;
+                    }
+                }
+                else{
+                     swal("Error!", "Error on Upload " + fileName, "error");
+                }
         }
     }
 

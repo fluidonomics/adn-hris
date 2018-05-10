@@ -499,7 +499,7 @@
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();"> <i class="fa fa-refresh"></i> </button>
                                     </div>
                                 </div>
-                                <div class="m-accordion__item-content">/
+                                <div class="m-accordion__item-content">
                                     <form class="m-form m-form--fit m-form--label-align-right" #fdocuments="ngForm" (ngSubmit)="saveDocumentsInfo()" novalidate="novalidate">
                                         <div class="form-group m-form__group m--margin-top-10">
                                         </div>
@@ -529,8 +529,8 @@
                                                 <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard"  class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                   <button type="button" class="btn green" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change
-                                                        <input type="file" name="document" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartNationalId')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                   <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change
+                                                        <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartNationalId')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                    </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIdSmartCard" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
@@ -546,8 +546,8 @@
                                                 <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat"  class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change
-                                                        <input type="file" name="document" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'oldNationalId')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                    <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change
+                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'oldNationalId')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIDOldFormat" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
@@ -565,8 +565,8 @@
                                                 <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green"  name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
-                                                            <input type="file" name="document" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                    <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
+                                                            <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
@@ -582,12 +582,13 @@
                                                 <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn green"  name="changePassportNumber" style="margin-right: 6px;" >Change
-                                                        <input type="file" name="document" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                    <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" >Change
+                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;">View</button>
                                                     <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
                                                     </div>
+                                          
                                                 </div>
                                             </div>
                                         </div>
