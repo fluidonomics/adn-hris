@@ -533,7 +533,7 @@
                                                         <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                    </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
-                                                    <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('smartCard')"><i class="fa fa-close"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,7 +550,7 @@
                                                         <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
-                                                    <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('smartOldCard')"><i class="fa fa-close"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -569,7 +569,7 @@
                                                             <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
-                                                    <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -586,7 +586,7 @@
                                                         <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
-                                                    <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted"><i class="fa fa-close"></i></button>
+                                                    <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
                                                     </div>
                                           
                                                 </div>

@@ -140,87 +140,6 @@ export class ProfileComponent implements OnInit {
         this.currentDate=new Date();
     }
     
-    onUploadOutput(output: UploadOutput,fileName:string): void {
-      let atCurrentAuthData=this._authService.currentAuthData;
-        if (output.type === 'allAddedToQueue') { // when all files added in queue
-            // uncomment this if you want to auto upload files when added
-            const event: UploadInput = {
-                fieldName:'profileDocuments',
-                type: 'uploadAll',
-                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
-                headers: {
-                    'access-token': atCurrentAuthData.accessToken,
-                    'client': atCurrentAuthData.client,
-                    'expiry': atCurrentAuthData.expiry,
-                    'token-type': atCurrentAuthData.tokenType,
-                    'uid': atCurrentAuthData.uid
-                },
-                method: 'POST',
-            };
-            this.uploadInput.emit(event);
-        } else if (output.type === 'done') {
-               if(output.file.responseStatus==200){
-                    switch (fileName) {
-                            case 'smartCard':
-                                this.documents.nationalIdSmartCardDocURL=output.file.response.key||'';
-                                break;
-                            case 'smartOldCard':
-                                this.documents.nationalIDOldFormatDocURL=output.file.response.key||'';
-                                break;  
-                            case 'birth':
-                                this.documents.birthRegistrationNumberDocURL=output.file.response.key||'';
-                                break;
-                            case 'passport':
-                                this.documents.passportNumberDocURL=output.file.response.key||'';
-                                break;  
-                            default:
-                                break;
-                    }
-                }
-                else{
-                     swal("Error!", "Error on Upload " + fileName, "error");
-                }
-        }
-    }
-
-    showDocumentImagePopUp(filedName)
-    {
-        switch (filedName) {
-            case 'smartCard':
-                    swal({
-                        imageUrl:this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                        imageHeight: 700,
-                        //imageWidth: 5000,
-                        showConfirmButton: false,
-                    });
-                break;
-            case 'smartOldCard':
-                    swal({
-                        imageUrl:this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                        imageHeight: 700,
-                        //imageWidth: 5000,
-                        showConfirmButton: false,
-                    });
-                break;  
-            case 'birth':
-                        swal({
-                            imageUrl:this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                            imageHeight: 700,
-                            //imageWidth: 5000,
-                            showConfirmButton: false,
-                        });
-                break;
-            case 'passport':
-                        swal({
-                            imageUrl:this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                            imageHeight: 700,
-                            //imageWidth: 5000,
-                            showConfirmButton: false,
-                        });
-                break;  
-        }
-    }
-
     ngOnInit() {
         this._route.queryParams.subscribe(params => {
             if (params['tabName']) {
@@ -263,6 +182,128 @@ export class ProfileComponent implements OnInit {
             default:
                 this.loadPersonal();
         }
+    }
+
+    onUploadOutput(output: UploadOutput,fileName:string): void {
+        let atCurrentAuthData=this._authService.currentAuthData;
+          if (output.type === 'allAddedToQueue') { // when all files added in queue
+              // uncomment this if you want to auto upload files when added
+              const event: UploadInput = {
+                  fieldName:'profileDocuments',
+                  type: 'uploadAll',
+                  url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                  headers: {
+                      'access-token': atCurrentAuthData.accessToken,
+                      'client': atCurrentAuthData.client,
+                      'expiry': atCurrentAuthData.expiry,
+                      'token-type': atCurrentAuthData.tokenType,
+                      'uid': atCurrentAuthData.uid
+                  },
+                  method: 'POST',
+              };
+              this.uploadInput.emit(event);
+          } else if (output.type === 'done') {
+              if(output.file.responseStatus==200){
+                      switch (fileName) {
+                              case 'smartCard':
+                                  
+                                  this.documents.nationalIdSmartCardDocURL=output.file.response.key||'';
+                                  break;
+                              case 'smartOldCard':
+                                  this.documents.nationalIDOldFormatDocURL=output.file.response.key||'';
+                                  break;  
+                              case 'birth':
+                                  this.documents.birthRegistrationNumberDocURL=output.file.response.key||'';
+                                  break;
+                              case 'passport':
+                                  this.documents.passportNumberDocURL=output.file.response.key||'';
+                                  break;  
+                              default:
+                                  break;
+                      }
+                  }
+                  else{
+                       swal("Error!", "Error on Upload " + fileName, "error");
+                  }
+          }
+    }
+  
+    showDocumentImagePopUp(filedName)
+    {
+          switch (filedName) {
+              case 'smartCard':
+                      swal({
+                          imageUrl:this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                          imageHeight: 700,
+                          //imageWidth: 5000,
+                          showConfirmButton: false,
+                      });
+                  break;
+              case 'smartOldCard':
+                      swal({
+                          imageUrl:this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                          imageHeight: 700,
+                          //imageWidth: 5000,
+                          showConfirmButton: false,
+                      });
+                  break;  
+              case 'birth':
+                          swal({
+                              imageUrl:this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                              imageHeight: 700,
+                              //imageWidth: 5000,
+                              showConfirmButton: false,
+                          });
+                  break;
+              case 'passport':
+                          swal({
+                              imageUrl:this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                              imageHeight: 700,
+                              //imageWidth: 5000,
+                              showConfirmButton: false,
+                          });
+                  break;  
+          }
+    }
+  
+    deleteDocImage(imagePath,imageTypeName)
+    {
+        this._myService.deleteImage({key:imagePath}).subscribe(
+            res => {
+                if(res.ok)
+                {
+                    this.documents[imageTypeName]=null;
+                    swal("Deleted", "Successfully", "success");
+                } 
+            },
+            error => {
+            });;
+    }
+  
+    showDeleteMessage()
+    {
+        swal("Error!", "Image not found", "error"); 
+    } 
+  
+    deleteDocumentImage(fileName)
+    {
+          switch (fileName) {
+              case 'smartCard':
+              let isdeleted=this.documents.nationalIdSmartCardDocURL? this.deleteDocImage(this.documents.nationalIdSmartCardDocURL,'nationalIdSmartCardDocURL'):this.showDeleteMessage();
+                  break;
+              case 'smartOldCard':
+              let isdeletedOld=this.documents.nationalIDOldFormatDocURL? this.deleteDocImage(this.documents.nationalIDOldFormatDocURL,'nationalIDOldFormatDocURL'):this.showDeleteMessage();
+                      break;  
+              case 'birth':
+              let isdeletedbirth=this.documents.birthRegistrationNumberDocURL? this.deleteDocImage(this.documents.birthRegistrationNumberDocURL,'birthRegistrationNumberDocURL'):this.showDeleteMessage();
+                  break;
+              case 'passport':
+              let isdeletedpassport=this.documents.passportNumberDocURL? this.deleteDocImage(this.documents.passportNumberDocURL,'passportNumberDocURL'):this.showDeleteMessage();
+                  break;  
+              default:
+                  break;
+          }
+  
     }
 
     setPermentAddress() {
@@ -325,6 +366,7 @@ export class ProfileComponent implements OnInit {
             
         // });
     }
+
     //save Personal Info
     savePersonalInfo() {
         mApp.block('#m_accordion_5_item_1_body', {
@@ -364,6 +406,7 @@ export class ProfileComponent implements OnInit {
 
     saveDocumentsInfo()
     {
+        this.documents.emp_id = this.documents.emp_id != null ? this.documents.emp_id : (this._currentEmpId || this.param_emp_id)
         mApp.block('#m_accordion_5_item_9_body', {
             overlayColor: '#000000',
             type: 'loader',
