@@ -9,6 +9,19 @@ import { FormBuilder } from "@angular/forms";
     encapsulation: ViewEncapsulation.None,
 })
 export class ApplyComponent {
+    leaveapplication: any = {};
 
+    leavetype = ['Annual leave', 'Slick leave', 'Maternity leave'];
+    applyto = ['leave supervisor'];
+    fromsessiondropdown = [];
+    tosessiondropdown = [];
+
+    constructor() {
+    }
+    
+    onLeaveAppSubmit(data) {
+        console.log(data);
+        console.log(this.leaveapplication);
+    }
 
 }

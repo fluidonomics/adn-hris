@@ -13,6 +13,7 @@ import { CalenderComponent } from './leaves/calender/calender.component';
 import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { DashboardComponent } from './leaves/dashboard/dashboard.component';
 
 // import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 // import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
@@ -25,13 +26,14 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: MyLearningComponent },
         { path: 'workflows/pap', component: MyPapComponent },
         { path: 'workflows/pip', component: MyPipComponent },
+        { path: 'leaves/dashboard', component: DashboardComponent },
         { path: 'leaves/apply', component: ApplyComponent },
         { path: 'leaves/holidays', component: HolidaysComponent },
         { path: 'leaves/calender', component: CalenderComponent },
         { path: 'leaves/list', component: LeaveListComponent },
         { path: 'leaves/reports', component: ReportsComponent },
-      
-        
+
+
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},
         //{path:"team",loadChildren:".\/team\/team.module#TeamModule"}

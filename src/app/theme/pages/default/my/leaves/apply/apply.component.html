@@ -1,1 +1,219 @@
-hi
+<div class="m-content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text flaticon-user-add">
+								Leave Application
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="tab-content">
+						<div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
+							<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onLeaveAppSubmit(fleaveapplication)" id="fleaveapplication"
+							 #fleaveapplication="ngForm">
+								<div class="form-body">
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Leave Type</label>
+												<span class="required" aria-required="true"> * </span>
+												<ng-select class="m-input m-input--air" name="leaveType" bindLabel="leaveType" [items]="leavetype" [(ngModel)]="leaveapplication.leavetype"
+												 id="leavetype" #leavetype="ngModel" placeholder="" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !leavetype.valid ">
+													This field is required.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">From Date</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" class="form-control m-input m-input--air" name="fromDate" [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel"
+												 bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="fromDate"
+												 required>
+												<div class="form-control-feedback has-danger" *ngIf="!fromDate.valid">
+													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This field is required.</span>
+
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">From Session</label>
+												<span class="required" aria-required="true"> * </span>
+												<ng-select class="m-input m-input--air" name="fromSession" bindLabel="fromSession" [items]="fromsessiondropdown" [(ngModel)]="leaveapplication.fromSession"
+												 #fromSession="ngModel" bindValue="_id" placeholder="Select From Session" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !fromSession.valid ">
+													This field is required.
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">To Date</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" class="form-control m-input m-input--air" name="toDate" bsDatepicker [readonly]="true" [maxDate]="currentDate"
+												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate" [(ngModel)]="leaveapplication.toDate" #toDate="ngModel"
+												 required>
+												<div class="form-control-feedback has-danger" *ngIf="!toDate.valid">
+													<span *ngIf="fleaveapplication.submitted && !toDate.valid">This field is required.</span>
+
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">To Session</label>
+												<span class="required" aria-required="true"> * </span>
+												<ng-select class="m-input m-input--air" name="toSession" bindLabel="toSession" bindValue="_id" placeholder="Select To Session"
+												 [(ngModel)]="leaveapplication.toSession" #toSession="ngModel" [items]="tosessiondropdown" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !toSession.valid ">
+													This field is required.
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Days</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" name="days" class="form-control m-input m-input--air" OnlyNumber="true" [(ngModel)]="leaveapplication.days"
+												 #days="ngModel" disabled required>
+												<div class="form-control-feedback has-danger" *ngIf="!days.valid">
+													<span *ngIf="fleaveapplication.submitted && !days.valid">This field is required.</span>
+
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Balance</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" class="form-control m-input m-input--air" name="balance" id="balance" [(ngModel)]="leaveapplication.balance"
+												 #balance="ngModel" OnlyNumber="true" disabled required>
+												<div class="form-control-feedback has-danger" *ngIf="!balance.valid">
+													<span *ngIf="fleaveapplication.submitted && !balance.valid">This field is required.</span>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="form-group m-form__group">
+												<label for="form_control_1">Apply To</label>
+												<ng-select class="m-input m-input--air" name="applyto" [items]="applyto" [(ngModel)]="leaveapplication.applyto" #applyto="ngModel"></ng-select>
+
+												<div class="form-control-feedback has-danger" *ngIf="!applyto.valid">
+													<span *ngIf="fleaveapplication.submitted && !applyto.valid">This field is required.</span>
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Reason</label>
+												<span class="required" aria-required="true"> * </span>
+												<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" [(ngModel)]="leaveapplication.reason"
+												 #reason="ngModel" required></textarea>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !reason.valid ">
+													This field is required.
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Contact Detail</label>
+
+												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="3" [(ngModel)]="leaveapplication.contactDetail"
+												 name="contactDetail" #contactDetail="ngModel"></textarea>
+
+											</div>
+										</div>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Attechment</label>
+												<span class="required" aria-required="true"> * </span>
+												<input type="file" name="attechment" [(ngModel)]="leaveapplication.attechment" #attechment="ngModel" required>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !attechment.valid ">
+													This field is required.
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-5 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">CC To</label>
+
+												<input type="text" class="form-control m-input m-input--air" name="ccTo" id="mobileNumber" [(ngModel)]="leaveapplication.ccTo"
+												 #ccTo="ngModel">
+
+											</div>
+
+										</div>
+										<div class="col-md-1 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="">&nbsp;</label>
+												<button class="btn btn-success submitForm">Select</button>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											Note: Separate multiple emails with commas
+
+										</div>
+									</div>
+
+
+
+								</div>
+								<div class="form-actions">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="m-form__actions">
+												<button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button>
+												<button class="btn btn-secondary" (click)="fleaveapplication.resetForm();clearFormData();" type="reset">Cancel</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
