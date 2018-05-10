@@ -183,7 +183,7 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    showDocumnetImagePopUp(filedName)
+    showDocumentImagePopUp(filedName)
     {
         switch (filedName) {
             case 'smartCard':
