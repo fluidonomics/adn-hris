@@ -17,8 +17,8 @@ export const environment = {
         //validateTokenPath:'auth/validateTokenPath'
     },
     content_api_base: {
-        apiBase: "http://localhost:3000",
-        imgBase: "http://localhost:3000"
+        apiBase: " https://adn-bucket.s3.ap-south-1.amazonaws.com/",
+        imgBase: " https://adn-bucket.s3.ap-south-1.amazonaws.com/"
     },
     access_deniedPath: ["access-denied"]
 };
