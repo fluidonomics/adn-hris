@@ -161,10 +161,10 @@ export class ProfileComponent implements OnInit {
         } else if (output.type === 'done') {
                if(output.file.responseStatus==200){
                     switch (fileName) {
-                            case 'smartNationalId':
+                            case 'smartCard':
                                 this.documents.nationalIdSmartCardDocURL=output.file.response.key||'';
                                 break;
-                            case 'oldNationalId':
+                            case 'smartOldCard':
                                 this.documents.nationalIDOldFormatDocURL=output.file.response.key||'';
                                 break;  
                             case 'birth':
@@ -180,6 +180,44 @@ export class ProfileComponent implements OnInit {
                 else{
                      swal("Error!", "Error on Upload " + fileName, "error");
                 }
+        }
+    }
+
+    showDocumnetImagePopUp(filedName)
+    {
+        switch (filedName) {
+            case 'smartCard':
+                    swal({
+                        imageUrl:this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                        imageHeight: 700,
+                        //imageWidth: 5000,
+                        showConfirmButton: false,
+                    });
+                break;
+            case 'smartOldCard':
+                    swal({
+                        imageUrl:this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                        imageHeight: 700,
+                        //imageWidth: 5000,
+                        showConfirmButton: false,
+                    });
+                break;  
+            case 'birth':
+                        swal({
+                            imageUrl:this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                            imageHeight: 700,
+                            //imageWidth: 5000,
+                            showConfirmButton: false,
+                        });
+                break;
+            case 'passport':
+                        swal({
+                            imageUrl:this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                            imageHeight: 700,
+                            //imageWidth: 5000,
+                            showConfirmButton: false,
+                        });
+                break;  
         }
     }
 
