@@ -2,12 +2,12 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { ActivatedRoute, Router } from "@angular/router";
 import { ScriptLoaderService } from "../../_services/script-loader.service";
 import { Helpers } from "../../helpers";
-
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
 import { environment } from '../../../environments/environment'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import swal from "sweetalert2";
 
 
 @Component({
@@ -24,7 +24,6 @@ export class ResetPasswordComponent {
     constructor(private _router: Router,
         private _script: ScriptLoaderService,
         private _route: ActivatedRoute,
-        private cfr: ComponentFactoryResolver,
         private http: Http
     ) {
         this.resetModel.token = this._route.snapshot.params['token'];
@@ -50,6 +49,13 @@ export class ResetPasswordComponent {
     }
 
     resetPassword() {
+        let url= environment.api_base.apiBase + "/" +environment.api_base.apiPath + "/auth/reset"
+        this.http.post(url, this.resetModel).map(this.extractData).catch(this.handleError).subscribe( data => {
+             swal("Success","","success")
+        },
+        error => {
+            
+        });
         // this._authService.reset(this.resetModel)
         //     .subscribe(
         //     data => {
