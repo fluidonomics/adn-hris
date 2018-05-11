@@ -71,7 +71,7 @@
                                     <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh" >
-                                            <button class="btn btn-secondary" type="button" (click)="loadPersonalInfoTabData()"> <i class="fa fa-refresh"></i> </button>
+                                            <button class="btn btn-secondary" type="button" (click)="loadPersonalInfoTabData();showSpin();" > <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                         </div>
                                     </div>
                                     <div class="m-accordion__item-content">
@@ -179,9 +179,10 @@
                                                     <label for="personalEmail">Personal Email
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" #personalEmail="ngModel" placeholder="Enter email" type="email" required [disabled]="profileProcess.isPersonalProfileCompleted">
-                                                    <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !personalEmail.valid ">
-                                                        This field is required.
+                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" #personalEmail="ngModel" placeholder="Enter email" type="email" email required [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                    <div class="form-control-feedback has-danger">
+                                                        <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
+                                                        <span *ngIf="!personalEmail.errors?.required && personalEmail.errors?.email">Personal Email not valid.</span> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -275,7 +276,7 @@
                                     <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh">
-                                            <button class="btn btn-secondary" type="button" (click)="loadAddressTabData();"> <i class="fa fa-refresh"></i> </button>
+                                            <button class="btn btn-secondary" type="button" (click)="loadAddressTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                         </div>
                                     </div>
                                     <div class="m-accordion__item-content">
@@ -496,7 +497,7 @@
                                 <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadDocuments();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadDocuments();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -530,7 +531,7 @@
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                    <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;">Change
-                                                        <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                        <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted ||!documents.nationalIdSmartCard">
                                                    </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
                                                     <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('smartCard')"><i class="fa fa-close"></i></button>
@@ -547,7 +548,7 @@
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;">Change
-                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted ||!documents.nationalIDOldFormat">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
                                                     <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('smartOldCard')"><i class="fa fa-close"></i></button>
@@ -566,7 +567,7 @@
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
-                                                            <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                            <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput"  [disabled]="profileProcess.isPersonalProfileCompleted ||!documents.birthRegistrationNumber">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
                                                     <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
@@ -583,7 +584,7 @@
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                     <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" >Change
-                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput" [disabled]="profileProcess.isPersonalProfileCompleted">
+                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" [uploadInput]="uploadInput"  [disabled]="profileProcess.isPersonalProfileCompleted ||!documents.passportNumber">
                                                     </button>
                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
                                                     <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isPersonalProfileCompleted" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
@@ -614,7 +615,7 @@
                                 <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadAcademicInfoTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadAcademicInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -751,7 +752,7 @@
                                 <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadCertificateAndTraningInfoTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadCertificateAndTraningInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -849,7 +850,7 @@
                                 <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadEmploymentDetails();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadEmploymentDetails();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -992,7 +993,7 @@
                                 <div class="row" *ngIf="!profileProcess.isPersonalProfileCompleted">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadFamilyInfoTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadFamilyInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -1093,7 +1094,7 @@
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                    <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadOfficeInfoTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadOfficeInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div> 
                                 </div> -->
                                 <div class="m-accordion__item-content">
@@ -1171,8 +1172,9 @@
                                                 <span class="required" aria-required="true"> * </span>
                                             </label>
                                             <input  [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" required disabled>
-                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officeEmail.valid ">
-                                                    This field is required.
+                                            <div class="form-control-feedback has-danger">
+                                                <span *ngIf="fpersonalInfo.submitted && officeEmail.errors?.required">This field is required.</span>
+                                                <span *ngIf="!officeEmail.errors?.required && officeEmail.errors?.email">Offcie Email not valid.</span> 
                                             </div>
                                         </div>
                                         </div>
@@ -1275,7 +1277,7 @@
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                      <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadPositionDetailsTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadPositionDetailsTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div> -->
                                 <div class="m-accordion__item-content">
@@ -1498,7 +1500,7 @@
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadPerformanceDairyTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadPerformanceDairyTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div> -->
                                 <div class="m-accordion__item-content">
@@ -1562,7 +1564,7 @@
                                 <div class="row">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadBankDetails();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadBankDetails();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div>
                                 <div class="m-accordion__item-content">
@@ -1645,7 +1647,7 @@
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadSalaryInfoTabData();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadSalaryInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div> 
                                 </div> -->
                                 <div class="m-accordion__item-content">
@@ -1850,7 +1852,7 @@
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
-                                        <button class="btn btn-secondary" type="button" (click)="loadCarDetails();"> <i class="fa fa-refresh"></i> </button>
+                                        <button class="btn btn-secondary" type="button" (click)="loadCarDetails();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
                                 </div> -->
                                 <div class="m-accordion__item-content">
