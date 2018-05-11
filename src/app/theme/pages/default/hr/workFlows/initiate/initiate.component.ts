@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { Helpers } from '../../../../../../helpers';
-import { ScriptLoaderService } from '../../../../../../_services/script-loader.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { HrService } from '../../hr.service';
@@ -14,7 +12,16 @@ import swal from 'sweetalert2';
     encapsulation: ViewEncapsulation.None,
 })
 export class HrInitiateComponent implements OnInit, AfterViewInit {
+
     employeeData: any = [];
+
+    filterSearch: any = {};
+
+    divisionData: any = [];
+    deparmentData: any = [];
+    gradeData: any = [];
+
+
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
@@ -23,21 +30,69 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
    
 
 
-    constructor(private _script: ScriptLoaderService,
+    constructor(
         private _hrService: HrService,
+        private _commonService: CommonService,
         public _authService: AuthService) {
 
     }
+
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
-                this.loadAllEmployee();
+                this.initDropdown();
             });
         
     }
 
-    ngAfterViewInit() {
+    initDropdown() {
+        this.loadDivision();
+        this.loadDepartment();
+        this.loadGrade();
+    }
+
+
+    ngAfterViewInit() { 
+    }
+
+    loadDivision() {
+        this._commonService.getDivision()
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.divisionData = res.json();
+                }
+            },
+            error => {
+            });
+    }
+
+    loadDepartment(division_id?: number) {
+        this._commonService.getDepartment(division_id)
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+            });
+    }
+     //load Grade Dropdown By managementType_id  && employmentType_id
+     loadGrade() {
+        this._commonService.getGrade()
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.gradeData = res.json();
+                }
+            },
+            error => {
+            });
     }
 
     loadAllEmployee() {
@@ -78,6 +133,11 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
+    }
+    clearFormData() {
+        this.deparmentData = [];
+        this.gradeData = [];
+        this.divisionData = [];
     }
 
 }

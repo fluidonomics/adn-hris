@@ -1,4 +1,59 @@
 <div class="m-content">
+		<div class="row">
+				<div class="col-md-12">
+				   <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+					  <div class="m-portlet__head">
+						 <div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+							   <h3 class="m-portlet__head-text">
+								  Initiate Workflow
+								  <small>
+								  </small>
+							   </h3>
+							</div>
+						 </div>
+					  </div>
+					  <div class="m-portlet__body">
+						 <div class="m-section" >
+		 
+							<div class="m-section__content"> 
+									<div class="form-body">											 
+											<div class="row">							
+													    <div class="col-md-4">
+														  <div class="m-form__group form-group">
+															  <label for="form_control_1">Division</label>
+															  <ng-select class="m-input m-input--air" name="division" [items]="divisionData" bindLabel="divisionName"  bindValue="_id" placeholder="Select Division" [(ngModel)]="filterSearch.division_id" (change)="loadDepartment(filterSearch.division_id)"></ng-select>
+														  </div>
+													    </div>
+													    <div class="col-md-4">
+															<div class="m-form__group form-group">
+																<label for="form_control_1">Department</label>
+																<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.department_id" [clearable]="false"></ng-select>
+															</div>
+														</div>
+														<div class="col-md-4">
+																<div class="m-form__group form-group">
+																	<label for="form_control_1">Grade</label>
+																	<ng-select class="m-input m-input--air" name="grade" [items]="gradeData" [multiple]="true" bindLabel="gradeName"  bindValue="_id" placeholder="Select Grade" [(ngModel)]="filterSearch.grades"   ></ng-select>
+																</div>
+														</div>
+											   </div>
+									</div>
+									<div class="form-actions">
+									<div class="row">
+												  <div class="col-md-12">
+													 <div class="m-form__actions">
+														<button class="btn btn-success submitForm" type="submit" id="search" (click)="loadAllEmployee()">Search</button>
+													 </div>
+												  </div>
+											   </div>
+									</div>
+							</div>
+						 </div>
+					  </div>
+				   </div>
+				</div>
+			 </div>
 		<div class="m-portlet m-portlet--mobile">
 			<div class="m-portlet__body">
 				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
@@ -23,8 +78,14 @@
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
+										
+										<th class="m-datatable__cell" width="5%">
+												<label>
+														<input type="checkbox">
+												</label>
+										</th>
 										<th class="m-datatable__cell" width="5%" ></th>
-										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
+										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%" >
 											<span>
 											 NAME
 											<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
@@ -53,11 +114,16 @@
 							</thead>
 							<tbody class="m-datatable__body">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
-								   <td class="m-datatable__cell" width="5%" >
+									<td class="m-datatable__cell" width="5%" >
+										<label>
+												<input type="checkbox">
+										</label>
+									</td>	
+									<td class="m-datatable__cell" width="5%" >
 										  <img *ngIf="employee?.ProfileImage; else noImage" src="{{employee?.ProfileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									</td>
-								    <td class="m-datatable__cell" width="25%" >
+								    <td class="m-datatable__cell" width="20%" >
 										<span>{{employee.FullName}}</span>
 									</td>
 									<td class="m-datatable__cell" width="20%" >
@@ -96,7 +162,7 @@
 									</a>
 								</li>
 								<li *ngFor="let page of p.pages">
-									<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+									<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number" [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
 										{{ page.label }}
 									</a>
 								</li>
@@ -113,6 +179,15 @@
 							</ul>
 						</div>
 					</pagination-template>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="m-form__actions">
+									<button class="btn btn-success submitForm" type="submit" id="search" (click)="loadAllEmployee()">Initiate</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

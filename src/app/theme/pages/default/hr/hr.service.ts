@@ -20,6 +20,13 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    loadDivision() {
+        let url = "master/getAllDivision";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+
+
     savekraWorkFlowDetails(data:any)
     {
         let url = "kra/addKraWorkFlowInfo";
