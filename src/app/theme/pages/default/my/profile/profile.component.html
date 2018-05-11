@@ -16,6 +16,9 @@
                 </div>
                 <div class="m-portlet__head-tools">
                     <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                        <li class="nav-item m-tabs__item" >
+                            <button type="button" class="btn m-btn--pill pulldown btn-secondary">Submit to HR</button>	
+                        </li>
                         <li class="nav-item dropdown m-tabs__item" >
                             <a aria-expanded="true" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" ng-reflect-href="#">
                             <i class="la la-user"></i> Personal Info
@@ -1641,21 +1644,19 @@
                                 <span class="m-accordion__item-icon"><i class="fa fa-money"></i></span>
                                 <span class="m-accordion__item-title">Salary Details (Monthly)</span>
                                 <span class="m-accordion__item-mode"></span>
-                            </div>
+                            </div> 
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_17_body" role="tabpanel" aria-labelledby="m_accordion_5_item_17_head" data-parent="#m_accordion_5">
                                 <!-- comment after demo -->
                                 <!-- <div class="row">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
+                                        <button class="btn btn-success" type="button" (click)="isHikeSalary(fsalaryDetails);"> <i class="fa fa-arrow-up"></i> Hike </button>
                                         <button class="btn btn-secondary" type="button" (click)="loadSalaryInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div> 
                                 </div> -->
                                 <div class="m-accordion__item-content">
                                     <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="fsalaryDetails.valid && saveSalaryDetails()" #fsalaryDetails="ngForm" novalidate="novalidate">
                                     <!-- comment after demo -->
-                                    <!-- <div class="form-group m-form__group m--margin-top-10 accordian-refresh">
-                                        <button type="button" class="btn btn-secondary" (click)="isHikeSalary(fsalaryDetails);">Hike</button>
-                                    </div> -->
                                     <div class="row">
                                         <div class="col-md-6 adn-form__group" hidden="true">
                                         <div class="form-group m-form__group">
