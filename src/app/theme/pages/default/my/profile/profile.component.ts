@@ -102,6 +102,8 @@ export class ProfileComponent implements OnInit {
 
     countryData=[];
 
+    isSpin=false;
+
 
     profileProcess={
         isOfficeProfileCompleted:false,
@@ -228,6 +230,15 @@ export class ProfileComponent implements OnInit {
           }
     }
   
+    showSpin()
+    {
+        var that = this;
+        that.isSpin = true;
+        setTimeout(function(){
+            that.isSpin = false;
+        },500);
+    }
+
     showDocumentImagePopUp(filedName)
     {
           switch (filedName) {
