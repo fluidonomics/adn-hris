@@ -1,0 +1,108 @@
+<div class="m-content">
+    <div class="row">
+        <!--begin::Leave Balance-->
+        <div class="col-xl-4">
+            <div class="m-portlet m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Leave Balance - 2018
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget4">
+                        <div class="m-widget4__item" *ngFor="let leave of leaveBalance">
+                            <div class="m-widget4__info">
+                                <span class="m-widget4__text">
+                                    {{leave.title}}
+                                </span>
+                            </div>
+                            <div class="m-widget4__ext">
+                                <span>
+                                    {{leave.balance}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Leave Balance-->
+
+        <!--begin::Upcoming Holidays-->
+        <div class="col-xl-4 holiday">
+            <div class="m-portlet m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Upcoming Holidays
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget4">
+                        <div class="m-widget4__item" *ngFor="let holiday of upcomingHolidays">
+                            <div class="m-widget4__info">
+                                <span class="m-menu__link-badge">
+                                    <span class="m-badge m-badge--info day">
+                                        {{holiday.date | date:'EEEE'}}
+                                    </span>
+                                    <span class="m-badge m-badge--info type" *ngIf="holiday.type">
+                                        {{holiday.type}}
+                                    </span>
+                                </span>
+                                <span>{{holiday.date | date:'d MMM y'}}</span>
+                            </div>
+                            <div class="m-widget4__ext">
+                                <span>{{holiday.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Upcoming Holidays-->
+
+        <!--begin::Recent Transactions-->
+        <div class="col-xl-4 transaction">
+            <div class="m-portlet m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Recent Transactions
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget4">
+                        <div class="m-widget4__item" *ngFor="let tran of recentTransactions">
+                            <div class="m-widget4__info">
+                                <span class="m-widget4__text">
+                                    {{tran.holidayType}}
+                                </span>
+                            </div>
+                            <div class="m-widget4__desc">
+                                <span *ngIf="tran.endDate">{{tran.startDate | date:'d MMM y'}} to {{tran.endDate | date:'d MMM y'}}</span>
+                                <span *ngIf="!tran.endDate">{{tran.startDate | date:'d MMM y'}}</span>
+                                <span class="">{{tran.description}}</span>
+                            </div>
+                            <div class="m-widget4__ext">
+                                <span>
+                                    {{tran.status}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Recent Transactions-->
+    </div>
+</div>
