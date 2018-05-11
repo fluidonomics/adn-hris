@@ -20,40 +20,25 @@ import { StylesCompileDependency } from "@angular/compiler";
 })
 
 export class LoginComponent implements OnInit {
-    model: any = {
-
-    };
     loading = false;
     returnUrl: string;
     loginModel: any = {
 
     };
     error = false;
-    @ViewChild('loginForm') loginForm: ElementRef;
-    //@ViewChild('alertSignin', { read: ViewContainerRef }) alertSignin: ViewContainerRef;
-    // @ViewChild('alertSignup', { read: ViewContainerRef }) alertSignup: ViewContainerRef;
-    //@ViewChild('alertForgotPass', { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
-
-    // constructor(private _router: Router,
-    //     private _script: ScriptLoaderService,
-    //     //private _userService: UserService,
-    //     private _route: ActivatedRoute,
-    //     private _authService: AuthService,
-    //     //private _alertService: AlertService,
-    //     private cfr: ComponentFactoryResolver) {
-    // }
-
+    errorMsg="";
+    // @ViewChild('loginForm') loginForm: ElementRef;
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
-        private _script: ScriptLoaderService,
-        private _cfr: ComponentFactoryResolver,
+        // private _script: ScriptLoaderService,
+        // private _cfr: ComponentFactoryResolver,
         private _route: ActivatedRoute,
         public _router: Router,
         private _authService: AuthService,
     ) {
         title.setTitle('ADN HRIS | Login');
         meta.addTags([
-            { name: 'author', content: '' },
+            { name: 'author', content: 'LogiN Adn' },
             { name: 'keywords', content: 'Login.' },
             { name: 'description', content: 'Login.' }
         ]);
@@ -61,41 +46,33 @@ export class LoginComponent implements OnInit {
 
 
     ngOnInit() {
-        this.model.remember = true;
-        // get return url from route parameters or default to '/'
+        //this.remember = true;
         this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
         this._router.navigate([this.returnUrl]);
-        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
-            .then(() => {
-                Helpers.setLoading(false);
-                // /LoginCustom.init();
-            });
+        // this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
+        //     .then(() => {
+               
+        // });
+        Helpers.setLoading(false);
     }
 
-    login(form) {
-        if (form.valid) {
+    login() {
+        // if (form.valid) {
             this.loading = true;
             this._authService.login(this.loginModel)
                 .subscribe(
                 data => {
+                   
                     this._router.navigate([this.returnUrl]);
                 },
                 error => {
-                    //this.showAlert('alertSignin');
-                    //this._alertService.error(error);
+                    this.errorMsg= error.json().error.message ||error;
                     this.error = true;
                     this.loading = false;
                 });
-        }
-        else {
-            this.loginForm.nativeElement.className = this.loginForm.nativeElement.className + ' ng-submited';
-        }
-    }
-
-    showAlert(target) {
-        // this[target].clear();
-        // let factory = this.cfr.resolveComponentFactory(AlertComponent);
-        // let ref = this[target].createComponent(factory);
-        // ref.changeDetectorRef.detectChanges();
+        // }
+        // else {
+        //     this.loginForm.nativeElement.className = this.loginForm.nativeElement.className + ' ng-submited';
+        // }
     }
 }
