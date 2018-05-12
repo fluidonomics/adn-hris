@@ -10,6 +10,8 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { BankInfo, AcademicInfo, CarInfo, CertificationInfo, PreviousEmploymentInfo, FamilyInfo } from "../../../../../base/_interface/user.model"
 import { environment } from "../../../../../../environments/environment";
 import swal from 'sweetalert2';
+import { FormControl } from "@angular/forms/src/model";
+import { NgControl } from "@angular/forms/src/directives/ng_control";
 declare var mApp;
 declare var $;
 
@@ -99,28 +101,16 @@ export class ProfileComponent implements OnInit {
     hospitalizationSchemeData = [];
 
     relationData = [];
-
     countryData=[];
 
     isSpin=false;
 
-
     profileProcess={
-        isOfficeProfileCompleted:false,
-
-        //Change for demo make value true Remove approved
-        isPersonalProfileCompleted:false,
-        officeProfileStatus:"Approved"
-
-        //
+        isEmployeeStatus:true,
+        isHrStatus:false,
+        isHrSatusSendBack:true,
+        isSupervisorStatus:true
     }
-    
-    isOfficeTabCompleted=false;
-    isPersonalTabCompleted=false;
-
-  
-
-    
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -151,13 +141,13 @@ export class ProfileComponent implements OnInit {
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
-                    this.checkTabCompleted('personal');
-                    this.loadProcessStatusInfoDetails();
+                  
                 });
         });
     }
 
     initData() {
+        this.loadProcessInfoDetails();
         switch (this.tabName) {
             case "personal":
                 this.loadPersonal();
@@ -346,36 +336,65 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    checkTabCompleted(tabName:string)
+    loadProcessInfoDetails()
     {
-        this._commonService.checkTabCompleted(this._currentEmpId,tabName)
+        this._myService.getProfileProcessInfo(this._currentEmpId)
         .subscribe(
         data => {
             if(data.ok)
             {
-              this.isPersonalTabCompleted=data.json();
+              this.profileProcess=data.json();
             }
         },  
         error => {
             
         });
     }
+    
+    //save Personal Info
+    saveProfileStatus() {
+        this.profileProcess["employeeStatus"] ='Submitted';
+        this._myService.saveProfileStatus(this.profileProcess)
+            .subscribe(
+            data => {
+                this.profileProcess=data.json()||{}
+                swal({
+                    type: 'success',
+                    title:'Submit!',
+                    titleText:"Profile submitted successfully.",
+                });
+            },
+            error => {
+        });
+    }
 
-    loadProcessStatusInfoDetails()
+    loadTabStatus()
     {
-        //change for demo 
+        this._commonService.getTabStatus(this._currentEmpId)
+            .subscribe(
+            data => {
+                let tabData=data.json();
+                if(tabData.isPersonalInfo 
+                   && tabData.isAddress
+                   && tabData.isDocuments
+                   && tabData.isAcademicInfo
+                   && tabData.isCertificate
+                   && tabData.isEmployment
+                   && tabData.isFamilyInfo)
+                {
+                  this.saveProfileStatus();
+                }
+                else
+                swal({type: 'error',title:'Error!',titleText:"Please fill detail of personal info.",});
+            },
+            error => {
+                swal({type: 'error',title:'Error!',titleText: error.json().error.message  ,});
+        });
+    }
 
-        // this._commonService.getProfileProcessStatus(this._currentEmpId)
-        // .subscribe(
-        // data => {
-        //     if(data.ok)
-        //     {
-        //       this.profileProcess=data.json();
-        //     }
-        // },  
-        // error => {
-            
-        // });
+    //save Personal Info
+    submitProfile() {
+       this.loadTabStatus();
     }
 
     //save Personal Info
@@ -390,7 +409,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_1_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
             },
@@ -398,6 +417,22 @@ export class ProfileComponent implements OnInit {
                 mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
+
+    checkEmailExists(_element) {
+        if (_element.valid) {
+            this._commonService.checkEmailExists(_element.value)
+            .subscribe(
+            data => {
+                 if(data.json())
+                _element.control.setErrors({"emailExists": true})
+            },
+            error => {
+                _element.control.setErrors(null)
+            });
+         
+        }
+    }
+
     //save Address Info
     saveAddressInfo() {
         if(this.address.isSameAsCurrent)
@@ -408,7 +443,8 @@ export class ProfileComponent implements OnInit {
         this._myService.saveAddressInfo(this.address)
         .subscribe(
         data => {
-            swal("Saved", "Successfully", "success");
+            // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+            swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
             this.address=data.json()||{};
         },
         error => {
@@ -428,7 +464,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_9_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.documents = data.json() || {};
             },
             error => {
@@ -450,7 +486,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_10_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.academicInfo[index] = data.json();
                 if(this.academicInfo[index].levelOfEducation_id)
                 {
@@ -467,7 +503,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveCertificationInfo(objCertification)
             .subscribe(
             data => {
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.certificationsandTrainingInfo[index] = data.json();
             },
             error => {
@@ -480,7 +516,7 @@ export class ProfileComponent implements OnInit {
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
             .subscribe(
             data => {
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.previousEmploymentDetails[index] = data.json();
                 this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):this.previousEmploymentDetails[index].employmentPeriodFrom;
                 this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):this.previousEmploymentDetails[index].employmentPeriodTo;
@@ -495,7 +531,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(
             data => {
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.familyInfo[index] = data.json();
                 this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):this.familyInfo[index].dateOfBirth;
             },
@@ -508,7 +544,7 @@ export class ProfileComponent implements OnInit {
         this._myService.saveOfficeInfo(this.officeInfo)
         .subscribe(
         data => {
-            swal("Saved", "Successfully", "success");
+             swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
             this.officeInfo=data.json();
             this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
             this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
@@ -524,7 +560,7 @@ export class ProfileComponent implements OnInit {
         this._myService.savePositionInfo(this.positionDetails)
         .subscribe(
         data => {
-            swal("Saved", "Successfully", "success");
+             swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
             this.positionDetails=data.json();
         },
         error => {
@@ -543,7 +579,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_16_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.bankDetails = data.json();
             },
             error => {
@@ -557,7 +593,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 // mApp.unblock('#m_accordion_5_item_1_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.salaryDetails = data.json();
             },
             error => {
@@ -571,7 +607,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
-                swal("Saved", "Successfully", "success");
+                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
                 this.carDetails = data.json();
                 this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
                 this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
@@ -714,7 +750,7 @@ export class ProfileComponent implements OnInit {
 
     saveSuccessMesssage()
     {
-        swal("Saved", "Successfully", "success");
+         swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
     }
 
     //Add New Html on Click of Add Button 
@@ -1416,7 +1452,9 @@ export class ProfileComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#66BB6A',
         cancelButtonColor: '#9a9caf',
-        confirmButtonText: 'Yes'
+        confirmButtonText: 'Yes',
+        allowOutsideClick:false,
+        allowEscapeKey:false
       }).then((result) => {
         if (result.value) {
             form.resetForm();

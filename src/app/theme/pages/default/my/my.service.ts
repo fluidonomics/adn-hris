@@ -122,6 +122,15 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getProfileProcessInfo(empId?:number):Observable<Response> {
+        let url = "user/getProfileProcessInfo" 
+        if(empId)
+        {
+           url = "user/getProfileProcessInfo?emp_id="+empId 
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     savePersonalInfo(data: any): Observable<Response> {
         {
             let url = "user/addPersonalInfo"
@@ -131,6 +140,8 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
+
+    
     
     saveAddressInfo(data: any): Observable<Response> {
         {
@@ -236,6 +247,16 @@ export class MyService {
             let url = "user/addFamilyInfo"
             if (data._id != null && data._id != "" && data._id != undefined) {
                 url = "user/updateFamilyInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveProfileStatus(data: any): Observable<Response> {
+        {
+            let url = "user/addProfileProcessInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateProfileProcessInfo";
             }
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }

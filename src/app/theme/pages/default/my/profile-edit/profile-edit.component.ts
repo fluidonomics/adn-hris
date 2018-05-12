@@ -243,35 +243,35 @@ export class ProfileEditComponent implements OnInit {
         }
     }
 
-    checkTabCompleted(tabName:string)
-    {
-        this._commonService.checkTabCompleted(this._currentEmpId,tabName)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-             this.isPersonalTabCompleted=data.json();
-            }
-        },  
-        error => {
+    // checkTabCompleted(tabName:string)
+    // {
+    //     this._commonService.checkTabCompleted(this._currentEmpId,tabName)
+    //     .subscribe(
+    //     data => {
+    //         if(data.ok)
+    //         {
+    //          this.isPersonalTabCompleted=data.json();
+    //         }
+    //     },  
+    //     error => {
             
-        });
+    //     });
      
-    }
+    // }
 
     loadProcessStatusInfoDetails()
     {
-        this._commonService.getProfileProcessStatus(this._currentEmpId)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-              this.profileProcess=data.json();
-            }
-        },  
-        error => {
+        // this._commonService.getProfileProcessStatus(this._currentEmpId)
+        // .subscribe(
+        // data => {
+        //     if(data.ok)
+        //     {
+        //       this.profileProcess=data.json();
+        //     }
+        // },  
+        // error => {
             
-        });
+        // });
     }
 
     //save Personal Info
@@ -1226,7 +1226,9 @@ export class ProfileEditComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#66BB6A',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
+        confirmButtonText: 'Yes',
+        allowOutsideClick:false,
+        allowEscapeKey:false
       }).then((result) => {
         if (result.value) {
             form.resetForm();

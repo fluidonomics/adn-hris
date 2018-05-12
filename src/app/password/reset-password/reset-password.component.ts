@@ -51,22 +51,22 @@ export class ResetPasswordComponent {
     resetPassword() {
         let url= environment.api_base.apiBase + "/" +environment.api_base.apiPath + "/auth/reset"
         this.http.post(url, this.resetModel).map(this.extractData).catch(this.handleError).subscribe( data => {
-             swal("Success","","success")
+             swal({
+                type: 'success',
+                text: 'Password Change Successfully !',
+                showCancelButton: false,
+                allowOutsideClick:false,
+                allowEscapeKey:false,
+                confirmButtonText: 'OK',
+              }).then((result) => {
+                if (result.value) {
+                    this._router.navigate(['login'])
+                }
+              })
         },
         error => {
             
         });
-        // this._authService.reset(this.resetModel)
-        //     .subscribe(
-        //     data => {
-        //         // this._router.navigate([this.returnUrl]);
-        //         this.loading = false;
-        //     },
-        //     error => {
-        //         //this.showAlert('alertSignin');
-        //         //this._alertService.error(error);
-        //         this.loading = false;
-        //     });
     }
 
     

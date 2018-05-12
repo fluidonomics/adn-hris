@@ -241,25 +241,28 @@ export class CommonService {
 
     }
 
-    checkTabCompleted(empId:number,tabName?: string) {
-        let url = "common/checkTabCompleted?emp_id="+empId +"&tab="+tabName;
+    getTabStatus(emp_id?:number) {
+        let url = "common/getTabStatus" 
+        if(emp_id)
+        {
+           url = "common/getTabStatus?emp_id="+emp_id
+        }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     
-    getProfileProcessStatus(empId?:number) {
-        let url = "common/getProfileProcessStatus" 
-        if(empId)
-        {
-           url = "common/getProfileProcessStatus?emp_id="+empId 
-        }
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
+    
     
     sendEmail(data:any)
     {
         let url = "common/sendEmail" 
         return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    }
+
+    checkEmailExists(data:string)
+    {
+        let url = "common/checkEmailExists?email=" + data
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getLevelOfEducation() {

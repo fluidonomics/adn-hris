@@ -6,6 +6,7 @@ import { KeysPipe } from "./_pipes/key.pipes";
 import { CeilPipe } from "./_pipes/ceil.pipes";
 import { EqualValidator } from './_directive/equalValidator.directive';
 import { OnlyNumberDirective } from './_directive/only-number.directive';
+//import { EmailUniqueValidatorDirective } from './_directive/unique-email.directive';
 import {SummernoteComponent } from './_components/summernote.component';
 
 
@@ -20,6 +21,7 @@ import {SummernoteComponent } from './_components/summernote.component';
         CeilPipe,
         SummernoteComponent,
         OnlyNumberDirective,
+        //EmailUniqueValidatorDirective,
         EqualValidator
     ],
     exports: [
@@ -29,6 +31,7 @@ import {SummernoteComponent } from './_components/summernote.component';
         CeilPipe,
         SummernoteComponent,
         OnlyNumberDirective,
+        //EmailUniqueValidatorDirective,
         EqualValidator
     ],
 })
