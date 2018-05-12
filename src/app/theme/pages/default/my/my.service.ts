@@ -8,55 +8,8 @@ import { AuthService } from "../../../../base/_services/authService.service";
 
 @Injectable()
 export class MyService {
-    constructor(private authService: AuthService,
-        private http: Http) {
+    constructor(private authService: AuthService) {
     }
-
-    // verify() {
-    //     let url="/verify";
-    //     return this.authService.get(url).map((response: Response) => response.json());
-    // }
-
-    // forgotPassword(email: string) {
-    //     let url="/verify";
-    //     return this.authService.post('/api/forgot-password', JSON.stringify({ email })).map((response: Response) => response.json());
-    // }
-
-    // getAll() {
-    //     let url="/user";
-    //     return this.authService.get(url).map((response: Response) => response.json());
-    // }
-
-    // getById(id: number) {
-    //     let url="/user?id"+id;
-    //     return this.authService.get(url + id).map((response: Response) => response.json());
-    // }
-
-    // create(user: User) {
-    //     let url="/user";
-    //     return this.authService.post(url, user).map((response: Response) => response.json());
-    // }
-
-    // update(user: User) {
-    //     let url="/user?id"+user.id;
-    //     return this.authService.put(url, user).map((response: Response) => response.json());
-    // }
-
-    // delete(id: number) {
-    //     let url="/user?id"+id;
-    //     return this.authService.delete('/api/user/' + id).map((response: Response) => response.json());
-    // }
-
-    // private helper methods
-    // private jwt() {
-    //     // create authorization header with jwt token
-    //     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //     if (currentUser && currentUser.token) {
-    //         let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-    //         return new RequestOptions({ headers: headers });
-    //     }
-    // }
-
 
     getPersonalInfo(emp_id?: number): Observable<Response> {
         let url = "user/getPersonalInfo?emp_id=" + emp_id;
@@ -87,6 +40,7 @@ export class MyService {
         let url = "user/getCarInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
     getAcademicInfo(emp_id?: number): Observable<Response> {
         let url = "user/getAcademicInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
@@ -140,8 +94,6 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-
-    
     
     saveAddressInfo(data: any): Observable<Response> {
         {
@@ -153,7 +105,6 @@ export class MyService {
         }
     }
 
-
     saveDocumentsInfo(data: any): Observable<Response> {
         {
             let url = "user/addDocumentsInfo"
@@ -164,6 +115,45 @@ export class MyService {
         }
     }
 
+    saveAcademicInfo(data: any): Observable<Response> {
+        let url = "user/addAcademicInfo"
+        if (data._id != null && data._id != "" && data._id != undefined) {
+            url = "user/updateAcademicInfo";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    saveCertificationInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addCertificationInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateCertificationInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    savePreviousEmploymentInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addPreviousEmploymentInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updatePreviousEmploymentInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveFamilyInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addFamilyInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateFamilyInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    
     saveOfficeInfo(data: any): Observable<Response> {
         {
             let url = "user/addOfficeInfo"
@@ -212,45 +202,7 @@ export class MyService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-
-
-    saveAcademicInfo(data: any): Observable<Response> {
-        let url = "user/addAcademicInfo"
-        if (data._id != null && data._id != "" && data._id != undefined) {
-            url = "user/updateAcademicInfo";
-        }
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-
-    saveCertificationInfo(data: any): Observable<Response> {
-        {
-            let url = "user/addCertificationInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateCertificationInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    savePreviousEmploymentInfo(data: any): Observable<Response> {
-        {
-            let url = "user/addPreviousEmploymentInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updatePreviousEmploymentInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    saveFamilyInfo(data: any): Observable<Response> {
-        {
-            let url = "user/addFamilyInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateFamilyInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
+  
 
     saveProfileStatus(data: any): Observable<Response> {
         {
