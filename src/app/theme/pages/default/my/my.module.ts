@@ -18,6 +18,8 @@ import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
 import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
+import { CancelComponent } from './leaves/cancel/cancel.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 //import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 //import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
 
@@ -27,7 +29,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { MyService } from "./my.service"
 import { BaseModule } from '../../../../base/base.module';
-import { DashboardComponent } from './leaves/dashboard/dashboard.component';
 
 
 
@@ -37,6 +38,7 @@ import { DashboardComponent } from './leaves/dashboard/dashboard.component';
         CommonModule,
         LayoutModule,
         //NgbModule.forRoot(),
+        NgxPaginationModule,
         FormsModule,
         ReactiveFormsModule,
         MyRoutingModule,
@@ -51,12 +53,12 @@ import { DashboardComponent } from './leaves/dashboard/dashboard.component';
         MyPapComponent,
         MyPipComponent,
         ApplyComponent,
+        CancelComponent,
         HolidaysComponent,
         CalenderComponent,
         LeaveListComponent,
         ReportsComponent,
         ProfileEditComponent,
-        DashboardComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],

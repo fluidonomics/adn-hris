@@ -5,22 +5,21 @@ import { FormBuilder } from "@angular/forms";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: "./apply.component.html",
+    templateUrl: "./cancel.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ApplyComponent {
-    leaveapplication: any = {};
 
- leavetypeitems=['Annual leave','Slick leave','Maternity leave'];
- applytoitems = ['leave supervisor'];
- fromsessiondropdownitems=[];
- tosessiondropdownitems=[];   
+export class CancelComponent {
+    leaveData: any = [];
+    p2: number = 1;
+    applytoitems = ['leave supervisor'];
+    leavecancel: any = {};
  constructor() {
     }
- onLeaveAppSubmit(data)
+    onLeavecancelSubmit(data)
  {
     console.log(data);
-    console.log(this.leaveapplication);
+    console.log(this.leavecancel);
  }
 
 }
