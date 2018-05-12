@@ -29,6 +29,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { MyService } from "./my.service"
 import { BaseModule } from '../../../../base/base.module';
+import { DashboardComponent } from './leaves/dashboard/dashboard.component';
 
 
 
@@ -52,6 +53,7 @@ import { BaseModule } from '../../../../base/base.module';
         MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
+        DashboardComponent,
         ApplyComponent,
         CancelComponent,
         HolidaysComponent,
