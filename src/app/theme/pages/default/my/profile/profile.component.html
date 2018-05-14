@@ -71,7 +71,7 @@
                                     <span class="m-accordion__item-mode"></span>
                                 </div>
                                 <div class="m-accordion__item-body collapse" id="m_accordion_5_item_1_body" role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_5">
-                                    <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted || profileProcess.isHrSendBack">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh" >
                                             <button class="btn btn-secondary" type="button" (click)="loadPersonalInfoTabData();showSpin();" > <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -263,7 +263,7 @@
                                             </div>
                                             </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                             <button type="submit"  class="btn btn-success">{{personalInfo._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
@@ -277,7 +277,7 @@
                                     <span class="m-accordion__item-mode"></span>
                                 </div>
                                 <div class="m-accordion__item-body collapse" id="m_accordion_5_item_2_body" role="tabpanel" aria-labelledby="m_accordion_5_item_2_head" data-parent="#m_accordion_5">
-                                    <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <div class="col-md-10"> </div>
                                         <div class="col-md-2 accordian-refresh">
                                             <button class="btn btn-secondary" type="button" (click)="loadAddressTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -479,7 +479,7 @@
                                             </div>
                                             <br/>
                                             </div>
-                                            <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                            <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted || profileProcess.isHrSendBack">
                                             <button type="submit" class="btn btn-success">{{address._id ? 'Update':'Save'}}</button>
                                             <!-- <button type="reset" *ngIf="!address._id" class="btn btn-secondary">Cancel</button> -->
                                             </div>
@@ -498,7 +498,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_9_body" role="tabpanel" aria-labelledby="m_accordion_5_item_9_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -594,7 +594,7 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                                 <button type="submit"  class="btn btn-success">{{documents._id ? 'Update':'Save'}}</button>
                                         </div>
                                     </form>
@@ -612,7 +612,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_10_body" role="tabpanel" aria-labelledby="m_accordion_5_item_10_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadAcademicInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -725,13 +725,13 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <button type="button" class="btn btn-danger" *ngIf="academic._id" (click)="deleteAcademicInfo(academic._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{academic._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
-                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <div class="m-form__actions">
                                         <button class="btn btn-success" [disabled]="isAdded('academicInfo')" (click)="addNewHtmlContain('academicInfo')"><i class="fa fa-plus"></i> Add
                                         </button>
@@ -749,7 +749,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_11_body" role="tabpanel" aria-labelledby="m_accordion_5_item_11_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted || profileProcess.isHrSendBack">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadCertificateAndTraningInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -821,13 +821,13 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <button type="button" class="btn btn-danger" *ngIf="certifications._id" (click)="deleteCertificationInfo(certifications._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{certifications._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
-                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <div class="m-form__actions">
                                         <button class="btn btn-success" [disabled]="isAdded('certification')" (click)="addNewHtmlContain('certification')"><i class="fa fa-plus"></i> Add
                                         </button>
@@ -847,7 +847,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_12_body" role="tabpanel" aria-labelledby="m_accordion_5_item_12_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted || profileProcess.isHrSendBack">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadEmploymentDetails();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -964,13 +964,13 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id" (click)="deletePreviousEmployment(previousEmployment._id)"><i class="fa fa-close" ></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
-                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                             <div class="m-form__actions">
                                                 <button class="btn btn-success" [disabled]="isAdded('employment')" (click)="addNewHtmlContain('employment')"><i class="fa fa-plus"></i> Add
                                                 </button>
@@ -990,7 +990,7 @@
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_13_body" role="tabpanel" aria-labelledby="m_accordion_5_item_13_head" data-parent="#m_accordion_5">
-                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted || profileProcess.isHrSendBack">
                                     <div class="col-md-10"> </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadFamilyInfoTabData();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
@@ -1063,13 +1063,13 @@
                                             </div>
                                         </div>
                                         </div>
-                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                        <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <button type="button" class="btn btn-danger" *ngIf="family._id" (click)="deleteFamilyInfo(family._id)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{family._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
                                     </div>
-                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                    <div class="m-portlet__foot m-portlet__foot--fit" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                         <div class="m-form__actions">
                                         <button class="btn btn-success" [disabled]="isAdded('family')" (click)="addNewHtmlContain('family')"><i class="fa fa-plus"></i> Add
                                         </button>
