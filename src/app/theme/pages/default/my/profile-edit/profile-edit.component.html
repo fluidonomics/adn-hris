@@ -1675,10 +1675,10 @@
                                                             <ng-select class="m-input m-input--air" name="companyName" [items]="companiesData" bindLabel="companyName" bindValue="_id"
                                                                 placeholder="Select Company Name" [(ngModel)]="positionDetails.company_id"
                                                                 #companyName="ngModel" (change)="loadHRSpoce(positionDetails.company_id)"
-                                                                [clearable]="false" required disabled></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !companyName.valid ">
-                                                                This field is required.
-                                                            </div>
+                                                                [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !companyName.valid ">
+                                                                    This field is required.
+                                                                </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1690,7 +1690,7 @@
                                                             <ng-select class="m-input m-input--air" name="division" [items]="divisionData" bindLabel="divisionName" bindValue="_id" placeholder="Select Division"
                                                                 (change)="loadDepartment(positionDetails.division_id)" [(ngModel)]="positionDetails.division_id"
                                                                 #division="ngModel" (change)="loadDepartment(positionDetails.division_id)"
-                                                                [clearable]="false" required disabled></ng-select>
+                                                                [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !division.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1703,7 +1703,7 @@
                                                             <ng-select class="m-input m-input--air" name="department" [items]="deparmentData" bindLabel="departmentName" bindValue="_id"
                                                                 placeholder="Select Department" (change)="loadVertical(positionDetails.department_id)"
                                                                 [(ngModel)]="positionDetails.department_id" [clearable]="false"
-                                                                #department="ngModel" required disabled></ng-select>
+                                                                #department="ngModel" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !department.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1717,7 +1717,7 @@
                                                             <ng-select class="m-input m-input--air" name="vertical" [items]="verticalData" bindLabel="verticalName" bindValue="_id" placeholder="Select Vertical"
                                                                 (change)="loadSubVertical(positionDetails.vertical_id)" [(ngModel)]="positionDetails.vertical_id"
                                                                 #vertical="ngModel" (change)="loadSubVertical(positionDetails.vertical);"
-                                                                disabled></ng-select>
+                                                                [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -1725,7 +1725,7 @@
                                                             <label for="form_control_1">Sub Vertical</label>
                                                             <ng-select class="m-input m-input--air" name="subVertical" [items]="subverticalData" bindLabel="subVerticalName" bindValue="_id"
                                                                 placeholder="Select Sub Vertical" [(ngModel)]="positionDetails.subVertical_id"
-                                                                #subVertical="ngModel" disabled></ng-select>
+                                                                #subVertical="ngModel" [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1737,7 +1737,7 @@
                                                             <ng-select class="m-input m-input--air" name="managementType" [items]="managementTypeData" bindLabel="managementTypeName"
                                                                 bindValue="_id" placeholder="Select Management Type" [(ngModel)]="positionDetails.managementType_id"
                                                                 (change)="loadEmploymentType(positionDetails.managementType_id)"
-                                                                #managementType="ngModel" [clearable]="false" required disabled></ng-select>
+                                                                #managementType="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !managementType.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1750,7 +1750,7 @@
                                                             <ng-select class="m-input m-input--air" name="employmentType" [items]="employmentTypeData" bindLabel="employmentTypeName"
                                                                 bindValue="_id" placeholder="Select Employment Type" [(ngModel)]="positionDetails.employmentType_id"
                                                                 (change)="loadGrade(positionDetails.managementType_id,positionDetails.employmentType_id)"
-                                                                #employmentType="ngModel" [clearable]="false" required disabled></ng-select>
+                                                                #employmentType="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !employmentType.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1765,7 +1765,7 @@
                                                             <ng-select class="m-input m-input--air" name="confirmationStatus" [items]="employmentStatusData" bindLabel="employmentStatusName"
                                                                 bindValue="_id" placeholder="Select Confirmation/Probation Status"
                                                                 [(ngModel)]="positionDetails.employmentStatus_id" #confirmationStatus="ngModel"
-                                                                [clearable]="false" required disabled></ng-select>
+                                                                [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !confirmationStatus.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1776,7 +1776,7 @@
                                                             <label for="form_control_1">Tenure of Contract/Internship (in months)</label>
                                                             <span class="required" aria-required="true"> * </span>
                                                             <input type="text" name="tenure" id="tenure" class="form-control m-input m-input--air" [(ngModel)]="positionDetails.tenureOfContract"
-                                                                #tenure="ngModel" OnlyNumber="true" disabled>
+                                                                #tenure="ngModel" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved">
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !tenure.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1790,7 +1790,7 @@
                                                                 (change)="loadDesignation(positionDetails.grade_id);loadSupervisor(positionDetails.grade_id)"
                                                                 [(ngModel)]="positionDetails.grade_id" #employeeGrade="ngModel"
                                                                 (change)="loadSupervisor(positionDetails.grade_id)" [clearable]="false"
-                                                                required disabled></ng-select>
+                                                                required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !employeeGrade.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1804,7 +1804,7 @@
                                                             <span class="required" aria-required="true">* </span>
                                                             <ng-select class="m-input m-input--air" name="designation" [items]="designationData" bindLabel="designationName" bindValue="_id"
                                                                 placeholder="Select Designation" [(ngModel)]="positionDetails.designation_id"
-                                                                #designation="ngModel" [clearable]="false" required disabled></ng-select>
+                                                                #designation="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !designation.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1814,7 +1814,7 @@
                                                         <div class="m-form__group form-group">
                                                             <label for="form_control_1">Job Title</label>
                                                             <input type="text" name="jobTitle" id="jobTitle" class="form-control m-input m-input--air" [(ngModel)]="positionDetails.jobTitle"
-                                                                [(ngModel)]="positionDetails.jobTitle" #jobTitle="ngModel" disabled>
+                                                                [(ngModel)]="positionDetails.jobTitle" #jobTitle="ngModel" [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1826,7 +1826,7 @@
                                                             <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" bindLabel="fullName" bindValue="_id"
                                                                 placeholder="Select Supervisor" [(ngModel)]="positionDetails.primarySupervisorEmp_id"
                                                                 #primarySupervisorEmp="ngModel" [clearable]="false" required
-                                                                disabled></ng-select>
+                                                                [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !primarySupervisorEmp.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1838,7 +1838,7 @@
                                                             <span class="required" aria-required="true"> * </span>
                                                             <ng-select class="m-input m-input--air" name="hrspoc" [items]="hrspocData" bindLabel="fullName" bindValue="_id" placeholder="Select HR SPOC"
                                                                 [(ngModel)]="positionDetails.hrspoc_id" #hrspoc="ngModel" (change)="loadBuisnessHrHead(positionDetails.hrspoc_id)"
-                                                                [clearable]="false" required disabled></ng-select>
+                                                                [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !hrspoc.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1854,7 +1854,7 @@
                                                             <ng-select class="m-input m-input--air" name="businessHrHead" [items]="buisnessHrHeadData" bindLabel="fullName" bindValue="_id"
                                                                 placeholder="Select Business HR Head" [(ngModel)]="positionDetails.businessHrHead_id"
                                                                 #businessHrHead="ngModel" (change)="loadGroupHrHead(positionDetails.businessHrHead_id)"
-                                                                [clearable]="false" required disabled></ng-select>
+                                                                [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !businessHrHead.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1867,7 +1867,7 @@
                                                             <span class="required" aria-required="true">* </span>
                                                             <ng-select class="m-input m-input--air" name="groupHrHead" [items]="groupHrHeadData" bindLabel="fullName" bindValue="_id"
                                                                 placeholder="Select Group HR Head" [(ngModel)]="positionDetails.groupHrHead_id"
-                                                                #groupHrHead="ngModel" [clearable]="false" required disabled></ng-select>
+                                                                #groupHrHead="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !groupHrHead.valid ">
                                                                 This field is required.
                                                             </div>

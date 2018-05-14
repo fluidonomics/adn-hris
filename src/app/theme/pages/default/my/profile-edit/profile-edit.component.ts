@@ -138,9 +138,14 @@ export class ProfileEditComponent implements OnInit {
             if (params['tabName']) {
                 this.tabName = params['tabName'];
             }
+            if(params['id'])
+            {
+                this.param_emp_id=params['id'];
+            }
             this._authService.validateToken().subscribe(
                 res => {
-                    this._currentEmpId = this._authService.currentUserData._id;
+                    //Do not uncomment if profile-edit
+                    //this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
                   
                 });
@@ -339,7 +344,7 @@ export class ProfileEditComponent implements OnInit {
 
     loadProcessInfoDetails()
     {
-        this._myService.getProfileProcessInfo(this._currentEmpId)
+        this._myService.getProfileProcessInfo(this.param_emp_id)
         .subscribe(
         data => {
             if(data.ok)
@@ -371,7 +376,7 @@ export class ProfileEditComponent implements OnInit {
 
     loadTabStatus(status)
     {
-        this._commonService.getTabStatus(this._currentEmpId)
+        this._commonService.getTabStatus(this.param_emp_id)
             .subscribe(
             data => {
                 let tabData=data.json();
@@ -840,7 +845,7 @@ export class ProfileEditComponent implements OnInit {
         this.maritialStatusData = this._commonService.getMartialStatus();
         this.nationalityData = this._commonService.getNationality()
 
-        this._myService.getPersonalInfo(this._currentEmpId)
+        this._myService.getPersonalInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.personalInfo = data.json() || {};
@@ -854,7 +859,7 @@ export class ProfileEditComponent implements OnInit {
     loadAddressTabData() {
         this.loadcurrentDivison();
         this.loadpermanentDivison();
-        this._myService.getAddressInfo(this._currentEmpId)
+        this._myService.getAddressInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.address = data.json() || {};
@@ -964,7 +969,7 @@ export class ProfileEditComponent implements OnInit {
     }
     //Load Documents Page Data 
     loadDocuments() {
-        this._myService.getDocumentsInfo(this._currentEmpId)
+        this._myService.getDocumentsInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.documents = data.json() || {};
@@ -1004,7 +1009,7 @@ export class ProfileEditComponent implements OnInit {
         //  this.levelOfEducationData = this._commonService.getLevelOfEducation();
         //  this.examDegreeTitleData = this._commonService.getExamDegreeTitle();
         this.loadlevelOfEducation();
-        this._myService.getAcademicInfo(this._currentEmpId)
+        this._myService.getAcademicInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.academicInfo = res.json().data;
@@ -1024,7 +1029,7 @@ export class ProfileEditComponent implements OnInit {
 
     //Load Certification & Traning Tab Data
     loadCertificateAndTraningInfoTabData() {
-        this._myService.getCertificationInfo(this._currentEmpId)
+        this._myService.getCertificationInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.certificationsandTrainingInfo = res.json().data;
@@ -1042,7 +1047,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadEmploymentDetails() {
-        this._myService.getPreviousEmploymentInfo(this._currentEmpId)
+        this._myService.getPreviousEmploymentInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.previousEmploymentDetails = res.json().data;
@@ -1074,7 +1079,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadFamilyInfo() {
-        this._myService.getFamilyInfo(this._currentEmpId)
+        this._myService.getFamilyInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.familyInfo = res.json().data;
@@ -1098,7 +1103,7 @@ export class ProfileEditComponent implements OnInit {
 
     loadOfficeInfoTabData() {
         this.countryData=this._commonService.getCountry();
-        this._myService.getOfficeDetails(this._currentEmpId)
+        this._myService.getOfficeDetails(this.param_emp_id)
             .subscribe(
             data => {
                 this.officeInfo = data.json() || {};
@@ -1374,7 +1379,7 @@ export class ProfileEditComponent implements OnInit {
         this.loadManagementType('init');
         this.loadEmploymentStatus();
         //this.loadRoles();
-           this._myService.getPositionDetails(this._currentEmpId)
+           this._myService.getPositionDetails(this.param_emp_id)
            .subscribe(
            data => {
                this.positionDetails=data.json()|| {};
@@ -1416,7 +1421,7 @@ export class ProfileEditComponent implements OnInit {
 
     loadBankDetails() {
         this.currencyArrData = this._commonService.getCurrency();
-        this._myService.getBankInfo(this._currentEmpId)
+        this._myService.getBankInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.bankDetails = data.json() || {};
@@ -1434,7 +1439,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadSalaryInfo() {
-        this._myService.getSalaryInfo(this._currentEmpId)
+        this._myService.getSalaryInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.salaryDetails = data.json() || {};
@@ -1469,7 +1474,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadCarDetails() {
-        this._myService.getCarInfo(this._currentEmpId)
+        this._myService.getCarInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.carDetails = data.json() || {};
