@@ -5,8 +5,10 @@ import { EmployeeInfo } from '../../../../../../base/_interface/user.model';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { MyService } from '../../my.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
+import { leaveView } from '@angular/core/src/render3/instructions';
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-
+import swal from 'sweetalert2';
+declare var mApp;
 
 @Component({
     selector: "app-my-leaves-cancel",
@@ -27,6 +29,7 @@ export class CancelComponent implements OnInit {
     reverse: boolean = false;
     search: string = '';
     employeeEmailList: any[] = [];
+    selectedLeave: any;
 
     constructor(
         public authService: AuthService,
@@ -61,10 +64,58 @@ export class CancelComponent implements OnInit {
         })
     }
 
+    selectLeave(event, leave) {
+        if (leave.checked) {
+
+            this.leaveData
+                .filter(lv => lv.checked && lv._id !== leave._id)
+                .forEach(lv => {
+                    lv.checked = false;
+                });
+            this.selectedLeave = leave;
+        }
+        else
+            this.selectedLeave = null;
+    }
+
     onLeavecancelSubmit(data) {
         console.log(data);
         console.log(this.leaveCancel);
-        this.fleavecancel.reset();
+
+        debugger;
+        if (data.valid) {
+            let ccToMail = [];
+            data.value.ccTo.forEach(cc => {
+                let mail = this.employeeEmailList.find(email => {
+                    return email._id == cc;
+                });
+                if (mail)
+                    ccToMail.push(mail.personalEmail);
+            });
+            let leave: any = {
+                id: this.selectedLeave._id,
+                emp_id: this.employee._id,
+                reason: this.leaveCancel.reason,
+                ccTo: ccToMail
+            }
+            mApp.block('.cancel-portlet', {
+                overlayColor: '#000000',
+                type: 'loader',
+                state: 'success',
+                // message: 'Please wait...'
+            });
+            this.myApiService.saveCancelLeave(leave).subscribe(data => {
+                debugger;
+                if (data.ok) {
+                    mApp.unblock('.cancel-portlet');
+                    swal("Leave Cancelled", "", "success");
+                    data.resetForm();
+                }
+            },
+                error => {
+                    mApp.unblock('.cancel-portlet');
+                });
+        }
     }
 
     sort(key: string) {
