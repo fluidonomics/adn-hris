@@ -6,8 +6,8 @@
 export const environment = {
     production: false,
     api_base: {
-        apiBase: "http://localhost:3000",
-       //apiBase: "http://goforship.com:3000",
+        //apiBase: "http://localhost:3000",
+        apiBase: "http://goforship.com:3000",
         apiPath: "api",
         resetPasswordCallback: "",
         signInPath: 'auth/login',
