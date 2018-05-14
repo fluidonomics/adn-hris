@@ -131,7 +131,7 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-    
+
     saveAddressInfo(data: any): Observable<Response> {
         {
             let url = "user/addAddressInfo"
@@ -161,7 +161,7 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-    
+
     savePositionInfo(data: any): Observable<Response> {
         {
             let url = "user/addPositionInfo"
@@ -261,10 +261,20 @@ export class MyService {
         let url = "user/deleteFamilyInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
-    
+
     deleteCertificationInfo(_id: number) {
         let url = "user/deleteCertificationInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeLeaveDetails(_empId: number) {
+        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeEmailDetails() {
+        let url = "leave/getEmployeEmailDetails";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
