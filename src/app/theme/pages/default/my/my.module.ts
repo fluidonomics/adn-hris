@@ -16,9 +16,11 @@ import { MyPipComponent } from './workflows/pip/pip.component'
 import { ApplyComponent } from './leaves/apply/apply.component';
 import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
+import { TrackLeaveComponent } from './leaves/track-leave/track-leave.component';
 import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
 import { CancelComponent } from './leaves/cancel/cancel.component';
+import { LeaveAppReivewComponent } from './leaves/leave-app-review/leave-app-review.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 //import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 //import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
@@ -56,11 +58,13 @@ import { DashboardComponent } from './leaves/dashboard/dashboard.component';
         DashboardComponent,
         ApplyComponent,
         CancelComponent,
+        TrackLeaveComponent,
         HolidaysComponent,
         CalenderComponent,
         LeaveListComponent,
         ReportsComponent,
         ProfileEditComponent,
+        LeaveAppReivewComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],

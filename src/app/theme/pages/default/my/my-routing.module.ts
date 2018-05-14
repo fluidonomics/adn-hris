@@ -15,6 +15,9 @@ import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { DashboardComponent } from './leaves/dashboard/dashboard.component';
+import { TrackLeaveComponent } from './leaves/track-leave/track-leave.component';
+import { LeaveAppReivewComponent } from './leaves/leave-app-review/leave-app-review.component';
+
 
 // import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
 // import { SupervisorComponent } from './team/workflows/supervisor/supervisor.component';
@@ -30,6 +33,8 @@ const routes: Routes = [{
         { path: 'leaves/dashboard', component: DashboardComponent },
         { path: 'leaves/apply', component: ApplyComponent },
         { path: 'leaves/cancel', component: CancelComponent },
+        { path: 'leaves/track-leave', component: TrackLeaveComponent },
+        { path: 'leaves/leave-application-review', component: LeaveAppReivewComponent },
         { path: 'leaves/holidays', component: HolidaysComponent },
         { path: 'leaves/calender', component: CalenderComponent },
         { path: 'leaves/list', component: LeaveListComponent },
