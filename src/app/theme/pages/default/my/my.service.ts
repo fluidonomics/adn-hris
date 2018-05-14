@@ -172,6 +172,14 @@ export class MyService {
         }
     }
 
+    addapplyLeave(data: any): Observable<Response> {
+        {
+            let url = "leave/applyLeave"
+           console.log(data);
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
     saveBankDetails(data: any): Observable<Response> {
         {
             let url = "user/addBankInfo"

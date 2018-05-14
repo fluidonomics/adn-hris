@@ -86,7 +86,7 @@
                                 <div class="m-form__group form-group">
                                    <label for="form_control_1">Days</label>
                                    <span class="required" aria-required="true">* </span>
-                                   <input type="text" name="days" class="form-control m-input m-input--air"  OnlyNumber="true" [(ngModel)]="leaveapplication.days" #days="ngModel" disabled required>
+                                   <input type="text" name="days" class="form-control m-input m-input--air"  OnlyNumber="true" [(ngModel)]="leaveapplication.days" #days="ngModel"  required>
                                    <div class="form-control-feedback has-danger" *ngIf="!days.valid">
                                      <span *ngIf="fleaveapplication.submitted && !days.valid">This field is required.</span>
                                      
@@ -97,7 +97,7 @@
                                 <div class="m-form__group form-group">
                                    <label for="form_control_1">Balance</label>
                                    <span class="required" aria-required="true">* </span>
-                                   <input type="text" class="form-control m-input m-input--air" name="balance" id="balance" [(ngModel)]="leaveapplication.balance" #balance="ngModel" OnlyNumber="true" disabled required>
+                                   <input type="text" class="form-control m-input m-input--air" name="balance" id="balance" [(ngModel)]="leaveapplication.balance" #balance="ngModel" OnlyNumber="true"  required>
                                    <div class="form-control-feedback has-danger" *ngIf="!balance.valid">
                                      <span *ngIf="fleaveapplication.submitted && !balance.valid">This field is required.</span>
                                      
@@ -151,7 +151,7 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">Attechment</label>
 								  <span class="required" aria-required="true"> * </span>
-								  <input type="file" name="attechment" [(ngModel)]="leaveapplication.attechment" #attechment="ngModel" required>
+								  <input type="file" name="attechment" [(ngModel)]="leaveapplication.attechment" #attechment="ngModel">
 								  <div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !attechment.valid ">
 									 This field is required.
 								  </div>
