@@ -1394,13 +1394,13 @@ export class ProfileComponent implements OnInit {
     }
 
     loadPerformanceDairyTabData() {
-        //this._authService.getOfficeDetails(this.empProfile.empId)
-        // .subscribe(
-        // data => {
-        //     this.empProfile.personalInfo=data.json()|| {};
-        // },
-        // error => {
-        // });
+        this._myService.getPerformanceDairyDeatils(this.param_emp_id)
+        .subscribe(
+        data => {
+             console.log(data.json());
+        },
+        error => {
+        });
     }
 
     loadOfficeDetails() {

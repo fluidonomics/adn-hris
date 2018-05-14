@@ -71,6 +71,11 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getPerformanceDairyDeatils(emp_id?: number): Observable<Response> {
+        let url = "user/getPerformanceRatingInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getSeperationDetails(emp_id?: number): Observable<Response> {
         let url = "user/seperationInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
