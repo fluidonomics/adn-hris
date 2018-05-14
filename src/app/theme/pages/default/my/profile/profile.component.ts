@@ -106,10 +106,11 @@ export class ProfileComponent implements OnInit {
     isSpin=false;
 
     profileProcess={
-        isEmployeeStatus:true,
-        isHrStatus:false,
-        isHrSatusSendBack:true,
-        isSupervisorStatus:true
+        isEmployeeSubmitted:true,
+        isHrSubmitted:false,
+        isHrSendBack:false,
+        isSupervisorApproved:false,
+        isSupervisorSendBack:false
     }
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -382,6 +383,7 @@ export class ProfileComponent implements OnInit {
                    && tabData.isEmployment
                    && tabData.isFamilyInfo)
                 {
+                  this.profileProcess["employeeStatus"]="Submitted";
                   this.saveProfileStatus();
                 }
                 else
