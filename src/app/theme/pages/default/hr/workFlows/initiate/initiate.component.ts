@@ -119,7 +119,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             res => {
                 if(res.ok)
                 {
-                    swal("Initiate KRA", "Successfully", "success");
+                    swal("KRA Workflow", "Initiated", "success");
                 }
             },
             error => {

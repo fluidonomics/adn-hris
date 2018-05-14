@@ -53,7 +53,7 @@ export class ResetPasswordComponent {
         this.http.post(url, this.resetModel).map(this.extractData).catch(this.handleError).subscribe( data => {
              swal({
                 type: 'success',
-                text: 'Password Change Successfully !',
+                text: 'Password changed successfully!',
                 showCancelButton: false,
                 allowOutsideClick:false,
                 allowEscapeKey:false,

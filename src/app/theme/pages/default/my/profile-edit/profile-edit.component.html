@@ -725,10 +725,9 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard"
-                                                                        style="margin-right: 6px;">Change
-                                                                        <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')"
+                                                                        style="margin-right: 6px;"  (click)="nationalIdSmartCard.click()">Change</button>
+                                                                        <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #nationalIdSmartCard (uploadOutput)="onUploadOutput($event,'smartCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIdSmartCard">
-                                                                    </button>
                                                                     <button type="button" class="btn btn-success" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
                                                                     <button type="button" class="btn btn-danger" name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
                                                                         (click)="deleteDocumentImage('smartCard')">
@@ -749,10 +748,10 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat"
-                                                                        style="margin-right: 6px;">Change
-                                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')"
+                                                                        style="margin-right: 6px;"  (click)="nationalIDOldFormat.click()">Change</button>
+                                                                        <input type="file" name="profileDocuments" hidden="hidden" #nationalIDOldFormat ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIDOldFormat">
-                                                                    </button>
+                                                                    
                                                                     <button type="button" class="btn btn-success" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
                                                                     <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
                                                                         (click)="deleteDocumentImage('smartOldCard')">
@@ -774,10 +773,9 @@
                                                                 placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
-                                                                    <button type="button" class="btn btn-success" name="changeBirthRegistrationNumber" style="margin-right: 6px;">Change
-                                                                        <input type="file" name="profileDocuments" class="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')"
+                                                                    <button type="button" class="btn btn-success" name="changeBirthRegistrationNumber" style="margin-right: 6px;"  (click)="birthRegistrationNumber.click()">Change</button>
+                                                                        <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #birthRegistrationNumber (uploadOutput)="onUploadOutput($event,'birth')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.birthRegistrationNumber">
-                                                                    </button>
                                                                     <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
                                                                     <button type="button" class="btn btn-danger" name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
                                                                         (click)="deleteDocumentImage('birth')">
@@ -797,10 +795,9 @@
                                                                 [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
-                                                                    <button type="button" class="btn btn-success" name="changePassportNumber" style="margin-right: 6px;">Change
-                                                                        <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')"
+                                                                    <button type="button" class="btn btn-success" name="changePassportNumber" style="margin-right: 6px;"  (click)="passportNumber.click()">Change</button>
+                                                                        <input type="file" name="profileDocuments"hidden="hidden" ngFileSelect [options]="options" #passportNumber (uploadOutput)="onUploadOutput($event,'passport')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.passportNumber">
-                                                                    </button>
                                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
                                                                     <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
                                                                         (click)="deleteDocumentImage('passport')">

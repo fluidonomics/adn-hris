@@ -101,7 +101,7 @@ export class BulkEmailComponent implements OnInit {
         data => {
             if(data.ok)
             {
-                swal("Mail Send Successfully!","", "success");
+                swal("E-mail has been sent!","", "success");
                 form.resetForm();
             }
         },
