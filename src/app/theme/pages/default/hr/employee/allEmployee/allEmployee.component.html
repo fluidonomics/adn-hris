@@ -79,21 +79,21 @@
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
 								   <td class="m-datatable__cell" width="5%" >
 										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
-										  <img *ngIf="employee?.ProfileImage; else noImage" src="{{employee?.ProfileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+										  <img *ngIf="employee?.profileImage; else noImage" src="{{employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									    </a>
 									</td>
 								    <td class="m-datatable__cell" width="25%" >
-										<span>{{employee.FullName}}</span>
+										<span>{{employee.fullName}}</span>
 									</td>
 									<td class="m-datatable__cell" width="25%" >
-										<span>{{employee.OfficeEmail}}</span>
+										<span>{{employee.officeEmail}}</span>
 									</td>
 									<td class="m-datatable__cell" width="20%" >
-										<span>{{employee.Designation}}</span>
+										<span>{{employee.designation}}</span>
 									</td>
 								    <td class="m-datatable__cell" width="25%" >
-										<span>{{employee.Supervisor}}</span>
+										<span>{{employee.supervisor}}</span>
 									</td>
 							  </tr>
 							  <tr *ngIf="!employeeData.length > 0">

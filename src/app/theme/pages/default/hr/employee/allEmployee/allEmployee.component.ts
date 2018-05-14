@@ -45,7 +45,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                 let data= res.json().data || [];
                 if(data.length >0)
                 {
-                    data = data.filter(obj => obj.HrScope_Id== this._currentEmpId);
+                    data = data.filter(obj => obj.hrScope_Id== this._currentEmpId);
                     this.employeeData = data || [];
                 }
                 else
