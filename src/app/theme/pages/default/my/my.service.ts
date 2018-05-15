@@ -175,7 +175,7 @@ export class MyService {
     addapplyLeave(data: any): Observable<Response> {
         {
             let url = "leave/applyLeave"
-           console.log(data);
+            console.log(data);
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
@@ -283,6 +283,11 @@ export class MyService {
     getEmployeeEmailDetails() {
         let url = "leave/getEmployeEmailDetails";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveCancelLeave(leave: any) {
+        let url = "leave/cancelLeave";
+        return this.authService.post(url, leave).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
