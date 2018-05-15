@@ -19,8 +19,6 @@ import { ResetPasswordComponent } from "./password/reset-password/reset-password
 import { AccessDeniedComponent } from './accessDenied/accessDenied.component';
 import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
-import { leaveService } from "./base/_services/leaveService.service";
-
 
 @NgModule({
     declarations: [
@@ -42,7 +40,7 @@ import { leaveService } from "./base/_services/leaveService.service";
         FormsModule,
         HttpModule
     ],
-    providers: [ScriptLoaderService, AuthService, CommonService, leaveService],
+    providers: [ScriptLoaderService, AuthService, CommonService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

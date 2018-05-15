@@ -4,7 +4,6 @@ import { FormBuilder } from "@angular/forms";
 import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
-import { leaveService } from '../../../../../../base/_services/leaveService.service';
 declare var mApp;
 
 
@@ -23,7 +22,11 @@ export class ApplyComponent implements OnInit {
     leaveTypesDetails: any;
     emailDetails: any;
     currentEmpId: any;
-    constructor(private _myService: MyService, private _commonService: CommonService, private _leaveService: leaveService, private _authService: AuthService) {
+    constructor(
+        private _myService: MyService,
+        private _commonService: CommonService,
+        private _authService: AuthService
+    ) {
         this._commonService.getSupervisor()
     }
     ngOnInit(): void {
@@ -32,7 +35,7 @@ export class ApplyComponent implements OnInit {
         this.getAllSupervisorDetails();
         this.getAllEmailListOfEmployee();
     }
-    InitValues(){
+    InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
         this._authService.validateToken().subscribe(
@@ -41,7 +44,7 @@ export class ApplyComponent implements OnInit {
             });
     }
     getLeaveTypes() {
-        this._leaveService.getLeaveType().subscribe(
+        this._myService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();
@@ -64,7 +67,7 @@ export class ApplyComponent implements OnInit {
                 });
     }
     getAllEmailListOfEmployee() {
-        this._leaveService.getEmaiDetailsOfEmployee().subscribe(
+        this._myService.getEmaiDetailsOfEmployee().subscribe(
             res => {
                 if (res.ok) {
                     this.emailDetails = res.json();
@@ -74,20 +77,20 @@ export class ApplyComponent implements OnInit {
                 console.log(error);
             });
     }
-    postEmployeeLeaveDetails(data : any) {
+    postEmployeeLeaveDetails(data: any) {
         let _postData: any = {};
-        _postData.applyTo = data.applyToId ;
-        _postData.fromDate = data.fromDate ;
-        _postData.toDate = data.toDate ;
-        _postData.leave_type = data._id ;
-        _postData.reason = data.reason ;
-        _postData.contactDetails = data.contactDetail ;
-        _postData.ccTo = data.ccTo ;
-        _postData.emp_id =this.currentEmpId ;
+        _postData.applyTo = data.applyToId;
+        _postData.fromDate = data.fromDate;
+        _postData.toDate = data.toDate;
+        _postData.leave_type = data._id;
+        _postData.reason = data.reason;
+        _postData.contactDetails = data.contactDetail;
+        _postData.ccTo = data.ccTo;
+        _postData.emp_id = this.currentEmpId;
         _postData.createdBy = this.currentEmpId;
-        this._leaveService.postEmployeeLeaveDetails(_postData).subscribe(
+        this._myService.postEmployeeLeaveDetails(_postData).subscribe(
             res => {
-console.log(res);
+                console.log(res);
             },
             error => {
                 console.log(error);

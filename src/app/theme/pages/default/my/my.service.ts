@@ -290,6 +290,19 @@ export class MyService {
         return this.authService.post(url, leave).map(this.extractData).catch(this.handleError);
     }
 
+    getLeaveType(): Observable<Response> {
+        let url = "leave/getLeaveTypes";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getEmaiDetailsOfEmployee(): Observable<Response> {
+        let url = "leave/getEmployeEmailDetails";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    postEmployeeLeaveDetails(leavesData: any): Observable<Response> {
+        let url = "leave/applyLeave";
+        return this.authService.post(url, leavesData).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
