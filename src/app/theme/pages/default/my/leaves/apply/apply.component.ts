@@ -4,6 +4,7 @@ import { FormBuilder } from "@angular/forms";
 import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
+import swal from 'sweetalert2';
 declare var mApp;
 
 
@@ -22,6 +23,10 @@ export class ApplyComponent implements OnInit {
     leaveTypesDetails: any;
     emailDetails: any;
     currentEmpId: any;
+    areDaysValid: boolean = true;
+    isBalanceValid: boolean = true;
+    isAttachmentRequired: boolean = false;
+
     constructor(
         private _myService: MyService,
         private _commonService: CommonService,
@@ -77,29 +82,64 @@ export class ApplyComponent implements OnInit {
                 console.log(error);
             });
     }
-    postEmployeeLeaveDetails(data: any) {
-        let _postData: any = {};
-        _postData.applyTo = data.applyToId;
-        _postData.fromDate = data.fromDate;
-        _postData.toDate = data.toDate;
-        _postData.leave_type = data._id;
-        _postData.reason = data.reason;
-        _postData.contactDetails = data.contactDetail;
-        _postData.ccTo = data.ccTo;
-        _postData.emp_id = this.currentEmpId;
-        _postData.createdBy = this.currentEmpId;
-        this._myService.postEmployeeLeaveDetails(_postData).subscribe(
-            res => {
-                console.log(res);
-            },
-            error => {
-                console.log(error);
+    postEmployeeLeaveDetails(form, data: any) {
+        this.areDaysValid = data.days > 0;
+        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
+
+        if (data.days > 3) {
+            if (!data.attachment) {
+                this.isAttachmentRequired = true;
+            }
+        } else {
+            this.isAttachmentRequired = false;
+        }
+
+
+        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
+            let _postData: any = {};
+            _postData.applyTo = data.applyToId;
+            _postData.fromDate = data.fromDate;
+            _postData.toDate = data.toDate;
+            _postData.leave_type = data._id;
+            _postData.reason = data.reason;
+            _postData.contactDetails = data.contactDetail;
+            _postData.ccTo = data.ccTo;
+            _postData.emp_id = this.currentEmpId;
+            _postData.createdBy = this.currentEmpId;
+
+            mApp.block('#applyLeavePanel', {
+                overlayColor: '#000000',
+                type: 'loader',
+                state: 'success',
+                // message: 'Please wait...'
             });
+            this._myService.postEmployeeLeaveDetails(_postData).subscribe(
+                res => {
+                    console.log(res);
+                    mApp.unblock('#applyLeavePanel');
+                    swal("Leave Applied", "", "success");
+                    this.resetForm(form);
+                },
+                error => {
+                    mApp.unblock('#applyLeavePanel');
+                    console.log(error);
+                });
+        }
     }
-    onLeaveAppSubmit(data) {
+
+    onLeaveAppSubmit(form) {
         //console.log(data);
-        this.postEmployeeLeaveDetails(this.leaveapplication);
+        this.postEmployeeLeaveDetails(form, this.leaveapplication);
     }
+
+    resetForm(form) {
+        form.resetForm();
+        form.submitted = false;
+        form.controls.days.setErrors({ 'required': null })
+        form.controls.balance.setErrors({ 'required': null })
+        form.controls.attachment.setErrors({ 'required': null })
+    }
+
     calculateDays(e: any, type: string) {
         let diff: number;
         if (type === 'fromDate') {
@@ -109,6 +149,7 @@ export class ApplyComponent implements OnInit {
             diff = Math.ceil((Date.parse(e) - Date.parse(this.leaveapplication.fromDate)) / (1000 * 3600 * 24));
         }
         if (diff < 0) {
+            this.leaveapplication.days = 0;
             if (type === 'fromDate') {
                 this.leaveapplication.fromDate = this.leaveapplication.fromDate;
                 return;
@@ -118,7 +159,7 @@ export class ApplyComponent implements OnInit {
                 return;
             }
         }
-        if (diff !== NaN)
+        if (!isNaN(diff))
             this.leaveapplication.days = diff + 1;
         else
             this.leaveapplication.days = 0;
