@@ -358,45 +358,65 @@ export class ProfileEditComponent implements OnInit {
     }
     
     //save Personal Info
-    saveProfileStatus(status) {
+    saveProfileStatus(status:string,isSendBack?:boolean) {
         this.profileProcess["hrStatus"] = status;
+        this.profileProcess["supervisorStatus"] = null;
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
             data => {
                 this.profileProcess=data.json()||{}
-                swal({
-                    type: 'success',
-                    title:'Submit!',
-                    titleText:"Profile submitted successfully.",
-                });
+                if(isSendBack)
+                {
+                    swal({
+                        type: 'success',
+                        title:'Send Back!',
+                        titleText:"Profile sent back successfully.",
+                    });
+                }
+                else{
+                    swal({
+                        type: 'success',
+                        title:'Submit!',
+                        titleText:"Profile submitted successfully.",
+                    });
+                }
             },
             error => {
         });
     }
 
-    loadTabStatus(status)
+    
+
+    loadTabStatus(status:string,isSendBack?:boolean)
     {
         this._commonService.getTabStatus(this.param_emp_id)
             .subscribe(
             data => {
                 let tabData=data.json();
-                if(tabData.isPersonalInfo 
-                   && tabData.isAddress
-                   && tabData.isDocuments
-                   && tabData.isAcademicInfo
-                   && tabData.isCertificate
-                   && tabData.isEmployment
-                   && tabData.isFamilyInfo
-                   && tabData.isOffice
-                   && tabData.isBankInfo
-                   && tabData.isSalaryInfo
-                   && tabData.isCarInfo
-                )
+                if(isSendBack)
                 {
-                  this.saveProfileStatus(status);
+                    this.saveProfileStatus(status,isSendBack);
                 }
                 else
-                swal({type: 'error',title:'Error!',titleText:"Please fill personal info and office info.",});
+                {
+                    if(tabData.isPersonalInfo 
+                        && tabData.isAddress
+                        && tabData.isDocuments
+                        && tabData.isAcademicInfo
+                        && tabData.isCertificate
+                        && tabData.isEmployment
+                        && tabData.isFamilyInfo
+                        && tabData.isOffice
+                        && tabData.isBankInfo
+                        && tabData.isSalaryInfo
+                        && tabData.isCarInfo
+                     )
+                     {
+                       this.saveProfileStatus(status);
+                     }
+                     else
+                     swal({type: 'error',title:'Error!',titleText:"Please fill personal info and office info.",});
+                }
             },
             error => {
                 swal({type: 'error',title:'Error!',titleText: error.json().error.message  ,});
@@ -406,6 +426,27 @@ export class ProfileEditComponent implements OnInit {
     //save Personal Info
     submitProfile(status) {
        this.loadTabStatus(status);
+    }
+
+    submitBackProfileStatus(status)
+    {
+        swal({
+            title: 'Please specify reason',
+            input: 'textarea',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonColor: '#f22d4e',
+            cancelButtonText:'Cancel',
+            confirmButtonText: 'Send Back',
+            allowOutsideClick: () => !swal.isLoading()
+          }).then((result) => {
+            if (result.value) {
+                this.profileProcess["hrSendbackComment"]=result.value;
+                this.loadTabStatus(status,true);
+            }
+          })
     }
 
     //save Personal Info
