@@ -9,16 +9,17 @@
                             <div class="col-md-4">
                                 <div class="m-widget4__item">
                                     <div class="m-widget4__img m-widget4__img--pic">
-                                        <img src="./assets/app/media/img/custom/users/user6.jpg" alt="">
+                                        <img *ngIf="profileProcess.profileImage; else noImage" src="{{profileProcess.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
+                                        <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"></ng-template>
                                     </div>
                                     <div class="m-widget4__info">
                                         <span class="m-widget4__title">
-                                            Test Employee
+                                            {{profileProcess.fullName}}
                                         </span>
                                         <br>
-                                        <span class="m-widget4__sub">
+                                        <!-- <span class="m-widget4__sub">
                                             Sales Executive, Marketing Department
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +52,7 @@
                                             <strong>Status: </strong>
                                         </span>
                                         <span class="m-widget4__text">
-                                            Submitted to HR
+                                            {{profileProcess.supervisorStatus=='Approved' ? 'Approved by Supervisor' : (profileProcess.supervisorStatus == 'SendBack' ? 'Sent Back by Supervisor' :( profileProcess.hrStatus=='Submitted' ? 'Submitted to Supervisor':(profileProcess.hrStatus=='SendBack'? 'Sent Back by HR':'Submitted by Employee')))}}
                                         </span>
                                     </div>
                                 </div>
@@ -64,7 +65,8 @@
                                         </span>
                                     </div>
                                     <div class="m-widget4__info">
-                                        <span class="m-widget4__text">12th May 2018
+                                        <span class="m-widget4__text">
+										    {{profileProcess.updatedAt | date:"dd-MMM-yyyy hh:mm aa" || profileProcess.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}
                                         </span>
                                     </div>
                                 </div>
@@ -72,11 +74,11 @@
                             <div class="col-md-2">
                                 <div class="m-widget4__item" style="align-self: right">
                                     <div class="m-widget4__ext" style="padding-right: 3px;">                                                                  
-                                        <button type="button" class="btn m-btn--pill btn-success" *ngIf="!profileProcess.isHrSubmitted || profileProcess.isSupervisorSendBack || profileProcess.isHrSendBack"
+                                        <button type="button" class="btn m-btn--pill btn-success" *ngIf="(!profileProcess.isHrSubmitted && !profileProcess.isHrSendBack) ||profileProcess.isSupervisorSendBack"
                                             (click)="submitProfile('Submitted')">Submit</button>
                                     </div>
                                     <div class="m-widget4__ext" style="padding-left: 3px;">
-                                        <button type="button" class="btn m-btn--pill btn-danger" (click)="submitProfile('SendBack')" *ngIf="!profileProcess.isHrSubmitted || profileProcess.isSupervisorSendBack || profileProcess.isHrSendBack">Send Back</button>
+                                        <button type="button" class="btn m-btn--pill btn-danger" (click)="submitBackProfileStatus('SendBack')" *ngIf="(!profileProcess.isHrSubmitted && !profileProcess.isHrSendBack)  || profileProcess.isSupervisorSendBack">Send Back</button>
                                     </div>
                                 </div>
                             </div>
