@@ -18,8 +18,8 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     reverse: boolean = false;
     p2: number = 1;
     search: any;
-    _currentEmpId:number;
-   
+    _currentEmpId: number;
+
 
 
     constructor(private _script: ScriptLoaderService,
@@ -42,14 +42,13 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
-                let data= res.json().data || [];
-                if(data.length >0)
-                {
-                    data = data.filter(obj => obj.hrScope_Id== this._currentEmpId);
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    data = data.filter(obj => obj.hrScope_Id == this._currentEmpId);
                     this.employeeData = data || [];
                 }
                 else
-                this.employeeData = data.json().data || [];
+                    this.employeeData = data.json().data || [];
             },
             error => {
             });

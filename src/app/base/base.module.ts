@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { SearchPipe } from "./_pipes/search.pipes";
 import { OrderPipe } from "./_pipes/order.pipes";
 import { KeysPipe } from "./_pipes/key.pipes";
+import { RoundPipe } from "./_pipes/round.pipes";
 import { CeilPipe } from "./_pipes/ceil.pipes";
 import { EqualValidator } from './_directive/equalValidator.directive';
 import { OnlyNumberDirective } from './_directive/only-number.directive';
 //import { EmailUniqueValidatorDirective } from './_directive/unique-email.directive';
-import {SummernoteComponent } from './_components/summernote.component';
+import { SummernoteComponent } from './_components/summernote.component';
 
 
 
@@ -19,6 +20,7 @@ import {SummernoteComponent } from './_components/summernote.component';
         OrderPipe,
         KeysPipe,
         CeilPipe,
+        RoundPipe,
         SummernoteComponent,
         OnlyNumberDirective,
         //EmailUniqueValidatorDirective,
@@ -29,6 +31,7 @@ import {SummernoteComponent } from './_components/summernote.component';
         OrderPipe,
         KeysPipe,
         CeilPipe,
+        RoundPipe,
         SummernoteComponent,
         OnlyNumberDirective,
         //EmailUniqueValidatorDirective,

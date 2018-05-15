@@ -18,7 +18,7 @@ import { AccessDeniedComponent } from './accessDenied/accessDenied.component';
 import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
 
-import {BaseModule} from "./base/base.module"
+import { BaseModule } from "./base/base.module"
 
 
 @NgModule({

@@ -15,13 +15,13 @@ import { Helpers } from "../../helpers";
 export class ForgetPasswordComponent {
     loading = false;
     forgetModel: any = {};
-    isForgetPassword:boolean=true;
+    isForgetPassword: boolean = true;
 
     constructor(private _router: Router,
         private _script: ScriptLoaderService,
         private _route: ActivatedRoute,
         private _authService: AuthService,
-       ) {
+    ) {
     }
 
     ngOnInit() {
@@ -34,7 +34,7 @@ export class ForgetPasswordComponent {
             data => {
                 if (data.ok) {
                     this.loading = false;
-                    this.isForgetPassword=false;
+                    this.isForgetPassword = false;
                 }
             },
             error => {

@@ -15,13 +15,16 @@ export class ApplyComponent {
     applyto = ['leave supervisor'];
     fromsessiondropdown = [];
     tosessiondropdown = [];
+    currentDate = new Date();
 
     constructor() {
     }
-    
+
     onLeaveAppSubmit(data) {
         console.log(data);
         console.log(this.leaveapplication);
+    }
+    clearFormData() {
     }
 
 }

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
     };
     error = false;
-    errorMsg="";
+    errorMsg = "";
     // @ViewChild('loginForm') loginForm: ElementRef;
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -47,17 +47,17 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-            this.loading = true;
-            this._authService.login(this.loginModel)
-                .subscribe(
-                data => {
-                   
-                    this._router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.errorMsg= error.json().error.message ||error;
-                    this.error = true;
-                    this.loading = false;
-                });
+        this.loading = true;
+        this._authService.login(this.loginModel)
+            .subscribe(
+            data => {
+
+                this._router.navigate([this.returnUrl]);
+            },
+            error => {
+                this.errorMsg = error.json().error.message || error;
+                this.error = true;
+                this.loading = false;
+            });
     }
 }

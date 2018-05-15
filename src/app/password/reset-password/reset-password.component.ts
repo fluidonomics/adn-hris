@@ -18,8 +18,8 @@ import swal from "sweetalert2";
 
 export class ResetPasswordComponent {
     resetModel: any = {};
-    isLinkExpire=false;
-    isResetSection=false;
+    isLinkExpire = false;
+    isResetSection = false;
 
     constructor(private _router: Router,
         private _script: ScriptLoaderService,
@@ -30,46 +30,46 @@ export class ResetPasswordComponent {
     }
 
     ngOnInit() {
-        let url= environment.api_base.apiBase + "/" +environment.api_base.apiPath + "/auth/reset"
-        this.http.get(url+"/"+this.resetModel.token).map(this.extractData).catch(this.handleError).subscribe( data => {
-            if (data.status!=200) {
-                this.isLinkExpire=true;
+        let url = environment.api_base.apiBase + "/" + environment.api_base.apiPath + "/auth/reset"
+        this.http.get(url + "/" + this.resetModel.token).map(this.extractData).catch(this.handleError).subscribe(data => {
+            if (data.status != 200) {
+                this.isLinkExpire = true;
                 Helpers.setLoading(false);
             }
-            if (data.status==200) {
-                this.isResetSection=true;
+            if (data.status == 200) {
+                this.isResetSection = true;
                 Helpers.setLoading(false);
             }
         },
-        error => {
-            this.isLinkExpire=true;
-            Helpers.setLoading(false);
-        });
-      
+            error => {
+                this.isLinkExpire = true;
+                Helpers.setLoading(false);
+            });
+
     }
 
     resetPassword() {
-        let url= environment.api_base.apiBase + "/" +environment.api_base.apiPath + "/auth/reset"
-        this.http.post(url, this.resetModel).map(this.extractData).catch(this.handleError).subscribe( data => {
-             swal({
+        let url = environment.api_base.apiBase + "/" + environment.api_base.apiPath + "/auth/reset"
+        this.http.post(url, this.resetModel).map(this.extractData).catch(this.handleError).subscribe(data => {
+            swal({
                 type: 'success',
                 text: 'Password changed successfully!',
                 showCancelButton: false,
-                allowOutsideClick:false,
-                allowEscapeKey:false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
                 confirmButtonText: 'OK',
-              }).then((result) => {
+            }).then((result) => {
                 if (result.value) {
                     this._router.navigate(['login'])
                 }
-              })
+            })
         },
-        error => {
-            
-        });
+            error => {
+
+            });
     }
 
-    
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

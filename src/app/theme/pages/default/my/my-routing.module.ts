@@ -32,7 +32,7 @@ const routes: Routes = [{
         { path: 'leaves/calender', component: CalenderComponent },
         { path: 'leaves/list', component: LeaveListComponent },
         { path: 'leaves/reports', component: ReportsComponent },
-        { path: 'team',loadChildren:".\/team\/my-team.module#MyTeamModule"}
+        { path: 'team', loadChildren: ".\/team\/my-team.module#MyTeamModule" }
     ]
 
 }]

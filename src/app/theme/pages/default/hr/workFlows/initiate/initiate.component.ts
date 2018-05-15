@@ -26,8 +26,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     reverse: boolean = false;
     p2: number = 1;
     search: any;
-    _currentEmpId:number;
-   
+    _currentEmpId: number;
+
 
 
     constructor(
@@ -43,7 +43,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initDropdown();
             });
-        
+
     }
 
     initDropdown() {
@@ -53,7 +53,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
 
-    ngAfterViewInit() { 
+    ngAfterViewInit() {
     }
 
     loadDivision() {
@@ -81,8 +81,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             error => {
             });
     }
-     //load Grade Dropdown By managementType_id  && employmentType_id
-     loadGrade() {
+    //load Grade Dropdown By managementType_id  && employmentType_id
+    loadGrade() {
         this._commonService.getGrade()
             .subscribe(
             res => {
@@ -99,26 +99,23 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
-                let data= res.json().data || [];
-                if(data.length >0)
-                {
-                    data = data.filter(obj => obj.HrScope_Id== this._currentEmpId);
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    data = data.filter(obj => obj.HrScope_Id == this._currentEmpId);
                     this.employeeData = data || [];
                 }
                 else
-                this.employeeData = data.json().data || [];
+                    this.employeeData = data.json().data || [];
             },
             error => {
             });
     }
 
-    savekraWorkFlowDetails(emp_id:number)
-    {
-        this._hrService.savekraWorkFlowDetails({emp_id:emp_id,status:'initiated'})
+    savekraWorkFlowDetails(emp_id: number) {
+        this._hrService.savekraWorkFlowDetails({ emp_id: emp_id, status: 'initiated' })
             .subscribe(
             res => {
-                if(res.ok)
-                {
+                if (res.ok) {
                     swal("KRA Workflow", "Initiated", "success");
                 }
             },

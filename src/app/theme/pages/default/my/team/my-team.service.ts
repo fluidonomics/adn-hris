@@ -11,11 +11,10 @@ export class MyTeamService {
     constructor(private authService: AuthService) {
     }
 
-    getProfileProcessInfo(empId?:number):Observable<Response> {
-        let url = "user/getProfileProcessInfo" 
-        if(empId)
-        {
-           url = "user/getProfileProcessInfo?emp_id="+empId 
+    getProfileProcessInfo(empId?: number): Observable<Response> {
+        let url = "user/getProfileProcessInfo"
+        if (empId) {
+            url = "user/getProfileProcessInfo?emp_id=" + empId
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
@@ -30,10 +29,9 @@ export class MyTeamService {
         }
     }
 
-    deleteImage(data:any)
-    {
+    deleteImage(data: any) {
         let url = "upload/deleteImage";
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
     getAllEmployee() {

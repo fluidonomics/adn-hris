@@ -241,26 +241,23 @@ export class CommonService {
 
     }
 
-    getTabStatus(emp_id?:number) {
-        let url = "common/getTabStatus" 
-        if(emp_id)
-        {
-           url = "common/getTabStatus?emp_id="+emp_id
+    getTabStatus(emp_id?: number) {
+        let url = "common/getTabStatus"
+        if (emp_id) {
+            url = "common/getTabStatus?emp_id=" + emp_id
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    
-    
-    
-    sendEmail(data:any)
-    {
-        let url = "common/sendEmail" 
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+
+
+
+    sendEmail(data: any) {
+        let url = "common/sendEmail"
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    checkEmailExists(data:string)
-    {
+    checkEmailExists(data: string) {
         let url = "common/checkEmailExists?email=" + data
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
@@ -272,10 +269,9 @@ export class CommonService {
     }
 
 
-    getKraDetailsData(emp_id)
-    {
-        let url = "kra/getKraDetailsData?emp_id="+ emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError); 
+    getKraDetailsData(emp_id) {
+        let url = "kra/getKraDetailsData?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
 

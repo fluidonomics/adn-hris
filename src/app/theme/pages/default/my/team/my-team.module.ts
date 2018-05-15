@@ -26,8 +26,8 @@ import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team
         BsDatepickerModule.forRoot(),
         BaseModule
     ], declarations: [
-          MyTeamReviewerComponent,
-          MyTeamSupervisorComponent
+        MyTeamReviewerComponent,
+        MyTeamSupervisorComponent
     ],
     providers: [MyTeamService]
 })

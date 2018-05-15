@@ -95,7 +95,7 @@ export class EditEmployeeComponent {
 
     // isOfficeTabCompleted=false;
 
-    
+
 
     // constructor( @Inject(PLATFORM_ID) private platformId: Object,
     //     meta: Meta, title: Title,
@@ -204,9 +204,9 @@ export class EditEmployeeComponent {
     //         }
     //     },  
     //     error => {
-            
+
     //     });
-     
+
     // }
     // //save Personal Info
     // savePersonalInfo() {
@@ -276,7 +276,7 @@ export class EditEmployeeComponent {
     //         error => {
     //         });
     // }
-     
+
     // //save EmploymentDetils Info
     // savePreviousEmploymentDetails(objPerviousEmployment: any, index: number) {
     //     objPerviousEmployment.emp_id = objPerviousEmployment.emp_id != null ? objPerviousEmployment.emp_id : (this._currentEmpId || this.param_emp_id)
@@ -327,7 +327,7 @@ export class EditEmployeeComponent {
     //     });
     // }
 
-    
+
 
     // //save Bank Info
     // saveBankDetails() {
@@ -428,7 +428,7 @@ export class EditEmployeeComponent {
     //             //mApp.unblock('#m_accordion_5_item_1_body');
     //         });
     // }
-    
+
     //  //delete Family Info
     //  deleteCertificationInfo(certification_id: number) {
     //     this._myService.deleteCertificationInfo(certification_id)

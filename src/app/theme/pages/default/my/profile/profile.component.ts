@@ -18,19 +18,19 @@ declare var $;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile",
     templateUrl: "./profile.component.html",
-    encapsulation: ViewEncapsulation.None ,
-    styles:[`input[type="file"]{
+    encapsulation: ViewEncapsulation.None,
+    styles: [`input[type="file"]{
         opacity: 0;
     }`]
 })
 
 export class ProfileComponent implements OnInit {
 
-    options:UploaderOptions;
+    options: UploaderOptions;
     uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
 
-    currentDate:any=new Date();
+    currentDate: any = new Date();
 
     //Local Variable for Profile 
     personalInfo: any = {}
@@ -38,8 +38,8 @@ export class ProfileComponent implements OnInit {
     documents: any = {}
     academicInfo = [];
     joiningDetails: any = {}
-    certificationsandTrainingInfo:any = [];
-    previousEmploymentDetails:any = [];
+    certificationsandTrainingInfo: any = [];
+    previousEmploymentDetails: any = [];
     familyInfo: any = []
     officeInfo: any = {}
     positionDetails: any = {}
@@ -101,16 +101,16 @@ export class ProfileComponent implements OnInit {
     hospitalizationSchemeData = [];
 
     relationData = [];
-    countryData=[];
+    countryData = [];
 
-    isSpin=false;
+    isSpin = false;
 
-    profileProcess={
-        isEmployeeSubmitted:true,
-        isHrSubmitted:false,
-        isHrSendBack:false,
-        isSupervisorApproved:false,
-        isSupervisorSendBack:false
+    profileProcess = {
+        isEmployeeSubmitted: true,
+        isHrSubmitted: false,
+        isHrSendBack: false,
+        isSupervisorApproved: false,
+        isSupervisorSendBack: false
     }
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -130,9 +130,9 @@ export class ProfileComponent implements OnInit {
 
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
-        this.currentDate=new Date();
+        this.currentDate = new Date();
     }
-    
+
     ngOnInit() {
         this._route.queryParams.subscribe(params => {
             if (params['tabName']) {
@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
-                  
+
                 });
         });
     }
@@ -177,135 +177,129 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    onUploadOutput(output: UploadOutput,fileName:string): void {
-        let atCurrentAuthData=this._authService.currentAuthData;
-          if (output.type === 'allAddedToQueue') { // when all files added in queue
-              // uncomment this if you want to auto upload files when added
-              const event: UploadInput = {
-                  fieldName:'profileDocuments',
-                  type: 'uploadAll',
-                  url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
-                  headers: {
-                      'access-token': atCurrentAuthData.accessToken,
-                      'client': atCurrentAuthData.client,
-                      'expiry': atCurrentAuthData.expiry,
-                      'token-type': atCurrentAuthData.tokenType,
-                      'uid': atCurrentAuthData.uid
-                  },
-                  method: 'POST',
-              };
-              this.uploadInput.emit(event);
-          } else if (output.type === 'done') {
-              if(output.file.responseStatus==200){
-                      switch (fileName) {
-                              case 'smartCard':
-                                  
-                                  this.documents.nationalIdSmartCardDocURL=output.file.response.key||'';
-                                  break;
-                              case 'smartOldCard':
-                                  this.documents.nationalIDOldFormatDocURL=output.file.response.key||'';
-                                  break;  
-                              case 'birth':
-                                  this.documents.birthRegistrationNumberDocURL=output.file.response.key||'';
-                                  break;
-                              case 'passport':
-                                  this.documents.passportNumberDocURL=output.file.response.key||'';
-                                  break;  
-                              default:
-                                  break;
-                      }
-                  }
-                  else{
-                       swal("Error!", "Error on Upload " + fileName, "error");
-                  }
-          }
-    }
-  
-    showSpin()
-    {
-        var that = this;
-        that.isSpin = true;
-        setTimeout(function(){
-            that.isSpin = false;
-        },500);
+    onUploadOutput(output: UploadOutput, fileName: string): void {
+        let atCurrentAuthData = this._authService.currentAuthData;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            // uncomment this if you want to auto upload files when added
+            const event: UploadInput = {
+                fieldName: 'profileDocuments',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                method: 'POST',
+            };
+            this.uploadInput.emit(event);
+        } else if (output.type === 'done') {
+            if (output.file.responseStatus == 200) {
+                switch (fileName) {
+                    case 'smartCard':
+
+                        this.documents.nationalIdSmartCardDocURL = output.file.response.key || '';
+                        break;
+                    case 'smartOldCard':
+                        this.documents.nationalIDOldFormatDocURL = output.file.response.key || '';
+                        break;
+                    case 'birth':
+                        this.documents.birthRegistrationNumberDocURL = output.file.response.key || '';
+                        break;
+                    case 'passport':
+                        this.documents.passportNumberDocURL = output.file.response.key || '';
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
+            }
+        }
     }
 
-    showDocumentImagePopUp(filedName)
-    {
-          switch (filedName) {
-              case 'smartCard':
-                      swal({
-                          imageUrl:this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                          imageHeight: 700,
-                          //imageWidth: 5000,
-                          showConfirmButton: false,
-                      });
-                  break;
-              case 'smartOldCard':
-                      swal({
-                          imageUrl:this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                          imageHeight: 700,
-                          //imageWidth: 5000,
-                          showConfirmButton: false,
-                      });
-                  break;  
-              case 'birth':
-                          swal({
-                              imageUrl:this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                              imageHeight: 700,
-                              //imageWidth: 5000,
-                              showConfirmButton: false,
-                          });
-                  break;
-              case 'passport':
-                          swal({
-                              imageUrl:this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL:environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
-                              imageHeight: 700,
-                              //imageWidth: 5000,
-                              showConfirmButton: false,
-                          });
-                  break;  
-          }
+    showSpin() {
+        var that = this;
+        that.isSpin = true;
+        setTimeout(function() {
+            that.isSpin = false;
+        }, 500);
     }
-  
-    deleteDocImage(imagePath,imageTypeName)
-    {
-        this._myService.deleteImage({key:imagePath}).subscribe(
+
+    showDocumentImagePopUp(filedName) {
+        switch (filedName) {
+            case 'smartCard':
+                swal({
+                    imageUrl: this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'smartOldCard':
+                swal({
+                    imageUrl: this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'birth':
+                swal({
+                    imageUrl: this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'passport':
+                swal({
+                    imageUrl: this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+        }
+    }
+
+    deleteDocImage(imagePath, imageTypeName) {
+        this._myService.deleteImage({ key: imagePath }).subscribe(
             res => {
-                if(res.ok)
-                {
-                    this.documents[imageTypeName]=null;
+                if (res.ok) {
+                    this.documents[imageTypeName] = null;
                     swal("Deleted", "Successfully", "success");
-                } 
+                }
             },
             error => {
             });;
     }
-  
-    showDeleteMessage()
-    {
-        swal("Error!", "Image not found", "error"); 
-    } 
-  
-    deleteDocumentImage(fileName)
-    {
-          switch (fileName) {
-              case 'smartCard':
-              let isdeleted=this.documents.nationalIdSmartCardDocURL? this.deleteDocImage(this.documents.nationalIdSmartCardDocURL,'nationalIdSmartCardDocURL'):this.showDeleteMessage();
-                  break;
-              case 'smartOldCard':
-              let isdeletedOld=this.documents.nationalIDOldFormatDocURL? this.deleteDocImage(this.documents.nationalIDOldFormatDocURL,'nationalIDOldFormatDocURL'):this.showDeleteMessage();
-                      break;  
-              case 'birth':
-              let isdeletedbirth=this.documents.birthRegistrationNumberDocURL? this.deleteDocImage(this.documents.birthRegistrationNumberDocURL,'birthRegistrationNumberDocURL'):this.showDeleteMessage();
-                  break;
-              case 'passport':
-              let isdeletedpassport=this.documents.passportNumberDocURL? this.deleteDocImage(this.documents.passportNumberDocURL,'passportNumberDocURL'):this.showDeleteMessage();
-                  break;  
-              default:
-                  break;
-          }
-  
+
+    showDeleteMessage() {
+        swal("Error!", "Image not found", "error");
+    }
+
+    deleteDocumentImage(fileName) {
+        switch (fileName) {
+            case 'smartCard':
+                let isdeleted = this.documents.nationalIdSmartCardDocURL ? this.deleteDocImage(this.documents.nationalIdSmartCardDocURL, 'nationalIdSmartCardDocURL') : this.showDeleteMessage();
+                break;
+            case 'smartOldCard':
+                let isdeletedOld = this.documents.nationalIDOldFormatDocURL ? this.deleteDocImage(this.documents.nationalIDOldFormatDocURL, 'nationalIDOldFormatDocURL') : this.showDeleteMessage();
+                break;
+            case 'birth':
+                let isdeletedbirth = this.documents.birthRegistrationNumberDocURL ? this.deleteDocImage(this.documents.birthRegistrationNumberDocURL, 'birthRegistrationNumberDocURL') : this.showDeleteMessage();
+                break;
+            case 'passport':
+                let isdeletedpassport = this.documents.passportNumberDocURL ? this.deleteDocImage(this.documents.passportNumberDocURL, 'passportNumberDocURL') : this.showDeleteMessage();
+                break;
+            default:
+                break;
+        }
+
     }
 
     setPermentAddress() {
@@ -323,8 +317,7 @@ export class ProfileComponent implements OnInit {
     }
 
     resetPermentAddress() {
-        if(!this.address.isSameAsCurrent)
-        {
+        if (!this.address.isSameAsCurrent) {
             this.address.permanentAddressLine1 = null;
             this.address.permanentAddressLine2 = null;
             this.address.permanentAddressDistrict_id = null;
@@ -332,71 +325,67 @@ export class ProfileComponent implements OnInit {
             this.address.permanentAddressThana_id = null;
             this.address.permanentAddressPostCode = null;
 
-            this.permanentAddressDistrictData=[];
-            this.permanentAddressThanaData=[];
+            this.permanentAddressDistrictData = [];
+            this.permanentAddressThanaData = [];
         }
     }
 
-    loadProcessInfoDetails()
-    {
+    loadProcessInfoDetails() {
         this._myService.getProfileProcessInfo(this._currentEmpId)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-              this.profileProcess=data.json();
-            }
-        },  
-        error => {
-            
-        });
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.profileProcess = data.json();
+                }
+            },
+            error => {
+
+            });
     }
-    
+
     //save Personal Info
     saveProfileStatus() {
-        this.profileProcess["employeeStatus"] ='Submitted';
+        this.profileProcess["employeeStatus"] = 'Submitted';
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
             data => {
-                this.profileProcess=data.json()||{}
+                this.profileProcess = data.json() || {}
                 swal({
                     type: 'success',
-                    title:'Submit!',
-                    titleText:"Profile submitted successfully.",
+                    title: 'Submit!',
+                    titleText: "Profile submitted successfully.",
                 });
             },
             error => {
-        });
+            });
     }
 
-    loadTabStatus()
-    {
+    loadTabStatus() {
         this._commonService.getTabStatus(this._currentEmpId)
             .subscribe(
             data => {
-                let tabData=data.json();
-                if(tabData.isPersonalInfo 
-                   && tabData.isAddress
-                   && tabData.isDocuments
-                   && tabData.isAcademicInfo
-                   && tabData.isCertificate
-                   && tabData.isEmployment
-                   && tabData.isFamilyInfo)
-                {
-                  this.profileProcess["employeeStatus"]="Submitted";
-                  this.saveProfileStatus();
+                let tabData = data.json();
+                if (tabData.isPersonalInfo
+                    && tabData.isAddress
+                    && tabData.isDocuments
+                    && tabData.isAcademicInfo
+                    && tabData.isCertificate
+                    && tabData.isEmployment
+                    && tabData.isFamilyInfo) {
+                    this.profileProcess["employeeStatus"] = "Submitted";
+                    this.saveProfileStatus();
                 }
                 else
-                swal({type: 'error',title:'Error!',titleText:"Please fill detail of personal info.",});
+                    swal({ type: 'error', title: 'Error!', titleText: "Please fill detail of personal info.", });
             },
             error => {
-                swal({type: 'error',title:'Error!',titleText: error.json().error.message  ,});
-        });
+                swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
+            });
     }
 
     //save Personal Info
     submitProfile() {
-       this.loadTabStatus();
+        this.loadTabStatus();
     }
 
     //save Personal Info
@@ -411,9 +400,9 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_1_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.personalInfo = data.json() || {};
-                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
             },
             error => {
                 mApp.unblock('#m_accordion_5_item_1_body');
@@ -423,38 +412,36 @@ export class ProfileComponent implements OnInit {
     checkEmailExists(_element) {
         if (_element.valid) {
             this._commonService.checkEmailExists(_element.value)
-            .subscribe(
-            data => {
-                 if(data.json())
-                _element.control.setErrors({"emailExists": true})
-            },
-            error => {
-                _element.control.setErrors(null)
-            });
-         
+                .subscribe(
+                data => {
+                    if (data.json())
+                        _element.control.setErrors({ "emailExists": true })
+                },
+                error => {
+                    _element.control.setErrors(null)
+                });
+
         }
     }
 
     //save Address Info
     saveAddressInfo() {
-        if(this.address.isSameAsCurrent)
-        {
-          this.setPermentAddress();
+        if (this.address.isSameAsCurrent) {
+            this.setPermentAddress();
         }
-        this.address.emp_id=this.address.emp_id !=null?this.address.emp_id:(this._currentEmpId || this.param_emp_id)
+        this.address.emp_id = this.address.emp_id != null ? this.address.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveAddressInfo(this.address)
-        .subscribe(
-        data => {
-            // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
-            swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
-            this.address=data.json()||{};
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.address = data.json() || {};
+            },
+            error => {
+            });
     }
 
-    saveDocumentsInfo()
-    {
+    saveDocumentsInfo() {
         this.documents.emp_id = this.documents.emp_id != null ? this.documents.emp_id : (this._currentEmpId || this.param_emp_id)
         mApp.block('#m_accordion_5_item_9_body', {
             overlayColor: '#000000',
@@ -466,7 +453,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_9_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.documents = data.json() || {};
             },
             error => {
@@ -474,7 +461,7 @@ export class ProfileComponent implements OnInit {
             });
 
     }
-    
+
     //save Address Info
     saveAcademicInfo(objAcademicInfo: any, index: number) {
         mApp.block('#m_accordion_5_item_10_body', {
@@ -488,11 +475,10 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_10_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.academicInfo[index] = data.json();
-                if(this.academicInfo[index].levelOfEducation_id)
-                {
-                 this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id,index,"init");
+                if (this.academicInfo[index].levelOfEducation_id) {
+                    this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id, index, "init");
                 }
             },
             error => {
@@ -505,23 +491,23 @@ export class ProfileComponent implements OnInit {
         this._myService.saveCertificationInfo(objCertification)
             .subscribe(
             data => {
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.certificationsandTrainingInfo[index] = data.json();
             },
             error => {
             });
     }
-     
+
     //save EmploymentDetils Info
     savePreviousEmploymentDetails(objPerviousEmployment: any, index: number) {
         objPerviousEmployment.emp_id = objPerviousEmployment.emp_id != null ? objPerviousEmployment.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
             .subscribe(
             data => {
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.previousEmploymentDetails[index] = data.json();
-                this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):this.previousEmploymentDetails[index].employmentPeriodFrom;
-                this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):this.previousEmploymentDetails[index].employmentPeriodTo;
+                this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : this.previousEmploymentDetails[index].employmentPeriodFrom;
+                this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : this.previousEmploymentDetails[index].employmentPeriodTo;
             },
             error => {
             });
@@ -533,9 +519,9 @@ export class ProfileComponent implements OnInit {
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(
             data => {
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.familyInfo[index] = data.json();
-                this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):this.familyInfo[index].dateOfBirth;
+                this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : this.familyInfo[index].dateOfBirth;
             },
             error => {
             });
@@ -544,29 +530,29 @@ export class ProfileComponent implements OnInit {
     saveOfficeInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveOfficeInfo(this.officeInfo)
-        .subscribe(
-        data => {
-             swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
-            this.officeInfo=data.json();
-            this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
-            this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-            this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
-            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.officeInfo = data.json();
+                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
+            },
+            error => {
+            });
     }
     //save Office Info
     savePositionInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePositionInfo(this.positionDetails)
-        .subscribe(
-        data => {
-             swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
-            this.positionDetails=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.positionDetails = data.json();
+            },
+            error => {
+            });
     }
     //save Bank Info
     saveBankDetails() {
@@ -581,7 +567,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_16_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.bankDetails = data.json();
             },
             error => {
@@ -595,7 +581,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 // mApp.unblock('#m_accordion_5_item_1_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.salaryDetails = data.json();
             },
             error => {
@@ -609,12 +595,12 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
-                 swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.carDetails = data.json();
-                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
+                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};;
@@ -622,13 +608,12 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    savePerformanceRatingInfo()
-    {
+    savePerformanceRatingInfo() {
         this._myService.savePerformanceRatingInfo(this.performanceDiary)
             .subscribe(
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
-                swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.performanceDiary = data.json();
             },
             error => {
@@ -647,7 +632,7 @@ export class ProfileComponent implements OnInit {
         // error => {
         // });
     }
-    
+
     //delete Academic Info
     deleteAcademicInfo(academicInfo_id: number) {
         swal({
@@ -658,35 +643,35 @@ export class ProfileComponent implements OnInit {
             confirmButtonColor: '#d33',
             cancelButtonColor: '#9a9caf',
             confirmButtonText: 'Delete'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
                 this._myService.deleteAcademicInfo(academicInfo_id)
-                .subscribe(
-                data => {
-                    if (data.ok) {
-                        this.removeHtmlContain("academicInfo", academicInfo_id);
-                    }
-                },
-                error => {
-                    //mApp.unblock('#m_accordion_5_item_1_body');
-                });
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            this.removeHtmlContain("academicInfo", academicInfo_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
             }
-          })
-      
+        })
+
     }
     //delete Previous Employment
     deletePreviousEmployment(previousEmployment_id: number) {
         swal({
-                title: 'Are you sure?',
-                text: "Do you want to delete it?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#9a9caf',
-                confirmButtonText: 'Delete'
-              }).then((result) => {
-                if (result.value) {
-                    this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
                     .subscribe(
                     data => {
                         if (data.ok) {
@@ -697,8 +682,8 @@ export class ProfileComponent implements OnInit {
                     error => {
                         //mApp.unblock('#m_accordion_5_item_1_body');
                     });
-                }
-              })
+            }
+        })
     }
     //delete Family Info
     deleteFamilyInfo(family_id: number) {
@@ -710,36 +695,36 @@ export class ProfileComponent implements OnInit {
             confirmButtonColor: '#d33',
             cancelButtonColor: '#9a9caf',
             confirmButtonText: 'Delete'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
                 this._myService.deleteFamilyInfo(family_id)
-                .subscribe(
-                data => {
-                    if (data.ok) {
-                        swal("Deleted", "Successfully", "success");
-                        this.removeHtmlContain("family", family_id);
-                    }
-                },
-                error => {
-                    //mApp.unblock('#m_accordion_5_item_1_body');
-                });
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
+                            this.removeHtmlContain("family", family_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
             }
-          })
+        })
     }
-    
-     //delete Family Info
-     deleteCertificationInfo(certification_id: number) {
+
+    //delete Family Info
+    deleteCertificationInfo(certification_id: number) {
         swal({
-                    title: 'Are you sure?',
-                    text: "Do you want to delete it?",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#9a9caf',
-                    confirmButtonText: 'Delete'
-              }).then((result) => {
-                if (result.value) {
-                    this._myService.deleteCertificationInfo(certification_id)
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deleteCertificationInfo(certification_id)
                     .subscribe(
                     data => {
                         if (data.ok) {
@@ -750,26 +735,24 @@ export class ProfileComponent implements OnInit {
                     error => {
                         //mApp.unblock('#m_accordion_5_item_1_body');
                     });
-                }
-              })
+            }
+        })
     }
 
-    showHideWaitingCircle(_id:string,isHide?:boolean)
-    {
-        if(!isHide)
-        mApp.block(_id, {
-            overlayColor: '#000000',
-            type: 'loader',
-            state: 'success',
-            // message: 'Please wait...'
-        });
-       else 
-        mApp.unblock(_id);
+    showHideWaitingCircle(_id: string, isHide?: boolean) {
+        if (!isHide)
+            mApp.block(_id, {
+                overlayColor: '#000000',
+                type: 'loader',
+                state: 'success',
+                // message: 'Please wait...'
+            });
+        else
+            mApp.unblock(_id);
     }
 
-    saveSuccessMesssage()
-    {
-         swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+    saveSuccessMesssage() {
+        swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
     }
 
     //Add New Html on Click of Add Button 
@@ -823,7 +806,7 @@ export class ProfileComponent implements OnInit {
     isAdded(subTabName: string) {
         switch (subTabName) {
             case "academicInfo":
-                if (this.academicInfo.filter(x => x._id == null || x._id == undefined && x.isCompleted==true).length == 0) {
+                if (this.academicInfo.filter(x => x._id == null || x._id == undefined && x.isCompleted == true).length == 0) {
                     return false;
                 }
                 return true;
@@ -857,7 +840,7 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 this.personalInfo = data.json() || {};
-                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
 
             },
             error => {
@@ -876,10 +859,10 @@ export class ProfileComponent implements OnInit {
                     this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id);
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
-                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id,"init");
+                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
                 }
-                else{
-                    this.address.isSameAsCurrent=false;
+                else {
+                    this.address.isSameAsCurrent = false;
                 }
             },
             error => {
@@ -916,13 +899,12 @@ export class ProfileComponent implements OnInit {
             });
     }
     //Load Permanent Thana Dropdown Data 
-    loadpermanentAddressThanaData(district_id: number,onLoad?:string) {
+    loadpermanentAddressThanaData(district_id: number, onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
-                        this.address.permanentAddressThana_id=null;
+                    if (!onLoad) {
+                        this.address.permanentAddressThana_id = null;
                     }
                     this.permanentAddressThanaData = res.json()
                 }
@@ -1062,11 +1044,11 @@ export class ProfileComponent implements OnInit {
                 if (this.previousEmploymentDetails.length == 0) {
                     this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
                 }
-                else{
+                else {
                     for (let index = 0; index < this.previousEmploymentDetails.length; index++) {
-                        this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):null;
-                        this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):null;
-                     }
+                        this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : null;
+                        this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : null;
+                    }
                 }
             },
             error => {
@@ -1094,10 +1076,10 @@ export class ProfileComponent implements OnInit {
                 if (this.familyInfo.length == 0) {
                     this.familyInfo.push(new FamilyInfo());
                 }
-                else{
-                   for (let index = 0; index < this.familyInfo.length; index++) {
-                      this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):null;
-                   }
+                else {
+                    for (let index = 0; index < this.familyInfo.length; index++) {
+                        this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : null;
+                    }
                 }
             },
             error => {
@@ -1110,15 +1092,15 @@ export class ProfileComponent implements OnInit {
     }
 
     loadOfficeInfoTabData() {
-        this.countryData=this._commonService.getCountry();
+        this.countryData = this._commonService.getCountry();
         this._myService.getOfficeDetails(this._currentEmpId)
             .subscribe(
             data => {
                 this.officeInfo = data.json() || {};
-                this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
-                this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-                this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
-                this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
+                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
             },
             error => {
             });
@@ -1387,37 +1369,36 @@ export class ProfileComponent implements OnInit {
         this.loadManagementType('init');
         this.loadEmploymentStatus();
         //this.loadRoles();
-           this._myService.getPositionDetails(this._currentEmpId)
-           .subscribe(
-           data => {
-               this.positionDetails=data.json()|| {};
-               if(data.json())
-               {
-                this.loadDepartment(this.positionDetails.division_id,"init")
-                this.loadEmploymentType(this.positionDetails.managementType_id,"init")
-                this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id,"init")
-                  this.loadHRSpoce(this.positionDetails.company_id,"init");
-                  this.loadBuisnessHrHead(this.positionDetails.hrspoc_id,"init")
-                  this.loadGroupHrHead(this.positionDetails.businessHrHead_id,"init") 
-                  this.loadVertical(this.positionDetails.department_id,"init")
-                  this.loadSubVertical(this.positionDetails.vertical_id,"init")
-                  this.loadSupervisor(this.positionDetails.grade_id,"init")
-                  this.loadDesignation(this.positionDetails.grade_id,"init")
-               }
-           },
-           error => {
-            this.positionDetails={};
-           });
+        this._myService.getPositionDetails(this._currentEmpId)
+            .subscribe(
+            data => {
+                this.positionDetails = data.json() || {};
+                if (data.json()) {
+                    this.loadDepartment(this.positionDetails.division_id, "init")
+                    this.loadEmploymentType(this.positionDetails.managementType_id, "init")
+                    this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
+                    this.loadHRSpoce(this.positionDetails.company_id, "init");
+                    this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
+                    this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
+                    this.loadVertical(this.positionDetails.department_id, "init")
+                    this.loadSubVertical(this.positionDetails.vertical_id, "init")
+                    this.loadSupervisor(this.positionDetails.grade_id, "init")
+                    this.loadDesignation(this.positionDetails.grade_id, "init")
+                }
+            },
+            error => {
+                this.positionDetails = {};
+            });
     }
 
     loadPerformanceDairyTabData() {
         this._myService.getPerformanceDairyDeatils(this._currentEmpId)
-        .subscribe(
-        data => {
-             this.performanceDiary=data.json()|| []
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.performanceDiary = data.json() || []
+            },
+            error => {
+            });
     }
 
     loadOfficeDetails() {
@@ -1462,23 +1443,22 @@ export class ProfileComponent implements OnInit {
         this.loadSalaryInfo();
     }
 
-    isHikeSalary(form)
-    {
-      swal({
-        title: 'Are you sure?',
-        text: "You want add new salary details!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#66BB6A',
-        cancelButtonColor: '#9a9caf',
-        confirmButtonText: 'Yes',
-        allowOutsideClick:false,
-        allowEscapeKey:false
-      }).then((result) => {
-        if (result.value) {
-            form.resetForm();
-        }
-      })
+    isHikeSalary(form) {
+        swal({
+            title: 'Are you sure?',
+            text: "You want add new salary details!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#66BB6A',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes',
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then((result) => {
+            if (result.value) {
+                form.resetForm();
+            }
+        })
     }
 
     loadCarDetails() {
@@ -1486,10 +1466,10 @@ export class ProfileComponent implements OnInit {
             .subscribe(
             data => {
                 this.carDetails = data.json() || {};
-                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
+                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};

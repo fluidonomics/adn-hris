@@ -13,76 +13,76 @@ import swal from 'sweetalert2';
     templateUrl: "./pap.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class MyPapComponent implements OnInit  {
+export class MyPapComponent implements OnInit {
 
-    kraCategoryData:any[];
-    weightageData:any=[];
-    supervisorData:any=[];
-    kraInfos:any=[
+    kraCategoryData: any[];
+    weightageData: any = [];
+    supervisorData: any = [];
+    kraInfos: any = [
     ];
 
-    isSubmitted:boolean=false;
+    isSubmitted: boolean = false;
     _currentEmpId: number;
-    kraArrLength: number=7
+    kraArrLength: number = 7
 
-    isKraAvaliable:boolean=false;
-    isDisabled:boolean=false;
+    isKraAvaliable: boolean = false;
+    isDisabled: boolean = false;
 
     ngOnInit() {
         this.kraCategoryData = [
             {
-              "id": "Strategic Initiative",
-              "text": "Strategic Initiative"
+                "id": "Strategic Initiative",
+                "text": "Strategic Initiative"
             },
             {
-              "id": "Functional/Customer Deliverables",
-              "text": "Functional/Customer Deliverables"
+                "id": "Functional/Customer Deliverables",
+                "text": "Functional/Customer Deliverables"
             },
             {
-              "id": "Financial Deliverables",
-              "text": "Financial Deliverables"
+                "id": "Financial Deliverables",
+                "text": "Financial Deliverables"
             },
             {
-              "id": "Internal Process Development/Optimization",
-              "text": "Internal Process Development/Optimization"
+                "id": "Internal Process Development/Optimization",
+                "text": "Internal Process Development/Optimization"
             },
             {
-              "id": "People Development",
-              "text": "People Development"
+                "id": "People Development",
+                "text": "People Development"
             }
-           ]
+        ]
         this.weightageData = [
             {
-              "id": 0,
-              "text": 0
+                "id": 0,
+                "text": 0
             },
             {
-              "id": 10,
-              "text": 10
+                "id": 10,
+                "text": 10
             },
             {
-              "id": 15,
-              "text": 15
+                "id": 15,
+                "text": 15
             },
             {
-              "id": 20,
-              "text": 20
+                "id": 20,
+                "text": 20
             },
             {
-              "id": 25,
-              "text": 25
+                "id": 25,
+                "text": 25
             },
             {
-              "id": 30,
-              "text": 30
+                "id": 30,
+                "text": 30
             },
             {
-              "id": 35,
-              "text": 35
+                "id": 35,
+                "text": 35
             }
-           ];
+        ];
         this.supervisorData = [
-           {
+            {
                 id: 1010006,
                 text: 'C1 Primary Supervisor1'
             },
@@ -98,7 +98,7 @@ export class MyPapComponent implements OnInit  {
                 this.loadKra();
             });
 
-        
+
 
         // for (let j = 0; j < 7; j++) {
         //     let data={
@@ -118,9 +118,9 @@ export class MyPapComponent implements OnInit  {
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
-         public _authService: AuthService,
-         private _commonService: CommonService,
-         private _myService: MyService
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private _myService: MyService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -131,65 +131,58 @@ export class MyPapComponent implements OnInit  {
 
     }
 
-    onKraSubmit(isSaveDraft?:boolean)
-    {
+    onKraSubmit(isSaveDraft?: boolean) {
         this._myService.saveKra(this.kraInfos)
-        .subscribe(
-        data => {
-            swal("Kra is submitted.", "", "success");
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                swal("Kra is submitted.", "", "success");
+            },
+            error => {
+            });
     }
 
-    loadKra()
-    {
+    loadKra() {
         this._commonService.getKraDetailsData(this._currentEmpId)
-        .subscribe(
-         res => {
-            let resData=res.json().data;
-            if(resData.length > 0)
-            {
-                this.isKraAvaliable=true;
-            }
-            else{
-                this.isKraAvaliable=false;
-            }
+            .subscribe(
+            res => {
+                let resData = res.json().data;
+                if (resData.length > 0) {
+                    this.isKraAvaliable = true;
+                }
+                else {
+                    this.isKraAvaliable = false;
+                }
 
 
 
-            if(resData[0].kraDetails.length>0)
-            {
-              this.kraInfos = resData[0].kraDetails;
-              if(resData[0].status=="submitted" || resData[0].status=="approved")
-              {
-                this.isDisabled=true;
-              }
-            }
+                if (resData[0].kraDetails.length > 0) {
+                    this.kraInfos = resData[0].kraDetails;
+                    if (resData[0].status == "submitted" || resData[0].status == "approved") {
+                        this.isDisabled = true;
+                    }
+                }
 
-            else{
-              if(resData[0].status=="initiated" && resData[0].kraDetails.length==0)
-              {
-                 this.addDummyRow(resData[0]._id);
-              }
-            }
-        },
-        error => {
-        });
+                else {
+                    if (resData[0].status == "initiated" && resData[0].kraDetails.length == 0) {
+                        this.addDummyRow(resData[0]._id);
+                    }
+                }
+            },
+            error => {
+            });
     }
 
-    addDummyRow(_id)
-    {
+    addDummyRow(_id) {
         for (let j = 0; j < 7; j++) {
-            let data={
-                _id:"",
-                kra:"",
-                category_id:"",
-                weightage_id:"",
-                unitOfSuccess:"",
-                measureOfSuccess:"",
-                supervisor_id:"",
-                kraWorkflow_id:_id
+            let data = {
+                _id: "",
+                kra: "",
+                category_id: "",
+                weightage_id: "",
+                unitOfSuccess: "",
+                measureOfSuccess: "",
+                supervisor_id: "",
+                kraWorkflow_id: _id
             };
             this.kraInfos.push(data);
         }

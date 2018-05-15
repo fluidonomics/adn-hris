@@ -11,7 +11,7 @@ import { MyTeamService } from '../../my-team.service';
 export class MyTeamSupervisorComponent implements AfterViewInit {
 
     employeeData: any = [];
-    _currentEmpId:number;
+    _currentEmpId: number;
 
     constructor(
         private _myteamService: MyTeamService,
@@ -30,14 +30,13 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
         this._myteamService.getAllEmployee()
             .subscribe(
             res => {
-                let data= res.json().data || [];
-                if(data.length >0)
-                {
-                    data = data.filter(obj => obj.profileProcessDetails.hrStatus=="Submitted" && obj.supervisor_id ==this._currentEmpId);
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.supervisor_id == this._currentEmpId);
                     this.employeeData = data || [];
                 }
                 else
-                this.employeeData = data.json().data || [];
+                    this.employeeData = data.json().data || [];
             },
             error => {
             });
