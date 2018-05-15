@@ -43,7 +43,7 @@ export class ProfileEditComponent implements OnInit {
     familyInfo: any = []
     officeInfo: any = {}
     positionDetails: any = {}
-    performanceDiary: any = {}
+    performanceDiary: any = []
     bankDetails: any = {}
     salaryDetails: any = {}
     carDetails: any = {};
@@ -630,6 +630,22 @@ export class ProfileEditComponent implements OnInit {
                 //mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
+
+    savePerformanceRatingInfo()
+    {
+        this._myService.savePerformanceRatingInfo(this.performanceDiary)
+            .subscribe(
+            data => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+                swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                this.performanceDiary = data.json();
+            },
+            error => {
+                this.performanceDiary = [];
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
+    }
+
     //save Seperation Info
     saveSeperationInfo() {
         // this._authService.saveSeperationInfo(this.empProfile.address)
@@ -1406,7 +1422,7 @@ export class ProfileEditComponent implements OnInit {
         this._myService.getPerformanceDairyDeatils(this.param_emp_id)
         .subscribe(
         data => {
-             console.log(data.json());
+            this.performanceDiary=data.json()|| []
         },
         error => {
         });

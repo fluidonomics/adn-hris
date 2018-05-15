@@ -189,6 +189,13 @@ export class MyService {
         }
     }
 
+    savePerformanceRatingInfo(data: any): Observable<Response> {
+        {
+            let url = "user/saveBulkPerformanceRating"
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
     saveSalaryDetails(data: any): Observable<Response> {
         {
             let url = "user/addSalaryInfo"

@@ -1505,47 +1505,28 @@
                                     </div>
                                 </div> -->
                                 <div class="m-accordion__item-content">
-                                    <form class="m-form m-form--fit m-form--label-align-right" #fperformanceDiary="ngForm" novalidate="novalidate">
+                                    <form class="m-form m-form--fit m-form--label-align-right" #fperformanceDiary="ngForm" (ngSubmit)="fperformanceDiary.valid && savePerformanceRatingInfo()" novalidate="novalidate">
                                         <div class="form-group m-form__group m--margin-top-10">
                                         </div>
                                         <div class="row">
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="performanceDiary_id" [(ngModel)]="performanceDiary._id" #performanceDiary_id="ngModel" class="form-control m-input m-input--air" />
+                                            <div class="col-md-6 adn-form__group" *ngFor="let performance of performanceDiary ;let j=index">
+                                                    <div class="col-md-6 adn-form__group" hidden="true">
+                                                        <input type="text" name="performanceDiary_id" [(ngModel)]="performance._id" #performanceDiary_id="ngModel" class="form-control m-input m-input--air" />
+                                                        <input type="text" name="performanceDiary_empid" [(ngModel)]="performance.emp_id" #performanceDiary_empid="ngModel" class="form-control m-input m-input--air" />
+                                                        <input type="text" name="performanceDiarystatus" [(ngModel)]="performance.completed" #performanceDiarystatus="ngModel" class="form-control m-input m-input--air" />
+                                                    </div>
+                                                    <div class="form-group m-form__group">
+                                                        <label for="performanceRating1">Performance Rating FY {{performance.performanceRatingName}}
+                                                        </label>
+                                                        <input class="form-control m-input m-input--air" [(ngModel)]="performance.performanceRatingValue" #performanceRating1="ngModel" id="performanceRating1" name="performanceRating1" placeholder="Enter performance rating" type="text" OnlyNumber="true" disabled>
+                                                    </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="performanceDiary_empid" [(ngModel)]="performanceDiary.emp_id" #performanceDiary_empid="ngModel" class="form-control m-input m-input--air" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="performanceDiarystatus" [(ngModel)]="performanceDiary.status" #performanceDiarystatus="ngModel" class="form-control m-input m-input--air" />
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="row">
-                                        <div class="col-md-6 adn-form__group">
-                                            <div class="form-group m-form__group">
-                                                <label for="performanceRating1">Performance Rating FY 15_ 16
-                                                </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="performanceDiary.performanceRating1" #performanceRating1="ngModel" id="performanceRating1" name="performanceRating1" placeholder="Enter performance rating FY 15_ 16" type="text" OnlyNumber="true" OnlyNumber="true" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 adn-form__group">
-                                            <div class="form-group m-form__group">
-                                                <label for="performanceRating2">Performance Rating FY 16_ 17
-                                                </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="performanceDiary.performanceRating2" #performanceRating2="ngModel" id="performanceRating2" name="performanceRating2" placeholder="Enter performance rating FY 16_ 17" type="text" disabled>
-                                            </div>
-                                        </div>
                                         </div>
                                         <div class="m-form__actions">
-                                             <!-- comment after demo -->
-                                        <!-- <button type="submit" class="btn btn-success">{{performanceDiary._id ? 'Update':'Save'}}</button> -->
-                                        <!-- <button type="reset" *ngIf="!performanceDiary._id" class="btn btn-secondary">Cancel</button> -->
-                                        </div>
+                                                <!-- comment after demo -->
+                                            <!-- <button type="submit" class="btn btn-success">{{performanceDiary._id ? 'Update':'Save'}}</button> -->
+                                            <!-- <button type="reset" *ngIf="!performanceDiary._id" class="btn btn-secondary">Cancel</button> -->
+                                       </div>
                                     </form>
                                 </div>
                             </div>
