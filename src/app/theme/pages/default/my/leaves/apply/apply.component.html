@@ -155,12 +155,18 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">CC To</label>
 
-												<input type="text" class="form-control m-input m-input--air" name="ccTo" id="mobileNumber" [(ngModel)]="leaveapplication.ccTo"
-												 #ccTo="ngModel">
-
+												<!-- <input type="text" class="form-control m-input m-input--air" name="ccTo" id="mobileNumber" [(ngModel)]="leaveapplication.ccTo"
+												 #ccTo="ngModel"> -->
+												 <ng-select class="m-input m-input--air" name="ccTo" [items]="emailDetails" [(ngModel)]="leaveapplication.ccTo" #ccTo="ngModel"
+												 bindLabel="personalEmail" bindValue="personalEmail" multiple="true" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="ccTo.touched && !ccTo.valid ">
+													This field is required.
+												</div>
 											</div>
 
 										</div>
+
+										
 									</div>
 									<div class="row">
 										<div class="col-md-6 adn-form__group">
