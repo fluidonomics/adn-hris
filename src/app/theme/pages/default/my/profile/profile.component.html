@@ -499,7 +499,9 @@
                             </div>
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_9_body" role="tabpanel" aria-labelledby="m_accordion_5_item_9_head" data-parent="#m_accordion_5">
                                 <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
-                                    <div class="col-md-10"> </div>
+                                    <div class="col-md-10 documentsnote">                                             
+                                        <label><strong>Note:</strong>Uploading at least one document is compulsory. Please enter Document Number to upload the file (JPG/JPEG or PNG)</label>
+                                    </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
                                     </div>
@@ -535,7 +537,7 @@
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
                                                         <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" #nationalIdSmartCard [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIdSmartCard">
-                                                        <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;" (click)="nationalIdSmartCard.click()">Upload</button>
+                                                        <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;" (click)="nationalIdSmartCard.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIdSmartCard ? 'not-allowed' : ''">Upload</button>
                                                         <button type="button" class="btn btn-secondary" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
                                                         <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('smartCard')"><i class="fa fa-close"></i></button>
                                                     </div>
@@ -550,7 +552,7 @@
                                                 <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat"  class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;" (click)="nationalIDOldFormat.click()">Upload</button>
+                                                    <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;" (click)="nationalIDOldFormat.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIDOldFormat ? 'not-allowed' : ''">Upload</button>
                                                     <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIDOldFormat" #nationalIDOldFormat>
                                                     <button type="button" class="btn btn-secondary" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
                                                     <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('smartOldCard')"><i class="fa fa-close"></i></button>
@@ -568,7 +570,7 @@
                                                 <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;" (click)="birthRegistrationNumber.click()">Upload</button>
+                                                    <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;" (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber ? 'not-allowed' : ''">Upload</button>
                                                     <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" #birthRegistrationNumber  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber">
                                                     <button type="button" class="btn btn-secondary" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
                                                     <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
@@ -584,7 +586,7 @@
                                                 <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 <div class="col-md-6 adn-form__group">
                                                     <div class="input-group-btn">
-                                                    <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" (click)="passportNumber.click()">Upload</button>
+                                                    <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" (click)="passportNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber ? 'not-allowed' : ''">Upload</button>
                                                     <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" #passportNumber [uploadInput]="uploadInput"  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber">
                                                     <button type="button" class="btn btn-secondary" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
                                                     <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
