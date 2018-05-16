@@ -301,7 +301,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail"
-                                                                (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel"
+                                                                (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" lowerCase
                                                                 placeholder="Enter email" type="email" email required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger">
                                                                 <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>

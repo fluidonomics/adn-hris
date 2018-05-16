@@ -182,7 +182,7 @@
                                                     <label for="personalEmail">Personal Email
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" placeholder="Enter email" type="email" email  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" lowerCase (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" placeholder="Enter email" type="email" email  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     <div class="form-control-feedback has-danger">
                                                         <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
                                                         <span *ngIf="!personalEmail.errors?.required && personalEmail.errors?.email">Personal Email not valid.</span> 
