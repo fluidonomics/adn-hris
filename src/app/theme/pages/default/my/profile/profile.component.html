@@ -100,22 +100,6 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 adn-form__group">
-                                                <div class="form-group m-form__group">
-                                                    <label for="fatherName">Father's Name
-                                                    </label>
-                                                    <input type="text" name="fatherName"  [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" id="fatherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 adn-form__group">
-                                                <div class="form-group m-form__group">
-                                                    <label for="motherName">Mother's Name
-                                                    </label>
-                                                    <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" id="motherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted && !profileProcess.isHrSendBack">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 adn-form__group">
                                                 <div class="m-form__group form-group">
                                                     <label for="gender">
                                                     Gender
@@ -239,6 +223,22 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                                <div class="col-md-6 adn-form__group">
+                                                    <div class="form-group m-form__group">
+                                                        <label for="fatherName">Father's Name
+                                                        </label>
+                                                        <input type="text" name="fatherName"  [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" id="fatherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group">
+                                                    <div class="form-group m-form__group">
+                                                        <label for="motherName">Mother's Name
+                                                        </label>
+                                                        <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" id="motherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted && !profileProcess.isHrSendBack">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <div class="row">
                                             <div class="col-md-6 adn-form__group">
                                                 <div class="form-group m-form__group">

@@ -47,6 +47,7 @@ export interface UserData {
     fullName: string;
     designation_id: number;
     roles: any[];
+    userName:string;
 }
 
 // Configuration Options

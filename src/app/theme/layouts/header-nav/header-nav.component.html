@@ -350,11 +350,12 @@
 												<div class="m-card-user__details">
 													<span class="m-card-user__name m--font-weight-500">
 														{{authService.atCurrentUserData?.fullName}}
+												
+														[{{authService.atCurrentUserData?.userName}}]
 													</span>
-													<a href="" class="m-card-user__email m--font-weight-300 m-link">
+													<span class="m-card-user__email m--font-weight-300">
 														{{authService.atCurrentUserData?.officeEmail ? authService.atCurrentUserData?.officeEmail :authService.atCurrentUserData?.personalEmail}}
-														{{authService.atCurrentUserData?.userName}}
-													</a>
+													</span>
 												</div>
 											</div>
 										</div>
