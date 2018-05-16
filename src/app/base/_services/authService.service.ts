@@ -228,6 +228,7 @@ export class AuthService implements CanActivate {
         sessionStorage.removeItem('tokenType');
         sessionStorage.removeItem('uid');
 
+
         this.atCurrentAuthData = null;
         this.atCurrentUserType = null;
         this.atCurrentUserData = null;
