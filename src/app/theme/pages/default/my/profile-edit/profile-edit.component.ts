@@ -405,7 +405,7 @@ export class ProfileEditComponent implements OnInit {
                        this.saveProfileStatus(status);
                      }
                      else
-                     swal({type: 'error',title:'Error!',titleText:"Please fill personal info and office info.",});
+                     swal({type: 'error',title:'Oops!',titleText:"Please complete Personal Info & Office Info.",});
                 }
             },
             error => {
@@ -421,7 +421,7 @@ export class ProfileEditComponent implements OnInit {
     submitBackProfileStatus(status)
     {
         swal({
-            title: 'Please specify reason',
+            title: 'Please specify the reason',
             input: 'textarea',
             inputAttributes: {
               autocapitalize: 'off'

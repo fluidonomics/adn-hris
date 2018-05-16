@@ -376,7 +376,7 @@ export class ProfileComponent implements OnInit {
                     this.saveProfileStatus();
                 }
                 else
-                    swal({ type: 'error', title: 'Error!', titleText: "Please fill detail of personal info.", });
+                    swal({ type: 'error', title: 'Oops!', titleText: "It seems you haven't filled all the details.", });
             },
             error => {
                 swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
