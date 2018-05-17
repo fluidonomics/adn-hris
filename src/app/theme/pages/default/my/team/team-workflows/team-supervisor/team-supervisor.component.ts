@@ -32,7 +32,8 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
-                    data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.supervisor_id == this._currentEmpId);
+                    //data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.supervisor_id == this._currentEmpId);
+                    data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted");
                     this.employeeData = data || [];
                 }
                 else
