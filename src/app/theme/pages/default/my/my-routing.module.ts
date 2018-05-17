@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
 import { MyPapComponent } from './workflows/pap/pap.component'
 import { MyPipComponent } from './workflows/pip/pip.component'
@@ -23,6 +24,7 @@ const routes: Routes = [{
     children: [
         { path: 'profile', component: ProfileComponent },
         { path: 'profile-edit', component: ProfileEditComponent },
+        { path: 'profile-view', component: ProfileViewComponent },
         { path: 'workflows/learning', component: MyLearningComponent },
         { path: 'workflows/pap', component: MyPapComponent },
         { path: 'workflows/pip', component: MyPipComponent },

@@ -10,6 +10,7 @@ import { LayoutModule } from '../../../layouts/layout.module';
 import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
 import { MyPapComponent } from './workflows/pap/pap.component'
 import { MyPipComponent } from './workflows/pip/pip.component'
@@ -56,6 +57,7 @@ import { DashboardComponent } from './leaves/dashboard/dashboard.component';
         LeaveListComponent,
         ReportsComponent,
         ProfileEditComponent,
+        ProfileViewComponent,
         DashboardComponent
         //ReviewerComponent,
         //SupervisorComponent
