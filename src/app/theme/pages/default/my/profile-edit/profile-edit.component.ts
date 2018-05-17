@@ -360,14 +360,14 @@ export class ProfileEditComponent implements OnInit {
                     swal({
                         type: 'success',
                         title:'Send Back!',
-                        titleText:"Profile sent back successfully.",
+                        titleText:"Profile sent back successfully to employee.",
                     });
                 }
                 else{
                     swal({
                         type: 'success',
                         title:'Submit!',
-                        titleText:"Profile submitted successfully.",
+                        titleText:"Profile submitted successfully to HR.",
                     });
                 }
             },
