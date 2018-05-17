@@ -46,7 +46,7 @@ export class CancelComponent implements OnInit {
     }
 
     loadEmployeeLeaves() {
-        this.myApiService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.myApiService.getCancelEmployeeLeaveDetails(this.employee._id).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leaveData = body.data.map(leave => {

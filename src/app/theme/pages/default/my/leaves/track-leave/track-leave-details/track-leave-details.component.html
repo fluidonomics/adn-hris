@@ -1,0 +1,261 @@
+<div class="m-content">
+	<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text flaticon-user-add">
+						Leave Application Review
+						<small>
+						</small>
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--form-->
+			<div class="row">
+				<div class="col-md-8">
+					<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+						<div class="m-portlet__body">
+							<span class="leave-app-review-user">
+								<img class="m--img-rounded" [src]="leave.profilePic" title="">
+							</span>
+							<span class="m-list-search__result-item-text">{{leave.emp_name}}</span>
+							<div class="tab-content">
+								<div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
+									<form class="m-form m-form--fit m-form--label-align-right">
+										<div class="form-body">
+											<div class="row">
+												<div class="col-md-6 adn-form__group">
+													<div class="form-group m-form__group">
+														<label for="form_control_1" class="formtitle">From</label>
+														<label for="form_control_1">{{leave.fromDate | date:'dd MMM yy'}}</label>
+													</div>
+												</div>
+												<div class="col-md-6 adn-form__group">
+													<div class="form-group m-form__group">
+														<label for="form_control_1" class="formtitle">To</label>
+														<label for="form_control_1">{{leave.toDate | date:'dd MMM yy'}}</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 adn-form__group">
+													<div class="form-group m-form__group">
+														<label for="form_control_1 " class="formtitle">Leave Type</label>
+														<label for="form_control_1">{{leave.leave_type_name}}</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6 adn-form__group">
+													<div class="form-group m-form__group">
+														<label for="form_control_1 " class="formtitle">Days</label>
+														<label for="form_control_1">{{leave.days}}</label>
+													</div>
+												</div>
+												<div class="col-md-6 adn-form__group">
+													<div class="form-group m-form__group">
+														<label for="form_control_1" class="formtitle">Leave Balance</label>
+														<label for="form_control_1">unmapped</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 adn-form__group">
+													<div class="m-form__group form-group">
+														<label for="form_control_1 formtitle">Reason</label>
+														<!-- <span class="required" aria-required="true"> * </span> -->
+														<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" disabled></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-actions">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="m-form__actions">
+														<!-- <button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button> -->
+														<button class="btn btn-secondary" (click)="goBack()" type="reset">Go Back</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">
+									Workflow History
+									<small>
+									</small>
+								</h3>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="">
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<th (click)="sortWorkflowHistory('index')" class="m-datatable__cell m-datatable__cell--sort" width="10%">
+											<span>
+												<i class="la" *ngIf="wfhSort == 'index'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sortWorkflowHistory('fromDate')" class="m-datatable__cell m-datatable__cell--sort" width="22.5%">
+											<span>
+												Date
+												<i class="la" *ngIf="wfhSort == 'fromDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sortWorkflowHistory('toDate')" class="m-datatable__cell m-datatable__cell--sort" width="22.5%">
+											<span>
+												Step
+												<i class="la" *ngIf="wfhSort == 'toDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sortWorkflowHistory('days')" class="m-datatable__cell m-datatable__cell--sort" width="22.5%">
+											<span>
+												Owner
+												<i class="la" *ngIf="wfhSort == 'days'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sortWorkflowHistory('status')" class="m-datatable__cell m-datatable__cell--sort" width="22.5%">
+											<span>
+												Status
+												<i class="la" *ngIf="wfhSort == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let wfh of workFlowHistory | orderBy: wfhSort : wfhReverse | filter: wfhFilter | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;let i=index">
+										<td class="m-datatable__cell" width="10%">
+											<span>{{i+1}}</span>
+										</td>
+										<td class="m-datatable__cell" width="22.5%">
+											<span>{{wfh.updatedAt | date:'dd MMM yy hh:mm'}}</span>
+										</td>
+										<td class="m-datatable__cell" width="22.5%">
+											<span>{{wfh.Step}}</span>
+										</td>
+										<td class="m-datatable__cell" width="22.5%">
+											<span>{{wfh.Owner}}</span>
+										</td>
+										<td class="m-datatable__cell" width="22.5%">
+											<span>{{wfh.Status}}</span>
+										</td>
+									</tr>
+									<tr class="no-data-block" *ngIf="!workFlowHistory?.length > 0">
+										<th colspan="5">
+											No Data
+										</th>
+									</tr>
+								</tbody>
+							</table>
+							<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+								<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+									<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+										<li>
+											<a class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+											 (click)="p.setCurrent(1)">
+												<i class="la la-angle-double-left"></i>
+											</a>
+										</li>
+										<li>
+											<a class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+											 (click)="p.previous()">
+												<i class="la la-angle-left"></i>
+											</a>
+										</li>
+										<li *ngFor="let page of p.pages">
+											<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+												{{ page.label }}
+											</a>
+										</li>
+										<li>
+											<a class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+											 (click)="p.next()">
+												<i class="la la-angle-right"></i>
+											</a>
+										</li>
+										<li>
+											<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+											 (click)="p.setCurrent(p.pages.length + 1)">
+												<i class="la la-angle-double-right"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</pagination-template>
+						</div>
+					</div>
+
+					<!---->
+					<div class="m-accordion m-accordion--default m-accordion--solid m-accordion--section  m-accordion--toggle-arrow" id="m_accordion_7"
+					 role="tablist">
+
+						<!--begin::Item-->
+						<div class="m-accordion__item">
+							<div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_7_item_1_head" data-toggle="collapse" href="#m_accordion_7_item_1_body"
+							 aria-expanded="    false">
+
+								<span class="m-accordion__item-title">View Leave Transaction</span>
+
+								<span class="m-accordion__item-mode"></span>
+							</div>
+
+							<div class="m-accordion__item-body collapse" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head"
+							 data-parent="#m_accordion_7">
+								<div class="m-accordion__item-content">
+									<p class="no-data-block">
+										No Data
+									</p>
+
+								</div>
+							</div>
+						</div>
+						<!--end::Item-->
+
+						<!--begin::Item-->
+						<div class="m-accordion__item">
+							<div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_7_item_2_head" data-toggle="collapse" href="#m_accordion_7_item_2_body"
+							 aria-expanded="    false">
+
+								<span class="m-accordion__item-title">View Employees On Leave</span>
+
+								<span class="m-accordion__item-mode"></span>
+							</div>
+
+							<div class="m-accordion__item-body collapse" id="m_accordion_7_item_2_body" role="tabpanel" aria-labelledby="m_accordion_7_item_2_head"
+							 data-parent="#m_accordion_7">
+								<div class="m-accordion__item-content">
+									<p class="no-data-block">
+										No Data
+									</p>
+
+								</div>
+							</div>
+						</div>
+						<!--end::Item-->
+
+					</div>
+					<!---->
+				</div>
+
+			</div>
+			<!--form-->
+
+		</div>
+	</div>
+</div>

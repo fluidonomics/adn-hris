@@ -72,7 +72,7 @@ export class ApplyComponent implements OnInit {
                 });
     }
     getAllEmailListOfEmployee() {
-        this._myService.getEmaiDetailsOfEmployee().subscribe(
+        this._myService.getEmployeeEmailDetails().subscribe(
             res => {
                 if (res.ok) {
                     this.emailDetails = res.json();

@@ -1,0 +1,45 @@
+app-my-leaves-track-leave {
+    width: 100vw;
+
+    .nav.nav-pills.nav-pills--brand .nav-link {
+        color: white;
+
+        &.active {
+            background: whitesmoke;
+            color: black;
+        }
+    }
+
+    .m-demo {
+        .m-list-search__results {
+            a {
+                &.m-list-search__result-item {
+                    border: 1px solid lightgray;
+                    padding: 10px;
+                    margin: 5px 0px;
+                    cursor: pointer;
+                }
+
+                &.m-list-search__result-item-text {
+                    text-align: right;
+                    padding-right: 15px;
+                }
+            }
+        }
+    }
+}
+
+app-my-leaves-track-leave-details {
+    .m-form__actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .no-data-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0px;
+    }
+}

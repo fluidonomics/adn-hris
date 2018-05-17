@@ -16,7 +16,8 @@ import { ReportsComponent } from './leaves/reports/reports.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { DashboardComponent } from './leaves/dashboard/dashboard.component';
 import { TrackLeaveComponent } from './leaves/track-leave/track-leave.component';
-import { LeaveAppReivewComponent } from './leaves/leave-app-review/leave-app-review.component';
+import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
+import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
 
 
 // import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
@@ -33,13 +34,12 @@ const routes: Routes = [{
         { path: 'leaves/dashboard', component: DashboardComponent },
         { path: 'leaves/apply', component: ApplyComponent },
         { path: 'leaves/cancel', component: CancelComponent },
-        { path: 'leaves/track-leave', component: TrackLeaveComponent },
-        { path: 'leaves/leave-application-review', component: LeaveAppReivewComponent },
+        { path: 'leaves/list', component: TrackLeaveComponent },
+        { path: 'leaves/list/details/:id', component: TrackLeaveDetailsComponent },
         { path: 'leaves/holidays', component: HolidaysComponent },
         { path: 'leaves/calender', component: CalenderComponent },
-        { path: 'leaves/list', component: LeaveListComponent },
         { path: 'leaves/reports', component: ReportsComponent },
-
+        { path: 'leaves/post-leave-transaction', component: PostLeaveTransactionComponent }
 
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},
