@@ -356,14 +356,14 @@ export class ProfileViewComponent implements OnInit {
                     swal({
                         type: 'success',
                         title:'Send Back!',
-                        titleText:"Profile sent back successfully.",
+                        titleText:"Profile sent back successfully to HR.",
                     });
                 }
                 else{
                     swal({
                         type: 'success',
                         title:'Submit!',
-                        titleText:"Profile submitted successfully.",
+                        titleText:"Profile approved successfully.",
                     });
                 }
             },
