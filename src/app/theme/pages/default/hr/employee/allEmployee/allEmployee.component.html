@@ -76,7 +76,7 @@
 									</tr>
 							</thead>
 							<tbody class="m-datatable__body">
-                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
+                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 								   <td class="m-datatable__cell" width="5%" >
 										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
 										  <img *ngIf="employee?.profileImage; else noImage" src="{{employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
@@ -134,7 +134,15 @@
 							</ul>
 						</div>
 					</pagination-template>
-				</div>
+					<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
+							<option value=10>10</option>
+							<option value=20>20</option>
+							<option value=30>30</option>
+							<option value=50>50</option>
+							<option value=100>100</option>
+					</select>
+					<span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+				</div>  
 			</div>
 		</div>
 </div>

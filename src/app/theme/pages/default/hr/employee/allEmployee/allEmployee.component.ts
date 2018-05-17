@@ -19,7 +19,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     p2: number = 1;
     search: any;
     _currentEmpId: number;
-
+    itemPerPage: number=10;
 
 
     constructor(private _script: ScriptLoaderService,
@@ -63,5 +63,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
+    
+    getStart()
+    {
+       return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
+    }
 
+    getEnd(filterCount)
+    {
+       let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
+       return  Math.min(start + this.itemPerPage  - 1, filterCount);
+    }
 }
