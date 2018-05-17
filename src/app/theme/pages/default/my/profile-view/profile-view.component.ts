@@ -347,16 +347,26 @@ export class ProfileViewComponent implements OnInit {
     //save Personal Info
     saveProfileStatus(status:string,isSendBack?:boolean) {
         this.profileProcess["supervisorStatus"] = status;
+        if(isSendBack){
+          this.profileProcess["hrStatus"] = null;
+        }
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
             data => {
                 this.profileProcess=data.json()||{}
                 if(isSendBack)
                 {
+
                     swal({
+                        title: 'Send Back!?',
+                        text: "Profile sent back successfully to HR",
                         type: 'success',
-                        title:'Send Back!',
-                        titleText:"Profile sent back successfully to HR.",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        timer:800
+                    }).then((result) => {
+                        this._router.navigate(['my/team/workflows/supervisor'])
                     });
                 }
                 else{
@@ -398,7 +408,19 @@ export class ProfileViewComponent implements OnInit {
                         && tabData.isCarInfo
                      )
                      {
-                       this.saveProfileStatus(status);
+                        swal({
+                            title: 'Are you sure?',
+                            text: "Do you want to approve profile?",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#66BB6A',
+                            cancelButtonColor: '#9a9caf',
+                            confirmButtonText: 'Approved'
+                        }).then((result) => {
+                            if (result.value) {
+                              this.saveProfileStatus(status);
+                            }
+                        });
                      }
                      else
                      swal({type: 'error',title:'Oops!',titleText:"Please complete Personal Info & Office Info.",});

@@ -351,6 +351,10 @@ export class ProfileEditComponent implements OnInit {
     saveProfileStatus(status:string,isSendBack?:boolean) {
         this.profileProcess["hrStatus"] = status;
         this.profileProcess["supervisorStatus"] = null;
+        if(isSendBack)
+        {
+          this.profileProcess["employeeStatus"] = null;
+        }
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
             data => {
@@ -361,6 +365,12 @@ export class ProfileEditComponent implements OnInit {
                         type: 'success',
                         title:'Send Back!',
                         titleText:"Profile sent back successfully to employee.",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        timer:1000
+                    }).then((result) => {
+                        this._router.navigate(['my/profile-edit'],{ queryParams: { id:this.param_emp_id ,tabName:'office' }})
                     });
                 }
                 else{
@@ -402,7 +412,19 @@ export class ProfileEditComponent implements OnInit {
                         && tabData.isCarInfo
                      )
                      {
-                       this.saveProfileStatus(status);
+                        swal({
+                            title: 'Are you sure?',
+                            text: "Do you want to submit profile to Supervisor?",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#66BB6A',
+                            cancelButtonColor: '#9a9caf',
+                            confirmButtonText: 'Submit'
+                        }).then((result) => {
+                            if (result.value) {
+                              this.saveProfileStatus(status);
+                            }
+                        });   
                      }
                      else
                      swal({type: 'error',title:'Oops!',titleText:"Please complete Personal Info & Office Info.",});
@@ -429,8 +451,7 @@ export class ProfileEditComponent implements OnInit {
             showCancelButton: true,
             confirmButtonColor: '#f22d4e',
             cancelButtonText:'Cancel',
-            confirmButtonText: 'Send Back',
-            allowOutsideClick: () => !swal.isLoading()
+            confirmButtonText: 'Send Back'
           }).then((result) => {
             if (result.value) {
                 this.profileProcess["hrSendbackComment"]=result.value;
