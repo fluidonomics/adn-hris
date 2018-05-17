@@ -56,7 +56,7 @@
 							<td data-field="RecordID" class="m-datatable__cell m-datatable__cell--check">
 								<span style="width: 40px;">
 									<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-										<input type="checkbox" value="245" (change)="selectLeave($event,leave)" [(ngModel)]="leave.checked">
+										<input type="checkbox" value="245" (change)="selectLeave($event,leave)" [(ngModel)]="leave.checked" [disabled]="leave.cannotCancel">
 										<span></span>
 									</label>
 								</span>

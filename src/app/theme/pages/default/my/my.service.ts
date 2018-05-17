@@ -276,7 +276,7 @@ export class MyService {
     }
 
     getEmployeeLeaveDetails(_empId: number) {
-        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId;
+        let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

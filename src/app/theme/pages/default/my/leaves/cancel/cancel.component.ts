@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, NgForm } from "@angular/forms";
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import { EmployeeInfo } from '../../../../../../base/_interface/user.model';
 import { UserData } from '../../../../../../base/_interface/auth.model';
@@ -18,7 +18,7 @@ declare var mApp;
 
 export class CancelComponent implements OnInit {
 
-    @ViewChild('fleavecancel') fleavecancel: FormControl;
+    @ViewChild('fleavecancel') fleavecancel: NgForm;
 
     leaveCancel: any = {};
     employee: UserData;
@@ -48,7 +48,16 @@ export class CancelComponent implements OnInit {
     loadEmployeeLeaves() {
         this.myApiService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
             let body = data.json();
-            this.leaveData = body.data || [];
+            if (body.data) {
+                this.leaveData = body.data.map(leave => {
+                    // Disable cancelling of leave if pending with supervisor
+                    leave.cannotCancel = false;
+                    if (!leave.isCancelled && leave.isApproved == true && leave.isForwarded == null) {
+                        leave.cannotCancel = true;
+                    }
+                    return leave;
+                })
+            }
         });
     }
 
@@ -74,15 +83,14 @@ export class CancelComponent implements OnInit {
                 });
             this.selectedLeave = leave;
         }
-        else
+        else {
+
             this.selectedLeave = null;
+            this.fleavecancel.resetForm();
+        }
     }
 
     onLeavecancelSubmit(data) {
-        console.log(data);
-        console.log(this.leaveCancel);
-
-        debugger;
         if (data.valid) {
             let ccToMail = [];
             data.value.ccTo.forEach(cc => {
@@ -94,9 +102,10 @@ export class CancelComponent implements OnInit {
             });
             let leave: any = {
                 id: this.selectedLeave._id,
-                emp_id: this.employee._id,
                 reason: this.leaveCancel.reason,
-                ccTo: ccToMail
+                ccTo: ccToMail,
+                emp_id: this.selectedLeave.emp_id,
+                updatedBy: this.employee._id
             }
             mApp.block('.cancel-portlet', {
                 overlayColor: '#000000',
@@ -104,12 +113,12 @@ export class CancelComponent implements OnInit {
                 state: 'success',
                 // message: 'Please wait...'
             });
-            this.myApiService.saveCancelLeave(leave).subscribe(data => {
-                debugger;
-                if (data.ok) {
+            this.myApiService.saveCancelLeave(leave).subscribe(res => {
+                if (res.ok) {
                     mApp.unblock('.cancel-portlet');
                     swal("Leave Cancelled", "", "success");
                     data.resetForm();
+                    this.loadEmployeeLeaves();
                 }
             },
                 error => {

@@ -135,9 +135,9 @@ export class ApplyComponent implements OnInit {
     resetForm(form) {
         form.resetForm();
         form.submitted = false;
-        form.controls.days.setErrors({ 'required': null })
-        form.controls.balance.setErrors({ 'required': null })
-        form.controls.attachment.setErrors({ 'required': null })
+        this.areDaysValid = true;
+        this.isBalanceValid = true;
+        this.isAttachmentRequired = false;
     }
 
     calculateDays(e: any, type: string) {
