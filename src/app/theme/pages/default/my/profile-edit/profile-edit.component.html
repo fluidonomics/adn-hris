@@ -1929,7 +1929,7 @@
                                                                 <div class="form-group m-form__group">
                                                                     <label for="performanceRating1">Performance Rating FY {{performance.performanceRatingName}}
                                                                     </label>
-                                                                    <input class="form-control m-input m-input--air" [(ngModel)]="performance.performanceRatingValue" #performanceRating1="ngModel" id="performanceRating1" name="performanceRating1" placeholder="Enter performance rating" type="text" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved">
+                                                                    <input class="form-control m-input m-input--air" [(ngModel)]="performance.performanceRatingValue" #performanceRating{{j}}="ngModel"  id="performanceRating{{j}}" name="performanceRating{{j}}" placeholder="Enter performance rating" type="text" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && profileProcess.isSupervisorApproved">
                                                                 </div>
                                                         </div>
                                                 </div>
