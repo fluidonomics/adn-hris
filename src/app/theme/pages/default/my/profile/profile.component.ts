@@ -356,6 +356,7 @@ export class ProfileComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.profileProcess["employeeStatus"] = 'Submitted';
+                this.profileProcess["hrStatus"] = null;
                 this._myService.saveProfileStatus(this.profileProcess)
                     .subscribe(
                     data => {

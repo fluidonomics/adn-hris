@@ -134,15 +134,19 @@
 							</ul>
 						</div>
 					</pagination-template>
-					<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
-							<option value=10>10</option>
-							<option value=20>20</option>
-							<option value=30>30</option>
-							<option value=50>50</option>
-							<option value=100>100</option>
-					</select>
-					<span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
-				</div>  
+					<div class="pager-display-size">
+						
+						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
+								<option value=10>10</option>
+								<option value=20>20</option>
+								<option value=30>30</option>
+								<option value=50>50</option>
+								<option value=100>100</option>
+						</select>
+						
+						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+					</div>
+					</div>  
 			</div>
 		</div>
 </div>

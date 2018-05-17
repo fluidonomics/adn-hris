@@ -730,7 +730,7 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard"
-                                                                        style="margin-right: 6px;"  (click)="nationalIdSmartCard.click()" [style.cursor] = "profileProcess.isSupervisorApproved ||!documents.nationalIdSmartCard? 'not-allowed' : ''">Upload</button>
+                                                                        style="margin-right: 6px;"  (click)="nationalIdSmartCard.click()" [style.cursor] = "profileProcess.isSupervisorSendBack && !documents.nationalIdSmartCard ? 'not-allowed' : ''">Upload</button>
                                                                         <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #nationalIdSmartCard (uploadOutput)="onUploadOutput($event,'smartCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIdSmartCard">
                                                                     <button type="button" class="btn btn-success" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
@@ -753,7 +753,7 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat"
-                                                                        style="margin-right: 6px;"  (click)="nationalIDOldFormat.click()" [style.cursor] = "profileProcess.isSupervisorApproved ||!documents.nationalIDOldFormat? 'not-allowed' : ''">Upload</button>
+                                                                        style="margin-right: 6px;"  (click)="nationalIDOldFormat.click()" [style.cursor] = "profileProcess.isSupervisorSendBack && !documents.nationalIDOldFormat? 'not-allowed' : ''">Upload</button>
                                                                         <input type="file" name="profileDocuments" hidden="hidden" #nationalIDOldFormat ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIDOldFormat">
                                                                     
@@ -778,7 +778,7 @@
                                                                 placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
-                                                                    <button type="button" class="btn btn-success" name="changeBirthRegistrationNumber" style="margin-right: 6px;"  (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isSupervisorApproved ||!documents.birthRegistrationNumber? 'not-allowed' : ''">Upload</button>
+                                                                    <button type="button" class="btn btn-success" name="changeBirthRegistrationNumber" style="margin-right: 6px;"  (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isSupervisorSendBack && !documents.birthRegistrationNumber? 'not-allowed' : ''">Upload</button>
                                                                         <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #birthRegistrationNumber (uploadOutput)="onUploadOutput($event,'birth')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.birthRegistrationNumber">
                                                                     <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
@@ -800,7 +800,7 @@
                                                                 [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
-                                                                    <button type="button" class="btn btn-success" name="changePassportNumber" style="margin-right: 6px;"  (click)="passportNumber.click()" [style.cursor] = "profileProcess.isSupervisorApproved ||!documents.passportNumber? 'not-allowed' : ''">Upload</button>
+                                                                    <button type="button" class="btn btn-success" name="changePassportNumber" style="margin-right: 6px;"  (click)="passportNumber.click()" [style.cursor] = "profileProcess.isSupervisorSendBack && !documents.passportNumber? 'not-allowed' : ''">Upload</button>
                                                                         <input type="file" name="profileDocuments"hidden="hidden" ngFileSelect [options]="options" #passportNumber (uploadOutput)="onUploadOutput($event,'passport')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.passportNumber">
                                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
