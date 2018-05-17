@@ -345,19 +345,31 @@ export class ProfileComponent implements OnInit {
 
     //save Personal Info
     saveProfileStatus() {
-        this.profileProcess["employeeStatus"] = 'Submitted';
-        this._myService.saveProfileStatus(this.profileProcess)
-            .subscribe(
-            data => {
-                this.profileProcess = data.json() || {}
-                swal({
-                    type: 'success',
-                    title: 'Submit!',
-                    titleText: "Profile submitted successfully.",
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to submit profile to HR?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#66BB6A',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Submit'
+        }).then((result) => {
+            if (result.value) {
+                this.profileProcess["employeeStatus"] = 'Submitted';
+                this._myService.saveProfileStatus(this.profileProcess)
+                    .subscribe(
+                    data => {
+                        this.profileProcess = data.json() || {}
+                        swal({
+                            type: 'success',
+                            title: 'Submit!',
+                            titleText: "Profile submitted successfully.",
+                        });
+                    },
+                    error => {
                 });
-            },
-            error => {
-            });
+            }
+        })
     }
 
     loadTabStatus() {
@@ -372,14 +384,20 @@ export class ProfileComponent implements OnInit {
                     && tabData.isCertificate
                     && tabData.isEmployment
                     && tabData.isFamilyInfo) {
-                    this.profileProcess["employeeStatus"] = "Submitted";
                     this.saveProfileStatus();
                 }
                 else
-                    swal({ type: 'error', title: 'Oops!', titleText: "It seems you haven't filled all the details.", });
+                    swal({
+                        title: 'Oops!',
+                        text: "It seems you haven't filled all the details.",
+                        type: 'warning',
+                         });
             },
             error => {
-                swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
+                swal({ 
+                    type: 'error',
+                    title: 'Error!',
+                    text: error.json().error.message, });
             });
     }
 

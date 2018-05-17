@@ -500,7 +500,7 @@
                             <div class="m-accordion__item-body collapse" id="m_accordion_5_item_9_body" role="tabpanel" aria-labelledby="m_accordion_5_item_9_head" data-parent="#m_accordion_5">
                                 <div class="row" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                     <div class="col-md-10 documentsnote">                                             
-                                        <label><strong>Note:</strong>Uploading at least one document is compulsory. Please enter Document Number to upload the file (JPG/JPEG or PNG)</label>
+                                        <label><i class="has-danger"> * </i><strong> Note:</strong> Uploading at least one document is compulsory. Please enter Document Number to upload the file (JPG/JPEG or PNG)</label>
                                     </div>
                                     <div class="col-md-2 accordian-refresh">
                                         <button class="btn btn-secondary" type="button" (click)="loadDocuments();showSpin()"> <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> </button>
