@@ -17,37 +17,27 @@
 						 <div class="m-section" >
 		 
 							<div class="m-section__content"> 
-									<div class="form-body">											 
-											<div class="row">							
-													    <div class="col-md-4">
-														  <div class="m-form__group form-group">
-															  <label for="form_control_1">Division</label>
-															  <ng-select class="m-input m-input--air" name="division" [items]="divisionData" bindLabel="divisionName"  bindValue="_id" placeholder="Select Division" [(ngModel)]="filterSearch.division_id" (change)="loadDepartment(filterSearch.division_id)"></ng-select>
-														  </div>
-													    </div>
-													    <div class="col-md-4">
-															<div class="m-form__group form-group">
-																<label for="form_control_1">Department</label>
-																<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.department_id" [clearable]="false"></ng-select>
-															</div>
-														</div>
-														<div class="col-md-4">
-																<div class="m-form__group form-group">
-																	<label for="form_control_1">Grade</label>
-																	<ng-select class="m-input m-input--air" name="grade" [items]="gradeData" [multiple]="true" bindLabel="gradeName"  bindValue="_id" placeholder="Select Grade" [(ngModel)]="filterSearch.grades"   ></ng-select>
-																</div>
-														</div>
-											   </div>
+								<div class="form-body">											 
+									<div class="row">							
+										<div class="col-md-4">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Department</label>
+												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.department_id" [clearable]="false"></ng-select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Grade</label>
+												<ng-select class="m-input m-input--air" name="grade" [items]="gradeData" [multiple]="true" bindLabel="gradeName"  bindValue="_id" placeholder="Select Grade" [(ngModel)]="filterSearch.grades"   ></ng-select>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="m-form__actions">
+												<button class="btn btn-success submitForm" style="margin-top: 5.5%"type="submit" id="search" (click)="loadAllEmployee()">Search</button>
+											</div>
+										</div>		
 									</div>
-									<div class="form-actions">
-									<div class="row">
-												  <div class="col-md-12">
-													 <div class="m-form__actions">
-														<button class="btn btn-success submitForm" type="submit" id="search" (click)="loadAllEmployee()">Search</button>
-													 </div>
-												  </div>
-											   </div>
-									</div>
+								</div>
 							</div>
 						 </div>
 					  </div>
