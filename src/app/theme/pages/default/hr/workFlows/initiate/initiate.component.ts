@@ -27,7 +27,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     p2: number = 1;
     search: any;
     _currentEmpId: number;
-
+    itemPerPage: number=30;
 
 
     constructor(
@@ -47,7 +47,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     initDropdown() {
-        this.loadDivision();
+        //this.loadDivision();
         this.loadDepartment();
         this.loadGrade();
     }
@@ -56,21 +56,21 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
     }
 
-    loadDivision() {
-        this._commonService.getDivision()
-            .subscribe(
-            res => {
-                if (res.ok) {
-                    this.employeeData = [];
-                    this.divisionData = res.json();
-                }
-            },
-            error => {
-            });
-    }
+    // loadDivision() {
+    //     this._commonService.getDivision()
+    //         .subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 this.employeeData = [];
+    //                 this.divisionData = res.json();
+    //             }
+    //         },
+    //         error => {
+    //         });
+    // }
 
     loadDepartment(division_id?: number) {
-        this._commonService.getDepartment(division_id)
+        this._commonService.getDepartment()
             .subscribe(
             res => {
                 if (res.ok) {
@@ -96,12 +96,21 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
+        if(this.filterSearch.grades.length > 0 && this.filterSearch.departments.length> 0 )
+        {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
-                    data = data.filter(obj => obj.HrScope_Id == this._currentEmpId);
+                    if(this.filterSearch.departments &&  this.filterSearch.departments.length>0)
+                    {
+                      data = data.filter(obj => obj.department_id == this.filterSearch.departments.includes(obj.department_id));
+                    }
+                    if(this.filterSearch.grades && this.filterSearch.grades.length>0)
+                    {
+                        data = data.filter(obj =>this.filterSearch.grades.includes(obj.grade_id));
+                    }
                     this.employeeData = data || [];
                 }
                 else
@@ -109,6 +118,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             },
             error => {
             });
+        }
+        else{
+            this.employeeData = [];
+        }
     }
 
     savekraWorkFlowDetails(emp_id: number) {
@@ -135,6 +148,24 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.deparmentData = [];
         this.gradeData = [];
         this.divisionData = [];
+    }
+
+    getStart()
+    {
+       return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
+    }
+
+    getEnd(filterCount)
+    {
+       let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
+       return  Math.min(start + this.itemPerPage  - 1, filterCount);
+    }
+
+    selectAllEmployee($event)
+    {
+        this.employeeData.forEach(element => {
+            element.checked=$event.target.checked;
+        });
     }
 
 }

@@ -22,7 +22,7 @@
 										<div class="col-md-4">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Department</label>
-												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.department_id" [clearable]="false"></ng-select>
+												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.departments" [clearable]="false"></ng-select>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -67,11 +67,11 @@
 				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
-									<tr class="m-datatable__row">
+									<tr class="m-datatable__row" >
 										
 										<th class="m-datatable__cell" width="5%">
 												<label>
-														<input type="checkbox">
+														<input type="checkbox" [disabled]="!p.pages.length > 0" (change)="selectAllEmployee($event)">
 												</label>
 										</th>
 										<th class="m-datatable__cell" width="5%" ></th>
@@ -99,14 +99,13 @@
 												<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 												</span>
                                         </th>
-                                        <th class="m-datatable__cell" width="5%">Action</th>
 									</tr>
 							</thead>
 							<tbody class="m-datatable__body">
-                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
+                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 									<td class="m-datatable__cell" width="5%" >
 										<label>
-												<input type="checkbox">
+											<input type="checkbox" [(ngModel)]="employee.checked">
 										</label>
 									</td>	
 									<td class="m-datatable__cell" width="5%" >
@@ -114,21 +113,16 @@
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									</td>
 								    <td class="m-datatable__cell" width="20%" >
-										<span>{{employee.FullName}}</span>
+										<span>{{employee.fullName}}</span>
 									</td>
 									<td class="m-datatable__cell" width="20%" >
-										<span>{{employee.OfficeEmail}}</span>
+										<span>{{employee.officeEmail}}</span>
 									</td>
 									<td class="m-datatable__cell" width="20%" >
-										<span>{{employee.Designation}}</span>
+										<span>{{employee.designation}}</span>
 									</td>
 								    <td class="m-datatable__cell" width="25%" >
-										<span>{{employee.Supervisor}}</span>
-                                    </td>
-                                    <td class="m-datatable__cell" width="5%" >
-                                        <button class="btn m-btn--pill m-btn--air btn-outline-success" type="button" (click)="savekraWorkFlowDetails(employee._id);employee.status='initiated'" [disabled]="employee.status=='initiated'">
-                                                {{employee.status=='initiated' ? 'Initiated KRA':'Initiate KRA'}}
-                                        </button>
+										<span>{{employee.supervisor}}</span>
                                     </td>
 							  </tr>
 							  <!-- <tr *ngIf="!employeeData.length > 0" style="text-align: center">
@@ -138,7 +132,7 @@
 							  </tr> -->
 							</tbody>
 					</table>
-					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
+					<pagination-template #p="paginationApi"  (pageChange)="p2 = $event" class="paginationtemplate" >
 						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
 							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 								<li>
@@ -169,16 +163,35 @@
 							</ul>
 						</div>
 					</pagination-template>
+					<select *ngIf="p.pages.length > 0"  [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
+							<option value=10>10</option>
+							<option value=20>20</option>
+							<option value=30>30</option>
+							<option value=50>50</option>
+							<option value=100>100</option>
+					</select>
+					<span *ngIf="p.pages.length > 0" class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+				</div>
+
+					<select *ngIf="p.pages.length > 0" #workflowtype="ngModel" name="workflow" [(ngModel)]="filterSearch.workflowtype" class="" title="Select page size" data-width="70px" data-selected="50">
+							<option value="KRA">KRA</option>
+							<option value="Learning" disabled>Learning</option>
+							<option value="PIP" disabled>PIP</option>
+					</select>
+					<!-- <div class="form-control-feedback has-danger" >
+							<span *ngIf ="(workflowtype.dirty || workflowtype.touched) && !filterSearch.workflowtype">
+									Please select workflowtype.
+							</span>
+					</div> -->
 					<div class="form-actions">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="search" (click)="loadAllEmployee()">Initiate</button>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="m-form__actions">
+										<button class="btn btn-success submitForm" type="submit" id="search" (click)="!filterSearch.workflowtype && savekraWorkFlowDetails()">Initiate</button>
+									</div>
 								</div>
 							</div>
-						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 </div>
