@@ -37,7 +37,7 @@
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Leave Type</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesDetails" [(ngModel)]="leavetransaction.leavetype"
+                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_leavetype" bindLabel="type" [items]="leaveTypesDetails" [(ngModel)]="leavetransaction.leavetype"
                                                     id="leavetype" #leavetype="ngModel" placeholder="" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted && !leavetype.valid ">
                                                     This field is required.

@@ -48,7 +48,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     getEmployeeList() {
         this.myService.getAllEmployee().subscribe(
             res => {
-                debugger;
+                //debugger;
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];
@@ -82,8 +82,11 @@ export class PostLeaveTransactionComponent implements OnInit {
             _postData.toDate = data.toDate;
             _postData.leave_type = data._id;
             _postData.reason = data.reason;
-            _postData.emp_id = this.currentEmpId;
-            _postData.createdBy = this.currentEmpId;
+            _postData.emp_id = data.employee;
+            //_postData.createdBy = data.currentEmpId;
+            _postData.updateBy =  this.currentEmpId;
+
+            console.log(_postData);
 
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
