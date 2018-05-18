@@ -24,6 +24,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
     wfhFilter: string = '';
     wfhSort: string = '';
     wfhReverse: boolean = false;
+    p2: number = 1;
 
     constructor(
         private authService: AuthService,
@@ -66,7 +67,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
             console.log(this.workFlowHistory);
         });
     }
-    goBack(event, leave) {
+    goBack() {
         this.router.navigate(['my/leaves/list']);
     }
 
