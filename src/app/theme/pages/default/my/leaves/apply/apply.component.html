@@ -38,7 +38,7 @@
 												<label for="form_control_1">From Date</label>
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air" name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
-												 [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true" [maxDate]="currentDate"
+												 [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true"
 												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="fromDate" required>
 												<div class="form-control-feedback has-danger" *ngIf="!fromDate.valid">
 													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This field is required.</span>
@@ -50,7 +50,7 @@
 												<label for="form_control_1">To Date</label>
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
-												 bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate"
+												 bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate"
 												 [(ngModel)]="leaveapplication.toDate" #toDate="ngModel" required>
 												<div class="form-control-feedback has-danger" *ngIf="!toDate.valid">
 													<span *ngIf="fleaveapplication.submitted && !toDate.valid">This field is required.</span>

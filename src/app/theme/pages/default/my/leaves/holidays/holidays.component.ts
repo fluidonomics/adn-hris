@@ -9,5 +9,22 @@ const now = new Date();
     templateUrl: "./holidays.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class HolidaysComponent {
+export class HolidaysComponent implements OnInit {
+
+
+    key: string = '';
+
+    constructor() {
+
+    }
+
+    ngOnInit(): void {
+
+    }
+
+    sort(key: string) {
+
+    }
 }
+
+
