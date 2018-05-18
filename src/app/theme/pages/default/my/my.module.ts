@@ -35,6 +35,7 @@ import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-det
 import { UtilityService } from '../../../../base/_services/utilityService.service';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
+import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
 
 
 
@@ -68,7 +69,8 @@ import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leave
         ProfileEditComponent,
         TrackLeaveDetailsComponent,
         PostLeaveTransactionComponent,
-        EmployeeLeavesComponent
+        EmployeeLeavesComponent,
+        GrantLeaveComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],

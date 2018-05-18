@@ -19,6 +19,7 @@ import { TrackLeaveComponent } from './leaves/track-leave/track-leave.component'
 import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
+import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
 
 
 // import { ReviewerComponent } from './team/workflows/reveiwer/reviewer.component';
@@ -41,7 +42,8 @@ const routes: Routes = [{
         { path: 'leaves/calender', component: CalenderComponent },
         { path: 'leaves/reports', component: ReportsComponent },
         { path: 'leaves/post-leave-transaction', component: PostLeaveTransactionComponent },
-        { path: 'leaves/employee-leaves', component: EmployeeLeavesComponent }
+        { path: 'leaves/employee-leaves', component: EmployeeLeavesComponent },
+        { path: 'leaves/grant-leave', component: GrantLeaveComponent }
 
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},

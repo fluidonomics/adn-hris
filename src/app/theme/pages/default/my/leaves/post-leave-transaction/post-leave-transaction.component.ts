@@ -45,10 +45,10 @@ export class PostLeaveTransactionComponent implements OnInit {
                 this.currentEmpId = this.authService.currentUserData._id;
             });
     }
+
     getEmployeeList() {
         this.myService.getAllEmployee().subscribe(
             res => {
-                //debugger;
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];

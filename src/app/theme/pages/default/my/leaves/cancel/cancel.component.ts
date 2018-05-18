@@ -8,6 +8,7 @@ import { CommonService } from '../../../../../../base/_services/common.service';
 import { leaveView } from '@angular/core/src/render3/instructions';
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import swal from 'sweetalert2';
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 declare var mApp;
 
 @Component({
@@ -32,9 +33,10 @@ export class CancelComponent implements OnInit {
     selectedLeave: any;
 
     constructor(
-        public authService: AuthService,
-        public myApiService: MyService,
-        public commonService: CommonService
+        private authService: AuthService,
+        private myApiService: MyService,
+        private commonService: CommonService,
+        private utilityService: UtilityService
     ) {
     }
 
@@ -107,22 +109,17 @@ export class CancelComponent implements OnInit {
                 emp_id: this.selectedLeave.emp_id,
                 updatedBy: this.employee._id
             }
-            mApp.block('.cancel-portlet', {
-                overlayColor: '#000000',
-                type: 'loader',
-                state: 'success',
-                // message: 'Please wait...'
-            });
+            this.utilityService.showLoader('.cancel-portlet');
             this.myApiService.saveCancelLeave(leave).subscribe(res => {
                 if (res.ok) {
-                    mApp.unblock('.cancel-portlet');
+                    this.utilityService.hideLoader('.cancel-portlet');
                     swal("Leave Cancelled", "", "success");
                     data.resetForm();
                     this.loadEmployeeLeaves();
                 }
             },
                 error => {
-                    mApp.unblock('.cancel-portlet');
+                    this.utilityService.hideLoader('.cancel-portlet');
                 });
         }
     }

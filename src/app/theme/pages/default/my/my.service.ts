@@ -315,6 +315,11 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    grantLeaveByEmployee(grantLeave: any) {
+        let url = "leave/grantLeaveByEmployee";
+        return this.authService.post(url, grantLeave).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
