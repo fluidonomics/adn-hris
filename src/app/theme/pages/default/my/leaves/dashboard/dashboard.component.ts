@@ -6,7 +6,6 @@ import { FormBuilder } from "@angular/forms";
 @Component({
     selector: "app-my-leaves-dashboard",
     templateUrl: "./dashboard.component.html",
-    styleUrls: ["./dashboard.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
 export class DashboardComponent implements OnInit {
