@@ -41,7 +41,7 @@ const routes: Routes = [{
         { path: 'leaves/holidays', component: HolidaysComponent },
         { path: 'leaves/calender', component: CalenderComponent },
         { path: 'leaves/reports', component: ReportsComponent },
-        { path: 'leaves/post-leave-transaction', component: PostLeaveTransactionComponent }
+        { path: 'leaves/post-leave-transaction', component: PostLeaveTransactionComponent },
 
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},

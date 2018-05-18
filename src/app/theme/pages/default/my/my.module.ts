@@ -67,7 +67,7 @@ import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/p
         ReportsComponent,
         ProfileEditComponent,
         TrackLeaveDetailsComponent,
-        PostLeaveTransactionComponent
+        PostLeaveTransactionComponent,
         ProfileViewComponent,
         DashboardComponent
         //ReviewerComponent,
