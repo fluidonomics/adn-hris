@@ -34,6 +34,7 @@ import { DashboardComponent } from './leaves/dashboard/dashboard.component';
 import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
 import { UtilityService } from '../../../../base/_services/utilityService.service';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
+import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
 
 
 
@@ -66,7 +67,8 @@ import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/p
         ReportsComponent,
         ProfileEditComponent,
         TrackLeaveDetailsComponent,
-        PostLeaveTransactionComponent
+        PostLeaveTransactionComponent,
+        EmployeeLeavesComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],
