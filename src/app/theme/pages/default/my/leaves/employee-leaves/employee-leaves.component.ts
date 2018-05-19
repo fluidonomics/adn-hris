@@ -5,7 +5,7 @@ import { FormBuilder } from "@angular/forms";
 const now = new Date();
 
 @Component({
-    selector: "app-my-leaves-employee-leaves",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./employee-leaves.component.html",
     encapsulation: ViewEncapsulation.None,
 })

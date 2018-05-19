@@ -1,1 +1,244 @@
-reports
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-graph">
+                                Overview
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="year" bindLabel="year" [items]="yearList" [(ngModel)]="currentYear"
+                                    id="currentYear" placeholder="Select Year" required></ng-select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="reportsPanel" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="chart1"></div>
+                                    <div class="chart2"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow" data-dropdown-toggle="click">
+                                                <a href="#" class="m-dropdown__toggle btn btn-success dropdown-toggle">
+                                                    Team On Leave
+                                                </a>
+                                                <div class="m-dropdown__wrapper">
+                                                    <span class="m-dropdown__arrow m-dropdown__arrow--left"></span>
+                                                    <div class="m-dropdown__inner">
+                                                        <div class="m-dropdown__body">
+                                                            <div class="m-dropdown__content">
+                                                                <ul class="m-nav">
+                                                                    <li class="m-nav__section m-nav__section--first">
+                                                                        <span class="m-nav__section-text">
+                                                                            Section
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-share"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Activity
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Messages
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-info"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                FAQ
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Support
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" routerLink="/logout">
+                                                                            Logout
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow" data-dropdown-toggle="click">
+                                                <a href="#" class="m-dropdown__toggle btn btn-success dropdown-toggle">
+                                                    Category
+                                                </a>
+                                                <div class="m-dropdown__wrapper">
+                                                    <span class="m-dropdown__arrow m-dropdown__arrow--left"></span>
+                                                    <div class="m-dropdown__inner">
+                                                        <div class="m-dropdown__body">
+                                                            <div class="m-dropdown__content">
+                                                                <ul class="m-nav">
+                                                                    <li class="m-nav__section m-nav__section--first">
+                                                                        <span class="m-nav__section-text">
+                                                                            Section
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-share"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Activity
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Messages
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-info"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                FAQ
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="" class="m-nav__link">
+                                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Support
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                                                    <li class="m-nav__item">
+                                                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" routerLink="/logout">
+                                                                            Logout
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                                <table class="m-datatable__table">
+                                                    <thead class="m-datatable__head">
+                                                        <tr class="m-datatable__row">
+                                                            <th (click)="sort('leavetype')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                                                <span>
+                                                                    Leave Type
+                                                                    <i class="la" *ngIf="key == 'leavetype'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                </span>
+                                                            </th>
+                                                            <th (click)="sort('fromDate')" class="m-datatable__cell m-datatable__cell--sort" width="60%">
+                                                                <span>
+                                                                    Details
+                                                                    <i class="la" *ngIf="key == 'fromDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                </span>
+                                                            </th>
+                                                            <th (click)="sort('toDate')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                                                <span>
+                                                                    Days
+                                                                    <i class="la" *ngIf="key == 'toDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="m-datatable__body">
+                                                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of leaveData | orderBy: key : reverse | filter:search;let even=even;">
+                                                            <td class="m-datatable__cell" width="20%">
+                                                                <span>{{leave.leave_type_name}}</span>
+                                                            </td>
+                                                            <td class="m-datatable__cell" width="20%">
+                                                                <span>{{leave.details}}</span>
+                                                            </td>
+                                                            <td class="m-datatable__cell" width="20%">
+                                                                <span>{{leave.days}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="no-data-block" *ngIf="!leaveData || leaveData.length == 0">
+                                                            <th colspan="5">
+                                                                No Data
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+                                                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                                        <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                                            <li>
+                                                                <a class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                                    (click)="p.setCurrent(1)">
+                                                                    <i class="la la-angle-double-left"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                                    (click)="p.previous()">
+                                                                    <i class="la la-angle-left"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li *ngFor="let page of p.pages">
+                                                                <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                                                    {{ page.label }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                                    (click)="p.next()">
+                                                                    <i class="la la-angle-right"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                                    (click)="p.setCurrent(p.pages.length + 1)">
+                                                                    <i class="la la-angle-double-right"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </pagination-template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,186 +1,236 @@
-<div style="margin: 12px;">
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link" id="nav-btn-tab" data-toggle="tab" href="#nav-btn" role="tab" aria-controls="nav-btn" aria-selected="true">
-                btn
-            </a>
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                Main
-            </a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
-                Action    
-            </a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-                Activity
-            </a>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-           <div class="">
-               <div class="row">
-                    <div class="col-md-2">
-                        <span style="padding: 12px;">
-                            Holiday List
-                        </span>
-                    </div>
-                    <div class="col-md-8"></div>
-                    <div class="col-md-2">
-                        <div class="row">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    2018
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">2016</a>
-                                    <a class="dropdown-item" href="#">2017</a>
-                                    <a class="dropdown-item" href="#">2018</a>  
-                                </div>
+<div class="m-content">
+	<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text flaticon-user-add">
+						Holidays
+						<small></small>
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<!--<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabActive" role="tab">
+							Active
+						</a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" href="#tabCompleted" role="tab">
+							Completed
+						</a>
+					</li>
+				</ul>-->
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<div class="tab-content">
+				<div class="tab-pane active" id="tabActive">
+					<div class="m-widget2">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">
+                                    All
+                                </a>
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                    Main
+                                </a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                                    Action    
+                                </a>
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                                    Activity
+                                </a>
                             </div>
-                            <button type="button" class="btn btn-default">Show</button>
-                        </div>
-                    </div>
-               </div>
-               <hr>
-               <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.1);padding: 5px;margin-left:  2px;">
-                                    <div class="col-md-6">
-                                        7 General Holidays
-                                    </div>
-                                    <div class="col-md-6" style="text-align: right;">
-                                        8 Restricted Holidays
-                                    </div>
-                                </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                                    First Tab...
+                                    Sint sit mollit irure quis est nostrud cillum consequat Lorem esse do quis dolor esse fugiat sunt do. Eu ex commodo veniam Lorem aliquip laborum occaecat qui Lorem esse mollit dolore anim cupidatat. Deserunt officia id Lorem nostrud aute id commodo elit eiusmod enim irure amet eiusmod qui reprehenderit nostrud tempor. Fugiat ipsum excepteur in aliqua non et quis aliquip ad irure in labore cillum elit enim. Consequat aliquip incididunt ipsum et minim laborum laborum laborum et cillum labore. Deserunt adipisicing cillum id nulla minim nostrud labore eiusmod et amet. Laboris consequat consequat commodo non ut non aliquip reprehenderit nulla anim occaecat. Sunt sit ullamco reprehenderit irure ea ullamco Lorem aute nostrud magna.
                             </div>
-                            <div class="col-md-6"></div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-default">Excel Export</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12" style="margin-top: 14px;">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-                                    <table class="m-datatable__table">
-                                            <thead class="m-datatable__head">
-                                                    <tr class="m-datatable__row">
-                                                        <th class="m-datatable__cell" width="5%" style="text-align: center;" >
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        </th>
-                                                        <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
-                                                            <span>
-                                                                Occasion
-                                                            <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                            </span>
-                                                        </th>
-                                                        <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-                                                            <span>
-                                                            Date
-                                                            <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                            </span>
-                                                        </th>
-                                                        <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                                            <span>
-                                                            Day
-                                                            <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                            </span>
-                                                        </th>
-                                                        <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                                            <span>
-                                                            Restricted
-                                                            <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                            </span>
-                                                        </th>
-                                                        <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                                            <span>
-                                                            Action
-                                                            <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                            </span>
-                                                        </th>
-                                                    </tr>
-                                            </thead>
-                                            <tbody class="m-datatable__body">
-                                                <tr class="m-datatable__row">
-                                                    <td class="m-datatable__cell" width="5%" style="text-align: center;" >
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                        </div>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="25%" >
-                                                        <span>Diwali</span>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="15%" >
-                                                        <span>Ashish</span>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="15%" >
-                                                        <span>Ashish</span>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="15%" >
-                                                        <span>Ashish</span>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="15%" >
-                                                        <span>Ashish</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                    </table>
-                                    <!--<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
-                                        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                                            <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                                                <li>
-                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
-                                                        <i class="la la-angle-double-left"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-                                                        <i class="la la-angle-left"></i>
-                                                    </a>
-                                                </li>
-                                                <li *ngFor="let page of p.pages">
-                                                    <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                                        {{ page.label }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
-                                                        <i class="la la-angle-right"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-                                                        <i class="la la-angle-double-right"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5 style="padding-top: 10px;">
+                                                Holiday List
+                                            </h5>
+                                            <span style="padding: 12px;"></span>
                                         </div>
-                                    </pagination-template>-->
+                                        <div class="col-md-8"></div>
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        2018
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#">2016</a>
+                                                        <a class="dropdown-item" href="#">2017</a>
+                                                        <a class="dropdown-item" href="#">2018</a>  
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-default">Show</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.1);padding: 5px;margin-left:  2px;">
+                                                        <div class="col-md-6">
+                                                            7 General Holidays
+                                                        </div>
+                                                        <div class="col-md-6" style="text-align: right;">
+                                                            8 Restricted Holidays
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-default">Excel Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top: 14px;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                                        <table class="m-datatable__table">
+                                                                <thead class="m-datatable__head">
+                                                                        <tr class="m-datatable__row">
+                                                                            <th class="m-datatable__cell" width="5%" style="text-align: center;padding-bottom: 4px;" >
+                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                    <!-- <input type="checkbox" value="245"> -->
+                                                                                    <span></span>
+                                                                                </label>
+                                                                                <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">-->
+                                                                            </th>
+                                                                            <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
+                                                                                <span>
+                                                                                    Occasion
+                                                                                <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                                </span>
+                                                                            </th>
+                                                                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
+                                                                                <span>
+                                                                                Date
+                                                                                <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                                </span>
+                                                                            </th>
+                                                                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                                <span>
+                                                                                Day
+                                                                                <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                                </span>
+                                                                            </th>
+                                                                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                                <span>
+                                                                                Restricted
+                                                                                <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                                </span>
+                                                                            </th>
+                                                                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                                <span>
+                                                                                Action
+                                                                                <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                                </span>
+                                                                            </th>
+                                                                        </tr>
+                                                                </thead>
+                                                                <tbody class="m-datatable__body">
+                                                                    <tr class="m-datatable__row">
+                                                                        <td class="m-datatable__cell" width="5%" style="text-align: center;" >
+                                                                            <span style="width: 40px;padding: 10px 0 0 10px;">
+                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                    <input type="checkbox" value="245" (change)="selectLeave($event,leave)" [(ngModel)]="leave.checked" [disabled]="leave.cannotCancel">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="25%" >
+                                                                            <span>Diwali</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%" >
+                                                                            <span>Ashish</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%" >
+                                                                            <span>Ashish</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%" >
+                                                                            <span>Ashish</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%" >
+                                                                            <span>Ashish</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                        </table>
+                                                        <!--<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
+                                                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                                                <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                                                    <li>
+                                                                        <a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
+                                                                            <i class="la la-angle-double-left"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
+                                                                            <i class="la la-angle-left"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li *ngFor="let page of p.pages">
+                                                                        <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                                                            {{ page.label }}
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+                                                                            <i class="la la-angle-right"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
+                                                                            <i class="la la-angle-double-right"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </pagination-template>-->
+                                                    </div>
+                                                    <!-- END EXAMPLE TABLE PORTLET-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center" style="margin-top: 14px;">
+                                            <button name="Save" class="btn btn-primary">Save</button> 
+                                            <button name="Delete" class="btn btn-default">Delete</button> 
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- END EXAMPLE TABLE PORTLET-->
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                Second Tab...
+                                Sint sit mollit irure quis est nostrud cillum consequat Lorem esse do quis dolor esse fugiat sunt do. Eu ex commodo veniam Lorem aliquip laborum occaecat qui Lorem esse mollit dolore anim cupidatat. Deserunt officia id Lorem nostrud aute id commodo elit eiusmod enim irure amet eiusmod qui reprehenderit nostrud tempor. Fugiat ipsum excepteur in aliqua non et quis aliquip ad irure in labore cillum elit enim. Consequat aliquip incididunt ipsum et minim laborum laborum laborum et cillum labore. Deserunt adipisicing cillum id nulla minim nostrud labore eiusmod et amet. Laboris consequat consequat commodo non ut non aliquip reprehenderit nulla anim occaecat. Sunt sit ullamco reprehenderit irure ea ullamco Lorem aute nostrud magna.
+                            </div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                Third Tab...
+                                Sint sit mollit irure quis est nostrud cillum consequat Lorem esse do quis dolor esse fugiat sunt do. Eu ex commodo veniam Lorem aliquip laborum occaecat qui Lorem esse mollit dolore anim cupidatat. Deserunt officia id Lorem nostrud aute id commodo elit eiusmod enim irure amet eiusmod qui reprehenderit nostrud tempor. Fugiat ipsum excepteur in aliqua non et quis aliquip ad irure in labore cillum elit enim. Consequat aliquip incididunt ipsum et minim laborum laborum laborum et cillum labore. Deserunt adipisicing cillum id nulla minim nostrud labore eiusmod et amet. Laboris consequat consequat commodo non ut non aliquip reprehenderit nulla anim occaecat. Sunt sit ullamco reprehenderit irure ea ullamco Lorem aute nostrud magna.
                             </div>
                         </div>
-                   </div>
-                   <div class="col-md-12 text-center" style="margin-top: 14px;">
-                        <button name="Save" class="btn btn-primary">Save</button> 
-                        <button name="Delete" class="btn btn-default">Delete</button> 
-                    </div>
-               </div>
-           </div>
-        </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            Second Tab...
-            Sint sit mollit irure quis est nostrud cillum consequat Lorem esse do quis dolor esse fugiat sunt do. Eu ex commodo veniam Lorem aliquip laborum occaecat qui Lorem esse mollit dolore anim cupidatat. Deserunt officia id Lorem nostrud aute id commodo elit eiusmod enim irure amet eiusmod qui reprehenderit nostrud tempor. Fugiat ipsum excepteur in aliqua non et quis aliquip ad irure in labore cillum elit enim. Consequat aliquip incididunt ipsum et minim laborum laborum laborum et cillum labore. Deserunt adipisicing cillum id nulla minim nostrud labore eiusmod et amet. Laboris consequat consequat commodo non ut non aliquip reprehenderit nulla anim occaecat. Sunt sit ullamco reprehenderit irure ea ullamco Lorem aute nostrud magna.
-        </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-            Third Tab...
-            Sint sit mollit irure quis est nostrud cillum consequat Lorem esse do quis dolor esse fugiat sunt do. Eu ex commodo veniam Lorem aliquip laborum occaecat qui Lorem esse mollit dolore anim cupidatat. Deserunt officia id Lorem nostrud aute id commodo elit eiusmod enim irure amet eiusmod qui reprehenderit nostrud tempor. Fugiat ipsum excepteur in aliqua non et quis aliquip ad irure in labore cillum elit enim. Consequat aliquip incididunt ipsum et minim laborum laborum laborum et cillum labore. Deserunt adipisicing cillum id nulla minim nostrud labore eiusmod et amet. Laboris consequat consequat commodo non ut non aliquip reprehenderit nulla anim occaecat. Sunt sit ullamco reprehenderit irure ea ullamco Lorem aute nostrud magna.
-        </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
+
 
 
