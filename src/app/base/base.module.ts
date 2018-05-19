@@ -9,6 +9,7 @@ import { EqualValidator } from './_directive/equalValidator.directive';
 import { OnlyNumberDirective } from './_directive/only-number.directive';
 import { LowerCaseDirective } from './_directive/lowerCase.directive';
 //import { EmailUniqueValidatorDirective } from './_directive/unique-email.directive';
+import { OnlyOneRequired } from './_directive/only-one-required';
 import { SummernoteComponent } from './_components/summernote.component';
 
 
@@ -26,7 +27,8 @@ import { SummernoteComponent } from './_components/summernote.component';
         OnlyNumberDirective,
         LowerCaseDirective,
         //EmailUniqueValidatorDirective,
-        EqualValidator
+        EqualValidator,
+        OnlyOneRequired
     ],
     exports: [
         SearchPipe,
@@ -37,6 +39,7 @@ import { SummernoteComponent } from './_components/summernote.component';
         SummernoteComponent,
         LowerCaseDirective,
         OnlyNumberDirective,
+        OnlyOneRequired,
         //EmailUniqueValidatorDirective,
         EqualValidator
     ],

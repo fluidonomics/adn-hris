@@ -4,6 +4,7 @@ import { AuthService } from "../../../base/_services/authService.service"
 
 
 declare let mLayout: any;
+declare let $ :any;
 
 @Component({
     selector: "app-header-nav",
@@ -23,4 +24,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         mLayout.initHeader();
     }
+
+    // removeScript()
+    // {
+    //     $('script[src$="assets/vendors/base/vendors.bundle.js"]').remove();
+    //     $('script[src$="assets/demo/default/base/scripts.bundle.js"]').remove();
+    // }
 }
