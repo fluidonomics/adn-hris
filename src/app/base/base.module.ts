@@ -5,7 +5,8 @@ import { OrderPipe } from "./_pipes/order.pipes";
 import { KeysPipe } from "./_pipes/key.pipes";
 import { CeilPipe } from "./_pipes/ceil.pipes";
 import { OnlyNumberDirective } from './_directive/only-number.directive';
-import {SummernoteComponent } from './_components/summernote.component';
+import { SummernoteComponent } from './_components/summernote.component';
+import { CalendarComponent } from './_components/calendar.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {SummernoteComponent } from './_components/summernote.component';
         KeysPipe,
         CeilPipe,
         SummernoteComponent,
-        OnlyNumberDirective
+        OnlyNumberDirective,
+        CalendarComponent
     ],
     exports: [
         SearchPipe,
@@ -24,7 +26,8 @@ import {SummernoteComponent } from './_components/summernote.component';
         KeysPipe,
         CeilPipe,
         SummernoteComponent,
-        OnlyNumberDirective
+        OnlyNumberDirective,
+        CalendarComponent
     ],
 })
 export class BaseModule {
