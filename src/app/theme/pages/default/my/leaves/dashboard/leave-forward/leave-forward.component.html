@@ -1,0 +1,37 @@
+<div class=”portlet-body”>
+  <form class="m-form m-form--fit m-form--label-align-right">
+    <div class="form-body">
+      <div class="row">
+        <div class="col-md-12 adn-form__group">
+          <div class="m-form__group form-group">
+            <label for="form_control_1">Forward To</label>
+            <ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
+                id="employees" placeholder="" required></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 adn-form__group">
+          <div class="m-form__group form-group">
+            <label for="form_control_1">Remarks</label>
+            <span class="required" aria-required="true"> * </span>
+            <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-actions">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="m-form__actions">
+              <button class="btn btn-success submitForm" type="submit" id="submitForm">Forward</button>
+              <button class="btn btn-success" type="submit">Accept</button>
+              <button class="btn btn-danger" type="button">Reject</button>
+              <button class="btn btn-secondary" type="submit"  (click)="navigateToDetails($event,leave)">Detailed View <i class="fa fa-caret-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

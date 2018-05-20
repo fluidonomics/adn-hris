@@ -15,6 +15,7 @@ import { LeaveListComponent } from './leaves/leave-list/leavelist.component';
 import { ReportsComponent } from './leaves/reports/reports.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { DashboardComponent } from './leaves/dashboard/dashboard.component';
+import { DashboardDetailsComponent } from './leaves/dashboard/dashboard-details/dashboard-details.component';
 import { TrackLeaveComponent } from './leaves/track-leave/track-leave.component';
 import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
@@ -34,6 +35,7 @@ const routes: Routes = [{
         { path: 'workflows/pap', component: MyPapComponent },
         { path: 'workflows/pip', component: MyPipComponent },
         { path: 'leaves/dashboard', component: DashboardComponent },
+        { path: 'leaves/dashboard/details/:id', component: DashboardDetailsComponent },
         { path: 'leaves/apply', component: ApplyComponent },
         { path: 'leaves/cancel', component: CancelComponent },
         { path: 'leaves/list', component: TrackLeaveComponent },

@@ -31,6 +31,8 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { MyService } from "./my.service"
 import { BaseModule } from '../../../../base/base.module';
 import { DashboardComponent } from './leaves/dashboard/dashboard.component';
+import { LeaveForwardComponent } from './leaves/dashboard/leave-forward/leave-forward.component';
+import { DashboardDetailsComponent } from './leaves/dashboard/dashboard-details/dashboard-details.component';
 import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
 import { UtilityService } from '../../../../base/_services/utilityService.service';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
@@ -59,6 +61,8 @@ import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component'
         MyPapComponent,
         MyPipComponent,
         DashboardComponent,
+        LeaveForwardComponent,
+        DashboardDetailsComponent,
         ApplyComponent,
         CancelComponent,
         TrackLeaveComponent,

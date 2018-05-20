@@ -2,6 +2,10 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
+import { LeaveForwardComponent } from './leave-forward/leave-forward.component';
+
+import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UserData } from '../../../../../../base/_interface/auth.model';
 
 @Component({
     selector: "app-my-leaves-dashboard",
@@ -13,12 +17,16 @@ export class DashboardComponent implements OnInit {
     leaveBalance: any = [];
     upcomingHolidays: any = [];
     recentTransactions: any = [];
+    employeeList: any;
+    currentUser: UserData;
 
-    constructor() {
+    constructor(public authService: AuthService) {
 
     }
 
     ngOnInit() {
+        this.currentUser = this.authService.currentUserData;
+
         this.leaveBalance = [
             {
                 title: "LOP",
