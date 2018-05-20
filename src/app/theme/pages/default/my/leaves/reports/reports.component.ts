@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const now = new Date();
@@ -23,17 +22,13 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
     ];
     currentYear: number = 2018;
-    chartEmployee: AmChart;
-    chartLeaves: AmChart;
 
     key: string = '';
     reverse: boolean = false;
     search: string = '';
 
 
-    constructor(
-        private AmCharts: AmChartsService
-    ) {
+    constructor() {
 
     }
 
@@ -109,44 +104,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 "color": "#5698C6"
             }
         ];
-
-        this.chartEmployee = this.AmCharts.makeChart("chartEmployee", {
-            "type": "serial",
-            "theme": "light",
-            "allLabels": [{
-                "text": "Leaves Taken By Month (All Employees)",
-                "align": "left",
-                "bold": true,
-                "size": 18,
-                "y": 10
-            }],
-            "marginRight": 70,
-            "marginTop": 50,
-            "dataProvider": data,
-            "valueAxes": [{
-                "axisAlpha": 0,
-                "position": "left",
-            }],
-            "startDuration": 1,
-            "graphs": [{
-                "balloonText": "<b>[[category]]: [[value]]</b>",
-                "fillColorsField": "color",
-                "fillAlphas": 0.9,
-                "lineAlpha": 0.2,
-                "type": "column",
-                "valueField": "count"
-            }],
-            "chartCursor": {
-                "categoryBalloonEnabled": false,
-                "cursorAlpha": 0,
-                "zoomable": false
-            },
-            "categoryField": "month",
-            "categoryAxis": {
-                "gridPosition": "start",
-                "labelRotation": 45
-            }
-        });
     }
 
     loadChartLeaves() {
@@ -178,43 +135,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             }
         ];
 
-        this.chartLeaves = this.AmCharts.makeChart("chartLeaves", {
-            "type": "serial",
-            "theme": "light",
-            "allLabels": [{
-                "text": "Leaves Taken By Leave Type",
-                "align": "left",
-                "bold": true,
-                "size": 18,
-                "y": 10
-            }],
-            "marginRight": 70,
-            "marginTop": 50,
-            "dataProvider": data,
-            "valueAxes": [{
-                "axisAlpha": 0,
-                "position": "left",
-            }],
-            "startDuration": 1,
-            "graphs": [{
-                "balloonText": "<b>[[category]]: [[value]]</b>",
-                "fillColorsField": "color",
-                "fillAlphas": 0.9,
-                "lineAlpha": 0.2,
-                "type": "column",
-                "valueField": "count"
-            }],
-            "chartCursor": {
-                "categoryBalloonEnabled": false,
-                "cursorAlpha": 0,
-                "zoomable": false
-            },
-            "categoryField": "month",
-            "categoryAxis": {
-                "gridPosition": "start",
-                "labelRotation": 45
-            }
-        });
     }
 
     sort(key: string) {

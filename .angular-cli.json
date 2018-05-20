@@ -22,11 +22,7 @@
         "styles.scss",
         "assets/custom.scss"
       ],
-      "scripts": [
-        "assets/amcharts/amcharts.js",
-        "assets/amcharts/serial.js",
-        "assets/amcharts/light.js"
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

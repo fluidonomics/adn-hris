@@ -36,7 +36,6 @@ import { UtilityService } from '../../../../base/_services/utilityService.servic
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
 import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
-import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 
 @NgModule({
@@ -51,8 +50,7 @@ import { AmChartsModule } from "@amcharts/amcharts3-angular";
         NgSelectModule,
         NgUploaderModule,
         BsDatepickerModule.forRoot(),
-        BaseModule,
-        AmChartsModule
+        BaseModule
     ], declarations: [
         MyComponent,
         ProfileComponent,
