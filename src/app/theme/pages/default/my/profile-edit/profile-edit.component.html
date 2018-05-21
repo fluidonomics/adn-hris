@@ -75,7 +75,7 @@
                                 <div class="m-widget4__item" style="align-self: right">
                                     <div class="m-widget4__ext" style="padding-right: 3px;">                                                                  
                                         <button type="button" class="btn m-btn--pill btn-success" *ngIf="(!profileProcess.isHrSubmitted && !profileProcess.isHrSendBack) ||profileProcess.isSupervisorSendBack"
-                                            (click)="submitProfile('Submitted')">Submit</button>
+                                            (click)="submitProfile('Submitted')">Send for Approval</button>
                                     </div>
                                     <div class="m-widget4__ext" style="padding-left: 3px;">
                                         <button type="button" class="btn m-btn--pill btn-danger" (click)="submitBackProfileStatus('SendBack')" *ngIf="(!profileProcess.isHrSubmitted && !profileProcess.isHrSendBack)  || profileProcess.isSupervisorSendBack">Send Back</button>
@@ -260,7 +260,7 @@
                                                                 class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
                                                                         <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
-                                                                        <span *ngIf="mobileNo.errors?.maxlength">Please enter your 10 digit number</span>
+                                                                        <span *ngIf="mobileNo.errors?.maxlength">Please enter valid mobile number</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -272,8 +272,8 @@
                                                                 placeholder="Enter home phone" type="text" OnlyNumber="true"
                                                                 class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
-                                                                <span *ngIf="homePhonNo.errors?.minlength">Please enter your 10 digit number</span>
-                                                                <span *ngIf="homePhonNo.errors?.maxlength">Please enter your 10 digit number</span>
+                                                                <span *ngIf="homePhonNo.errors?.minlength">Please enter valid mobile number</span>
+                                                                <span *ngIf="homePhonNo.errors?.maxlength">Please enter valid mobile number</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -511,7 +511,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
-                                                                <label for="thane">Thane
+                                                                <label for="thane">Upazila/Thana
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData"
@@ -633,7 +633,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
-                                                                <label for="permanentAddressThana">Thana
+                                                                <label for="permanentAddressThana">Upazila/Thana
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>
@@ -938,7 +938,7 @@
                                                                 <label for="result">Result
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result"
+                                                                <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result" (ngModelChange)="academic.marks='';academic.cgpa='';academic.scale=''"
                                                                     [(ngModel)]="academic.result" [clearable]="false" #result="ngModel"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
                                                                 <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
@@ -946,13 +946,26 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6 adn-form__group">
+                                                        <div class="col-md-6 adn-form__group" *ngIf="academic.result=='First Division/Class' || academic.result=='Second Division/Class' || academic.result=='Third Division/Class'">
                                                             <div class="form-group m-form__group">
                                                                 <label for="marks">Marks in %
                                                                 </label>
-                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %"
-                                                                    id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
+                                                                <div class="form-group m-form__group">
+                                                                    <label for="marks">CGPA
+                                                                    </label>
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    </div>
+                                                        </div>
+                                                        <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
+                                                                <div class="form-group m-form__group">
+                                                                    <label for="marks">Scale
+                                                                        </label>
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -1382,7 +1395,7 @@
                                                                     type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
-                                                                        Please enter your 10 digit number
+                                                                        Please enter valid mobile number
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -1498,14 +1511,10 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="officePhoneNumber">Office Phone Number
-                                                                <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.officePhone" #officePhoneNumber="ngModel" maxlength="10"
                                                                 id="officePhoneNumber" name="officePhoneNumber" placeholder="Enter office phone no"
-                                                                type="text" OnlyNumber="true" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
-                                                                This field is required.
-                                                            </div>
+                                                                type="text" OnlyNumber="true"  [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1519,7 +1528,7 @@
                                                                 placeholder="Enter office mobile no" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                                 <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
                                                                     <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
-                                                                            Please enter your 10 digit number
+                                                                            Please enter valid mobile number
                                                                     </span>
                                                                 </div>
                                                         </div>
@@ -1547,7 +1556,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
-                                                                placeholder="Enter facility" type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                placeholder="Enter facility" type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" required>
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1604,14 +1613,12 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="workPermitNumber">Work Permit Number
-                                                                <span class="required" aria-required="true"> * </span>
+                                                               
                                                             </label>
                                                             <input type="text" [(ngModel)]="officeInfo.workPermitNumber" #workPermitNumber="ngModel" name="workPermitNumber" placeholder="Enter work permit no"
                                                                 id="idCardNumber" maxlength="10" class="form-control m-input m-input--air"
-                                                                required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !workPermitNumber.valid ">
-                                                                This field is required.
-                                                            </div>
+                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                          
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2108,7 +2115,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.basic" #basic="ngModel" id="basic" name="basic"
                                                                 placeholder="Enter basic" type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !basic.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !basic.valid" OnlyNumber="true">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2121,7 +2128,7 @@
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.hra" #houseRent="ngModel" id="houseRent" name="houseRent"
                                                                 placeholder="Enter house rent allowance (HRA)" type="text" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !houseRent.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !houseRent.valid" OnlyNumber="true">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2134,7 +2141,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.conveyanceAllowance" #conveyanceAllowance="ngModel"
                                                                 id="conveyanceAllowance" name="conveyanceAllowance" placeholder="Enter conveyance allowance"
-                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2143,7 +2150,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.lfa" #leaveFareAssistance="ngModel" id="leaveFareAssistance"
                                                                 name="leaveFareAssistance" placeholder="Enter leave fare assistance (LFA)"
-                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2153,8 +2160,8 @@
                                                             <label for="medicalAllowance">Medical Allowance
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.medicalAllowance" #medicalAllowance="ngModel"
-                                                                id="medicalAllowance" name="medicalAllowance" placeholder="Enter medical allowance"
-                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                id="medicalAllowance" name="medicalAllowance" placeholder="Enter medical allowance" 
+                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2164,7 +2171,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.specialAllowance" #specialAllowance="ngModel"
                                                                 id="specialAllowance" name="specialAllowance" placeholder="Enter special allowance"
-                                                                type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !specialAllowance.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2178,7 +2185,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.otherAllowance" #otherAllowance="ngModel" id="otherAllowance"
                                                                 name="otherAllowance" placeholder="Enter other allowance (if any)"
-                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2187,7 +2194,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.lunchAllowance" #lunchAllowance="ngModel" id="lunchAllowance"
                                                                 name="lunchAllowance" placeholder="Enter lunch allowance" type="text"
-                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2198,7 +2205,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.mobileAllowance" #mobileAllowance="ngModel" id="mobileAllowance"
                                                                 name="mobileAllowance" placeholder="Enter mobile allowance" type="text"
-                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2208,7 +2215,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.grossSalary" #grossSalary="ngModel" id="grossSalary"
                                                                 name="grossSalary" placeholder="Enter gross salary" type="text"
-                                                                required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !grossSalary.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2223,7 +2230,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.totalEarnings" #totalEarnings="ngModel" id="totalEarnings"
                                                                 name="totalEarnings" placeholder="Enter total earnings" type="text"
-                                                                required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !totalEarnings.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2239,7 +2246,7 @@
                                                             <ng-select class="m-input m-input--air" name="festivalAllowance" [items]="festivalAllowanceData" bindLabel="text" bindValue="id"
                                                                 placeholder="Select Festival Allowance" [(ngModel)]="salaryDetails.festivalAllowance"
                                                                 [clearable]="false" #festivalAllowance="ngModel" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !festivalAllowance.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !festivalAllowance.valid">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2375,7 +2382,7 @@
                                                             <label for="fa">Fuel Allowance
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyFuelAllowance" #fa="ngModel" name="fa" placeholder="Enter fuel allowance"
-                                                                id="fa" class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                id="fa" class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2386,7 +2393,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyMaintenanceAllowance" #companyMaintenanceAllowance="ngModel" name="companyMaintenanceAllowance"
                                                                 placeholder="Enter maintenance allowance" id="maintenanceAllowance"
-                                                                class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2395,7 +2402,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyDriverAllowance" #companyDriverAllowance="ngModel" name="companyDriverAllowance"
                                                                 placeholder="Enter driver allowance" id="driverAllowance" class="form-control m-input m-input--air"
-                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2405,7 +2412,7 @@
                                                             <label for="companyGrossPay">Gross Pay
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyGrossPay" #companyGrossPay="ngModel" name="companyGrossPay" placeholder="Enter gross pay"
-                                                                class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                class="form-control m-input m-input--air" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2447,7 +2454,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.privateCarUsageAllowance" #privateCarUsageAllowance="ngModel" name="privateCarUsageAllowance"
                                                                 placeholder="Enter fuel allowance" id="fa" class="form-control m-input m-input--air"
-                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>

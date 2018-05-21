@@ -263,7 +263,7 @@
                                                                                 This field is required.
                                                                         </span>
                                                                         <span *ngIf="mobileNo.errors?.maxlength || mobileNo.errors?.minlength">
-                                                                                Please enter your 10 digit number
+                                                                                Please enter valid mobile number
                                                                         </span>
                                                                 </div>
                                                         </div>
@@ -276,8 +276,8 @@
                                                                 placeholder="Enter home phone" type="text" OnlyNumber="true"
                                                                 class="form-control m-input m-input--air" disabled>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
-                                                                <span *ngIf="homePhonNo.errors?.minlength">Please enter your 10 digit number</span>
-                                                                <span *ngIf="homePhonNo.errors?.maxlength">Please enter your 10 digit number</span>
+                                                                <span *ngIf="homePhonNo.errors?.minlength">Please enter valid mobile number</span>
+                                                                <span *ngIf="homePhonNo.errors?.maxlength">Please enter valid mobile number</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -512,7 +512,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
-                                                                <label for="thane">Thane
+                                                                <label for="thane">Upazila/Thana
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData"
@@ -634,7 +634,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
-                                                                <label for="permanentAddressThana">Thana
+                                                                <label for="permanentAddressThana">Upazila/Thana
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>
@@ -934,20 +934,33 @@
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result"
-                                                                    [(ngModel)]="academic.result" [clearable]="false" #result="ngModel"
+                                                                    [(ngModel)]="academic.result" [clearable]="false" #result="ngModel" (ngModelChange)="academic.marks='';academic.cgpa='';academic.scale=''"
                                                                     required disabled></ng-select>
                                                                 <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6 adn-form__group">
+                                                        <div class="col-md-6 adn-form__group" *ngIf="academic.result=='First Division/Class' || academic.result=='Second Division/Class' || academic.result=='Third Division/Class'">
                                                             <div class="form-group m-form__group">
                                                                 <label for="marks">Marks in %
                                                                 </label>
-                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %"
-                                                                    id="marks" class="form-control m-input m-input--air" disabled>
+                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" disabled>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
+                                                                <div class="form-group m-form__group">
+                                                                    <label for="marks">CGPA
+                                                                    </label>
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" disabled>
+                                                                    </div>
+                                                        </div>
+                                                        <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
+                                                                <div class="form-group m-form__group">
+                                                                    <label for="marks">Scale
+                                                                        </label>
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" disabled>
+                                                                </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -1362,7 +1375,7 @@
                                                                     type="text" OnlyNumber="true" disabled>
                                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
-                                                                        Please enter your 10 digit number
+                                                                        Please enter valid mobile number
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -1473,14 +1486,10 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="officePhoneNumber">Office Phone Number
-                                                                <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.officePhone" #officePhoneNumber="ngModel" maxlength="10"
                                                                 id="officePhoneNumber" name="officePhoneNumber" placeholder="Enter office phone no"
-                                                                type="text" OnlyNumber="true" required disabled>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
-                                                                This field is required.
-                                                            </div>
+                                                                type="text" OnlyNumber="true"  disabled>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1494,7 +1503,7 @@
                                                                 placeholder="Enter office mobile no" OnlyNumber="true" disabled>
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
                                                                 <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
-                                                                            Please enter your 10 digit number
+                                                                            Please enter valid mobile number
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -1522,7 +1531,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
-                                                                placeholder="Enter facility" type="text" disabled>
+                                                                placeholder="Enter facility" type="text" disabled required>
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1579,14 +1588,10 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="workPermitNumber">Work Permit Number
-                                                                <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input type="text" [(ngModel)]="officeInfo.workPermitNumber" #workPermitNumber="ngModel" name="workPermitNumber" placeholder="Enter work permit no"
                                                                 id="idCardNumber" maxlength="10" class="form-control m-input m-input--air"
-                                                                required disabled>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !workPermitNumber.valid ">
-                                                                This field is required.
-                                                            </div>
+                                                                 disabled>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2069,7 +2074,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.basic" #basic="ngModel" id="basic" name="basic"
-                                                                placeholder="Enter basic" type="text" required disabled>
+                                                                placeholder="Enter basic" type="text" required disabled OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !basic.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2082,7 +2087,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.hra" #houseRent="ngModel" id="houseRent" name="houseRent"
                                                                 placeholder="Enter house rent allowance (HRA)" type="text" required
-                                                                disabled>
+                                                                disabled OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !houseRent.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2096,7 +2101,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.conveyanceAllowance" #conveyanceAllowance="ngModel"
                                                                 id="conveyanceAllowance" name="conveyanceAllowance" placeholder="Enter conveyance allowance"
-                                                                type="text" disabled>
+                                                                type="text" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2105,7 +2110,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.lfa" #leaveFareAssistance="ngModel" id="leaveFareAssistance"
                                                                 name="leaveFareAssistance" placeholder="Enter leave fare assistance (LFA)"
-                                                                type="text" disabled>
+                                                                type="text" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2116,7 +2121,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.medicalAllowance" #medicalAllowance="ngModel"
                                                                 id="medicalAllowance" name="medicalAllowance" placeholder="Enter medical allowance"
-                                                                type="text" disabled>
+                                                                type="text" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2126,7 +2131,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.specialAllowance" #specialAllowance="ngModel"
                                                                 id="specialAllowance" name="specialAllowance" placeholder="Enter special allowance"
-                                                                type="text" required disabled>
+                                                                type="text" required disabled OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !specialAllowance.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2140,7 +2145,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.otherAllowance" #otherAllowance="ngModel" id="otherAllowance"
                                                                 name="otherAllowance" placeholder="Enter other allowance (if any)"
-                                                                type="text" disabled>
+                                                                type="text" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2149,7 +2154,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.lunchAllowance" #lunchAllowance="ngModel" id="lunchAllowance"
                                                                 name="lunchAllowance" placeholder="Enter lunch allowance" type="text"
-                                                                disabled>
+                                                                disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2160,7 +2165,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.mobileAllowance" #mobileAllowance="ngModel" id="mobileAllowance"
                                                                 name="mobileAllowance" placeholder="Enter mobile allowance" type="text"
-                                                                disabled>
+                                                                disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2170,7 +2175,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.grossSalary" #grossSalary="ngModel" id="grossSalary"
                                                                 name="grossSalary" placeholder="Enter gross salary" type="text"
-                                                                required disabled>
+                                                                required disabled OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !grossSalary.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2185,7 +2190,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.totalEarnings" #totalEarnings="ngModel" id="totalEarnings"
                                                                 name="totalEarnings" placeholder="Enter total earnings" type="text"
-                                                                required disabled>
+                                                                required disabled OnlyNumber="true">
                                                             <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !totalEarnings.valid ">
                                                                 This field is required.
                                                             </div>
@@ -2334,7 +2339,7 @@
                                                             <label for="fa">Fuel Allowance
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyFuelAllowance" #fa="ngModel" name="fa" placeholder="Enter fuel allowance"
-                                                                id="fa" class="form-control m-input m-input--air" disabled>
+                                                                id="fa" class="form-control m-input m-input--air" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2345,7 +2350,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyMaintenanceAllowance" #companyMaintenanceAllowance="ngModel" name="companyMaintenanceAllowance"
                                                                 placeholder="Enter maintenance allowance" id="maintenanceAllowance"
-                                                                class="form-control m-input m-input--air" disabled>
+                                                                class="form-control m-input m-input--air" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -2354,7 +2359,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyDriverAllowance" #companyDriverAllowance="ngModel" name="companyDriverAllowance"
                                                                 placeholder="Enter driver allowance" id="driverAllowance" class="form-control m-input m-input--air"
-                                                                disabled>
+                                                                disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2364,7 +2369,7 @@
                                                             <label for="companyGrossPay">Gross Pay
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.companyGrossPay" #companyGrossPay="ngModel" name="companyGrossPay" placeholder="Enter gross pay"
-                                                                class="form-control m-input m-input--air" disabled>
+                                                                class="form-control m-input m-input--air" disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2406,7 +2411,7 @@
                                                             </label>
                                                             <input type="text" [(ngModel)]="carDetails.privateCarUsageAllowance" #privateCarUsageAllowance="ngModel" name="privateCarUsageAllowance"
                                                                 placeholder="Enter fuel allowance" id="fa" class="form-control m-input m-input--air"
-                                                                disabled>
+                                                                disabled OnlyNumber="true">
                                                         </div>
                                                     </div>
                                                 </div>
