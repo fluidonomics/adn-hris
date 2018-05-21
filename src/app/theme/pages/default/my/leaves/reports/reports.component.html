@@ -26,12 +26,18 @@
                         <div class="tab-pane active show" id="reportsPanel" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="chart1"></div>
-                                    <div class="chart2"></div>
+                                    <div id="chartEmployee" class="chartEmployee">
+                                        <h5>Leaves taken by Month (All Employees)</h5>
+                                        <div class="d3-chart" #chart></div>
+                                    </div>
+                                    <div id="chartLeaves" class="chartLeaves">
+                                        <h5>Leaves taken by Leave Type</h5>
+                                        <div class="d3-chart" #leaveChart></div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 m--margin-bottom-10">
                                             <div class="m-dropdown m-dropdown--inline  m-dropdown--arrow" data-dropdown-toggle="click">
                                                 <a href="#" class="m-dropdown__toggle btn btn-success dropdown-toggle">
                                                     Team On Leave
@@ -42,47 +48,11 @@
                                                         <div class="m-dropdown__body">
                                                             <div class="m-dropdown__content">
                                                                 <ul class="m-nav">
-                                                                    <li class="m-nav__section m-nav__section--first">
-                                                                        <span class="m-nav__section-text">
-                                                                            Section
-                                                                        </span>
-                                                                    </li>
                                                                     <li class="m-nav__item">
                                                                         <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-share"></i>
                                                                             <span class="m-nav__link-text">
-                                                                                Activity
+                                                                                This Week
                                                                             </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Messages
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                FAQ
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Support
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" routerLink="/logout">
-                                                                            Logout
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -101,47 +71,11 @@
                                                         <div class="m-dropdown__body">
                                                             <div class="m-dropdown__content">
                                                                 <ul class="m-nav">
-                                                                    <li class="m-nav__section m-nav__section--first">
-                                                                        <span class="m-nav__section-text">
-                                                                            Section
-                                                                        </span>
-                                                                    </li>
                                                                     <li class="m-nav__item">
                                                                         <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-share"></i>
                                                                             <span class="m-nav__link-text">
-                                                                                Activity
+                                                                                All
                                                                             </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Messages
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                FAQ
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="" class="m-nav__link">
-                                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Support
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                                    <li class="m-nav__item">
-                                                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" routerLink="/logout">
-                                                                            Logout
                                                                         </a>
                                                                     </li>
                                                                 </ul>

@@ -40,7 +40,6 @@ import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leave
 import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
 
 
-
 @NgModule({
     imports: [
         CommonModule,
