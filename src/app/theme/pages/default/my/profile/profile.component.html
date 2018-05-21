@@ -1,4 +1,50 @@
 <div class="m-content">
+    <div class="row" *ngIf="profileProcess.isHrSendBack">
+                <div class="col-md-12">
+                    <div class="m-portlet m-portlet">
+                        <div class="m-portlet__body">
+                            <div class="m-widget4">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__ext">
+                                                    <span class="m-widget4__icon m--font-brand">
+                                                        <i class="fa fa-info"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget4__info">
+                                                    <span class="m-widget4__text">
+                                                        <strong>Status: </strong>
+                                                    </span>
+                                                    <span class="m-widget4__text">
+                                                          Personal Profile has been <strong class="has-danger">Sent Back</strong> by HR. <br>Please re-submit making the changes. 
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__ext">
+                                                    <span class="m-widget4__icon m--font-brand">
+                                                        <i class="fa fa-comments"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget4__info">
+                                                    <span class="m-widget4__text">
+                                                        <strong>HR's Feedback: </strong>
+                                                    </span>
+                                                    <span class="m-widget4__text">
+                                                        {{profileProcess.hrSendbackComment}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
@@ -104,19 +150,24 @@
                                                     <label for="gender">
                                                     Gender
                                                     </label>
-                                                    <div class="m-radio-inline">
-                                                        <label class="m-radio">
-                                                        <input name="gender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Male
-                                                        <span></span>
-                                                        </label>
-                                                        <label class="m-radio">
-                                                        <input name="gender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Female
-                                                        <span></span>
-                                                        </label>
-                                                        <label class="m-radio">
-                                                        <input name="gender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Other
-                                                        <span></span>
-                                                        </label>
+                                                    <div ngModelGroup="genderGroup" #genderGroup="ngModelGroup" onlyOneRequired>
+                                                        <div class="m-radio-inline">
+                                                            <label class="m-radio">
+                                                            <input name="mgender" id="Male" type="radio" value="Male" [(ngModel)]="personalInfo.gender" #mgender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Male
+                                                            <span></span>
+                                                            </label>
+                                                            <label class="m-radio">
+                                                            <input name="fgender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Female
+                                                            <span></span>
+                                                            </label>
+                                                            <label class="m-radio">
+                                                            <input name="ogender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"> Other
+                                                            <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && genderGroup.errors?.onlyOneRequired">
+                                                            This field is required.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,15 +189,16 @@
                                                     <label for="mobileNo">Mobile No.
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true" minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                    <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !mobileNo.valid">
-                                                        This field is required.
+                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true" minlength=10 minlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
+                                                        <span *ngIf="mobileNo.errors?.required">
+                                                                This field is required.
+                                                        </span>
+                                                        <span *ngIf="mobileNo.errors?.maxlength || mobileNo.errors?.minlength">
+                                                                Please enter your 10 digit number
+                                                        </span>
                                                     </div>
                                                 </div>
-                                            <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
-                                                <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
-                                                <span *ngIf="mobileNo.errors?.maxlength">Please enter your 10 digit number</span>
-                                            </div>
                                             </div>
                                             <div class="col-md-6 adn-form__group">
                                                 <div class="form-group m-form__group">
@@ -166,10 +218,10 @@
                                                     <label for="personalEmail">Personal Email
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" lowerCase (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" placeholder="Enter email" type="email" email  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" placeholder="Enter email" type="email"  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     <div class="form-control-feedback has-danger">
                                                         <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
-                                                        <span *ngIf="!personalEmail.errors?.required && personalEmail.errors?.email">Personal Email not valid.</span> 
+                                                        <span *ngIf="personalEmail.errors?.pattern">Personal Email not valid.</span> 
                                                         <span *ngIf="personalEmail.errors?.emailExists">Email Address already exists.</span> 
                                                     </div>
                                                 </div>
@@ -360,7 +412,7 @@
                                                         </label>
                                                         <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressthane.valid ">
-                                                        This field is required.
+                                                           This field is required.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -369,9 +421,14 @@
                                                         <label for="currentAddressPostCode">Post Code
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                        <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressPostCode.valid ">
-                                                        This field is required.
+                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" minlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
+                                                                <span *ngIf="currentAddressPostCode.errors?.required">
+                                                                        This field is required.
+                                                                </span>    
+                                                                <span *ngIf="currentAddressPostCode.errors?.maxlength || currentAddressPostCode.errors?.minlength">
+                                                                        Please enter your 6 digit number
+                                                                </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -439,7 +496,7 @@
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDistrict?.selectedItems[0]?.label}}</span>
                                                         <ng-container *ngIf="!address.isSameAsCurrent">
-                                                            <ng-select  class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>
+                                                            <ng-select  class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)" [items]="permanentAddressDistrictData" bindLabel="locationName" bindValue="_id"  placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id" [clearable]="false" #permanentAddressDistrict="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>
                                                             <div  class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDistrict.valid ">
                                                             This field is required.
                                                             </div>
@@ -455,7 +512,7 @@
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>  
                                                         <ng-container *ngIf="!address.isSameAsCurrent">
-                                                            <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>                                              
+                                                            <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName" bindValue="_id" dropdownPosition="top" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>                                              
                                                             <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
                                                             This field is required.
                                                             </div>
@@ -469,9 +526,14 @@
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
                                                         <ng-container *ngIf="!address.isSameAsCurrent">
-                                                            <input type="text"  maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                            <div  class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressPostCode.valid ">
-                                                            This field is required.
+                                                            <input type="text"  maxlength="6" minlength="6" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                            <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
+                                                                    <span *ngIf="permanentAddressPostCode.errors?.required">
+                                                                            This field is required.
+                                                                    </span>    
+                                                                    <span *ngIf="permanentAddressPostCode.errors?.maxlength || permanentAddressPostCode.errors?.minlength">
+                                                                            Please enter your 6 digit number
+                                                                    </span>
                                                             </div>
                                                         </ng-container>   
                                                     </div>
@@ -563,43 +625,50 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
-                                                            <label for="txtBirthRegistrationNumber">
-                                                            Birth Registration Number
-                                                            </label>
-                                                            <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                            <div class="col-md-6 adn-form__group">
-                                                                <div class="input-group-btn">
-                                                                <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;" (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber ? 'not-allowed' : ''">Upload</button>
-                                                                <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" #birthRegistrationNumber  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber">
-                                                                <button type="button" class="btn btn-secondary" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
-                                                                <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
+                                                        <div class="col-md-6 adn-form__group">
+                                                            <div class="form-group m-form__group">
+                                                                <label for="txtBirthRegistrationNumber">
+                                                                Birth Registration Number
+                                                                </label>
+                                                                <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                                <div class="col-md-6 adn-form__group">
+                                                                    <div class="input-group-btn">
+                                                                    <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;" (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber ? 'not-allowed' : ''">Upload</button>
+                                                                    <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" #birthRegistrationNumber  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber">
+                                                                    <button type="button" class="btn btn-secondary" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
+                                                                    <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 adn-form__group">
+                                                            <div class="form-group m-form__group">
+                                                                <label for="txtPassportNumber">
+                                                                Passport Number
+                                                                </label>
+                                                                <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                                <div class="col-md-6 adn-form__group">
+                                                                    <div class="input-group-btn">
+                                                                    <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" (click)="passportNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber ? 'not-allowed' : ''">Upload</button>
+                                                                    <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" #passportNumber [uploadInput]="uploadInput"  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber">
+                                                                    <button type="button" class="btn btn-secondary" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
+                                                                    <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
+                                                                    </div>
+                                                        
+                                                                </div>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 adn-form__group">
+                                                            <div class="form-group m-form__group">
+                                                                <div class="has-danger" *ngIf="fdocuments.submitted && documentsVal.errors?.onlyOneRequired">
+                                                                        * Please upload at least one document.
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
-                                                            <label for="txtPassportNumber">
-                                                            Passport Number
-                                                            </label>
-                                                            <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                            <div class="col-md-6 adn-form__group">
-                                                                <div class="input-group-btn">
-                                                                <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" (click)="passportNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber ? 'not-allowed' : ''">Upload</button>
-                                                                <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" #passportNumber [uploadInput]="uploadInput"  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber">
-                                                                <button type="button" class="btn btn-secondary" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
-                                                                <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
-                                                                </div>
-                                                    
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-control-feedback has-danger" *ngIf="fdocuments.submitted && documentsVal.errors?.onlyOneRequired">
-                                                        please enter at least one document.
-                                                </div>
                                             </div>
                                         <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
                                                 <button type="submit"  class="btn btn-success">{{documents._id ? 'Update':'Save'}}</button>
@@ -1170,7 +1239,12 @@
                                         <div class="form-group m-form__group">
                                             <label for="officeMobileNumber">Office Mobile Number
                                             </label>
-                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" minlength="10" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
+                                                <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
+                                                        Please enter your 10 digit number
+                                                </span>
+                                            </div>
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -1178,10 +1252,10 @@
                                             <label for="officeEmailId">Office Email ID
                                                 <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input  [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail)" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" required disabled>
+                                            <input  [(ngModel)]="officeInfo.officeEmail"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail)" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" required disabled>
                                             <div class="form-control-feedback has-danger">
                                                 <span *ngIf="fofficeInfo.submitted && officeEmail.errors?.required">This field is required.</span>
-                                                <span *ngIf="!officeEmail.errors?.required && officeEmail.errors?.email">Offcie Email not valid.</span> 
+                                                <span *ngIf="officeEmail.errors?.pattern">Offcie Email not valid.</span> 
                                                 <span *ngIf="officeEmail.errors?.emailExists">Email Address already exists.</span> 
                                             </div>
                                         </div>

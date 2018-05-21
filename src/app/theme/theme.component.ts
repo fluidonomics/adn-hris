@@ -18,12 +18,7 @@ export class ThemeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
-            .then(result => {
-                Helpers.setLoading(false);
-                // optional js to be loaded once
-                this._script.load('head', 'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js');
-            });
+       
         this._router.events.subscribe((route) => {
             if (route instanceof NavigationStart) {
                 (<any>mLayout).closeMobileAsideMenuOffcanvas();

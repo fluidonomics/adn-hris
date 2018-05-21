@@ -212,20 +212,25 @@
                                                             <label for="gender">
                                                                 Gender
                                                             </label>
-                                                            <div class="m-radio-inline">
-                                                                <label class="m-radio">
-                                                                    <input name="gender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel"
-                                                                        disabled> Male
-                                                                    <span></span>
-                                                                </label>
-                                                                <label class="m-radio">
-                                                                    <input name="gender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" disabled> Female
-                                                                    <span></span>
-                                                                </label>
-                                                                <label class="m-radio">
-                                                                    <input name="gender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" disabled> Other
-                                                                    <span></span>
-                                                                </label>
+                                                            <div ngModelGroup="genderGroup" #genderGroup="ngModelGroup" onlyOneRequired>
+                                                                <div class="m-radio-inline">
+                                                                    <label class="m-radio">
+                                                                        <input name="mgender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel"
+                                                                            disabled> Male
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="m-radio">
+                                                                        <input name="fgender" id="Female" type="radio" value="Female" [(ngModel)]="personalInfo.gender" #fgender="ngModel" disabled> Female
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="m-radio">
+                                                                        <input name="ogender" id="Other" type="radio" value="Other" [(ngModel)]="personalInfo.gender" #ogender="ngModel" disabled> Other
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && genderGroup.errors?.onlyOneRequired">
+                                                                This field is required.
                                                             </div>
                                                         </div>
                                                     </div>
@@ -253,13 +258,14 @@
                                                                 minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo"
                                                                 maxlength="10" aria-describedby="mobileNo" aria-invalid="true"
                                                                 class="form-control m-input m-input--air" required disabled>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !mobileNo.valid">
-                                                                This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
-                                                            <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
-                                                            <span *ngIf="mobileNo.errors?.maxlength">Please enter your 10 digit number</span>
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
+                                                                        <span *ngIf="mobileNo.errors?.required">
+                                                                                This field is required.
+                                                                        </span>
+                                                                        <span *ngIf="mobileNo.errors?.maxlength || mobileNo.errors?.minlength">
+                                                                                Please enter your 10 digit number
+                                                                        </span>
+                                                                </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -283,11 +289,11 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail"
-                                                                (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" lowerCase
-                                                                placeholder="Enter email" type="email" email required disabled>
+                                                                (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                                                placeholder="Enter email" type="email" required disabled>
                                                             <div class="form-control-feedback has-danger">
                                                                 <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
-                                                                <span *ngIf="!personalEmail.errors?.required && personalEmail.errors?.email">Personal Email not valid.</span>
+                                                                <span *ngIf="personalEmail.errors?.pattern">Personal Email not valid.</span>
                                                                 <span *ngIf="personalEmail.errors?.emailExists">Email Address already exists.</span>
                                                             </div>
                                                         </div>
@@ -524,14 +530,19 @@
                                                                 <label for="currentAddressPostCode">Post Code
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air"
+                                                                <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" minlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air"
                                                                     placeholder="Enter Post Code" id="currentAddressPostCode"
                                                                     name="currentAddressPostCode" OnlyNumber="true" required
                                                                     disabled
                                                                     disabled>
-                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressPostCode.valid ">
-                                                                    This field is required.
-                                                                </div>
+                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
+                                                                            <span *ngIf="currentAddressPostCode.errors?.required">
+                                                                                    This field is required.
+                                                                            </span>    
+                                                                            <span *ngIf="currentAddressPostCode.errors?.maxlength || currentAddressPostCode.errors?.minlength">
+                                                                                    Please enter your 6 digit number
+                                                                            </span>
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -645,13 +656,18 @@
                                                                 </label>
                                                                 <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
-                                                                    <input type="text" maxlength="6 " [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code"
+                                                                    <input type="text" maxlength="6" minlength="6" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code"
                                                                         class="form-control m-input m-input--air" id="permanentAddressPostCode"
                                                                         name="permanentAddressPostCode" OnlyNumber="true" required
                                                                         disabled>
-                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressPostCode.valid ">
-                                                                        This field is required.
-                                                                    </div>
+                                                                        <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
+                                                                                <span *ngIf="permanentAddressPostCode.errors?.required">
+                                                                                        This field is required.
+                                                                                </span>    
+                                                                                <span *ngIf="permanentAddressPostCode.errors?.maxlength || permanentAddressPostCode.errors?.minlength">
+                                                                                        Please enter your 6 digit number
+                                                                                </span>
+                                                                        </div>
                                                                 </ng-container>
                                                             </div>
                                                         </div>
@@ -1476,6 +1492,11 @@
                                                             <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
                                                                 maxlength="10" type="text" class="form-control m-input m-input--air"
                                                                 placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
+                                                                <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
+                                                                            Please enter your 10 digit number
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
@@ -1484,11 +1505,11 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail)" placeholder="Enter office email id"
-                                                                name="officeEmailId" type="text" class="form-control m-input m-input--air"
+                                                                name="officeEmailId" type="text" class="form-control m-input m-input--air" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                                                 required disabled>
                                                             <div class="form-control-feedback has-danger">
                                                                 <span *ngIf="fofficeInfo.submitted && officeEmail.errors?.required">This field is required.</span>
-                                                                <span *ngIf="!officeEmail.errors?.required && officeEmail.errors?.email">Offcie Email not valid.</span>
+                                                                <span *ngIf="officeEmail.errors?.pattern">Offcie Email not valid.</span>
                                                                 <span *ngIf="officeEmail.errors?.emailExists">Email Address already exists.</span>
                                                             </div>
                                                         </div>
