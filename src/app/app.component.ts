@@ -4,7 +4,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from "./helpers";
 import { AuthService } from "./base/_services/authService.service";
 import { environment } from '../environments/environment';
-
+import { ScriptLoaderService } from './_services/script-loader.service';
 
 @Component({
     selector: 'body',
@@ -17,12 +17,17 @@ export class AppComponent implements OnInit {
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         public authService: AuthService,
-        private _router: Router) {
+        private _router: Router,
+        private _script: ScriptLoaderService,) {
         if (isPlatformBrowser(this.platformId)) {
             environment.api_base.resetPasswordCallback = window.location.origin + "/reset-password";
             // this.authService.init(environment.api_base);
         }
         this.authService.init(environment.api_base);
+        this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
+        .then(result => {
+            //this._script.load('head', 'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js');
+        });
     }
 
 

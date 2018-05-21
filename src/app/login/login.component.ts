@@ -6,7 +6,7 @@ import { ScriptLoaderService } from "../_services/script-loader.service";
 import { AuthService } from "../base/_services/authService.service";
 import { Helpers } from "../helpers";
 import { CommonService } from "../base/_services/common.service";
-import { StylesCompileDependency } from "@angular/compiler";
+
 
 
 @Component({
@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
             { name: 'keywords', content: 'Login.' },
             { name: 'description', content: 'Login.' }
         ]);
+        // setTimeout(function(){window.location.reload()}, 1000);
+        // clearTimeout();
     }
 
 

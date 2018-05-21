@@ -11,8 +11,8 @@ export const currency = [
 
 export const nationality = [
     {
-        "id": "Bangladesh",
-        "text": "Bangladesh",
+        "id": "Bangladeshi",
+        "text": "Bangladeshi",
     },
     {
         "id": "Other",

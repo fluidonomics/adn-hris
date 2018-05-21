@@ -15,6 +15,8 @@ import { ForgetPasswordComponent } from './password/forget-password/forget-passw
 import { ResetPasswordComponent } from "./password/reset-password/reset-password.component";
 import { AccessDeniedComponent } from './accessDenied/accessDenied.component';
 
+
+
 import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
 
@@ -28,7 +30,7 @@ import { BaseModule } from "./base/base.module"
         AppComponent,
         ForgetPasswordComponent,
         ResetPasswordComponent,
-        AccessDeniedComponent,
+        AccessDeniedComponent
     ],
     imports: [
         BaseModule,
