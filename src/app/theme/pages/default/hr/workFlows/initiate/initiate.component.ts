@@ -96,7 +96,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        if(this.filterSearch.grades.length > 0 && this.filterSearch.departments.length> 0 )
+        if(this.filterSearch.grades && this.filterSearch.departments)
         {
         this._hrService.getAllEmployee()
             .subscribe(

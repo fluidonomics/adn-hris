@@ -71,7 +71,7 @@
                                             {{i+1}}
                                        </th> 
                                         <td>
-                                            <textarea style="resize:none" name="kraOne" id="kraOne" [(ngModel)]="kras.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                            <textarea name="kraOne" id="kraOne" [(ngModel)]="kras.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
                                         </td>
                                         <td>
                                             <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="text"  bindValue="id" placeholder="Select KRA Category" [(ngModel)]="kras.category_id" [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled"></ng-select>
