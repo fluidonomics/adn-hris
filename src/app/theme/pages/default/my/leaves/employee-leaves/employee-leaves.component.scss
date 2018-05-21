@@ -1,0 +1,24 @@
+app-my-leaves-employee-leaves {
+    flex: 1;
+
+    .nav {
+        &.nav-tabs {
+            a {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .session {
+        .dropdown {
+            .dropdown-menu {
+                .dropdown-item {
+                    i {
+                        float: right;
+                        padding-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

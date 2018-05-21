@@ -11,6 +11,8 @@ export class UtilityService {
 
 
     subtractDates(startDate: string, endDate: string) {
+        if (startDate && endDate && startDate === endDate)
+            return 1;
         let difference = Math.ceil((Date.parse(endDate) - Date.parse(startDate)) / (1000 * 3600 * 24));
         return isNaN(difference) ? 0 : difference;
     }
