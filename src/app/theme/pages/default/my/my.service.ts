@@ -315,9 +315,24 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    grantLeaveAllEmployee(grantLeave: any) {
+        let url = "leave/grantLeaveAllEmployee";
+        return this.authService.post(url, grantLeave).map(this.extractData).catch(this.handleError);
+    }
+
+    grantLeaveByDepartment(grantLeave: any) {
+        let url = "leave/grantLeaveByDepartment";
+        return this.authService.post(url, grantLeave).map(this.extractData).catch(this.handleError);
+    }
+
     grantLeaveByEmployee(grantLeave: any) {
         let url = "leave/grantLeaveByEmployee";
         return this.authService.post(url, grantLeave).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeLeaveBalance(empId: number) {
+        let url = "leave/getEmployeeLeaveBalance?id=" + empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {

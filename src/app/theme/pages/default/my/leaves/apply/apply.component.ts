@@ -5,6 +5,7 @@ import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
+import { UserData } from '../../../../../../base/_interface/auth.model';
 declare var mApp;
 
 
@@ -22,10 +23,10 @@ export class ApplyComponent implements OnInit {
     supervisorDetails: any;
     leaveTypesDetails: any;
     emailDetails: any;
-    currentEmpId: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
+    currentUser: UserData;
 
     constructor(
         private _myService: MyService,
@@ -43,11 +44,10 @@ export class ApplyComponent implements OnInit {
     InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
-        this._authService.validateToken().subscribe(
-            res => {
-                this.currentEmpId = this._authService.currentUserData._id;
-            });
+        this.currentUser = this._authService.atCurrentUserData;
+        this.getEmployeeLeaveBalance();
     }
+
     getLeaveTypes() {
         this._myService.getLeaveType().subscribe(
             res => {
@@ -82,6 +82,15 @@ export class ApplyComponent implements OnInit {
                 console.log(error);
             });
     }
+
+    getEmployeeLeaveBalance() {
+        this._myService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                // this.leaveapplication.balance = res.json() || 0;
+            }
+        })
+    }
+
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
@@ -104,8 +113,8 @@ export class ApplyComponent implements OnInit {
             _postData.reason = data.reason;
             _postData.contactDetails = data.contactDetail;
             _postData.ccTo = data.ccTo;
-            _postData.emp_id = this.currentEmpId;
-            _postData.createdBy = this.currentEmpId;
+            _postData.emp_id = this.currentUser._id;
+            _postData.createdBy = this.currentUser._id;
 
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
@@ -138,6 +147,7 @@ export class ApplyComponent implements OnInit {
         this.areDaysValid = true;
         this.isBalanceValid = true;
         this.isAttachmentRequired = false;
+        this.getEmployeeLeaveBalance();
     }
 
     calculateDays(e: any, type: string) {

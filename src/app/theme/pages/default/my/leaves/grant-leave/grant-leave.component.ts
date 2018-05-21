@@ -97,25 +97,62 @@ export class GrantLeaveComponent implements OnInit {
             return;
 
         if (form.valid) {
+            debugger;
             switch (this.currentCategory) {
                 case 'all': {
+                    this.utilityService.showLoader('#fGrantLeave');
+                    let body = {
+                        "leave_type": this.grantLeave.leaveType,
+                        "balance": this.grantLeave.days,
+                        "updatedBy": this.employee._id,
+                        "createdBy": this.employee._id
+                    }
+                    this.myApiService.grantLeaveAllEmployee(body).subscribe(res => {
+                        if (res.ok) {
+                            this.utilityService.hideLoader('#fGrantLeave');
+                            swal("Leaves Granted", "", "success");
+                            this.resetForm(form);
+                        }
+                    },
+                        error => {
+                            this.utilityService.hideLoader('#fGrantLeave');
+                        });
                     break;
                 }
 
                 case 'department': {
-                    debugger;
+                    this.utilityService.showLoader('#fGrantLeave');
+                    let body = {
+                        "department_id": this.grantLeave.department,
+                        "leave_type": this.grantLeave.leaveType,
+                        "balance": this.grantLeave.days,
+                        "updatedBy": this.employee._id,
+                        "createdBy": this.employee._id
+                    }
+                    this.myApiService.grantLeaveByDepartment(body).subscribe(res => {
+                        if (res.ok) {
+                            this.utilityService.hideLoader('#fGrantLeave');
+                            swal("Leaves Granted", "", "success");
+                            this.resetForm(form);
+                        }
+                    },
+                        error => {
+                            this.utilityService.hideLoader('#fGrantLeave');
+                        });
                     break;
                 }
 
                 case 'single': {
                     this.utilityService.showLoader('#fGrantLeave');
                     let body = {
-                        "emp_id": this.grantLeave.employee._id,
+                        "emp_id": this.grantLeave.employee,
                         "leave_type": this.grantLeave.leaveType,
                         "lapseDate": new Date(),
                         "balance": this.grantLeave.days,
                         "updatedBy": this.employee._id,
-                        "createdBy": this.employee._id
+                        "createdBy": this.employee._id,
+                        "createdDate": new Date(),
+                        "updatedDate": new Date()
                     }
                     this.myApiService.grantLeaveByEmployee(body).subscribe(res => {
                         if (res.ok) {
