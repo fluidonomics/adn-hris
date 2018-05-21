@@ -1,4 +1,4 @@
-<div class="m-content" *ngIf="currentUser?.roles.indexOf('HR') == -1 && currentUser?.roles.indexOf('Supervisor') == -1">
+<div class="m-content" *ngIf="currentUser?.roles.indexOf('HR') > -1 && currentUser?.roles.indexOf('Supervisor') > -1">
     <div class="row">
         <!--begin::Leave Balance-->
         <div class="col-xl-4">
@@ -107,16 +107,16 @@
     </div>
 </div>
 
-<div class="m-content hr-leave-dashboard" *ngIf="currentUser?.roles.indexOf('HR') > -1 || currentUser?.roles.indexOf('Supervisor') > -1">
+<div class="m-content hr-leave-dashboard" *ngIf="currentUser?.roles.indexOf('HR') == -1 || currentUser?.roles.indexOf('Supervisor') == -1">
     <div class="row">
         <div class="col-xl-12">
             <div class="m-accordion m-accordion--default m-accordion--solid m-accordion--section  m-accordion--toggle-arrow" id="m_accordion_7"
                 role="tablist">
 
                 <!--begin::Item // Need to loop this -->
-                <div class="m-accordion__item">
-                    <div class="m-accordion__item-head acc_custom collapsed" role="tab" id="m_accordion_7_item_1_head" data-toggle="collapse"
-                        href="#m_accordion_7_item_1_body" aria-expanded="false">
+                <div class="m-accordion__item" *ngFor="let leave of leaveList;let i=index">
+                    <div class="m-accordion__item-head acc_custom collapsed" role="tab" attr.id="m_accordion_7_item_{{i+1}}_head" data-toggle="collapse"
+                        attr.href="#m_accordion_7_item_{{i+1}}_body" aria-expanded="false">
                         <div class="m-accordion__item-title">
                             <div class="row">
                                 <div class="col-xl-4">
@@ -124,25 +124,25 @@
                                         <img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
                                     </div>
                                     <div class="d-inline-block">
-                                        <span class="emp-list-name d-block">Shaik Bhanu</span>
-                                        <span class="emp-list-empid d-block">#PP143</span>
+                                        <span class="emp-list-name d-block">{{leave.emp_name}}</span>
+                                        <span class="emp-list-empid d-block">#PP{{leave.emp_id}}</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-4">
                                     <div class="d-inline-block align-top">
-                                        <span class="leave-type d-block">PL: 2 Days</span>
-                                        <span class="leave-desc d-block">Going home</span>
+                                        <span class="leave-type d-block">PL: {{leave.days}} Days</span>
+                                        <span class="leave-desc d-block">{{leave.remark}}</span>
                                     </div>
                                     <div class="d-inline-block">
-                                        <span class="emp-list-leavedate">27 Apr 2018 to 28 Apr 2018</span>
+                                        <span class="emp-list-leavedate">{{leave.fromDate | date:'dd MMM yy'}} to {{leave.toDate | date:'dd MMM yy'}}</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-4">Currently with: Vijay</div>
+                                <div class="col-xl-4">Currently with: {{leave.applyTo_name}}</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="m-accordion__item-body collapse" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head"
+                    <div class="m-accordion__item-body collapse" attr.id="m_accordion_7_item_{{i+1}}_body" role="tabpanel" attr.aria-labelledby="m_accordion_7_item_{{i+1}}_head"
                         data-parent="#m_accordion_7">
                         <div class="m-accordion__item-content">
                             <!--Need to move this to separate child componenet-->
@@ -152,22 +152,22 @@
                                         <td>
                                             <span class="label">Leave Type:</span>Priviledge Leave</td>
                                         <td>
-                                            <span class="label">Days:</span>2</td>
+                                            <span class="label">Days:</span>{{leave.days}}</td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="label">From:</span>27 Apr 2018 - Session 1</td>
+                                            <span class="label">From:</span>{{leave.fromDate | date:'dd MMM yy'}}</td>
                                         <td>
-                                            <span class="label">To:</span>28 Apr 2018 - Session 2</td>
+                                            <span class="label">To:</span>{{leave.toDate | date:'dd MMM yy'}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="leave_reason_col">
-                                            <span class="label">Reason:</span>Going home</td>
+                                            <span class="label">Reason:</span>{{leave.remark}}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <app-leave-forward></app-leave-forward>
+                            <app-leave-forward [leave]="leave"></app-leave-forward>
                         </div>
                     </div>
                 </div>

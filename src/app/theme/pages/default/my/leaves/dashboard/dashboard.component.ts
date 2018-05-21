@@ -4,7 +4,9 @@ import { FormBuilder } from "@angular/forms";
 
 import { LeaveForwardComponent } from './leave-forward/leave-forward.component';
 
+import { MyService } from "../../my.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 
 @Component({
@@ -20,8 +22,25 @@ export class DashboardComponent implements OnInit {
     employeeList: any;
     currentUser: UserData;
 
-    constructor(public authService: AuthService) {
+    leaveList: any;
 
+    constructor(private _myService: MyService, public authService: AuthService, private utilityService: UtilityService) {
+      this._myService.getHRLeaveDetails().subscribe(
+          res => {
+              if (res.ok) {
+                  this.leaveList = res.json().data;
+                  if (this.leaveList) {
+                      this.leaveList = this.leaveList.map(leave => {
+                          leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
+                          return leave;
+                      });
+                  }
+                  console.log(this.leaveList);
+              }
+          },
+          error => {
+              console.error(error);
+          });
     }
 
     ngOnInit() {
@@ -81,4 +100,5 @@ export class DashboardComponent implements OnInit {
             }
         ]
     }
+
 }

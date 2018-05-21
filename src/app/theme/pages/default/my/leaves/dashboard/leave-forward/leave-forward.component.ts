@@ -12,15 +12,15 @@ import { AuthService } from "../../../../../../../base/_services/authService.ser
 })
 export class LeaveForwardComponent implements OnInit {
 
-    constructor(public authService: AuthService, private router: Router) {
+  @Input() leave: any;
 
+    constructor(public authService: AuthService, private router: Router) {
     }
 
     ngOnInit() {
     }
 
-    navigateToDetails(event, leave) {
-      this.router.navigate(['my/leaves/dashboard/details/1']);
-        //this.router.navigate(['my/leaves/dashboard/details/' + leave._id]);
+    navigateToDetails(event) {
+      this.router.navigate(['my/leaves/dashboard/details/'+this.leave._id]);
     }
 }
