@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LayoutModule } from '../../../layouts/layout.module';
@@ -52,6 +53,7 @@ import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component'
         NgSelectModule,
         NgUploaderModule,
         BsDatepickerModule.forRoot(),
+        ModalModule.forRoot(),
         BaseModule
     ], declarations: [
         MyComponent,
