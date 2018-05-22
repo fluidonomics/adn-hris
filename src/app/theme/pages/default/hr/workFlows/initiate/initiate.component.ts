@@ -56,19 +56,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
     }
 
-    // loadDivision() {
-    //     this._commonService.getDivision()
-    //         .subscribe(
-    //         res => {
-    //             if (res.ok) {
-    //                 this.employeeData = [];
-    //                 this.divisionData = res.json();
-    //             }
-    //         },
-    //         error => {
-    //         });
-    // }
-
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
@@ -81,7 +68,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             error => {
             });
     }
-    //load Grade Dropdown By managementType_id  && employmentType_id
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
@@ -96,14 +82,14 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        if(this.filterSearch.grades && this.filterSearch.departments)
+        if(this.filterSearch.grades || this.filterSearch.departments)
         {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
-                    if(this.filterSearch.departments &&  this.filterSearch.departments.length>0)
+                    if(this.filterSearch.departments && this.filterSearch.departments.length>0)
                     {
                       data = data.filter(obj => obj.department_id == this.filterSearch.departments.includes(obj.department_id));
                     }
