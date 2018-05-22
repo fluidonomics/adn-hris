@@ -340,6 +340,26 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getLeaveHolidays() {
+        let url = "leave/getLeaveHolidays";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveLeaveHoliday(leaveHoliday: any) {
+        let url = "leave/addLeaveHoliday";
+        return this.authService.post(url, leaveHoliday).map(this.extractData).catch(this.handleError);
+    }
+
+    updateLeaveHoliday(leaveHoliday: any) {
+        let url = "leave/updateLeaveHoliday";
+        return this.authService.post(url, leaveHoliday).map(this.extractData).catch(this.handleError);
+    }
+
+    removeLeaveHoliday(leaveHoliday: any) {
+        let url = "leave/removeLeaveHoliday";
+        return this.authService.post(url, leaveHoliday).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

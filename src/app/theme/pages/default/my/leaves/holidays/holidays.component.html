@@ -177,149 +177,145 @@
             </div>
 
             <ng-template #template>
-              <div class="modal-header">
-                <h4 class="modal-title pull-left">Add Holiday</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form  class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #faddholiday="ngForm">
-  								<div class="form-body">
-  									<div class="row">
-  										<div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-  												<label for="form_control_1">Holiday Occasion</label>
-  												<span class="required" aria-required="true"> * </span>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Add Holiday</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #faddholiday="ngForm" (submit)="onAddHoliday(faddholiday)">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">Holiday Occasion</label>
+                                        <span class="required" aria-required="true"> * </span>
 
-                          <input type="text" class="form-control  m-input m-input--air name-input" name="occasion" id="occasion" [(ngModel)]="faddholiday.occasion" #occasion="ngModel" required>
-        								  <div class="form-control-feedback has-danger" *ngIf="!occasion.valid">
-        									 <span *ngIf="faddholiday.submitted && !occasion.valid">This field is required.</span>
-        								  </div>
+                                        <input type="text" class="form-control  m-input m-input--air name-input" name="occasion" id="occasion" [(ngModel)]="addholiday.occasion"
+                                            #occasion="ngModel" required>
+                                        <div class="form-control-feedback has-danger" *ngIf="!occasion.valid">
+                                            <span *ngIf="faddholiday.submitted && !occasion.valid">This field is required.</span>
+                                        </div>
 
-  											</div>
-  										</div>
-  									</div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-              						<label for="form_control_1">Restricted</label>
-            							<input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="faddholiday.isRestricted">
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">Restricted</label>
+                                        <input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="addholiday.isRestricted">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">General</label>
+                                        <input type="checkbox" name="isGeneral" id="isGeneral" [(ngModel)]="addholiday.isGeneral">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="date">Date
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="addholiday.date" bsDatepicker
+                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel"
+                                            required>
+                                        <div class="form-control-feedback has-danger" *ngIf="faddholiday.submitted && !date.valid">
+                                            This field is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-              						<label for="form_control_1">General</label>
-            							<input type="checkbox" name="isGeneral" id="isGeneral" [(ngModel)]="faddholiday.isGeneral">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="m-form__actions">
+                                        <button class="btn btn-success submitForm" type="button" id="submitForm">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-                          <label for="date">Date
-                            <span class="required" aria-required="true"> * </span>
-                          </label>
-                          <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="faddholiday.date" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel" required>
-                          <div class="form-control-feedback has-danger" *ngIf="faddholiday.submitted && !date.valid">
-                            This field is required.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                  </div>
-                  <div class="form-actions">
-      						 <div class="row">
-      							<div class="col-md-12">
-      							   <div class="m-form__actions">
-      								  <button class="btn btn-success submitForm" type="button" id="submitForm" (click)="onAddHoliday(faddholiday)">Submit</button>
-      							   </div>
-      							</div>
-      						 </div>
-                 </div>
-                </form>
-              </div>
+                    </form>
+                </div>
             </ng-template>
 
             <ng-template #templateEdit>
-              <div class="modal-header">
-                <h4 class="modal-title pull-left">Edit Holiday</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form  class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #feditholiday="ngForm">
-  								<div class="form-body">
-  									<div class="row">
-  										<div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-  												<label for="form_control_1">Holiday Occasion</label>
-  												<span class="required" aria-required="true"> * </span>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Edit Holiday</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #feditholiday="ngForm" (submit)="onEditHoliday(feditholiday)">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">Holiday Occasion</label>
+                                        <span class="required" aria-required="true"> * </span>
 
-                          <input type="text" class="form-control  m-input m-input--air name-input" name="occasion" id="occasion" [(ngModel)]="feditholiday.occasion" #occasion="ngModel" required>
-        								  <div class="form-control-feedback has-danger" *ngIf="!occasion.valid">
-        									 <span *ngIf="feditholiday.submitted && !occasion.valid">This field is required.</span>
-        								  </div>
+                                        <input type="text" class="form-control  m-input m-input--air name-input" name="occasion" id="occasion" [(ngModel)]="editholiday.occasion"
+                                            #occasion="ngModel" required>
+                                        <div class="form-control-feedback has-danger" *ngIf="!occasion.valid">
+                                            <span *ngIf="feditholiday.submitted && !occasion.valid">This field is required.</span>
+                                        </div>
 
-  											</div>
-  										</div>
-  									</div>
-
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-              						<label for="form_control_1">Restricted</label>
-            							<input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="feditholiday.isRestricted">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">Restricted</label>
+                                        <input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="editholiday.isRestricted">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="form_control_1">General</label>
+                                        <input type="checkbox" name="isGeneral" id="isGeneral" [(ngModel)]="editholiday.isGeneral">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="date">Date
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="editholiday.date" bsDatepicker
+                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel"
+                                            required>
+                                        <div class="form-control-feedback has-danger" *ngIf="feditholiday.submitted && !date.valid">
+                                            This field is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-              						<label for="form_control_1">General</label>
-            							<input type="checkbox" name="isGeneral" id="isGeneral" [(ngModel)]="feditholiday.isGeneral">
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="m-form__actions">
+                                        <button class="btn btn-success submitForm" type="button" id="submitForm">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 adn-form__group">
-  											<div class="m-form__group form-group">
-                          <label for="date">Date
-                            <span class="required" aria-required="true"> * </span>
-                          </label>
-                          <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="feditholiday.date" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel" required>
-                          <div class="form-control-feedback has-danger" *ngIf="feditholiday.submitted && !date.valid">
-                            This field is required.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                  </div>
-                  <div class="form-actions">
-      						 <div class="row">
-      							<div class="col-md-12">
-      							   <div class="m-form__actions">
-      								  <button class="btn btn-success submitForm" type="button" id="submitForm" (click)="onEditHoliday(feditholiday)">Submit</button>
-      							   </div>
-      							</div>
-      						 </div>
-                 </div>
-                </form>
-              </div>
+                    </form>
+                </div>
             </ng-template>
-
         </div>
     </div>
 </div>
