@@ -28,7 +28,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     search: any;
     _currentEmpId: number;
     itemPerPage: number=30;
-
+    checkAll:boolean=false;
 
     constructor(
         private _hrService: HrService,
@@ -68,6 +68,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             error => {
             });
     }
+
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
@@ -110,12 +111,18 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         }
     }
 
-    savekraWorkFlowDetails(emp_id: number) {
-        this._hrService.savekraWorkFlowDetails({ emp_id: emp_id, status: 'initiated' })
+    saveBulkKra() {
+        var selectedEmp_id = this.employeeData.filter(function (employee, index, array) {
+           return employee.checked;
+        }).map(item=> {
+            return item._id
+        });
+        this._hrService.saveBulkKra({ emp_id: selectedEmp_id, type:this.filterSearch.workflowtype })
             .subscribe(
             res => {
                 if (res.ok) {
                     swal("KRA Workflow", "Initiated", "success");
+                    this.clearForm();
                 }
             },
             error => {
@@ -130,6 +137,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
+
     clearFormData() {
         this.deparmentData = [];
         this.gradeData = [];
@@ -153,6 +161,19 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             element.checked=$event.target.checked;
         });
     }
+
+
+    clearForm()
+    {
+        this.key=''; //set default
+        this.reverse= false;
+        this.p2 = 1;
+        this.search=null;
+        this.filterSearch={};
+        this.checkAll=false;
+        this.loadAllEmployee();
+    }
+
 
 }
 
