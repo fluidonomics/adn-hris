@@ -132,13 +132,14 @@ export class MyPapComponent implements OnInit {
     }
 
     onKraSubmit(isSaveDraft?: boolean) {
-        this._myService.saveKra(this.kraInfos)
-            .subscribe(
-            data => {
-                swal("Kra is submitted.", "", "success");
-            },
-            error => {
-            });
+        // this._myService.saveKra(this.kraInfos)
+        //     .subscribe(
+        //     data => {
+        //         swal("Kra is submitted.", "", "success");
+        //     },
+        //     error => {
+        //     });
+        
     }
 
     loadKra() {

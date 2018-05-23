@@ -6,8 +6,9 @@ import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
-import { MyPapComponent } from './workflows/pap/pap.component'
-import { MyPipComponent } from './workflows/pip/pip.component'
+import { MyPapComponent } from './workflows/pap/pap.component';
+import { MyPipComponent } from './workflows/pip/pip.component';
+import { MyKraComponent } from './workflows/kra/kra.component';
 import { ApplyComponent } from './leaves/apply/apply.component';
 import { CancelComponent } from './leaves/cancel/cancel.component';
 import { HolidaysComponent } from './leaves/holidays/holidays.component';
@@ -33,6 +34,7 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: MyLearningComponent },
         { path: 'workflows/pap', component: MyPapComponent },
         { path: 'workflows/pip', component: MyPipComponent },
+        { path: 'workflows/kra', component: MyKraComponent },
         { path: 'leaves/dashboard', component: DashboardComponent },
         { path: 'leaves/apply', component: ApplyComponent },
         { path: 'leaves/cancel', component: CancelComponent },

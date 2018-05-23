@@ -12,8 +12,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
-import { MyPapComponent } from './workflows/pap/pap.component'
-import { MyPipComponent } from './workflows/pip/pip.component'
+import { MyPapComponent } from './workflows/pap/pap.component';
+import { MyKraComponent } from './workflows/kra/kra.component';
+import { MyPipComponent } from './workflows/pip/pip.component';
 import { ApplyComponent } from './leaves/apply/apply.component';
 import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
@@ -57,6 +58,7 @@ import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/p
         MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
+        MyKraComponent,
         DashboardComponent,
         ApplyComponent,
         CancelComponent,

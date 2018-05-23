@@ -233,12 +233,12 @@ export class MyService {
         }
     }
 
-    saveKra(data: any): Observable<Response> {
-        {
-            let url = "kra/addKraInfo"
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
+    // saveKra(data: any): Observable<Response> {
+    //     {
+    //         let url = "kra/addKraInfo"
+    //         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    //     }
+    // }
 
     deleteAcademicInfo(_id: number) {
         let url = "user/deleteAcademicInfo?_id=" + _id;
