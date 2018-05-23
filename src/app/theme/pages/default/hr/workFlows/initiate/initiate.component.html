@@ -63,14 +63,14 @@
 										<div class="col-md-3"></div>
 										<div class="col-md-3"></div>
 										<div class="col-md-3">
-											<div class="m-input-icon m-input-icon--left">
+											<!-- <div class="m-input-icon m-input-icon--left">
 												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
 												<span class="m-input-icon__icon m-input-icon__icon--left">
 													<span>
 														<i class="la la-search"></i>
 													</span>
 												</span>
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>
@@ -135,50 +135,57 @@
 									</td>
 								    <td class="m-datatable__cell" width="25%" >
 										<span>{{employee.supervisor}}</span>
-                                    </td>
+									</td>
+							  </tr>
+							  <tr class="m-datatable__row m-datatable__row--even">
+								<td class="m-datatable__cell" colspan="5"  *ngIf="p.pages.length==0">
+									No record found.
+								</td>
 							  </tr>
 							</tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
-						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-								<li>
-									<a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
-										<i class="la la-angle-double-left"></i>
-									</a>
-								</li>
-								<li>
-									<a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-										<i class="la la-angle-left"></i>
-									</a>
-								</li>
-								<li *ngFor="let page of p.pages">
-									<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-										{{ page.label }}
-									</a>
-								</li>
-								<li>
-									<a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
-										<i class="la la-angle-right"></i>
-									</a>
-								</li>
-								<li>
-									<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-										<i class="la la-angle-double-right"></i>
-									</a>
-								</li>
-							</ul>
-						</div>
+							<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+								<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+									<li>
+										<a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
+											<i class="la la-angle-double-left"></i>
+										</a>
+									</li>
+									<li>
+										<a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
+											<i class="la la-angle-left"></i>
+										</a>
+									</li>
+									<li *ngFor="let page of p.pages">
+										<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+											{{ page.label }}
+										</a>
+									</li>
+									<li>
+										<a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+											<i class="la la-angle-right"></i>
+										</a>
+									</li>
+									<li>
+										<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
+											<i class="la la-angle-double-right"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
 					</pagination-template>
-					</div>
-					<select *ngIf="p.pages.length > 0"  [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
+				</div>
+				<div class="pager-display-size" *ngIf="p.pages?.length!=0">
+					<select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
 						<option value=10>10</option>
 						<option value=20>20</option>
 						<option value=30>30</option>
 						<option value=50>50</option>
 						<option value=100>100</option>
-				</select>
-				<span *ngIf="p.pages.length > 0" class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+				    </select>
+			        <span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+				</div>
 				<div class="form-actions">
 							<div class="row">
 								<div class="col-md-12">
