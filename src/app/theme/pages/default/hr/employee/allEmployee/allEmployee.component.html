@@ -128,9 +128,18 @@
 										<span>{{employee.supervisor}}</span>
 									</td>
 									<td class="m-datatable__cell" width="15%" >
-										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }"><i class="fa fa-pencil m--font-success" title="Edit Profile">  </i></a>
+										<!-- <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }"><i class="fa fa-pencil m--font-success" title="Edit Profile">  </i></a>
 										<i class="fa fa-gear m--font-brand" title="Edit Roles"></i>
-										<i class="fa fa-reply m--font-danger" title="Reset Password"></i>
+										<i class="fa fa-reply m--font-danger" title="Reset Password"></i> -->
+										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+											<i class="la la-edit"></i>
+										</a>
+										<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Roles">
+											<i class="la la-gear"></i>
+										</a>
+										<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
+											<i class="la la-reply"></i>
+										</a>
 									</td>
 							  </tr>
 							  <tr class="m-datatable__row m-datatable__row--even">
