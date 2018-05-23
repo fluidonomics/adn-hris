@@ -27,10 +27,11 @@ export class HrService {
 
 
 
-    savekraWorkFlowDetails(data: any) {
-        let url = "kra/addKraWorkFlowInfo";
+    saveBulkKra(data: any) {
+        let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+    
 
     private extractData(res: Response) {
         return res || {};
