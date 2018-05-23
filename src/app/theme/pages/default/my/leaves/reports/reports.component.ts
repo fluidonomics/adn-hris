@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, OnChanges, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import * as d3 from "d3";
 

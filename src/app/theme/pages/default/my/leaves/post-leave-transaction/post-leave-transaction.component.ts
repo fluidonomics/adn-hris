@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
+import { LeaveService } from '../leave.service';
 declare var mApp;
 
 const now = new Date();
@@ -25,7 +24,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     isBalanceValid: boolean = true;
 
     constructor(
-        private myService: MyService,
+        private leaveService: LeaveService,
         private commonService: CommonService,
         private authService: AuthService,
         private utilityService: UtilityService
@@ -47,12 +46,11 @@ export class PostLeaveTransactionComponent implements OnInit {
     }
 
     getEmployeeList() {
-        this.myService.getAllEmployee().subscribe(
+        this.leaveService.getAllEmployee().subscribe(
             res => {
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];
-                    console.log(this.employeeList);
                 }
             },
             error => {
@@ -61,7 +59,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.myService.getLeaveType().subscribe(
+        this.leaveService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();
@@ -84,9 +82,7 @@ export class PostLeaveTransactionComponent implements OnInit {
             _postData.reason = data.reason;
             _postData.emp_id = data.employee;
             //_postData.createdBy = data.currentEmpId;
-            _postData.updateBy =  this.currentEmpId;
-
-            console.log(_postData);
+            _postData.updateBy = this.currentEmpId;
 
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
@@ -94,9 +90,8 @@ export class PostLeaveTransactionComponent implements OnInit {
                 state: 'success',
                 // message: 'Please wait...'
             });
-            this.myService.postEmployeeLeaveDetails(_postData).subscribe(
+            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
                 res => {
-                    console.log(res);
                     mApp.unblock('#applyLeavePanel');
                     swal("Post Leave Transaction", "", "success");
                     this.resetForm(form);
@@ -109,7 +104,6 @@ export class PostLeaveTransactionComponent implements OnInit {
     }
 
     onLeaveTransactionSubmit(form) {
-        //console.log(data);
         this.postLeaveTransactionDetails(form, this.leavetransaction);
     }
 

@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
 import { UserData } from '../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../leave.service';
 declare var mApp;
 
 
@@ -29,7 +28,7 @@ export class ApplyComponent implements OnInit {
     currentUser: UserData;
 
     constructor(
-        private _myService: MyService,
+        private leaveService: LeaveService,
         private _commonService: CommonService,
         private _authService: AuthService
     ) {
@@ -49,7 +48,7 @@ export class ApplyComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this._myService.getLeaveType().subscribe(
+        this.leaveService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();
@@ -72,7 +71,7 @@ export class ApplyComponent implements OnInit {
                 });
     }
     getAllEmailListOfEmployee() {
-        this._myService.getEmployeeEmailDetails().subscribe(
+        this.leaveService.getEmployeeEmailDetails().subscribe(
             res => {
                 if (res.ok) {
                     this.emailDetails = res.json();
@@ -84,7 +83,7 @@ export class ApplyComponent implements OnInit {
     }
 
     getEmployeeLeaveBalance() {
-        this._myService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
             if (res.ok) {
                 // this.leaveapplication.balance = res.json() || 0;
             }
@@ -122,9 +121,8 @@ export class ApplyComponent implements OnInit {
                 state: 'success',
                 // message: 'Please wait...'
             });
-            this._myService.postEmployeeLeaveDetails(_postData).subscribe(
+            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
                 res => {
-                    console.log(res);
                     mApp.unblock('#applyLeavePanel');
                     swal("Leave Applied", "", "success");
                     this.resetForm(form);
@@ -137,7 +135,6 @@ export class ApplyComponent implements OnInit {
     }
 
     onLeaveAppSubmit(form) {
-        //console.log(data);
         this.postEmployeeLeaveDetails(form, this.leaveapplication);
     }
 

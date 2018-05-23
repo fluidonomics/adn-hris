@@ -1,9 +1,8 @@
 import { Component, Input, Output, OnInit, ViewEncapsulation, TemplateRef, EventEmitter } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { MyService } from '../../my.service';
+import { LeaveService } from '../leave.service';
 
 const now = new Date();
 
@@ -25,7 +24,7 @@ export class HolidaysComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private myService: MyService
+    private leaveService: LeaveService
   ) {
 
   }
@@ -67,7 +66,7 @@ export class HolidaysComponent implements OnInit {
       //   "createdAt": new Date(),
       //   "updatedAt": new Date(),
       // }
-      
+
     }
 
     this.modalRef.hide();

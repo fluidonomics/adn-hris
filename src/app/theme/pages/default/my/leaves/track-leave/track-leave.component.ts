@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { AuthService } from '../../../../../../base/_services/authService.service';
-import { MyService } from '../../my.service';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { Router } from '@angular/router';
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LeaveService } from '../leave.service';
 
 
 @Component({
@@ -23,7 +22,7 @@ export class TrackLeaveComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private myApiService: MyService,
+        private leaveService: LeaveService,
         private utilityService: UtilityService,
         private router: Router
     ) {
@@ -35,7 +34,7 @@ export class TrackLeaveComponent implements OnInit {
     }
 
     loadLeaveTransactions() {
-        this.myApiService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.leaveService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leaveData = body.data.map(leave => {
@@ -45,7 +44,6 @@ export class TrackLeaveComponent implements OnInit {
                 this.activeLeaveData = this.leaveData.filter(leave => leave.isCancelled != true && leave.isApproved == null);
                 this.completedLeaveData = this.leaveData.filter(leave => leave.isCancelled == true || leave.isApproved == true);
             }
-            console.log(this.leaveData);
         });
     }
 

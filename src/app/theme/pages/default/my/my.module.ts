@@ -39,6 +39,7 @@ import { UtilityService } from '../../../../base/_services/utilityService.servic
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
 import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
+import { LeaveService } from './leaves/leave.service';
 
 
 @NgModule({
@@ -79,7 +80,7 @@ import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component'
         //ReviewerComponent,
         //SupervisorComponent
     ],
-    providers: [MyService, UtilityService]
+    providers: [MyService, UtilityService, LeaveService]
 })
 export class MyModule {
 }

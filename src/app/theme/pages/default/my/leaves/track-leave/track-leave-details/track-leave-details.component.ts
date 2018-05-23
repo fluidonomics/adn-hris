@@ -2,10 +2,9 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { UserData } from '../../../../../../../base/_interface/auth.model';
 import { AuthService } from '../../../../../../../base/_services/authService.service';
-import { MyService } from '../../../my.service';
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LeaveService } from '../../leave.service';
 
 
 @Component({
@@ -28,7 +27,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private myApiService: MyService,
+        private leaveService: LeaveService,
         private utilityService: UtilityService,
         private router: Router,
         private route: ActivatedRoute
@@ -46,7 +45,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
     }
 
     loadLeaveDetails() {
-        this.myApiService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.leaveService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leave = body.data.find(leave => leave._id == this.leaveId);
@@ -54,17 +53,15 @@ export class TrackLeaveDetailsComponent implements OnInit {
                     this.leave.days = this.utilityService.subtractDates(this.leave.toDate, this.leave.fromDate);
                 }
             }
-            console.log(this.leave);
         });
     }
 
     getWorkflowHistory() {
-        this.myApiService.getWorkflowHistory(this.leaveId).subscribe(data => {
+        this.leaveService.getWorkflowHistory(this.leaveId).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.workFlowHistory = body.data;
             }
-            console.log(this.workFlowHistory);
         });
     }
     goBack() {

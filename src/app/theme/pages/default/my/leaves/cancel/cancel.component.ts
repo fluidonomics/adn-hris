@@ -3,12 +3,11 @@ import { FormBuilder, FormControl, NgForm } from "@angular/forms";
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import { EmployeeInfo } from '../../../../../../base/_interface/user.model';
 import { UserData } from '../../../../../../base/_interface/auth.model';
-import { MyService } from '../../my.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { leaveView } from '@angular/core/src/render3/instructions';
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import swal from 'sweetalert2';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
+import { LeaveService } from '../leave.service';
 declare var mApp;
 
 @Component({
@@ -34,7 +33,7 @@ export class CancelComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private myApiService: MyService,
+        private leaveService: LeaveService,
         private commonService: CommonService,
         private utilityService: UtilityService
     ) {
@@ -48,7 +47,7 @@ export class CancelComponent implements OnInit {
     }
 
     loadEmployeeLeaves() {
-        this.myApiService.getCancelEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.leaveService.getCancelEmployeeLeaveDetails(this.employee._id).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leaveData = body.data.map(leave => {
@@ -70,7 +69,7 @@ export class CancelComponent implements OnInit {
     }
 
     getEmployeeEmails() {
-        this.myApiService.getEmployeeEmailDetails().subscribe(data => {
+        this.leaveService.getEmployeeEmailDetails().subscribe(data => {
             this.employeeEmailList = data.json() || [];
         })
     }
@@ -110,7 +109,7 @@ export class CancelComponent implements OnInit {
                 updatedBy: this.employee._id
             }
             this.utilityService.showLoader('.cancel-portlet');
-            this.myApiService.saveCancelLeave(leave).subscribe(res => {
+            this.leaveService.saveCancelLeave(leave).subscribe(res => {
                 if (res.ok) {
                     this.utilityService.hideLoader('.cancel-portlet');
                     swal("Leave Cancelled", "", "success");

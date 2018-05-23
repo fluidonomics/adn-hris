@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-import { MyService } from '../../my.service';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LeaveService } from '../leave.service';
 
 const now = new Date();
 
@@ -28,7 +27,7 @@ export class EmployeeLeavesComponent implements OnInit {
     search: string = '';
 
     constructor(
-        private myApiService: MyService,
+        private leaveService: LeaveService,
         private utilityService: UtilityService
     ) {
 
@@ -41,7 +40,7 @@ export class EmployeeLeavesComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.myApiService.getLeaveType().subscribe(
+        this.leaveService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();
@@ -54,7 +53,7 @@ export class EmployeeLeavesComponent implements OnInit {
     }
 
     getEmployeeList() {
-        this.myApiService.getAllEmployee().subscribe(
+        this.leaveService.getAllEmployee().subscribe(
             res => {
                 if (res.ok) {
                     let body = res.json();
@@ -80,7 +79,7 @@ export class EmployeeLeavesComponent implements OnInit {
     }
 
     getEmployeeLeaves() {
-        this.myApiService.getEmployeeLeaveDetails(this.selectedEmployee).subscribe(
+        this.leaveService.getEmployeeLeaveDetails(this.selectedEmployee).subscribe(
             res => {
                 if (res.ok) {
                     let body = res.json();

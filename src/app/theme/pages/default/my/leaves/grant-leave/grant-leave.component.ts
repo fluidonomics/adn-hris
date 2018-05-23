@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { AuthService } from '../../../../../../base/_services/authService.service';
-import { MyService } from '../../my.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import swal from 'sweetalert2';
+import { LeaveService } from '../leave.service';
 
 @Component({
     selector: "app-my-leaves-grant-leave",
@@ -23,7 +23,7 @@ export class GrantLeaveComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private myApiService: MyService,
+        private leaveService: LeaveService,
         private commonService: CommonService,
         private utilityService: UtilityService
     ) {
@@ -44,7 +44,7 @@ export class GrantLeaveComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.myApiService.getLeaveType().subscribe(
+        this.leaveService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesList = res.json();
@@ -56,13 +56,12 @@ export class GrantLeaveComponent implements OnInit {
     }
 
     getEmployeeList() {
-        this.myApiService.getAllEmployee().subscribe(
+        this.leaveService.getAllEmployee().subscribe(
             res => {
                 //debugger;
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];
-                    console.log(this.employeeList);
                 }
             },
             error => {
@@ -77,7 +76,6 @@ export class GrantLeaveComponent implements OnInit {
                 if (res.ok) {
                     let body = res.json();
                     this.departmentList = body || [];
-                    console.log(this.departmentList);
                 }
             },
             error => {
@@ -107,7 +105,7 @@ export class GrantLeaveComponent implements OnInit {
                         "updatedBy": this.employee._id,
                         "createdBy": this.employee._id
                     }
-                    this.myApiService.grantLeaveAllEmployee(body).subscribe(res => {
+                    this.leaveService.grantLeaveAllEmployee(body).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#fGrantLeave');
                             swal("Leaves Granted", "", "success");
@@ -129,7 +127,7 @@ export class GrantLeaveComponent implements OnInit {
                         "updatedBy": this.employee._id,
                         "createdBy": this.employee._id
                     }
-                    this.myApiService.grantLeaveByDepartment(body).subscribe(res => {
+                    this.leaveService.grantLeaveByDepartment(body).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#fGrantLeave');
                             swal("Leaves Granted", "", "success");
@@ -154,7 +152,7 @@ export class GrantLeaveComponent implements OnInit {
                         "createdDate": new Date(),
                         "updatedDate": new Date()
                     }
-                    this.myApiService.grantLeaveByEmployee(body).subscribe(res => {
+                    this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#fGrantLeave');
                             swal("Leaves Granted", "", "success");
