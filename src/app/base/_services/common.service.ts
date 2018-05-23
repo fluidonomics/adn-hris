@@ -269,6 +269,21 @@ export class CommonService {
     }
 
 
+    getKraCategory() {
+        let url = "kra/getKraCategoryInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraWeightage() {
+        let url = "kra/getKraWeightageInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraSupervisor(emp_id) {
+        let url = "kra/getKraSupervisor?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getKraDetailsData(emp_id) {
         let url = "kra/getKraDetailsData?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
