@@ -1095,3 +1095,11 @@ input:read-only {
 margin-left: 20px; 
 margin-top: 7px;
 }
+
+.workflow--info--light{
+  background: #f0f5f0;
+}
+
+.workflow--info .workflow--info--light :hover{
+  background: #eee;
+}
