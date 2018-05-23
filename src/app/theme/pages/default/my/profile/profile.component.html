@@ -376,7 +376,7 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="currentAddressLine2">Address Line 2
                                                         </label>
-                                                        <input type="text" [(ngModel)]="address.currentAddressLine2" #currentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Address Line 2" id="currentAddressLine2" name="currentAddressLine2" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" [(ngModel)]="address.currentAddressLine2" #currentAddressLine2="ngModel" class="form-control m-input m-input--air" placeholder="Enter Address Line 2" id="currentAddressLine2" name="currentAddressLine2" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     </div>
                                                 </div>
                                             </div>
@@ -421,7 +421,7 @@
                                                         <label for="currentAddressPostCode">Post Code
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" minlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="4" minlength="4" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air" placeholder="Enter Post Code" id="currentAddressPostCode" name="currentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                         <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
                                                                 <span *ngIf="currentAddressPostCode.errors?.required">
                                                                         This field is required.
@@ -526,7 +526,7 @@
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
                                                         <ng-container *ngIf="!address.isSameAsCurrent">
-                                                            <input type="text"  maxlength="6" minlength="6" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                            <input type="text"  maxlength="4" minlength="4" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code" class="form-control m-input m-input--air" id="permanentAddressPostCode" name="permanentAddressPostCode" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="faddress.submitted">
                                                                     <span *ngIf="permanentAddressPostCode.errors?.required">
                                                                             This field is required.
@@ -779,14 +779,14 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="marks">CGPA
                                                         </label>
-                                                        <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                         </div>
                                             </div>
                                             <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
                                                     <div class="form-group m-form__group">
                                                         <label for="marks">Scale
                                                             </label>
-                                                        <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     </div>
                                             </div>
                                         </div>
@@ -892,10 +892,10 @@
                                         </div>
                                         <div class="col-md-6 adn-form__group">
                                             <div class="form-group m-form__group">
-                                                <label for="durationInMonths">Duration in Months
+                                                <label for="durationInMonths">Duration
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months" id="durationInMonths" class="form-control m-input m-input--air" OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration" id="durationInMonths" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !durationInMonths.valid ">
                                                     This field is required.
                                                 </div>
@@ -1138,7 +1138,7 @@
                                             <div class="form-group m-form__group">
                                                 <label for="fmobileNumber">Mobile Number
                                                 </label>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10" id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number" type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10" id="fmobileNumber" name="fmobileNumber" placeholder="+880" type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
                                                             Please enter valid mobile number
@@ -1249,7 +1249,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="officeMobileNumber">Office Mobile Number
                                             </label>
-                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" minlength="10" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber" minlength="10" maxlength="10" type="text" class="form-control m-input m-input--air" placeholder="+880" OnlyNumber="true" disabled>
                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
                                                 <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
                                                         Please enter valid mobile number

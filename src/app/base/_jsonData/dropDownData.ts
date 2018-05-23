@@ -462,16 +462,16 @@ export const relation = [
 
 export const religion = [
     {
-        "id": "Hindu",
-        "text": "Hindu"
-    },
-    {
         "id": "Islam",
         "text": "Islam"
     },
     {
-        "id": "Chirstan",
-        "text": "Chirstan"
+        "id": "Hindu",
+        "text": "Hindu"
+    },
+    {
+        "id": "Christian",
+        "text": "Christian"
     },
     {
         "id": "Buddhist",

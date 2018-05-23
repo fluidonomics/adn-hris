@@ -1049,6 +1049,29 @@ input:read-only {
 }
 
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted #268F4F;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #268F4F;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 
 

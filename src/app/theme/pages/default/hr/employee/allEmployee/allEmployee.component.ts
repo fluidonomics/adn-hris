@@ -20,6 +20,14 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     search: any;
     _currentEmpId: number;
     itemPerPage: number=10;
+    
+    profileProcess = {
+        isEmployeeSubmitted: false,
+        isHrSubmitted: false,
+        isHrSendBack: false,
+        isSupervisorApproved: false,
+        isSupervisorSendBack: false
+    }
 
 
     constructor(private _script: ScriptLoaderService,

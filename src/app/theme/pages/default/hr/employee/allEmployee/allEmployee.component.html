@@ -48,59 +48,96 @@
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
+										
 										<th class="m-datatable__cell" width="5%" ></th>
-										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
+										<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%" >
+												<span>
+												 ID
+												<i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+												</span>
+											</th>
+										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%" >
 											<span>
 											 NAME
 											<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="25%" >
+										
+										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
 											<span>
 											EMAIL
 											<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
 											<span>
 											DESIGNATION 
 											<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
-												<span>
-														SUPERVISOR  
-												<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-												</span>
-											</th>
+										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+											<span>
+											SUPERVISOR  
+											<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+											<span>
+											ACTIONS  
+											<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
 									</tr>
 							</thead>
 							<tbody class="m-datatable__body">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-								   <td class="m-datatable__cell" width="5%" >
-										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
+									<td class="m-datatable__cell" width="3%" >
+									
+											<i class="fa" [ngClass]="
+											!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
+											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
+											((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
+											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'fa-adjust m--font-success':
+											(employee.profileProcessDetails.hrStatus=='SendBack'? 'fa-circle-o m--font-danger':
+											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'fa-circle-o m--font-success':
+											'fa-circle-o m--font-warning')))))" 
+											
+											[title]="!employee.isAccountActive ?'Inactive':
+											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'Profile Complete' :
+											(employee.profileProcessDetails.supervisorStatus == 'SendBack' ? 'Office Profile Sent Back' :
+											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'Office Profile Submitted':
+											(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
+											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))"> </i>
+
 										  <img *ngIf="employee?.profileImage; else noImage" src="{{employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-									    </a>
 									</td>
-								    <td class="m-datatable__cell" width="25%" >
+									<td class="m-datatable__cell" width="5%" >
+										<span>{{employee.userName}}</span>
+									</td>
+								    <td class="m-datatable__cell" width="20%" >
 										<span>{{employee.fullName}}</span>
 									</td>
-									<td class="m-datatable__cell" width="25%" >
+									<td class="m-datatable__cell" width="15%" >
 										<span>{{employee.officeEmail}}</span>
 									</td>
-									<td class="m-datatable__cell" width="20%" >
+									<td class="m-datatable__cell" width="15%" >
 										<span>{{employee.designation}}</span>
 									</td>
-								    <td class="m-datatable__cell" width="25%" >
+								    <td class="m-datatable__cell" width="15%" >
 										<span>{{employee.supervisor}}</span>
 									</td>
+									<td class="m-datatable__cell" width="15%" >
+										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }"><i class="fa fa-pencil m--font-success" title="Edit Profile">  </i></a>
+										<i class="fa fa-gear m--font-brand" title="Edit Roles"></i>
+										<i class="fa fa-reply m--font-danger" title="Reset Password"></i>
+									</td>
 							  </tr>
-							  <!-- <tr *ngIf="!employeeData.length > 0">
-								  <th colspan="5">
-										No Data
-								  </th>
-							  </tr> -->
+							  <tr class="m-datatable__row m-datatable__row--even">
+								<td class="m-datatable__cell" *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0">
+									No record found.
+								</td>
+							  </tr>
 							</tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
@@ -134,7 +171,7 @@
 							</ul>
 						</div>
 					</pagination-template>
-					<div class="pager-display-size">
+					<div class="pager-display-size" *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length!=0">
 						
 						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
 								<option value=10>10</option>
@@ -143,7 +180,8 @@
 								<option value=50>50</option>
 								<option value=100>100</option>
 						</select>
-						
+						 <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
+        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeeData | orderBy: key : reverse | filter:search)?.length ? (employeeData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
 						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
 					</div>
 					</div>  

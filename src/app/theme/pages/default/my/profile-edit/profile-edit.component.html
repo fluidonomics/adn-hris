@@ -472,7 +472,7 @@
                                                                 </label>
                                                                 <input type="text" [(ngModel)]="address.currentAddressLine2" #currentAddressLine2="ngModel" class="form-control m-input m-input--air"
                                                                     placeholder="Enter Address Line 2" id="currentAddressLine2"
-                                                                    name="currentAddressLine2" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    name="currentAddressLine2" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -529,7 +529,7 @@
                                                                 <label for="currentAddressPostCode">Post Code
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="6" minlength="6" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air"
+                                                                <input type="text" [(ngModel)]="address.currentAddressPostCode" maxlength="4" minlength="4" #currentAddressPostCode="ngModel" class="form-control m-input m-input--air"
                                                                     placeholder="Enter Post Code" id="currentAddressPostCode"
                                                                     name="currentAddressPostCode" OnlyNumber="true" required
                                                                     [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
@@ -655,7 +655,7 @@
                                                                 </label>
                                                                 <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
-                                                                    <input type="text" maxlength="6" minlength="6" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code"
+                                                                    <input type="text" maxlength="4" minlength="4" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code"
                                                                         class="form-control m-input m-input--air" id="permanentAddressPostCode"
                                                                         name="permanentAddressPostCode" OnlyNumber="true" required
                                                                         [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
@@ -957,14 +957,14 @@
                                                                 <div class="form-group m-form__group">
                                                                     <label for="marks">CGPA
                                                                     </label>
-                                                                    <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                     </div>
                                                         </div>
                                                         <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
                                                                 <div class="form-group m-form__group">
                                                                     <label for="marks">Scale
                                                                         </label>
-                                                                    <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 </div>
                                                         </div>
                                                     </div>
@@ -1093,12 +1093,12 @@
                                                         </div>
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
-                                                                <label for="durationInMonths">Duration in Months
+                                                                <label for="durationInMonths">Duration
                                                                 </label>
                                                                 <span class="required" aria-required="true"> * </span>
-                                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration in months"
+                                                                <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration"
                                                                     id="durationInMonths" class="form-control m-input m-input--air"
-                                                                    OnlyNumber="true" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !durationInMonths.valid ">
                                                                     This field is required.
                                                                 </div>
@@ -1958,7 +1958,7 @@
                                                         </div>
                                                 </div>
                                                 <div class="m-form__actions" *ngIf="!profileProcess.isHrSubmitted || profileProcess.isSupervisorSendBack">
-                                                    <button type="submit" class="btn btn-success">Save</button>
+                                                    <button type="submit" class="btn btn-success">{{performanceDiary._id ? 'Update':'Save'}}</button>
                                                 </div>
                                             </form>
                                         </div>
