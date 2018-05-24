@@ -102,6 +102,9 @@ export class ProfileEditComponent implements OnInit {
 
     relationData = [];
     countryData = [];
+    facilityData=[];
+    
+    companyBusinessData=[];
 
     isSpin = false;
 
@@ -1118,6 +1121,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadEmploymentDetails() {
+        this.loadCompanyBusiness();
         this._myService.getPreviousEmploymentInfo(this.param_emp_id)
             .subscribe(
             res => {
@@ -1130,6 +1134,18 @@ export class ProfileEditComponent implements OnInit {
                         this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : null;
                         this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : null;
                     }
+                }
+            },
+            error => {
+            });
+    }
+
+    loadCompanyBusiness() {
+        this._commonService.getCompanyBusiness()
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.companyBusinessData = res.json() || [];
                 }
             },
             error => {
@@ -1174,6 +1190,7 @@ export class ProfileEditComponent implements OnInit {
 
     loadOfficeInfoTabData() {
         this.countryData = this._commonService.getCountry();
+        this.loadFacility();
         this._myService.getOfficeDetails(this.param_emp_id)
             .subscribe(
             data => {
@@ -1185,6 +1202,16 @@ export class ProfileEditComponent implements OnInit {
             },
             error => {
             });
+    }
+
+    loadFacility()
+    {
+        this._commonService.getFacility().subscribe(
+        res => {
+                this.facilityData = res.json() || [];
+            },
+            error => {
+        });
     }
 
     loadJoiningDetailsTabData() {

@@ -261,7 +261,7 @@
                                                                             +880
                                                                         </span>                                                
                                                                     </div>
-                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true"
+                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyMobileNumber="true"
                                                                 minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo"
                                                                 maxlength="10" aria-describedby="mobileNo" aria-invalid="true"
                                                                 class="form-control m-input m-input--air" required disabled>
@@ -282,7 +282,7 @@
                                                             <label for="homePhonNo">Home Phone No.
                                                             </label>
                                                             <input name="homePhonNo" id="homePhonNo" [(ngModel)]="personalInfo.homePhone" minlength=10 maxlength=10 #homePhonNo="ngModel"
-                                                                placeholder="Enter home phone" type="text" OnlyNumber="true"
+                                                                placeholder="Enter home phone" type="text" OnlyMobileNumber="true"
                                                                 class="form-control m-input m-input--air" disabled>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
                                                                 <span *ngIf="homePhonNo.errors?.minlength">Please enter valid mobile number</span>
@@ -410,7 +410,7 @@
                                                                     </div>
                                                                     <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber"
                                                                     #emergencyContactNo="ngModel" placeholder="Enter emergency contact no"
-                                                                    type="text" class="form-control m-input m-input--air" OnlyNumber="true"
+                                                                    type="text" class="form-control m-input m-input--air" OnlyMobileNumber="true"
                                                                     required disabled>
                                                                 </div>
                                                         
@@ -1204,9 +1204,11 @@
                                                                 <label for="companyBusiness">Company Business
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business"
+                                                                <ng-select name="companyBusiness" [items]="companyBusinessData" bindLabel="companyBusinessName" bindValue="id" placeholder="Select Compnay Business" [clearable]="false" [(ngModel)]="previousEmployment.companyBusiness_id" #companyBusiness="ngModel" required disabled>
+                                                                </ng-select>
+                                                                <!-- <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business"
                                                                     id="companyBusiness" class="form-control m-input m-input--air"
-                                                                    required disabled>
+                                                                    required disabled> -->
                                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
                                                                     This field is required.
                                                                 </div>
@@ -1515,7 +1517,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.officePhone" #officePhoneNumber="ngModel" maxlength="10"
                                                                 id="officePhoneNumber" name="officePhoneNumber" placeholder="Enter office phone no"
-                                                                type="text" OnlyNumber="true"  disabled>
+                                                                type="text" OnlyMobileNumber="true"  disabled>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1532,7 +1534,7 @@
                                                                     </div>
                                                                     <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
                                                                 maxlength="10" type="text" class="form-control m-input m-input--air"
-                                                                placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                                                placeholder="Enter office mobile no" OnlyMobileNumber="true" disabled>
                                                                 </div>
                                                           
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
@@ -1564,9 +1566,11 @@
                                                             <label for="facility">Facility
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
-                                                                placeholder="Enter facility" type="text" disabled required>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !officePhoneNumber.valid ">
+                                                            <ng-select name="facility" [items]="facilityData" bindLabel="facilityName" bindValue="id" placeholder="Select facility" [(ngModel)]="officeInfo.facility_id" #facility="ngModel" disabled required >
+                                                            </ng-select>
+                                                            <!-- <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
+                                                                placeholder="Enter facility" type="text" disabled required> -->
+                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !facility.valid ">
                                                                 This field is required.
                                                             </div>
                                                         </div>

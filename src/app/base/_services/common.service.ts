@@ -160,6 +160,16 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getFacility(): Observable<Response> {
+        let url = "common/getFacility";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    
+    getCompanyBusiness(): Observable<Response> {
+        let url = "common/getCompanyBusiness";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getCurrency() {
         return currency;
     }
