@@ -103,27 +103,27 @@
                                             </tr>
                                         </thead>
                                         <tbody class="m-datatable__body">
-                                            <tr class="m-datatable__row">
+                                            <tr class="m-datatable__row" *ngFor="let holiday of holidayList">
                                                 <td class="m-datatable__cell" width="25%">
-                                                    <span>Diwali</span>
+                                                    <span>{{holiday.occasion}}</span>
                                                 </td>
                                                 <td class="m-datatable__cell" width="15%">
-                                                    <span>Ashish</span>
+                                                    <span>{{holiday.date | date:'dd MMM yy'}}</span>
                                                 </td>
                                                 <td class="m-datatable__cell" width="15%">
-                                                    <span>Ashish</span>
+                                                    <span>{{holiday.day}}</span>
                                                 </td>
                                                 <td class="m-datatable__cell" width="15%">
                                                     <a>
-                                                        <i class="fa fa-check"></i>
+                                                        <i class="fa fa-check" *ngIf="holiday.isRestricted == true"></i>
                                                     </a>
                                                 </td>
                                                 <td class="m-datatable__cell actions" width="15%">
                                                     <a>
-                                                        <i class="fa fa-pencil" (click)="openEditModal(templateEdit)"></i>
+                                                        <i class="fa fa-pencil" (click)="openEditModal(templateEdit, holiday)"></i>
                                                     </a>
                                                     <a>
-                                                        <i class="fa fa-trash-o"></i>
+                                                        <i class="fa fa-trash-o" (click)="onDeleteHoliday(holiday)"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -238,7 +238,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button class="btn btn-success submitForm" type="button" id="submitForm">Submit</button>
+                                        <button class="btn btn-success submitForm" type="submit" id="submitForm">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -257,6 +257,7 @@
                 <div class="modal-body">
                     <form class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #feditholiday="ngForm" (submit)="onEditHoliday(feditholiday)">
                         <div class="form-body">
+                          <input type="hidden" name="_id" id="holidayid" [(ngModel)]="editholiday._id" #id="ngModel">
                             <div class="row">
                                 <div class="col-md-12 adn-form__group">
                                     <div class="m-form__group form-group">
@@ -308,7 +309,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button class="btn btn-success submitForm" type="button" id="submitForm">Submit</button>
+                                        <button class="btn btn-success submitForm" type="submit" id="submitForm">Submit</button>
                                     </div>
                                 </div>
                             </div>

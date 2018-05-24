@@ -82,9 +82,9 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveHolidays() {
+    getLeaveHolidays(year: any) {
         let url = "leave/getLeaveHolidays";
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+        return this.authService.get(url+'?date='+year).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
     saveLeaveHoliday(leaveHoliday: any) {

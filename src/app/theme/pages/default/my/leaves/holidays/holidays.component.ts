@@ -3,6 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { LeaveService } from '../leave.service';
+import swal from 'sweetalert2';
 
 const now = new Date();
 
@@ -13,9 +14,12 @@ const now = new Date();
 })
 export class HolidaysComponent implements OnInit {
 
+  public holidayList: any = [];
   addholiday: any = {};
   editholiday: any = {};
   modalRef: BsModalRef;
+
+  public year: any;
 
   key: string = '';
 
@@ -30,7 +34,21 @@ export class HolidaysComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.year = now.getFullYear();
+    this.getHolidays();
+  }
 
+  public getHolidays() {
+    this.leaveService.getLeaveHolidays(this.year).subscribe(
+      res => {
+          if (res.ok) {
+              let body = res.json();
+              this.holidayList = body || [];
+          }
+      },
+      error => {
+          console.error(error);
+      });
   }
 
   sort(key: string) {
@@ -39,44 +57,84 @@ export class HolidaysComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    /*this.modalRef.content.action.subscribe((value) => {
-        console.log(value) // here you will get the value
-    });*/
-    //this.modalRef.onHide()
   }
 
-  openEditModal(template: TemplateRef<any>) {
+  openEditModal(template: TemplateRef<any>, holiday) {
     this.modalRef = this.modalService.show(template);
-    /*this.modalRef.content.action.subscribe((value) => {
-        console.log(value) // here you will get the value
-    });*/
-    //this.modalRef.onHide()
+    this.editholiday = holiday;
   }
 
-  public onAddHoliday(form) {
-    debugger;
+  public onAddHoliday(formdata) {
+    if (formdata.valid) {
+      let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    if (form.valid) {
-      // let leaveHoliday = {
-      //   "day": "Tuesday",
-      //   "date": ISODate("2018-05-05T07:00:00.000+0000"),
-      //   "isRestricted": false,
-      //   "isGeneral": true,
-      //   "occasion": "diwali",
-      //   "createdAt": new Date(),
-      //   "updatedAt": new Date(),
-      // }
+      let date = new Date(formdata.form.value.date);
+      let dayName = days[date.getDay()];
 
+      const payload = {
+        day: dayName,
+        date: formdata.form.value.date,
+        isRestricted: formdata.form.value.isRestricted,
+        isGeneral: formdata.form.value.isGeneral,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        occasion: formdata.form.value.occasion
+      }
+
+      this.leaveService.saveLeaveHoliday(payload).subscribe(
+          res => {
+            this.getHolidays();
+            swal("Add Holiday", "", "success");
+            this.modalRef.hide();
+          },
+          error => {
+              console.log(error);
+          });
     }
-
-    this.modalRef.hide();
-    //this.action.emit(true); // here you can send object  instead of true
   }
 
-  public onEditHoliday(form) {
-    console.log("Edit Holiday form submitted");
-    this.modalRef.hide();
-    //this.action.emit(true); // here you can send object  instead of true
+  public onEditHoliday(formdata) {
+    if (formdata.valid) {
+      let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+      let date = new Date(formdata.form.value.date);
+      let dayName = days[date.getDay()];
+
+      const payload = {
+        _id: formdata.form.value._id,
+        day: dayName,
+        date: formdata.form.value.date,
+        isRestricted: formdata.form.value.isRestricted,
+        isGeneral: formdata.form.value.isGeneral,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        occasion: formdata.form.value.occasion
+      }
+
+      this.leaveService.updateLeaveHoliday(payload).subscribe(
+          res => {
+            this.getHolidays();
+            swal("Edit Holiday", "", "success");
+            this.modalRef.hide();
+          },
+          error => {
+              console.log(error);
+          });
+    }
+  }
+
+  public onDeleteHoliday(holiday: any) {
+
+    if(holiday._id) {
+      this.leaveService.removeLeaveHoliday(holiday).subscribe(
+        res => {
+          this.getHolidays();
+          swal("Delete Holiday", "", "success");
+        },
+        error => {
+            console.log(error);
+        });
+    }
   }
 
 }
