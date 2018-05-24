@@ -534,7 +534,7 @@
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData"
-                                                                    bindLabel="locationName" bindValue="_id" placeholder="Select Thane"
+                                                                    bindLabel="locationName" bindValue="_id" placeholder="Select Thana"
                                                                     [(ngModel)]="address.currentAddressThana_id" [clearable]="false"
                                                                     #currentAddressthane="ngModel" required disabled
                                                                     disabled></ng-select>
@@ -658,7 +658,7 @@
                                                                 <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName"
-                                                                        bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id"
+                                                                        bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.permanentAddressThana_id"
                                                                         [clearable]="false" #permanentAddressThana="ngModel"
                                                                         required disabled></ng-select>
                                                                     <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">

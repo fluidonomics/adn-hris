@@ -346,10 +346,10 @@
 											<div class="row">
 												<div class="col-md-6 adn-form__group">
 													<div class="form-group m-form__group">
-														<label for="thane">Thane
+														<label for="thana">Thana
 														<span class="required" aria-required="true"> * </span>
 														</label>
-														<ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required></ng-select>
+														<ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required></ng-select>
 														<div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !currentAddressthane.valid ">
 														This field is required.
 														</div>
@@ -438,7 +438,7 @@
 														<label for="permanentAddressThana">Thana
 														<span class="required" aria-required="true"> * </span>
 														</label>
-														<span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>                                                 <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required></ng-select>
+														<span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>                                                 <ng-select *ngIf="!address.isSameAsCurrent" class="m-input m-input--air" name="permanentAddressThana" [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required></ng-select>
 														<div class="form-control-feedback has-danger" *ngIf="!address.isSameAsCurrent && faddress.submitted && !permanentAddressThana.valid ">
 														This field is required.
 														</div>

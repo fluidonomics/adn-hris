@@ -432,7 +432,7 @@
                                                         <label for="thane">Upazila/Thana
                                                         <span class="required" aria-required="true"> * </span>
                                                         </label>
-                                                        <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thane" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>
+                                                        <ng-select class="m-input m-input--air" #currentThana name="currentAddressThana" #thane [items]="currentAddressThanaData" bindLabel="locationName" bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.currentAddressThana_id" [clearable]="false" #currentAddressthane="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>
                                                         <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressthane.valid ">
                                                            This field is required.
                                                         </div>
@@ -534,7 +534,7 @@
                                                         </label>
                                                         <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>  
                                                         <ng-container *ngIf="!address.isSameAsCurrent">
-                                                            <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName" bindValue="_id" dropdownPosition="top" placeholder="Select Thane" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>                                              
+                                                            <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName" bindValue="_id" dropdownPosition="top" placeholder="Select Thana" [(ngModel)]="address.permanentAddressThana_id" [clearable]="false" #permanentAddressThana="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"></ng-select>                                              
                                                             <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
                                                             This field is required.
                                                             </div>

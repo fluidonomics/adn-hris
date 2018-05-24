@@ -15,6 +15,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     employeeData: any = [];
 
     filterBy: any = {};
+
+    checkAll: any = {};
     currentDate=new Date();
 
     divisionData: any = [];
@@ -22,7 +24,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     gradeData: any = [];
 
     batchData={
-        emp_id:[]
+        emp_id:[],
+        batchEndDate:[],
+        batchName:[],
+        batchType:[]
     };
 
     
@@ -176,7 +181,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.search=null
         this.filterBy={}
         this.batchData={
-            emp_id:[]
+            emp_id:[],
+            batchEndDate:[],
+            batchName:[],
+            batchType:[]
         };
         this.loadAllEmployee();
     }
