@@ -178,27 +178,40 @@
 				    </select>
 			        <span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
 				</div>
-				<div class="form-actions">
-							<div class="row">
-								<div class="col-md-12">
-										<select #batchType="ngModel" name="workflow" [(ngModel)]="batchData.batchType" class="form-control m-input m-input--solid" title="Select page size" data-width="70px" data-selected="50">
+				<div class="form-actions" style="margin-top: 25px;">
+					<div class="row">
+						<div class="col-md-4">
+								<div class="form-group m-form__group">
+										<label for="batchName">Workflow Type
+											</label>
+										<span class="required" aria-required="true"> * </span>
+										<select #batchType="ngModel" name="workflow" [(ngModel)]="batchData.batchType" class="form-control m-input m-input--air" data-width="70px" data-selected="50">
 												<option value="KRA">KRA</option>
 												<option value="Learning" disabled>Learning</option>
 												<option value="PIP" disabled>PIP</option>
-										</select>
-										<label for="batchName">Batch Name
-										</label>
-										<input name="batchName" class="form-control m-input m-input--air" placeholder="Enter Batch Name" [(ngModel)]="batchData.batchName">
-										
-										<label for="batchEndDate">End Batch
-										</label>
-										<input name="batchEndDate" class="form-control m-input m-input--air" placeholder="Enter Batch End Date" [(ngModel)]="batchData.bacthEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #bacthEndDate="ngModel">
-										
-									<div class="m-form__actions">
-										<button class="btn btn-success submitForm" type="submit" id="search" (click)="saveBulkKra()">Initiate</button>
+										</select>										
 									</div>
-								</div>
+
+
+							
+						</div>
+						<div class="col-md-4">
+								<label for="batchName">Batch Name
+								</label>
+								<input name="batchName" class="form-control m-input m-input--air" placeholder="Enter Batch Name" [(ngModel)]="batchData.batchName">
+						</div>
+						<div class="col-md-4">
+								<label for="batchEndDate">Batch End Date
+								</label>
+								<input name="batchEndDate" class="form-control m-input m-input--air" placeholder="Enter Batch End Date" [(ngModel)]="batchData.bacthEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #bacthEndDate="ngModel">
+						</div>
+						<div class="col-md-4">
+								
+							<div class="m-form__actions">
+								<button class="btn btn-success submitForm" type="submit" id="search" (click)="saveBulkKra()">Initiate</button>
 							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
