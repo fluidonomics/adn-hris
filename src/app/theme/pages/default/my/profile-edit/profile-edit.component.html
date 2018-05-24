@@ -950,7 +950,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="marks">Marks in %
                                                                 </label>
-                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="3" OnlyNumber="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">

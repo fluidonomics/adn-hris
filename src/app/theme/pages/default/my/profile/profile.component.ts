@@ -533,7 +533,17 @@ export class ProfileComponent implements OnInit {
 
     }
     //save Family Info
-    saveFamilyInfo(objFamily: any, index: number) {
+    saveFamilyInfo(objFamily: any, index: number,_element) {
+        if(objFamily.relation_id==1 || objFamily.relation_id==2)
+        {
+           if(this.familyInfo.filter(item=> item.relation_id == objFamily.relation_id).length > 1)
+           {
+               return _element.control.setErrors({ "relationExists": true })
+           }
+           else{
+                _element.control.setErrors(null);
+           }
+        }
         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(

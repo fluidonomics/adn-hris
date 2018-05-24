@@ -772,7 +772,7 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="marks">Marks in %
                                                     </label>
-                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="4" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="3" OnlyNumber="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 </div>
                                             </div>
                                             <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
@@ -1088,7 +1088,7 @@
                                 </div>
                                 <div class="m-accordion__item-content">
                                     <div *ngFor="let family of familyInfo ;let i=index">
-                                        <form class="m-form m-form--fit m-form--label-align-right" #ffamilyInfo="ngForm" (ngSubmit)="ffamilyInfo.valid && saveFamilyInfo(family,i)" novalidate="novalidate">
+                                        <form class="m-form m-form--fit m-form--label-align-right" #ffamilyInfo="ngForm" (ngSubmit)="ffamilyInfo.valid && saveFamilyInfo(family,i,relation)" novalidate="novalidate">
                                         <div class="form-group m-form__group m--margin-top-10">
                                         </div>
                                         <div class="row">
@@ -1127,9 +1127,11 @@
                                                 <span class="required" aria-required="true"> * </span>
                                                 <ng-select name="relation" [items]="relationData" bindLabel="relationName" bindValue="_id" placeholder="Select relation" [(ngModel)]="family.relation_id" #relation="ngModel"  [clearable]="false" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 </ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !relation.valid ">
-                                                    This field is required.
-                                                </div>
+
+                                                <div class="form-control-feedback has-danger" *ngIf="!relation.valid">
+                                                        <span *ngIf="ffamilyInfo.submitted && relation.errors?.required">This field is required.</span>
+                                                        <span *ngIf="relation.errors?.relationExists">Relation is already use.</span> 
+                                                  </div>
                                             </div>
                                         </div>
                                         </div>
