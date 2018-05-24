@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,AfterViewInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from '../helpers';
 import { ScriptLoaderService } from '../_services/script-loader.service';
 
-
+declare let $:any;
 declare let mApp: any;
 declare let mUtil: any;
 declare let mLayout: any;
@@ -12,7 +12,7 @@ declare let mLayout: any;
     templateUrl: "./theme.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ThemeComponent implements OnInit {
+export class ThemeComponent implements OnInit,AfterViewInit {
 
     constructor(private _script: ScriptLoaderService, private _router: Router) {
 
@@ -41,5 +41,17 @@ export class ThemeComponent implements OnInit {
             }
         });
     }
+
+    ngAfterViewInit()
+    {
+        $.sessionTimeout({
+            redirUrl:"/login",
+            warnAfter:60000, //10 mint
+            redirAfter:66000,
+            ignoreUserActivity:false,
+            keepAlive:false
+        })
+    }
+    
 
 }

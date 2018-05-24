@@ -21,7 +21,10 @@ import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
 
 import { BaseModule } from "./base/base.module"
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment'
 
+const config: SocketIoConfig = { url:environment.api_base.apiBase, options: {} };
 
 @NgModule({
     declarations: [
@@ -36,6 +39,7 @@ import { BaseModule } from "./base/base.module"
         BaseModule,
         LayoutModule,
         BrowserModule.withServerTransition({ appId: 'AdnHris' }),
+        SocketIoModule.forRoot(config),
         BrowserAnimationsModule,
         AppRoutingModule,
         ThemeRoutingModule,
