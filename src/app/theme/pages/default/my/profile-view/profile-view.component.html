@@ -210,6 +210,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="m-form__group form-group">
                                                             <label for="gender">
+                                                                    <span class="required" aria-required="true"> * </span>
                                                                 Gender
                                                             </label>
                                                             <div ngModelGroup="genderGroup" #genderGroup="ngModelGroup" onlyOneRequired>
@@ -250,14 +251,22 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label for="mobileNo">Mobile No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true"
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true"
                                                                 minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo"
                                                                 maxlength="10" aria-describedby="mobileNo" aria-invalid="true"
                                                                 class="form-control m-input m-input--air" required disabled>
+                                                                </div>
+                                                          
                                                                 <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted">
                                                                         <span *ngIf="mobileNo.errors?.required">
                                                                                 This field is required.
@@ -379,6 +388,7 @@
                                                             <label for="emergencyContactName">Emergency Contact Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
+                                                         
                                                             <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel"
                                                                 placeholder="Enter emergency contact name" id="emergencyContactName"
                                                                 class="form-control m-input m-input--air" required disabled>
@@ -388,14 +398,22 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label class="emergencyContactNo">Emergency Contact No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber"
-                                                                #emergencyContactNo="ngModel" placeholder="Enter emergency contact no"
-                                                                type="text" class="form-control m-input m-input--air" OnlyNumber="true"
-                                                                required disabled>
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber"
+                                                                    #emergencyContactNo="ngModel" placeholder="Enter emergency contact no"
+                                                                    type="text" class="form-control m-input m-input--air" OnlyNumber="true"
+                                                                    required disabled>
+                                                                </div>
+                                                        
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactNo.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1367,12 +1385,20 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
-                                                            <div class="form-group m-form__group">
+                                                            <div class="form-group m-form__group input-group">
                                                                 <label for="fmobileNumber">Mobile Number
                                                                 </label>
-                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10"
-                                                                    id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number"
-                                                                    type="text" OnlyNumber="true" disabled>
+                                                                <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="basic-addon2">
+                                                                                +880
+                                                                            </span>                                                
+                                                                        </div>
+                                                                        <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10"
+                                                                        id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number"
+                                                                        type="text" OnlyNumber="true" disabled>
+                                                                    </div>
+                                                               
                                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
                                                                         Please enter valid mobile number
@@ -1495,12 +1521,20 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label for="officeMobileNumber">Office Mobile Number
                                                             </label>
-                                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
                                                                 maxlength="10" type="text" class="form-control m-input m-input--air"
                                                                 placeholder="Enter office mobile no" OnlyNumber="true" disabled>
+                                                                </div>
+                                                          
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
                                                                 <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
                                                                             Please enter valid mobile number

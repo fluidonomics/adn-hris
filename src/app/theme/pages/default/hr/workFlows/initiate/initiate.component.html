@@ -63,14 +63,6 @@
 										<div class="col-md-3"></div>
 										<div class="col-md-3"></div>
 										<div class="col-md-3">
-											<!-- <div class="m-input-icon m-input-icon--left">
-												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-												<span class="m-input-icon__icon m-input-icon__icon--left">
-													<span>
-														<i class="la la-search"></i>
-													</span>
-												</span>
-											</div> -->
 										</div>
 									</div>
 								</div>
@@ -83,7 +75,7 @@
 										
 										<th class="m-datatable__cell" width="5%">
 												<label>
-														<input type="checkbox" [(ngModel)]="checkAll" [disabled]="!p.pages.length > 0" (change)="selectAllEmployee($event)">
+														<input type="checkbox" [(ngModel)]="checkAll" [disabled]="p.pages.length==0" (change)="selectAllEmployee($event)">
 												</label>
 										</th>
 										<th class="m-datatable__cell" width="5%" ></th>
@@ -146,7 +138,7 @@
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
 							<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-								<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+								<ul class="m-datatable__pager-nav" *ngIf="p.pages.length != 0">
 									<li>
 										<a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
 											<i class="la la-angle-double-left"></i>

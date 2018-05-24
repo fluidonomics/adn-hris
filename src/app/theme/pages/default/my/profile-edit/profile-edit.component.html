@@ -23,56 +23,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="m-widget4__item">
-                                    <div class="m-widget4__ext">
-                                        <span class="m-widget4__icon m--font-brand">
-                                            <i class="flaticon-share"></i>
-                                        </span>
-                                    </div>
-                                    <div class="m-widget4__info">
-                                        <span class="m-widget4__text">
-                                            <strong>Type: </strong>
-                                        </span>
-                                        <span class="m-widget4__text">
-                                            Employee Profile
-                                        </span>
+                            <div class="col-md-4"  *ngIf="profileProcess.isSupervisorSendBack">
+                                    <div class="m-widget4__item">
+                                        <div class="m-widget4__ext">
+                                            <span class="m-widget4__icon m--font-danger">
+                                                <i class="fa fa-comment"></i>
+                                            </span>
+                                        </div>
+                                        <div class="m-widget4__info">
+                                              <strong> {{profileProcess.supervisorStatus=='SendBack' ? 'Resaon to Send Back : ' : (profileProcess.supervisorStatus == 'SendBack' ? 'Resaon to Send Back : ' : '')}} </strong>                                {{profileProcess.supervisorStatus=='SendBack' ? profileProcess.hrSupervisorSendbackComment : (profileProcess.supervisorStatus == 'SendBack' ? profileProcess.hrSendbackComment : '')}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="m-widget4__item">
-                                    <div class="m-widget4__ext">
+                                    <div class="m-widget4__ext" >
                                         <span class="m-widget4__icon m--font-brand">
                                             <i class="flaticon-information"></i>
                                         </span>
                                     </div>
                                     <div class="m-widget4__info">
                                         <span class="m-widget4__text">
-                                            <strong>Status: </strong>
-                                        </span>
-                                        <span class="m-widget4__text">
-                                            {{profileProcess.supervisorStatus=='Approved' ? 'Approved by Supervisor' : (profileProcess.supervisorStatus == 'SendBack' ? 'Sent Back by Supervisor' :( profileProcess.hrStatus=='Submitted' ? 'Submitted to Supervisor':(profileProcess.hrStatus=='SendBack'? 'Sent Back by HR':'Submitted by Employee')))}}
+                                            Employee Profile : <strong>{{profileProcess.supervisorStatus=='Approved' ? 'Approved by Supervisor' : (profileProcess.supervisorStatus == 'SendBack' ? 'Sent Back by Supervisor' :( profileProcess.hrStatus=='Submitted' ? 'Submitted to Supervisor':(profileProcess.hrStatus=='SendBack'? 'Sent Back by HR':'Submitted by Employee')))}} </strong><br> {{profileProcess.updatedAt | date:"dd-MMM-yyyy hh:mm aa" || profileProcess.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="m-widget4__item">
-                                    <div class="m-widget4__ext">
-                                        <span class="m-widget4__icon m--font-brand">
-                                            <i class="flaticon-calendar"></i>
-                                        </span>
-                                    </div>
-                                    <div class="m-widget4__info">
-                                        <span class="m-widget4__text">
-										    {{profileProcess.updatedAt | date:"dd-MMM-yyyy hh:mm aa" || profileProcess.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="m-widget4__item" style="align-self: right">
+                        
+                            <div class="col-md-3">
+                                <div class="m-widget4__item" style="align-self: center">
                                     <div class="m-widget4__ext" style="padding-right: 3px;">                                                                  
                                         <button type="button" class="btn m-btn--pill btn-success" *ngIf="(!profileProcess.isHrSubmitted && !profileProcess.isHrSendBack) ||profileProcess.isSupervisorSendBack"
                                             (click)="submitProfile('Submitted')">Send for Approval</button>
@@ -211,9 +190,10 @@
                                                         <div class="m-form__group form-group">
                                                             <label for="gender">
                                                                 Gender
+                                                                <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <div ngModelGroup="genderGroup" #genderGroup="ngModelGroup" onlyOneRequired>
-                                                                <div class="m-radio-inline">
+                                                                <div class="m-radio-inline" >
                                                                     <label class="m-radio">
                                                                         <input name="mgender" id="Male" type="radio" value="Male" checked="checked" [(ngModel)]="personalInfo.gender" #mgender="ngModel"
                                                                             [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"> Male
@@ -250,14 +230,18 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label for="mobileNo">Mobile No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true"
-                                                                minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo"
-                                                                maxlength="10" aria-describedby="mobileNo" aria-invalid="true"
-                                                                class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyNumber="true" minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                </div>
                                                             <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
                                                                         <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
                                                                         <span *ngIf="mobileNo.errors?.maxlength">Please enter valid mobile number</span>
@@ -356,7 +340,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="fatherName">Father's Name
                                                                 </label>
-                                                                <input type="text" name="fatherName" [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name"
+                                                                <input type="text" name="fatherName" [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
                                                                     id="fatherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
@@ -364,7 +348,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="motherName">Mother's Name
                                                                 </label>
-                                                                <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name"
+                                                                <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
                                                                     id="motherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
@@ -375,7 +359,7 @@
                                                             <label for="emergencyContactName">Emergency Contact Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel"
+                                                            <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
                                                                 placeholder="Enter emergency contact name" id="emergencyContactName"
                                                                 class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactName.valid ">
@@ -384,14 +368,22 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label class="emergencyContactNo">Emergency Contact No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber"
-                                                                #emergencyContactNo="ngModel" placeholder="Enter emergency contact no"
-                                                                type="text" class="form-control m-input m-input--air" OnlyNumber="true"
-                                                                required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input name="emergencyContactNo" id="emergencyContactNo" minlength=10 maxlength=10 [(ngModel)]="personalInfo.emergencyContactNumber"
+                                                                    #emergencyContactNo="ngModel" placeholder="Enter emergency contact no"
+                                                                    type="text" class="form-control m-input m-input--air" OnlyNumber="true"
+                                                                    required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                </div>
+                                                            
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactNo.valid ">
                                                                 This field is required.
                                                             </div>
@@ -1387,12 +1379,20 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6 adn-form__group">
-                                                            <div class="form-group m-form__group">
+                                                            <div class="form-group m-form__group input-group">
                                                                 <label for="fmobileNumber">Mobile Number
                                                                 </label>
-                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10"
-                                                                    id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number"
-                                                                    type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="basic-addon2">
+                                                                                +880
+                                                                            </span>                                                
+                                                                        </div>
+                                                                        <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10"
+                                                                        id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number"
+                                                                        type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    </div>
+                                                                
                                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
                                                                     <span *ngIf="mobileNumber.errors?.maxlength || mobileNumber.errors?.minlength">
                                                                         Please enter valid mobile number
@@ -1520,12 +1520,20 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
-                                                        <div class="form-group m-form__group">
+                                                        <div class="form-group m-form__group input-group">
                                                             <label for="officeMobileNumber">Office Mobile Number
                                                             </label>
-                                                            <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
+                                                            <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon2">
+                                                                            +880
+                                                                        </span>                                                
+                                                                    </div>
+                                                                    <input name="officeMobileNumber" [(ngModel)]="officeInfo.officeMobile" #officeMobileNumber="ngModel" id="officeMobileNumber"
                                                                 maxlength="10" type="text" class="form-control m-input m-input--air"
                                                                 placeholder="Enter office mobile no" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
+                                                                </div>
+                                                            
                                                                 <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted">
                                                                     <span *ngIf="officeMobileNumber.errors?.maxlength || officeMobileNumber.errors?.minlength">
                                                                             Please enter valid mobile number
