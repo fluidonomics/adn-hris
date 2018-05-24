@@ -533,7 +533,7 @@ export class ProfileComponent implements OnInit {
 
     }
     //save Family Info
-    saveFamilyInfo(objFamily: any, index: number,_element) {
+    saveFamilyInfo(objFamily: any, index: number, _element) {
         if(objFamily.relation_id==1 || objFamily.relation_id==2)
         {
            if(this.familyInfo.filter(item=> item.relation_id == objFamily.relation_id).length > 1)
