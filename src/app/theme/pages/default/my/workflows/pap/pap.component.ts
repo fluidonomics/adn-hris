@@ -143,34 +143,34 @@ export class MyPapComponent implements OnInit {
     }
 
     loadKra() {
-        this._commonService.getKraDetailsData(this._currentEmpId)
-            .subscribe(
-            res => {
-                let resData = res.json().data;
-                if (resData.length > 0) {
-                    this.isKraAvaliable = true;
-                }
-                else {
-                    this.isKraAvaliable = false;
-                }
+        // this._commonService.getKraDetailsData(this._currentEmpId)
+        //     .subscribe(
+        //     res => {
+        //         let resData = res.json().data;
+        //         if (resData.length > 0) {
+        //             this.isKraAvaliable = true;
+        //         }
+        //         else {
+        //             this.isKraAvaliable = false;
+        //         }
 
 
 
-                if (resData[0].kraDetails.length > 0) {
-                    this.kraInfos = resData[0].kraDetails;
-                    if (resData[0].status == "submitted" || resData[0].status == "approved") {
-                        this.isDisabled = true;
-                    }
-                }
+        //         if (resData[0].kraDetails.length > 0) {
+        //             this.kraInfos = resData[0].kraDetails;
+        //             if (resData[0].status == "submitted" || resData[0].status == "approved") {
+        //                 this.isDisabled = true;
+        //             }
+        //         }
 
-                else {
-                    if (resData[0].status == "initiated" && resData[0].kraDetails.length == 0) {
-                        this.addDummyRow(resData[0]._id);
-                    }
-                }
-            },
-            error => {
-            });
+        //         else {
+        //             if (resData[0].status == "initiated" && resData[0].kraDetails.length == 0) {
+        //                 this.addDummyRow(resData[0]._id);
+        //             }
+        //         }
+        //     },
+        //     error => {
+        //     });
     }
 
     addDummyRow(_id) {

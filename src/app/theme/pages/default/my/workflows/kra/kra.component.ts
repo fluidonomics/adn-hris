@@ -20,8 +20,7 @@ export class MyKraComponent {
     weightageData: any = [];
     supervisorData: any = [];
 
-    kraInfos: any = [
-    ];
+    kraInfoData: any = [];
 
     isSubmitted: boolean = false;
     _currentEmpId: number;
@@ -86,6 +85,18 @@ export class MyKraComponent {
        this.loadKraCategoryData();
        this.loadWeightAgeData();
        this.loadSupervisorData();
+       this.loadKraInfo();
+    }
+
+    loadKraInfo()
+    {
+        this._kraService.getKraInfo(this.param_id).subscribe(
+            res => {
+                this.kraInfoData=res.json().data;
+                this.addDummyRow((7-this.kraInfoData.length));
+            },
+            error => {
+        });;
     }
        
     loadKraCategoryData()
@@ -112,16 +123,36 @@ export class MyKraComponent {
     
     loadSupervisorData()
     {
-      
+        this._commonService.getKraSupervisor(this._currentEmpId)
+        .subscribe(
+        data => {
+           this.supervisorData=data.json();
+        },
+        error => {
+        });
     }
 
     onKraSubmit(isSaveDraft?: boolean) {
-     
-    }
+        if(isSaveDraft)
+        {
+          //var insertedData=this.kraInfoData.filter(item>
+          //)
+        }
+          this._kraService.saveKra(this.kraInfoData)
+            .subscribe(
+            data => {
+                swal("Kra is submitted.", "", "success");
+            },
+            error => {
+            });
+    };
+   
+   
 
 
-    addDummyRow(_id) {
-        for (let j = 0; j < 7; j++) {
+
+    addDummyRow(loopLength) {
+        for (let j = 0; j < loopLength; j++) {
             let data = {
                 _id: "",
                 kra: "",
@@ -130,9 +161,9 @@ export class MyKraComponent {
                 unitOfSuccess: "",
                 measureOfSuccess: "",
                 supervisor_id: "",
-                kraWorkflow_id: _id
+                kraWorkflow_id: this.param_id
             };
-            this.kraInfos.push(data);
+            this.kraInfoData.push(data);
         }
     }
 }

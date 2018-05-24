@@ -279,16 +279,10 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getKraSupervisor(emp_id) {
-        let url = "kra/getKraSupervisor?emp_id=" + emp_id;
+    getKraSupervisor(emp_id:number) {
+        let url = "common/getKraSupervisor?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-
-    getKraDetailsData(emp_id) {
-        let url = "kra/getKraDetailsData?emp_id=" + emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
 
     getExamDegreeTitle() {
         return examDegreeTitle;

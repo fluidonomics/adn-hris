@@ -16,6 +16,15 @@ export class KraService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getKraInfo(kraworkflow_id?: number): Observable<Response> {
+        let url = "kra/getKraInfo?kraworkflow_id=" + kraworkflow_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    
+    saveKra(data: any): Observable<Response> {
+        let url = "kra/addKraInfo"
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
     private extractData(res: Response) {
         return res || {};
     }
