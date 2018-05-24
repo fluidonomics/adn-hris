@@ -888,7 +888,7 @@ export class ProfileComponent implements OnInit {
                 this.address = data.json() || {};
                 if (data.json()) {
                     this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
-                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id);
+                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id,'init');
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
                     this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
@@ -974,10 +974,13 @@ export class ProfileComponent implements OnInit {
             });
     }
     //Load Current Thana Dropdown Data
-    loadcurrentAddressThanaData(district_id) {
+    loadcurrentAddressThanaData(district_id:number,onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
+                    if (!onLoad) {
+                        this.address.currentAddressThana_id = null;
+                    }
                     this.currentAddressThanaData = res.json()
                 }
             },
