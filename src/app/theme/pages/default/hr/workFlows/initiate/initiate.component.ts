@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { HrService } from '../../hr.service';
-declare var $;
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,20 +14,27 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     employeeData: any = [];
 
-    filterSearch: any = {};
+    filterBy: any = {};
+    currentDate=new Date();
 
     divisionData: any = [];
     deparmentData: any = [];
     gradeData: any = [];
 
+    batchData={
+        emp_id:[]
+    };
 
+    
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
-    search: any;
+
     _currentEmpId: number;
     itemPerPage: number=30;
-    checkAll:boolean=false;
+
+    search:any;
+    isCheckAll:boolean=false;
 
     constructor(
         private _hrService: HrService,
@@ -83,20 +89,20 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        if(this.filterSearch.grades || this.filterSearch.departments)
+        if(this.filterBy.grades || this.filterBy.departments)
         {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
-                    if(this.filterSearch.departments && this.filterSearch.departments.length>0)
+                    if(this.filterBy.departments && this.filterBy.departments.length>0)
                     {
-                      data = data.filter(obj => obj.department_id == this.filterSearch.departments.includes(obj.department_id));
+                      data = data.filter(obj => obj.department_id == this.filterBy.departments.includes(obj.department_id));
                     }
-                    if(this.filterSearch.grades && this.filterSearch.grades.length>0)
+                    if(this.filterBy.grades && this.filterBy.grades.length>0)
                     {
-                        data = data.filter(obj =>this.filterSearch.grades.includes(obj.grade_id));
+                        data = data.filter(obj =>this.filterBy.grades.includes(obj.grade_id));
                     }
                     this.employeeData = data || [];
                 }
@@ -112,12 +118,14 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     saveBulkKra() {
-        var selectedEmp_id = this.employeeData.filter(function (employee, index, array) {
+
+        this.batchData.emp_id = this.employeeData.filter(function (employee, index, array) {
            return employee.checked;
         }).map(item=> {
             return item._id
         });
-        this._hrService.saveBulkKra({ emp_id: selectedEmp_id, type:this.filterSearch.workflowtype })
+
+        this._hrService.saveBulkKra(this.batchData)
             .subscribe(
             res => {
                 if (res.ok) {
@@ -138,11 +146,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.reverse = !this.reverse;
     }
 
-    clearFormData() {
-        this.deparmentData = [];
-        this.gradeData = [];
-        this.divisionData = [];
-    }
+  
 
     getStart()
     {
@@ -168,9 +172,12 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.key=''; //set default
         this.reverse= false;
         this.p2 = 1;
-        this.search=null;
-        this.filterSearch={};
-        this.checkAll=false;
+        this.isCheckAll=false;
+        this.search=null
+        this.filterBy={}
+        this.batchData={
+            emp_id:[]
+        };
         this.loadAllEmployee();
     }
 

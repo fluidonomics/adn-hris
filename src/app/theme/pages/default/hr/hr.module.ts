@@ -29,6 +29,8 @@ import { TagInputModule } from 'ngx-chips';
 import { HrService } from './hr.service';
 import { BaseModule } from '../../../../base/base.module';
 
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 @NgModule({
     imports: [
@@ -41,7 +43,8 @@ import { BaseModule } from '../../../../base/base.module';
         NgSelectModule,
         NgxPaginationModule,
         TagInputModule,
-        BaseModule
+        BaseModule,
+        BsDatepickerModule.forRoot(),
     ], declarations: [
         HrComponent,
         DashboardComponent,

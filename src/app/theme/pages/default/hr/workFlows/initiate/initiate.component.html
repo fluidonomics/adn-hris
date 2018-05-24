@@ -22,13 +22,13 @@
 										<div class="col-md-4">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Department</label>
-												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterSearch.departments" [clearable]="false"></ng-select>
+												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterBy.departments" [clearable]="false"></ng-select>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Grade</label>
-												<ng-select class="m-input m-input--air" name="grade" [items]="gradeData" [multiple]="true" bindLabel="gradeName"  bindValue="_id" placeholder="Select Grade" [(ngModel)]="filterSearch.grades"   ></ng-select>
+												<ng-select class="m-input m-input--air" name="grade" [items]="gradeData" [multiple]="true" bindLabel="gradeName"  bindValue="_id" placeholder="Select Grade" [(ngModel)]="filterBy.grades"   ></ng-select>
 											</div>
 										</div>
 										<div class="col-md-4">
@@ -63,14 +63,6 @@
 										<div class="col-md-3"></div>
 										<div class="col-md-3"></div>
 										<div class="col-md-3">
-											<!-- <div class="m-input-icon m-input-icon--left">
-												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-												<span class="m-input-icon__icon m-input-icon__icon--left">
-													<span>
-														<i class="la la-search"></i>
-													</span>
-												</span>
-											</div> -->
 										</div>
 									</div>
 								</div>
@@ -83,7 +75,7 @@
 										
 										<th class="m-datatable__cell" width="5%">
 												<label>
-														<input type="checkbox" [(ngModel)]="checkAll" [disabled]="!p.pages.length > 0" (change)="selectAllEmployee($event)">
+														<input type="checkbox" [(ngModel)]="isCheckAll" [disabled]="!p.pages.length > 0" (change)="selectAllEmployee($event)">
 												</label>
 										</th>
 										<th class="m-datatable__cell" width="5%" ></th>
@@ -189,12 +181,19 @@
 				<div class="form-actions">
 							<div class="row">
 								<div class="col-md-12">
-									
-										<select #workflowtype="ngModel" name="workflow" [(ngModel)]="filterSearch.workflowtype" class="form-control m-input m-input--solid" title="Select page size" data-width="70px" data-selected="50">
+										<select #batchType="ngModel" name="workflow" [(ngModel)]="batchData.batchType" class="form-control m-input m-input--solid" title="Select page size" data-width="70px" data-selected="50">
 												<option value="KRA">KRA</option>
 												<option value="Learning" disabled>Learning</option>
 												<option value="PIP" disabled>PIP</option>
 										</select>
+										<label for="batchName">Batch Name
+										</label>
+										<input name="batchName" class="form-control m-input m-input--air" placeholder="Enter Batch Name" [(ngModel)]="batchData.batchName">
+										
+										<label for="batchEndDate">End Batch
+										</label>
+										<input name="batchEndDate" class="form-control m-input m-input--air" placeholder="Enter Batch End Date" [(ngModel)]="batchData.bacthEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #bacthEndDate="ngModel">
+										
 									<div class="m-form__actions">
 										<button class="btn btn-success submitForm" type="submit" id="search" (click)="saveBulkKra()">Initiate</button>
 									</div>
