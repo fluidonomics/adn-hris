@@ -26,6 +26,7 @@ export class ApplyComponent implements OnInit {
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
     currentUser: UserData;
+    employeeBalances: any = [];
 
     constructor(
         private leaveService: LeaveService,
@@ -85,9 +86,18 @@ export class ApplyComponent implements OnInit {
     getEmployeeLeaveBalance() {
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
             if (res.ok) {
-                // this.leaveapplication.balance = res.json() || 0;
+                this.employeeBalances = res.json() || [];
             }
         })
+    }
+
+    onChangeLeaveType() {
+        let empBal = this.employeeBalances.find(bal => {
+            if (bal) {
+                return bal.leave_type == this.leaveapplication.leaveType;
+            }
+        });
+        this.leaveapplication.balance = empBal ? empBal.balance : 0;
     }
 
     postEmployeeLeaveDetails(form, data: any) {
@@ -108,13 +118,14 @@ export class ApplyComponent implements OnInit {
             _postData.applyTo = data.applyToId;
             _postData.fromDate = data.fromDate;
             _postData.toDate = data.toDate;
-            _postData.leave_type = data._id;
+            _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
             _postData.contactDetails = data.contactDetail;
             _postData.ccTo = data.ccTo;
             _postData.emp_id = this.currentUser._id;
             _postData.createdBy = this.currentUser._id;
-
+            _postData.updatedBy = this.currentUser._id;
+            
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
                 type: 'loader',

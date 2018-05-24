@@ -49,10 +49,7 @@
                             <div class="col-md-4">
                                 <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.1);padding: 5px;margin-left:  2px;">
                                     <div class="col-md-6">
-                                        7 General Holidays
-                                    </div>
-                                    <div class="col-md-6" style="text-align: right;">
-                                        8 Restricted Holidays
+                                        0 General Holidays
                                     </div>
                                 </div>
                             </div>
@@ -90,12 +87,6 @@
                                                 </th>
                                                 <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                     <span>
-                                                        Restricted
-                                                        <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                                    <span>
                                                         Action
                                                         <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                     </span>
@@ -112,11 +103,6 @@
                                                 </td>
                                                 <td class="m-datatable__cell" width="15%">
                                                     <span>{{holiday.day}}</span>
-                                                </td>
-                                                <td class="m-datatable__cell" width="15%">
-                                                    <a>
-                                                        <i class="fa fa-check" *ngIf="holiday.isRestricted == true"></i>
-                                                    </a>
                                                 </td>
                                                 <td class="m-datatable__cell actions" width="15%">
                                                     <a>
@@ -201,15 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-12 adn-form__group">
-                                    <div class="m-form__group form-group">
-                                        <label for="form_control_1">Restricted</label>
-                                        <input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="addholiday.isRestricted">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-md-12 adn-form__group">
                                     <div class="m-form__group form-group">
@@ -257,7 +234,7 @@
                 <div class="modal-body">
                     <form class="m-form m-form--fit m-form--label-align-right" id="addHoliday" #feditholiday="ngForm" (submit)="onEditHoliday(feditholiday)">
                         <div class="form-body">
-                          <input type="hidden" name="_id" id="holidayid" [(ngModel)]="editholiday._id" #id="ngModel">
+                            <input type="hidden" name="_id" id="holidayid" [(ngModel)]="editholiday._id" #id="ngModel">
                             <div class="row">
                                 <div class="col-md-12 adn-form__group">
                                     <div class="m-form__group form-group">
@@ -270,14 +247,6 @@
                                             <span *ngIf="feditholiday.submitted && !occasion.valid">This field is required.</span>
                                         </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 adn-form__group">
-                                    <div class="m-form__group form-group">
-                                        <label for="form_control_1">Restricted</label>
-                                        <input type="checkbox" name="isRestricted" id="isRestricted" [(ngModel)]="editholiday.isRestricted">
                                     </div>
                                 </div>
                             </div>

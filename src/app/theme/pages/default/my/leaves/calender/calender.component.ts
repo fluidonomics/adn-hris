@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { ScriptLoaderService } from '../../../../../../_services/script-loader.service';
+import { AuthService } from '../../../../../../base/_services/authService.service';
+import { UserData } from '../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../leave.service';
 
 declare var $;
 declare var moment;
@@ -11,133 +14,70 @@ declare var mApp;
     templateUrl: "./calender.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class CalenderComponent implements OnInit, AfterViewInit {
+export class CalenderComponent implements OnInit {
 
     calendardata: any = [];
+    currenUser: UserData;
+    leaveDetails: any = [];
 
-    constructor(private _script: ScriptLoaderService) {
+
+    constructor(
+        private authService: AuthService,
+        private leaveService: LeaveService
+    ) {
 
     }
     ngOnInit() {
+        this.currenUser = this.authService.currentUserData;
+        this.getLeaveDetailsByRole();
     }
 
-    ngAfterViewInit() {
-        /* this._script.loadScripts('app-calendar-basic',
-            ['assets/demo/default/custom/components/calendar/basic.js']);*/
+    getLeaveDetailsByRole() {
+        debugger;
+        let role = this.currenUser.roles[0];
+        this.leaveService.getLeaveDetailsByRole(role).subscribe(res => {
+            if (res.ok) {
+                this.leaveDetails = res.json() || [];
+                this.calendardata = this.leaveDetails.map(leave => {
+                    debugger;
+                    let data: any = {};
+                    let fromdate, toDate;
+                    if (leave.fromDate)
+                        fromdate = moment(leave.fromDate).format('YYYY-MM-DD');
+                    if (leave.toDate)
+                        toDate = moment(leave.toDate).format('YYYY-MM-DD');
 
-        /* this._script.loadScript('app-calendar-basic'); */
-        setTimeout(() => {
-            this.loadCalendar();
-        }, 3000);
-    }
+                    if (leave.emp_name) {
+                        data.title = leave.emp_name + ' - ' + leave.leave_type_name;
+                    }
+                    else {
+                        data.title = leave.leave_type_name;
+                    }
+                    if (fromdate && toDate) {
+                        data.start = fromdate;
+                        if (fromdate != toDate) {
+                            data.end = toDate;
+                        }
+                    }
 
-
-    loadCalendar() {
-        var todayDate = moment().startOf('day');
-        var YM = todayDate.format('YYYY-MM');
-        var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-        var TODAY = todayDate.format('YYYY-MM-DD');
-        var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-
-        this.calendardata = [
-            {
-                title: 'All Day Event',
-                start: YM + '-01',
-                description: 'Lorem ipsum dolor sit incid idunt ut',
-                className: "m-fc-event--danger m-fc-event--solid-warning"
-            },
-            {
-                title: 'Reporting',
-                start: YM + '-14T13:30:00',
-                description: 'Lorem ipsum dolor incid idunt ut labore',
-                end: YM + '-14',
-                className: "m-fc-event--accent"
-            },
-            {
-                title: 'Company Trip',
-                start: YM + '-02',
-                description: 'Lorem ipsum dolor sit tempor incid',
-                end: YM + '-03',
-                className: "m-fc-event--primary"
-            },
-            {
-                title: 'ICT Expo 2017 - Product Release',
-                start: YM + '-03',
-                description: 'Lorem ipsum dolor sit tempor inci',
-                end: YM + '-05',
-                className: "m-fc-event--light m-fc-event--solid-primary"
-            },
-            {
-                title: 'Dinner',
-                start: YM + '-12',
-                description: 'Lorem ipsum dolor sit amet, conse ctetur',
-                end: YM + '-10'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: YM + '-09T16:00:00',
-                description: 'Lorem ipsum dolor sit ncididunt ut labore',
-                className: "m-fc-event--danger"
-            },
-            {
-                id: 1000,
-                title: 'Repeating Event',
-                description: 'Lorem ipsum dolor sit amet, labore',
-                start: YM + '-16T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: YESTERDAY,
-                end: TOMORROW,
-                description: 'Lorem ipsum dolor eius mod tempor labore',
-                className: "m-fc-event--accent"
-            },
-            {
-                title: 'Meeting',
-                start: TODAY + 'T10:30:00',
-                end: TODAY + 'T12:30:00',
-                description: 'Lorem ipsum dolor eiu idunt ut labore'
-            },
-            {
-                title: 'Lunch',
-                start: TODAY + 'T12:00:00',
-                className: "m-fc-event--info",
-                description: 'Lorem ipsum dolor sit amet, ut labore'
-            },
-            {
-                title: 'Meeting',
-                start: TODAY + 'T14:30:00',
-                className: "m-fc-event--warning",
-                description: 'Lorem ipsum conse ctetur adipi scing'
-            },
-            {
-                title: 'Happy Hour',
-                start: TODAY + 'T17:30:00',
-                className: "m-fc-event--metal",
-                description: 'Lorem ipsum dolor sit amet, conse ctetur'
-            },
-            {
-                title: 'Dinner',
-                start: TODAY + 'T20:00:00',
-                className: "m-fc-event--solid-focus m-fc-event--light",
-                description: 'Lorem ipsum dolor sit ctetur adipi scing'
-            },
-            {
-                title: 'Birthday Party',
-                start: TOMORROW + 'T07:00:00',
-                className: "m-fc-event--primary",
-                description: 'Lorem ipsum dolor sit amet, scing'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: YM + '-28',
-                className: "m-fc-event--solid-info m-fc-event--light",
-                description: 'Lorem ipsum dolor sit amet, labore'
+                    let description = '';
+                    if (fromdate && toDate) {
+                        description = moment(fromdate).format('DD MMM') + " To " + moment(toDate).format('DD MMM');
+                    }
+                    if (leave.remark) {
+                        description += " : " + leave.remark;
+                    }
+                    data.description = description;
+                    data.className = "m-fc-event--light m-fc-event--solid-primary";
+                    data.empName = leave.emp_name;
+                    data.leaveType = leave.leave_type_name;
+                    data.empId = leave.emp_id;
+                    return data;
+                });
             }
-        ]
+        })
     }
+
 }
 
 

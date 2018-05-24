@@ -26,26 +26,19 @@ export class DashboardComponent implements OnInit {
         public authService: AuthService,
         private utilityService: UtilityService
     ) {
-        this.leaveService.getHRLeaveDetails().subscribe(
-            res => {
-                if (res.ok) {
-                    this.leaveList = res.json().data;
-                    if (this.leaveList) {
-                        this.leaveList = this.leaveList.map(leave => {
-                            leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
-                            return leave;
-                        });
-                    }
-                }
-            },
-            error => {
-                console.error(error);
-            });
+
     }
 
     ngOnInit() {
-        debugger;
         this.currentUser = this.authService.currentUserData;
+
+        if (this.currentUser.roles.indexOf('HR') > -1 || this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getLeaveDetails();
+        } else {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
+        }
 
         this.leaveBalance = [
             {
@@ -63,24 +56,6 @@ export class DashboardComponent implements OnInit {
             {
                 title: "OH",
                 balance: 4
-            }
-        ];
-
-        this.upcomingHolidays = [
-            {
-                date: new Date(),
-                title: "Ramzan Id (Id ul Fitra)",
-                type: null
-            },
-            {
-                date: new Date("08/15/2018"),
-                title: "Independance Day",
-                type: null
-            },
-            {
-                date: new Date(),
-                title: "Ganesh Chaturthi",
-                type: "OH"
             }
         ];
 
@@ -102,4 +77,62 @@ export class DashboardComponent implements OnInit {
         ]
     }
 
+    getLeaveDetails() {
+        this.leaveService.getHRLeaveDetails().subscribe(
+            res => {
+                if (res.ok) {
+                    this.leaveList = res.json().data;
+                    if (this.leaveList) {
+                        this.leaveList = this.leaveList.map(leave => {
+                            leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
+                            return leave;
+                        });
+                    }
+                }
+            },
+            error => {
+                console.error(error);
+            });
+    }
+
+    getHolidays() {
+        this.leaveService.getLeaveHolidays(2018).subscribe(res => {
+            if (res.ok) {
+                this.upcomingHolidays = res.json() || [];
+            }
+        })
+    }
+
+    getTransactions() {
+        this.leaveService.getEmployeeLeaveDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let body = res.json();
+                this.recentTransactions = body.data || [];
+            }
+        })
+    }
+
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+                this.leaveBalance.forEach(bal => {
+                    switch (bal.leave_type) {
+                        case 1:
+                            bal.type = "Annual Leave";
+                            break;
+                        case 2:
+                            bal.type = "Sick Leave";
+                            break;
+                        case 3:
+                            bal.type = "Maternity Leave";
+                            break;
+                        case 4:
+                            bal.type = "Special Leave";
+                            break;
+                    }
+                });
+            }
+        })
+    }
 }

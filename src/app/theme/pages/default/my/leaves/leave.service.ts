@@ -84,7 +84,7 @@ export class LeaveService {
 
     getLeaveHolidays(year: any) {
         let url = "leave/getLeaveHolidays";
-        return this.authService.get(url+'?date='+year).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+        return this.authService.get(url + '?date=' + year).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
     saveLeaveHoliday(leaveHoliday: any) {
@@ -100,6 +100,11 @@ export class LeaveService {
     removeLeaveHoliday(leaveHoliday: any) {
         let url = "leave/removeLeaveHoliday";
         return this.authService.post(url, leaveHoliday).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveDetailsByRole(roleName: string) {
+        let url = "leave/getLeaveDetailsByRole?role=" + roleName;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
 }

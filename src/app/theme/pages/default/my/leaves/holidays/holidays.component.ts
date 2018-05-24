@@ -41,13 +41,13 @@ export class HolidaysComponent implements OnInit {
   public getHolidays() {
     this.leaveService.getLeaveHolidays(this.year).subscribe(
       res => {
-          if (res.ok) {
-              let body = res.json();
-              this.holidayList = body || [];
-          }
+        if (res.ok) {
+          let body = res.json();
+          this.holidayList = body || [];
+        }
       },
       error => {
-          console.error(error);
+        console.error(error);
       });
   }
 
@@ -74,7 +74,6 @@ export class HolidaysComponent implements OnInit {
       const payload = {
         day: dayName,
         date: formdata.form.value.date,
-        isRestricted: formdata.form.value.isRestricted,
         isGeneral: formdata.form.value.isGeneral,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -82,14 +81,14 @@ export class HolidaysComponent implements OnInit {
       }
 
       this.leaveService.saveLeaveHoliday(payload).subscribe(
-          res => {
-            this.getHolidays();
-            swal("Add Holiday", "", "success");
-            this.modalRef.hide();
-          },
-          error => {
-              console.log(error);
-          });
+        res => {
+          this.getHolidays();
+          swal("Add Holiday", "", "success");
+          this.modalRef.hide();
+        },
+        error => {
+          console.log(error);
+        });
     }
   }
 
@@ -104,7 +103,6 @@ export class HolidaysComponent implements OnInit {
         _id: formdata.form.value._id,
         day: dayName,
         date: formdata.form.value.date,
-        isRestricted: formdata.form.value.isRestricted,
         isGeneral: formdata.form.value.isGeneral,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -112,27 +110,27 @@ export class HolidaysComponent implements OnInit {
       }
 
       this.leaveService.updateLeaveHoliday(payload).subscribe(
-          res => {
-            this.getHolidays();
-            swal("Edit Holiday", "", "success");
-            this.modalRef.hide();
-          },
-          error => {
-              console.log(error);
-          });
+        res => {
+          this.getHolidays();
+          swal("Edit Holiday", "", "success");
+          this.modalRef.hide();
+        },
+        error => {
+          console.log(error);
+        });
     }
   }
 
   public onDeleteHoliday(holiday: any) {
 
-    if(holiday._id) {
+    if (holiday._id) {
       this.leaveService.removeLeaveHoliday(holiday).subscribe(
         res => {
           this.getHolidays();
           swal("Delete Holiday", "", "success");
         },
         error => {
-            console.log(error);
+          console.log(error);
         });
     }
   }
