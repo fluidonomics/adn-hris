@@ -102,7 +102,10 @@ export class ProfileComponent implements OnInit {
 
     relationData = [];
     countryData = [];
+    facilityData=[];
 
+    companyBusinessData=[];
+    
     isSpin = false;
 
     profileProcess = {
@@ -1066,6 +1069,7 @@ export class ProfileComponent implements OnInit {
     }
 
     loadEmploymentDetails() {
+        this.loadCompanyBusiness();
         this._myService.getPreviousEmploymentInfo(this._currentEmpId)
             .subscribe(
             res => {
@@ -1084,6 +1088,17 @@ export class ProfileComponent implements OnInit {
             });
     }
 
+    loadCompanyBusiness() {
+        this._commonService.getCompanyBusiness()
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.companyBusinessData = res.json() || [];
+                }
+            },
+            error => {
+            });
+    }
 
     loadRelation() {
         this._commonService.getRelation()
@@ -1122,6 +1137,7 @@ export class ProfileComponent implements OnInit {
 
     loadOfficeInfoTabData() {
         this.countryData = this._commonService.getCountry();
+        this.loadFacility();
         this._myService.getOfficeDetails(this._currentEmpId)
             .subscribe(
             data => {
@@ -1133,6 +1149,16 @@ export class ProfileComponent implements OnInit {
             },
             error => {
             });
+    }
+
+    loadFacility()
+    {
+        this._commonService.getFacility().subscribe(
+        res => {
+                this.facilityData = res.json() || [];
+            },
+            error => {
+        });
     }
 
     loadJoiningDetailsTabData() {
