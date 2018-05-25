@@ -14,6 +14,7 @@ import { HrPapComponent } from './workFlows/pap/pap.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
+import { HrGuard } from '../../../../base/_guard/hr.guard'
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -29,8 +30,7 @@ const routes: Routes = [{
         { path: 'workflows/pap', component: HrPapComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'directory', component: DirectoryComponent },
-    ]
-
+    ],canActivate:[HrGuard]
 }]
 
 
