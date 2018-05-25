@@ -46,8 +46,8 @@ export class ThemeComponent implements OnInit,AfterViewInit {
     {
         $.sessionTimeout({
             redirUrl:"/login",
-            warnAfter:60000, //10 mint
-            redirAfter:66000,
+            warnAfter:600000, //10 mint
+            redirAfter:660000,
             ignoreUserActivity:false,
             keepAlive:false
         })
