@@ -618,13 +618,18 @@
                                                             <label for="txtNationalIdSmartCard">
                                                             National ID Smart Card
                                                             </label>
-                                                            <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard"  class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                            <input type="text" [(ngModel)]="documents.nationalIdSmartCard" #txtNationalIdSmartCard="ngModel" name="txtNationalIdSmartCard" id="txtNationalIdSmartCard" [required]="documents.nationalIdSmartCardDocURL ? true:false"  class="form-control m-input m-input--air" placeholder="Enter National ID Smart Card number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
-                                                                    <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" #nationalIdSmartCard [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIdSmartCard">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" style="margin-right: 6px;" (click)="nationalIdSmartCard.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIdSmartCard ? 'not-allowed' : ''">Upload</button>
+                                                                    <input type="file" name="profileDocuments" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartCard')" [uploadInput]="uploadInput" #nationalIdSmartCard [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIdSmartCard">
+                                                                    <input type="text" hidden="hidden" name="newImage" [(ngModel)]="documents.nationalIdSmartCardDocURL" #nationalIdImage="ngModel" [required]="documents.nationalIdSmartCard ? true:false">
                                                                     <button type="button" class="btn btn-secondary" name="viewNationalIdSmartCard" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartCard')">View</button>
                                                                     <button type="button" class="btn btn-danger"  name="deleteNationalIdSmartCard" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('smartCard')"><i class="fa fa-close"></i></button>
+                                                                </div>
+                                                                <div class="form-control-feedback has-danger" *ngIf="fdocuments.submitted">
+                                                                    <span *ngIf="nationalIdImage.errors?.required">Please upload image.</span>
+                                                                    <span *ngIf="txtNationalIdSmartCard.errors?.required">Please fill this field.</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -634,13 +639,18 @@
                                                             <label for="txtNationalIDOldFormat">
                                                             National ID (Old Format)
                                                             </label>
-                                                            <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat"  class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                            <input type="text" [(ngModel)]="documents.nationalIDOldFormat" #txtNationalIDOldFormat="ngModel" name="txtNationalIDOldFormat" id="txtNationalIDOldFormat" [required]="documents.nationalIDOldFormatDocURL ? true:false"  class="form-control m-input m-input--air" placeholder="Enter National ID (old format)" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                 <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" style="margin-right: 6px;" (click)="nationalIDOldFormat.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIDOldFormat ? 'not-allowed' : ''">Upload</button>
                                                                 <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')" [uploadInput]="uploadInput" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.nationalIDOldFormat" #nationalIDOldFormat>
+                                                                <input type="text" hidden="hidden" name="oldImage" [(ngModel)]="documents.nationalIDOldFormatDocURL" #nationalOldIdImage="ngModel" [required]="documents.nationalIDOldFormat ? true:false">
                                                                 <button type="button" class="btn btn-secondary" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
                                                                 <button type="button" class="btn btn-danger" name="deleteNationalIDOldFormat" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('smartOldCard')"><i class="fa fa-close"></i></button>
+                                                                </div>
+                                                                <div class="form-control-feedback has-danger" *ngIf="fdocuments.submitted">
+                                                                        <span *ngIf="nationalOldIdImage.errors?.required">Please upload image.</span>
+                                                                        <span *ngIf="txtNationalIDOldFormat.errors?.required">Please fill this field.</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -652,13 +662,18 @@
                                                                 <label for="txtBirthRegistrationNumber">
                                                                 Birth Registration Number
                                                                 </label>
-                                                                <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                                <input type="text" [(ngModel)]="documents.birthRegistrationNumber" #txtBirthRegistrationNumber="ngModel" name="txtBirthRegistrationNumber" id="txtBirthRegistrationNumber" [required]="documents.birthRegistrationNumberDocURL ? true:false"  class="form-control m-input m-input--air" placeholder="Enter birth registration number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                                 <div class="col-md-6 adn-form__group">
                                                                     <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success"  name="changeBirthRegistrationNumber" style="margin-right: 6px;" (click)="birthRegistrationNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber ? 'not-allowed' : ''">Upload</button>
                                                                     <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'birth')" [uploadInput]="uploadInput" #birthRegistrationNumber  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.birthRegistrationNumber">
+                                                                    <input type="text" hidden="hidden" name="birthImage" [(ngModel)]="documents.birthRegistrationNumberDocURL" #birthImage="ngModel" [required]="documents.birthRegistrationNumber ? true:false">
                                                                     <button type="button" class="btn btn-secondary" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
                                                                     <button type="button" class="btn btn-danger"  name="deleteBirthRegistrationNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('birth')"><i class="fa fa-close"></i></button>
+                                                                    </div>
+                                                                    <div class="form-control-feedback has-danger" *ngIf="fdocuments.submitted">
+                                                                            <span *ngIf="birthImage.errors?.required">Please upload image.</span>
+                                                                            <span *ngIf="txtBirthRegistrationNumber.errors?.required">Please fill this field.</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -668,15 +683,19 @@
                                                                 <label for="txtPassportNumber">
                                                                 Passport Number
                                                                 </label>
-                                                                <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                                <input type="text" [(ngModel)]="documents.passportNumber" #txtPassportNumber="ngModel" name="txtPassportNumber" id="txtPassportNumber" [required]="documents.passportNumberDocURL ? true:false"  class="form-control m-input m-input--air" placeholder="Enter passport number" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                                 <div class="col-md-6 adn-form__group">
                                                                     <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success"  name="changePassportNumber" style="margin-right: 6px;" (click)="passportNumber.click()" [style.cursor] = "profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber ? 'not-allowed' : ''">Upload</button>
                                                                     <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'passport')" #passportNumber [uploadInput]="uploadInput"  [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack ||!documents.passportNumber">
+                                                                    <input type="text" hidden="hidden" name="passportImage" [(ngModel)]="documents.passportNumberDocURL" #passportNumberImage="ngModel" [required]="documents.passportNumber ? true:false">
                                                                     <button type="button" class="btn btn-secondary" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
                                                                     <button type="button" class="btn btn-danger" name="deletePassportNumber" style="margin-right: 6px;" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" (click)="deleteDocumentImage('passport')"><i class="fa fa-close"></i></button>
                                                                     </div>
-                                                        
+                                                                    <div class="form-control-feedback has-danger" *ngIf="fdocuments.submitted">
+                                                                            <span *ngIf="passportNumberImage.errors?.required">Please upload image.</span>
+                                                                            <span *ngIf="txtPassportNumber.errors?.required">Please fill this field.</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                            
@@ -838,7 +857,7 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
-                                        <button type="button" class="btn btn-danger" *ngIf="academic._id" (click)="deleteAcademicInfo(academic._id)"><i class="fa fa-close"></i>Delete</button>
+                                        <button type="button" class="btn btn-danger" *ngIf="academic._id || (!academic._id && i!=0)" (click)="academic._id ? deleteAcademicInfo(academic._id):removeHtmlByView('academicInfo',i)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{academic._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
@@ -934,7 +953,7 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
-                                        <button type="button" class="btn btn-danger" *ngIf="certifications._id" (click)="deleteCertificationInfo(certifications._id)"><i class="fa fa-close"></i>Delete</button>
+                                        <button type="button" class="btn btn-danger" *ngIf="certifications._id || (!certifications._id && i!=0)" (click)="certifications._id ? deleteCertificationInfo(certifications._id):removeHtmlByView('certification',i)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{certifications._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
@@ -1079,7 +1098,7 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
-                                        <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id" (click)="deletePreviousEmployment(previousEmployment._id)"><i class="fa fa-close" ></i>Delete</button>
+                                        <button type="button" class="btn btn-danger" *ngIf="previousEmployment._id || (!previousEmployment._id && i!=0)"  (click)="previousEmployment._id ? deletePreviousEmployment(previousEmployment._id):removeHtmlByView('employment',i)"><i class="fa fa-close" ></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{previousEmployment._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>
@@ -1187,7 +1206,7 @@
                                         </div>
                                         </div>
                                         <div class="m-form__actions" *ngIf="!profileProcess.isEmployeeSubmitted ||  profileProcess.isHrSendBack">
-                                        <button type="button" class="btn btn-danger" *ngIf="family._id" (click)="deleteFamilyInfo(family._id)"><i class="fa fa-close"></i>Delete</button>
+                                        <button type="button" class="btn btn-danger" *ngIf="family._id || (!family._id && i!=0)" (click)="family._id ? deleteFamilyInfo(family._id):removeHtmlByView('family',i)"><i class="fa fa-close"></i>Delete</button>
                                         <button type="submit" class="btn btn-success">{{family._id ? 'Update':'Save'}}</button>
                                         </div>
                                         </form>

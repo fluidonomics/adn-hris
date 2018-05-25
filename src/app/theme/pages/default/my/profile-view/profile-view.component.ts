@@ -203,16 +203,19 @@ export class ProfileViewComponent implements OnInit {
             if (output.file.responseStatus == 200) {
                 switch (fileName) {
                     case 'smartCard':
-
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false,timer:800})
                         this.documents.nationalIdSmartCardDocURL = output.file.response.key || '';
                         break;
                     case 'smartOldCard':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false,timer:800})
                         this.documents.nationalIDOldFormatDocURL = output.file.response.key || '';
                         break;
                     case 'birth':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
                         this.documents.birthRegistrationNumberDocURL = output.file.response.key || '';
                         break;
                     case 'passport':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Passport Number', showConfirmButton: false,timer:800})
                         this.documents.passportNumberDocURL = output.file.response.key || '';
                         break;
                     default:
@@ -883,6 +886,36 @@ export class ProfileViewComponent implements OnInit {
                 break;
         }
     }
+
+    removeHtmlByView(subTabName: string, _index: number) {
+        switch (subTabName) {
+            case "academicInfo":
+                if(this.academicInfo.length > 1)
+                {
+                  this.academicInfo.splice(_index, 1);
+                }
+                break;
+            case "certification":
+                if(this.certificationsandTrainingInfo.length > 1)
+                {
+                  this.certificationsandTrainingInfo.splice(_index, 1);
+                }
+                break;
+            case "employment":
+                if(this.previousEmploymentDetails.length > 1)
+                {
+                  this.previousEmploymentDetails.splice(_index, 1);
+                }
+                break;
+            case "family":
+                if(this.familyInfo.length > 1)
+                {
+                  this.familyInfo.splice(_index, 1);
+                }
+                break;
+        }
+    }
+
     //Check wheather HTML is Added or Not
     isAdded(subTabName: string) {
         switch (subTabName) {
