@@ -10,7 +10,6 @@ import { LayoutModule } from '../../../../layouts/layout.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LeaveRoutingModule } from './leave-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgUploaderModule } from 'ngx-uploader';
 import { BaseModule } from '../../../../../base/base.module';
 
 
@@ -46,7 +45,6 @@ import { LeaveComponent } from './leave.component';
         ReactiveFormsModule,
         LeaveRoutingModule,
         NgSelectModule,
-        NgUploaderModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
         BaseModule
