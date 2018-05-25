@@ -19,10 +19,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 
-// import { MyLearningComponent } from './workflows/learning/learning.component';
-// import { MyPapComponent } from './workflows/pap/pap.component';
-// import { MyPipComponent } from './workflows/pip/pip.component';
-
 import { DocumentsComponent } from './documents/documents.component';
 
 import { MyService } from "./my.service"
@@ -47,11 +43,6 @@ import { MyService } from "./my.service"
         ProfileComponent,
         ProfileEditComponent,
         ProfileViewComponent,
-
-        // MyLearningComponent,
-        // MyPapComponent,
-        // MyPipComponent,
-       
         DocumentsComponent
     ],
     providers: [MyService]

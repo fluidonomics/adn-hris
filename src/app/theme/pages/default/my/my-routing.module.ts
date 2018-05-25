@@ -21,14 +21,8 @@ const routes: Routes = [{
         { path: 'profile', component: ProfileComponent },
         { path: 'profile-edit', component: ProfileEditComponent },
         { path: 'profile-view', component: ProfileViewComponent },
-
-        // { path: 'workflows/learning', component: MyLearningComponent },
-        // { path: 'workflows/pap', component: MyPapComponent },
-        // { path: 'workflows/pip', component: MyPipComponent },
-
-
-        
         { path: 'documents', component: DocumentsComponent },
+        
         { path: 'workflows',loadChildren: ".\/workflows\/my-workflows.module#MyWorkFlowsModule"},
         { path: 'leaves',loadChildren: ".\/leaves\/leave.module#LeaveModule" },
         { path: 'team', loadChildren: ".\/team\/my-team.module#MyTeamModule" }
