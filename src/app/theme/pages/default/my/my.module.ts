@@ -11,6 +11,7 @@ import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { DocumentsComponent } from './documents/documents.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
 import { MyPapComponent } from './workflows/pap/pap.component';
 import { MyKraComponent } from './workflows/kra/kra.component';
@@ -55,6 +56,7 @@ import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/p
     ], declarations: [
         MyComponent,
         ProfileComponent,
+        DocumentsComponent,
         MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
