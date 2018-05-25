@@ -5,6 +5,7 @@ import { AuthService } from "../../../../../../../base/_services/authService.ser
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../leave.service';
+import swal from 'sweetalert2';
 
 @Component({
     selector: "app-dashboard-details",
@@ -70,5 +71,33 @@ export class DashboardDetailsComponent implements OnInit {
 
     goBack() {
         this.router.navigate(['my/leaves/dashboard']);
+    }
+
+    saveAcceptRejectLeave(flag: boolean) {
+        let data = {
+            _id: this.leaveId,
+            emp_id: this.employee._id,
+            isApproved: flag,
+            updatedBy: this.employee._id,
+        }
+        this.utilityService.showLoader('#frmLeave');
+        this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
+            if (res.ok) {
+                this.utilityService.hideLoader('#frmLeave');
+                let promise;
+                if (flag) {
+                    promise = swal("Leave Approved", "", "success");
+                }
+                else {
+                    promise = swal("Leave Rejected", "", "success");
+                }
+                promise.then(success => {
+                    this.goBack();
+                });
+            }
+        }, err => {
+            console.log(err);
+            this.utilityService.hideLoader('#frmLeave');
+        })
     }
 }

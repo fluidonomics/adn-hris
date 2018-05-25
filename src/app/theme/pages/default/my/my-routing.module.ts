@@ -34,19 +34,10 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: MyLearningComponent },
         { path: 'workflows/pap', component: MyPapComponent },
         { path: 'workflows/pip', component: MyPipComponent },
-        { path: 'leaves/dashboard', component: DashboardComponent },
-        { path: 'leaves/dashboard/details/:id', component: DashboardDetailsComponent },
-        { path: 'leaves/apply', component: ApplyComponent },
-        { path: 'leaves/cancel', component: CancelComponent },
-        { path: 'leaves/list', component: TrackLeaveComponent },
-        { path: 'leaves/list/details/:id', component: TrackLeaveDetailsComponent },
-        { path: 'leaves/holidays', component: HolidaysComponent },
-        { path: 'leaves/calender', component: CalenderComponent },
-        { path: 'leaves/reports', component: ReportsComponent },
-        { path: 'leaves/post-leave-transaction', component: PostLeaveTransactionComponent },
-        { path: 'leaves/employee-leaves', component: EmployeeLeavesComponent },
-        { path: 'leaves/grant-leave', component: GrantLeaveComponent }
-
+        {
+            "path": "leaves",
+            "loadChildren": "./leaves/leave.module#LeaveModule"
+        }
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},
         //{path:"team",loadChildren:".\/team\/team.module#TeamModule"}

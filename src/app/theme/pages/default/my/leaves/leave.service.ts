@@ -107,4 +107,9 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    saveAcceptRejectLeave(leave: any) {
+        let url = "leave/postAcceptRejectLeave";
+        return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
 }

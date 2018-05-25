@@ -1,88 +1,87 @@
 <div class="m-content hr-leave-dashboard-details">
-  <div class="m-portlet">
-    <div class="m-portlet__body">
-      <div class="row">
-        <div class="col-xl-6">
-          <div class="row">
-            <div class="col-xl-8">
-              <div class="d-inline-block align-top">
-                <img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
-              </div>
-              <div class="d-inline-block">
-                <span class="emp-list-name d-block">Shaik Bhanu</span>
-                <span class="emp-list-empid d-block">#PP143</span>
-              </div>
-            </div>
-          </div>
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <td><span class="label">From:</span>27 Apr 2018 - Session 1</td>
-                <td><span class="label">To:</span>28 Apr 2018 - Session 2</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="leave_reason_col"><span class="label">Leave Type:</span>Priviledge Leave</td>
-              </tr>
-              <tr>
-                <td><span class="label">Days:</span>2</td>
-                <td><span class="label">Leave Balance:</span>8</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="leave_reason_col"><span class="label">Reason:</span>Going home</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="leave_reason_col"><span class="label">Contact Details:</span></td>
-              </tr>
-            </tbody>
-          </table>
+	<div class="m-portlet">
+		<div class="m-portlet__body">
+			<div class="row">
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col-xl-8">
+							<div class="d-inline-block align-top">
+								<img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
+							</div>
+							<div class="d-inline-block">
+								<span class="emp-list-name d-block">Shaik Bhanu</span>
+								<span class="emp-list-empid d-block">#PP143</span>
+							</div>
+						</div>
+					</div>
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td>
+									<span class="label">From:</span>27 Apr 2018 - Session 1</td>
+								<td>
+									<span class="label">To:</span>28 Apr 2018 - Session 2</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Leave Type:</span>Priviledge Leave</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="label">Days:</span>2</td>
+								<td>
+									<span class="label">Leave Balance:</span>8</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Reason:</span>Going home</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Contact Details:</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-          <form class="m-form m-form--fit m-form--label-align-right">
-            <div class="form-body">
-              <div class="row">
-                <div class="col-md-12 adn-form__group">
-                  <div class="m-form__group form-group">
-                    <label for="form_control_1">Forward To</label>
-                    <ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
-                        id="employees" placeholder="" required></ng-select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 adn-form__group">
-                  <div class="m-form__group form-group">
-                    <label for="form_control_1">Remarks</label>
-                    <span class="required" aria-required="true"> * </span>
-                    <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 adn-form__group">
-                  <div class="m-form__group form-group">
-                    <label for="form_control_1">CC</label>
-                    <ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
-                        id="employees" placeholder="" required></ng-select>
-                  </div>
-                </div>
-              </div>
+					<form id="frmLeave" class="m-form m-form--fit m-form--label-align-right">
+						<div class="form-body">
+							<div class="row">
+								<div class="col-md-12 adn-form__group">
+									<div class="m-form__group form-group">
+										<label for="form_control_1">Remarks</label>
+										<span class="required" aria-required="true"> * </span>
+										<textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 adn-form__group">
+									<div class="m-form__group form-group">
+										<label for="form_control_1">CC</label>
+										<ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
+										 id="employees" placeholder="" required></ng-select>
+									</div>
+								</div>
+							</div>
 
-            </div>
-            <div class="form-actions">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="m-form__actions">
-                      <button class="btn btn-success submitForm" type="submit" id="submitForm">Forward</button>
-                      <button class="btn btn-success" type="submit">Accept</button>
-                      <button class="btn btn-danger" type="button">Reject</button>
-                      <button class="btn btn-secondary" type="button" (click)="goBack()"><i class="fa fa-caret-left"></i> Back</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="m-form__actions">
+										<button class="btn btn-success" type="button" (click)="saveAcceptRejectLeave(true)">Accept</button>
+										<button class="btn btn-danger" type="button" (click)="saveAcceptRejectLeave(false)">Reject</button>
+										<button class="btn btn-secondary" type="button" (click)="goBack()">
+											<i class="fa fa-caret-left"></i> Back</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
 
-        <div class="col-xl-6">
+				<div class="col-xl-6">
 
 					<div class="m-portlet__head">
 						<div class="m-portlet__head-caption">
@@ -245,8 +244,8 @@
 
 					</div>
 
-        </div>
-      </div>
-    </div>
-  </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
