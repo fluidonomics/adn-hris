@@ -10,6 +10,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { BankInfo, AcademicInfo, CarInfo, CertificationInfo, PreviousEmploymentInfo, FamilyInfo } from "../../../../../base/_interface/user.model"
 import { environment } from "../../../../../../environments/environment";
 import swal from 'sweetalert2';
+
 declare var mApp;
 declare var $;
 
@@ -18,12 +19,14 @@ declare var $;
     templateUrl: "./profile-edit.component.html",
     encapsulation: ViewEncapsulation.None,
 })
+
 export class ProfileEditComponent implements OnInit {
-    options:UploaderOptions;
+
+    options: UploaderOptions;
     uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
 
-    currentDate:any=new Date();
+    currentDate: any = new Date();
 
     //Local Variable for Profile 
     personalInfo: any = {}
@@ -31,18 +34,19 @@ export class ProfileEditComponent implements OnInit {
     documents: any = {}
     academicInfo = [];
     joiningDetails: any = {}
-    certificationsandTrainingInfo:any = [];
-    previousEmploymentDetails:any = [];
+    certificationsandTrainingInfo: any = [];
+    previousEmploymentDetails: any = [];
     familyInfo: any = []
     officeInfo: any = {}
     positionDetails: any = {}
-    performanceDiary: any = {}
+    performanceDiary: any = []
     bankDetails: any = {}
     salaryDetails: any = {}
     carDetails: any = {};
 
     exampleData: any = [];
-    tabName = "office";
+    tabName = "personal";
+    params = "";
 
     _currentEmpId: number;
     param_emp_id: number;
@@ -93,17 +97,20 @@ export class ProfileEditComponent implements OnInit {
     hospitalizationSchemeData = [];
 
     relationData = [];
-
-
-    countryData=[];
-
-    isPersonalTabCompleted=false;
- 
-    profileProcess={
-        isOfficeProfileCompleted:false,
-        isPersonalProfileCompleted:true
-    }
+    countryData = [];
+    facilityData=[];
     
+    companyBusinessData=[];
+
+    isSpin = false;
+
+    profileProcess = {
+        isEmployeeSubmitted: false,
+        isHrSubmitted: false,
+        isHrSendBack: false,
+        isSupervisorApproved: false,
+        isSupervisorSendBack: false
+    }
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -122,50 +129,7 @@ export class ProfileEditComponent implements OnInit {
 
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
-        this.currentDate=new Date();
-    }
-
-    
-    
-    onUploadOutput(output: UploadOutput,fileName:string): void {
-      let atCurrentAuthData=this._authService.currentAuthData;
-        if (output.type === 'allAddedToQueue') { // when all files added in queue
-            // uncomment this if you want to auto upload files when added
-            const event: UploadInput = {
-                type: 'uploadAll',
-                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
-                headers: {
-                    'access-token': atCurrentAuthData.accessToken,
-                    'client': atCurrentAuthData.client,
-                    'expiry': atCurrentAuthData.expiry,
-                    'token-type': atCurrentAuthData.tokenType,
-                    'uid': atCurrentAuthData.uid
-                },
-                method: 'POST',
-            };
-            this.uploadInput.emit(event);
-        } else if (output.type === 'done') {
-            //this.dragOver = false;
-            //output.file.response
-        //   switch (fileName) {
-        //       case 'smartNationalId':
-        //           this.documents.
-        //           break;
-        //       case 'oldNationalId':
-        //           this.documents.
-        //           break;  
-        //       case 'birth':
-        //           this.documents.
-        //           break;
-        //       case 'passport':
-        //           this.documents.
-        //           break;  
-          
-        //       default:
-        //           break;
-        //   }
-
-        }
+        this.currentDate = new Date();
     }
 
     ngOnInit() {
@@ -173,22 +137,21 @@ export class ProfileEditComponent implements OnInit {
             if (params['tabName']) {
                 this.tabName = params['tabName'];
             }
-            if(params['id'])
-            {
-              this._currentEmpId = params['id'];
-              this.initData();
-              this.loadProcessStatusInfoDetails();
-              //this.checkTabCompleted('personal');
+            if (params['id']) {
+                this.param_emp_id = params['id'];
             }
-            // this._authService.validateToken().subscribe(
-            //     res => {
-            //         this._currentEmpId = this._authService.currentUserData._id;
-            //         this.checkTabCompleted('office');
-            //});
+            this._authService.validateToken().subscribe(
+                res => {
+                    //Do not uncomment if profile-edit
+                    //this._currentEmpId = this._authService.currentUserData._id;
+                    this.initData();
+
+                });
         });
     }
 
     initData() {
+        this.loadProcessInfoDetails();
         switch (this.tabName) {
             case "personal":
                 this.loadPersonal();
@@ -217,6 +180,134 @@ export class ProfileEditComponent implements OnInit {
         }
     }
 
+    onUploadOutput(output: UploadOutput, fileName: string): void {
+        let atCurrentAuthData = this._authService.currentAuthData;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            // uncomment this if you want to auto upload files when added
+            const event: UploadInput = {
+                fieldName: 'profileDocuments',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                method: 'POST',
+            };
+            this.uploadInput.emit(event);
+        } else if (output.type === 'done') {
+            if (output.file.responseStatus == 200) {
+                switch (fileName) {
+                    case 'smartCard':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false,timer:800})
+                        this.documents.nationalIdSmartCardDocURL = output.file.response.key || '';
+                        break;
+                    case 'smartOldCard':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false,timer:800})
+                        this.documents.nationalIDOldFormatDocURL = output.file.response.key || '';
+                        break;
+                    case 'birth':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
+                        this.documents.birthRegistrationNumberDocURL = output.file.response.key || '';
+                        break;
+                    case 'passport':
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
+                        this.documents.passportNumberDocURL = output.file.response.key || '';
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
+            }
+        }
+    }
+
+    showSpin() {
+        var that = this;
+        that.isSpin = true;
+        setTimeout(function() {
+            that.isSpin = false;
+        }, 500);
+    }
+
+    showDocumentImagePopUp(filedName) {
+        switch (filedName) {
+            case 'smartCard':
+                swal({
+                    imageUrl: this.documents.nationalIdSmartCardDocURL ? environment.content_api_base.imgBase + this.documents.nationalIdSmartCardDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'smartOldCard':
+                swal({
+                    imageUrl: this.documents.nationalIDOldFormatDocURL ? environment.content_api_base.imgBase + this.documents.nationalIDOldFormatDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'birth':
+                swal({
+                    imageUrl: this.documents.birthRegistrationNumberDocURL ? environment.content_api_base.imgBase + this.documents.birthRegistrationNumberDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+            case 'passport':
+                swal({
+                    imageUrl: this.documents.passportNumberDocURL ? environment.content_api_base.imgBase + this.documents.passportNumberDocURL : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+                    imageHeight: 700,
+                    //imageWidth: 5000,
+                    showConfirmButton: false,
+                });
+                break;
+        }
+    }
+
+    deleteDocImage(imagePath, imageTypeName) {
+        this._myService.deleteImage({ key: imagePath }).subscribe(
+            res => {
+                if (res.ok) {
+                    this.documents[imageTypeName] = null;
+                    swal("Deleted", "Successfully", "success");
+                }
+            },
+            error => {
+            });;
+    }
+
+    showDeleteMessage() {
+        swal("Error!", "Image not found", "error");
+    }
+
+    deleteDocumentImage(fileName) {
+        switch (fileName) {
+            case 'smartCard':
+                let isdeleted = this.documents.nationalIdSmartCardDocURL ? this.deleteDocImage(this.documents.nationalIdSmartCardDocURL, 'nationalIdSmartCardDocURL') : this.showDeleteMessage();
+                break;
+            case 'smartOldCard':
+                let isdeletedOld = this.documents.nationalIDOldFormatDocURL ? this.deleteDocImage(this.documents.nationalIDOldFormatDocURL, 'nationalIDOldFormatDocURL') : this.showDeleteMessage();
+                break;
+            case 'birth':
+                let isdeletedbirth = this.documents.birthRegistrationNumberDocURL ? this.deleteDocImage(this.documents.birthRegistrationNumberDocURL, 'birthRegistrationNumberDocURL') : this.showDeleteMessage();
+                break;
+            case 'passport':
+                let isdeletedpassport = this.documents.passportNumberDocURL ? this.deleteDocImage(this.documents.passportNumberDocURL, 'passportNumberDocURL') : this.showDeleteMessage();
+                break;
+            default:
+                break;
+        }
+
+    }
+
     setPermentAddress() {
         if (this.address.isSameAsCurrent) {
             this.address.permanentAddressLine1 = this.address.currentAddressLine1;
@@ -225,12 +316,14 @@ export class ProfileEditComponent implements OnInit {
             this.address.permanentAddressDivision_id = this.address.currentAddressDivision_id;
             this.address.permanentAddressThana_id = this.address.currentAddressThana_id;
             this.address.permanentAddressPostCode = this.address.currentAddressPostCode;
+
+            // this.loadpermanentAddressDistrictData(this.address.currentAddressDivision_id,"init");
+            // this.loadpermanentAddressThanaData(this.address.currentAddressDistrict_id,"init");
         }
     }
 
     resetPermentAddress() {
-        if(!this.address.isSameAsCurrent)
-        {
+        if (!this.address.isSameAsCurrent) {
             this.address.permanentAddressLine1 = null;
             this.address.permanentAddressLine2 = null;
             this.address.permanentAddressDistrict_id = null;
@@ -238,40 +331,135 @@ export class ProfileEditComponent implements OnInit {
             this.address.permanentAddressThana_id = null;
             this.address.permanentAddressPostCode = null;
 
-            this.permanentAddressDistrictData=[];
-            this.permanentAddressThanaData=[];
+            this.permanentAddressDistrictData = [];
+            this.permanentAddressThanaData = [];
         }
     }
 
-    checkTabCompleted(tabName:string)
-    {
-        this._commonService.checkTabCompleted(this._currentEmpId,tabName)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-             this.isPersonalTabCompleted=data.json();
-            }
-        },  
-        error => {
-            
-        });
-     
+    loadProcessInfoDetails() {
+        this._myService.getProfileProcessInfo(this.param_emp_id)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.profileProcess = data.json();
+                }
+            },
+            error => {
+
+            });
     }
 
-    loadProcessStatusInfoDetails()
+    //save Personal Info
+    saveProfileStatus(status:string,isSendBack?:boolean) {
+        this.profileProcess["hrStatus"] = status;
+        this.profileProcess["supervisorStatus"] = null;
+        if(isSendBack)
+        {
+          this.profileProcess["employeeStatus"] = null;
+        }
+        this._myService.saveProfileStatus(this.profileProcess)
+            .subscribe(
+            data => {
+                this.profileProcess=data.json()||{}
+                if(isSendBack)
+                {
+                    swal({
+                        type: 'success',
+                        title:'Send Back!',
+                        titleText:"Profile sent back successfully to employee.",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        timer:1000
+                    }).then((result) => {
+                        this._router.navigate(['my/profile-edit'],{ queryParams: { id:this.param_emp_id ,tabName:'office' }})
+                    });
+                }
+                else{
+                    swal({
+                        type: 'success',
+                        title:'Submit!',
+                        titleText:"Profile submitted successfully to Supervisor.",
+                    });
+                }
+            },
+            error => {
+            });
+    }
+
+    
+
+    loadTabStatus(status:string,isSendBack?:boolean)
     {
-        this._commonService.getProfileProcessStatus(this._currentEmpId)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-              this.profileProcess=data.json();
+        this._commonService.getTabStatus(this.param_emp_id)
+            .subscribe(
+            data => {
+                let tabData=data.json();
+                if(isSendBack)
+                {
+                    this.saveProfileStatus(status,isSendBack);
+                }
+                else
+                {
+                    if(tabData.isPersonalInfo 
+                        && tabData.isAddress
+                        && tabData.isDocuments
+                        && tabData.isAcademicInfo
+                        && tabData.isCertificate
+                        && tabData.isEmployment
+                        && tabData.isFamilyInfo
+                        && tabData.isOffice
+                        && tabData.isBankInfo
+                        && tabData.isSalaryInfo
+                        && tabData.isCarInfo
+                     )
+                     {
+                        swal({
+                            title: 'Are you sure?',
+                            text: "Do you want to submit profile to Supervisor?",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#66BB6A',
+                            cancelButtonColor: '#9a9caf',
+                            confirmButtonText: 'Submit'
+                        }).then((result) => {
+                            if (result.value) {
+                              this.saveProfileStatus(status);
+                            }
+                        });   
+                     }
+                     else
+                     swal({type: 'error',title:'Oops!',titleText:"Please complete Personal Info & Office Info.",});
+                }
+            },
+            error => {
+                swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
+            });
+    }
+
+    //save Personal Info
+    submitProfile(status) {
+        this.loadTabStatus(status);
+    }
+
+    submitBackProfileStatus(status)
+    {
+        swal({
+            title: 'Please specify the reason',
+            input: 'textarea',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonColor: '#f22d4e',
+            cancelButtonText:'Cancel',
+            confirmButtonText: 'Send Back'
+          }).then((result) => {
+            if (result.value) {
+                this.profileProcess["hrSendbackComment"]=result.value;
+                this.loadTabStatus(status,true);
             }
-        },  
-        error => {
-            
-        });
+          })
     }
 
     //save Personal Info
@@ -286,28 +474,68 @@ export class ProfileEditComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_1_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.personalInfo = data.json() || {};
-                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
             },
             error => {
                 mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
+
+    checkEmailExists(_element) {
+        if (_element.valid) {
+            this._commonService.checkEmailExists(_element.value)
+                .subscribe(
+                data => {
+                    if (data.json())
+                        _element.control.setErrors({ "emailExists": true })
+                },
+                error => {
+                    _element.control.setErrors(null)
+                });
+
+        }
+    }
+
     //save Address Info
     saveAddressInfo() {
-        if(this.address.isSameAsCurrent)
-        {
-          this.setPermentAddress();
+        if (this.address.isSameAsCurrent) {
+            this.setPermentAddress();
         }
-        this.address.emp_id=this.address.emp_id !=null?this.address.emp_id:(this._currentEmpId || this.param_emp_id)
+        this.address.emp_id = this.address.emp_id != null ? this.address.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveAddressInfo(this.address)
-        .subscribe(
-        data => {
-            this.address=data.json()||{};
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.address = data.json() || {};
+            },
+            error => {
+            });
     }
+
+    saveDocumentsInfo() {
+        this.documents.emp_id = this.documents.emp_id != null ? this.documents.emp_id : (this._currentEmpId || this.param_emp_id)
+        mApp.block('#m_accordion_5_item_9_body', {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
+        this._myService.saveDocumentsInfo(this.documents)
+            .subscribe(
+            data => {
+                mApp.unblock('#m_accordion_5_item_9_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.documents = data.json() || {};
+            },
+            error => {
+                mApp.unblock('#m_accordion_5_item_9_body');
+            });
+
+    }
+
     //save Address Info
     saveAcademicInfo(objAcademicInfo: any, index: number) {
         mApp.block('#m_accordion_5_item_10_body', {
@@ -321,10 +549,10 @@ export class ProfileEditComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_10_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.academicInfo[index] = data.json();
-                if(this.academicInfo[index].levelOfEducation_id)
-                {
-                 this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id,index,"init");
+                if (this.academicInfo[index].levelOfEducation_id) {
+                    this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id, index, "init");
                 }
             },
             error => {
@@ -337,31 +565,47 @@ export class ProfileEditComponent implements OnInit {
         this._myService.saveCertificationInfo(objCertification)
             .subscribe(
             data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.certificationsandTrainingInfo[index] = data.json();
             },
             error => {
             });
     }
-     
+
     //save EmploymentDetils Info
     savePreviousEmploymentDetails(objPerviousEmployment: any, index: number) {
         objPerviousEmployment.emp_id = objPerviousEmployment.emp_id != null ? objPerviousEmployment.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
             .subscribe(
             data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.previousEmploymentDetails[index] = data.json();
+                this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : this.previousEmploymentDetails[index].employmentPeriodFrom;
+                this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : this.previousEmploymentDetails[index].employmentPeriodTo;
             },
             error => {
             });
 
     }
     //save Family Info
-    saveFamilyInfo(objFamily: any, index: number) {
+    saveFamilyInfo(objFamily: any, index: number,_element) {
+        if(objFamily.relation_id==1 || objFamily.relation_id==2)
+        {
+           if(this.familyInfo.filter(item=> item.relation_id == objFamily.relation_id).length > 1)
+           {
+               return _element.control.setErrors({ "relationExists": true })
+           }
+           else{
+                _element.control.setErrors(null);
+           }
+        }
         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(
             data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.familyInfo[index] = data.json();
+                this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : this.familyInfo[index].dateOfBirth;
             },
             error => {
             });
@@ -370,31 +614,30 @@ export class ProfileEditComponent implements OnInit {
     saveOfficeInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveOfficeInfo(this.officeInfo)
-        .subscribe(
-        data => {
-            this.officeInfo.address=data.json();
-            this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
-            this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-            this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
-            this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.officeInfo = data.json();
+                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
+            },
+            error => {
+            });
     }
     //save Office Info
     savePositionInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePositionInfo(this.positionDetails)
-        .subscribe(
-        data => {
-            this.officeInfo.address=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.positionDetails = data.json();
+            },
+            error => {
+            });
     }
-
-    
-
     //save Bank Info
     saveBankDetails() {
         mApp.block('#m_accordion_5_item_16_body', {
@@ -408,6 +651,7 @@ export class ProfileEditComponent implements OnInit {
             .subscribe(
             data => {
                 mApp.unblock('#m_accordion_5_item_16_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.bankDetails = data.json();
             },
             error => {
@@ -421,6 +665,7 @@ export class ProfileEditComponent implements OnInit {
             .subscribe(
             data => {
                 // mApp.unblock('#m_accordion_5_item_1_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.salaryDetails = data.json();
             },
             error => {
@@ -434,17 +679,33 @@ export class ProfileEditComponent implements OnInit {
             .subscribe(
             data => {
                 //mApp.unblock('#m_accordion_5_item_1_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.carDetails = data.json();
-                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
+                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};;
                 //mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
+
+    savePerformanceRatingInfo() {
+        this._myService.savePerformanceRatingInfo(this.performanceDiary)
+            .subscribe(
+            data => {
+                //mApp.unblock('#m_accordion_5_item_1_body');
+                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                this.performanceDiary = data.json();
+            },
+            error => {
+                this.performanceDiary = [];
+                //mApp.unblock('#m_accordion_5_item_1_body');
+            });
+    }
+
     //save Seperation Info
     saveSeperationInfo() {
         // this._authService.saveSeperationInfo(this.empProfile.address)
@@ -457,80 +718,125 @@ export class ProfileEditComponent implements OnInit {
     }
     //delete Academic Info
     deleteAcademicInfo(academicInfo_id: number) {
-        this._myService.deleteAcademicInfo(academicInfo_id)
-            .subscribe(
-            data => {
-                if (data.ok) {
-                    this.removeHtmlContain("academicInfo", academicInfo_id);
-                }
-            },
-            error => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deleteAcademicInfo(academicInfo_id)
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            this.removeHtmlContain("academicInfo", academicInfo_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
+            }
+        })
+
     }
     //delete Previous Employment
     deletePreviousEmployment(previousEmployment_id: number) {
-        this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
-            .subscribe(
-            data => {
-                if (data.ok) {
-                    this.removeHtmlContain("employment", previousEmployment_id);
-                }
-            },
-            error => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
+                            this.removeHtmlContain("employment", previousEmployment_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
+            }
+        })
     }
     //delete Family Info
     deleteFamilyInfo(family_id: number) {
-        this._myService.deleteFamilyInfo(family_id)
-            .subscribe(
-            data => {
-                if (data.ok) {
-                    this.removeHtmlContain("family", family_id);
-                }
-            },
-            error => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deleteFamilyInfo(family_id)
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
+                            this.removeHtmlContain("family", family_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
+            }
+        })
     }
-    
-     //delete Family Info
-     deleteCertificationInfo(certification_id: number) {
-        this._myService.deleteCertificationInfo(certification_id)
-            .subscribe(
-            data => {
-                if (data.ok) {
-                    this.removeHtmlContain("certification", certification_id);
-                }
-            },
-            error => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+
+    //delete Family Info
+    deleteCertificationInfo(certification_id: number) {
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete it?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.value) {
+                this._myService.deleteCertificationInfo(certification_id)
+                    .subscribe(
+                    data => {
+                        if (data.ok) {
+                            swal("Deleted", "Successfully", "success");
+                            this.removeHtmlContain("certification", certification_id);
+                        }
+                    },
+                    error => {
+                        //mApp.unblock('#m_accordion_5_item_1_body');
+                    });
+            }
+        })
     }
 
-    // addNewAcademicInfoHtml()
-    // {
-    //   this.academicInfo.push(new AcademicInfo());
-    // }
+    showHideWaitingCircle(_id: string, isHide?: boolean) {
+        if (!isHide)
+            mApp.block(_id, {
+                overlayColor: '#000000',
+                type: 'loader',
+                state: 'success',
+                // message: 'Please wait...'
+            });
+        else
+            mApp.unblock(_id);
+    }
 
-    // removeAcademicInfo(academicInfo_id)
-    // {
-    //   this.academicInfo=this.academicInfo.filter(x=>x._id!=academicInfo_id);
-    //   if(this.academicInfo.length==0)
-    //   {
-    //      this.addNewAcademicInfoHtml();
-    //   }
-    // }
-
-    // isAddAcademicInfo()
-    // {
-    //     if(this.academicInfo.filter(x=>x._id==null || x._id==undefined).length == 0)
-    //     {
-    //       return false;
-    //     }
-    //     return true ;
-    // }
+    saveSuccessMesssage() {
+        swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+    }
 
     //Add New Html on Click of Add Button 
     addNewHtmlContain(subTabName: string) {
@@ -579,11 +885,41 @@ export class ProfileEditComponent implements OnInit {
                 break;
         }
     }
+
+    removeHtmlByView(subTabName: string, _index: number) {
+        switch (subTabName) {
+            case "academicInfo":
+                if(this.academicInfo.length > 1)
+                {
+                  this.academicInfo.splice(_index, 1);
+                }
+                break;
+            case "certification":
+                if(this.certificationsandTrainingInfo.length > 1)
+                {
+                  this.certificationsandTrainingInfo.splice(_index, 1);
+                }
+                break;
+            case "employment":
+                if(this.previousEmploymentDetails.length > 1)
+                {
+                  this.previousEmploymentDetails.splice(_index, 1);
+                }
+                break;
+            case "family":
+                if(this.familyInfo.length > 1)
+                {
+                  this.familyInfo.splice(_index, 1);
+                }
+                break;
+        }
+    }
+
     //Check wheather HTML is Added or Not
     isAdded(subTabName: string) {
         switch (subTabName) {
             case "academicInfo":
-                if (this.academicInfo.filter(x => x._id == null || x._id == undefined).length == 0) {
+                if (this.academicInfo.filter(x => x._id == null || x._id == undefined && x.isCompleted == true).length == 0) {
                     return false;
                 }
                 return true;
@@ -604,6 +940,7 @@ export class ProfileEditComponent implements OnInit {
                 return true;
         }
     }
+
     //Load Personal Info Tab Data;
     loadPersonalInfoTabData() {
         //Init Data Personal Info Tab
@@ -612,11 +949,12 @@ export class ProfileEditComponent implements OnInit {
         this.maritialStatusData = this._commonService.getMartialStatus();
         this.nationalityData = this._commonService.getNationality()
 
-        this._myService.getPersonalInfo(this._currentEmpId)
+        this._myService.getPersonalInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.personalInfo = data.json() || {};
-                this.personalInfo.dob=this.personalInfo.dob?new Date(this.personalInfo.dob):this.personalInfo.dob;
+                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
+
             },
             error => {
             });
@@ -625,16 +963,19 @@ export class ProfileEditComponent implements OnInit {
     loadAddressTabData() {
         this.loadcurrentDivison();
         this.loadpermanentDivison();
-        this._myService.getAddressInfo(this._currentEmpId)
+        this._myService.getAddressInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.address = data.json() || {};
                 if (data.json()) {
                     this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
-                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id);
+                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id,'init');
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
-                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id,"init");
+                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
+                }
+                else {
+                    this.address.isSameAsCurrent = false;
                 }
             },
             error => {
@@ -671,13 +1012,12 @@ export class ProfileEditComponent implements OnInit {
             });
     }
     //Load Permanent Thana Dropdown Data 
-    loadpermanentAddressThanaData(district_id: number,onLoad?:string) {
+    loadpermanentAddressThanaData(district_id: number, onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
-                    if(!onLoad)
-                    {
-                        this.address.permanentAddressThana_id=null;
+                    if (!onLoad) {
+                        this.address.permanentAddressThana_id = null;
                     }
                     this.permanentAddressThanaData = res.json()
                 }
@@ -715,10 +1055,13 @@ export class ProfileEditComponent implements OnInit {
             });
     }
     //Load Current Thana Dropdown Data
-    loadcurrentAddressThanaData(district_id) {
+    loadcurrentAddressThanaData(district_id:number,onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
+                    if (!onLoad) {
+                        this.address.currentAddressThana_id = null;
+                    }
                     this.currentAddressThanaData = res.json()
                 }
             },
@@ -732,7 +1075,7 @@ export class ProfileEditComponent implements OnInit {
     }
     //Load Documents Page Data 
     loadDocuments() {
-        this._myService.getDocumentsInfo(this._currentEmpId)
+        this._myService.getDocumentsInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.documents = data.json() || {};
@@ -772,7 +1115,7 @@ export class ProfileEditComponent implements OnInit {
         //  this.levelOfEducationData = this._commonService.getLevelOfEducation();
         //  this.examDegreeTitleData = this._commonService.getExamDegreeTitle();
         this.loadlevelOfEducation();
-        this._myService.getAcademicInfo(this._currentEmpId)
+        this._myService.getAcademicInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.academicInfo = res.json().data;
@@ -792,7 +1135,7 @@ export class ProfileEditComponent implements OnInit {
 
     //Load Certification & Traning Tab Data
     loadCertificateAndTraningInfoTabData() {
-        this._myService.getCertificationInfo(this._currentEmpId)
+        this._myService.getCertificationInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.certificationsandTrainingInfo = res.json().data;
@@ -810,18 +1153,31 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadEmploymentDetails() {
-        this._myService.getPreviousEmploymentInfo(this._currentEmpId)
+        this.loadCompanyBusiness();
+        this._myService.getPreviousEmploymentInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.previousEmploymentDetails = res.json().data;
                 if (this.previousEmploymentDetails.length == 0) {
                     this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
                 }
-                else{
+                else {
                     for (let index = 0; index < this.previousEmploymentDetails.length; index++) {
-                        this.previousEmploymentDetails[index].employmentPeriodFrom=this.previousEmploymentDetails[index].employmentPeriodFrom?new Date(this.previousEmploymentDetails[index].employmentPeriodFrom):null;
-                        this.previousEmploymentDetails[index].employmentPeriodTo=this.previousEmploymentDetails[index].employmentPeriodTo?new Date(this.previousEmploymentDetails[index].employmentPeriodTo):null;
-                     }
+                        this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : null;
+                        this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : null;
+                    }
+                }
+            },
+            error => {
+            });
+    }
+
+    loadCompanyBusiness() {
+        this._commonService.getCompanyBusiness()
+            .subscribe(
+            res => {
+                if (res.ok) {
+                    this.companyBusinessData = res.json() || [];
                 }
             },
             error => {
@@ -842,17 +1198,17 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadFamilyInfo() {
-        this._myService.getFamilyInfo(this._currentEmpId)
+        this._myService.getFamilyInfo(this.param_emp_id)
             .subscribe(
             res => {
                 this.familyInfo = res.json().data;
                 if (this.familyInfo.length == 0) {
                     this.familyInfo.push(new FamilyInfo());
                 }
-                else{
-                   for (let index = 0; index < this.familyInfo.length; index++) {
-                      this.familyInfo[index].dateOfBirth=this.familyInfo[index].dateOfBirth?new Date(this.familyInfo[index].dateOfBirth):null;
-                   }
+                else {
+                    for (let index = 0; index < this.familyInfo.length; index++) {
+                        this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : null;
+                    }
                 }
             },
             error => {
@@ -865,18 +1221,29 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadOfficeInfoTabData() {
-        this.countryData=this._commonService.getCountry();
-        this._myService.getOfficeDetails(this._currentEmpId)
+        this.countryData = this._commonService.getCountry();
+        this.loadFacility();
+        this._myService.getOfficeDetails(this.param_emp_id)
             .subscribe(
             data => {
                 this.officeInfo = data.json() || {};
-                this.officeInfo.dateOfJoining=this.officeInfo.dateOfJoining?new Date(this.officeInfo.dateOfJoining):this.officeInfo.dateOfJoining;
-                this.officeInfo.dateOfConfirmation=this.officeInfo.dateOfConfirmation?new Date(this.officeInfo.dateOfConfirmation):this.officeInfo.dateOfConfirmation;
-                this.officeInfo.workPermitEffectiveDate=this.officeInfo.workPermitEffectiveDate?new Date(this.officeInfo.workPermitEffectiveDate):this.officeInfo.workPermitEffectiveDate;
-                this.officeInfo.workPermitExpiryDate=this.officeInfo.workPermitExpiryDate?new Date(this.officeInfo.workPermitExpiryDate):this.officeInfo.workPermitExpiryDate;
+                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
             },
             error => {
             });
+    }
+
+    loadFacility()
+    {
+        this._commonService.getFacility().subscribe(
+        res => {
+                this.facilityData = res.json() || [];
+            },
+            error => {
+        });
     }
 
     loadJoiningDetailsTabData() {
@@ -1142,49 +1509,48 @@ export class ProfileEditComponent implements OnInit {
         this.loadManagementType('init');
         this.loadEmploymentStatus();
         //this.loadRoles();
-           this._myService.getPositionDetails(this._currentEmpId)
-           .subscribe(
-           data => {
-               this.positionDetails=data.json()|| {};
-               if(data.json())
-               {
-                this.loadDepartment(this.positionDetails.division_id,"init")
-                this.loadEmploymentType(this.positionDetails.managementType_id,"init")
-                this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id,"init")
-                  this.loadHRSpoce(this.positionDetails.company_id,"init");
-                  this.loadBuisnessHrHead(this.positionDetails.hrspoc_id,"init")
-                  this.loadGroupHrHead(this.positionDetails.businessHrHead_id,"init") 
-                  this.loadVertical(this.positionDetails.department_id,"init")
-                  this.loadSubVertical(this.positionDetails.vertical_id,"init")
-                  this.loadSupervisor(this.positionDetails.grade_id,"init")
-                  this.loadDesignation(this.positionDetails.grade_id,"init")
-               }
-           },
-           error => {
-            this.positionDetails={};
-           });
+        this._myService.getPositionDetails(this.param_emp_id)
+            .subscribe(
+            data => {
+                this.positionDetails = data.json() || {};
+                if (data.json()) {
+                    this.loadDepartment(this.positionDetails.division_id, "init")
+                    this.loadEmploymentType(this.positionDetails.managementType_id, "init")
+                    this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
+                    this.loadHRSpoce(this.positionDetails.company_id, "init");
+                    this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
+                    this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
+                    this.loadVertical(this.positionDetails.department_id, "init")
+                    this.loadSubVertical(this.positionDetails.vertical_id, "init")
+                    this.loadSupervisor(this.positionDetails.grade_id, "init")
+                    this.loadDesignation(this.positionDetails.grade_id, "init")
+                }
+            },
+            error => {
+                this.positionDetails = {};
+            });
     }
 
     loadPerformanceDairyTabData() {
-        //this._authService.getOfficeDetails(this.empProfile.empId)
-        // .subscribe(
-        // data => {
-        //     this.empProfile.personalInfo=data.json()|| {};
-        // },
-        // error => {
-        // });
+        this._myService.getPerformanceDairyDeatils(this.param_emp_id)
+            .subscribe(
+            data => {
+                this.performanceDiary = data.json() || []
+            },
+            error => {
+            });
+
     }
 
     loadOfficeDetails() {
         this.loadOfficeInfoTabData();
-        //this.loadJoiningDetailsTabData();
         this.loadPositionDetailsTabData();
         this.loadPerformanceDairyTabData();
     }
 
     loadBankDetails() {
         this.currencyArrData = this._commonService.getCurrency();
-        this._myService.getBankInfo(this._currentEmpId)
+        this._myService.getBankInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.bankDetails = data.json() || {};
@@ -1202,7 +1568,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     loadSalaryInfo() {
-        this._myService.getSalaryInfo(this._currentEmpId)
+        this._myService.getSalaryInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.salaryDetails = data.json() || {};
@@ -1217,32 +1583,33 @@ export class ProfileEditComponent implements OnInit {
         this.loadSalaryInfo();
     }
 
-    isHikeSalary(form)
-    {
-      swal({
-        title: 'Are you sure?',
-        text: "You want add new salary details!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#66BB6A',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.value) {
-            form.resetForm();
-        }
-      })
+    isHikeSalary(form) {
+        swal({
+            title: 'Are you sure?',
+            text: "You want add new salary details!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#66BB6A',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes',
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then((result) => {
+            if (result.value) {
+                form.resetForm();
+            }
+        })
     }
 
     loadCarDetails() {
-        this._myService.getCarInfo(this._currentEmpId)
+        this._myService.getCarInfo(this.param_emp_id)
             .subscribe(
             data => {
                 this.carDetails = data.json() || {};
-                this.carDetails.companyEffectiveDate=this.carDetails.companyEffectiveDate?new Date(this.carDetails.companyEffectiveDate):this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate=this.carDetails.companyExpiryDate?new Date(this.carDetails.companyExpiryDate):this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate=this.carDetails.privateEffectiveDate?new Date(this.carDetails.privateEffectiveDate):this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate=this.carDetails.privateExpiryDate?new Date(this.carDetails.privateExpiryDate):this.carDetails.privateExpiryDate;
+                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
             },
             error => {
                 this.carDetails = {};

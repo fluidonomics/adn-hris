@@ -2,7 +2,8 @@ import { Injectable, } from "@angular/core";
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
 import { environment } from '../../../../../environments/environment'
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { AuthService } from "../../../../base/_services/authService.service"
 
 @Injectable()
@@ -20,11 +21,18 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    savekraWorkFlowDetails(data:any)
-    {
-        let url = "kra/addKraWorkFlowInfo";
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    loadDivision() {
+        let url = "master/getAllDivision";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
+
+
+    saveBulkKra(data: any) {
+        let url = "kra/addBulkKra";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+    
 
     private extractData(res: Response) {
         return res || {};

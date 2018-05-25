@@ -38,10 +38,11 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">Personal Email</label>
 								  <span class="required" aria-required="true">* </span>
-								  <input class="form-control m-input m-input--air" name="personalEmail" id="personalEmail" [(ngModel)]="addemp.personalEmail" #personalEmail="ngModel" placeholder="Please Enter Email" [pattern]="'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'"  type="text" required>
+								  <input class="form-control m-input m-input--air" lowerCase  name="personalEmail" id="personalEmail" [(ngModel)]="addemp.personalEmail" (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"   placeholder="Please Enter Email"   type="text" required>
 								  <div class="form-control-feedback has-danger" *ngIf="!personalEmail.valid">
-										<span *ngIf="faddemp.submitted && !personalEmail.valid">This field is required.</span>
-										<span *ngIf="personalEmail.errors?.pattern">Please enter email in proper format</span>
+										<span *ngIf="faddemp.submitted && personalEmail.errors?.required">This field is required.</span>
+										<span *ngIf="personalEmail.errors?.pattern">Personal Email not valid.</span> 
+										<span *ngIf="personalEmail.errors?.emailExists">Email Address already exists.</span> 
 								  </div>
 							   </div>
 							</div>
@@ -51,7 +52,7 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">Mobile Number</label>
 								  <span class="required" aria-required="true">* </span>
-								  <input type="text" class="form-control m-input m-input--air" name="mobileNumber" id="mobileNumber" [(ngModel)]="addemp.personalMobileNumber"  #mobileNumber="ngModel" OnlyNumber="true" maxlength="10" required>
+								  <input type="text" class="form-control m-input m-input--air" name="mobileNumber" id="mobileNumber" [(ngModel)]="addemp.personalMobileNumber"  #mobileNumber="ngModel" OnlyNumber="true" minlength="10" maxlength="10" required>
 								  <div class="form-control-feedback has-danger" *ngIf="!mobileNumber.valid">
 									<span *ngIf="faddemp.submitted && !mobileNumber.valid">This field is required.</span>
 									<span *ngIf="mobileNumber.errors?.maxlength">Mobile number must be 10 digit max..</span>

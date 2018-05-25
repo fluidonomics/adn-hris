@@ -6,11 +6,10 @@
 
 // export function isEmailUnique(_common: CommonService): AsyncValidatorFn {
 //   return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-//     return this._common.isEmailUnique(control.value).map(
-//       users => {
-//         return (users && users.length > 0) ? {"isUnique": true} : null;
-//       }
-//     );
+//         return _common.isEmailUnique(control.value).map(
+//         users => {
+//             return users ? {"isUnique": true} : null;
+//         });  
 //   };
 // }
 
@@ -18,10 +17,13 @@
 //   selector: '[isEmailUnique][formControlName],[isEmailUnique][isEmailUnique],[isEmailUnique][ngModel]',
 //   providers: [{provide: NG_ASYNC_VALIDATORS, useExisting: EmailUniqueValidatorDirective, multi: true}]
 // })
+
 // export class EmailUniqueValidatorDirective implements AsyncValidator {
-//   constructor(private _common: CommonService) {  }
+//   constructor(public _common: CommonService) {  
+
+//   }
 
 //   validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-//      return isEmailUnique(this._common)(control);
+//       return isEmailUnique(this._common)(control);
 //   }
 // } 

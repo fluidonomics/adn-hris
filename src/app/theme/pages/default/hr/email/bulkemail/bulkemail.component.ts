@@ -1,4 +1,4 @@
-import { Component,PLATFORM_ID, Input, OnInit, Inject,ViewEncapsulation } from '@angular/core';
+import { Component, PLATFORM_ID, Input, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./bulkemail.component.html",
     encapsulation: ViewEncapsulation.None
-  
+
 })
 export class BulkEmailComponent implements OnInit {
 
@@ -21,10 +21,10 @@ export class BulkEmailComponent implements OnInit {
 
     disabled: boolean = false;
 
-    bulkemail:any={}
+    bulkemail: any = {}
 
-  
-  
+
+
     options = {
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -57,20 +57,20 @@ export class BulkEmailComponent implements OnInit {
     //             ['help', ['help']]
     //     ]
     // };
-    constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService,
-   ) {
-    title.setTitle('ADN HRIS | My Profile');
-    meta.addTags([
-        { name: 'author', content: '' },
-        { name: 'keywords', content: 'Add new employee' },
-        { name: 'description', content: 'Add new employee.' }
-    ]);
-}
+    constructor( @Inject(PLATFORM_ID) private platformId: Object,
+        meta: Meta, title: Title,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+    ) {
+        title.setTitle('ADN HRIS | My Profile');
+        meta.addTags([
+            { name: 'author', content: '' },
+            { name: 'keywords', content: 'Add new employee' },
+            { name: 'description', content: 'Add new employee.' }
+        ]);
+    }
 
     ngOnInit() {
     }
@@ -94,19 +94,17 @@ export class BulkEmailComponent implements OnInit {
     }
 
 
-    sendEmail(form)
-    {
+    sendEmail(form) {
         this._commonService.sendEmail(this.bulkemail)
-        .subscribe(
-        data => {
-            if(data.ok)
-            {
-                swal("Mail Send Successfully!","", "success");
-                form.resetForm();
-            }
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    swal("E-mail has been sent!", "", "success");
+                    form.resetForm();
+                }
+            },
+            error => {
+            });
     }
 }
 

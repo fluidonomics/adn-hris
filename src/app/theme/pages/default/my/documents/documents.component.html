@@ -1,0 +1,74 @@
+<div class="m-content">
+        <div class="row">
+           <div class="col-md-12">
+              <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+                 <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                       <div class="m-portlet__head-title">
+                          <h3 class="m-portlet__head-text">
+                             <i class="fa fa-file"> </i> 
+                             Employee Documents
+                             <small>
+                             </small>
+                          </h3>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="m-portlet__body">
+                    <div class="row">
+                            <div class="col-md-10 documentsnote">                                             
+                                <label><i class="has-danger"> * </i><strong> Note:</strong> Please [1] Download the format of given documents. [2] Print the documents. [3] Fill the required information. [4] Scan and Upload in PDF format only.</label>
+                            </div>
+                            <div class="col-md-2 accordian-refresh">
+                                <button class="btn btn-secondary" type="button"> <i class="fa fa-refresh"></i> </button>
+                            </div>
+                        </div>
+                    <div class="row" *ngFor="let document of documentsData ;let i=index">
+                                   <div class="col-md-12">
+                                      <div class="m-widget4">
+                                         <div class="m-widget4__item">
+                                            <div class="m-widget4__img m-widget4__img--icon">
+                                               <img alt="" src="./assets/app/media/img/files/pdf.svg">
+                                            </div>
+                                            <div class="m-widget4__info">
+                                               <span class="m-widget4__text">
+                                               {{document.documentName}} 
+                                               </span>
+                                            </div>
+                                            <div class="m-widget4__ext documents--ext">
+                                               <a class="btn btn-warning">
+                                                 <i class="fa fa-download"> Download</i>
+                                               </a>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                                   <div class="col-md-12">
+                                      <div class="m-widget4">
+                                         <div class="m-widget4__item">
+                                            <div class="m-widget4__ext documents--ext">
+                                               <button type="button" class="btn btn-success"  name="test" (click)="nationalIdSmartCard.click()" >{{document?.uploadDocument?._id ? 'Change':'Upload'}}</button>
+                                               <input type="file" hidden="hidden" name="documentUpload{{i}}" #nationalIdSmartCard ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName)" [uploadInput]="uploadInput">
+                                            </div>
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document.uploadDocument._id">
+                                               <!-- <button type="button" class="btn btn-secondary" name="documentView{{i}}"  
+                                               (click)="showPdf(document.documentUrl)">View</button> -->
+                                               <a class="btn btn-secondary" target="_blank" href="{{document.documentUrl}}" >
+                                                  View
+                                               </a>
+                                            </div>
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document.uploadDocument._id">
+                                               <button type="button" class="btn btn-danger"  
+                                               name="documentDelete{{i}}" 
+                                               (click)="removeDocument(document.documentUrl,i)"><i class="fa fa-close"></i></button>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                                <hr>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>

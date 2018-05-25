@@ -18,8 +18,16 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     reverse: boolean = false;
     p2: number = 1;
     search: any;
-    _currentEmpId:number;
-   
+    _currentEmpId: number;
+    itemPerPage: number=10;
+    
+    profileProcess = {
+        isEmployeeSubmitted: false,
+        isHrSubmitted: false,
+        isHrSendBack: false,
+        isSupervisorApproved: false,
+        isSupervisorSendBack: false
+    }
 
 
     constructor(private _script: ScriptLoaderService,
@@ -42,14 +50,13 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
-                let data= res.json().data || [];
-                if(data.length >0)
-                {
-                    data = data.filter(obj => obj.HrScope_Id== this._currentEmpId);
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                     this.employeeData = data || [];
                 }
                 else
-                this.employeeData = data.json().data || [];
+                    this.employeeData = data.json().data || [];
             },
             error => {
             });
@@ -64,5 +71,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
+    
+    getStart()
+    {
+       return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
+    }
 
+    getEnd(filterCount)
+    {
+       let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
+       return  Math.min(start + this.itemPerPage  - 1, filterCount);
+    }
 }

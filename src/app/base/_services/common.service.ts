@@ -160,6 +160,16 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getFacility(): Observable<Response> {
+        let url = "common/getFacility";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    
+    getCompanyBusiness(): Observable<Response> {
+        let url = "common/getCompanyBusiness";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getCurrency() {
         return currency;
     }
@@ -241,25 +251,25 @@ export class CommonService {
 
     }
 
-    checkTabCompleted(empId:number,tabName?: string) {
-        let url = "common/checkTabCompleted?emp_id="+empId +"&tab="+tabName;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    
-    getProfileProcessStatus(empId?:number) {
-        let url = "common/getProfileProcessStatus" 
-        if(empId)
-        {
-           url = "common/getProfileProcessStatus?emp_id="+empId 
+    getTabStatus(emp_id?: number) {
+        let url = "common/getTabStatus"
+        if (emp_id) {
+            url = "common/getTabStatus?emp_id=" + emp_id
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    
-    sendEmail(data:any)
-    {
-        let url = "common/sendEmail" 
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+
+
+
+
+    sendEmail(data: any) {
+        let url = "common/sendEmail"
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    checkEmailExists(data: string) {
+        let url = "common/checkEmailExists?email=" + data
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getLevelOfEducation() {
@@ -269,12 +279,20 @@ export class CommonService {
     }
 
 
-    getKraDetailsData(emp_id)
-    {
-        let url = "kra/getKraDetailsData?emp_id="+ emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError); 
+    getKraCategory() {
+        let url = "kra/getKraCategoryInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getKraWeightage() {
+        let url = "kra/getKraWeightageInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraSupervisor(emp_id:number) {
+        let url = "common/getKraSupervisor?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     getExamDegreeTitle() {
         return examDegreeTitle;

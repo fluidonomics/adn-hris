@@ -8,55 +8,8 @@ import { AuthService } from "../../../../base/_services/authService.service";
 
 @Injectable()
 export class MyService {
-    constructor(private authService: AuthService,
-        private http: Http) {
+    constructor(private authService: AuthService) {
     }
-
-    // verify() {
-    //     let url="/verify";
-    //     return this.authService.get(url).map((response: Response) => response.json());
-    // }
-
-    // forgotPassword(email: string) {
-    //     let url="/verify";
-    //     return this.authService.post('/api/forgot-password', JSON.stringify({ email })).map((response: Response) => response.json());
-    // }
-
-    // getAll() {
-    //     let url="/user";
-    //     return this.authService.get(url).map((response: Response) => response.json());
-    // }
-
-    // getById(id: number) {
-    //     let url="/user?id"+id;
-    //     return this.authService.get(url + id).map((response: Response) => response.json());
-    // }
-
-    // create(user: User) {
-    //     let url="/user";
-    //     return this.authService.post(url, user).map((response: Response) => response.json());
-    // }
-
-    // update(user: User) {
-    //     let url="/user?id"+user.id;
-    //     return this.authService.put(url, user).map((response: Response) => response.json());
-    // }
-
-    // delete(id: number) {
-    //     let url="/user?id"+id;
-    //     return this.authService.delete('/api/user/' + id).map((response: Response) => response.json());
-    // }
-
-    // private helper methods
-    // private jwt() {
-    //     // create authorization header with jwt token
-    //     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    //     if (currentUser && currentUser.token) {
-    //         let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
-    //         return new RequestOptions({ headers: headers });
-    //     }
-    // }
-
 
     getPersonalInfo(emp_id?: number): Observable<Response> {
         let url = "user/getPersonalInfo?emp_id=" + emp_id;
@@ -87,6 +40,7 @@ export class MyService {
         let url = "user/getCarInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
     getAcademicInfo(emp_id?: number): Observable<Response> {
         let url = "user/getAcademicInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
@@ -117,8 +71,21 @@ export class MyService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getPerformanceDairyDeatils(emp_id?: number): Observable<Response> {
+        let url = "user/getPerformanceRatingInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getSeperationDetails(emp_id?: number): Observable<Response> {
         let url = "user/seperationInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getProfileProcessInfo(empId?: number): Observable<Response> {
+        let url = "user/getProfileProcessInfo"
+        if (empId) {
+            url = "user/getProfileProcessInfo?emp_id=" + empId
+        }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -151,64 +118,6 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-
-    saveOfficeInfo(data: any): Observable<Response> {
-        {
-            let url = "user/addOfficeInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateOfficeInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    savePositionInfo(data: any): Observable<Response> {
-        {
-            let url = "user/addPositionInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updatePositionInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    addapplyLeave(data: any): Observable<Response> {
-        {
-            let url = "leave/applyLeave"
-            console.log(data);
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    saveBankDetails(data: any): Observable<Response> {
-        {
-            let url = "user/addBankInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateBankInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    saveSalaryDetails(data: any): Observable<Response> {
-        {
-            let url = "user/addSalaryInfo"
-            if (data._id != null && data._id != "" && data._id != undefined) {
-                url = "user/updateSalaryInfo";
-            }
-            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-        }
-    }
-
-    saveCarDetails(data: any): Observable<Response> {
-        let url = "user/addCarInfo"
-        if (data._id != null && data._id != "" && data._id != undefined) {
-            url = "user/updateCarInfo";
-        }
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-
-
 
     saveAcademicInfo(data: any): Observable<Response> {
         let url = "user/addAcademicInfo"
@@ -248,12 +157,82 @@ export class MyService {
         }
     }
 
-    saveKra(data: any): Observable<Response> {
+
+    saveOfficeInfo(data: any): Observable<Response> {
         {
-            let url = "kra/addKraInfo"
+            let url = "user/addOfficeInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateOfficeInfo";
+            }
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
+
+    savePositionInfo(data: any): Observable<Response> {
+        {
+            let url = "user/addPositionInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updatePositionInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    addapplyLeave(data: any): Observable<Response> {
+        {
+            let url = "leave/applyLeave"
+            console.log(data);
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveBankDetails(data: any): Observable<Response> {
+        {
+            let url = "user/addBankInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateBankInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    savePerformanceRatingInfo(data: any): Observable<Response> {
+        {
+            let url = "user/saveBulkPerformanceRating"
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveSalaryDetails(data: any): Observable<Response> {
+        {
+            let url = "user/addSalaryInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateSalaryInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    saveCarDetails(data: any): Observable<Response> {
+        let url = "user/addCarInfo"
+        if (data._id != null && data._id != "" && data._id != undefined) {
+            url = "user/updateCarInfo";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+
+
+    saveProfileStatus(data: any): Observable<Response> {
+        {
+            let url = "user/addProfileProcessInfo"
+            if (data._id != null && data._id != "" && data._id != undefined) {
+                url = "user/updateProfileProcessInfo";
+            }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
 
     deleteAcademicInfo(_id: number) {
         let url = "user/deleteAcademicInfo?_id=" + _id;
@@ -273,6 +252,51 @@ export class MyService {
     deleteCertificationInfo(_id: number) {
         let url = "user/deleteCertificationInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
+    }
+
+    deleteImage(data: any) {
+        let url = "upload/deleteImage";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    getCancelEmployeeLeaveDetails(_empId: number) {
+        let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeEmailDetails() {
+        let url = "leave/getEmployeEmailDetails";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveCancelLeave(leave: any) {
+        let url = "leave/cancelLeave";
+        return this.authService.post(url, leave).map(this.extractData).catch(this.handleError);
+    }
+
+    getLeaveType(): Observable<Response> {
+        let url = "leave/getLeaveTypes";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    postEmployeeLeaveDetails(leavesData: any): Observable<Response> {
+        let url = "leave/applyLeave";
+        return this.authService.post(url, leavesData).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeLeaveDetails(_empId: number): Observable<Response> {
+        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getWorkflowHistory(_id: number): Observable<Response> {
+        let url = "leave/getLeaveWorkflowDetails?id=" + _id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getAllEmployee() {
+        let url = "user/getAllEmployee";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {

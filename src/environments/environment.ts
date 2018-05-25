@@ -7,7 +7,7 @@ export const environment = {
     production: false,
     api_base: {
         apiBase: "http://localhost:3000",
-       //apiBase: "http://goforship.com:3000",
+        //apiBase: "http://goforship.com:3000",
         apiPath: "api",
         resetPasswordCallback: "",
         signInPath: 'auth/login',
@@ -17,8 +17,9 @@ export const environment = {
         //validateTokenPath:'auth/validateTokenPath'
     },
     content_api_base: {
-        apiBase: "http://localhost:3000",
-        imgBase: "http://localhost:3000"
+        apiBase: "https://adn-bucket.s3.ap-south-1.amazonaws.com/",
+        imgBase: "https://adn-bucket.s3.ap-south-1.amazonaws.com/",
+        noImagePath: "image/0e02f48c.noimageavailable.jpg"
     },
     access_deniedPath: ["access-denied"]
 };

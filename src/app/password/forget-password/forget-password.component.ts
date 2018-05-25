@@ -15,30 +15,27 @@ import { Helpers } from "../../helpers";
 export class ForgetPasswordComponent {
     loading = false;
     forgetModel: any = {};
+    isForgetPassword: boolean = true;
 
     constructor(private _router: Router,
         private _script: ScriptLoaderService,
         private _route: ActivatedRoute,
         private _authService: AuthService,
-        private cfr: ComponentFactoryResolver) {
+    ) {
     }
 
     ngOnInit() {
-        // this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
-        //     .then(() => {
-        //         Helpers.setLoading(false);
-        //     });
     }
 
-    forgetPassword(form) {
-        //this.loading = true;
+    forgetPassword() {
+        this.loading = true;
         this._authService.forget(this.forgetModel)
             .subscribe(
             data => {
                 if (data.ok) {
-                    form.resetFrom();
+                    this.loading = false;
+                    this.isForgetPassword = false;
                 }
-                //this._router.navigate([this.returnUrl]);
             },
             error => {
                 this.loading = false;

@@ -352,6 +352,21 @@ export class AddEmployeeComponent implements OnInit {
         }
     }
 
+    checkEmailExists(_element) {
+        if (_element.valid) {
+            this._commonService.checkEmailExists(_element.value)
+                .subscribe(
+                data => {
+                    if (data.json())
+                        _element.control.setErrors({ "emailExists": true })
+                },
+                error => {
+                    _element.control.setErrors(null)
+                });
+
+        }
+    }
+
     //Clear All Form Data 
     clearFormData() {
         this.addemp = {}

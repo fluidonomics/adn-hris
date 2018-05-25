@@ -103434,10 +103434,16 @@ Chart.elements.Rectangle.prototype.draw = function() {
             timer = setTimeout(function() {
                 // Check for onWarn callback function and if there is none, launch dialog
                 if (typeof opt.onWarn !== 'function') {
-                    $('#session-timeout-dialog').modal('show');
+					//custom edit remove below
+					sessionStorage.clear();
+					window.location = opt.redirUrl;
+					
+					//Remove Below Comment
+                    //$('#session-timeout-dialog').modal('show');
                 } else {
                     opt.onWarn(opt);
-                }
+				}
+				//custom remove below comment
                 // Start dialog timer
                 startDialogTimer();
             }, opt.warnAfter);
@@ -103455,6 +103461,8 @@ Chart.elements.Rectangle.prototype.draw = function() {
             timer = setTimeout(function() {
                 // Check for onRedir callback function and if there is none, launch redirect
                 if (typeof opt.onRedir !== 'function') {
+					//custom change
+					sessionStorage.clear();
                     window.location = opt.redirUrl;
                 } else {
                     opt.onRedir(opt);

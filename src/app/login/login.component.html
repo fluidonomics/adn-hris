@@ -21,14 +21,14 @@
                                     and provided Password to continue.
                                 </div>
                             </div>
-                            <form class="m-login__form m-form" (ngSubmit)="login(flogin)" #flogin="ngForm" #loginForm >
-                                <div *ngIf="error" role="alert" class="m-alert m-alert--outline alert alert-danger alert-dismissible">
-                                            <button aria-label="Close" class="close" data-dismiss="alert" type="button"></button>
-                                            <span>Email or password is incorrect</span>
+                            <form class="m-login__form m-form" (ngSubmit)="flogin.valid && login()" #flogin="ngForm">
+                                <div *ngIf="error" class="m-alert m-alert--outline alert alert-danger alert-dismissible" >
+                                        <button class="close" type="button" (click)="error=!error"></button>
+                                        <span>{{errorMsg}}</span>
                                 </div>
                                
                                 <div class="form-group m-form__group">
-                                    <input class="form-control m-input" type="text" placeholder="Username" name="userName" [(ngModel)]="loginModel.userName" #userName="ngModel" autocomplete="off" required>
+                                    <input class="form-control m-input" type="text" placeholder="Username" name="userName" [(ngModel)]="loginModel.userName" #userName="ngModel" required>
                                     <div class="form-control-feedback has-danger" *ngIf="!userName.valid">
                                         <span *ngIf="flogin.submitted && !userName.valid">This field is required.</span>
                                     </div>
@@ -49,12 +49,12 @@
                                     </div> -->
                                     <div class="col m--align-right">
                                         <a class="m-link" id="m_login_forget_password" routerLink="/reset" >
-										Forget Password ?
+										Forgot Password ?
 									</a>
                                     </div>
                                 </div>
                                 <div class="m-login__form-action">
-                                    <button class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"   [ngClass]="{'m-loader m-loader--right m-loader--light' :loading}">
+                                    <button class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" type="submit"   [ngClass]="{'m-loader m-loader--right m-loader--light' :loading}">
                                         Sign In
                                     </button>
                                 </div>
