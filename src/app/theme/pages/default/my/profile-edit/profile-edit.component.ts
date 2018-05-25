@@ -10,8 +10,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { BankInfo, AcademicInfo, CarInfo, CertificationInfo, PreviousEmploymentInfo, FamilyInfo } from "../../../../../base/_interface/user.model"
 import { environment } from "../../../../../../environments/environment";
 import swal from 'sweetalert2';
-import { FormControl } from "@angular/forms/src/model";
-import { NgControl } from "@angular/forms/src/directives/ng_control";
+
 declare var mApp;
 declare var $;
 
@@ -19,9 +18,6 @@ declare var $;
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
     templateUrl: "./profile-edit.component.html",
     encapsulation: ViewEncapsulation.None,
-    styles: [`input[type="file"]{
-        opacity: 0;
-    }`]
 })
 
 export class ProfileEditComponent implements OnInit {

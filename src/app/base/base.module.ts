@@ -7,6 +7,7 @@ import { RoundPipe } from "./_pipes/round.pipes";
 import { CeilPipe } from "./_pipes/ceil.pipes";
 import { EqualValidator } from './_directive/equalValidator.directive';
 import { OnlyNumberDirective } from './_directive/only-number.directive';
+import { OnlyPercentageDirective } from './_directive/only-percentage.directive';
 import { OnlyMobileNumberDirective } from './_directive/only-mobile-number.directive';
 import { LowerCaseDirective } from './_directive/lowerCase.directive';
 //import { EmailUniqueValidatorDirective } from './_directive/unique-email.directive';
@@ -26,6 +27,7 @@ import { SummernoteComponent } from './_components/summernote.component';
         RoundPipe,
         SummernoteComponent,
         OnlyNumberDirective,
+        OnlyPercentageDirective,
         LowerCaseDirective,
         OnlyMobileNumberDirective,
         //EmailUniqueValidatorDirective,
@@ -41,6 +43,7 @@ import { SummernoteComponent } from './_components/summernote.component';
         SummernoteComponent,
         LowerCaseDirective,
         OnlyNumberDirective,
+        OnlyPercentageDirective,
         OnlyOneRequired,
         OnlyMobileNumberDirective,
         //EmailUniqueValidatorDirective,

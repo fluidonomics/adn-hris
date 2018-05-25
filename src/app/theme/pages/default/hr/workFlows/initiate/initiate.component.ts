@@ -23,11 +23,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     deparmentData: any = [];
     gradeData: any = [];
 
-    batchData={
-        emp_id:[],
-        batchEndDate:[],
-        batchName:[],
-        batchType:[]
+    batchData:any={
+        "emp_id":[]
     };
 
     
@@ -45,7 +42,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         private _hrService: HrService,
         private _commonService: CommonService,
         public _authService: AuthService) {
-
+        //this.batchData.emp_id=[];
     }
 
     ngOnInit() {
@@ -181,14 +178,9 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.search=null
         this.filterBy={}
         this.batchData={
-            emp_id:[],
-            batchEndDate:[],
-            batchName:[],
-            batchType:[]
+            emp_id:[]  
         };
         this.loadAllEmployee();
     }
-
-
 }
 
