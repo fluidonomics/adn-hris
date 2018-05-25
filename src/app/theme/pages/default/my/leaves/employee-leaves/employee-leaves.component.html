@@ -1,0 +1,227 @@
+<div class="m-content">
+    <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text flaticon-user-add">
+                        Employee Leaves
+                        <small></small>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <!--<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabActive" role="tab">
+							Active
+						</a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" href="#tabCompleted" role="tab">
+							Completed
+						</a>
+					</li>
+				</ul>-->
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 adn-form__group">
+                        <div class="m-form__group form-group">
+                            <label for="form_control_1">Select Employee</label>
+                            <ng-select class="m-input m-input--air" name="employee" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="selectedEmployee"
+                                id="employees" #employee="ngModel" placeholder="" (change)="changeEmployee($event,employee)"></ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabActive">
+                    <div class="m-widget2">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a *ngFor="let leaveType of leaveTypesDetails" class="nav-item nav-link" [ngClass]="selectedLeaveType == leaveType ? 'active' : ''"
+                                    id="nav-lop-tab" data-toggle="tab" role="tab" aria-controls="nav-lop" aria-selected="true"
+                                    (click)="changeLeaveType($event,leaveType)">
+                                    {{leaveType.type}}
+                                </a>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-lop-tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 style="padding: 20px 0 20px 16px;">
+                                            {{selectedLeaveType?.type}}
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-12 session">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Session {{currentSession}}
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#" *ngFor="let session of sessions" (click)="changeSession(session)">{{session}}
+                                                    <i *ngIf="session == currentSession" class="fa fa-check"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12" style="margin-top: 14px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                                                        <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                                            <table class="m-datatable__table">
+                                                                <thead class="m-datatable__head">
+                                                                    <tr class="m-datatable__row">
+                                                                        <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                                                                            <span>
+                                                                                Type
+                                                                                <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                            <span>
+                                                                                Posted
+                                                                                <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                            <span>
+                                                                                From
+                                                                                <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                            <span>
+                                                                                To
+                                                                                <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                                            <span>
+                                                                                Days
+                                                                                <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                                            </span>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="m-datatable__body">
+                                                                    <tr class="m-datatable__row" *ngFor="let leave of leaveDetails | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
+                                                                        <td class="m-datatable__cell" width="25%">
+                                                                            <span>{{leave.leave_type_name}}</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%">
+                                                                            <span></span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%">
+                                                                            <span>{{leave.fromDate | date:'dd MMM yy'}}</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%">
+                                                                            <span>{{leave.toDate | date:'dd MMM yy'}}</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="15%">
+                                                                            <span *ngIf="leave.days">{{leave.days}}</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+                                                                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                                                    <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                                                        <li>
+                                                                            <a class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                                                (click)="p.setCurrent(1)">
+                                                                                <i class="la la-angle-double-left"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                                                (click)="p.previous()">
+                                                                                <i class="la la-angle-left"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li *ngFor="let page of p.pages">
+                                                                            <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                                                                {{ page.label }}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                                                (click)="p.next()">
+                                                                                <i class="la la-angle-right"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                                                (click)="p.setCurrent(p.pages.length + 1)">
+                                                                                <i class="la la-angle-double-right"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </pagination-template>
+                                                        </div>
+                                                        <!-- END EXAMPLE TABLE PORTLET-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <table class="table" style="margin-top: 6%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" style="text-align: center">
+                                                            Summery
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Opening Balance</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Granted(+)</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Avaited(-)</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Encashed(-)</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lapsed(-)</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Balance</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Applied</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

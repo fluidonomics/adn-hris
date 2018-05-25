@@ -1,0 +1,109 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                Grant Leave
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="applyLeavePanel" role="tabpanel">
+                            <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onGrantLeaveSubmit(fGrantLeave)" id="fGrantLeave"
+                                #fGrantLeave="ngForm">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <div class="m-radio-inline">
+                                                    <label class="m-radio">
+                                                        <input type="radio" name="grantCategory" value="all" (change)="onCategoryChange($event, fGrantLeave)" [(ngModel)]="currentCategory">All
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="m-radio">
+                                                        <input type="radio" name="grantCategory" value="department" (change)="onCategoryChange($event, fGrantLeave)" [(ngModel)]="currentCategory"> Department
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="m-radio">
+                                                        <input type="radio" name="grantCategory" value="single" (change)="onCategoryChange($event, fGrantLeave)" [(ngModel)]="currentCategory"> Single
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="currentCategory !== 'all'">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group" *ngIf="currentCategory === 'department'">
+                                                <label for="department">Department</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="departmentName" [items]="departmentList" [(ngModel)]="grantLeave.department"
+                                                    #department="ngModel" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="!department.valid">
+                                                    <span *ngIf="fGrantLeave.submitted && !department.valid">This field is required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="m-form__group form-group" *ngIf="currentCategory === 'single'">
+                                                <label for="employee">Employee</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="grantLeave.employee"
+                                                    #employee="ngModel" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="!employee.valid">
+                                                    <span *ngIf="fGrantLeave.submitted && !employee.valid">This field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Leave Type</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesList" [(ngModel)]="grantLeave.leaveType"
+                                                    id="leavetype" #leavetype="ngModel" placeholder="" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="!leavetype.valid">
+                                                    <span *ngIf="fGrantLeave.submitted && !leavetype.valid">This field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="days">Days</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <input type="text" name="days" class="form-control m-input m-input--air" OnlyNumber="true" [(ngModel)]="grantLeave.days"
+                                                    #days="ngModel" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="fGrantLeave.submitted">
+                                                    <span *ngIf="fGrantLeave.submitted && !days.valid">This field is required.</span>
+                                                    <span *ngIf="fGrantLeave.submitted && days.value == 0">Days cannot be zero.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="m-form__actions">
+                                                <button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+                                                <button class="btn btn-secondary" (click)="resetForm(fGrantLeave);" type="button">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

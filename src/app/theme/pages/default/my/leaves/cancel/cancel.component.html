@@ -52,7 +52,7 @@
 						</tr>
 					</thead>
 					<tbody class="m-datatable__body">
-						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of leaveData | orderBy: key : reverse | filter:search;let even=even;">
+						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of leaveData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
 							<td data-field="RecordID" class="m-datatable__cell m-datatable__cell--check">
 								<span style="width: 40px;">
 									<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">

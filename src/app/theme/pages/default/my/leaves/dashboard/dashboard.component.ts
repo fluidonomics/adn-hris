@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-
+import { LeaveForwardComponent } from './leave-forward/leave-forward.component';
+import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
+import { UserData } from '../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../leave.service';
 
 @Component({
     selector: "app-my-leaves-dashboard",
@@ -13,12 +16,30 @@ export class DashboardComponent implements OnInit {
     leaveBalance: any = [];
     upcomingHolidays: any = [];
     recentTransactions: any = [];
+    employeeList: any;
+    currentUser: UserData;
 
-    constructor() {
+    leaveList: any;
+
+    constructor(
+        private leaveService: LeaveService,
+        public authService: AuthService,
+        private utilityService: UtilityService
+    ) {
 
     }
 
     ngOnInit() {
+        this.currentUser = this.authService.currentUserData;
+
+        if (this.currentUser.roles.indexOf('HR') > -1 || this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getLeaveDetails();
+        } else {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
+        }
+
         this.leaveBalance = [
             {
                 title: "LOP",
@@ -38,24 +59,6 @@ export class DashboardComponent implements OnInit {
             }
         ];
 
-        this.upcomingHolidays = [
-            {
-                date: new Date(),
-                title: "Ramzan Id (Id ul Fitra)",
-                type: null
-            },
-            {
-                date: new Date("08/15/2018"),
-                title: "Independance Day",
-                type: null
-            },
-            {
-                date: new Date(),
-                title: "Ganesh Chaturthi",
-                type: "OH"
-            }
-        ];
-
         this.recentTransactions = [
             {
                 holidayType: "LOP",
@@ -72,5 +75,64 @@ export class DashboardComponent implements OnInit {
                 status: "Approved"
             }
         ]
+    }
+
+    getLeaveDetails() {
+        this.leaveService.getHRLeaveDetails().subscribe(
+            res => {
+                if (res.ok) {
+                    this.leaveList = res.json().data;
+                    if (this.leaveList) {
+                        this.leaveList = this.leaveList.map(leave => {
+                            leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
+                            return leave;
+                        });
+                    }
+                }
+            },
+            error => {
+                console.error(error);
+            });
+    }
+
+    getHolidays() {
+        this.leaveService.getLeaveHolidays(2018).subscribe(res => {
+            if (res.ok) {
+                this.upcomingHolidays = res.json() || [];
+            }
+        })
+    }
+
+    getTransactions() {
+        this.leaveService.getEmployeeLeaveDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let body = res.json();
+                this.recentTransactions = body.data || [];
+            }
+        })
+    }
+
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+                this.leaveBalance.forEach(bal => {
+                    switch (bal.leave_type) {
+                        case 1:
+                            bal.type = "Annual Leave";
+                            break;
+                        case 2:
+                            bal.type = "Sick Leave";
+                            break;
+                        case 3:
+                            bal.type = "Maternity Leave";
+                            break;
+                        case 4:
+                            bal.type = "Special Leave";
+                            break;
+                    }
+                });
+            }
+        })
     }
 }
