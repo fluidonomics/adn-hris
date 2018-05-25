@@ -1,0 +1,17 @@
+app-dashboard-details {
+  width: 100%;
+  .emp-list-image {
+    width: 36px;
+  }
+  .table-bordered td {
+    border: 1px solid #c0c0c0;
+  }
+  .m-portlet__head {
+    background-color: #198F4A !important;
+    border-color: #198F4A !important;
+
+    .m-portlet__head-text {
+      color: #fff !important;
+    }
+  }
+}

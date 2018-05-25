@@ -1,0 +1,33 @@
+app-my-leaves-reports {
+    flex: 1;
+
+    .no-data-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0px;
+    }
+
+    .chartEmployee, .chartLeaves {
+        width: 100%;
+        height: 500px;
+
+        h5 {
+            text-transform: capitalize;
+        }
+    }
+
+    .d3-chart {
+        width: 100%;
+        height: 400px;
+    }
+
+    .d3-chart .axis path,
+    .d3-chart .axis line {
+        stroke: #999;
+    }
+
+    .d3-chart .axis text {
+        fill: #999;
+    }
+}

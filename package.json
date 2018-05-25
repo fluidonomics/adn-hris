@@ -33,6 +33,7 @@
         "angular2-jwt": "^0.2.3",
         "classlist.js": "^1.1.20150312",
         "core-js": "^2.4.1",
+        "d3": "^5.4.0",
         "enhanced-resolve": "^3.3.0",
         "jquery": "^3.2.1",
         "ng-recaptcha": "^3.0.0",
@@ -50,6 +51,7 @@
         "@angular/cli": "^1.7.4",
         "@angular/compiler-cli": "^5.2.9",
         "@angular/language-service": "^5.0.0",
+        "@types/d3": "^5.0.0",
         "typescript": "~2.4.2"
     }
 }

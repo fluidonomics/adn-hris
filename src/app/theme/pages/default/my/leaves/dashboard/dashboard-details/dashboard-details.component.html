@@ -1,95 +1,88 @@
-<div class="m-content">
-	<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text flaticon-user-add">
-						Leave Application Review
-						<small>
-						</small>
-					</h3>
-				</div>
-			</div>
-		</div>
+<div class="m-content hr-leave-dashboard-details">
+	<div class="m-portlet">
 		<div class="m-portlet__body">
-			<!--form-->
 			<div class="row">
-				<div class="col-md-8">
-					<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
-						<div class="m-portlet__body">
-							<span class="leave-app-review-user">
-								<img class="m--img-rounded" [src]="leave.profilePic" title="">
-							</span>
-							<span class="m-list-search__result-item-text">{{leave.emp_name}}</span>
-							<div class="tab-content">
-								<div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
-									<form class="m-form m-form--fit m-form--label-align-right">
-										<div class="form-body">
-											<div class="row">
-												<div class="col-md-6 adn-form__group">
-													<div class="form-group m-form__group">
-														<label for="form_control_1" class="formtitle">From</label>
-														<label for="form_control_1">{{leave.fromDate | date:'dd MMM yy'}}</label>
-													</div>
-												</div>
-												<div class="col-md-6 adn-form__group">
-													<div class="form-group m-form__group">
-														<label for="form_control_1" class="formtitle">To</label>
-														<label for="form_control_1">{{leave.toDate | date:'dd MMM yy'}}</label>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12 adn-form__group">
-													<div class="form-group m-form__group">
-														<label for="form_control_1 " class="formtitle">Leave Type</label>
-														<label for="form_control_1">{{leave.leave_type_name}}</label>
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-md-6 adn-form__group">
-													<div class="form-group m-form__group">
-														<label for="form_control_1 " class="formtitle">Days</label>
-														<label for="form_control_1">{{leave.days}}</label>
-													</div>
-												</div>
-												<div class="col-md-6 adn-form__group">
-													<div class="form-group m-form__group">
-														<label for="form_control_1" class="formtitle">Leave Balance</label>
-														<label for="form_control_1">{{leave.balance}}</label>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-12 adn-form__group">
-													<div class="m-form__group form-group">
-														<label for="form_control_1 formtitle">Reason</label>
-														<!-- <span class="required" aria-required="true"> * </span> -->
-														<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" disabled></textarea>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="form-actions">
-											<div class="row">
-												<div class="col-md-12">
-													<div class="m-form__actions">
-														<!-- <button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button> -->
-														<button class="btn btn-secondary" (click)="goBack()" type="reset">Go Back</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col-xl-8">
+							<div class="d-inline-block align-top">
+								<img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
+							</div>
+							<div class="d-inline-block">
+								<span class="emp-list-name d-block">Shaik Bhanu</span>
+								<span class="emp-list-empid d-block">#PP143</span>
 							</div>
 						</div>
 					</div>
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td>
+									<span class="label">From:</span>27 Apr 2018 - Session 1</td>
+								<td>
+									<span class="label">To:</span>28 Apr 2018 - Session 2</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Leave Type:</span>Priviledge Leave</td>
+							</tr>
+							<tr>
+								<td>
+									<span class="label">Days:</span>2</td>
+								<td>
+									<span class="label">Leave Balance:</span>8</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Reason:</span>Going home</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leave_reason_col">
+									<span class="label">Contact Details:</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<form id="frmLeave" class="m-form m-form--fit m-form--label-align-right">
+						<div class="form-body">
+							<div class="row">
+								<div class="col-md-12 adn-form__group">
+									<div class="m-form__group form-group">
+										<label for="form_control_1">Remarks</label>
+										<span class="required" aria-required="true"> * </span>
+										<textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 adn-form__group">
+									<div class="m-form__group form-group">
+										<label for="form_control_1">CC</label>
+										<ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
+										 id="employees" placeholder="" required></ng-select>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="m-form__actions">
+										<button class="btn btn-success" type="button" (click)="saveAcceptRejectLeave(true)">Accept</button>
+										<button class="btn btn-danger" type="button" (click)="saveAcceptRejectLeave(false)">Reject</button>
+										<button class="btn btn-secondary" type="button" (click)="goBack()">
+											<i class="fa fa-caret-left"></i> Back</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 
-				<div class="col-md-4">
+				<div class="col-xl-6">
+
 					<div class="m-portlet__head">
 						<div class="m-portlet__head-caption">
 							<div class="m-portlet__head-title">
@@ -150,7 +143,7 @@
 											<span>{{wfh.Step}}</span>
 										</td>
 										<td class="m-datatable__cell" width="22.5%">
-											<span>{{wfh.Owner_name}}</span>
+											<span>{{wfh.Owner}}</span>
 										</td>
 										<td class="m-datatable__cell" width="22.5%">
 											<span>{{wfh.Status}}</span>
@@ -250,12 +243,9 @@
 						<!--end::Item-->
 
 					</div>
-					<!---->
+
 				</div>
-
 			</div>
-			<!--form-->
-
 		</div>
 	</div>
 </div>

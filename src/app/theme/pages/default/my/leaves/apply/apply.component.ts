@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { MyService } from "../../my.service";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
+import { UserData } from '../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../leave.service';
 declare var mApp;
 
 
@@ -22,13 +22,14 @@ export class ApplyComponent implements OnInit {
     supervisorDetails: any;
     leaveTypesDetails: any;
     emailDetails: any;
-    currentEmpId: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
+    currentUser: UserData;
+    employeeBalances: any = [];
 
     constructor(
-        private _myService: MyService,
+        private leaveService: LeaveService,
         private _commonService: CommonService,
         private _authService: AuthService
     ) {
@@ -43,13 +44,12 @@ export class ApplyComponent implements OnInit {
     InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
-        this._authService.validateToken().subscribe(
-            res => {
-                this.currentEmpId = this._authService.currentUserData._id;
-            });
+        this.currentUser = this._authService.atCurrentUserData;
+        this.getEmployeeLeaveBalance();
     }
+
     getLeaveTypes() {
-        this._myService.getLeaveType().subscribe(
+        this.leaveService.getLeaveType().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();
@@ -72,7 +72,7 @@ export class ApplyComponent implements OnInit {
                 });
     }
     getAllEmailListOfEmployee() {
-        this._myService.getEmployeeEmailDetails().subscribe(
+        this.leaveService.getEmployeeEmailDetails().subscribe(
             res => {
                 if (res.ok) {
                     this.emailDetails = res.json();
@@ -82,6 +82,24 @@ export class ApplyComponent implements OnInit {
                 console.log(error);
             });
     }
+
+    getEmployeeLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                this.employeeBalances = res.json() || [];
+            }
+        })
+    }
+
+    onChangeLeaveType() {
+        let empBal = this.employeeBalances.find(bal => {
+            if (bal) {
+                return bal.leave_type == this.leaveapplication.leaveType;
+            }
+        });
+        this.leaveapplication.balance = empBal ? empBal.balance : 0;
+    }
+
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
@@ -100,22 +118,22 @@ export class ApplyComponent implements OnInit {
             _postData.applyTo = data.applyToId;
             _postData.fromDate = data.fromDate;
             _postData.toDate = data.toDate;
-            _postData.leave_type = data._id;
+            _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
             _postData.contactDetails = data.contactDetail;
             _postData.ccTo = data.ccTo;
-            _postData.emp_id = this.currentEmpId;
-            _postData.createdBy = this.currentEmpId;
-
+            _postData.emp_id = this.currentUser._id;
+            _postData.createdBy = this.currentUser._id;
+            _postData.updatedBy = this.currentUser._id;
+            
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
                 type: 'loader',
                 state: 'success',
                 // message: 'Please wait...'
             });
-            this._myService.postEmployeeLeaveDetails(_postData).subscribe(
+            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
                 res => {
-                    console.log(res);
                     mApp.unblock('#applyLeavePanel');
                     swal("Leave Applied", "", "success");
                     this.resetForm(form);
@@ -128,7 +146,6 @@ export class ApplyComponent implements OnInit {
     }
 
     onLeaveAppSubmit(form) {
-        //console.log(data);
         this.postEmployeeLeaveDetails(form, this.leaveapplication);
     }
 
@@ -138,6 +155,7 @@ export class ApplyComponent implements OnInit {
         this.areDaysValid = true;
         this.isBalanceValid = true;
         this.isAttachmentRequired = false;
+        this.getEmployeeLeaveBalance();
     }
 
     calculateDays(e: any, type: string) {

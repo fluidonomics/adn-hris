@@ -1,20 +1,19 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { UserData } from '../../../../../../../base/_interface/auth.model';
-import { AuthService } from '../../../../../../../base/_services/authService.service';
+import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../leave.service';
-
+import swal from 'sweetalert2';
 
 @Component({
-    selector: "app-my-leaves-track-leave-details",
-    templateUrl: "./track-leave-details.component.html",
+    selector: "app-dashboard-details",
+    templateUrl: "./dashboard-details.component.html",
+    styleUrls: ["./dashboard-details.component.scss"],
     encapsulation: ViewEncapsulation.None,
-
 })
-
-export class TrackLeaveDetailsComponent implements OnInit {
+export class DashboardDetailsComponent implements OnInit {
 
     leave: any = {};
     employee: UserData;
@@ -64,12 +63,41 @@ export class TrackLeaveDetailsComponent implements OnInit {
             }
         });
     }
-    goBack() {
-        this.router.navigate(['my/leaves/list']);
-    }
 
     sortWorkflowHistory(key: string) {
         this.wfhSort = key;
         this.wfhReverse = !this.wfhReverse;
+    }
+
+    goBack() {
+        this.router.navigate(['my/leaves/dashboard']);
+    }
+
+    saveAcceptRejectLeave(flag: boolean) {
+        let data = {
+            _id: this.leaveId,
+            emp_id: this.employee._id,
+            isApproved: flag,
+            updatedBy: this.employee._id,
+        }
+        this.utilityService.showLoader('#frmLeave');
+        this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
+            if (res.ok) {
+                this.utilityService.hideLoader('#frmLeave');
+                let promise;
+                if (flag) {
+                    promise = swal("Leave Approved", "", "success");
+                }
+                else {
+                    promise = swal("Leave Rejected", "", "success");
+                }
+                promise.then(success => {
+                    this.goBack();
+                });
+            }
+        }, err => {
+            console.log(err);
+            this.utilityService.hideLoader('#frmLeave');
+        })
     }
 }

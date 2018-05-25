@@ -13,8 +13,7 @@ import { LowerCaseDirective } from './_directive/lowerCase.directive';
 //import { EmailUniqueValidatorDirective } from './_directive/unique-email.directive';
 import { OnlyOneRequired } from './_directive/only-one-required';
 import { SummernoteComponent } from './_components/summernote.component';
-
-
+import { CalendarComponent } from './_components/calendar.component';
 
 @NgModule({
     imports: [
@@ -32,7 +31,8 @@ import { SummernoteComponent } from './_components/summernote.component';
         OnlyMobileNumberDirective,
         //EmailUniqueValidatorDirective,
         EqualValidator,
-        OnlyOneRequired
+        OnlyOneRequired,
+        CalendarComponent
     ],
     exports: [
         SearchPipe,
@@ -47,7 +47,8 @@ import { SummernoteComponent } from './_components/summernote.component';
         OnlyOneRequired,
         OnlyMobileNumberDirective,
         //EmailUniqueValidatorDirective,
-        EqualValidator
+        EqualValidator,
+        CalendarComponent
     ],
 })
 export class BaseModule {

@@ -4,18 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LayoutModule } from '../../../layouts/layout.module';
 import { MyComponent } from './my.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
-import { ProfileViewComponent } from './profile-view/profile-view.component';
-import { DocumentsComponent } from './documents/documents.component';
 import { MyLearningComponent } from './workflows/learning/learning.component'
-import { MyPapComponent } from './workflows/pap/pap.component';
-import { MyKraComponent } from './workflows/kra/kra.component';
-import { MyPipComponent } from './workflows/pip/pip.component';
+import { MyPapComponent } from './workflows/pap/pap.component'
+import { MyPipComponent } from './workflows/pip/pip.component'
 import { ApplyComponent } from './leaves/apply/apply.component';
 import { HolidaysComponent } from './leaves/holidays/holidays.component';
 import { CalenderComponent } from './leaves/calender/calender.component';
@@ -34,10 +32,15 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { MyService } from "./my.service"
 import { BaseModule } from '../../../../base/base.module';
 import { DashboardComponent } from './leaves/dashboard/dashboard.component';
+import { LeaveForwardComponent } from './leaves/dashboard/leave-forward/leave-forward.component';
+import { DashboardDetailsComponent } from './leaves/dashboard/dashboard-details/dashboard-details.component';
 import { TrackLeaveDetailsComponent } from './leaves/track-leave/track-leave-details/track-leave-details.component';
 import { UtilityService } from '../../../../base/_services/utilityService.service';
 import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/post-leave-transaction.component';
-
+import { EmployeeLeavesComponent } from './leaves/employee-leaves/employee-leaves.component';
+import { GrantLeaveComponent } from './leaves/grant-leave/grant-leave.component';
+import { LeaveService } from './leaves/leave.service';
+import { LeaveModule } from './leaves/leave.module';
 
 
 @NgModule({
@@ -52,32 +55,20 @@ import { PostLeaveTransactionComponent } from './leaves/post-leave-transaction/p
         NgSelectModule,
         NgUploaderModule,
         BsDatepickerModule.forRoot(),
-        BaseModule
+        ModalModule.forRoot(),
+        BaseModule,
+        LeaveModule
     ], declarations: [
         MyComponent,
         ProfileComponent,
-        DocumentsComponent,
         MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
-        MyKraComponent,
-        DashboardComponent,
-        ApplyComponent,
-        CancelComponent,
-        TrackLeaveComponent,
-        HolidaysComponent,
-        CalenderComponent,
-        LeaveListComponent,
-        ReportsComponent,
         ProfileEditComponent,
-        TrackLeaveDetailsComponent,
-        PostLeaveTransactionComponent,
-        ProfileViewComponent,
-        DashboardComponent
         //ReviewerComponent,
         //SupervisorComponent
     ],
-    providers: [MyService, UtilityService]
+    providers: [MyService]
 })
 export class MyModule {
 }

@@ -1,14 +1,83 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-//import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ScriptLoaderService } from '../../../../../../_services/script-loader.service';
+import { AuthService } from '../../../../../../base/_services/authService.service';
+import { UserData } from '../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../leave.service';
 
-
+declare var $;
+declare var moment;
+declare var mApp;
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: "app-my-leaves-calendar",
     templateUrl: "./calender.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class CalenderComponent {
+export class CalenderComponent implements OnInit {
+
+    calendardata: any = [];
+    currenUser: UserData;
+    leaveDetails: any = [];
+
+
+    constructor(
+        private authService: AuthService,
+        private leaveService: LeaveService
+    ) {
+
+    }
+    ngOnInit() {
+        this.currenUser = this.authService.currentUserData;
+        this.getLeaveDetailsByRole();
+    }
+
+    getLeaveDetailsByRole() {
+        debugger;
+        let role = this.currenUser.roles[0];
+        this.leaveService.getLeaveDetailsByRole(role).subscribe(res => {
+            if (res.ok) {
+                this.leaveDetails = res.json() || [];
+                this.calendardata = this.leaveDetails.map(leave => {
+                    debugger;
+                    let data: any = {};
+                    let fromdate, toDate;
+                    if (leave.fromDate)
+                        fromdate = moment(leave.fromDate).format('YYYY-MM-DD');
+                    if (leave.toDate)
+                        toDate = moment(leave.toDate).format('YYYY-MM-DD');
+
+                    if (leave.emp_name) {
+                        data.title = leave.emp_name + ' - ' + leave.leave_type_name;
+                    }
+                    else {
+                        data.title = leave.leave_type_name;
+                    }
+                    if (fromdate && toDate) {
+                        data.start = fromdate;
+                        if (fromdate != toDate) {
+                            data.end = toDate;
+                        }
+                    }
+
+                    let description = '';
+                    if (fromdate && toDate) {
+                        description = moment(fromdate).format('DD MMM') + " To " + moment(toDate).format('DD MMM');
+                    }
+                    if (leave.remark) {
+                        description += " : " + leave.remark;
+                    }
+                    data.description = description;
+                    data.className = "m-fc-event--light m-fc-event--solid-primary";
+                    data.empName = leave.emp_name;
+                    data.leaveType = leave.leave_type_name;
+                    data.empId = leave.emp_id;
+                    return data;
+                });
+            }
+        })
+    }
 
 }
+
+
