@@ -25,6 +25,9 @@ export class DocumentsComponent implements OnInit {
     humanizeBytes: Function;
     currentDate: any = new Date();
 
+    _currentEmpId: number;
+    documentsData:any=[];
+
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -44,7 +47,107 @@ export class DocumentsComponent implements OnInit {
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
     }
-    ngOnInit() {
 
+    ngOnInit() {
+        //     this._authService.validateToken().subscribe(
+        //         res => {
+        //             this._currentEmpId = this._authService.currentUserData._id;
+        //             this.initData();
+        //    });
+           this.initData();
+    }
+
+    initData()
+    {
+        this.documentsData=[
+            { 
+              "documentName":"abaccc 1",
+              "documentUrl":"./assets 1",
+              "uploadDocument": {
+                  "_id":null,
+                  "documentsUrl":"./assets1"
+              }
+            },
+            { 
+                "documentName":"abaccc2",
+                "documentUrl":"./assets2",
+                "uploadDocument": {
+                    "_id":1,
+                    "documentsUrl":"./assets2"
+                }
+            },
+            { 
+                "documentName":"abaccc3",
+                "documentUrl":"./assets3",
+                "uploadDocument": {
+                    "_id":null,
+                    "documentsUrl":"./assets3"
+                }
+            }
+        ]
+        // // this._myService.getDocuments(this._currentEmpId)
+        // //     .subscribe(
+        // //     data => {
+        // //         if (data.ok) {
+        // //             this.documentsData = data.json();
+        // //         }
+        // //     },
+        // //     error => {
+        // // });
+    }
+
+    onUploadOutput(output: UploadOutput, fileName: string): void {
+        let atCurrentAuthData = this._authService.currentAuthData;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            const event: UploadInput = {
+                fieldName: 'employeeExternalDocuments',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                method: 'POST',
+            };
+            this.uploadInput.emit(event);
+        } else if (output.type === 'done') {
+            if (output.file.responseStatus == 200) {
+                swal({ type: 'success', title: 'Upload successfully', text: fileName.toLocaleUpperCase(), showConfirmButton: false,timer:800})
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
+            }
+        }
+    }
+
+    // showPdf(pdfLink) {
+    //     // swal({
+    //     //     imageUrl: imageLink ? environment.content_api_base.imgBase + imageLink : environment.content_api_base.imgBase + environment.content_api_base.noImagePath,
+    //     //     imageHeight: 700,
+    //     //     showConfirmButton: false,
+    //     // });
+    // }
+
+    removeDocument(pdfLink,index) {
+        // let isdeleted = pdfLink ? this.deleteDocImage(pdfLink): this.showDeleteMessage();
+    }
+
+    deleteDocImage(pdfLink, index) {
+        // this._myService.deletePdf({ key: pdfLink }).subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.documentsData[index].documentUrl = null;
+        //             swal("Deleted", "Successfully", "success");
+        //         }
+        //     },
+        //     error => {
+        // });
+    }
+
+    showDeleteMessage() {
+        swal("Error!", "Pdf not found", "error");
     }
 }
