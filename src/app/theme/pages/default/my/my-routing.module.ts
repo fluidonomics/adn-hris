@@ -37,7 +37,8 @@ const routes: Routes = [{
         {
             "path": "leaves",
             "loadChildren": "./leaves/leave.module#LeaveModule"
-        }
+        },
+        { path: 'team', loadChildren: ".\/team\/my-team.module#MyTeamModule" }
         //{path:'team/workflows/reveiwer',component:ReviewerComponent},
         //{path:'team/workflows/supervisor',component:SupervisorComponent},
         //{path:"team",loadChildren:".\/team\/team.module#TeamModule"}
