@@ -11,7 +11,6 @@ import { MyRoutingModule } from './my-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { BaseModule } from '../../../../base/base.module';
-import { LeaveModule } from './leaves/leave.module';
 
 import { MyComponent } from './my.component';
 
@@ -36,8 +35,7 @@ import { MyService } from "./my.service"
         NgUploaderModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
-        BaseModule,
-        LeaveModule
+        BaseModule
     ], declarations: [
         MyComponent,
         ProfileComponent,
