@@ -20,6 +20,7 @@ export class CalenderComponent implements OnInit {
     currenUser: UserData;
     leaveDetails: any = [];
 
+    reverse: boolean = false;
 
     constructor(
         private authService: AuthService,

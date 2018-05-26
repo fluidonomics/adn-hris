@@ -18,6 +18,7 @@ export class LeaveForwardComponent implements OnInit {
 
   @Input() leave: any;
   employee: UserData;
+  remark: any;
 
   constructor(
     public authService: AuthService,

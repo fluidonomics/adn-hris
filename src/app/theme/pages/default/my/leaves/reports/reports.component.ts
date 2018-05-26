@@ -13,7 +13,7 @@ import * as d3 from "d3";
 export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
 
 
-  leaveDate: any = [];
+  leaveData: any = [];
   yearList: any = [
     {
       year: 2017,
@@ -27,6 +27,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
   key: string = '';
   reverse: boolean = false;
   search: string = '';
+  p2: number;
 
   @ViewChild('chart') private chartContainer: ElementRef;
   @ViewChild('leaveChart') private leaveChartContainer: ElementRef;

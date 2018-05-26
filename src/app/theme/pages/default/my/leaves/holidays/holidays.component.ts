@@ -22,7 +22,7 @@ export class HolidaysComponent implements OnInit {
   public year: any;
 
   key: string = '';
-
+  p2: number;
 
   @Output() action = new EventEmitter();
 
