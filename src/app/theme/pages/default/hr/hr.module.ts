@@ -30,6 +30,7 @@ import { HrService } from './hr.service';
 import { BaseModule } from '../../../../base/base.module';
 
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { HrGuard } from '../../../../base/_guard/hr.guard';
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         EditEmployeeComponent,
         HrInitiateComponent,
     ],
-    providers: [HrService]
+    providers: [HrService,HrGuard]
 })
 export class HrModule {
 }
