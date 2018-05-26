@@ -58,7 +58,6 @@ export class GrantLeaveComponent implements OnInit {
     getEmployeeList() {
         this.leaveService.getAllEmployee().subscribe(
             res => {
-                //debugger;
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];
@@ -72,7 +71,6 @@ export class GrantLeaveComponent implements OnInit {
     getDepartments() {
         this.commonService.getDepartment().subscribe(
             res => {
-                //debugger;
                 if (res.ok) {
                     let body = res.json();
                     this.departmentList = body || [];
@@ -95,7 +93,6 @@ export class GrantLeaveComponent implements OnInit {
             return;
 
         if (form.valid) {
-            debugger;
             switch (this.currentCategory) {
                 case 'all': {
                     this.utilityService.showLoader('#fGrantLeave');

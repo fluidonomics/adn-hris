@@ -51,7 +51,7 @@
 									<div class="m-form__group form-group">
 										<label for="form_control_1">Remarks</label>
 										<span class="required" aria-required="true"> * </span>
-										<textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
+										<textarea name="remark" id="remarks" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remarks" required></textarea>
 									</div>
 								</div>
 							</div>
@@ -59,8 +59,8 @@
 								<div class="col-md-12 adn-form__group">
 									<div class="m-form__group form-group">
 										<label for="form_control_1">CC</label>
-										<ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="employee"
-										 id="employees" placeholder="" required></ng-select>
+										<ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="personalEmail" [items]="emailList" [(ngModel)]="ccTo"
+										 id="ccTo" placeholder="" multiple="true" required></ng-select>
 									</div>
 								</div>
 							</div>

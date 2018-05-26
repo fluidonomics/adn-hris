@@ -164,7 +164,6 @@ export class AuthService implements CanActivate {
 
     // Sign in request and set storage
     login(signInData: any): Observable<Response> {
-
         if (signInData.userType == null)
             this.atCurrentUserType = null;
         else
@@ -381,7 +380,6 @@ export class AuthService implements CanActivate {
 
     // Construct and send Http request
     request(options: RequestOptionsArgs): Observable<Response> {
-
         let baseRequestOptions: RequestOptions;
         let baseHeaders: { [key: string]: string; } = this.atOptions.globalOptions.headers;
 

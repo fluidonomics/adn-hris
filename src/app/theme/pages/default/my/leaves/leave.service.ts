@@ -112,4 +112,8 @@ export class LeaveService {
         return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    getLeaveDetailsById(leaveId: number) {
+        let url = "leave/getLeaveDetailsById?id=" + leaveId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }

@@ -6,6 +6,8 @@ import { UtilityService } from '../../../../../../../base/_services/utilityServi
 import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../leave.service';
 import swal from 'sweetalert2';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
     selector: "app-dashboard-details",
@@ -19,6 +21,10 @@ export class DashboardDetailsComponent implements OnInit {
     employee: UserData;
     leaveId: number;
     workFlowHistory: any;
+    emailList: any = [];
+    remarks: string;
+    ccTo: any = [];
+
     wfhFilter: string = '';
     wfhSort: string = '';
     wfhReverse: boolean = false;
@@ -38,21 +44,42 @@ export class DashboardDetailsComponent implements OnInit {
         this.employee = this.authService.currentUserData;
         this.route.params.subscribe(param => {
             this.leaveId = param.id;
-            this.loadLeaveDetails();
+            Observable.forkJoin([this.getLeaveDetails(), this.getEmployeeEmails()])
+                .subscribe((response) => {
+                    this.processEmployeeEmails(response[1]);
+                    this.processLeaveDetails(response[0]);
+                });
             this.getWorkflowHistory();
         })
     }
 
-    loadLeaveDetails() {
-        this.leaveService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
-            let body = data.json();
-            if (body.data) {
-                this.leave = body.data.find(leave => leave._id == this.leaveId);
-                if (this.leave) {
-                    this.leave.days = this.utilityService.subtractDates(this.leave.toDate, this.leave.fromDate);
+    getLeaveDetails() {
+        return this.leaveService.getLeaveDetailsById(this.leaveId);
+    }
+    processLeaveDetails(data) {
+        let body = data.json();
+        if (body.data && body.data.length > 0) {
+            this.leave = body.data[0];
+            if (this.leave) {
+                this.leave.days = this.utilityService.subtractDates(this.leave.toDate, this.leave.fromDate);
+                if (this.leave.ccTo) {
+                    let listOfcc = this.leave.ccTo.split(',');
+                    listOfcc.forEach(cc => {
+                        this.ccTo.push(parseInt(cc));
+                    });
                 }
             }
-        });
+        }
+    }
+
+    getEmployeeEmails() {
+        return this.leaveService.getEmployeeEmailDetails();
+    }
+    processEmployeeEmails(res) {
+        if (res.ok) {
+            let body = res.json();
+            this.emailList = body.data || [];
+        }
     }
 
     getWorkflowHistory() {
@@ -74,11 +101,21 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
+        let ccToMail = [];
+        this.ccTo.forEach(cc => {
+            let mail = this.emailList.find(email => {
+                return email._id == cc;
+            });
+            if (mail)
+                ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+        });
+
         let data = {
             _id: this.leaveId,
             emp_id: this.employee._id,
             isApproved: flag,
             updatedBy: this.employee._id,
+            ccTo: ccToMail
         }
         this.utilityService.showLoader('#frmLeave');
         this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {

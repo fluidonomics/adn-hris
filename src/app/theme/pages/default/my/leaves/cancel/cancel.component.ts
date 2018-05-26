@@ -70,7 +70,8 @@ export class CancelComponent implements OnInit {
 
     getEmployeeEmails() {
         this.leaveService.getEmployeeEmailDetails().subscribe(data => {
-            this.employeeEmailList = data.json() || [];
+            let body = data.json();
+            this.employeeEmailList = body.data || [];
         })
     }
 
@@ -99,7 +100,7 @@ export class CancelComponent implements OnInit {
                     return email._id == cc;
                 });
                 if (mail)
-                    ccToMail.push(mail.personalEmail);
+                    ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
             });
             let leave: any = {
                 id: this.selectedLeave._id,

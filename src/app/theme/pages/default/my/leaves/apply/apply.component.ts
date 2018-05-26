@@ -75,7 +75,8 @@ export class ApplyComponent implements OnInit {
         this.leaveService.getEmployeeEmailDetails().subscribe(
             res => {
                 if (res.ok) {
-                    this.emailDetails = res.json();
+                    let body = res.json();
+                    this.emailDetails = body.data || [];
                 }
             },
             error => {
@@ -114,6 +115,15 @@ export class ApplyComponent implements OnInit {
 
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
+            let ccToMail = [];
+            data.ccTo.forEach(cc => {
+                let mail = this.emailDetails.find(email => {
+                    return email._id == cc;
+                });
+                if (mail)
+                    ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+            });
+
             let _postData: any = {};
             _postData.applyTo = data.applyToId;
             _postData.fromDate = data.fromDate;
@@ -121,11 +131,11 @@ export class ApplyComponent implements OnInit {
             _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
             _postData.contactDetails = data.contactDetail;
-            _postData.ccTo = data.ccTo;
+            _postData.ccTo = ccToMail;
             _postData.emp_id = this.currentUser._id;
             _postData.createdBy = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
-            
+
             mApp.block('#applyLeavePanel', {
                 overlayColor: '#000000',
                 type: 'loader',

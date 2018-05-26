@@ -33,13 +33,11 @@ export class CalenderComponent implements OnInit {
     }
 
     getLeaveDetailsByRole() {
-        debugger;
         let role = this.currenUser.roles[0];
         this.leaveService.getLeaveDetailsByRole(role).subscribe(res => {
             if (res.ok) {
                 this.leaveDetails = res.json() || [];
                 this.calendardata = this.leaveDetails.map(leave => {
-                    debugger;
                     let data: any = {};
                     let fromdate, toDate;
                     if (leave.fromDate)
