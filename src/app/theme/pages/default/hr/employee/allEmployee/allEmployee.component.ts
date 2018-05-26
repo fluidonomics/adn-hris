@@ -19,8 +19,8 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     p2: number = 1;
     search: any;
     _currentEmpId: number;
-    itemPerPage: number=10;
-    
+    itemPerPage: number = 10;
+
     profileProcess = {
         isEmployeeSubmitted: false,
         isHrSubmitted: false,
@@ -71,15 +71,13 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
-    
-    getStart()
-    {
-       return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
+
+    getStart() {
+        return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
     }
 
-    getEnd(filterCount)
-    {
-       let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
-       return  Math.min(start + this.itemPerPage  - 1, filterCount);
+    getEnd(filterCount) {
+        let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
+        return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 }

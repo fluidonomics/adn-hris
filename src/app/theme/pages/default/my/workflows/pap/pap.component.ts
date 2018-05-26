@@ -139,7 +139,7 @@ export class MyPapComponent implements OnInit {
         //     },
         //     error => {
         //     });
-        
+
     }
 
     loadKra() {

@@ -60,7 +60,7 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         EditEmployeeComponent,
         HrInitiateComponent,
     ],
-    providers: [HrService,HrGuard]
+    providers: [HrService, HrGuard]
 })
 export class HrModule {
 }

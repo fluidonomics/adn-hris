@@ -4,7 +4,7 @@ import { AuthService } from "../../../base/_services/authService.service"
 import { Socket } from 'ngx-socket-io';
 
 declare let mLayout: any;
-declare let $ :any;
+declare let $: any;
 
 
 @Component({
@@ -14,9 +14,9 @@ declare let $ :any;
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
     constructor(public authService: AuthService,
-                private socket: Socket
+        private socket: Socket
     ) {
-     
+
     }
     ngOnInit() {
         // this.socket.emit("initData","Hello Form init");

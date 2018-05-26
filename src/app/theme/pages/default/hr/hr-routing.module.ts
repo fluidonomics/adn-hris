@@ -30,7 +30,7 @@ const routes: Routes = [{
         { path: 'workflows/pap', component: HrPapComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'directory', component: DirectoryComponent },
-    ],canActivate:[HrGuard]
+    ], canActivate: [HrGuard]
 }]
 
 

@@ -98,9 +98,9 @@ export class ProfileEditComponent implements OnInit {
 
     relationData = [];
     countryData = [];
-    facilityData=[];
-    
-    companyBusinessData=[];
+    facilityData = [];
+
+    companyBusinessData = [];
 
     isSpin = false;
 
@@ -202,19 +202,19 @@ export class ProfileEditComponent implements OnInit {
             if (output.file.responseStatus == 200) {
                 switch (fileName) {
                     case 'smartCard':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false, timer: 800 })
                         this.documents.nationalIdSmartCardDocURL = output.file.response.key || '';
                         break;
                     case 'smartOldCard':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false, timer: 800 })
                         this.documents.nationalIDOldFormatDocURL = output.file.response.key || '';
                         break;
                     case 'birth':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false, timer: 800 })
                         this.documents.birthRegistrationNumberDocURL = output.file.response.key || '';
                         break;
                     case 'passport':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false, timer: 800 })
                         this.documents.passportNumberDocURL = output.file.response.key || '';
                         break;
                     default:
@@ -350,36 +350,34 @@ export class ProfileEditComponent implements OnInit {
     }
 
     //save Personal Info
-    saveProfileStatus(status:string,isSendBack?:boolean) {
+    saveProfileStatus(status: string, isSendBack?: boolean) {
         this.profileProcess["hrStatus"] = status;
         this.profileProcess["supervisorStatus"] = null;
-        if(isSendBack)
-        {
-          this.profileProcess["employeeStatus"] = null;
+        if (isSendBack) {
+            this.profileProcess["employeeStatus"] = null;
         }
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
             data => {
-                this.profileProcess=data.json()||{}
-                if(isSendBack)
-                {
+                this.profileProcess = data.json() || {}
+                if (isSendBack) {
                     swal({
                         type: 'success',
-                        title:'Send Back!',
-                        titleText:"Profile sent back successfully to employee.",
+                        title: 'Send Back!',
+                        titleText: "Profile sent back successfully to employee.",
                         allowOutsideClick: false,
                         allowEscapeKey: false,
                         showConfirmButton: false,
-                        timer:1000
+                        timer: 1000
                     }).then((result) => {
-                        this._router.navigate(['my/profile-edit'],{ queryParams: { id:this.param_emp_id ,tabName:'office' }})
+                        this._router.navigate(['my/profile-edit'], { queryParams: { id: this.param_emp_id, tabName: 'office' } })
                     });
                 }
-                else{
+                else {
                     swal({
                         type: 'success',
-                        title:'Submit!',
-                        titleText:"Profile submitted successfully to Supervisor.",
+                        title: 'Submit!',
+                        titleText: "Profile submitted successfully to Supervisor.",
                     });
                 }
             },
@@ -387,21 +385,18 @@ export class ProfileEditComponent implements OnInit {
             });
     }
 
-    
 
-    loadTabStatus(status:string,isSendBack?:boolean)
-    {
+
+    loadTabStatus(status: string, isSendBack?: boolean) {
         this._commonService.getTabStatus(this.param_emp_id)
             .subscribe(
             data => {
-                let tabData=data.json();
-                if(isSendBack)
-                {
-                    this.saveProfileStatus(status,isSendBack);
+                let tabData = data.json();
+                if (isSendBack) {
+                    this.saveProfileStatus(status, isSendBack);
                 }
-                else
-                {
-                    if(tabData.isPersonalInfo 
+                else {
+                    if (tabData.isPersonalInfo
                         && tabData.isAddress
                         && tabData.isDocuments
                         && tabData.isAcademicInfo
@@ -412,8 +407,7 @@ export class ProfileEditComponent implements OnInit {
                         && tabData.isBankInfo
                         && tabData.isSalaryInfo
                         && tabData.isCarInfo
-                     )
-                     {
+                    ) {
                         swal({
                             title: 'Are you sure?',
                             text: "Do you want to submit profile to Supervisor?",
@@ -424,12 +418,12 @@ export class ProfileEditComponent implements OnInit {
                             confirmButtonText: 'Submit'
                         }).then((result) => {
                             if (result.value) {
-                              this.saveProfileStatus(status);
+                                this.saveProfileStatus(status);
                             }
-                        });   
-                     }
-                     else
-                     swal({type: 'error',title:'Oops!',titleText:"Please complete Personal Info & Office Info.",});
+                        });
+                    }
+                    else
+                        swal({ type: 'error', title: 'Oops!', titleText: "Please complete Personal Info & Office Info.", });
                 }
             },
             error => {
@@ -442,24 +436,23 @@ export class ProfileEditComponent implements OnInit {
         this.loadTabStatus(status);
     }
 
-    submitBackProfileStatus(status)
-    {
+    submitBackProfileStatus(status) {
         swal({
             title: 'Please specify the reason',
             input: 'textarea',
             inputAttributes: {
-              autocapitalize: 'off'
+                autocapitalize: 'off'
             },
             showCancelButton: true,
             confirmButtonColor: '#f22d4e',
-            cancelButtonText:'Cancel',
+            cancelButtonText: 'Cancel',
             confirmButtonText: 'Send Back'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
-                this.profileProcess["hrSendbackComment"]=result.value;
-                this.loadTabStatus(status,true);
+                this.profileProcess["hrSendbackComment"] = result.value;
+                this.loadTabStatus(status, true);
             }
-          })
+        })
     }
 
     //save Personal Info
@@ -588,16 +581,14 @@ export class ProfileEditComponent implements OnInit {
 
     }
     //save Family Info
-    saveFamilyInfo(objFamily: any, index: number,_element) {
-        if(objFamily.relation_id==1 || objFamily.relation_id==2)
-        {
-           if(this.familyInfo.filter(item=> item.relation_id == objFamily.relation_id).length > 1)
-           {
-               return _element.control.setErrors({ "relationExists": true })
-           }
-           else{
+    saveFamilyInfo(objFamily: any, index: number, _element) {
+        if (objFamily.relation_id == 1 || objFamily.relation_id == 2) {
+            if (this.familyInfo.filter(item => item.relation_id == objFamily.relation_id).length > 1) {
+                return _element.control.setErrors({ "relationExists": true })
+            }
+            else {
                 _element.control.setErrors(null);
-           }
+            }
         }
         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
@@ -889,27 +880,23 @@ export class ProfileEditComponent implements OnInit {
     removeHtmlByView(subTabName: string, _index: number) {
         switch (subTabName) {
             case "academicInfo":
-                if(this.academicInfo.length > 1)
-                {
-                  this.academicInfo.splice(_index, 1);
+                if (this.academicInfo.length > 1) {
+                    this.academicInfo.splice(_index, 1);
                 }
                 break;
             case "certification":
-                if(this.certificationsandTrainingInfo.length > 1)
-                {
-                  this.certificationsandTrainingInfo.splice(_index, 1);
+                if (this.certificationsandTrainingInfo.length > 1) {
+                    this.certificationsandTrainingInfo.splice(_index, 1);
                 }
                 break;
             case "employment":
-                if(this.previousEmploymentDetails.length > 1)
-                {
-                  this.previousEmploymentDetails.splice(_index, 1);
+                if (this.previousEmploymentDetails.length > 1) {
+                    this.previousEmploymentDetails.splice(_index, 1);
                 }
                 break;
             case "family":
-                if(this.familyInfo.length > 1)
-                {
-                  this.familyInfo.splice(_index, 1);
+                if (this.familyInfo.length > 1) {
+                    this.familyInfo.splice(_index, 1);
                 }
                 break;
         }
@@ -969,7 +956,7 @@ export class ProfileEditComponent implements OnInit {
                 this.address = data.json() || {};
                 if (data.json()) {
                     this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
-                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id,'init');
+                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id, 'init');
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
                     this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
@@ -1055,7 +1042,7 @@ export class ProfileEditComponent implements OnInit {
             });
     }
     //Load Current Thana Dropdown Data
-    loadcurrentAddressThanaData(district_id:number,onLoad?: string) {
+    loadcurrentAddressThanaData(district_id: number, onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
@@ -1236,14 +1223,13 @@ export class ProfileEditComponent implements OnInit {
             });
     }
 
-    loadFacility()
-    {
+    loadFacility() {
         this._commonService.getFacility().subscribe(
-        res => {
+            res => {
                 this.facilityData = res.json() || [];
             },
             error => {
-        });
+            });
     }
 
     loadJoiningDetailsTabData() {

@@ -22,11 +22,11 @@ const routes: Routes = [{
         { path: 'profile-edit', component: ProfileEditComponent },
         { path: 'profile-view', component: ProfileViewComponent },
         { path: 'documents', component: DocumentsComponent },
-        
-        { path: 'workflows',loadChildren: ".\/workflows\/my-workflows.module#MyWorkFlowsModule"},
-        { path: 'leaves',loadChildren: ".\/leaves\/leave.module#LeaveModule" },
+
+        { path: 'workflows', loadChildren: ".\/workflows\/my-workflows.module#MyWorkFlowsModule" },
+        { path: 'leaves', loadChildren: ".\/leaves\/leave.module#LeaveModule" },
         { path: 'team', loadChildren: ".\/team\/my-team.module#MyTeamModule" }
-     
+
     ]
 
 }]

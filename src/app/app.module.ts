@@ -24,7 +24,7 @@ import { BaseModule } from "./base/base.module"
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment'
 
-const config: SocketIoConfig = { url:environment.api_base.apiBase, options: {} };
+const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} };
 
 @NgModule({
     declarations: [

@@ -164,7 +164,7 @@ export class CommonService {
         let url = "common/getFacility";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    
+
     getCompanyBusiness(): Observable<Response> {
         let url = "common/getCompanyBusiness";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
@@ -289,7 +289,7 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getKraSupervisor(emp_id:number) {
+    getKraSupervisor(emp_id: number) {
         let url = "common/getKraSupervisor?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }

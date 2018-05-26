@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation,AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from '../helpers';
 import { ScriptLoaderService } from '../_services/script-loader.service';
 
-declare let $:any;
+declare let $: any;
 declare let mApp: any;
 declare let mUtil: any;
 declare let mLayout: any;
@@ -12,13 +12,13 @@ declare let mLayout: any;
     templateUrl: "./theme.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ThemeComponent implements OnInit,AfterViewInit {
+export class ThemeComponent implements OnInit, AfterViewInit {
 
     constructor(private _script: ScriptLoaderService, private _router: Router) {
 
     }
     ngOnInit() {
-       
+
         this._router.events.subscribe((route) => {
             if (route instanceof NavigationStart) {
                 (<any>mLayout).closeMobileAsideMenuOffcanvas();
@@ -42,16 +42,15 @@ export class ThemeComponent implements OnInit,AfterViewInit {
         });
     }
 
-    ngAfterViewInit()
-    {
+    ngAfterViewInit() {
         $.sessionTimeout({
-            redirUrl:"/login",
-            warnAfter:600000, //10 mint
-            redirAfter:660000,
-            ignoreUserActivity:false,
-            keepAlive:false
+            redirUrl: "/login",
+            warnAfter: 600000, //10 mint
+            redirAfter: 660000,
+            ignoreUserActivity: false,
+            keepAlive: false
         })
     }
-    
+
 
 }

@@ -97,10 +97,10 @@ export class ProfileComponent implements OnInit {
 
     relationData = [];
     countryData = [];
-    facilityData=[];
+    facilityData = [];
 
-    companyBusinessData=[];
-    
+    companyBusinessData = [];
+
     isSpin = false;
 
     profileProcess = {
@@ -197,19 +197,19 @@ export class ProfileComponent implements OnInit {
             if (output.file.responseStatus == 200) {
                 switch (fileName) {
                     case 'smartCard':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id Smart Card', showConfirmButton: false, timer: 800 })
                         this.documents.nationalIdSmartCardDocURL = output.file.response.key || '';
                         break;
                     case 'smartOldCard':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'National Id(Old Format) Smart Card', showConfirmButton: false, timer: 800 })
                         this.documents.nationalIDOldFormatDocURL = output.file.response.key || '';
                         break;
                     case 'birth':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Birth Registration Number', showConfirmButton: false, timer: 800 })
                         this.documents.birthRegistrationNumberDocURL = output.file.response.key || '';
                         break;
                     case 'passport':
-                        swal({ type: 'success', title: 'Upload successfully', text: 'Passport Number', showConfirmButton: false,timer:800})
+                        swal({ type: 'success', title: 'Upload successfully', text: 'Passport Number', showConfirmButton: false, timer: 800 })
                         this.documents.passportNumberDocURL = output.file.response.key || '';
                         break;
                     default:
@@ -369,7 +369,7 @@ export class ProfileComponent implements OnInit {
                         });
                     },
                     error => {
-                });
+                    });
             }
         })
     }
@@ -393,13 +393,14 @@ export class ProfileComponent implements OnInit {
                         title: 'Oops!',
                         text: "It seems you haven't filled all the details.",
                         type: 'warning',
-                         });
+                    });
             },
             error => {
-                swal({ 
+                swal({
                     type: 'error',
                     title: 'Error!',
-                    text: error.json().error.message, });
+                    text: error.json().error.message,
+                });
             });
     }
 
@@ -535,15 +536,13 @@ export class ProfileComponent implements OnInit {
     }
     //save Family Info
     saveFamilyInfo(objFamily: any, index: number, _element) {
-        if(objFamily.relation_id==1 || objFamily.relation_id==2)
-        {
-           if(this.familyInfo.filter(item=> item.relation_id == objFamily.relation_id).length > 1)
-           {
-               return _element.control.setErrors({ "relationExists": true })
-           }
-           else{
+        if (objFamily.relation_id == 1 || objFamily.relation_id == 2) {
+            if (this.familyInfo.filter(item => item.relation_id == objFamily.relation_id).length > 1) {
+                return _element.control.setErrors({ "relationExists": true })
+            }
+            else {
                 _element.control.setErrors(null);
-           }
+            }
         }
         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
@@ -836,27 +835,23 @@ export class ProfileComponent implements OnInit {
     removeHtmlByView(subTabName: string, _index: number) {
         switch (subTabName) {
             case "academicInfo":
-                if(this.academicInfo.length > 1)
-                {
-                  this.academicInfo.splice(_index, 1);
+                if (this.academicInfo.length > 1) {
+                    this.academicInfo.splice(_index, 1);
                 }
                 break;
             case "certification":
-                if(this.certificationsandTrainingInfo.length > 1)
-                {
-                  this.certificationsandTrainingInfo.splice(_index, 1);
+                if (this.certificationsandTrainingInfo.length > 1) {
+                    this.certificationsandTrainingInfo.splice(_index, 1);
                 }
                 break;
             case "employment":
-                if(this.previousEmploymentDetails.length > 1)
-                {
-                  this.previousEmploymentDetails.splice(_index, 1);
+                if (this.previousEmploymentDetails.length > 1) {
+                    this.previousEmploymentDetails.splice(_index, 1);
                 }
                 break;
             case "family":
-                if(this.familyInfo.length > 1)
-                {
-                  this.familyInfo.splice(_index, 1);
+                if (this.familyInfo.length > 1) {
+                    this.familyInfo.splice(_index, 1);
                 }
                 break;
         }
@@ -916,7 +911,7 @@ export class ProfileComponent implements OnInit {
                 this.address = data.json() || {};
                 if (data.json()) {
                     this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
-                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id,'init');
+                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id, 'init');
 
                     this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
                     this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
@@ -1002,7 +997,7 @@ export class ProfileComponent implements OnInit {
             });
     }
     //Load Current Thana Dropdown Data
-    loadcurrentAddressThanaData(district_id:number,onLoad?: string) {
+    loadcurrentAddressThanaData(district_id: number, onLoad?: string) {
         this._commonService.getlocation(district_id).subscribe(
             res => {
                 if (res.ok) {
@@ -1182,14 +1177,13 @@ export class ProfileComponent implements OnInit {
             });
     }
 
-    loadFacility()
-    {
+    loadFacility() {
         this._commonService.getFacility().subscribe(
-        res => {
+            res => {
                 this.facilityData = res.json() || [];
             },
             error => {
-        });
+            });
     }
 
     loadJoiningDetailsTabData() {

@@ -26,7 +26,7 @@ export class DocumentsComponent implements OnInit {
     currentDate: any = new Date();
 
     _currentEmpId: number;
-    documentsData:any=[];
+    documentsData: any = [];
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -54,34 +54,33 @@ export class DocumentsComponent implements OnInit {
         //             this._currentEmpId = this._authService.currentUserData._id;
         //             this.initData();
         //    });
-           this.initData();
+        this.initData();
     }
 
-    initData()
-    {
-        this.documentsData=[
-            { 
-              "documentName":"abaccc 1",
-              "documentUrl":"./assets 1",
-              "uploadDocument": {
-                  "_id":null,
-                  "documentsUrl":"./assets1"
-              }
-            },
-            { 
-                "documentName":"abaccc2",
-                "documentUrl":"./assets2",
+    initData() {
+        this.documentsData = [
+            {
+                "documentName": "abaccc 1",
+                "documentUrl": "./assets 1",
                 "uploadDocument": {
-                    "_id":1,
-                    "documentsUrl":"./assets2"
+                    "_id": null,
+                    "documentsUrl": "./assets1"
                 }
             },
-            { 
-                "documentName":"abaccc3",
-                "documentUrl":"./assets3",
+            {
+                "documentName": "abaccc2",
+                "documentUrl": "./assets2",
                 "uploadDocument": {
-                    "_id":null,
-                    "documentsUrl":"./assets3"
+                    "_id": 1,
+                    "documentsUrl": "./assets2"
+                }
+            },
+            {
+                "documentName": "abaccc3",
+                "documentUrl": "./assets3",
+                "uploadDocument": {
+                    "_id": null,
+                    "documentsUrl": "./assets3"
                 }
             }
         ]
@@ -115,7 +114,7 @@ export class DocumentsComponent implements OnInit {
             this.uploadInput.emit(event);
         } else if (output.type === 'done') {
             if (output.file.responseStatus == 200) {
-                swal({ type: 'success', title: 'Upload successfully', text: fileName.toLocaleUpperCase(), showConfirmButton: false,timer:800})
+                swal({ type: 'success', title: 'Upload successfully', text: fileName.toLocaleUpperCase(), showConfirmButton: false, timer: 800 })
             }
             else {
                 swal("Error!", "Error on Upload " + fileName, "error");
@@ -131,7 +130,7 @@ export class DocumentsComponent implements OnInit {
     //     // });
     // }
 
-    removeDocument(pdfLink,index) {
+    removeDocument(pdfLink, index) {
         // let isdeleted = pdfLink ? this.deleteDocImage(pdfLink): this.showDeleteMessage();
     }
 

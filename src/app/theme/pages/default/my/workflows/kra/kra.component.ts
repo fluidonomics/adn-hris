@@ -12,7 +12,7 @@ import swal from 'sweetalert2';
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./kra.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers:[KraService]
+    providers: [KraService]
 })
 export class MyKraComponent {
 
@@ -29,116 +29,108 @@ export class MyKraComponent {
     isKraAvaliable: boolean = false;
     isDisabled: boolean = false;
 
-    param_id:number;
-    kraWorkFlowData:any=[];
-    
+    param_id: number;
+    kraWorkFlowData: any = [];
+
 
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService,
-    private _kraService: KraService
-   ) {
-    title.setTitle('ADN HRIS | My Profile');
-    meta.addTags([
-        { name: 'author', content: '' },
-        { name: 'keywords', content: 'Add new employee' },
-        { name: 'description', content: 'Add new employee.' }
-    ]);
+        meta: Meta, title: Title,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private _kraService: KraService
+    ) {
+        title.setTitle('ADN HRIS | My Profile');
+        meta.addTags([
+            { name: 'author', content: '' },
+            { name: 'keywords', content: 'Add new employee' },
+            { name: 'description', content: 'Add new employee.' }
+        ]);
 
-   }
+    }
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
-                 this._currentEmpId = this._authService.currentUserData._id;
-                 this._route.queryParams.subscribe(params => {
+                this._currentEmpId = this._authService.currentUserData._id;
+                this._route.queryParams.subscribe(params => {
                     if (params['id']) {
                         this.param_id = params['id'];
                         this.initData();
                     }
-                    else
-                    {
+                    else {
                         this.loadKraWorkFlowDetails();
                     }
                 });
             });
 
-           
+
     }
 
-    loadKraWorkFlowDetails()
-    {
+    loadKraWorkFlowDetails() {
         this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId).subscribe(
             res => {
-                this.kraWorkFlowData=res.json();
+                this.kraWorkFlowData = res.json();
             },
             error => {
-        });;
+            });;
     }
 
-    initData()
-    {
-       this.loadKraCategoryData();
-       this.loadWeightAgeData();
-       this.loadSupervisorData();
-       this.loadKraInfo();
+    initData() {
+        this.loadKraCategoryData();
+        this.loadWeightAgeData();
+        this.loadSupervisorData();
+        this.loadKraInfo();
     }
 
-    loadKraInfo()
-    {
+    loadKraInfo() {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
-                this.kraInfoData=res.json().data;
-                this.addDummyRow((7-this.kraInfoData.length));
+                this.kraInfoData = res.json().data;
+                this.addDummyRow((7 - this.kraInfoData.length));
             },
             error => {
-        });;
-    }
-       
-    loadKraCategoryData()
-    {
-        this._commonService.getKraCategory()
-                .subscribe(
-                data => {
-                    this.kraCategoryData=data.json();
-                },
-                error => {
-        });
+            });;
     }
 
-    loadWeightAgeData ()
-    {
-        this._commonService.getKraWeightage()
-                .subscribe(
-                data => {
-                   this.weightageData=data.json();
-                },
-                error => {
-        });
+    loadKraCategoryData() {
+        this._commonService.getKraCategory()
+            .subscribe(
+            data => {
+                this.kraCategoryData = data.json();
+            },
+            error => {
+            });
     }
-    
-    loadSupervisorData()
-    {
+
+    loadWeightAgeData() {
+        this._commonService.getKraWeightage()
+            .subscribe(
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
+    }
+
+    loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId)
-        .subscribe(
-        data => {
-           this.supervisorData=data.json();
-        },
-        error => {
-        });
+            .subscribe(
+            data => {
+                this.supervisorData = data.json();
+            },
+            error => {
+            });
     }
 
     onKraSubmit(isSaveDraft?: boolean) {
-        if(isSaveDraft)
-        {
-          //var insertedData=this.kraInfoData.filter(item>
-          //)
+        if (isSaveDraft) {
+            //var insertedData=this.kraInfoData.filter(item>
+            //)
         }
-          this._kraService.saveKra(this.kraInfoData)
+        this._kraService.saveKra(this.kraInfoData)
             .subscribe(
             data => {
                 swal("Kra is submitted.", "", "success");
@@ -146,8 +138,8 @@ export class MyKraComponent {
             error => {
             });
     };
-   
-   
+
+
 
 
 

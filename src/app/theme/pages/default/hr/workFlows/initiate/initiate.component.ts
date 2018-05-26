@@ -17,26 +17,26 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     filterBy: any = {};
 
     checkAll: any = {};
-    currentDate=new Date();
+    currentDate = new Date();
 
     divisionData: any = [];
     deparmentData: any = [];
     gradeData: any = [];
 
-    batchData:any={
-        "emp_id":[]
+    batchData: any = {
+        "emp_id": []
     };
 
-    
+
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
 
     _currentEmpId: number;
-    itemPerPage: number=30;
+    itemPerPage: number = 30;
 
-    search:any;
-    isCheckAll:boolean=false;
+    search: any;
+    isCheckAll: boolean = false;
 
     constructor(
         private _hrService: HrService,
@@ -91,39 +91,36 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        if(this.filterBy.grades || this.filterBy.departments)
-        {
-        this._hrService.getAllEmployee()
-            .subscribe(
-            res => {
-                let data = res.json().data || [];
-                if (data.length > 0) {
-                    if(this.filterBy.departments && this.filterBy.departments.length>0)
-                    {
-                      data = data.filter(obj => obj.department_id == this.filterBy.departments.includes(obj.department_id));
+        if (this.filterBy.grades || this.filterBy.departments) {
+            this._hrService.getAllEmployee()
+                .subscribe(
+                res => {
+                    let data = res.json().data || [];
+                    if (data.length > 0) {
+                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                            data = data.filter(obj => obj.department_id == this.filterBy.departments.includes(obj.department_id));
+                        }
+                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
+                        }
+                        this.employeeData = data || [];
                     }
-                    if(this.filterBy.grades && this.filterBy.grades.length>0)
-                    {
-                        data = data.filter(obj =>this.filterBy.grades.includes(obj.grade_id));
-                    }
-                    this.employeeData = data || [];
-                }
-                else
-                    this.employeeData = data.json().data || [];
-            },
-            error => {
-            });
+                    else
+                        this.employeeData = data.json().data || [];
+                },
+                error => {
+                });
         }
-        else{
+        else {
             this.employeeData = [];
         }
     }
 
     saveBulkKra() {
 
-        this.batchData.emp_id = this.employeeData.filter(function (employee, index, array) {
-           return employee.checked;
-        }).map(item=> {
+        this.batchData.emp_id = this.employeeData.filter(function(employee, index, array) {
+            return employee.checked;
+        }).map(item => {
             return item._id
         });
 
@@ -148,37 +145,33 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this.reverse = !this.reverse;
     }
 
-  
 
-    getStart()
-    {
-       return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
+
+    getStart() {
+        return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
     }
 
-    getEnd(filterCount)
-    {
-       let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
-       return  Math.min(start + this.itemPerPage  - 1, filterCount);
+    getEnd(filterCount) {
+        let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
+        return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 
-    selectAllEmployee($event)
-    {
+    selectAllEmployee($event) {
         this.employeeData.forEach(element => {
-            element.checked=$event.target.checked;
+            element.checked = $event.target.checked;
         });
     }
 
 
-    clearForm()
-    {
-        this.key=''; //set default
-        this.reverse= false;
+    clearForm() {
+        this.key = ''; //set default
+        this.reverse = false;
         this.p2 = 1;
-        this.isCheckAll=false;
-        this.search=null
-        this.filterBy={}
-        this.batchData={
-            emp_id:[]  
+        this.isCheckAll = false;
+        this.search = null
+        this.filterBy = {}
+        this.batchData = {
+            emp_id: []
         };
         this.loadAllEmployee();
     }

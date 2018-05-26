@@ -18,16 +18,16 @@ export class AppComponent implements OnInit {
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         public authService: AuthService,
         private _router: Router,
-        private _script: ScriptLoaderService,) {
+        private _script: ScriptLoaderService, ) {
         if (isPlatformBrowser(this.platformId)) {
             environment.api_base.resetPasswordCallback = window.location.origin + "/reset-password";
             // this.authService.init(environment.api_base);
         }
         this.authService.init(environment.api_base);
         this._script.load('body', 'assets/vendors/base/vendors.bundle.js', 'assets/demo/default/base/scripts.bundle.js')
-        .then(result => {
-            //this._script.load('head', 'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js');
-        });
+            .then(result => {
+                //this._script.load('head', 'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js');
+            });
     }
 
 

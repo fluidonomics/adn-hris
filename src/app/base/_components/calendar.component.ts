@@ -49,11 +49,11 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             navLinks: true,
-            events: function (start, end, timezone, callback) {
+            events: function(start, end, timezone, callback) {
                 callback(calendarComp.data);
             },
 
-            eventRender: function (event, element) {
+            eventRender: function(event, element) {
                 if (element.hasClass('fc-day-grid-event')) {
                     element.data('content', event.description);
                     element.data('placement', 'top');

@@ -12,7 +12,7 @@ export class OnlyMobileNumberDirective {
     @HostListener('keydown', ['$event']) onKeyDown(event) {
         let e = <KeyboardEvent>event;
         if (this.OnlyMobileNumber) {
-         
+
             if ([46, 8, 9, 27, 13, 110, 190].indexOf(e.keyCode) !== -1 ||
                 // Allow: Ctrl+A
                 (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) ||
@@ -31,11 +31,10 @@ export class OnlyMobileNumberDirective {
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
             }
-            if(this.el.nativeElement.value=="" ||this.el.nativeElement.value==null ||this.el.nativeElement.value==undefined)
-            {
+            if (this.el.nativeElement.value == "" || this.el.nativeElement.value == null || this.el.nativeElement.value == undefined) {
                 var regEx = new RegExp('^[1-9]*$');
                 if (!regEx.test(e.key)) {
-                  event.preventDefault();
+                    event.preventDefault();
                 }
             }
         }
