@@ -1522,7 +1522,7 @@
                                                             <label for="idCardNumber">ID card No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No"
+                                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" OnlyNumber="true"
                                                                 id="idCardNumber" maxlength="15" class="form-control m-input m-input--air"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !idCardNumber.valid ">
@@ -1585,7 +1585,7 @@
                                                             <label for="facility">Facility
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <ng-select name="facility" [items]="facilityData" bindLabel="facilityName" bindValue="_id" placeholder="Select facility" [(ngModel)]="officeInfo.facility_id" #facility="ngModel" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" required >
+                                                            <ng-select name="facility" [items]="facilityData" bindLabel="facilityName" bindValue="_id" placeholder="Select facility" [(ngModel)]="officeInfo.facility_id" #facility="ngModel" [clearable]="false" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" required >
                                                             </ng-select>
                                                             <!-- <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
                                                                 placeholder="Enter facility" type="text"  required> -->

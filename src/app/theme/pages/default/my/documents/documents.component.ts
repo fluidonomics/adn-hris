@@ -144,6 +144,7 @@ export class DocumentsComponent implements OnInit {
     // 		window.open(url, '_blank');
     // 	} else {
     // 		this.router.navigate([url])
+    
     // 	}
     // }
 

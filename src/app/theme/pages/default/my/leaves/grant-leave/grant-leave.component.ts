@@ -137,7 +137,7 @@ export class GrantLeaveComponent implements OnInit {
 
                 case 'single': {
                     this.utilityService.showLoader('#fGrantLeave');
-                    let body.emp_id = this.grantLeave.employee;
+                    //let body = this.grantLeave.employee;
                     this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#fGrantLeave');
