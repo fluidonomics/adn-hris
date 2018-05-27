@@ -236,6 +236,14 @@
 									</div>
 								</div>
 						 </div> -->
+						 <div class="row">							
+								<div class="col-md-6 adn-form__group">
+									<div class="m-form__group form-group">
+										<label for="form_control_1">User Documents</label>
+										<ng-select class="m-input m-input--air" name="document" [items]="documentsData" [multiple]="true" bindLabel="documentName"  bindValue="_id" placeholder="Select User Documents" [(ngModel)]="addemp.documents"  #document="ngModel"></ng-select>
+									</div>
+								</div>
+						 </div>
 					  </div>
 					  <div class="form-actions">
 						 <div class="row">

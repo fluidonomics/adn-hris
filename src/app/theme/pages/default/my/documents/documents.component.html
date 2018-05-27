@@ -47,10 +47,10 @@
                                       <div class="m-widget4">
                                          <div class="m-widget4__item">
                                             <div class="m-widget4__ext documents--ext">
-                                               <button type="button" class="btn btn-success"  name="test" (click)="documentsPdf.click()" >{{document?._id ? 'Change':'Upload'}}</button>
+                                               <button type="button" class="btn btn-success"  name="test" (click)="documentsPdf.click()" >{{document?.employeeExternalDocumentUrl ? 'Change':'Upload'}}</button>
                                                <input type="file" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName)" [uploadInput]="uploadInput">
                                             </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id">
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document.employeeExternalDocumentUrl">
                                                <a class="btn btn-secondary" target="_blank" href="{{contetBase + document.employeeExternalDocumentUrl}}" >
                                                   View
                                                </a>
@@ -58,7 +58,7 @@
                                                   View
                                                </a> -->
                                             </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id">
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id && document.employeeExternalDocumentUrl">
                                                <button type="button" class="btn btn-danger"  
                                                name="documentDelete{{i}}" 
                                                (click)="removeDocument(document.employeeExternalDocumentUrl,i)"><i class="fa fa-close"></i></button>
