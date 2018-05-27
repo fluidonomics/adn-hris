@@ -114,7 +114,7 @@ export class OfficeInfo {
     officeEmail: string = null;
     officePhone: number = null;
     officeMobile: number = null;
-    facility: string = null;
+    facility: number = null;
     city: string = null;
     country: string = null;
     costCentre: number = null;
@@ -162,7 +162,7 @@ export class PreviousEmploymentInfo {
     _id: number = null;
     emp_id: number = null;
     companyName: string = null;
-    companyBusiness: string = null;
+    companyBusiness: number = null;
     designation: string = null;
     department: string = null;
     responsibility: string = null;
