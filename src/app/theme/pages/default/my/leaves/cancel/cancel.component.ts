@@ -63,7 +63,7 @@ export class CancelComponent implements OnInit {
     }
 
     getEmployeeSupervisor() {
-        this.commonService.getSupervisor().subscribe(data => {
+        this.commonService.getKraSupervisor(this.employee._id).subscribe(data => {
             this.supervisorList = data.json() || [];;
         })
     }

@@ -29,7 +29,6 @@ export class PostLeaveTransactionComponent implements OnInit {
         private authService: AuthService,
         private utilityService: UtilityService
     ) {
-        this.commonService.getSupervisor();
     }
     ngOnInit(): void {
         this.InitValues();
