@@ -36,9 +36,9 @@
                                                </span>
                                             </div>
                                             <div class="m-widget4__ext documents--ext">
-                                               <a class="btn btn-warning">
+                                               <button class="btn btn-warning" (click)="downloadPdf(document.documentUrl,document.documentName)">
                                                  <i class="fa fa-download"> Download</i>
-                                               </a>
+                                               </button>
                                             </div>
                                          </div>
                                       </div>
@@ -47,20 +47,21 @@
                                       <div class="m-widget4">
                                          <div class="m-widget4__item">
                                             <div class="m-widget4__ext documents--ext">
-                                               <button type="button" class="btn btn-success"  name="test" (click)="nationalIdSmartCard.click()" >{{document?.uploadDocument?._id ? 'Change':'Upload'}}</button>
-                                               <input type="file" hidden="hidden" name="documentUpload{{i}}" #nationalIdSmartCard ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName)" [uploadInput]="uploadInput">
+                                               <button type="button" class="btn btn-success"  name="test" (click)="documentsPdf.click()" >{{document?._id ? 'Change':'Upload'}}</button>
+                                               <input type="file" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName)" [uploadInput]="uploadInput">
                                             </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document.uploadDocument._id">
-                                               <!-- <button type="button" class="btn btn-secondary" name="documentView{{i}}"  
-                                               (click)="showPdf(document.documentUrl)">View</button> -->
-                                               <a class="btn btn-secondary" target="_blank" href="{{document.documentUrl}}" >
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id">
+                                               <a class="btn btn-secondary" target="_blank" href="{{contetBase + document.employeeExternalDocumentUrl}}" >
                                                   View
                                                </a>
+                                               <!-- <a class="btn btn-secondary" (click)="downloadPdf(document.employeeExternalDocumentUrl,document.documentName)">
+                                                  View
+                                               </a> -->
                                             </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document.uploadDocument._id">
+                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id">
                                                <button type="button" class="btn btn-danger"  
                                                name="documentDelete{{i}}" 
-                                               (click)="removeDocument(document.documentUrl,i)"><i class="fa fa-close"></i></button>
+                                               (click)="removeDocument(document.employeeExternalDocumentUrl,i)"><i class="fa fa-close"></i></button>
                                             </div>
                                          </div>
                                       </div>

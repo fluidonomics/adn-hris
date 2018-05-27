@@ -259,6 +259,11 @@ export class MyService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
+    getEmployeeExternalDocument(emp_id: number): Observable<Response> {
+        let url = "externalDocument/getEmployeeExternalDocumentInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
