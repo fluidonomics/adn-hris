@@ -259,46 +259,6 @@ export class MyService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getCancelEmployeeLeaveDetails(_empId: number) {
-        let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    getEmployeeEmailDetails() {
-        let url = "leave/getEmployeEmailDetails";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    saveCancelLeave(leave: any) {
-        let url = "leave/cancelLeave";
-        return this.authService.post(url, leave).map(this.extractData).catch(this.handleError);
-    }
-
-    getLeaveType(): Observable<Response> {
-        let url = "leave/getLeaveTypes";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    postEmployeeLeaveDetails(leavesData: any): Observable<Response> {
-        let url = "leave/applyLeave";
-        return this.authService.post(url, leavesData).map(this.extractData).catch(this.handleError);
-    }
-
-    getEmployeeLeaveDetails(_empId: number): Observable<Response> {
-        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    getWorkflowHistory(_id: number): Observable<Response> {
-        let url = "leave/getLeaveWorkflowDetails?id=" + _id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    getAllEmployee() {
-        let url = "user/getAllEmployee";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
