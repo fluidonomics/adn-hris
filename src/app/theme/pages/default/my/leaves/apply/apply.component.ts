@@ -33,7 +33,7 @@ export class ApplyComponent implements OnInit {
         private _commonService: CommonService,
         private _authService: AuthService
     ) {
-        this._commonService.getSupervisor()
+
     }
     ngOnInit(): void {
         this.InitValues();
@@ -60,7 +60,7 @@ export class ApplyComponent implements OnInit {
             });
     }
     getAllSupervisorDetails() {
-        this._commonService.getSupervisor()
+        this._commonService.getKraSupervisor(this.currentUser._id)
             .subscribe(
                 res => {
                     if (res.ok) {

@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +13,7 @@ import { BaseModule } from '../../../../../base/base.module';
 
 
 //--------- Component -------------
+import { LeaveComponent } from './leave.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LeaveForwardComponent } from './dashboard/leave-forward/leave-forward.component';
 import { DashboardDetailsComponent } from './dashboard/dashboard-details/dashboard-details.component';
@@ -30,10 +30,8 @@ import { EmployeeLeavesComponent } from './employee-leaves/employee-leaves.compo
 import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
 
 //--------- Services -------------
-import { UtilityService } from '../../../../../base/_services/utilityService.service';
 import { LeaveService } from './leave.service';
 import { CommonService } from '../../../../../base/_services/common.service';
-import { LeaveComponent } from './leave.component';
 
 
 @NgModule({
@@ -65,7 +63,7 @@ import { LeaveComponent } from './leave.component';
         EmployeeLeavesComponent,
         GrantLeaveComponent
     ],
-    providers: [UtilityService, LeaveService, CommonService]
+    providers: [LeaveService, CommonService]
 })
 export class LeaveModule {
 }
