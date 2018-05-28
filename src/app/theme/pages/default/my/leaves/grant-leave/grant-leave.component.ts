@@ -126,15 +126,18 @@ export class GrantLeaveComponent implements OnInit {
                 confirmButtonText: 'Yes, Grant Leaves'
             }).then((result) => {
                 if (result.value) {
+                    let body: any = {
+                        "leave_type": this.grantLeave.leaveType,
+                        "balance": this.grantLeave.days,
+                        "updatedBy": this.employee._id,
+                        "createdBy": this.employee._id,
+                        "lapseDate": new Date(),
+                        "createdDate": new Date(),
+                        "updatedDate": new Date()
+                    };
                     switch (this.currentCategory) {
                         case 'all': {
                             this.utilityService.showLoader('#fGrantLeave');
-                            let body = {
-                                "leave_type": this.grantLeave.leaveType,
-                                "balance": this.grantLeave.days,
-                                "updatedBy": this.employee._id,
-                                "createdBy": this.employee._id
-                            }
                             this.leaveService.grantLeaveAllEmployee(body).subscribe(res => {
                                 if (res.ok) {
                                     this.utilityService.hideLoader('#fGrantLeave');
@@ -149,13 +152,8 @@ export class GrantLeaveComponent implements OnInit {
 
                         case 'department': {
                             this.utilityService.showLoader('#fGrantLeave');
-                            let body = {
-                                "department_id": this.grantLeave.department,
-                                "leave_type": this.grantLeave.leaveType,
-                                "balance": this.grantLeave.days,
-                                "updatedBy": this.employee._id,
-                                "createdBy": this.employee._id
-                            }
+                            body.department_id = this.grantLeave.department;
+
                             this.leaveService.grantLeaveByDepartment(body).subscribe(res => {
                                 if (res.ok) {
                                     this.utilityService.hideLoader('#fGrantLeave');
@@ -166,20 +164,12 @@ export class GrantLeaveComponent implements OnInit {
                                 err => this.handleError(this, err)
                             );
                             break;
+
                         }
 
                         case 'single': {
                             this.utilityService.showLoader('#fGrantLeave');
-                            let body = {
-                                "emp_id": this.grantLeave.employee,
-                                "leave_type": this.grantLeave.leaveType,
-                                "lapseDate": new Date(),
-                                "balance": this.grantLeave.days,
-                                "updatedBy": this.employee._id,
-                                "createdBy": this.employee._id,
-                                "createdDate": new Date(),
-                                "updatedDate": new Date()
-                            }
+                            body.emp_id = this.grantLeave.employee;
                             this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
                                 if (res.ok) {
                                     this.utilityService.hideLoader('#fGrantLeave');
@@ -190,6 +180,7 @@ export class GrantLeaveComponent implements OnInit {
                                 err => this.handleError(this, err)
                             );
                             break;
+
                         }
                     }
                 }
