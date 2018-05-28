@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
+import 'rxjs/add/observable/throw';
 
 declare var mApp;
 
@@ -39,14 +40,16 @@ export class UtilityService {
     }
 
     handleError(error: Response | any) {
-        let errMsg: string;
+        let objError: any = {};
         if (error instanceof Response) {
             const body = error.json() || '';
             const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+            objError.error = err;
+            objError.status = status;
+            objError.errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         } else {
-            errMsg = error.message ? error.message : error.toString();
+            objError.errMsg = error.message ? error.message : error.toString();
         }
-        return Observable.throw(errMsg);
+        return Observable.throw(objError);
     }
 }

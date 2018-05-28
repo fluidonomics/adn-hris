@@ -62,14 +62,14 @@ export class ApplyComponent implements OnInit {
     getAllSupervisorDetails() {
         this._commonService.getSupervisor()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.supervisorDetails = res.json();
-                }
-            },
-            error => {
-                console.log(error);
-            });
+                res => {
+                    if (res.ok) {
+                        this.supervisorDetails = res.json();
+                    }
+                },
+                error => {
+                    console.log(error);
+                });
     }
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(
@@ -102,10 +102,11 @@ export class ApplyComponent implements OnInit {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
+        debugger;
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
 
-        if (data.days > 3) {
+        if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
                 this.isAttachmentRequired = true;
             }
@@ -116,13 +117,15 @@ export class ApplyComponent implements OnInit {
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
             let ccToMail = [];
-            data.ccTo.forEach(cc => {
-                let mail = this.emailDetails.find(email => {
-                    return email._id == cc;
+            if (data.ccTo) {
+                data.ccTo.forEach(cc => {
+                    let mail = this.emailDetails.find(email => {
+                        return email._id == cc;
+                    });
+                    if (mail)
+                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
-                if (mail)
-                    ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-            });
+            }
 
             let _postData: any = {};
             _postData.applyTo = data.applyToId;
@@ -149,8 +152,7 @@ export class ApplyComponent implements OnInit {
                     this.resetForm(form);
                 },
                 error => {
-                    mApp.unblock('#applyLeavePanel');
-                    console.log(error);
+                    this.handleError(this, error);
                 });
         }
     }
@@ -192,5 +194,14 @@ export class ApplyComponent implements OnInit {
         else
             this.leaveapplication.days = 0;
 
+    }
+
+    handleError(that, err) {
+        mApp.unblock('#applyLeavePanel');
+        let msg = "";
+        if (err.error.message) {
+            msg = err.error.message;
+        }
+        swal("An Error Occured", msg, "error");
     }
 }
