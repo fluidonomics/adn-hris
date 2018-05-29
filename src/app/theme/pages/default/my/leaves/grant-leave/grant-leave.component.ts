@@ -20,6 +20,8 @@ export class GrantLeaveComponent implements OnInit {
     employeeList: any = [];
     employee: UserData;
     departmentList: any = [];
+    maxDaysValidation: any = {};
+    proRatedMultiplier: number = 1;
 
     constructor(
         private authService: AuthService,
@@ -41,6 +43,10 @@ export class GrantLeaveComponent implements OnInit {
     initValues() {
         this.grantLeave.days = 1;
         this.currentCategory = 'all';
+        this.maxDaysValidation = {
+            isValid: false,
+            msg: ''
+        };
     }
 
     getLeaveTypes() {
@@ -92,70 +98,109 @@ export class GrantLeaveComponent implements OnInit {
         if (this.grantLeave.days <= 0)
             return;
 
-        if (form.valid) {
-            let body: any = {
-                "leave_type": this.grantLeave.leaveType,
-                "balance": this.grantLeave.days,
-                "updatedBy": this.employee._id,
-                "createdBy": this.employee._id,
-                "lapseDate": new Date(),
-                "createdDate": new Date(),
-                "updatedDate": new Date()
-            };
-
-            switch (this.currentCategory) {
-                case 'all': {
-                    this.utilityService.showLoader('#fGrantLeave');
-                    this.leaveService.grantLeaveAllEmployee(body).subscribe(res => {
-                        if (res.ok) {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                            swal("Leaves Granted", "", "success");
-                            this.resetForm(form);
-                        }
-                    },
-                        error => {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                        });
-                    break;
-                }
-
-                case 'department': {
-                    this.utilityService.showLoader('#fGrantLeave');
-                    body.department_id = this.grantLeave.department;
-                    this.leaveService.grantLeaveByDepartment(body).subscribe(res => {
-                        if (res.ok) {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                            swal("Leaves Granted", "", "success");
-                            this.resetForm(form);
-                        }
-                    },
-                        error => {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                        });
-                    break;
-                }
-
-                case 'single': {
-                    this.utilityService.showLoader('#fGrantLeave');
-                    //let body = this.grantLeave.employee;
-                    this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
-                        if (res.ok) {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                            swal("Leaves Granted", "", "success");
-                            this.resetForm(form);
-                        }
-                    },
-                        error => {
-                            this.utilityService.hideLoader('#fGrantLeave');
-                        });
-                    break;
-                }
+        // Annual Leave
+        if (this.grantLeave.leaveType == 1 && this.grantLeave.days > (20 * this.proRatedMultiplier)) {
+            this.maxDaysValidation = {
+                isValid: true,
+                msg: 'Annual Leaves cannot be granted more than ' + (20 * this.proRatedMultiplier) + ' days.'
             }
+            return;
         }
+        // Sick Leave
+        else if (this.grantLeave.leaveType == 2 && this.grantLeave.days > (14 * this.proRatedMultiplier)) {
+            this.maxDaysValidation = {
+                isValid: true,
+                msg: 'Sick Leaves cannot be granted more than ' + (14 * this.proRatedMultiplier) + ' days.'
+            }
+            return;
+        }
+
+        if (form.valid) {
+            swal({
+                title: 'Are you sure?',
+                text: "You want to Grant Leaves",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Grant Leaves'
+            }).then((result) => {
+                if (result.value) {
+                    let body: any = {
+                        "leave_type": this.grantLeave.leaveType,
+                        "balance": this.grantLeave.days,
+                        "updatedBy": this.employee._id,
+                        "createdBy": this.employee._id,
+                        "lapseDate": new Date(),
+                        "createdDate": new Date(),
+                        "updatedDate": new Date()
+                    };
+                    switch (this.currentCategory) {
+                        case 'all': {
+                            this.utilityService.showLoader('#fGrantLeave');
+                            this.leaveService.grantLeaveAllEmployee(body).subscribe(res => {
+                                if (res.ok) {
+                                    this.utilityService.hideLoader('#fGrantLeave');
+                                    swal("Leaves Granted", "", "success");
+                                    this.resetForm(form);
+                                }
+                            },
+                                err => this.handleError(this, err)
+                            );
+                            break;
+                        }
+
+                        case 'department': {
+                            this.utilityService.showLoader('#fGrantLeave');
+                            body.department_id = this.grantLeave.department;
+
+                            this.leaveService.grantLeaveByDepartment(body).subscribe(res => {
+                                if (res.ok) {
+                                    this.utilityService.hideLoader('#fGrantLeave');
+                                    swal("Leaves Granted", "", "success");
+                                    this.resetForm(form);
+                                }
+                            },
+                                err => this.handleError(this, err)
+                            );
+                            break;
+
+                        }
+
+                        case 'single': {
+                            this.utilityService.showLoader('#fGrantLeave');
+                            body.emp_id = this.grantLeave.employee;
+                            this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
+                                if (res.ok) {
+                                    this.utilityService.hideLoader('#fGrantLeave');
+                                    swal("Leaves Granted", "", "success");
+                                    this.resetForm(form);
+                                }
+                            },
+                                err => this.handleError(this, err)
+                            );
+                            break;
+
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    handleError(that, err) {
+        that.utilityService.hideLoader('#fGrantLeave');
+        let msg = "";
+        if (err.error.message) {
+            msg = err.error.message;
+        }
+        swal("An Error Occured", msg, "error");
     }
 
     resetForm(form) {
         form.resetForm();
-        this.initValues();
+        setTimeout(() => {
+            this.initValues();
+        }, 1);
     }
 }

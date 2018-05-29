@@ -116,4 +116,14 @@ export class LeaveService {
         let url = "leave/getLeaveDetailsById?id=" + leaveId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+
+    getLeavesByMonth() {
+        let url = "leave/getLeavesByMonth";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeavesByLeaveType() {
+        let url = "leave/getLeavesByLeaveType";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }
