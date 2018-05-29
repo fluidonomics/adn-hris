@@ -35,6 +35,7 @@ export class AddEmployeeComponent implements OnInit {
     designationData: any = [];
     //rolesData: any = [];
     managementTypeData: any = [];
+    documentsData:any=[];
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -62,7 +63,23 @@ export class AddEmployeeComponent implements OnInit {
         this.loadDivision();
         this.loadManagementType();
         this.loadEmploymentStatus();
+        this.loadDocuments();
         //this.loadRoles();
+    }
+
+
+
+    loadDocuments() {
+        this._commonService.getDocuments().subscribe(
+            res => {
+                if (res.ok) {
+                    this.documentsData = res.json() || [];
+                }
+            },
+            error => {
+                this.documentsData = [];
+            });
+
     }
 
     //load Roles Dropdown Data init

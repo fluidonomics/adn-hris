@@ -12,6 +12,16 @@ export class UtilityService {
 
     }
 
+    currentDateStr() {
+        var date = new Date();
+        return [
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes()
+        ].join('');
+    }
 
     subtractDates(startDate: string, endDate: string) {
         if (startDate && endDate && startDate === endDate)

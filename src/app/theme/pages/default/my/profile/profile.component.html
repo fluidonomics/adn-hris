@@ -813,7 +813,10 @@
                                                 <div class="form-group m-form__group">
                                                     <label for="marks">Marks in %
                                                     </label>
-                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="3" OnlyNumber="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="5" OnlyNumber="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <div class="form-control-feedback has-danger" *ngIf="academic.marks > 100">
+                                                        Marks cannot be more than 100%
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
@@ -1023,9 +1026,8 @@
                                                 <label for="companyBusiness">Company Business
                                                 <span class="required" aria-required="true"> * </span>
                                                 </label>
-                                                <ng-select name="companyBusiness" [items]="companyBusinessData" bindLabel="companyBusinessName" bindValue="id" placeholder="Select Compnay Business" [(ngModel)]="previousEmployment.companyBusiness_id" #companyBusiness="ngModel" [clearable]="false" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                <ng-select class="m-input m-input--air" name="companyBusiness" [items]="companyBusinessData" bindLabel="companyBusinessName" bindValue="_id" placeholder="Select Company Business" [(ngModel)]="previousEmployment.companyBusiness_id" #companyBusiness="ngModel" [clearable]="false" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                 </ng-select>
-                                                <!-- <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business" id="companyBusiness" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack" > -->
                                                 <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
                                                     This field is required.
                                                 </div>
@@ -1157,10 +1159,12 @@
                                                 <label for="familyName">Name
                                                 </label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
-                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !familyName.valid ">
-                                                    This field is required.
+                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'">
+                                                <div class="form-control-feedback has-danger"  *ngIf="!familyName.valid" >
+                                                    <span *ngIf="ffamilyInfo.submitted && !familyName.errors?.pattern">This field is required.</span>
+                                                    <span *ngIf="familyName.errors?.pattern">Special characters not allowed. only space is allowed</span>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">
@@ -1282,7 +1286,7 @@
                                             <label for="idCardNumber">ID card No.
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" id="idCardNumber" maxlength="15" class="form-control m-input m-input--air" required disabled>
+                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" id="idCardNumber" OnlyNumber="true" maxlength="15" class="form-control m-input m-input--air" required disabled>
                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !idCardNumber.valid ">
                                                 This field is required.
                                             </div>
@@ -1336,7 +1340,7 @@
                                             <label for="facility">Facility
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <ng-select name="facility" [items]="facilityData" bindLabel="facilityName" bindValue="id" placeholder="Select Facility" [(ngModel)]="officeInfo.facility_id" #facility="ngModel" disabled>
+                                            <ng-select name="facility" [items]="facilityData" bindLabel="facilityName" bindValue="_id" placeholder="Select Facility" [(ngModel)]="officeInfo.facility_id" #facility="ngModel" [clearable]="false" disabled>
                                             </ng-select>
                                             <!-- <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility" placeholder="Enter facility" required type="text" disabled> -->
                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !facility.valid ">
@@ -1719,9 +1723,13 @@
                                             <label for="bankName">Bank Name
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName" placeholder="Enter bank name" type="text" required disabled>
+                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName" placeholder="Enter bank name" type="text" required disabled  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'">
                                             <div class="form-control-feedback has-danger" *ngIf="fbankDetails.submitted && !bankName.valid ">
                                                 This field is required.
+                                            </div>
+                                            <div class="form-control-feedback has-danger"  *ngIf="!bankName.valid" >
+                                                <span *ngIf="fbankDetails.submitted && !bankName.errors?.pattern">This field is required.</span>
+                                                <span *ngIf="bankName.errors?.pattern">Special characters are not allowed. Only space is allowed</span>
                                             </div>
                                         </div>
                                         </div>
@@ -1730,9 +1738,10 @@
                                             <label for="accountName">Account Name
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" name="accountName" placeholder="Enter Account Name" type="text" required  disabled>
-                                            <div class="form-control-feedback has-danger" *ngIf="fbankDetails.submitted && !accountName.valid ">
-                                                This field is required.
+                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" name="accountName" placeholder="Enter Account Name" type="text" required  disabled [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'">
+                                            <div class="form-control-feedback has-danger"  *ngIf="!accountName.valid" >
+                                                <span *ngIf="fbankDetails.submitted && !accountName.errors?.pattern">This field is required.</span>
+                                                <span *ngIf="accountName.errors?.pattern">Special characters are not allowed. Only space is allowed</span>
                                             </div>
                                         </div>
                                         </div>

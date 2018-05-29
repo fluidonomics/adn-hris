@@ -3,14 +3,16 @@ import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { CommonService } from "../../../../../base/_services/common.service";
+import { DocumentService } from "../../../../../base/_services/documentService.service";
+import { UtilityService } from "../../../../../base/_services/utilityService.service";
 import { AuthService } from "../../../../../base/_services/authService.service";
 import { MyService } from "../my.service";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 import { environment } from "../../../../../../environments/environment";
 import swal from 'sweetalert2';
-declare var mApp;
-declare var $;
+import * as FileSaver from 'file-saver';
+
+
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--documents",
@@ -26,14 +28,17 @@ export class DocumentsComponent implements OnInit {
     currentDate: any = new Date();
 
     _currentEmpId: number;
-    documentsData: any = [];
+    documentsData: any = []
+    contetBase: any;
+
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
-        public _authService: AuthService,
-        private _commonService: CommonService,
+        private _authService: AuthService,
+        private _documentService: DocumentService,
+        private _utilityService:UtilityService,
         private _myService: MyService
     ) {
         title.setTitle('ADN HRIS | My Documents');
@@ -46,53 +51,27 @@ export class DocumentsComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
+        this.contetBase = environment.content_api_base;
     }
 
     ngOnInit() {
-        //     this._authService.validateToken().subscribe(
-        //         res => {
-        //             this._currentEmpId = this._authService.currentUserData._id;
-        //             this.initData();
-        //    });
-        this.initData();
+        this._authService.validateToken().subscribe(
+            res => {
+                this._currentEmpId = this._authService.currentUserData._id;
+                this.initData();
+            });
     }
 
     initData() {
-        this.documentsData = [
-            {
-                "documentName": "abaccc 1",
-                "documentUrl": "./assets 1",
-                "uploadDocument": {
-                    "_id": null,
-                    "documentsUrl": "./assets1"
+        this._myService.getEmployeeExternalDocument(this._currentEmpId)
+            .subscribe(
+            data => {
+                if (data.ok) {
+                    this.documentsData = data.json();
                 }
             },
-            {
-                "documentName": "abaccc2",
-                "documentUrl": "./assets2",
-                "uploadDocument": {
-                    "_id": 1,
-                    "documentsUrl": "./assets2"
-                }
-            },
-            {
-                "documentName": "abaccc3",
-                "documentUrl": "./assets3",
-                "uploadDocument": {
-                    "_id": null,
-                    "documentsUrl": "./assets3"
-                }
-            }
-        ]
-        // // this._myService.getDocuments(this._currentEmpId)
-        // //     .subscribe(
-        // //     data => {
-        // //         if (data.ok) {
-        // //             this.documentsData = data.json();
-        // //         }
-        // //     },
-        // //     error => {
-        // // });
+            error => {
+            });
     }
 
     onUploadOutput(output: UploadOutput, fileName: string): void {
@@ -149,4 +128,24 @@ export class DocumentsComponent implements OnInit {
     showDeleteMessage() {
         swal("Error!", "Pdf not found", "error");
     }
+
+    downloadPdf(fileUrl, fileName) {
+        this._documentService.downloadPdf(fileUrl).subscribe((response) => {
+            var mediaType = 'application/pdf';
+            var blob = new Blob([response['_body']], { type: mediaType });
+            //var filename = fileName.split(' ').join('_') + '_' + '.pdf';
+            var filename = fileName.split(' ').join('_') + '_' + this._utilityService.currentDateStr()  + '.pdf';
+            FileSaver.saveAs(blob, filename);
+        });
+    }
+
+    // goToUrl(url: string) {
+    // 	if(url.startsWith("http")) {
+    // 		window.open(url, '_blank');
+    // 	} else {
+    // 		this.router.navigate([url])
+    
+    // 	}
+    // }
+
 }

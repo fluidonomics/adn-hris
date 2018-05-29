@@ -24,6 +24,7 @@ import { BaseModule } from "./base/base.module"
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment'
 import { UtilityService } from './base/_services/utilityService.service';
+import { DocumentService } from './base/_services/documentService.service';
 
 const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} };
 
@@ -48,7 +49,7 @@ const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} 
         FormsModule,
         HttpModule
     ],
-    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService],
+    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService, DocumentService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -170,6 +170,11 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getDocuments(): Observable<Response> {
+        let url = "common/getDocuments";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getCurrency() {
         return currency;
     }
