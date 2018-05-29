@@ -16,8 +16,8 @@ export class KraService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getKraInfo(kraworkflow_id?: number): Observable<Response> {
-        let url = "kra/getKraInfo?kraworkflow_id=" + kraworkflow_id;
+    getKraInfo(kraWorkflow_id?: number): Observable<Response> {
+        let url = "kra/getKraInfo?kraWorkflow_id=" + kraWorkflow_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

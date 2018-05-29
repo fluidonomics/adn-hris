@@ -93,14 +93,11 @@
                                         </div>
                                     </div>
                             </div>
-                               
-					
 					</div>
 				</div>	
 			</div>
 			
 	</div>
-		
 </div>
 <div class="m-content" *ngIf="param_id">
     <div class="row">
@@ -172,10 +169,10 @@
                                             <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled"></ng-select>
                                         </td>
                                         <td>
-                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air"></textarea>
+                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air"></textarea>
+                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
                                         </td>
                                         <td>
                                             <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled"></ng-select>
@@ -185,10 +182,10 @@
                             </table>
                         </div>
                         <br>
-                        <button class="btn btn-success m-btn--air" type="button" (click)="onKraSubmit()" [disabled]="isDisabled">
+                        <button class="btn btn-success m-btn--air" type="button" (click)="onKraSubmit(false)"  [disabled]="isDisabled">
                            Submit
                         </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button  class="btn btn-metal m-btn--air" type="button" (click)="onKraSubmit()" [disabled]="isDisabled">
+                        <button  class="btn btn-metal m-btn--air" type="button" (click)="onKraSubmit(true)" [disabled]="isDisabled">
                            Save as Draft
                         </button>
                     <!-- </form> -->
