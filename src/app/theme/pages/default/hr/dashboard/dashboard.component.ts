@@ -8,6 +8,7 @@ const now = new Date();
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./dashboard.component.html",
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
 }
