@@ -50,7 +50,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
             if (body.data) {
                 this.leave = body.data.find(leave => leave._id == this.leaveId);
                 if (this.leave) {
-                    this.leave.days = this.utilityService.subtractDates(this.leave.toDate, this.leave.fromDate);
+                    this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
                 }
             }
         });

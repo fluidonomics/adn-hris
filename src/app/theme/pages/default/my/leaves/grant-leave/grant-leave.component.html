@@ -66,10 +66,37 @@
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Leave Type</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesList" [(ngModel)]="grantLeave.leaveType"
-                                                    id="leavetype" #leavetype="ngModel" placeholder="" required></ng-select>
+                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesList" (ngModelChange)="onLeaveTypeChange($event)"
+                                                    [(ngModel)]="grantLeave.leaveType" id="leavetype" #leavetype="ngModel" placeholder=""
+                                                    required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!leavetype.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !leavetype.valid">This field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="isGrantingSpecialLeaves">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">From Date</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <input type="text" class="form-control m-input m-input--air" name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
+                                                    [(ngModel)]="grantLeave.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true"
+                                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="fromDate" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="!fromDate.valid">
+                                                    <span *ngIf="fGrantLeave.submitted && !fromDate.valid">This field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">To Date</label>
+                                                <span class="required" aria-required="true">* </span>
+                                                <input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
+                                                    bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                                    id="toDate" [(ngModel)]="grantLeave.toDate" #toDate="ngModel" required>
+                                                <div class="form-control-feedback has-danger" *ngIf="!toDate.valid">
+                                                    <span *ngIf="fGrantLeave.submitted && !toDate.valid">This field is required.</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,7 +107,7 @@
                                                 <label for="days">Days</label>
                                                 <span class="required" aria-required="true">* </span>
                                                 <input type="text" name="days" class="form-control m-input m-input--air" OnlyNumber="true" [(ngModel)]="grantLeave.days"
-                                                    #days="ngModel" required>
+                                                    #days="ngModel" [disabled]="isGrantingSpecialLeaves" required>
                                                 <div class="form-control-feedback has-danger" *ngIf="fGrantLeave.submitted">
                                                     <span *ngIf="fGrantLeave.submitted && !days.valid">This field is required.</span>
                                                     <span *ngIf="fGrantLeave.submitted && days.value == 0">Days cannot be zero.</span>

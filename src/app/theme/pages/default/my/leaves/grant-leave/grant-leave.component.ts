@@ -22,6 +22,7 @@ export class GrantLeaveComponent implements OnInit {
     departmentList: any = [];
     maxDaysValidation: any = {};
     proRatedMultiplier: number = 1;
+    isGrantingSpecialLeaves: boolean;
 
     constructor(
         private authService: AuthService,
@@ -47,6 +48,7 @@ export class GrantLeaveComponent implements OnInit {
             isValid: false,
             msg: ''
         };
+        this.isGrantingSpecialLeaves = false;
     }
 
     getLeaveTypes() {
@@ -135,6 +137,10 @@ export class GrantLeaveComponent implements OnInit {
                         "createdDate": new Date(),
                         "updatedDate": new Date()
                     };
+                    if (this.grantLeave.leaveType == 3 || this.grantLeave.leaveType == 4) {
+                        body.fromDate = this.grantLeave.fromDate;
+                        body.toDate = this.grantLeave.toDate;
+                    }
                     switch (this.currentCategory) {
                         case 'all': {
                             this.utilityService.showLoader('#fGrantLeave');
@@ -164,7 +170,6 @@ export class GrantLeaveComponent implements OnInit {
                                 err => this.handleError(this, err)
                             );
                             break;
-
                         }
 
                         case 'single': {
@@ -185,6 +190,27 @@ export class GrantLeaveComponent implements OnInit {
                     }
                 }
             })
+        }
+    }
+
+    onLeaveTypeChange(event) {
+        if (event === 3 || event === 4) {
+            this.isGrantingSpecialLeaves = true;
+            this.grantLeave.days = 0;
+        } else {
+            this.isGrantingSpecialLeaves = false;
+            this.grantLeave.days = 1;
+        }
+        this.grantLeave.fromDate = null;
+        this.grantLeave.toDate = null;
+    }
+
+    calculateDays(e: any, type: string) {
+        if (type === 'fromDate') {
+            this.grantLeave.days = this.utilityService.subtractDates(e, this.grantLeave.toDate);
+        }
+        else {
+            this.grantLeave.days = this.utilityService.subtractDates(this.grantLeave.fromDate, e);
         }
     }
 
