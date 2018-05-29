@@ -42,13 +42,16 @@ export class DashboardComponent implements OnInit {
     }
 
     getLeaveDetails() {
-        this.leaveService.getHRLeaveDetails().subscribe(
+        let role = this.currentUser.roles[0];
+        this.leaveService.getLeaveDetailsByRole(role).subscribe(
             res => {
                 if (res.ok) {
-                    this.leaveList = res.json().data;
+                    this.leaveList = res.json() || [];
                     if (this.leaveList) {
+                        debugger;
+                        this.leaveList = this.leaveList.filter(leave => leave.isApproved == null && leave.isCancelled == null);
                         this.leaveList = this.leaveList.map(leave => {
-                            leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
+                            leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
                             return leave;
                         });
                         console.log(this.leaveList);

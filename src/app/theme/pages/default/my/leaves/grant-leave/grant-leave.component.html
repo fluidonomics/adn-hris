@@ -44,8 +44,8 @@
                                             <div class="m-form__group form-group" *ngIf="currentCategory === 'department'">
                                                 <label for="department">Department</label>
                                                 <span class="required" aria-required="true">* </span>
-                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="departmentName" [items]="departmentList" [(ngModel)]="grantLeave.department"
-                                                    #department="ngModel" required></ng-select>
+                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="departmentName" [items]="departmentList"
+                                                    [(ngModel)]="grantLeave.department" #department="ngModel" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!department.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !department.valid">This field is required.</span>
                                                 </div>
@@ -53,7 +53,7 @@
                                             <div class="m-form__group form-group" *ngIf="currentCategory === 'single'">
                                                 <label for="employee">Employee</label>
                                                 <span class="required" aria-required="true">* </span>
-                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="FullName" [items]="employeeList" [(ngModel)]="grantLeave.employee"
+                                                <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="fullName" [items]="employeeList" [(ngModel)]="grantLeave.employee"
                                                     #employee="ngModel" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!employee.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !employee.valid">This field is required.</span>
@@ -84,6 +84,7 @@
                                                 <div class="form-control-feedback has-danger" *ngIf="fGrantLeave.submitted">
                                                     <span *ngIf="fGrantLeave.submitted && !days.valid">This field is required.</span>
                                                     <span *ngIf="fGrantLeave.submitted && days.value == 0">Days cannot be zero.</span>
+                                                    <span *ngIf="fGrantLeave.submitted && maxDaysValidation.isValid">{{maxDaysValidation.msg}}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -310,6 +310,13 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    resetPasswordByHr(emp_id: number): Observable<Response> {
+        let url = "common/resetPasswordByHr";
+        return this.authService.post(url,{emp_id:emp_id}).map(this.extractData).catch(this.handleError);
+    }
+
+    
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

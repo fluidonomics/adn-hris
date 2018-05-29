@@ -4,7 +4,9 @@ import { ScriptLoaderService } from '../../../../../../_services/script-loader.s
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { HrService } from '../../hr.service';
+import swal from 'sweetalert2';
 declare var $;
+
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
@@ -32,6 +34,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     constructor(private _script: ScriptLoaderService,
         private _hrService: HrService,
+        private _commonService:CommonService,
         public _authService: AuthService) {
 
     }
@@ -79,5 +82,22 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     getEnd(filterCount) {
         let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
         return Math.min(start + this.itemPerPage - 1, filterCount);
+    }
+
+    resetPassword(emp_id:number)
+    {
+        this._commonService.resetPasswordByHr(emp_id)
+        .subscribe(
+        res => {
+            swal({
+                type: 'success',
+                title: 'Reset Password!',
+                titleText: "Email send successfully to employee.",
+                showConfirmButton: false,
+                timer: 1000
+            })
+        },
+        error => {
+        });
     }
 }
