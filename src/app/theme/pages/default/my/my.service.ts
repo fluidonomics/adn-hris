@@ -221,8 +221,6 @@ export class MyService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-
-
     saveProfileStatus(data: any): Observable<Response> {
         {
             let url = "user/addProfileProcessInfo"
@@ -232,7 +230,6 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-
 
     deleteAcademicInfo(_id: number) {
         let url = "user/deleteAcademicInfo?_id=" + _id;
@@ -257,11 +254,6 @@ export class MyService {
     deleteImage(data: any) {
         let url = "upload/deleteImage";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-
-    getEmployeeExternalDocument(emp_id: number): Observable<Response> {
-        let url = "externalDocument/getEmployeeExternalDocumentInfo?emp_id=" + emp_id;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
