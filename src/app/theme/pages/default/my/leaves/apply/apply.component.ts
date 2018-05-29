@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../base/_services/authService.servic
 import swal from 'sweetalert2';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 declare var mApp;
 
 
@@ -31,7 +32,8 @@ export class ApplyComponent implements OnInit {
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
-        private _authService: AuthService
+        private _authService: AuthService,
+        private utilityService: UtilityService
     ) {
 
     }
@@ -62,14 +64,14 @@ export class ApplyComponent implements OnInit {
     getAllSupervisorDetails() {
         this._commonService.getKraSupervisor(this.currentUser._id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.supervisorDetails = res.json();
-                }
-            },
-            error => {
-                console.log(error);
-            });
+                res => {
+                    if (res.ok) {
+                        this.supervisorDetails = res.json();
+                    }
+                },
+                error => {
+                    console.log(error);
+                });
     }
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(
@@ -171,29 +173,12 @@ export class ApplyComponent implements OnInit {
     }
 
     calculateDays(e: any, type: string) {
-        let diff: number;
         if (type === 'fromDate') {
-            diff = Math.ceil((Date.parse(this.leaveapplication.toDate) - Date.parse(e)) / (1000 * 3600 * 24));
+            this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
         }
         else {
-            diff = Math.ceil((Date.parse(e) - Date.parse(this.leaveapplication.fromDate)) / (1000 * 3600 * 24));
+            this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
         }
-        if (diff < 0) {
-            this.leaveapplication.days = 0;
-            if (type === 'fromDate') {
-                this.leaveapplication.fromDate = this.leaveapplication.fromDate;
-                return;
-            }
-            else {
-                this.leaveapplication.toDate = this.leaveapplication.toDate;
-                return;
-            }
-        }
-        if (!isNaN(diff))
-            this.leaveapplication.days = diff + 1;
-        else
-            this.leaveapplication.days = 0;
-
     }
 
     handleError(that, err) {

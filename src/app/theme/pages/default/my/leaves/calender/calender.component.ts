@@ -17,7 +17,7 @@ declare var mApp;
 export class CalenderComponent implements OnInit {
 
     calendardata: any = [];
-    currenUser: UserData;
+    currentUser: UserData;
     leaveDetails: any = [];
 
     reverse: boolean = false;
@@ -29,13 +29,18 @@ export class CalenderComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.currenUser = this.authService.currentUserData;
+        this.currentUser = this.authService.currentUserData;
         this.getLeaveDetailsByRole();
     }
 
     getLeaveDetailsByRole() {
-        let role = this.currenUser.roles[0];
-        this.leaveService.getLeaveDetailsByRole(role).subscribe(res => {
+        let role = "";
+        if (this.currentUser.roles.indexOf('HR') > -1) {
+            role = 'HR';
+        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+            role = 'Supervisor';
+        }
+        this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(res => {
             if (res.ok) {
                 this.leaveDetails = res.json() || [];
                 this.calendardata = this.leaveDetails.map(leave => {

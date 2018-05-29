@@ -27,7 +27,13 @@ export class UtilityService {
         if (startDate && endDate && startDate === endDate)
             return 1;
         let difference = Math.ceil((Date.parse(endDate) - Date.parse(startDate)) / (1000 * 3600 * 24));
-        return isNaN(difference) ? 0 : difference;
+        if (!isNaN(difference))
+            if (difference < 0)
+                return 0;
+            else
+                return difference + 1;
+        else
+            return 0;
     }
 
     showLoader(element) {

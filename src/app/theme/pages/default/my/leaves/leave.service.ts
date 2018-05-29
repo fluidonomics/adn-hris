@@ -102,8 +102,8 @@ export class LeaveService {
         return this.authService.post(url, leaveHoliday).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveDetailsByRole(roleName: string) {
-        let url = "leave/getLeaveDetailsByRole?role=" + roleName;
+    getLeaveDetailsByRole(roleName: string, empId: number) {
+        let url = "leave/getLeaveDetailsByRole?role=" + roleName + "&emp_id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
