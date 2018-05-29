@@ -130,11 +130,11 @@
                                 </div>
                                 <div class="col-xl-4">
                                     <div class="d-inline-block align-top">
-                                        <span class="leave-type d-block">PL: {{leave.days}} Days</span>
-                                        <span class="leave-desc d-block">{{leave.remark}}</span>
+                                        <span class="leave-type d-block">{{leave.days}} Days</span>
+                                        <span class="leave-desc d-block">{{leave.reason}}</span>
                                     </div>
                                     <div class="d-inline-block">
-                                        <span class="emp-list-leavedate">{{leave.fromDate | date:'dd MMM yy'}} to {{leave.toDate | date:'dd MMM yy'}}</span>
+                                        <span *ngIf="leave.fromDate && leave.toDate" class="emp-list-leavedate">{{leave.fromDate | date:'dd MMM yy'}} to {{leave.toDate | date:'dd MMM yy'}}</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-4">Currently with: {{leave.applyTo_name}}</div>
@@ -150,7 +150,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span class="label">Leave Type:</span>Priviledge Leave</td>
+                                            <span class="label">Leave Type:</span>{{leave.leave_type_name}}</td>
                                         <td>
                                             <span class="label">Days:</span>{{leave.days}}</td>
                                     </tr>
@@ -161,13 +161,13 @@
                                             <span class="label">To:</span>{{leave.toDate | date:'dd MMM yy'}}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" class="leave_reason_col">
-                                            <span class="label">Reason:</span>{{leave.remark}}</td>
+                                        <td colspan="2">
+                                            <span class="label">Reason:</span>{{leave.reason}}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <app-leave-forward [leave]="leave"></app-leave-forward>
+                            <app-leave-forward [leave]="leave" (refreshLeavesList)="getLeaveDetails()"></app-leave-forward>
                         </div>
                     </div>
                 </div>

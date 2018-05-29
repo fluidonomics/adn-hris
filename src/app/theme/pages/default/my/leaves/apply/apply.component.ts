@@ -98,7 +98,7 @@ export class ApplyComponent implements OnInit {
                 return bal.leave_type == this.leaveapplication.leaveType;
             }
         });
-        this.leaveapplication.balance = empBal ? empBal.balance : 0;
+        this.leaveapplication.balance = empBal ? empBal.balance : 10;
     }
 
     postEmployeeLeaveDetails(form, data: any) {

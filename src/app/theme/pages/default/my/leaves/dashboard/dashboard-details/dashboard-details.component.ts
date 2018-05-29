@@ -48,6 +48,8 @@ export class DashboardDetailsComponent implements OnInit {
                 .subscribe((response) => {
                     this.processEmployeeEmails(response[1]);
                     this.processLeaveDetails(response[0]);
+                    console.log(this.leave);
+                    console.log(this.emailList);
                 });
             this.getWorkflowHistory();
         })
@@ -61,7 +63,7 @@ export class DashboardDetailsComponent implements OnInit {
         if (body.data && body.data.length > 0) {
             this.leave = body.data[0];
             if (this.leave) {
-                this.leave.days = this.utilityService.subtractDates(this.leave.toDate, this.leave.fromDate);
+                this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
                 if (this.leave.ccTo) {
                     let listOfcc = this.leave.ccTo.split(',');
                     listOfcc.forEach(cc => {
