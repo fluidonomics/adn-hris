@@ -5,8 +5,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
 import { DocumentService } from "../../../../../base/_services/documentService.service";
 import { UtilityService } from "../../../../../base/_services/utilityService.service";
-import { AuthService } from "../../../../../base/_services/authService.service";
+import { CommonService } from "../../../../../base/_services/common.service";
 import { MyService } from "../my.service";
+import { AuthService } from "../../../../../base/_services/authService.service";
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 import { environment } from "../../../../../../environments/environment";
 import swal from 'sweetalert2';
@@ -29,7 +30,7 @@ export class DocumentsComponent implements OnInit {
 
     _currentEmpId: number;
     documentsData: any = []
-    contetBase: any;
+    contentBase: any;
 
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -39,6 +40,7 @@ export class DocumentsComponent implements OnInit {
         private _authService: AuthService,
         private _documentService: DocumentService,
         private _utilityService:UtilityService,
+        private _commonService:CommonService,
         private _myService: MyService
     ) {
         title.setTitle('ADN HRIS | My Documents');
@@ -51,7 +53,7 @@ export class DocumentsComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
-        this.contetBase = environment.content_api_base;
+        
     }
 
     ngOnInit() {
@@ -60,10 +62,11 @@ export class DocumentsComponent implements OnInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initData();
             });
+            this.contentBase = environment.content_api_base.apiBase;
     }
 
     initData() {
-        this._myService.getEmployeeExternalDocument(this._currentEmpId)
+        this._commonService.getEmployeeExternalDocument(this._currentEmpId)
             .subscribe(
             data => {
                 if (data.ok) {
@@ -74,13 +77,14 @@ export class DocumentsComponent implements OnInit {
             });
     }
 
-    onUploadOutput(output: UploadOutput, fileName: string): void {
+    onUploadOutput(output: UploadOutput, fileName: string,index:number): void {
         let atCurrentAuthData = this._authService.currentAuthData;
         if (output.type === 'allAddedToQueue') { // when all files added in queue
             const event: UploadInput = {
-                fieldName: 'employeeExternalDocuments',
+                fieldName: 'externalDocument',
                 type: 'uploadAll',
-                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/document',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/externalDocument/updateEmployeeExternalDocumentInfo',
+                //url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/externalDocument',
                 headers: {
                     'access-token': atCurrentAuthData.accessToken,
                     'client': atCurrentAuthData.client,
@@ -88,11 +92,13 @@ export class DocumentsComponent implements OnInit {
                     'token-type': atCurrentAuthData.tokenType,
                     'uid': atCurrentAuthData.uid
                 },
+                data:this.documentsData[index],
                 method: 'POST',
             };
             this.uploadInput.emit(event);
         } else if (output.type === 'done') {
             if (output.file.responseStatus == 200) {
+                this.documentsData[index]['employeeExternalDocumentUrl']= output.file.response.key || '';
                 swal({ type: 'success', title: 'Upload successfully', text: fileName.toLocaleUpperCase(), showConfirmButton: false, timer: 800 })
             }
             else {
@@ -110,20 +116,18 @@ export class DocumentsComponent implements OnInit {
     // }
 
     removeDocument(pdfLink, index) {
-        // let isdeleted = pdfLink ? this.deleteDocImage(pdfLink): this.showDeleteMessage();
+        this._myService.deleteImage({ key: pdfLink }).subscribe(
+            res => {
+                if (res.ok) {
+                    this.documentsData[index].employeeExternalDocumentUrl = null;
+                    swal("Deleted", "Successfully", "success");
+                }
+            },
+            error => {
+        });
     }
 
-    deleteDocImage(pdfLink, index) {
-        // this._myService.deletePdf({ key: pdfLink }).subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.documentsData[index].documentUrl = null;
-        //             swal("Deleted", "Successfully", "success");
-        //         }
-        //     },
-        //     error => {
-        // });
-    }
+   
 
     showDeleteMessage() {
         swal("Error!", "Pdf not found", "error");
@@ -139,13 +143,9 @@ export class DocumentsComponent implements OnInit {
         });
     }
 
-    // goToUrl(url: string) {
-    // 	if(url.startsWith("http")) {
-    // 		window.open(url, '_blank');
-    // 	} else {
-    // 		this.router.navigate([url])
-    
-    // 	}
-    // }
+    goToUrl(url: string) {
+        var link =this.contentBase + url;
+        window.open(link,'_blank');
+    }
 
 }
