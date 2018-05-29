@@ -1522,7 +1522,7 @@
                                                             <label for="idCardNumber">ID card No.
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" OnlyNumber="true"
+                                                            <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" 
                                                                 id="idCardNumber" maxlength="15" class="form-control m-input m-input--air"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !idCardNumber.valid ">

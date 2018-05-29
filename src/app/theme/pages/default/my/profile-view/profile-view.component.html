@@ -1508,7 +1508,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No"
-                                                                id="idCardNumber" maxlength="15" class="form-control m-input m-input--air" OnlyNumber="true"
+                                                                id="idCardNumber" maxlength="15" class="form-control m-input m-input--air" 
                                                                 required disabled>
                                                             <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !idCardNumber.valid ">
                                                                 This field is required.
