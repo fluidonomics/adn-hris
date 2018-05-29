@@ -39,8 +39,12 @@ export class DocumentsComponent implements OnInit {
         private _router: Router,
         private _authService: AuthService,
         private _documentService: DocumentService,
+<<<<<<< HEAD
         private _utilityService:UtilityService,
         private _commonService:CommonService,
+=======
+        private _utilityService: UtilityService,
+>>>>>>> 0ad649ed4af714ed16ecac988914e38e25dfdf58
         private _myService: MyService
     ) {
         title.setTitle('ADN HRIS | My Documents');
@@ -138,7 +142,7 @@ export class DocumentsComponent implements OnInit {
             var mediaType = 'application/pdf';
             var blob = new Blob([response['_body']], { type: mediaType });
             //var filename = fileName.split(' ').join('_') + '_' + '.pdf';
-            var filename = fileName.split(' ').join('_') + '_' + this._utilityService.currentDateStr()  + '.pdf';
+            var filename = fileName.split(' ').join('_') + '_' + this._utilityService.currentDateStr() + '.pdf';
             FileSaver.saveAs(blob, filename);
         });
     }
