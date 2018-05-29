@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { Router } from '@angular/router';
 
@@ -17,6 +17,8 @@ import { UserData } from '../../../../../../../base/_interface/auth.model';
 export class LeaveForwardComponent implements OnInit {
 
     @Input() leave: any;
+    @Output() refreshLeavesList: EventEmitter<void> = new EventEmitter<void>();
+
     employee: UserData;
     remark: any;
 
@@ -54,6 +56,9 @@ export class LeaveForwardComponent implements OnInit {
                 else {
                     promise = swal("Leave Rejected", "", "success");
                 }
+                promise.then(x => {
+                    this.refreshLeavesList.emit();
+                });
             }
         }, err => {
             console.log(err);

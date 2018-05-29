@@ -9,8 +9,8 @@
 								<img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
 							</div>
 							<div class="d-inline-block">
-								<span class="emp-list-name d-block">Shaik Bhanu</span>
-								<span class="emp-list-empid d-block">#PP143</span>
+								<span class="emp-list-name d-block">{{leave.emp_name}}</span>
+								<span class="emp-list-empid d-block">#PP{{leave.emp_id}}</span>
 							</div>
 						</div>
 					</div>
@@ -18,27 +18,27 @@
 						<tbody>
 							<tr>
 								<td>
-									<span class="label">From:</span>27 Apr 2018 - Session 1</td>
+									<span class="label">From: </span>{{leave.fromDate | date:'dd MMM yy'}}</td>
 								<td>
-									<span class="label">To:</span>28 Apr 2018 - Session 2</td>
+									<span class="label">To: </span>{{leave.toDate | date:'dd MMM yy'}}</td>
 							</tr>
 							<tr>
 								<td colspan="2" class="leave_reason_col">
-									<span class="label">Leave Type:</span>Priviledge Leave</td>
+									<span class="label">Leave Type: </span>{{leave.leave_type_name}}</td>
 							</tr>
 							<tr>
 								<td>
-									<span class="label">Days:</span>2</td>
+									<span class="label">Days: </span>{{leave.days}}</td>
 								<td>
-									<span class="label">Leave Balance:</span>8</td>
+									<span class="label">Leave Balance: </span>{{leave.balance}}</td>
 							</tr>
 							<tr>
 								<td colspan="2" class="leave_reason_col">
-									<span class="label">Reason:</span>Going home</td>
+									<span class="label">Reason: </span>{{leave.reason}}</td>
 							</tr>
 							<tr>
 								<td colspan="2" class="leave_reason_col">
-									<span class="label">Contact Details:</span>
+									<span class="label">Contact Details: </span>
 								</td>
 							</tr>
 						</tbody>
