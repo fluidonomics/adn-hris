@@ -62,14 +62,14 @@ export class ApplyComponent implements OnInit {
     getAllSupervisorDetails() {
         this._commonService.getKraSupervisor(this.currentUser._id)
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.supervisorDetails = res.json();
-                    }
-                },
-                error => {
-                    console.log(error);
-                });
+            res => {
+                if (res.ok) {
+                    this.supervisorDetails = res.json();
+                }
+            },
+            error => {
+                console.log(error);
+            });
     }
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(

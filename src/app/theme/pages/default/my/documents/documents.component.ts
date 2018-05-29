@@ -38,7 +38,7 @@ export class DocumentsComponent implements OnInit {
         private _router: Router,
         private _authService: AuthService,
         private _documentService: DocumentService,
-        private _utilityService:UtilityService,
+        private _utilityService: UtilityService,
         private _myService: MyService
     ) {
         title.setTitle('ADN HRIS | My Documents');
@@ -134,7 +134,7 @@ export class DocumentsComponent implements OnInit {
             var mediaType = 'application/pdf';
             var blob = new Blob([response['_body']], { type: mediaType });
             //var filename = fileName.split(' ').join('_') + '_' + '.pdf';
-            var filename = fileName.split(' ').join('_') + '_' + this._utilityService.currentDateStr()  + '.pdf';
+            var filename = fileName.split(' ').join('_') + '_' + this._utilityService.currentDateStr() + '.pdf';
             FileSaver.saveAs(blob, filename);
         });
     }
@@ -144,7 +144,7 @@ export class DocumentsComponent implements OnInit {
     // 		window.open(url, '_blank');
     // 	} else {
     // 		this.router.navigate([url])
-    
+
     // 	}
     // }
 

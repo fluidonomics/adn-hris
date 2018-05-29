@@ -49,7 +49,7 @@ const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} 
         FormsModule,
         HttpModule
     ],
-    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService,DocumentService],
+    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService, DocumentService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

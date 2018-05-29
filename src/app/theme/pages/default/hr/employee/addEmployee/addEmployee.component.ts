@@ -35,7 +35,7 @@ export class AddEmployeeComponent implements OnInit {
     designationData: any = [];
     //rolesData: any = [];
     managementTypeData: any = [];
-    documentsData:any=[];
+    documentsData: any = [];
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,

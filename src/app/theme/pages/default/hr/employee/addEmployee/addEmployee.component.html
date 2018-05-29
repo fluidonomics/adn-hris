@@ -49,10 +49,18 @@
 						 </div>
 						 <div class="row">
 							<div class="col-md-6 adn-form__group">
-							   <div class="m-form__group form-group">
+							   <div class="m-form__group form-group input-group">
 								  <label for="form_control_1">Mobile Number</label>
 								  <span class="required" aria-required="true">* </span>
-								  <input type="text" class="form-control m-input m-input--air" name="mobileNumber" id="mobileNumber" [(ngModel)]="addemp.personalMobileNumber"  #mobileNumber="ngModel" OnlyNumber="true" minlength="10" maxlength="10" required>
+								  
+								  <div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon2">
+											+880
+										</span>                                                
+									</div>
+									<input type="text" class="form-control m-input m-input--air" name="mobileNumber" id="mobileNumber" [(ngModel)]="addemp.personalMobileNumber"  #mobileNumber="ngModel" OnlyNumber="true" minlength="10" maxlength="10" required>
+								</div>							 
 								  <div class="form-control-feedback has-danger" *ngIf="!mobileNumber.valid">
 									<span *ngIf="faddemp.submitted && !mobileNumber.valid">This field is required.</span>
 									<span *ngIf="mobileNumber.errors?.maxlength">Mobile number must be 10 digit max..</span>
