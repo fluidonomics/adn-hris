@@ -5,7 +5,7 @@ import { Headers, Http, RequestOptions, Response } from "@angular/http";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-
+import { Subject } from 'rxjs';
 
 
 @Injectable()
@@ -73,7 +73,7 @@ export class LeaveService {
     }
 
     getEmployeeLeaveBalance(empId: number) {
-        let url = "leave/getEmployeeLeaveBalance?id=" + empId;
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -125,5 +125,40 @@ export class LeaveService {
     getLeavesByLeaveType() {
         let url = "leave/getLeavesByLeaveType";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveTypeByEmpId(empId: number): Subject<any> {
+        let leaveTypes: Subject<any> = new Subject<any>();
+        this.getEmployeeLeaveBalance(empId).subscribe(resBalance => {
+            if (resBalance.ok) {
+                let leaveBalance = resBalance.json() || [];
+                if (leaveBalance.length > 0) {
+                    let url = "leave/getLeaveTypes";
+                    let response = this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+                    response.subscribe(res => {
+                        if (res.ok) {
+                            let types = res.json() || [];
+                            leaveBalance.forEach(bal => {
+                                let leaveType = types.find(type => type._id == bal.leaveType)
+                                leaveTypes.next(leaveType);
+                            });
+                        }
+                    })
+                }
+            }
+        });
+        return leaveTypes;
+    }
+
+    process(response) {
+        // response.map(res => {
+        //     if (res.ok) {
+        //         let types = res.json() || [];
+        //         leaveBalance.forEach(bal => {
+        //             let leaveType = types.find(type => type._id == bal.leaveType)
+        //             leaveTypes.push(leaveType);
+        //         });
+        //     }
+        // })
     }
 }

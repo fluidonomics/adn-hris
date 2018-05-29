@@ -205,6 +205,13 @@ export class GrantLeaveComponent implements OnInit {
         this.grantLeave.toDate = null;
     }
 
+    onDaysChange(event) {
+        this.maxDaysValidation = {
+            isValid: false,
+            msg: ''
+        }
+    }
+
     calculateDays(e: any, type: string) {
         if (type === 'fromDate') {
             this.grantLeave.days = this.utilityService.subtractDates(e, this.grantLeave.toDate);
