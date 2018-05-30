@@ -111,6 +111,8 @@ export class ProfileComponent implements OnInit {
         isSupervisorSendBack: false
     }
 
+    imageBase:string;
+
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -129,9 +131,11 @@ export class ProfileComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
+        this.imageBase= environment.content_api_base.imgBase;
     }
 
     ngOnInit() {
+        this.imageBase= environment.content_api_base.imgBase;
         this._route.queryParams.subscribe(params => {
             if (params['tabName']) {
                 this.tabName = params['tabName'];
@@ -140,7 +144,6 @@ export class ProfileComponent implements OnInit {
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
                     this.initData();
-
                 });
         });
     }
@@ -172,6 +175,35 @@ export class ProfileComponent implements OnInit {
 
             default:
                 this.loadPersonal();
+        }
+    }
+
+    onUploadOutputProfile(output: UploadOutput, fileName: string): void {
+        let atCurrentAuthData = this._authService.currentAuthData;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            // uncomment this if you want to auto upload files when added
+            const event: UploadInput = {
+                fieldName: 'avatar',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/upload/profile',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                data: { avatarUrl: this._authService.currentUserData.profileImage ? this._authService.currentUserData.profileImage:null},
+                method: 'POST',
+            };
+            this.uploadInput.emit(event);
+        } else if (output.type === 'done') {
+            if (output.file.responseStatus == 200) {
+                this._authService.validateToken();
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
+            }
         }
     }
 
