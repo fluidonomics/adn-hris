@@ -87,6 +87,23 @@ export class DashboardComponent implements OnInit {
             if (res.ok) {
                 let body = res.json();
                 this.recentTransactions = body.data || [];
+                this.recentTransactions.forEach(tran => {
+                    if (tran.isApproved == null) {
+                        tran.status = 'Pending';
+                    } else {
+                        tran.status = 'Pending Cancel';
+                    }
+
+                    if (tran.isCancelled == true) {
+                        tran.status = 'Cancelled';
+                    } else {
+                        if (tran.isApproved == true) {
+                            tran.status = 'Approved';
+                        } else {
+                            tran.status = 'Rejected';
+                        }
+                    }
+                });
             }
         })
     }
