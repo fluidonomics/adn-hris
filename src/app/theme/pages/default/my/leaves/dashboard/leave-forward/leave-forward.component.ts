@@ -53,6 +53,7 @@ export class LeaveForwardComponent implements OnInit {
                     emp_id: this.employee._id,
                     isApproved: flag,
                     updatedBy: this.employee._id,
+                    remarks: this.remark
                 }
                 this.utilityService.showLoader('#frmLeave');
                 this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {

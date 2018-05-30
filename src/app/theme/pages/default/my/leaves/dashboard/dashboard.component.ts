@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
                 this.leaveBalance.forEach(bal => {
-                    switch (bal.leave_type) {
+                    switch (bal.leaveType) {
                         case 1:
                             bal.type = "Annual Leave";
                             break;
