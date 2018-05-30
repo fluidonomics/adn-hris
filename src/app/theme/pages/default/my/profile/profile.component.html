@@ -128,21 +128,35 @@
                                         <div class="form-group m-form__group m--margin-top-10">
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="personal_id" [(ngModel)]="personalInfo._id" #personal_id="ngModel" class="form-control m-input m-input--air" />
-                                            </div>
-                                            </div>
-                                            <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="emp_id" [(ngModel)]="personalInfo.emp_id" #emp_id="ngModel" class="form-control m-input m-input--air" />
-                                            </div>
-                                            </div>
-                                            <div class="col-md-6 adn-form__group" hidden="true">
-                                            <div class="form-group m-form__group">
-                                                <input type="text" name="status" [(ngModel)]="personalInfo.isCompleted" #isCompleted="ngModel" class="form-control m-input m-input--air" />
-                                            </div>
-                                            </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                    <input type="text" name="personal_id" [(ngModel)]="personalInfo._id" #personal_id="ngModel" class="form-control m-input m-input--air" />
+                                                </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                    <input type="text" name="emp_id" [(ngModel)]="personalInfo.emp_id" #emp_id="ngModel" class="form-control m-input m-input--air" />
+                                                </div>
+                                                </div>
+                                                <div class="col-md-6 adn-form__group" hidden="true">
+                                                <div class="form-group m-form__group">
+                                                    <input type="text" name="status" [(ngModel)]="personalInfo.isCompleted" #isCompleted="ngModel" class="form-control m-input m-input--air" />
+                                                </div>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-md-10" >
+                                                </div>
+                                        <div class="col-md-2 profile--image-div pull-right">
+                                            <span >
+                                                <img *ngIf="_authService?.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+_authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--marginless m--img-centered profile--image" alt="">
+                                                <ng-template #noImage>
+                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--marginless m--img-centered profile--image">
+                                                </ng-template>
+                                                <input type="file"  name="profileImage" ngFileSelect [options]="options" (uploadOutput)="onUploadOutputProfile($event,'profileImage')" [uploadInput]="uploadInput" #profileImage>
+                                            </span>
+                                        </div>
+                                                
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 adn-form__group">

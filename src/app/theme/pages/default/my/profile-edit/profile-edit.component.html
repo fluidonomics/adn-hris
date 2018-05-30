@@ -186,6 +186,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                        <div class="col-md-10" >
+                                                        </div>
+                                                <div class="col-md-2 profile--image-div pull-right">
+                                                    <span >
+                                                        <img *ngIf="_authService?.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+_authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--marginless m--img-centered profile--image" alt="">
+                                                        <ng-template #noImage>
+                                                            <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--marginless m--img-centered profile--image">
+                                                        </ng-template>
+                                                    </span>
+                                                </div>
+                                                        
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="m-form__group form-group">
                                                             <label for="gender">

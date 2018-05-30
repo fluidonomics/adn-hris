@@ -238,7 +238,6 @@ export class AuthService implements CanActivate {
     // Validate token request
     validateToken(): Observable<Response> {
         let observ = this.get(this.getUserPath() + "auth/validateToken");
-
         observ.subscribe(
             res => {
                 this.atCurrentUserData = res.json()

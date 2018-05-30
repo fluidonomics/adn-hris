@@ -42,7 +42,9 @@ export class TrackLeaveComponent implements OnInit {
                     return leave;
                 });
                 this.activeLeaveData = this.leaveData.filter(leave => leave.isCancelled != true && leave.isApproved == null);
-                this.completedLeaveData = this.leaveData.filter(leave => leave.isCancelled == true || leave.isApproved == true);
+                // isApproved =false --leave rejeceted
+                // isApproved =false --leave approved
+                this.completedLeaveData = this.leaveData.filter(leave => leave.isCancelled == true || leave.isApproved != null);
             }
         });
     }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { Helpers } from '../../../helpers';
 import { AuthService } from "../../../base/_services/authService.service"
 import { Socket } from 'ngx-socket-io';
+import { environment } from "../../../../environments/environment";
 
 declare let mLayout: any;
 declare let $: any;
@@ -13,12 +14,14 @@ declare let $: any;
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
+    imageBase:string;
     constructor(public authService: AuthService,
         private socket: Socket
     ) {
-
+        this.imageBase=environment.content_api_base.imgBase;
     }
     ngOnInit() {
+        this.imageBase=environment.content_api_base.imgBase;
         // this.socket.emit("initData","Hello Form init");
         // this.socket.on('insertedNotification', (data) => {
 
@@ -26,6 +29,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         // this.socket.on("getData",(data)=>{
         //     alert(data);
         // });
+
     }
     ngAfterViewInit() {
         mLayout.initHeader();
