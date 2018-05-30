@@ -17,6 +17,7 @@ export class GrantLeaveComponent implements OnInit {
     grantLeave: any = {};
     currentCategory: string;
     leaveTypesList: any = [];
+    filteredLeaveTypesList: any = [];
     employeeList: any = [];
     employee: UserData;
     departmentList: any = [];
@@ -56,6 +57,7 @@ export class GrantLeaveComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.leaveTypesList = res.json();
+                    this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
                 }
             },
             error => {
@@ -94,6 +96,11 @@ export class GrantLeaveComponent implements OnInit {
         this.grantLeave.department = null;
         this.grantLeave.employee = null;
         this.grantLeave.leaveType = null;
+        if (this.currentCategory == 'single') {
+            this.filteredLeaveTypesList = this.leaveTypesList;
+        } else {
+            this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+        }
     }
 
     onGrantLeaveSubmit(form) {

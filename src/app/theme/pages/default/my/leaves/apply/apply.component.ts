@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, NgForm } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
@@ -9,7 +9,9 @@ import { UtilityService } from '../../../../../../base/_services/utilityService.
 import { Subscription } from 'rxjs';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Observable } from 'rxjs/Observable';
+
 declare var mApp;
+declare var moment;
 
 
 @Component({
@@ -33,6 +35,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
     isAttachmentRequired: boolean = false;
     currentUser: UserData;
     employeeBalances: any = [];
+    fromDateValidation: any = {};
+    @ViewChild('fleaveapplication') fleaveapplication: NgForm;
 
     getLeaveTypeByEmpIdSubs: Subscription;
 
@@ -49,12 +53,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.getLeaveTypes();
         this.getAllSupervisorDetails();
         this.getAllEmailListOfEmployee();
+        this.fleaveapplication.valueChanges.subscribe(val => {
+            this.areDaysValid = true;
+            this.isBalanceValid = true;
+            this.isAttachmentRequired = false;
+        });
     }
     InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
         this.currentUser = this._authService.atCurrentUserData;
         this.getEmployeeLeaveBalance();
+        this.fromDateValidation = {
+            isValid: true,
+            msg: ''
+        }
     }
 
     getLeaveTypes() {
@@ -107,18 +120,30 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
-        debugger;
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
 
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
                 this.isAttachmentRequired = true;
+            } else {
+                this.isAttachmentRequired = false;
             }
-        } else {
-            this.isAttachmentRequired = false;
         }
 
+        // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
+        if (data.leaveType == 1 && data.days >= 3) {
+            var new_date = moment(new Date()).add(7, 'days');
+            if (data.fromDate < new_date._d) {
+                this.fromDateValidation = {
+                    isValid: false,
+                    msg: 'Can only apply Annual Leave after 7 days from now for leave more than 3 days.'
+                }
+                return;
+            } else {
+                this.resetFromDateValidation();
+            }
+        }
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
             let ccToMail = [];
@@ -162,6 +187,13 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
     }
 
+    resetFromDateValidation() {
+        this.fromDateValidation = {
+            isValid: true,
+            msg: ''
+        }
+    }
+
     onLeaveAppSubmit(form) {
         this.postEmployeeLeaveDetails(form, this.leaveapplication);
     }
@@ -182,6 +214,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         else {
             this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
         }
+        this.resetFromDateValidation();
     }
 
     handleError(that, err) {
