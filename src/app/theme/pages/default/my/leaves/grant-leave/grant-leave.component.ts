@@ -96,7 +96,11 @@ export class GrantLeaveComponent implements OnInit {
         this.grantLeave.department = null;
         this.grantLeave.employee = null;
         this.grantLeave.leaveType = null;
-        if (this.currentCategory == 'single') {
+    }
+
+    onChangeEmployee() {
+        let selectedEmployee = this.employeeList.find(emp => emp._id == this.grantLeave.employee);
+        if (selectedEmployee.gender == 'Female') {
             this.filteredLeaveTypesList = this.leaveTypesList;
         } else {
             this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);

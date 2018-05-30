@@ -22,6 +22,7 @@ declare var moment;
 export class ApplyComponent implements OnInit, OnDestroy {
 
     @ViewChild('ddLeaveType') ddLeaveType: NgSelectComponent;
+    @ViewChild('fleaveapplication') fleaveapplication: NgForm;
 
     leaveapplication: any = {};
     fromsessiondropdownitems = ['text'];
@@ -36,10 +37,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
     currentUser: UserData;
     employeeBalances: any = [];
     fromDateValidation: any = {};
-    @ViewChild('fleaveapplication') fleaveapplication: NgForm;
+    inProbation: boolean = false;
 
     getLeaveTypeByEmpIdSubs: Subscription;
-
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
@@ -53,6 +53,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.getLeaveTypes();
         this.getAllSupervisorDetails();
         this.getAllEmailListOfEmployee();
+        this.getEmployeeProbationDetails();
         this.fleaveapplication.valueChanges.subscribe(val => {
             this.areDaysValid = true;
             this.isBalanceValid = true;
@@ -89,6 +90,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     console.log(error);
                 });
     }
+
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(
             res => {
@@ -108,6 +110,17 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.employeeBalances = res.json() || [];
             }
         })
+    }
+
+    getEmployeeProbationDetails() {
+        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                if (data) {
+                    this.inProbation = data.result || false;
+                }
+            }
+        });
     }
 
     onChangeLeaveType() {
@@ -169,22 +182,42 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.createdBy = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
 
-            mApp.block('#applyLeavePanel', {
-                overlayColor: '#000000',
-                type: 'loader',
-                state: 'success',
-                // message: 'Please wait...'
-            });
-            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
-                res => {
-                    mApp.unblock('#applyLeavePanel');
-                    swal("Leave Applied", "", "success");
-                    this.resetForm(form);
-                },
-                error => {
-                    this.handleError(this, error);
+            if (this.inProbation) {
+                swal({
+                    title: 'Are you sure?',
+                    text: 'You are under Probation',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.value) {
+                        this.postApply(_postData, form);
+                    }
                 });
+            } else {
+                this.postApply(_postData, form);
+            }
         }
+    }
+
+    postApply(_postData, form) {
+        mApp.block('#applyLeavePanel', {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
+        this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
+            res => {
+                mApp.unblock('#applyLeavePanel');
+                swal("Leave Applied", "", "success");
+                this.resetForm(form);
+            },
+            error => {
+                this.handleError(this, error);
+            });
     }
 
     resetFromDateValidation() {

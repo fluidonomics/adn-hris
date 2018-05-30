@@ -54,7 +54,7 @@
                                                 <label for="employee">Employee</label>
                                                 <span class="required" aria-required="true">* </span>
                                                 <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="fullName" [items]="employeeList" [(ngModel)]="grantLeave.employee"
-                                                    #employee="ngModel" required></ng-select>
+                                                    (ngModelChange)="onChangeEmployee()" #employee="ngModel" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!employee.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !employee.valid">This field is required.</span>
                                                 </div>
