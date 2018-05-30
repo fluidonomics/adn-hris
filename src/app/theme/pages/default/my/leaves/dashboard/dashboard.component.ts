@@ -44,13 +44,20 @@ export class DashboardComponent implements OnInit {
     }
 
     getLeaveDetails(role) {
+        if (!role) {
+            if (this.currentUser.roles.indexOf('HR') > -1) {
+                role = 'HR';
+            } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+                role = 'Supervisor';
+            }
+        }
         this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(
             res => {
                 if (res.ok) {
                     this.leaveList = res.json() || [];
                     if (this.leaveList && this.leaveList.length > 0) {
-                        this.leaveList = this.leaveList.filter(leave => leave.isApproved == null && leave.isCancelled == null);
                         this.leaveList = this.leaveList.map(leave => {
+                            leave.allowActions = leave.isApproved == null && leave.isCancelled == null;
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
                             return leave;
                         });

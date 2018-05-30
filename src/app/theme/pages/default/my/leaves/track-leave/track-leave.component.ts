@@ -38,7 +38,7 @@ export class TrackLeaveComponent implements OnInit {
             let body = data.json();
             if (body.data) {
                 this.leaveData = body.data.map(leave => {
-                    leave.days = this.utilityService.subtractDates(leave.toDate, leave.fromDate);
+                    leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
                     return leave;
                 });
                 this.activeLeaveData = this.leaveData.filter(leave => leave.isCancelled != true && leave.isApproved == null);

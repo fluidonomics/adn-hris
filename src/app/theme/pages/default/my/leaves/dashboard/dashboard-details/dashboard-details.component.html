@@ -70,8 +70,8 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="m-form__actions">
-										<button class="btn btn-success" type="button" (click)="saveAcceptRejectLeave(true)">Accept</button>
-										<button class="btn btn-danger" type="button" (click)="saveAcceptRejectLeave(false)">Reject</button>
+										<button class="btn btn-success" *ngIf="employee?.roles.indexOf('Supervisor') > -1 && leave.allowActions" type="button" (click)="saveAcceptRejectLeave(true)">Accept</button>
+										<button class="btn btn-danger" *ngIf="employee?.roles.indexOf('Supervisor') > -1 && leave.allowActions" type="button" (click)="saveAcceptRejectLeave(false)">Reject</button>
 										<button class="btn btn-secondary" type="button" (click)="goBack()">
 											<i class="fa fa-caret-left"></i> Back</button>
 									</div>

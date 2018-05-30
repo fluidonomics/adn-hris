@@ -24,6 +24,7 @@ export class DashboardDetailsComponent implements OnInit {
     emailList: any = [];
     remarks: string;
     ccTo: any = [];
+    leaveBalance: number = 0;
 
     wfhFilter: string = '';
     wfhSort: string = '';
@@ -63,6 +64,7 @@ export class DashboardDetailsComponent implements OnInit {
         if (body.data && body.data.length > 0) {
             this.leave = body.data[0];
             if (this.leave) {
+                this.leave.allowActions = this.leave.isApproved == null && this.leave.isCancelled == null;
                 this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
                 if (this.leave.ccTo) {
                     let listOfcc = this.leave.ccTo.split(',');
@@ -93,6 +95,18 @@ export class DashboardDetailsComponent implements OnInit {
         });
     }
 
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.employee._id).subscribe(res => {
+            if (res.ok) {
+                let leaveBalances = res.json() || [];
+                if (leaveBalances && leaveBalances.length > 0) {
+                    let empBal = leaveBalances.find(bal => bal.leaveType == this.leave.leaveType);
+                    this.leaveBalance = empBal.leaveBalance;
+                }
+            }
+        });
+    }
+
     sortWorkflowHistory(key: string) {
         this.wfhSort = key;
         this.wfhReverse = !this.wfhReverse;
@@ -103,40 +117,52 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
-        let ccToMail = [];
-        this.ccTo.forEach(cc => {
-            let mail = this.emailList.find(email => {
-                return email._id == cc;
-            });
-            if (mail)
-                ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-        });
-
-        let data = {
-            _id: this.leaveId,
-            emp_id: this.employee._id,
-            isApproved: flag,
-            updatedBy: this.employee._id,
-            ccTo: ccToMail
-        }
-        this.utilityService.showLoader('#frmLeave');
-        this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
-            if (res.ok) {
-                this.utilityService.hideLoader('#frmLeave');
-                let promise;
-                if (flag) {
-                    promise = swal("Leave Approved", "", "success");
-                }
-                else {
-                    promise = swal("Leave Rejected", "", "success");
-                }
-                promise.then(success => {
-                    this.goBack();
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                let ccToMail = [];
+                this.ccTo.forEach(cc => {
+                    let mail = this.emailList.find(email => {
+                        return email._id == cc;
+                    });
+                    if (mail)
+                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
+
+                let data = {
+                    _id: this.leaveId,
+                    emp_id: this.employee._id,
+                    isApproved: flag,
+                    updatedBy: this.employee._id,
+                    ccTo: ccToMail
+                }
+                this.utilityService.showLoader('#frmLeave');
+                this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
+                    if (res.ok) {
+                        this.utilityService.hideLoader('#frmLeave');
+                        let promise;
+                        if (flag) {
+                            promise = swal("Leave Approved", "", "success");
+                        }
+                        else {
+                            promise = swal("Leave Rejected", "", "success");
+                        }
+                        promise.then(success => {
+                            this.goBack();
+                        });
+                    }
+                }, err => {
+                    console.log(err);
+                    this.utilityService.hideLoader('#frmLeave');
+                })
             }
-        }, err => {
-            console.log(err);
-            this.utilityService.hideLoader('#frmLeave');
-        })
+
+        });
     }
 }
