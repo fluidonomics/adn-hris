@@ -45,6 +45,7 @@
 												<span *ngIf="leave.toDate"> to {{leave.toDate | date:'dd MMM yy'}}</span>
 											</span>
 											<a class="m-list-search__result-item-text">
+												<span class="leaveStatus">{{leave.isApproved == null? "Pending" : "Pending Cancel"}}</span>
 												<i class="fa fa-caret-right"></i>
 											</a>
 										</a>
@@ -73,6 +74,7 @@
 												<span *ngIf="leave.toDate"> to {{leave.toDate | date:'dd MMM yy'}}</span>
 											</span>
 											<a class="m-list-search__result-item-text">
+												<span class="leaveStatus">{{leave.isCancelled == true ? "Cancelled" : (leave.isApproved == true? "Approved" : "Rejected")}}</span>
 												<i class="fa fa-caret-right"></i>
 											</a>
 										</a>
