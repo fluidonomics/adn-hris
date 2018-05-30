@@ -32,8 +32,10 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.currentUser = this.authService.currentUserData;
 
-        if (this.currentUser.roles.indexOf('HR') > -1 || this.currentUser.roles.indexOf('Supervisor') > -1) {
-            this.getLeaveDetails();
+        if (this.currentUser.roles.indexOf('HR') > -1) {
+            this.getLeaveDetails('HR');
+        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getLeaveDetails('Supervisor');
         } else {
             this.getHolidays();
             this.getTransactions();
@@ -41,14 +43,12 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    getLeaveDetails() {
-        let role = this.currentUser.roles[0];
-        this.leaveService.getLeaveDetailsByRole(role).subscribe(
+    getLeaveDetails(role) {
+        this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(
             res => {
                 if (res.ok) {
                     this.leaveList = res.json() || [];
-                    if (this.leaveList) {
-                        debugger;
+                    if (this.leaveList && this.leaveList.length > 0) {
                         this.leaveList = this.leaveList.filter(leave => leave.isApproved == null && leave.isCancelled == null);
                         this.leaveList = this.leaveList.map(leave => {
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);

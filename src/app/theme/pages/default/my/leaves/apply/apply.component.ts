@@ -1,10 +1,14 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
+import { Subscription } from 'rxjs';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { Observable } from 'rxjs/Observable';
 declare var mApp;
 
 
@@ -13,14 +17,16 @@ declare var mApp;
     templateUrl: "./apply.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ApplyComponent implements OnInit {
+export class ApplyComponent implements OnInit, OnDestroy {
+
+    @ViewChild('ddLeaveType') ddLeaveType: NgSelectComponent;
 
     leaveapplication: any = {};
-
     fromsessiondropdownitems = ['text'];
     tosessiondropdownitems = ['text'];
     supervisorDetails: any;
-    leaveTypesDetails: any;
+    leaveTypeList: any = [];
+    leaveTypesDetails: Observable<Array<any>>;
     emailDetails: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
@@ -28,10 +34,13 @@ export class ApplyComponent implements OnInit {
     currentUser: UserData;
     employeeBalances: any = [];
 
+    getLeaveTypeByEmpIdSubs: Subscription;
+
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
-        private _authService: AuthService
+        private _authService: AuthService,
+        private utilityService: UtilityService
     ) {
 
     }
@@ -49,27 +58,23 @@ export class ApplyComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.leaveService.getLeaveType().subscribe(
-            res => {
-                if (res.ok) {
-                    this.leaveTypesDetails = res.json();
-                }
-            },
-            error => {
-                console.error(error);
-            });
+        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypeByEmpId(this.currentUser._id).subscribe(data => {
+            this.leaveTypeList.push(data);
+            this.leaveTypesDetails = this.leaveTypeList;
+        });
     }
+
     getAllSupervisorDetails() {
         this._commonService.getKraSupervisor(this.currentUser._id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.supervisorDetails = res.json();
-                }
-            },
-            error => {
-                console.log(error);
-            });
+                res => {
+                    if (res.ok) {
+                        this.supervisorDetails = res.json();
+                    }
+                },
+                error => {
+                    console.log(error);
+                });
     }
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(
@@ -95,10 +100,10 @@ export class ApplyComponent implements OnInit {
     onChangeLeaveType() {
         let empBal = this.employeeBalances.find(bal => {
             if (bal) {
-                return bal.leave_type == this.leaveapplication.leaveType;
+                return bal.leaveType == this.leaveapplication.leaveType;
             }
         });
-        this.leaveapplication.balance = empBal ? empBal.balance : 10;
+        this.leaveapplication.balance = empBal ? empBal.leaveBalance : 0;
     }
 
     postEmployeeLeaveDetails(form, data: any) {
@@ -171,29 +176,12 @@ export class ApplyComponent implements OnInit {
     }
 
     calculateDays(e: any, type: string) {
-        let diff: number;
         if (type === 'fromDate') {
-            diff = Math.ceil((Date.parse(this.leaveapplication.toDate) - Date.parse(e)) / (1000 * 3600 * 24));
+            this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
         }
         else {
-            diff = Math.ceil((Date.parse(e) - Date.parse(this.leaveapplication.fromDate)) / (1000 * 3600 * 24));
+            this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
         }
-        if (diff < 0) {
-            this.leaveapplication.days = 0;
-            if (type === 'fromDate') {
-                this.leaveapplication.fromDate = this.leaveapplication.fromDate;
-                return;
-            }
-            else {
-                this.leaveapplication.toDate = this.leaveapplication.toDate;
-                return;
-            }
-        }
-        if (!isNaN(diff))
-            this.leaveapplication.days = diff + 1;
-        else
-            this.leaveapplication.days = 0;
-
     }
 
     handleError(that, err) {
@@ -203,5 +191,9 @@ export class ApplyComponent implements OnInit {
             msg = err.error.message;
         }
         swal("An Error Occured", msg, "error");
+    }
+
+    ngOnDestroy(): void {
+        this.getLeaveTypeByEmpIdSubs.unsubscribe();
     }
 }

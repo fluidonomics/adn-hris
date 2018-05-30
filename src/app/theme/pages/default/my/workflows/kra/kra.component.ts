@@ -27,11 +27,12 @@ export class MyKraComponent {
     kraArrLength: number = 7
 
     isKraAvaliable: boolean = false;
-    isDisabled: boolean = false;
+ 
 
     param_id: number;
     kraWorkFlowData: any = [];
 
+    isDisabled:boolean=false;
 
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -61,6 +62,7 @@ export class MyKraComponent {
                         this.initData();
                     }
                     else {
+                        this.param_id=null;
                         this.loadKraWorkFlowDetails();
                     }
                 });
@@ -89,6 +91,8 @@ export class MyKraComponent {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
                 this.kraInfoData = res.json().data;
+                let status= res.json().status;
+                this.isDisabled = status =="Initiated" || status=="SendBack" ? false :true ;
                 this.addDummyRow((7 - this.kraInfoData.length));
             },
             error => {
@@ -125,23 +129,28 @@ export class MyKraComponent {
             });
     }
 
-    onKraSubmit(isSaveDraft?: boolean) {
-        if (isSaveDraft) {
-            //var insertedData=this.kraInfoData.filter(item>
-            //)
+    onKraSubmit(isSaveDraft: boolean) {
+        var filterKraData=[];
+        for (let i = 0; i < this.kraInfoData.length; i++) {
+           if(this.kraInfoData[i].kra && this.kraInfoData[i].category_id && this.kraInfoData[i].weightage_id && this.kraInfoData[i].unitOfSuccess && this.kraInfoData[i].measureOfSuccess && this.kraInfoData[i].supervisor_id)
+           {
+                filterKraData.push(this.kraInfoData[i])
+           }
+           if(i == this.kraInfoData.length-1)
+           {
+                this._kraService.saveKra({"kraInfo":filterKraData,"kraWorkflow_id":this.param_id,"isSaveDraft":isSaveDraft})
+                .subscribe(
+                data => {
+                        let messageString= isSaveDraft ? 'save':'submitted';
+                        swal("Kra is " + messageString, "", "success");
+                        this.loadKraInfo();
+                },
+                error => {
+                });
+           }
         }
-        this._kraService.saveKra(this.kraInfoData)
-            .subscribe(
-            data => {
-                swal("Kra is submitted.", "", "success");
-            },
-            error => {
-            });
+        
     };
-
-
-
-
 
     addDummyRow(loopLength) {
         for (let j = 0; j < loopLength; j++) {

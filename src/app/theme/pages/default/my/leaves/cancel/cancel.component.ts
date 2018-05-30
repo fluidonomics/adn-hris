@@ -104,10 +104,11 @@ export class CancelComponent implements OnInit {
             });
             let leave: any = {
                 id: this.selectedLeave._id,
-                reason: this.leaveCancel.reason,
+                cancelReason: this.leaveCancel.reason,
                 ccTo: ccToMail,
                 emp_id: this.selectedLeave.emp_id,
-                updatedBy: this.employee._id
+                updatedBy: this.selectedLeave.emp_id,
+                cancelLeaveApplyTo: this.employee._id
             }
             this.utilityService.showLoader('.cancel-portlet');
             this.leaveService.saveCancelLeave(leave).subscribe(res => {
