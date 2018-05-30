@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
     currentUser: UserData;
 
     leaveList: any;
+    dashboardTab: string = 'my';
 
     constructor(
         private leaveService: LeaveService,
@@ -35,6 +36,9 @@ export class DashboardComponent implements OnInit {
         if (this.currentUser.roles.indexOf('HR') > -1) {
             this.getLeaveDetails('HR');
         } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
             this.getLeaveDetails('Supervisor');
         } else {
             this.getHolidays();

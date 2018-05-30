@@ -1,4 +1,21 @@
-<div class="m-content" *ngIf="currentUser?.roles.indexOf('HR') == -1 && currentUser?.roles.indexOf('Supervisor') == -1">
+<div class="m-content" *ngIf="currentUser?.roles.indexOf('Supervisor') > -1">
+    <div class="row">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" (click)="dashboardTab = 'my'">
+                    My Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" (click)="dashboardTab = 'team'">
+                    My Team
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="m-content" *ngIf="(currentUser?.roles.indexOf('HR') == -1 && currentUser?.roles.indexOf('Supervisor') == -1) || (currentUser?.roles.indexOf('Supervisor') > -1 && dashboardTab == 'my')">
     <div class="row">
         <!--begin::Leave Balance-->
         <div class="col-xl-4">
@@ -107,7 +124,7 @@
     </div>
 </div>
 
-<div class="m-content hr-leave-dashboard" *ngIf="currentUser?.roles.indexOf('HR') > -1 || currentUser?.roles.indexOf('Supervisor') > -1">
+<div class="m-content hr-leave-dashboard" *ngIf="currentUser?.roles.indexOf('HR') > -1 || (currentUser?.roles.indexOf('Supervisor') > -1 && dashboardTab == 'team')">
     <div class="row">
         <div class="col-xl-12">
             <div class="m-accordion m-accordion--default m-accordion--solid m-accordion--section  m-accordion--toggle-arrow" id="m_accordion_7"

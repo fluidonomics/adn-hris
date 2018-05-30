@@ -53,7 +53,7 @@ export class LeaveService {
     }
 
     getAllEmployee() {
-        let url = "user/getAllEmployee";
+        let url = "leave/getAllEmployee";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
