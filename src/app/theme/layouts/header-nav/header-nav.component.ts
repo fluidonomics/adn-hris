@@ -30,9 +30,23 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
             alert(data);
         });
 
+        this.socket.on("sendBack",(data)=>{
+            alert(data);
+        });
+        
+
     }
     ngAfterViewInit() {
         mLayout.initHeader();
+    }
+
+    btnClick()
+    {
+        let url = "common/sendNotification";
+        this.authService.get(url).subscribe(data=>{
+            
+        });
+            
     }
 
     // removeScript()
