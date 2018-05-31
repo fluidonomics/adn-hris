@@ -71,6 +71,11 @@ export class GrantLeaveComponent implements OnInit {
                 if (res.ok) {
                     let body = res.json();
                     this.employeeList = body.data || [];
+                    if (this.employeeList != []) {
+                        this.employeeList.forEach((f) => {
+                            f.fullName = f.fullName + '-' + f.userName
+                        })
+                    }
                 }
             },
             error => {
