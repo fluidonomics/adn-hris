@@ -1,0 +1,229 @@
+
+
+
+<div class="m-content">
+    <div class="row">
+       <div class="col-md-12">
+          <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+             <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                   <div class="m-portlet__head-title">
+                      <h3 class="m-portlet__head-text">
+                         Submit KRA
+                         <small>
+                         </small>
+                      </h3>
+                   </div>
+                </div> 
+                <div class="m-portlet__head-tools">
+                   <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                      <li class="nav-item m-tabs__item">
+                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false">
+                         <i class="la la-print"></i>
+                         Print
+                         </a>
+                      </li>
+                   </ul>
+                </div>
+             </div>
+             <div class="m-portlet__body">
+                <div class="m-section" >
+                   <div class="m-section__content">  
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                        KRA
+                                    </th>
+                                    <th style="width: 170px;">
+                                        KRA Category
+                                    </th>
+                                    <th>
+                                        Weightage
+                                    </th>
+                                    <th>
+                                        Unit of Success
+                                    </th>
+                                    <th>
+                                        Measure of Success
+                                    </th>
+                                    <th>
+                                        Supervisor
+                                    </th>
+                                    <th *ngIf="status=='SendBack'">
+                                        Send Back Comment
+                                    </th>
+                                    <!-- <th>
+                                        Approve
+                                    </th>
+                                    <th>
+                                        Send Back
+                                    </th> -->
+                                    <th>
+                                        Action
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let kraInfo of kraInfoData;let i=index">
+                                       <th scope="row">
+                                            {{i+1}}
+                                       </th> 
+                                        <td>
+                                            <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled"></ng-select>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled"></ng-select>
+                                        </td>
+                                        <td>
+                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                        </td>
+                                        <td>
+                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                        </td>
+                                        <td>
+                                            <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled"></ng-select>
+                                        </td>
+                                        <td  *ngIf="status=='SendBack'">
+                                            <textarea name="sendBackComment" id="sendBackComment"  class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                        </td>
+                                        <!-- <td>
+                                                <button class="btn btn-success" type="button">
+                                                        Approve
+                                                    </button>
+                                                  
+                                        </td>
+                                        <td>
+                                                    <button class="btn btn-danger" type="button">
+                                                            SendBack
+                                                    </button>
+                                        </td> -->
+                                        <td>
+                                            <button class="btn btn-danger" type="button">
+                                                SendBack
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                     
+                    <!-- </form> -->
+                   </div><br><br>
+                   <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isKraAvaliable">
+                        <div class="tab-content">
+                            <div class="m-widget3">
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="hrName">
+                                                Test HR
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time" id="dateTime">
+                                                2 day ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--success m-badge--wide" id="kraStatus">
+                                            accepted
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-success" id="kraTimeline">
+                                            Your KRA has been Accepted.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="supervisorName">
+                                                Test Supervisor
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                1 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--info m-badge--wide">
+                                            initiated
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-info" >
+                                            Your KRA has been Initiated.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="hrName">
+                                                Test HR
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                               2 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--danger m-badge--wide">
+                                            rejected
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-danger">
+                                            Your KRA has been rejected.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" id="supervisorName">
+                                                Test Supervisor
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                3 weeks ago
+                                            </span>
+                                        </div>
+                                        <span class="m-badge m-badge--info m-badge--wide">
+                                            initiated
+                                        </span>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text m--font-info">
+                                            Your KRA has been Initiated.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+
