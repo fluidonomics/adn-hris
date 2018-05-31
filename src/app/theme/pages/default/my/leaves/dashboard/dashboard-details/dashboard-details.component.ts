@@ -25,7 +25,7 @@ export class DashboardDetailsComponent implements OnInit {
     remarks: string;
     ccTo: any = [];
     leaveBalance: number = 0;
-
+    isRemarkEmpty: boolean = false;
     wfhFilter: string = '';
     wfhSort: string = '';
     wfhReverse: boolean = false;
@@ -118,6 +118,20 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
+        
+        if (this.remarks != undefined) {
+            if (this.remarks.trim().length < 1) {
+                this.isRemarkEmpty = true;
+                return;
+            }
+            else {
+                this.isRemarkEmpty = false;
+            }
+        }
+        else {
+            this.isRemarkEmpty = true;
+            return;
+        }
         swal({
             title: 'Are you sure?',
             type: 'warning',
@@ -142,6 +156,7 @@ export class DashboardDetailsComponent implements OnInit {
                     isCancelled: null,
                     updatedBy: this.employee._id,
                     ccTo: ccToMail,
+                    reason: this.remarks,
                     remarks: this.remarks,
                     status: flag ? 'Approved' : 'Rejected'
                 }

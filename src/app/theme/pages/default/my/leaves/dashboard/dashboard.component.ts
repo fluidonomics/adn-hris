@@ -34,6 +34,9 @@ export class DashboardComponent implements OnInit {
         this.currentUser = this.authService.currentUserData;
 
         if (this.currentUser.roles.indexOf('HR') > -1) {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
             this.getLeaveDetails('HR');
         } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
             this.getHolidays();

@@ -147,7 +147,7 @@
 														 bindLabel="fullName" bindValue="_id" required></ng-select>
 
 														<div class="form-control-feedback has-danger" *ngIf="!applyto.valid">
-															<span *ngIf="applyto.touched && !applyto.valid">This field is required.</span>
+															<span *ngIf="!applyto.valid">This field is required.</span>
 														</div>
 													</div>
 												</div>
@@ -159,7 +159,7 @@
 														<span class="required" aria-required="true"> * </span>
 														<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" [(ngModel)]="leaveCancel.reason" #reason="ngModel"
 														 required></textarea>
-														<div class="form-control-feedback has-danger" *ngIf="reason.touched && !reason.valid ">
+														<div class="form-control-feedback has-danger" *ngIf="!reason.valid ">
 															This field is required.
 														</div>
 													</div>
@@ -171,10 +171,7 @@
 													<div class="m-form__group form-group">
 														<label for="form_control_1">CC To</label>
 														<ng-select class="m-input m-input--air" name="ccTo" [items]="employeeEmailList" [(ngModel)]="leaveCancel.ccTo" #ccTo="ngModel"
-														 bindLabel="personalEmail" bindValue="_id" multiple="true" required></ng-select>
-														<div class="form-control-feedback has-danger" *ngIf="ccTo.touched && !ccTo.valid ">
-															This field is required.
-														</div>
+														 bindLabel="personalEmail" bindValue="_id" multiple="true"></ng-select>
 													</div>
 												</div>
 											</div>
@@ -188,7 +185,7 @@
 											<div class="row">
 												<div class="col-md-12">
 													<div class="m-form__actions">
-														<button [disabled]="!fleavecancel.valid" class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button>
+														<button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button>
 														<button class="btn btn-secondary" (click)="fleavecancel.resetForm();" type="reset">Cancel</button>
 													</div>
 												</div>

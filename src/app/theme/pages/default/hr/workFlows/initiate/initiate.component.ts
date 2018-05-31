@@ -98,10 +98,12 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                     let data = res.json().data || [];
                     if (data.length > 0) {
                         if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                            data = data.filter(obj => obj.department_id == this.filterBy.departments.includes(obj.department_id));
+                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id));
+                            //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
                         }
                         if (this.filterBy.grades && this.filterBy.grades.length > 0) {
                             data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
+                            //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
                         }
                         this.employeeData = data || [];
                     }

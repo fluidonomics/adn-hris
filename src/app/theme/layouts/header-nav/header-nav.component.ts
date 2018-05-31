@@ -22,13 +22,13 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     }
     ngOnInit() {
         this.imageBase=environment.content_api_base.imgBase;
-        // this.socket.emit("initData","Hello Form init");
-        // this.socket.on('insertedNotification', (data) => {
+        this.socket.emit("initData","Hello Form init");
+        this.socket.on('insertedNotification', (data) => {
 
-        // });
-        // this.socket.on("getData",(data)=>{
-        //     alert(data);
-        // });
+        });
+        this.socket.on("getData",(data)=>{
+            alert(data);
+        });
 
     }
     ngAfterViewInit() {

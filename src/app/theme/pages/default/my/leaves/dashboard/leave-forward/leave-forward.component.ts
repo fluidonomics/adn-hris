@@ -18,7 +18,7 @@ export class LeaveForwardComponent implements OnInit {
 
     @Input() leave: any;
     @Output() refreshLeavesList: EventEmitter<void> = new EventEmitter<void>();
-
+    isRemarkEmpty: boolean = false;
     employee: UserData;
     remark: any;
 
@@ -39,6 +39,20 @@ export class LeaveForwardComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
+        
+        if (this.remark != undefined) {
+            if (this.remark.trim().length < 1) {
+                this.isRemarkEmpty = true;
+                return;
+            }
+            else {
+                this.isRemarkEmpty = false;
+            }
+        }
+        else {
+            this.isRemarkEmpty = true;
+            return;
+        }
         swal({
             title: 'Are you sure?',
             type: 'warning',
@@ -54,6 +68,7 @@ export class LeaveForwardComponent implements OnInit {
                     isApproved: flag,
                     isCancelled: null,
                     updatedBy: this.employee._id,
+                    reason: this.remark,
                     remarks: this.remark,
                     status: flag ? 'Approved' : 'Rejected'
                 }

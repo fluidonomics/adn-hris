@@ -150,7 +150,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (data.fromDate < new_date._d) {
                 this.fromDateValidation = {
                     isValid: false,
-                    msg: 'Can only apply Annual Leave after 7 days from now for leave more than 3 days.'
+                    msg: 'Annual leave for more than 3 days should be applied before 7 days\r\nTo Add Post leave Transaction, Contact Your HR'
                 }
                 return;
             } else {
