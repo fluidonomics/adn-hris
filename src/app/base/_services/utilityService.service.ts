@@ -58,10 +58,12 @@ export class UtilityService {
     handleError(error: Response | any) {
         let objError: any = {};
         if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
+            let err = error as any;
+            if (err._body != "") {
+                const body = error.json() || '';
+            }
             objError.error = err;
-            objError.status = status;
+            objError.status = err.status;
             objError.errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
         } else {
             objError.errMsg = error.message ? error.message : error.toString();
