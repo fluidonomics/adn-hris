@@ -57,30 +57,31 @@ export class DashboardComponent implements OnInit {
         }
         this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(
             res => {
+                debugger;
                 if (res.ok) {
                     this.leaveList = res.json() || [];
                     if (this.leaveList && this.leaveList.length > 0) {
                         this.leaveList = this.leaveList.map(leave => {
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
-                            if (leave.isApproved == null && leave.isCancelled == null) {
-                                leave.allowActions = true;
-                                leave.status = "Pending Approval";
-                            } else {
-                                if (leave.isCancelled != null) {
-                                    if (leave.isCancelled == false) {
-                                        leave.status = "Applied For Cancellation";
-                                        leave.allowActions = true;
-                                    } else {
-                                        leave.status = "Accepted";
-                                    }
-                                } else {
-                                    if (leave.isApproved == true) {
-                                        leave.status = "Accepted";
-                                    } else {
-                                        leave.status = "Rejected";
-                                    }
-                                }
-                            }
+                            // if (leave.isApproved == null && leave.isCancelled == null) {
+                            //     leave.allowActions = true;
+                            //     leave.status = "Pending Approval";
+                            // } else {
+                            //     if (leave.isCancelled != null) {
+                            //         if (leave.isCancelled == false) {
+                            //             leave.status = "Applied For Cancellation";
+                            //             leave.allowActions = true;
+                            //         } else {
+                            //             leave.status = "Accepted";
+                            //         }
+                            //     } else {
+                            //         if (leave.isApproved == true) {
+                            //             leave.status = "Accepted";
+                            //         } else {
+                            //             leave.status = "Rejected";
+                            //         }
+                            //     }
+                            // }
 
 
 

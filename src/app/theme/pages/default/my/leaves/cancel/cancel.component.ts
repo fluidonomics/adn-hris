@@ -108,7 +108,8 @@ export class CancelComponent implements OnInit {
                 ccTo: ccToMail,
                 emp_id: this.selectedLeave.emp_id,
                 updatedBy: this.selectedLeave.emp_id,
-                cancelLeaveApplyTo: this.employee._id
+                cancelLeaveApplyTo: this.employee._id,
+                status: 'cancel applied'
             }
             this.utilityService.showLoader('.cancel-portlet');
             this.leaveService.saveCancelLeave(leave).subscribe(res => {

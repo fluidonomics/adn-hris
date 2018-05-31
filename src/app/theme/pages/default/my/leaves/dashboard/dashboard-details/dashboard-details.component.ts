@@ -134,14 +134,14 @@ export class DashboardDetailsComponent implements OnInit {
                     if (mail)
                         ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
-
                 let data = {
                     _id: this.leaveId,
                     emp_id: this.employee._id,
                     isApproved: flag,
                     updatedBy: this.employee._id,
                     ccTo: ccToMail,
-                    remarks: this.remarks
+                    remarks: this.remarks,
+                    status: flag ? 'Approved' : 'Rejected'
                 }
                 this.utilityService.showLoader('#frmLeave');
                 this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
