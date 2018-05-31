@@ -64,8 +64,12 @@ export class DashboardDetailsComponent implements OnInit {
         if (body.data && body.data.length > 0) {
             this.leave = body.data[0];
             if (this.leave) {
-                this.leave.allowActions = this.leave.isApproved == null && this.leave.isCancelled == null;
                 this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
+                if (!this.leave.status || this.leave.status == 'Cancelled' || this.leave.status == 'Rejected' || this.leave.status == '' || this.leave.status == 'Cancel Rejected') {
+                    this.leave.allowActions = false;
+                } else {
+                    this.leave.allowActions = true;
+                }
                 if (this.leave.ccTo) {
                     let listOfcc = this.leave.ccTo.split(',');
                     listOfcc.forEach(cc => {
@@ -131,7 +135,7 @@ export class DashboardDetailsComponent implements OnInit {
                     if (mail)
                         ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
-                let data = {
+                let data: any = {
                     _id: this.leaveId,
                     emp_id: this.employee._id,
                     isApproved: flag,
@@ -139,6 +143,16 @@ export class DashboardDetailsComponent implements OnInit {
                     ccTo: ccToMail,
                     remarks: this.remarks,
                     status: flag ? 'Approved' : 'Rejected'
+                }
+                if (this.leave.status == 'Cancel Pending') {
+                    data.isApproved = true;
+                    if (flag) {
+                        data.isCancelled = true;
+                        data.status = 'Cancelled';
+                    } else {
+                        data.isCancelled = null;
+                        data.status = 'Cancel Rejected';
+                    }
                 }
                 this.utilityService.showLoader('#frmLeave');
                 this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
