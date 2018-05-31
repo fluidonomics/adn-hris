@@ -191,7 +191,14 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">Supervisor</label>
 								  <span class="required" aria-required="true"> * </span>
-								  <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="addemp.primarySupervisorEmp_id"  #primarySupervisorEmp="ngModel" [clearable]="false" required></ng-select>
+								  <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="addemp.primarySupervisorEmp_id"  #primarySupervisorEmp="ngModel" [clearable]="false" required>
+									<ng-template ng-label-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+									<ng-template ng-option-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+								  </ng-select>
 								  <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !primarySupervisorEmp.valid ">
 									 This field is required.
 								  </div>
@@ -201,7 +208,14 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">HR SPOC</label>
 								  <span class="required" aria-required="true"> * </span>
-								  <ng-select class="m-input m-input--air" name="hrspoc" [items]="hrspocData" bindLabel="fullName"  bindValue="_id" placeholder="Select HR SPOC" [(ngModel)]="addemp.hrspoc_id"  #hrspoc="ngModel" (change)="loadBuisnessHrHead(addemp.hrspoc_id)" [clearable]="false" required></ng-select>
+								  <ng-select class="m-input m-input--air" name="hrspoc" [items]="hrspocData" bindLabel="fullName"  bindValue="_id" placeholder="Select HR SPOC" [(ngModel)]="addemp.hrspoc_id"  #hrspoc="ngModel" (change)="loadBuisnessHrHead(addemp.hrspoc_id)" [clearable]="false" required>
+									<ng-template ng-label-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+									<ng-template ng-option-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+								  </ng-select>
 								  <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !hrspoc.valid ">
 									 This field is required.
 								  </div>
@@ -214,7 +228,14 @@
 								  <label class="control-label">Business HR Head
 								  </label> 
 								  <span class="required" aria-required="true">* </span>                                                          
-								  <ng-select class="m-input m-input--air" name="businessHrHead" [items]="buisnessHrHeadData" bindLabel="fullName"  bindValue="_id" placeholder="Select Business HR Head" [(ngModel)]="addemp.businessHrHead_id"  #businessHrHead="ngModel" (change)="loadGroupHrHead(addemp.businessHrHead_id)" [clearable]="false" required></ng-select>  
+								  <ng-select class="m-input m-input--air" name="businessHrHead" [items]="buisnessHrHeadData" bindLabel="fullName"  bindValue="_id" placeholder="Select Business HR Head" [(ngModel)]="addemp.businessHrHead_id"  #businessHrHead="ngModel" (change)="loadGroupHrHead(addemp.businessHrHead_id)" [clearable]="false" required>
+									<ng-template ng-label-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+									<ng-template ng-option-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+								  </ng-select>  
 								  <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !businessHrHead.valid ">
 									 This field is required.
 								  </div>
@@ -225,7 +246,14 @@
 								  <label class="control-label">Group HR Head
 								  </label>   
 								  <span class="required" aria-required="true">* </span>
-								  <ng-select class="m-input m-input--air" name="groupHrHead" [items]="groupHrHeadData" bindLabel="fullName"  bindValue="_id" placeholder="Select Group HR Head" [(ngModel)]="addemp.groupHrHead_id"  #groupHrHead="ngModel" [clearable]="false" required></ng-select>
+								  <ng-select class="m-input m-input--air" name="groupHrHead" [items]="groupHrHeadData" bindLabel="fullName"  bindValue="_id" placeholder="Select Group HR Head" [(ngModel)]="addemp.groupHrHead_id"  #groupHrHead="ngModel" [clearable]="false" required>
+									<ng-template ng-label-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+									<ng-template ng-option-tmp let-item="item" let-index="index">
+										<b> {{item.fullName}} [{{item.userName}}]</b>
+									</ng-template>
+								  </ng-select>
 								  <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !groupHrHead.valid ">
 									 This field is required.
 								  </div>
