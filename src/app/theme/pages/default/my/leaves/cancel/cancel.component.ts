@@ -92,20 +92,24 @@ export class CancelComponent implements OnInit {
             this.fleavecancel.resetForm();
         }
     }
-
+    finalCancelMessage: string;
     onLeavecancelSubmit(data) {
+        debugger;
         if (data.valid) {
             let ccToMail = [];
-            data.value.ccTo.forEach(cc => {
-                let mail = this.employeeEmailList.find(email => {
-                    return email._id == cc;
+            if (data.value.ccTo != undefined) {
+                data.value.ccTo.forEach(cc => {
+                    let mail = this.employeeEmailList.find(email => {
+                        return email._id == cc;
+                    });
+                    if (mail)
+                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
-                if (mail)
-                    ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-            });
+            }
             let leave: any = {
                 id: this.selectedLeave._id,
                 cancelReason: this.leaveCancel.reason,
+                reason: this.leaveCancel.reason,
                 ccTo: ccToMail,
                 emp_id: this.selectedLeave.emp_id,
                 updatedBy: this.selectedLeave.emp_id,
@@ -113,16 +117,22 @@ export class CancelComponent implements OnInit {
             }
             if (this.selectedLeave.status == 'Applied (pending)') {
                 leave.status = "Cancelled";
+                this.finalCancelMessage = "Leave Cancelled";
                 leave.isCancelled = true;
             } else if (this.selectedLeave.status == 'Approved') {
                 leave.status = "Cancel Pending";
                 leave.isCancelled = false;
+                this.finalCancelMessage = "Leave Cancel Sent For Approval";
+            } else if (this.selectedLeave.status == 'Cancel Rejected' ){
+                leave.status ="Cancel Pending";
+                leave.isCancelled = false;
+                this.finalCancelMessage = "Leave Cancel Sent For Approval";
             }
             this.utilityService.showLoader('.cancel-portlet');
             this.leaveService.saveCancelLeave(leave).subscribe(res => {
                 if (res.ok) {
                     this.utilityService.hideLoader('.cancel-portlet');
-                    swal("Leave Cancelled", "", "success");
+                    swal(this.finalCancelMessage, "", "success");
                     data.resetForm();
                     this.loadEmployeeLeaves();
                 }

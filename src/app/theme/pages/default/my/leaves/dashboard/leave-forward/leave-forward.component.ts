@@ -68,6 +68,7 @@ export class LeaveForwardComponent implements OnInit {
                     isApproved: flag,
                     isCancelled: null,
                     updatedBy: this.employee._id,
+                    reason: this.remark,
                     remarks: this.remark,
                     status: flag ? 'Approved' : 'Rejected'
                 }
