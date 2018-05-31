@@ -72,6 +72,15 @@ export class DashboardDetailsComponent implements OnInit {
                         this.ccTo.push(parseInt(cc));
                     });
                 }
+                this.leaveService.getEmployeeLeaveBalance(this.leave.emp_id).subscribe(leaveBalanceResponse => {
+                    if (leaveBalanceResponse.ok) {
+                        let leaveBalance = leaveBalanceResponse.json();
+                        if (leaveBalance.length > 0) {
+                            let empBal = leaveBalance.find(bal => bal.leaveType == this.leave.leave_type);
+                            this.leave.balance = empBal.leaveBalance;
+                        }
+                    }
+                })
             }
         }
     }
@@ -91,18 +100,6 @@ export class DashboardDetailsComponent implements OnInit {
             let body = data.json();
             if (body.data) {
                 this.workFlowHistory = body.data;
-            }
-        });
-    }
-
-    getLeaveBalance() {
-        this.leaveService.getEmployeeLeaveBalance(this.employee._id).subscribe(res => {
-            if (res.ok) {
-                let leaveBalances = res.json() || [];
-                if (leaveBalances && leaveBalances.length > 0) {
-                    let empBal = leaveBalances.find(bal => bal.leaveType == this.leave.leaveType);
-                    this.leaveBalance = empBal.leaveBalance;
-                }
             }
         });
     }

@@ -56,6 +56,7 @@ export class CancelComponent implements OnInit {
                     if (!leave.isCancelled && leave.isApproved == true && leave.isForwarded == null) {
                         leave.cannotCancel = true;
                     }
+                    leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
                     return leave;
                 })
             }
