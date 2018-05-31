@@ -65,7 +65,7 @@ export class DashboardDetailsComponent implements OnInit {
             this.leave = body.data[0];
             if (this.leave) {
                 this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
-                if (!this.leave.status || this.leave.status == 'Cancelled' || this.leave.status == 'Rejected' || this.leave.status == '' || this.leave.status == 'Cancel Rejected') {
+                if (!this.leave.status || this.leave.status == 'Cancelled' || this.leave.status == 'Rejected' || this.leave.status == '' || this.leave.status == 'Cancel Rejected' || this.leave.status == 'Approved') {
                     this.leave.allowActions = false;
                 } else {
                     this.leave.allowActions = true;
@@ -139,6 +139,7 @@ export class DashboardDetailsComponent implements OnInit {
                     _id: this.leaveId,
                     emp_id: this.employee._id,
                     isApproved: flag,
+                    isCancelled: null,
                     updatedBy: this.employee._id,
                     ccTo: ccToMail,
                     remarks: this.remarks,
