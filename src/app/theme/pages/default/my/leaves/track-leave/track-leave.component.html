@@ -36,15 +36,24 @@
 										<a class="m-list-search__result-item" *ngFor="let leave of activeLeaveData" (click)="navigateToDetails($event,leave)">
 											<span class="m-list-search__result-item-pic">
 												<img class="m--img-rounded" [src]="leave.profilePic" title="">
+												<!-- <span>{{leave.emp_name}}</span> -->
 											</span>
-											<span class="m-list-search__result-item-text">{{leave.emp_name}}</span>
+											<span class="m-list-search__result-item-text" style="width: 40% !important">
+													<span >{{leave.emp_name}}</span>
+												</span>
+	
 											<span class="m-list-search__result-item-text">
-												{{leave.leave_type_name}}
-												<span *ngIf="leave.days || leave.days == 0">- {{leave.days}} Days </span>
-												<span *ngIf="leave.fromDate">- {{leave.fromDate | date:'dd MMM yy'}}</span>
-												<span *ngIf="leave.toDate"> to {{leave.toDate | date:'dd MMM yy'}}</span>
+													{{leave.leave_type_name}}
+													<span *ngIf="leave.days || leave.days == 0">- {{leave.days}} Days </span>
+													<span *ngIf="leave.fromDate">- {{leave.fromDate | date:'dd MMM yy'}}</span>
+													<span *ngIf="leave.toDate"> to {{leave.toDate | date:'dd MMM yy'}}</span>
 											</span>
-											<a class="m-list-search__result-item-text">
+											<span class="m-list-search__result-item-text" style="width: 40% !important">
+												<span >Reason: {{leave.reason}}</span>
+											</span>
+											
+											
+											<a class="m-list-search__result-item-text" style="width: 40% !important">
 												<span class="leaveStatus">{{leave.status}}</span>
 												<i class="fa fa-caret-right"></i>
 											</a>
