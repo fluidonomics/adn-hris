@@ -61,8 +61,29 @@ export class DashboardComponent implements OnInit {
                     this.leaveList = res.json() || [];
                     if (this.leaveList && this.leaveList.length > 0) {
                         this.leaveList = this.leaveList.map(leave => {
-                            leave.allowActions = leave.isApproved == null && leave.isCancelled == null;
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
+                            if (leave.isApproved == null && leave.isCancelled == null) {
+                                leave.allowActions = true;
+                                leave.status = "Pending Approval";
+                            } else {
+                                if (leave.isCancelled != null) {
+                                    if (leave.isCancelled == false) {
+                                        leave.status = "Applied For Cancellation";
+                                        leave.allowActions = true;
+                                    } else {
+                                        leave.status = "Accepted";
+                                    }
+                                } else {
+                                    if (leave.isApproved == true) {
+                                        leave.status = "Accepted";
+                                    } else {
+                                        leave.status = "Rejected";
+                                    }
+                                }
+                            }
+
+
+
                             return leave;
                         });
                         console.log(this.leaveList);

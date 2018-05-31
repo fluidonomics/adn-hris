@@ -136,7 +136,7 @@
                         attr.href="#m_accordion_7_item_{{i+1}}_body" aria-expanded="false">
                         <div class="m-accordion__item-title">
                             <div class="row">
-                                <div class="col-xl-4">
+                                <div class="col-xl-2">
                                     <div class="d-inline-block align-top">
                                         <img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
                                     </div>
@@ -154,7 +154,8 @@
                                         <span *ngIf="leave.fromDate && leave.toDate" class="emp-list-leavedate">{{leave.fromDate | date:'dd MMM yy'}} to {{leave.toDate | date:'dd MMM yy'}}</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-4">Currently with: {{leave.applyTo_name}}</div>
+                                <div class="col-xl-3">Currently with: {{leave.applyTo_name}}</div>
+                                <div class="col-xl-3">Status: {{leave.status}}</div>
                             </div>
                         </div>
                     </div>
