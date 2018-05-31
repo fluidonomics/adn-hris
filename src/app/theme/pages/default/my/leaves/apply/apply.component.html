@@ -32,9 +32,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 adn-form__group">
+										<div class="col-md-3 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">From Date</label>
 												<span class="required" aria-required="true">* </span>
@@ -47,7 +45,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6 adn-form__group">
+										<div class="col-md-3 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">To Date</label>
 												<span class="required" aria-required="true">* </span>
@@ -97,8 +95,6 @@
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Reason</label>
@@ -115,29 +111,27 @@
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Contact Detail</label>
-												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="3" placeholder="Contact Details"
+												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="1" placeholder="Contact Details"
 												 [(ngModel)]="leaveapplication.contactDetail" name="contactDetail" #contactDetail="ngModel"></textarea>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 adn-form__group">
-											<div class="m-form__group form-group">
-												<label for="form_control_1">Attachment</label>
-												<span class="required" aria-required="true"> * </span>
-												<input type="file" name="attachment" [(ngModel)]="leaveapplication.attachment" #attachment="ngModel">
-												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted">
-													<span *ngIf="isAttachmentRequired">This field is required.</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">CC To</label>
 												<ng-select class="m-input m-input--air" name="ccTo" [items]="emailDetails" [(ngModel)]="leaveapplication.ccTo" #ccTo="ngModel"
 												 placeholder="Select CC To" bindLabel="personalEmail" bindValue="personalEmail" multiple="true"></ng-select>
+											</div>
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Attachment</label>
+												<span class="required" aria-required="true"> * </span>
+
+												<input type="file" name="attachment" [(ngModel)]="leaveapplication.attachment" #attachment="ngModel" value="Upload Document"
+												/>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted">
+													<span *ngIf="isAttachmentRequired">This field is required.</span>
+												</div>
 											</div>
 										</div>
 									</div>
