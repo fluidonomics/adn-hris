@@ -156,6 +156,7 @@ export class DashboardDetailsComponent implements OnInit {
                     isCancelled: null,
                     updatedBy: this.employee._id,
                     ccTo: ccToMail,
+                    reason: this.remarks,
                     remarks: this.remarks,
                     status: flag ? 'Approved' : 'Rejected'
                 }
