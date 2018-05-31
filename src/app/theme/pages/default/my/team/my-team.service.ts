@@ -39,6 +39,11 @@ export class MyTeamService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getKraWorkFlowInfo() {
+        let url = "kra/getKraWorkFlowInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }

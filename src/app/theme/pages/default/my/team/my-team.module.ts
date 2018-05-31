@@ -11,7 +11,7 @@ import { MyTeamService } from "./my-team.service"
 import { BaseModule } from '../../../../../base/base.module';
 import { MyTeamReviewerComponent } from './team-workflows/team-reveiwer/team-reviewer.component';
 import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team-supervisor.component';
-
+import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team
         BaseModule
     ], declarations: [
         MyTeamReviewerComponent,
-        MyTeamSupervisorComponent
+        MyTeamSupervisorComponent,
+        MyTeamKraComponent
     ],
     providers: [MyTeamService]
 })

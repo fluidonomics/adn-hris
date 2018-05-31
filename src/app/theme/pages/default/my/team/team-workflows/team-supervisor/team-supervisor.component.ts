@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@ang
 import { CommonService } from '../../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { MyTeamService } from '../../my-team.service';
+import { environment } from "../../../../../../../../environments/environment";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -12,6 +13,8 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
 
     employeeData: any = [];
     _currentEmpId: number;
+    kraData:any=[];
+    imageBase:any;
 
     constructor(
         private _myteamService: MyTeamService,
@@ -24,6 +27,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.loadAllEmployee();
             });
+            this.imageBase=environment.content_api_base.apiBase;
     }
 
     loadAllEmployee() {
@@ -33,8 +37,10 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                 let data = res.json().data || [];
                 if (data.length > 0) {
                     //data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.supervisor_id == this._currentEmpId);
-                    data = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted");
-                    this.employeeData = data || [];
+                    let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted");
+                    let kraData = data.filter(obj =>  obj.kraWorkflow && obj.kraWorkflow.status == "Submitted");
+                    this.employeeData = profileData || [];
+                    this.kraData=kraData||[];
                 }
                 else
                     this.employeeData = data.json().data || [];
