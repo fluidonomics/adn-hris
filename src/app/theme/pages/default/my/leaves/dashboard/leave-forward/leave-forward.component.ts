@@ -39,30 +39,54 @@ export class LeaveForwardComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
-        let data = {
-            _id: this.leave._id,
-            emp_id: this.employee._id,
-            isApproved: flag,
-            updatedBy: this.employee._id,
-        }
-        this.utilityService.showLoader('#frmLeave');
-        this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
-            if (res.ok) {
-                this.utilityService.hideLoader('#frmLeave');
-                let promise;
-                if (flag) {
-                    promise = swal("Leave Approved", "", "success");
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                let data: any = {
+                    _id: this.leave._id,
+                    emp_id: this.employee._id,
+                    isApproved: flag,
+                    isCancelled: null,
+                    updatedBy: this.employee._id,
+                    remarks: this.remark,
+                    status: flag ? 'Approved' : 'Rejected'
                 }
-                else {
-                    promise = swal("Leave Rejected", "", "success");
+                if (this.leave.status == 'Cancel Pending') {
+                    data.isApproved = true;
+                    if (flag) {
+                        data.isCancelled = true;
+                        data.status = 'Cancelled';
+                    } else {
+                        data.isCancelled = null;
+                        data.status = 'Cancel Rejected';
+                    }
                 }
-                promise.then(x => {
-                    this.refreshLeavesList.emit();
-                });
+                this.utilityService.showLoader('#frmLeave');
+                this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
+                    if (res.ok) {
+                        this.utilityService.hideLoader('#frmLeave');
+                        let promise;
+                        if (flag) {
+                            promise = swal("Leave Approved", "", "success");
+                        }
+                        else {
+                            promise = swal("Leave Rejected", "", "success");
+                        }
+                        promise.then(x => {
+                            this.refreshLeavesList.emit();
+                        });
+                    }
+                }, err => {
+                    console.log(err);
+                    this.utilityService.hideLoader('#frmLeave');
+                })
             }
-        }, err => {
-            console.log(err);
-            this.utilityService.hideLoader('#frmLeave');
-        })
+        });
     }
 }

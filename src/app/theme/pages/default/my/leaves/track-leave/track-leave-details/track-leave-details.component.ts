@@ -51,6 +51,15 @@ export class TrackLeaveDetailsComponent implements OnInit {
                 this.leave = body.data.find(leave => leave._id == this.leaveId);
                 if (this.leave) {
                     this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
+                    this.leaveService.getEmployeeLeaveBalance(this.employee._id).subscribe(res => {
+                        if (res.ok) {
+                            let bal = res.json();
+                            if (bal.length > 0) {
+                                let empBal = bal.find(bl => bl.leaveType == this.leave.leave_type);
+                                this.leave.balance = empBal.leaveBalance;
+                            }
+                        }
+                    })
                 }
             }
         });

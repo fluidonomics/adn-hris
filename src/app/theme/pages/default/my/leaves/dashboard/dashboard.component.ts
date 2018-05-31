@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
     currentUser: UserData;
 
     leaveList: any;
+    dashboardTab: string = 'my';
 
     constructor(
         private leaveService: LeaveService,
@@ -35,6 +36,9 @@ export class DashboardComponent implements OnInit {
         if (this.currentUser.roles.indexOf('HR') > -1) {
             this.getLeaveDetails('HR');
         } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
             this.getLeaveDetails('Supervisor');
         } else {
             this.getHolidays();
@@ -44,17 +48,27 @@ export class DashboardComponent implements OnInit {
     }
 
     getLeaveDetails(role) {
+        if (!role) {
+            if (this.currentUser.roles.indexOf('HR') > -1) {
+                role = 'HR';
+            } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+                role = 'Supervisor';
+            }
+        }
         this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(
             res => {
                 if (res.ok) {
                     this.leaveList = res.json() || [];
                     if (this.leaveList && this.leaveList.length > 0) {
-                        this.leaveList = this.leaveList.filter(leave => leave.isApproved == null && leave.isCancelled == null);
                         this.leaveList = this.leaveList.map(leave => {
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
+                            if (!leave.status || leave.status == 'Cancelled' || leave.status == 'Rejected' || leave.status == '' || leave.status == 'Cancel Rejected' || leave.status == 'Approved') {
+                                leave.allowActions = false;
+                            } else {
+                                leave.allowActions = true;
+                            }
                             return leave;
                         });
-                        console.log(this.leaveList);
                     }
                 }
             },
@@ -85,7 +99,7 @@ export class DashboardComponent implements OnInit {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
                 this.leaveBalance.forEach(bal => {
-                    switch (bal.leave_type) {
+                    switch (bal.leaveType) {
                         case 1:
                             bal.type = "Annual Leave";
                             break;

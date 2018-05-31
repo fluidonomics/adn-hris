@@ -53,7 +53,7 @@ export class LeaveService {
     }
 
     getAllEmployee() {
-        let url = "user/getAllEmployee";
+        let url = "leave/getAllEmployee";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -150,15 +150,8 @@ export class LeaveService {
         return leaveTypes;
     }
 
-    process(response) {
-        // response.map(res => {
-        //     if (res.ok) {
-        //         let types = res.json() || [];
-        //         leaveBalance.forEach(bal => {
-        //             let leaveType = types.find(type => type._id == bal.leaveType)
-        //             leaveTypes.push(leaveType);
-        //         });
-        //     }
-        // })
+    getEmployeeProbationDetails(empId: number) {
+        let url = "leave/getEmployeeProbationDetails?id=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 }

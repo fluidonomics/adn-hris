@@ -30,6 +30,8 @@ app-my-leaves-track-leave {
 }
 
 app-my-leaves-track-leave-details {
+    width: 100%;
+
     .m-form__actions {
         display: flex;
         align-items: center;
@@ -42,4 +44,8 @@ app-my-leaves-track-leave-details {
         justify-content: center;
         padding: 20px 0px;
     }
+}
+
+.leaveStatus {
+    margin-right: 10px;
 }

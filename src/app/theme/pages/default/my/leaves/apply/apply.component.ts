@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, NgForm } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
@@ -9,7 +9,9 @@ import { UtilityService } from '../../../../../../base/_services/utilityService.
 import { Subscription } from 'rxjs';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Observable } from 'rxjs/Observable';
+
 declare var mApp;
+declare var moment;
 
 
 @Component({
@@ -20,6 +22,7 @@ declare var mApp;
 export class ApplyComponent implements OnInit, OnDestroy {
 
     @ViewChild('ddLeaveType') ddLeaveType: NgSelectComponent;
+    @ViewChild('fleaveapplication') fleaveapplication: NgForm;
 
     leaveapplication: any = {};
     fromsessiondropdownitems = ['text'];
@@ -33,9 +36,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
     isAttachmentRequired: boolean = false;
     currentUser: UserData;
     employeeBalances: any = [];
+    fromDateValidation: any = {};
+    inProbation: boolean = false;
 
     getLeaveTypeByEmpIdSubs: Subscription;
-
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
@@ -49,12 +53,22 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.getLeaveTypes();
         this.getAllSupervisorDetails();
         this.getAllEmailListOfEmployee();
+        this.getEmployeeProbationDetails();
+        this.fleaveapplication.valueChanges.subscribe(val => {
+            this.areDaysValid = true;
+            this.isBalanceValid = true;
+            this.isAttachmentRequired = false;
+        });
     }
     InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
         this.currentUser = this._authService.atCurrentUserData;
         this.getEmployeeLeaveBalance();
+        this.fromDateValidation = {
+            isValid: true,
+            msg: ''
+        }
     }
 
     getLeaveTypes() {
@@ -76,6 +90,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     console.log(error);
                 });
     }
+
     getAllEmailListOfEmployee() {
         this.leaveService.getEmployeeEmailDetails().subscribe(
             res => {
@@ -97,6 +112,17 @@ export class ApplyComponent implements OnInit, OnDestroy {
         })
     }
 
+    getEmployeeProbationDetails() {
+        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                if (data) {
+                    this.inProbation = data.result || false;
+                }
+            }
+        });
+    }
+
     onChangeLeaveType() {
         let empBal = this.employeeBalances.find(bal => {
             if (bal) {
@@ -107,18 +133,30 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
-        debugger;
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
 
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
                 this.isAttachmentRequired = true;
+            } else {
+                this.isAttachmentRequired = false;
             }
-        } else {
-            this.isAttachmentRequired = false;
         }
 
+        // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
+        if (data.leaveType == 1 && data.days >= 3) {
+            var new_date = moment(new Date()).add(7, 'days');
+            if (data.fromDate < new_date._d) {
+                this.fromDateValidation = {
+                    isValid: false,
+                    msg: 'Can only apply Annual Leave after 7 days from now for leave more than 3 days.'
+                }
+                return;
+            } else {
+                this.resetFromDateValidation();
+            }
+        }
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
             let ccToMail = [];
@@ -143,22 +181,49 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.emp_id = this.currentUser._id;
             _postData.createdBy = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
-
-            mApp.block('#applyLeavePanel', {
-                overlayColor: '#000000',
-                type: 'loader',
-                state: 'success',
-                // message: 'Please wait...'
-            });
-            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
-                res => {
-                    mApp.unblock('#applyLeavePanel');
-                    swal("Leave Applied", "", "success");
-                    this.resetForm(form);
-                },
-                error => {
-                    this.handleError(this, error);
+            _postData.status = 'Applied (pending)';
+            if (this.inProbation) {
+                swal({
+                    title: 'Are you sure?',
+                    text: 'You are under Probation',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.value) {
+                        this.postApply(_postData, form);
+                    }
                 });
+            } else {
+                this.postApply(_postData, form);
+            }
+        }
+    }
+
+    postApply(_postData, form) {
+        mApp.block('#applyLeavePanel', {
+            overlayColor: '#000000',
+            type: 'loader',
+            state: 'success',
+            // message: 'Please wait...'
+        });
+        this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
+            res => {
+                mApp.unblock('#applyLeavePanel');
+                swal("Leave Applied", "", "success");
+                this.resetForm(form);
+            },
+            error => {
+                this.handleError(this, error);
+            });
+    }
+
+    resetFromDateValidation() {
+        this.fromDateValidation = {
+            isValid: true,
+            msg: ''
         }
     }
 
@@ -182,6 +247,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         else {
             this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
         }
+        this.resetFromDateValidation();
     }
 
     handleError(that, err) {

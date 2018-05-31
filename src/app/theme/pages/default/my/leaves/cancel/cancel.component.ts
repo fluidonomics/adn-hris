@@ -53,9 +53,10 @@ export class CancelComponent implements OnInit {
                 this.leaveData = body.data.map(leave => {
                     // Disable cancelling of leave if pending with supervisor
                     leave.cannotCancel = false;
-                    if (!leave.isCancelled && leave.isApproved == true && leave.isForwarded == null) {
+                    if (leave.isCancelled || leave.status == 'Cancel Pending') {
                         leave.cannotCancel = true;
                     }
+                    leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
                     return leave;
                 })
             }
@@ -110,6 +111,13 @@ export class CancelComponent implements OnInit {
                 updatedBy: this.selectedLeave.emp_id,
                 cancelLeaveApplyTo: this.employee._id
             }
+            if (this.selectedLeave.status == 'Applied (pending)') {
+                leave.status = "Cancelled";
+                leave.isCancelled = true;
+            } else if (this.selectedLeave.status == 'Approved') {
+                leave.status = "Cancel Pending";
+                leave.isCancelled = false;
+            }
             this.utilityService.showLoader('.cancel-portlet');
             this.leaveService.saveCancelLeave(leave).subscribe(res => {
                 if (res.ok) {
@@ -129,5 +137,4 @@ export class CancelComponent implements OnInit {
         this.key = key;
         this.reverse = !this.reverse;
     }
-
 }

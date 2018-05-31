@@ -17,6 +17,7 @@ export class GrantLeaveComponent implements OnInit {
     grantLeave: any = {};
     currentCategory: string;
     leaveTypesList: any = [];
+    filteredLeaveTypesList: any = [];
     employeeList: any = [];
     employee: UserData;
     departmentList: any = [];
@@ -56,6 +57,7 @@ export class GrantLeaveComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.leaveTypesList = res.json();
+                    this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
                 }
             },
             error => {
@@ -94,6 +96,15 @@ export class GrantLeaveComponent implements OnInit {
         this.grantLeave.department = null;
         this.grantLeave.employee = null;
         this.grantLeave.leaveType = null;
+    }
+
+    onChangeEmployee() {
+        let selectedEmployee = this.employeeList.find(emp => emp._id == this.grantLeave.employee);
+        if (selectedEmployee.gender == 'Female') {
+            this.filteredLeaveTypesList = this.leaveTypesList;
+        } else {
+            this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+        }
     }
 
     onGrantLeaveSubmit(form) {
@@ -151,7 +162,7 @@ export class GrantLeaveComponent implements OnInit {
                                     this.resetForm(form);
                                 }
                             },
-                                err => this.handleError(this, err)
+                                err => this.handleError(this, err, form)
                             );
                             break;
                         }
@@ -167,7 +178,7 @@ export class GrantLeaveComponent implements OnInit {
                                     this.resetForm(form);
                                 }
                             },
-                                err => this.handleError(this, err)
+                                err => this.handleError(this, err, form)
                             );
                             break;
                         }
@@ -182,7 +193,7 @@ export class GrantLeaveComponent implements OnInit {
                                     this.resetForm(form);
                                 }
                             },
-                                err => this.handleError(this, err)
+                                err => this.handleError(this, err, form)
                             );
                             break;
 
@@ -221,13 +232,14 @@ export class GrantLeaveComponent implements OnInit {
         }
     }
 
-    handleError(that, err) {
+    handleError(that, err, form) {
         that.utilityService.hideLoader('#fGrantLeave');
         let msg = "";
-        if (err.error.message) {
-            msg = err.error.message;
+        if (err.error.status == 300) {
+            msg = "This leave type can only be granted once in a year. Thus the current operation might only grant leaves for only those employees that have not been granted leaves yet";
         }
         swal("An Error Occured", msg, "error");
+        this.resetForm(form);
     }
 
     resetForm(form) {

@@ -24,6 +24,7 @@ export class DashboardDetailsComponent implements OnInit {
     emailList: any = [];
     remarks: string;
     ccTo: any = [];
+    leaveBalance: number = 0;
 
     wfhFilter: string = '';
     wfhSort: string = '';
@@ -64,12 +65,26 @@ export class DashboardDetailsComponent implements OnInit {
             this.leave = body.data[0];
             if (this.leave) {
                 this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
+                if (!this.leave.status || this.leave.status == 'Cancelled' || this.leave.status == 'Rejected' || this.leave.status == '' || this.leave.status == 'Cancel Rejected' || this.leave.status == 'Approved') {
+                    this.leave.allowActions = false;
+                } else {
+                    this.leave.allowActions = true;
+                }
                 if (this.leave.ccTo) {
                     let listOfcc = this.leave.ccTo.split(',');
                     listOfcc.forEach(cc => {
                         this.ccTo.push(parseInt(cc));
                     });
                 }
+                this.leaveService.getEmployeeLeaveBalance(this.leave.emp_id).subscribe(leaveBalanceResponse => {
+                    if (leaveBalanceResponse.ok) {
+                        let leaveBalance = leaveBalanceResponse.json();
+                        if (leaveBalance.length > 0) {
+                            let empBal = leaveBalance.find(bal => bal.leaveType == this.leave.leave_type);
+                            this.leave.balance = empBal.leaveBalance;
+                        }
+                    }
+                })
             }
         }
     }
@@ -103,40 +118,64 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
-        let ccToMail = [];
-        this.ccTo.forEach(cc => {
-            let mail = this.emailList.find(email => {
-                return email._id == cc;
-            });
-            if (mail)
-                ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-        });
-
-        let data = {
-            _id: this.leaveId,
-            emp_id: this.employee._id,
-            isApproved: flag,
-            updatedBy: this.employee._id,
-            ccTo: ccToMail
-        }
-        this.utilityService.showLoader('#frmLeave');
-        this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
-            if (res.ok) {
-                this.utilityService.hideLoader('#frmLeave');
-                let promise;
-                if (flag) {
-                    promise = swal("Leave Approved", "", "success");
-                }
-                else {
-                    promise = swal("Leave Rejected", "", "success");
-                }
-                promise.then(success => {
-                    this.goBack();
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                let ccToMail = [];
+                this.ccTo.forEach(cc => {
+                    let mail = this.emailList.find(email => {
+                        return email._id == cc;
+                    });
+                    if (mail)
+                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
                 });
+                let data: any = {
+                    _id: this.leaveId,
+                    emp_id: this.employee._id,
+                    isApproved: flag,
+                    isCancelled: null,
+                    updatedBy: this.employee._id,
+                    ccTo: ccToMail,
+                    remarks: this.remarks,
+                    status: flag ? 'Approved' : 'Rejected'
+                }
+                if (this.leave.status == 'Cancel Pending') {
+                    data.isApproved = true;
+                    if (flag) {
+                        data.isCancelled = true;
+                        data.status = 'Cancelled';
+                    } else {
+                        data.isCancelled = null;
+                        data.status = 'Cancel Rejected';
+                    }
+                }
+                this.utilityService.showLoader('#frmLeave');
+                this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
+                    if (res.ok) {
+                        this.utilityService.hideLoader('#frmLeave');
+                        let promise;
+                        if (flag) {
+                            promise = swal("Leave Approved", "", "success");
+                        }
+                        else {
+                            promise = swal("Leave Rejected", "", "success");
+                        }
+                        promise.then(success => {
+                            this.goBack();
+                        });
+                    }
+                }, err => {
+                    console.log(err);
+                    this.utilityService.hideLoader('#frmLeave');
+                })
             }
-        }, err => {
-            console.log(err);
-            this.utilityService.hideLoader('#frmLeave');
-        })
+
+        });
     }
 }

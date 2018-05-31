@@ -54,7 +54,7 @@
                                                 <label for="employee">Employee</label>
                                                 <span class="required" aria-required="true">* </span>
                                                 <ng-select class="m-input m-input--air" name="applyto" bindValue="_id" bindLabel="fullName" [items]="employeeList" [(ngModel)]="grantLeave.employee"
-                                                    #employee="ngModel" required></ng-select>
+                                                    (ngModelChange)="onChangeEmployee()" #employee="ngModel" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!employee.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !employee.valid">This field is required.</span>
                                                 </div>
@@ -66,8 +66,9 @@
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Leave Type</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesList" [(ngModel)]="grantLeave.leaveType"
-                                                    id="leavetype" #leavetype="ngModel" placeholder="" required></ng-select>
+                                                <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="filteredLeaveTypesList"
+                                                    [(ngModel)]="grantLeave.leaveType" id="leavetype" #leavetype="ngModel" placeholder=""
+                                                    required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!leavetype.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !leavetype.valid">This field is required.</span>
                                                 </div>
