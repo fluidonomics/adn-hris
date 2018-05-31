@@ -181,7 +181,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.emp_id = this.currentUser._id;
             _postData.createdBy = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
-
+            _postData.status = 'applied';
             if (this.inProbation) {
                 swal({
                     title: 'Are you sure?',
