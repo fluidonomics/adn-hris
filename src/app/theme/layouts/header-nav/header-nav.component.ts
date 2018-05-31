@@ -40,14 +40,14 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         mLayout.initHeader();
     }
 
-    btnClick()
-    {
-        let url = "common/sendNotification";
-        this.authService.get(url).subscribe(data=>{
+    // btnClick()
+    // {
+    //     let url = "common/sendNotification";
+    //     this.authService.get(url).subscribe(data=>{
             
-        });
+    //     });
             
-    }
+    // }
 
     // removeScript()
     // {
