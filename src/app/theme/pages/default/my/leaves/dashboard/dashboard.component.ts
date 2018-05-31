@@ -62,9 +62,9 @@ export class DashboardComponent implements OnInit {
                     if (this.leaveList && this.leaveList.length > 0) {
                         this.leaveList = this.leaveList.map(leave => {
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
-                            if (leave.isApproved == null && leave.isCancelled == null) {
-                                leave.allowActions = true;
-                            } else if (leave.isCancelled == false) {
+                            if (!leave.status || leave.status == 'Cancelled' || leave.status == 'Rejected' || leave.status == '' || leave.status == 'Cancel Rejected') {
+                                leave.allowActions = false;
+                            } else {
                                 leave.allowActions = true;
                             }
                             return leave;

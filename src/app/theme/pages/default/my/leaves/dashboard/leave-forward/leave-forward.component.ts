@@ -48,12 +48,22 @@ export class LeaveForwardComponent implements OnInit {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
-                let data = {
+                let data: any = {
                     _id: this.leave._id,
                     emp_id: this.employee._id,
                     isApproved: flag,
                     updatedBy: this.employee._id,
                     remarks: this.remark
+                }
+                if (this.leave.status == 'Cancel Pending') {
+                    data.isApproved = true;
+                    if (flag) {
+                        data.isCancelled = true;
+                        data.status = 'Cancelled';
+                    } else {
+                        data.isCancelled = null;
+                        data.status = 'Cancel Rejected';
+                    }
                 }
                 this.utilityService.showLoader('#frmLeave');
                 this.leaveService.saveAcceptRejectLeave(data).subscribe(res => {
