@@ -6,7 +6,10 @@
           <div class="m-form__group form-group">
             <label for="form_control_1">Remarks</label>
             <span class="required" aria-required="true"> * </span>
-            <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" [(ngModel)]="remark" required></textarea>
+            <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" (ngModelChange)="isRemarkEmpty=false;" [(ngModel)]="remark" required></textarea>
+            <div class="form-control-feedback has-danger" *ngIf="isRemarkEmpty">
+              Remarks cannot be empty
+            </div>
           </div>
         </div>
       </div>
