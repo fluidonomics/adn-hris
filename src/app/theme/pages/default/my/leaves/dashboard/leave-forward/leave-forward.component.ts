@@ -39,7 +39,7 @@ export class LeaveForwardComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
-        
+
         if (this.remark != undefined) {
             if (this.remark.trim().length < 1) {
                 this.isRemarkEmpty = true;
@@ -53,8 +53,14 @@ export class LeaveForwardComponent implements OnInit {
             this.isRemarkEmpty = true;
             return;
         }
+        
+        let text = "";
+        if (this.leave.employmentStatus == 2 || this.leave.employmentStatus == 3) {
+            text = "This employee is under Probation";
+        }
         swal({
             title: 'Are you sure?',
+            text: text,
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

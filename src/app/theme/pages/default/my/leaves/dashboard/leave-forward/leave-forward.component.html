@@ -6,7 +6,8 @@
           <div class="m-form__group form-group">
             <label for="form_control_1">Remarks</label>
             <span class="required" aria-required="true"> * </span>
-            <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" (ngModelChange)="isRemarkEmpty=false;" [(ngModel)]="remark" required></textarea>
+            <textarea name="remark" id="remark" class="form-control m-input m-input--air" rows="3" (ngModelChange)="isRemarkEmpty=false;"
+              [(ngModel)]="remark" required></textarea>
             <div class="form-control-feedback has-danger" *ngIf="isRemarkEmpty">
               Remarks cannot be empty
             </div>
@@ -18,8 +19,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="m-form__actions">
-            <button class="btn btn-success" *ngIf="employee?.roles.indexOf('Supervisor') > -1 && leave.allowActions" type="button"
-              (click)="saveAcceptRejectLeave(true)">Accept</button>
+            <button class="btn btn-success" *ngIf="employee?.roles.indexOf('Supervisor') > -1 && leave.allowActions" type="button" (click)="saveAcceptRejectLeave(true)">Accept</button>
             <button class="btn btn-danger" *ngIf="employee?.roles.indexOf('Supervisor') > -1 && leave.allowActions" type="button" (click)="saveAcceptRejectLeave(false)">Reject</button>
             <button class="btn btn-secondary" type="submit" (click)="navigateToDetails($event)">Detailed View
               <i class="fa fa-caret-right"></i>

@@ -118,7 +118,7 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     saveAcceptRejectLeave(flag: boolean) {
-        
+
         if (this.remarks != undefined) {
             if (this.remarks.trim().length < 1) {
                 this.isRemarkEmpty = true;
@@ -132,8 +132,13 @@ export class DashboardDetailsComponent implements OnInit {
             this.isRemarkEmpty = true;
             return;
         }
+        let text = "";
+        if (this.leave.employmentStatus == 2 || this.leave.employmentStatus == 3) {
+            text = "This employee is under Probation";
+        }
         swal({
             title: 'Are you sure?',
+            text: text,
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
