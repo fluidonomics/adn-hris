@@ -29,8 +29,10 @@ export class TrackLeaveComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.employee = this.authService.currentUserData;
-        this.loadLeaveTransactions();
+        this.authService.validateToken().subscribe(res => {
+            this.employee = this.authService.currentUserData;
+            this.loadLeaveTransactions();
+        });
     }
 
     loadLeaveTransactions() {

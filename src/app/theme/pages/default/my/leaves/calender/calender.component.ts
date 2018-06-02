@@ -29,8 +29,10 @@ export class CalenderComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.currentUser = this.authService.currentUserData;
-        this.getLeaveDetailsByRole();
+        this.authService.validateToken().subscribe(res => {
+            this.currentUser = this.authService.currentUserData;
+            this.getLeaveDetailsByRole();
+        });
     }
 
     getLeaveDetailsByRole() {

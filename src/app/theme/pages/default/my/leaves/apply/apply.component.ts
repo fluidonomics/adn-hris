@@ -49,21 +49,24 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
-        this.InitValues();
-        this.getLeaveTypes();
-        this.getAllSupervisorDetails();
-        this.getAllEmailListOfEmployee();
-        this.getEmployeeProbationDetails();
-        this.fleaveapplication.valueChanges.subscribe(val => {
-            this.areDaysValid = true;
-            this.isBalanceValid = true;
-            this.isAttachmentRequired = false;
+        this._authService.validateToken().subscribe(res => {
+            this.currentUser = this._authService.currentUserData;
+            this.InitValues();
+            this.getLeaveTypes();
+            this.getAllSupervisorDetails();
+            this.getAllEmailListOfEmployee();
+            this.getEmployeeProbationDetails();
+            this.fleaveapplication.valueChanges.subscribe(val => {
+                this.areDaysValid = true;
+                this.isBalanceValid = true;
+                this.isAttachmentRequired = false;
+            });
         });
     }
+
     InitValues() {
         this.leaveapplication.days = 0;
         this.leaveapplication.balance = 0;
-        this.currentUser = this._authService.atCurrentUserData;
         this.getEmployeeLeaveBalance();
         this.fromDateValidation = {
             isValid: true,
