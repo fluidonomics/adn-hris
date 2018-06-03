@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
 
     leaveList: any;
     dashboardTab: string = 'my';
+    isSuperVisor: boolean = false;
+    isHr: boolean = false;
 
     constructor(
         private leaveService: LeaveService,
@@ -39,11 +41,13 @@ export class DashboardComponent implements OnInit {
                 this.getTransactions();
                 this.getLeaveBalance();
                 this.getLeaveDetails('HR');
+                this.isHr = true;
             } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
                 this.getHolidays();
                 this.getTransactions();
                 this.getLeaveBalance();
                 this.getLeaveDetails('Supervisor');
+                this.isSuperVisor = true;
             } else {
                 this.getHolidays();
                 this.getTransactions();

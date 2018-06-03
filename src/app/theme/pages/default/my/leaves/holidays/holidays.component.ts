@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { LeaveService } from '../leave.service';
 import swal from 'sweetalert2';
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 
 const now = new Date();
 
@@ -14,12 +15,14 @@ const now = new Date();
 })
 export class HolidaysComponent implements OnInit {
 
-    public holidayList: any = [];
+    holidayList: any = [];
     addholiday: any = {};
     editholiday: any = {};
     modalRef: BsModalRef;
-
-    public year: any;
+    year: any;
+    isGeneralHolidayCount: number = 0;
+    years: any = [];
+    currentDate: Date = new Date();
 
     key: string = '';
     p2: number;
@@ -28,7 +31,8 @@ export class HolidaysComponent implements OnInit {
 
     constructor(
         private modalService: BsModalService,
-        private leaveService: LeaveService
+        private leaveService: LeaveService,
+        private utilityService: UtilityService
     ) {
 
     }
@@ -36,19 +40,28 @@ export class HolidaysComponent implements OnInit {
     ngOnInit(): void {
         this.year = now.getFullYear();
         this.getHolidays();
+        this.years = [2017, 2018, 2019, 2020]
     }
 
     public getHolidays() {
+        this.utilityService.showLoader('.m-portlet__body');
         this.leaveService.getLeaveHolidays(this.year).subscribe(
             res => {
                 if (res.ok) {
                     let body = res.json();
                     this.holidayList = body || [];
+                    this.isGeneralHolidayCount = this.holidayList.filter(hol => hol.isGeneral == true).length || 0;
                 }
             },
             error => {
                 console.error(error);
+            }, () => {
+                this.utilityService.hideLoader('.m-portlet__body');
             });
+    }
+
+    setYear(year) {
+        this.year = year;
     }
 
     sort(key: string) {
@@ -61,7 +74,10 @@ export class HolidaysComponent implements OnInit {
 
     openEditModal(template: TemplateRef<any>, holiday) {
         this.modalRef = this.modalService.show(template);
-        this.editholiday = holiday;
+        this.editholiday = Object.assign({}, holiday);
+        if (this.editholiday && this.editholiday.date) {
+            this.editholiday.date = new Date(this.editholiday.date);
+        }
     }
 
     public onAddHoliday(formdata) {
@@ -80,15 +96,26 @@ export class HolidaysComponent implements OnInit {
                 occasion: formdata.form.value.occasion
             }
 
-            this.leaveService.saveLeaveHoliday(payload).subscribe(
-                res => {
-                    this.getHolidays();
-                    swal("Add Holiday", "", "success");
-                    this.modalRef.hide();
-                },
-                error => {
-                    console.log(error);
-                });
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.leaveService.saveLeaveHoliday(payload).subscribe(
+                        res => {
+                            this.getHolidays();
+                            swal("Add Holiday", "", "success");
+                            this.modalRef.hide();
+                        },
+                        error => {
+                            console.log(error);
+                        });
+                }
+            });
         }
     }
 
@@ -108,30 +135,51 @@ export class HolidaysComponent implements OnInit {
                 updatedAt: new Date(),
                 occasion: formdata.form.value.occasion
             }
-
-            this.leaveService.updateLeaveHoliday(payload).subscribe(
-                res => {
-                    this.getHolidays();
-                    swal("Edit Holiday", "", "success");
-                    this.modalRef.hide();
-                },
-                error => {
-                    console.log(error);
-                });
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.leaveService.updateLeaveHoliday(payload).subscribe(
+                        res => {
+                            this.getHolidays();
+                            swal("Edit Holiday", "", "success");
+                            this.modalRef.hide();
+                        },
+                        error => {
+                            console.log(error);
+                        });
+                }
+            });
         }
     }
 
     public onDeleteHoliday(holiday: any) {
 
         if (holiday._id) {
-            this.leaveService.removeLeaveHoliday(holiday).subscribe(
-                res => {
-                    this.getHolidays();
-                    swal("Delete Holiday", "", "success");
-                },
-                error => {
-                    console.log(error);
-                });
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.leaveService.removeLeaveHoliday(holiday).subscribe(
+                        res => {
+                            this.getHolidays();
+                            swal("Delete Holiday", "", "success");
+                        },
+                        error => {
+                            console.log(error);
+                        });
+                }
+            });
         }
     }
 
