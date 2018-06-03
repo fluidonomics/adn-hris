@@ -56,45 +56,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   constructor(private leaveService: LeaveService, public authService: AuthService, private utilityService: UtilityService) {
-    // By Month
-    this.empChartData = [];
-    this.leaveService.getLeavesByMonth().subscribe(
-      res => {
-        if (res.ok) {
-          let body = res.json();
-          let months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-          let temp = [];
-          body.forEach(function (value, i) {
-            temp.push({0: months[i], 1: value});
-          });
-          this.empChartData = temp;
-          this.updateEmpChart();
-        }
-      },
-      error => {
-        console.error(error);
-      });
 
-    // By Leave Type
-    this.leaveChartData = [];
-    this.leaveService.getLeavesByLeaveType().subscribe(
-      res => {
-        if (res.ok) {
-          let body = res.json();
-          body.forEach(leave => {
-            this.leaveChartData.push({0: leave.types, 1: leave.leaves.length});
-          });
-          this.updateLeaveChart();
-        }
-      },
-      error => {
-        console.error(error);
-      });
   }
 
   ngOnInit(): void {
-    this.createEmpChart();
-    this.createLeaveChart();
+    this.getEmployeeLeavesByMonth();
+    this.getEmployeeLeavesByType();
   }
 
   ngOnChanges() {
@@ -110,6 +77,45 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
   }
 
+
+  getEmployeeLeavesByMonth() {
+    this.empChartData = [];
+    this.leaveService.getLeavesByMonth().subscribe(
+      res => {
+        if (res.ok) {
+          let body = res.json();
+          let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          let temp = [];
+          body.forEach(function (value, i) {
+            temp.push({ 0: months[i], 1: value });
+          });
+          this.empChartData = temp;
+          this.createEmpChart();
+          this.updateEmpChart();
+        }
+      },
+      error => {
+        console.error(error);
+      });
+  }
+
+  getEmployeeLeavesByType() {
+    this.leaveChartData = [];
+    this.leaveService.getLeavesByLeaveType().subscribe(
+      res => {
+        if (res.ok) {
+          let body = res.json();
+          body.forEach(leave => {
+            this.leaveChartData.push({ 0: leave.types, 1: leave.leaves.length });
+          });
+          this.createLeaveChart();
+          this.updateLeaveChart();
+        }
+      },
+      error => {
+        console.error(error);
+      });
+  }
 
   sort(key: string) {
     this.key = key;
@@ -138,7 +144,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
     this.yScale = d3.scaleLinear().domain(yDomain).range([this.height, 0]);
 
     // bar colors
-    this.colors = d3.scaleLinear().domain([0, this.empChartData.length]).range(<any[]>['red', 'blue']);
+    this.colors = d3.scaleOrdinal().range(["#4C97C3", "#BFD3EB", "#FF9E51", "#FFCC9D", "#4BB768"]);
 
     // x & y axis
     this.xAxis = svg.append('g')
@@ -155,12 +161,14 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
     // update scales & axis
     this.xScale.domain(this.empChartData.map(d => d[0]));
     this.yScale.domain([0, d3.max(this.empChartData, d => d[1])]);
-    this.colors.domain([0, this.empChartData.length]);
+    // this.colors.domain([0, this.empChartData.length]);
     this.xAxis.transition().call(d3.axisBottom(this.xScale));
     this.yAxis.transition().call(d3.axisLeft(this.yScale));
 
     let update = this.chart.selectAll('.bar')
       .data(this.empChartData);
+
+    let tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
     // remove exiting bars
     update.exit().remove();
@@ -211,7 +219,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
     this.yScaleT = d3.scaleLinear().domain(yDomain).range([this.heightT, 0]);
 
     // bar colors
-    this.colorsT = d3.scaleLinear().domain([0, this.leaveChartData.length]).range(<any[]>['red', 'blue']);
+    this.colorsT = d3.scaleOrdinal().range(["#4C97C3", "#BFD3EB", "#FF9E51", "#FFCC9D", "#4BB768"]);
 
     // x & y axis
     this.xAxisT = svg.append('g')

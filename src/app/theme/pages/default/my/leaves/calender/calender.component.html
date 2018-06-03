@@ -48,27 +48,13 @@
                             <div class="col-md-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div style="text-align: center; font-size: 16px; padding-bottom: 10px;">
+                                        <!-- <div style="text-align: center; font-size: 16px; padding-bottom: 10px;">
                                             01 Apr 2018
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <!-- <div class="dropdown" style="margin-bottom: 6px;">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        Category All
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">2016</a>
-                                                        <a class="dropdown-item" href="#">2017</a>
-                                                        <a class="dropdown-item" href="#">2018</a>
-                                                    </div>
-                                                </div> -->
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-default pull-right">Excel Export</button>
                                             </div>
                                             <div class="col-md-12">
@@ -97,7 +83,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body">
-                                                            <tr class="m-datatable__row" *ngFor="let leave of calendardata">
+                                                            <tr class="m-datatable__row" *ngFor="let leave of selectedLeaves">
                                                                 <td class="m-datatable__cell" width="25%">
                                                                     <span>{{leave.empName}}</span>
                                                                 </td>
@@ -115,37 +101,6 @@
                                                             </tr>
                                                         </tfoot>
                                                     </table>
-                                                    <!--<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
-                                                        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                                                            <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                                                                <li>
-                                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"   (click)="p.setCurrent(1)" >
-                                                                        <i class="la la-angle-double-left"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-                                                                        <i class="la la-angle-left"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li *ngFor="let page of p.pages">
-                                                                    <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                                                        {{ page.label }}
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
-                                                                        <i class="la la-angle-right"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-                                                                        <i class="la la-angle-double-right"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </pagination-template>-->
                                                 </div>
                                             </div>
                                         </div>

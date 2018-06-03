@@ -19,6 +19,7 @@ export class CalenderComponent implements OnInit {
     calendardata: any = [];
     currentUser: UserData;
     leaveDetails: any = [];
+    selectedLeaves: any = [];
 
     reverse: boolean = false;
 
