@@ -71,11 +71,14 @@
 								</div>
 							</li> -->
 							<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" data-dropdown-toggle="click" data-dropdown-persistent="true">
-								<!-- <button (click)="btnClick()">sendNotification</button> -->
-								<a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-									<span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
+								<a href="#"(click)="setReadStatus(); isReaded=true" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+									<span class="m-nav__link-badge m-badge m-badge--success">
+									<!-- <span class="m-nav__link-badge m-badge m-badge--success" [hidden]="isReaded" *ngIf="notificationData?.unReadCount!==0"> -->
+										9
+										<!-- {{notificationData?.unReadCount ? notificationData?.unReadCount:''}} -->
+									</span>
 									<span class="m-nav__link-icon">
-										<i class="flaticon-music-2"></i>
+										<i class="flaticon-alert-2"></i>
 									</span>
 								</a>
 								<div class="m-dropdown__wrapper">
@@ -84,6 +87,7 @@
 										<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/custom/misc/notification_bg1.jpg); background-size: cover;">
 											<span class="m-dropdown__header-title">
 												9 New
+										        <!-- {{notificationData.unReadCount? notificationData.unReadCount +' New' :'No New'}} -->
 											</span>
 											<span class="m-dropdown__header-subtitle">
 												View All
@@ -96,13 +100,22 @@
 														<div class="m-scrollable" data-scrollable="true" data-max-height="250" data-mobile-max-height="200">
 															<div class="m-list-timeline m-list-timeline--skin-light">
 																<div class="m-list-timeline__items">
+																	<!-- <div class="m-list-timeline__item"  *ngFor="let notify of notificationData?.notifications ;let i=index">
+																				<span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+																				<span class="m-list-timeline__text">
+																					{{notify?.message}}
+																				</span>
+																				<span class="m-list-timeline__time">
+																					{{getTime(notify?.createdAt)}}
+																				</span>
+																	</div> -->
 																	<div class="m-list-timeline__item">
 																		<span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
 																		<span class="m-list-timeline__text">
 																			New KRA approval.
 																		</span>
 																		<span class="m-list-timeline__time">
-																			Just now
+																		 1 hrs
 																		</span>
 																	</div>
 																	<div class="m-list-timeline__item">
