@@ -81,7 +81,7 @@
 							</td>
 
 						</tr>
-						<tr *ngIf="!leaveData || leaveData.length == 0" style="text-align: center">
+						<tr *ngIf="!leaveData || leaveData.length == 0" class="no-data-block">
 							<th colspan="5">
 								No Data
 							</th>
@@ -145,8 +145,7 @@
 														<span class="required" aria-required="true"> * </span>
 														<ng-select class="m-input m-input--air" name="applyto" [items]="supervisorList" [(ngModel)]="leaveCancel.applyto" #applyto="ngModel"
 														 bindLabel="fullName" bindValue="_id" required></ng-select>
-
-														<div class="form-control-feedback has-danger" *ngIf="!applyto.valid">
+														<div class="form-control-feedback has-danger" *ngIf="fleavecancel.submitted">
 															<span *ngIf="!applyto.valid">This field is required.</span>
 														</div>
 													</div>
@@ -159,7 +158,7 @@
 														<span class="required" aria-required="true"> * </span>
 														<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" [(ngModel)]="leaveCancel.reason" #reason="ngModel"
 														 required></textarea>
-														<div class="form-control-feedback has-danger" *ngIf="!reason.valid ">
+														<div class="form-control-feedback has-danger" *ngIf="fleavecancel.submitted && !reason.valid ">
 															This field is required.
 														</div>
 													</div>

@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
 
     leaveList: any;
     dashboardTab: string = 'my';
+    isSuperVisor: boolean = false;
+    isHr: boolean = false;
 
     constructor(
         private leaveService: LeaveService,
@@ -31,23 +33,27 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.currentUser = this.authService.currentUserData;
+        this.authService.validateToken().subscribe(res => {
+            this.currentUser = this.authService.currentUserData;
 
-        if (this.currentUser.roles.indexOf('HR') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('HR');
-        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('Supervisor');
-        } else {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-        }
+            if (this.currentUser.roles.indexOf('HR') > -1) {
+                this.getHolidays();
+                this.getTransactions();
+                this.getLeaveBalance();
+                this.getLeaveDetails('HR');
+                this.isHr = true;
+            } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+                this.getHolidays();
+                this.getTransactions();
+                this.getLeaveBalance();
+                this.getLeaveDetails('Supervisor');
+                this.isSuperVisor = true;
+            } else {
+                this.getHolidays();
+                this.getTransactions();
+                this.getLeaveBalance();
+            }
+        });
     }
 
     getLeaveDetails(role) {
@@ -84,6 +90,7 @@ export class DashboardComponent implements OnInit {
         this.leaveService.getLeaveHolidays(2018).subscribe(res => {
             if (res.ok) {
                 this.upcomingHolidays = res.json() || [];
+                this.upcomingHolidays = this.upcomingHolidays.filter(hol => hol.date > new Date());
             }
         })
     }

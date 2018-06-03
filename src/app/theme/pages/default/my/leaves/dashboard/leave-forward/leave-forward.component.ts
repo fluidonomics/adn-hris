@@ -31,7 +31,9 @@ export class LeaveForwardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.employee = this.authService.currentUserData;
+        this.authService.validateToken().subscribe(res => {
+            this.employee = this.authService.currentUserData;
+        });
     }
 
     navigateToDetails(event) {
@@ -53,7 +55,7 @@ export class LeaveForwardComponent implements OnInit {
             this.isRemarkEmpty = true;
             return;
         }
-        
+
         let text = "";
         if (this.leave.employmentStatus == 2 || this.leave.employmentStatus == 3) {
             text = "This employee is under Probation";

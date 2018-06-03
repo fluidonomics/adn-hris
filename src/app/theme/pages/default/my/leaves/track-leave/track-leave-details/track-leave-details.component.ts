@@ -36,11 +36,13 @@ export class TrackLeaveDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.employee = this.authService.currentUserData;
         this.route.params.subscribe(param => {
             this.leaveId = param.id;
-            this.loadLeaveDetails();
-            this.getWorkflowHistory();
+            this.authService.validateToken().subscribe(res => {
+                this.employee = this.authService.currentUserData;
+                this.loadLeaveDetails();
+                this.getWorkflowHistory();
+            });
         })
     }
 

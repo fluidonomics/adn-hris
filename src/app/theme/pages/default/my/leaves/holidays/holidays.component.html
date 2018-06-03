@@ -30,15 +30,13 @@
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    2018
+                                    {{year}}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">2016</a>
-                                    <a class="dropdown-item" href="#">2017</a>
-                                    <a class="dropdown-item" href="#">2018</a>
+                                    <a *ngFor="let year of years" class="dropdown-item" href="#" (click)="setYear(year)">{{year}}</a>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-default">Show</button>
+                            <button type="button" class="btn btn-default" (click)="getHolidays()">Show</button>
                         </div>
                     </div>
                 </div>
@@ -49,7 +47,7 @@
                             <div class="col-md-4">
                                 <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.1);padding: 5px;margin-left:  2px;">
                                     <div class="col-md-6">
-                                        0 General Holidays
+                                        {{isGeneralHolidayCount}} General Holidays
                                     </div>
                                 </div>
                             </div>
@@ -202,8 +200,8 @@
                                             <span class="required" aria-required="true"> * </span>
                                         </label>
                                         <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="addholiday.date" bsDatepicker
-                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel"
-                                            required>
+                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="currentDate"
+                                            #date="ngModel" required>
                                         <div class="form-control-feedback has-danger" *ngIf="faddholiday.submitted && !date.valid">
                                             This field is required.
                                         </div>
@@ -265,8 +263,8 @@
                                             <span class="required" aria-required="true"> * </span>
                                         </label>
                                         <input name="date" class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [(ngModel)]="editholiday.date" bsDatepicker
-                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #date="ngModel"
-                                            required>
+                                            [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [minDate]="currentDate"
+                                            #date="ngModel" required>
                                         <div class="form-control-feedback has-danger" *ngIf="feditholiday.submitted && !date.valid">
                                             This field is required.
                                         </div>

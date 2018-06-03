@@ -42,17 +42,20 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.employee = this.authService.currentUserData;
+
         this.route.params.subscribe(param => {
             this.leaveId = param.id;
-            Observable.forkJoin([this.getLeaveDetails(), this.getEmployeeEmails()])
-                .subscribe((response) => {
-                    this.processEmployeeEmails(response[1]);
-                    this.processLeaveDetails(response[0]);
-                    console.log(this.leave);
-                    console.log(this.emailList);
-                });
-            this.getWorkflowHistory();
+            this.authService.validateToken().subscribe(res => {
+                this.employee = this.authService.currentUserData;
+                Observable.forkJoin([this.getLeaveDetails(), this.getEmployeeEmails()])
+                    .subscribe((response) => {
+                        this.processEmployeeEmails(response[1]);
+                        this.processLeaveDetails(response[0]);
+                        console.log(this.leave);
+                        console.log(this.emailList);
+                    });
+                this.getWorkflowHistory();
+            });
         })
     }
 

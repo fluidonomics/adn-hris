@@ -40,10 +40,12 @@ export class CancelComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.employee = this.authService.currentUserData;
-        this.loadEmployeeLeaves();
-        this.getEmployeeSupervisor();
-        this.getEmployeeEmails();
+        this.authService.validateToken().subscribe(res => {
+            this.employee = this.authService.currentUserData;
+            this.loadEmployeeLeaves();
+            this.getEmployeeSupervisor();
+            this.getEmployeeEmails();
+        });
     }
 
     loadEmployeeLeaves() {
@@ -78,20 +80,27 @@ export class CancelComponent implements OnInit {
 
     selectLeave(event, leave) {
         if (leave.checked) {
-
             this.leaveData
                 .filter(lv => lv.checked && lv._id !== leave._id)
                 .forEach(lv => {
                     lv.checked = false;
                 });
             this.selectedLeave = leave;
+            setTimeout(() => {
+                let offset = ($('#fleavecancel') as any)["0"].offsetHeight;
+                if (offset) {
+                    $('html, body').animate({
+                        scrollTop: offset
+                    });
+                }
+            }, 200);
         }
         else {
-
             this.selectedLeave = null;
             this.fleavecancel.resetForm();
         }
     }
+
     finalCancelMessage: string;
     onLeavecancelSubmit(data) {
         debugger;
@@ -123,8 +132,8 @@ export class CancelComponent implements OnInit {
                 leave.status = "Cancel Pending";
                 leave.isCancelled = false;
                 this.finalCancelMessage = "Leave Cancel Sent For Approval";
-            } else if (this.selectedLeave.status == 'Cancel Rejected' ){
-                leave.status ="Cancel Pending";
+            } else if (this.selectedLeave.status == 'Cancel Rejected') {
+                leave.status = "Cancel Pending";
                 leave.isCancelled = false;
                 this.finalCancelMessage = "Leave Cancel Sent For Approval";
             }

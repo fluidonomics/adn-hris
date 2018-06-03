@@ -22,7 +22,11 @@ export class PostLeaveTransactionComponent implements OnInit {
     currentEmpId: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
-
+    employeeBalances: any = [];
+    inProbation: boolean = false;
+    fetchingBalances: boolean = false;
+    currentDate: Date = new Date()
+    
     constructor(
         private leaveService: LeaveService,
         private commonService: CommonService,
@@ -69,6 +73,41 @@ export class PostLeaveTransactionComponent implements OnInit {
             });
     }
 
+    getEmployeeProbationDetails() {
+        this.leaveService.getEmployeeProbationDetails(this.currentEmpId).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                if (data) {
+                    this.inProbation = data.result || false;
+                }
+            }
+        });
+    }
+
+    onChangeEmployee() {
+        this.fetchingBalances = true;
+        this.employeeBalances = [];
+        this.leaveService.getEmployeeLeaveBalance(this.leavetransaction.employee).subscribe(res => {
+            if (res.ok) {
+                this.employeeBalances = res.json() || [];
+            }
+        }, err => {
+            console.log("Unable to fetch balances");
+        }, () => {
+            this.fetchingBalances = false;
+        })
+    }
+
+    onChangeLeaveType() {
+        let empBal = this.employeeBalances.find(bal => {
+            if (bal) {
+                return bal.leaveType == this.leavetransaction.leavetype;
+            }
+        });
+        this.leavetransaction.balance = empBal ? empBal.leaveBalance : 0;
+    }
+
+
     postLeaveTransactionDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
@@ -83,22 +122,37 @@ export class PostLeaveTransactionComponent implements OnInit {
             //_postData.createdBy = data.currentEmpId;
             _postData.updateBy = this.currentEmpId;
 
-            mApp.block('#applyLeavePanel', {
-                overlayColor: '#000000',
-                type: 'loader',
-                state: 'success',
-                // message: 'Please wait...'
+            let text = "";
+            if (this.inProbation) {
+                text = "This employee is under probation";
+            }
+            swal({
+                title: 'Are you sure?',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    mApp.block('#applyLeavePanel', {
+                        overlayColor: '#000000',
+                        type: 'loader',
+                        state: 'success',
+                        // message: 'Please wait...'
+                    });
+                    this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
+                        res => {
+                            mApp.unblock('#applyLeavePanel');
+                            swal("Post Leave Transaction", "", "success");
+                            this.resetForm(form);
+                        },
+                        error => {
+                            this.handleError(this, error);
+                        });
+                }
             });
-            this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
-                res => {
-                    mApp.unblock('#applyLeavePanel');
-                    swal("Post Leave Transaction", "", "success");
-                    this.resetForm(form);
-                },
-                error => {
-                    mApp.unblock('#applyLeavePanel');
-                    console.log(error);
-                });
         }
     }
 
@@ -114,28 +168,20 @@ export class PostLeaveTransactionComponent implements OnInit {
     }
 
     calculateDays(e: any, type: string) {
-        let diff: number;
         if (type === 'fromDate') {
-            diff = this.utilityService.subtractDates(e, this.leavetransaction.toDate);
+            this.leavetransaction.days = this.utilityService.subtractDates(e, this.leavetransaction.toDate);
         }
         else {
-            diff = this.utilityService.subtractDates(this.leavetransaction.fromDate, e);
+            this.leavetransaction.days = this.utilityService.subtractDates(this.leavetransaction.fromDate, e);
         }
-        if (diff < 0) {
-            this.leavetransaction.days = 0;
-            if (type === 'fromDate') {
-                this.leavetransaction.fromDate = this.leavetransaction.fromDate;
-                return;
-            }
-            else {
-                this.leavetransaction.toDate = this.leavetransaction.toDate;
-                return;
-            }
-        }
-        if (!isNaN(diff))
-            this.leavetransaction.days = diff + 1;
-        else
-            this.leavetransaction.days = 0;
+    }
 
+    handleError(that, err) {
+        mApp.unblock('#applyLeavePanel');
+        let msg = "";
+        if (err.error.message) {
+            msg = err.error.message;
+        }
+        swal("An Error Occured", msg, "error");
     }
 }

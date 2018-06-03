@@ -35,11 +35,13 @@ export class GrantLeaveComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.employee = this.authService.currentUserData;
-        this.initValues();
-        this.getLeaveTypes();
-        this.getEmployeeList();
-        this.getDepartments();
+        this.authService.validateToken().subscribe(res => {
+            this.employee = this.authService.currentUserData;
+            this.initValues();
+            this.getLeaveTypes();
+            this.getEmployeeList();
+            this.getDepartments();
+        });
     }
 
     initValues() {

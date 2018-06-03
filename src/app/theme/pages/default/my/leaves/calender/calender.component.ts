@@ -19,6 +19,7 @@ export class CalenderComponent implements OnInit {
     calendardata: any = [];
     currentUser: UserData;
     leaveDetails: any = [];
+    selectedLeaves: any = [];
 
     reverse: boolean = false;
 
@@ -29,8 +30,10 @@ export class CalenderComponent implements OnInit {
 
     }
     ngOnInit() {
-        this.currentUser = this.authService.currentUserData;
-        this.getLeaveDetailsByRole();
+        this.authService.validateToken().subscribe(res => {
+            this.currentUser = this.authService.currentUserData;
+            this.getLeaveDetailsByRole();
+        });
     }
 
     getLeaveDetailsByRole() {
