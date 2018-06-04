@@ -15,7 +15,7 @@ declare var moment;
 
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: "app-my-leaves-apply",
     templateUrl: "./apply.component.html",
     encapsulation: ViewEncapsulation.None,
 })

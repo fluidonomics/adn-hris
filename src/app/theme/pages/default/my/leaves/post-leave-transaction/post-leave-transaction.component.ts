@@ -26,7 +26,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     inProbation: boolean = false;
     fetchingBalances: boolean = false;
     currentDate: Date = new Date()
-    
+
     constructor(
         private leaveService: LeaveService,
         private commonService: CommonService,
@@ -120,7 +120,7 @@ export class PostLeaveTransactionComponent implements OnInit {
             _postData.reason = data.reason;
             _postData.emp_id = data.employee;
             //_postData.createdBy = data.currentEmpId;
-            _postData.updateBy = this.currentEmpId;
+            _postData.updatedBy = this.currentEmpId;
 
             let text = "";
             if (this.inProbation) {
@@ -181,6 +181,8 @@ export class PostLeaveTransactionComponent implements OnInit {
         let msg = "";
         if (err.error.message) {
             msg = err.error.message;
+        } else if (err.body.error.message) {
+            msg = err.body.error.message;
         }
         swal("An Error Occured", msg, "error");
     }
