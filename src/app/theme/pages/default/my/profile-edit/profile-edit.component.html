@@ -185,7 +185,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                         <div class="col-md-10" >
                                                         </div>
                                                 <div class="col-md-2 profile--image-div pull-right">
@@ -197,7 +197,7 @@
                                                     </span>
                                                 </div>
                                                         
-                                                </div>
+                                                </div> -->
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="m-form__group form-group">
@@ -253,7 +253,7 @@
                                                                             +880
                                                                         </span>                                                
                                                                     </div>
-                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyMobileNumber="true" minlength=10 maxlength=10 placeholder="Enter Mobile No" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                    <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyMobileNumber="true" minlength=10 maxlength=10 placeholder="Enter mobile number" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 </div>
                                                             <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
                                                                         <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
@@ -327,7 +327,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <ng-select class="m-input m-input--air" name="maritalStatus" [items]="maritialStatusData" bindLabel="text" bindValue="id"
-                                                                placeholder="Select maritalStatus" [(ngModel)]="personalInfo.maritialStatus"
+                                                                placeholder="Select marital status" [(ngModel)]="personalInfo.maritialStatus"
                                                                 [clearable]="false" #maritalStatus="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !maritalStatus.valid ">
                                                                 This field is required.
@@ -339,7 +339,7 @@
                                                             <label for="nationality">Nationality
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <ng-select class="m-input m-input--air" name="nationality" [items]="nationalityData" bindLabel="text" bindValue="id" placeholder="Select maritalStatus"
+                                                            <ng-select class="m-input m-input--air" name="nationality" [items]="nationalityData" bindLabel="text" bindValue="id" placeholder="Select nationality"
                                                                 [(ngModel)]="personalInfo.nationality" [clearable]="false" #nationality="ngModel"
                                                                 required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !nationality.valid ">
@@ -914,7 +914,7 @@
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" name="levelOfEducation" [items]="levelOfEducationData" bindLabel="educationName"
-                                                                    bindValue="_id" placeholder="Select Level of Education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)"
+                                                                    bindValue="_id" placeholder="Select level of education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)"
                                                                     [(ngModel)]="academic.levelOfEducation_id" [clearable]="false"
                                                                     #levelOfEducation="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
                                                                 <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid">
@@ -928,7 +928,7 @@
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
                                                                 <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="academic.examDegreeTitleData" bindLabel="educationName"
-                                                                    bindValue="_id" placeholder="Select Level of Education" [(ngModel)]="academic.examDegreeTitle_id"
+                                                                    bindValue="_id" placeholder="Select exam degree title" [(ngModel)]="academic.examDegreeTitle_id"
                                                                     [clearable]="false" #examDegreeTitle="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
                                                                 <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
                                                                     This field is required.
@@ -1267,7 +1267,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="epf">Employment Period From
                                                                 </label>
-                                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="epf" [ngModel]="previousEmployment.employmentPeriodFrom"
+                                                                <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="epf" [ngModel]="previousEmployment.employmentPeriodFrom"
                                                                     (ngModelChange)="previousEmployment.employmentPeriodFrom=$event;previousEmployment.employmentPeriodTo=''"
                                                                     #epf="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                     [maxDate]="currentDate" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
@@ -1277,7 +1277,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="ept">Employment Period To
                                                                 </label>
-                                                                <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo"
+                                                                <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="ept" [(ngModel)]="previousEmployment.employmentPeriodTo"
                                                                     #ept="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                     [minDate]="previousEmployment.employmentPeriodFrom" [maxDate]="currentDate"
                                                                     [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
@@ -1426,7 +1426,7 @@
                                                                         </div>
                                                                         <input class="form-control m-input m-input--air" [(ngModel)]="family.contact" #mobileNumber="ngModel" minlength="10" maxlength="10"
                                                                         id="fmobileNumber" name="fmobileNumber" placeholder="Enter mobile number"
-                                                                        type="text" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                        type="text" OnlyMobileNumber="true" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                     </div>
                                                                 
                                                                 <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted">
@@ -1439,7 +1439,7 @@
                                                         <div class="col-md-6 adn-form__group">
                                                             <div class="form-group m-form__group">
                                                                 <label for="fbirthDate">Birth Date</label>
-                                                                <input class="form-control m-input m-input--air" placeholder="Enter Birth of Date" [readonly]="true" name="fbirthDate" [(ngModel)]="family.dateOfBirth"
+                                                                <input class="form-control m-input m-input--air" placeholder="Enter date of birth" [readonly]="true" name="fbirthDate" [(ngModel)]="family.dateOfBirth"
                                                                     #fbirthDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                     [maxDate]="currentDate" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
@@ -1639,7 +1639,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="dateOfJoining">Date of Joining</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="dateOfJoining" [ngModel]="officeInfo.dateOfJoining"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfJoining" [ngModel]="officeInfo.dateOfJoining"
                                                                 (ngModelChange)="officeInfo.dateOfJoining=$event;officeInfo.dateOfConfirmation=''"
                                                                 #dateOfJoining="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
@@ -1648,7 +1648,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="dateOfConfermation">Date of Confirmation</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="dateOfConfermation" [minDate]="officeInfo.dateOfJoining"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfConfermation" [minDate]="officeInfo.dateOfJoining"
                                                                 [(ngModel)]="officeInfo.dateOfConfirmation" #dateOfConfermation="ngModel"
                                                                 bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
@@ -1671,7 +1671,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="effectiveDate">Work Permit Effective Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="effectiveDate" [ngModel]="officeInfo.workPermitEffectiveDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="effectiveDate" [ngModel]="officeInfo.workPermitEffectiveDate"
                                                                 (ngModelChange)="officeInfo.workPermitEffectiveDate=$event;officeInfo.workPermitExpiryDate=''"
                                                                 #doj="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
@@ -1680,7 +1680,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="expiryDate">Work Permit Expiry Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="expiryDate" [(ngModel)]="officeInfo.workPermitExpiryDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="expiryDate" [(ngModel)]="officeInfo.workPermitExpiryDate"
                                                                 [minDate]="officeInfo.workPermitEffectiveDate" #expiryDate="ngModel"
                                                                 bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
@@ -2409,7 +2409,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="effectiveDate">Effective Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="effectiveDate" [(ngModel)]="carDetails.companyEffectiveDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="effectiveDate" [(ngModel)]="carDetails.companyEffectiveDate"
                                                                 #ed="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
@@ -2419,7 +2419,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="expiryDate1">Expiry Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="expiryDate1" [(ngModel)]="carDetails.companyExpiryDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="expiryDate1" [(ngModel)]="carDetails.companyExpiryDate"
                                                                 #companyExpiryDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
@@ -2480,7 +2480,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="privateEffectiveDate">Effective Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="privateEffectiveDate" [(ngModel)]="carDetails.privateEffectiveDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="privateEffectiveDate" [(ngModel)]="carDetails.privateEffectiveDate"
                                                                 #privateEffectiveDate="ngModel" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
@@ -2490,7 +2490,7 @@
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
                                                             <label for="privateEffectiveDate">Expiry Date</label>
-                                                            <input class="form-control m-input m-input--air" placeholder="YYYY-DD-MM" [readonly]="true" name="privateExpiryDate"
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="privateExpiryDate"
                                                                 [(ngModel)]="carDetails.privateExpiryDate" #privateExpiryDate="ngModel"
                                                                 bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                         </div>
