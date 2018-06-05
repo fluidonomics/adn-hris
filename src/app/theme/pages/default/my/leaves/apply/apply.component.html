@@ -123,12 +123,15 @@
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">
-											<div class="m-form__group form-group">
+											<div class="m-form__group form-group attachment">
 												<label for="form_control_1">Attachment</label>
-												<span class="required" aria-required="true"> * </span>
+												<span class="required" aria-required="true" *ngIf="isAttachmentRequired"> * </span>
+												<label class="btn btn-default browse">
+													Browse
+													<input type="file" name="attachment" [(ngModel)]="leaveapplication.attachment" #attachment="ngModel" value="Upload Document"
+													/>
+												</label>
 
-												<input type="file" name="attachment" [(ngModel)]="leaveapplication.attachment" #attachment="ngModel" value="Upload Document"
-												/>
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted">
 													<span *ngIf="isAttachmentRequired">This field is required.</span>
 												</div>

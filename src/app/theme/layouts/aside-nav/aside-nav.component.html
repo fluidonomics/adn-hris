@@ -191,7 +191,7 @@
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
 						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/employee/all" class="m-menu__link">
+							<a routerLink="/hr/employee" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-users">
 									<span></span>
 								</i>
@@ -256,14 +256,14 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__section">
+			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<h4 class="m-menu__section-text">
 					My
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
 			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover">
+			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-gear"></i>
 					<span class="m-menu__link-text">
@@ -318,7 +318,7 @@
 				</div>
 			</li>
 			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover">
+			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
@@ -432,7 +432,7 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a routerLink="/my/profile" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-user"></i>
 					<span class="m-menu__link-title">
@@ -444,7 +444,7 @@
 					</span>
 				</a>
 			</li>
-			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a routerLink="/my/documents" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-file"></i>
 					<span class="m-menu__link-title">

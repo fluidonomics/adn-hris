@@ -205,31 +205,40 @@
                             <div class="tab-pane active show" id="m_widget4_tab1_content">
                                 <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="400" data-scrollable="true" style="height: 400px; overflow: visible; max-height: 400px; position: relative;"><div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;"><div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
                                     <div class="m-list-timeline m-list-timeline--skin-light">
-                                        <div class="m-list-timeline__items">
-                                                <div class="m-list-timeline__item">
+                                        <div class="m-list-timeline__items"> 
+                                        <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span class="m-list-timeline__text">
+                                                    {{doc.documentName}}                                                       
+                                            </span>
+                                            <span class="m-list-timeline__time">
+                                                    <input type="checkbox" [checked]="doc.checked"  (change)="doc.checked = !doc.checked;setDocument();"  [disabled]="doc.externalDocumentUrl!= null ? true :false">
+                                            </span>
+                                         </div>
+                                                <!-- <div class="m-list-timeline__item">
                                                         <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
                                                         <span class="m-list-timeline__text">
                                                                 Checklist - Joining Formalities                                                        </span>
                                                         <span class="m-list-timeline__time">
                                                                 <input type="checkbox">
                                                         </span>
-                                                    </div>
-                                            <div class="m-list-timeline__item">
+                                                </div>
+                                                <div class="m-list-timeline__item">
                                                     <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
                                                     <span class="m-list-timeline__text">
                                                             Employee Induction Program                                                       </span>
                                                     <span class="m-list-timeline__time">
                                                             <input type="checkbox">
                                                     </span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
+                                                </div>
+                                                <div class="m-list-timeline__item">
                                                     <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
                                                     <span class="m-list-timeline__text">
                                                             Employee Joining Report                                                       </span>
                                                     <span class="m-list-timeline__time">
                                                             <input type="checkbox">
                                                     </span>
-                                            </div>
+                                               </div> -->
                                         </div>
                                     </div>
                                 </div></div><div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 231px; max-height: 380px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
@@ -242,8 +251,8 @@
                 
         </div>
         <div class="col-xl-4">
-<!-- 			
-                <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
+		
+                <div class="m-portlet m-portlet--head-overlay m-portlet--full-height m-portlet--rounded-force" id="configurationPortlet">
                     <div class="m-portlet__body">
                         <div class="m-widget28">
                             <div class="m-widget28__pic m-portlet-fit--sides"></div>
@@ -251,7 +260,7 @@
                                 
                                 <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
                                     <li class="m-widget28__nav-item nav-item">
-                                        <a class="nav-link active show" data-toggle="pill" href="#menu11" ng-reflect-href="#menu11">
+                                        <a class="nav-link active show" data-toggle="pill" href="#menu11" (click)="loadRole()">
                                             <span>
                                                 <i class="fa flaticon-settings"></i>
                                             </span>
@@ -261,7 +270,7 @@
                                         </a>
                                     </li>
                                     <li class="m-widget28__nav-item nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#menu21" ng-reflect-href="#menu21">
+                                            <a class="nav-link" data-toggle="pill" href="#menu21" (click)="loadSupervisorTabData()">
                                                 <span>
                                                     <i class="fa flaticon-users"></i>
                                                 </span>
@@ -271,8 +280,8 @@
                                             </a>
                                         </li>
                                         
-                                    <li class="m-widget28__nav-item nav-item">
-                                        <a class="nav-link" data-toggle="pill" href="#menu31" ng-reflect-href="#menu31">
+                                    <!-- <li class="m-widget28__nav-item nav-item">
+                                        <a class="nav-link" data-toggle="pill" href="#menu31" >
                                             <span>
                                                 <i class="fa flaticon-clipboard"></i>
                                             </span>
@@ -280,22 +289,22 @@
                                                 Documents
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                                  
                                 <div class="m-widget28__tab tab-content">
                                     <div class="m-widget28__tab-container tab-pane active show" id="menu11">
                                         <div class="m-widget28__tab-items">
-                                                <div class="m-widget28__tab-item">
-                                                        <span>
+                                                <div class="m-widget28__tab-item" *ngFor="let role of rolesData ;let i=index">
+                                                        <span *ngIf="role.roleName=='Employee'">
                                                             Default Role
                                                         </span>
                                                         <span>
-                                                                ESS
-                                                                <input class="pull-right" type="checkbox" checked="checked" disabled>
-                                                            </span>
+                                                                {{role.roleName}}
+                                                                <input class="pull-right" type="checkbox" [checked]="role.checked"  (change)="role.checked = !role.checked;setRole();"  [disabled]="role.roleName =='Employee'">
+                                                        </span>
                                                     </div>
-                                                    <div class="m-widget28__tab-item">
+                                                    <!--<div class="m-widget28__tab-item">
                                                             <span>
                                                             </span>
                                                             <span>
@@ -303,8 +312,8 @@
                                                                 <input class="pull-right" type="checkbox" checked="checked">
 
                                                             </span>
-                                                        </div>
-                                                        <div class="m-widget28__tab-item">
+                                                    </div>
+                                                     <div class="m-widget28__tab-item">
                                                                 <span>
                                                                 </span>
                                                                 <span>
@@ -312,8 +321,8 @@
                                                                     <input class="pull-right" type="checkbox">
 
                                                                 </span>
-                                                            </div>
-                                                            <div class="m-widget28__tab-item">
+                                                    </div>
+                                                    <div class="m-widget28__tab-item">
                                                                     <span>
                                                                     </span>
                                                                     <span>
@@ -321,7 +330,7 @@
                                                                         <input class="pull-right" type="checkbox">
     
                                                                     </span>
-                                                                </div>
+                                                    </div> -->
                                         </div>
                                     </div>
                                     <div class="m-widget28__tab-container tab-pane fade" id="menu21">
@@ -331,7 +340,7 @@
                                                     Primary Supervisor
                                                 </span>
                                                 <span>
-                                                <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select>
+                                                <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -339,7 +348,7 @@
                                                     Secondary Supervisor
                                                 </span>
                                                 <span>
-                                                        <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select>
+                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
                                                     </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -347,12 +356,12 @@
                                                     Leave Supervisor
                                                 </span>
                                                 <span>
-                                                        <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select>
+                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
                                                     </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="m-widget28__tab-container tab-pane fade" id="menu31">
+                                    <!-- <div class="m-widget28__tab-container tab-pane fade" id="menu31">
                                         <div class="m-widget28__tab-items">
                                             <div class="m-widget28__tab-item">
                                                 <span>
@@ -387,13 +396,13 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div> 
                 
         </div>
         <div class="col-xl-4">

@@ -1,0 +1,21 @@
+app-my-leaves-apply {
+    flex: 1;
+
+    #fleaveapplication {
+        .adn-form__group {
+            .attachment {
+                label {
+                    &.browse {
+                        display: block;
+                        text-align: center;
+                        width: 20%;
+
+                        input {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

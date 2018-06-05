@@ -90,7 +90,7 @@ export class DashboardComponent implements OnInit {
         this.leaveService.getLeaveHolidays(2018).subscribe(res => {
             if (res.ok) {
                 this.upcomingHolidays = res.json() || [];
-                this.upcomingHolidays = this.upcomingHolidays.filter(hol => hol.date > new Date());
+                this.upcomingHolidays = this.upcomingHolidays.filter(hol => new Date(hol.date) > new Date());
             }
         })
     }
