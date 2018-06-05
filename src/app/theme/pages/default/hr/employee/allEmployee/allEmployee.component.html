@@ -1,5 +1,5 @@
-<div class="m-content">
-		<div class="m-portlet m-portlet--mobile">
+<div class="m-content" *ngIf="!param_emp_id">
+	<div class="m-portlet m-portlet--mobile">
 			<div class="m-portlet__body">
 				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
 							<div class="row align-items-center">
@@ -20,35 +20,9 @@
 							</div>
 				</div>
 				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-					<!-- <table class="m-datatable__table">
-						<thead class="m-datatable__head">
-							<tr class="m-datatable__row">
-								<th class="m-datatable__cell"></th>
-								<th (click)="sort(title)" class="m-datatable__cell m-datatable__cell--sort" *ngFor="let title of (employeeData[0] | keys)">
-									<span>
-										{{getColumnName(title)}}
-										<i class="la" *ngIf="key == title" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-									</span>
-								</th>
-							</tr>
-						</thead>
-					    <tbody class="m-datatable__body">
-							<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: 8, currentPage: p2 };let even=even;">
-								<td class="m-datatable__cell m-datatable__cell--sort">
-										<a align="center" routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }">
-											<i class="fa fa-expand"></i>
-									   </a>
-								</td>
-								<td class="m-datatable__cell" *ngFor="let empkey of employee | keys ">
-									<span>{{employee[empkey]}}</span>
-								<td>
-							</tr>
-						</tbody>
-					</table> -->
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
-										
 										<th class="m-datatable__cell" width="5%" ></th>
 										<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%" >
 												<span>
@@ -90,7 +64,7 @@
 									</tr>
 							</thead>
 							<tbody class="m-datatable__body">
-                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 									<td class="m-datatable__cell" width="3%" >
 									
 											<i class="fa" [ngClass]="
@@ -128,13 +102,10 @@
 										<span>{{employee.supervisor}}</span>
 									</td>
 									<td class="m-datatable__cell" width="15%" >
-										<!-- <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }"><i class="fa fa-pencil m--font-success" title="Edit Profile">  </i></a>
-										<i class="fa fa-gear m--font-brand" title="Edit Roles"></i>
-										<i class="fa fa-reply m--font-danger" title="Reset Password"></i> -->
 										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
 											<i class="la la-edit"></i>
 										</a>
-										<a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Roles">
+										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Roles">
 											<i class="la la-gear"></i>
 										</a>
 										<a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
@@ -146,7 +117,7 @@
 									</td>
 							  </tr>
 							  <tr class="m-datatable__row m-datatable__row--even">
-								<td class="m-datatable__cell" *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0">
+								<td class="m-datatable__cell" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0">
 									No record found.
 								</td>
 							  </tr>
@@ -183,7 +154,7 @@
 							</ul>
 						</div>
 					</pagination-template>
-					<div class="pager-display-size" *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length!=0">
+					<div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
 						
 						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
 								<option value=10>10</option>
@@ -193,10 +164,490 @@
 								<option value=100>100</option>
 						</select>
 						 <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeeData | orderBy: key : reverse | filter:search)?.length ? (employeeData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
+						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeesData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse | filter:search)?.length}}</span>
 					</div>
-					</div>  
+				</div>  
 			</div>
-		</div>
+	</div>
+</div>
+
+
+<div class="m-content" *ngIf="param_emp_id">
+    <div class="row">
+            <div class="col-xl-4">
+			
+                    <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force">
+                        <div class="m-portlet__body">
+                            <div class="m-widget27 m-portlet-fit--sides">
+                                <div class="m-widget27__pic" style="text-align: center">
+                                    <img alt="" src="./assets/app/media/img//bg/bg-4.jpg">
+                                    <h3 class="m-widget27__title m--font-light">
+                                        <span style="padding-top: 40px;">
+                                                <img class="m--img-rounded" src="./assets/app/media/img/custom/users/user6.jpg" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                                <h4 class="m--font-light" style="padding-top: 15px;">Owais Rizwi</h4>
+                                                <h6 class="m--font-light">1010004 | Marketing Manager</h6> 
+                                                <h6 class="m--font-light" style="padding-bottom: 15px;">Internationa Business</h6> 
+    
+                                        </span>
+                                    </h3>
+                                    <div class="m-widget27__btn">
+                                        <button class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" type="button">
+                                            View Profile
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="m-widget27__container">
+                                    
+                                    <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
+                                        <li class="m-widget27__nav-item nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href="#m_personal_income_quater_1" ng-reflect-href="#m_personal_income_quater_1">
+                                                Quater 1
+                                            </a>
+                                        </li>
+                                        <li class="m-widget27__nav-item nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2" ng-reflect-href="#m_personal_income_quater_2">
+                                                Quater 2
+                                            </a>
+                                        </li>
+                                        <li class="m-widget27__nav-item nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_3" ng-reflect-href="#m_personal_income_quater_3">
+                                                Quater 3
+                                            </a>
+                                        </li>
+                                        <li class="m-widget27__nav-item nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_4" ng-reflect-href="#m_personal_income_quater_4">
+                                                Quater 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                                                  
+                                    <div class="m-widget27__tab tab-content m-widget27--no-padding">
+                                        <div class="tab-pane active" id="m_personal_income_quater_1">
+                                            <div class="row  align-items-center">
+                                                <div class="col">
+                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_1" style="height: 160px">
+                                                        <div class="m-widget27__stat">
+                                                            37
+                                                        </div>
+                                                    <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g class="ct-series custom"><path d="M169.499,108.314A66.5,66.5,0,0,0,109.328,13.5" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#00c5dc&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.70703125px 133.70703125px" stroke-dashoffset="-133.70703125px" stroke="#00c5dc"><animate attributeName="stroke-dashoffset" id="anim0" dur="1000ms" from="-133.70703125px" to="0px" fill="freeze" stroke="#00c5dc" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M58.089,122.389A66.5,66.5,0,0,0,169.598,108.104" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#ffb822&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.9405975341797px 133.9405975341797px" stroke-dashoffset="-133.9405975341797px" stroke="#ffb822"><animate attributeName="stroke-dashoffset" id="anim1" dur="1000ms" from="-133.9405975341797px" to="0px" fill="freeze" stroke="#ffb822" begin="anim0.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M109.328,13.5A66.5,66.5,0,0,0,58.237,122.567" class="ct-slice-donut" ct:value="36" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#716aca&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="150.6541748046875px 150.6541748046875px" stroke-dashoffset="-150.6541748046875px" stroke="#716aca"><animate attributeName="stroke-dashoffset" id="anim2" dur="1000ms" from="-150.6541748046875px" to="0px" fill="freeze" stroke="#716aca" begin="anim1.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g></svg></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="m-widget27__legends">
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-accent"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                37% Case
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-warning"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                42% Events
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                19% Others
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="m_personal_income_quater_2">
+                                            <div class="row  align-items-center">
+                                                <div class="col">
+                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_2" style="height: 160px">
+                                                        <div class="m-widget27__stat">
+                                                            70
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="m-widget27__legends">
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-focus"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                57% Case
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-success"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                20% Events
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                19% Others
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="m_personal_income_quater_3">
+                                            <div class="row  align-items-center">
+                                                <div class="col">
+                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_3" style="height: 160px">
+                                                        <div class="m-widget27__stat">
+                                                            67
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="m-widget27__legends">
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-info"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                47% Case
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                55% Events
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                27% Others
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="m_personal_income_quater_4">
+                                            <div class="row  align-items-center">
+                                                <div class="col">
+                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_4" style="height: 160px">
+                                                        <div class="m-widget27__stat">
+                                                            77
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="m-widget27__legends">
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-warning"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                37% Case
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-primary"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                65% Events
+                                                            </span>
+                                                        </div>
+                                                        <div class="m-widget27__legend">
+                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
+                                                            <span class="m-widget27__legend-text">
+                                                                33% Others
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+            </div>
+            
+        <div class="col-xl-4">
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    Documents
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="m_widget4_tab1_content">
+                                <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="400" data-scrollable="true" style="height: 400px; overflow: visible; max-height: 400px; position: relative;"><div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;"><div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+                                    <div class="m-list-timeline m-list-timeline--skin-light">
+                                        <div class="m-list-timeline__items"> 
+                                        <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
+                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span class="m-list-timeline__text">
+                                                    {{doc.documentName}}                                                       
+                                            </span>
+                                            <span class="m-list-timeline__time">
+                                                    <input type="checkbox" [checked]="doc.checked"  (change)="doc.checked = !doc.checked;setDocument();"  [disabled]="doc.externalDocumentUrl!= null ? true :false">
+                                            </span>
+                                         </div>
+                                                <!-- <div class="m-list-timeline__item">
+                                                        <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                        <span class="m-list-timeline__text">
+                                                                Checklist - Joining Formalities                                                        </span>
+                                                        <span class="m-list-timeline__time">
+                                                                <input type="checkbox">
+                                                        </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                    <span class="m-list-timeline__text">
+                                                            Employee Induction Program                                                       </span>
+                                                    <span class="m-list-timeline__time">
+                                                            <input type="checkbox">
+                                                    </span>
+                                                </div>
+                                                <div class="m-list-timeline__item">
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                    <span class="m-list-timeline__text">
+                                                            Employee Joining Report                                                       </span>
+                                                    <span class="m-list-timeline__time">
+                                                            <input type="checkbox">
+                                                    </span>
+                                               </div> -->
+                                        </div>
+                                    </div>
+                                </div></div><div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 231px; max-height: 380px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
+                            </div>
+                            <div class="tab-pane" id="m_widget4_tab2_content"></div>
+                            <div class="tab-pane" id="m_widget4_tab3_content"></div>
+                        </div>
+                    </div>
+                </div>
+                
+        </div>
+        <div class="col-xl-4">
+		
+                <div class="m-portlet m-portlet--head-overlay m-portlet--full-height m-portlet--rounded-force" id="configurationPortlet">
+                    <div class="m-portlet__body">
+                        <div class="m-widget28">
+                            <div class="m-widget28__pic m-portlet-fit--sides"></div>
+                            <div class="m-widget28__container">
+                                
+                                <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+                                    <li class="m-widget28__nav-item nav-item">
+                                        <a class="nav-link active show" data-toggle="pill" href="#menu11" (click)="loadRole()">
+                                            <span>
+                                                <i class="fa flaticon-settings"></i>
+                                            </span>
+                                            <span>
+                                                Roles
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-widget28__nav-item nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#menu21" (click)="loadSupervisorTabData()">
+                                                <span>
+                                                    <i class="fa flaticon-users"></i>
+                                                </span>
+                                                <span>
+                                                    Supervisor
+                                                </span>
+                                            </a>
+                                        </li>
+                                        
+                                    <!-- <li class="m-widget28__nav-item nav-item">
+                                        <a class="nav-link" data-toggle="pill" href="#menu31" >
+                                            <span>
+                                                <i class="fa flaticon-clipboard"></i>
+                                            </span>
+                                            <span>
+                                                Documents
+                                            </span>
+                                        </a>
+                                    </li> -->
+                                </ul>
+                                                 
+                                <div class="m-widget28__tab tab-content">
+                                    <div class="m-widget28__tab-container tab-pane active show" id="menu11">
+                                        <div class="m-widget28__tab-items">
+                                                <div class="m-widget28__tab-item" *ngFor="let role of rolesData ;let i=index">
+                                                        <span *ngIf="role.roleName=='Employee'">
+                                                            Default Role
+                                                        </span>
+                                                        <span>
+                                                                {{role.roleName}}
+                                                                <input class="pull-right" type="checkbox" [checked]="role.checked"  (change)="role.checked = !role.checked;setRole();"  [disabled]="role.roleName =='Employee'">
+                                                        </span>
+                                                    </div>
+                                                    <!--<div class="m-widget28__tab-item">
+                                                            <span>
+                                                            </span>
+                                                            <span>
+                                                                Supervisor
+                                                                <input class="pull-right" type="checkbox" checked="checked">
+
+                                                            </span>
+                                                    </div>
+                                                     <div class="m-widget28__tab-item">
+                                                                <span>
+                                                                </span>
+                                                                <span>
+                                                                    Reviewer
+                                                                    <input class="pull-right" type="checkbox">
+
+                                                                </span>
+                                                    </div>
+                                                    <div class="m-widget28__tab-item">
+                                                                    <span>
+                                                                    </span>
+                                                                    <span>
+                                                                        HR SPOC
+                                                                        <input class="pull-right" type="checkbox">
+    
+                                                                    </span>
+                                                    </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="m-widget28__tab-container tab-pane fade" id="menu21">
+                                        <div class="m-widget28__tab-items">
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Primary Supervisor
+                                                </span>
+                                                <span>
+                                                <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Secondary Supervisor
+                                                </span>
+                                                <span>
+                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
+                                                    </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Leave Supervisor
+                                                </span>
+                                                <span>
+                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="m-widget28__tab-container tab-pane fade" id="menu31">
+                                        <div class="m-widget28__tab-items">
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Total Charges
+                                                </span>
+                                                <span>
+                                                    USD 3,450.000
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Project Description
+                                                </span>
+                                                <span>
+                                                    Creating Back-end Components
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    Company Name
+                                                </span>
+                                                <span>
+                                                    SLT Back-end Solutions
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <span>
+                                                    INE Number
+                                                </span>
+                                                <span>
+                                                    D510-7431562548
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+        </div>
+        <div class="col-xl-4">
+			
+                <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
+                    <div class="m-portlet__body">
+                        <div class="m-widget17">
+                            <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
+                                <div class="m-widget17__chart" style="height:340px; padding-left: 30px; padding-right:30px; margin-bottom:20px;  text-align: center">
+                                    <img class="m--img-rounded" src="./assets/app/media/img/custom/users/user6.jpg" style="max-width: 75px; max-height: 75px;">
+                                    <h4 class="m--font-light" style="padding-top: 15px;">Owais Rizwi</h4> 
+                                    <h6 class="m--font-light">Employee ID : 1010004</h6> 
+                                    <h6 class="m--font-light">Marketing Manager</h6> 
+                            </div>
+                            </div>
+                            <div class="m-widget17__stats">
+                                <div class="m-widget17__items m-widget17__items-col1">
+                                    <div class="m-widget17__item">
+                                        <span class="m-widget17__icon">
+                                            <i class="flaticon-truck m--font-brand"></i>
+                                        </span>
+                                        <span class="m-widget17__subtitle">
+                                            Delivered
+                                        </span>
+                                        <span class="m-widget17__desc">
+                                            15 New Paskages
+                                        </span>
+                                    </div>
+                                    <div class="m-widget17__item">
+                                        <span class="m-widget17__icon">
+                                            <i class="flaticon-paper-plane m--font-info"></i>
+                                        </span>
+                                        <span class="m-widget17__subtitle">
+                                            Reporeted
+                                        </span>
+                                        <span class="m-widget17__desc">
+                                            72 Support Cases
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="m-widget17__items m-widget17__items-col2">
+                                    <div class="m-widget17__item">
+                                        <span class="m-widget17__icon">
+                                            <i class="flaticon-pie-chart m--font-success"></i>
+                                        </span>
+                                        <span class="m-widget17__subtitle">
+                                            Ordered
+                                        </span>
+                                        <span class="m-widget17__desc">
+                                            72 New Items
+                                        </span>
+                                    </div>
+                                    <div class="m-widget17__item">
+                                        <span class="m-widget17__icon">
+                                            <i class="flaticon-time m--font-danger"></i>
+                                        </span>
+                                        <span class="m-widget17__subtitle">
+                                            Arrived
+                                        </span>
+                                        <span class="m-widget17__desc">
+                                            34 Upgraded Boxes
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+        </div>
+        
+    </div>
 </div>
