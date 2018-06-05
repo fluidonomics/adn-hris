@@ -61,6 +61,9 @@ export class UtilityService {
             let err = error as any;
             if (err._body != "") {
                 const body = error.json() || '';
+                if (body) {
+                    objError.body = body;
+                }
             }
             objError.error = err;
             objError.status = err.status;
