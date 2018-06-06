@@ -6,6 +6,7 @@ import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { HrService } from '../../hr.service';
+import { environment } from "../../../../../../../environments/environment";
 import swal from 'sweetalert2';
 declare var $;
 
@@ -38,13 +39,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         isSupervisorSendBack: false
     }
 
-
+    imageBase:any;
+    contentBase:any;
+    
     constructor(private _script: ScriptLoaderService,
         private _hrService: HrService,
         private _commonService:CommonService,
         public _authService: AuthService,
         private _route: ActivatedRoute,
-        private utilityService: UtilityService,
+        public utilityService: UtilityService,
     ) {
 
     }
@@ -70,12 +73,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                     }
             });
         });
+        this.imageBase= environment.content_api_base.imgBase;
+        this.contentBase = environment.content_api_base.apiBase;
     }
 
     ngAfterViewInit() {
     }
 
     loadAllEmployee() {
+        this.utilityService.showLoader('#employeeTable');
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
@@ -83,11 +89,16 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                 if (data.length > 0) {
                     data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                     this.employeesData = data || [];
+                    this.utilityService.hideLoader('#employeeTable');
                 }
                 else
+                {
                     this.employeesData = data.json().data || [];
+                    this.utilityService.hideLoader('#employeeTable');
+                }
             },
             error => {
+                this.utilityService.hideLoader('#employeeTable');
             });
     }
 
@@ -112,14 +123,24 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     loadEmployeeData()
     {
+        this.loadEmployee();
         this.loadRole();
         this.loadDocumentData();
-        this.loadEmployee();
+      
     }
 
     loadEmployee()
     {
-
+        this.utilityService.showLoader('#employeePortlet');
+        this._commonService.getEmployee(this.param_emp_id)
+        .subscribe(
+        res => {
+            this.utilityService.hideLoader('#employeePortlet');
+            this.employee = res.json() || {};
+        },
+        error => {
+            this.utilityService.hideLoader('#employeePortlet');
+        });
     }
 
     setRole()
@@ -130,29 +151,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     loadRole()
     {
         this.utilityService.showLoader('#configurationPortlet');
-        this.rolesData=[
-            {
-            _id: null,
-            roleName: "HR",
-            checked: false
-            },
-            {
-            _id: null,
-            roleName: "Reviewer",
-            checked: true
-            },
-            {
-            _id: null,
-            roleName: "Supervisor",
-            checked: true
-            },
-            {
-            _id: null,
-            roleName: "Employee",
-            checked: true
-            }
-            ]
-         this.utilityService.hideLoader('#configurationPortlet');
+        this._commonService.getEmployeeRoles(this.param_emp_id)
+        .subscribe(
+        res => {
+            this.rolesData = res.json().data || [];
+            this.utilityService.hideLoader('#configurationPortlet');
+        },
+        error => {
+            this.utilityService.hideLoader('#configurationPortlet');
+        });
     }
     
     loadSupervisorTabData()
@@ -164,69 +171,42 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     
     loadSuperviorDropdownData()
     {
-      
+       
     }
     
     loadDocumentData()
     {
-       this.documentData= [
-            {
-            _id: null,
-            documentName: "Checklist - Joining Formalities",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "Employee Induction Program",
-            externalDocumentUrl:"/document/employeeInductionProgram",
-            checked: true
-            },
-            {
-            _id: null,
-            documentName: "Employee Joining Report",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "Employee Personal History",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "Information for Shared Services",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "PF Form-1",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "PF Form-2",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "PF Form-3",
-            externalDocumentUrl:null,
-            checked: false
-            },
-            {
-            _id: null,
-            documentName: "Exit Interview Form",
-            externalDocumentUrl:null,
-            checked: false
-            }
-            ]
+        this.utilityService.showLoader('#documentsPortlet');
+        this._commonService.getEmployeeDocument(this.param_emp_id)
+        .subscribe(
+        res => {
+            this.documentData = res.json().data || [];
+            this.utilityService.hideLoader('#documentsPortlet');
+        },
+        error => {
+            this.utilityService.hideLoader('#documentsPortlet');
+        });
     }
 
+    setDocument(index)
+    { 
+        this.utilityService.showLoader('#documentsPortlet');
+        this._commonService.saveEmployeeDocuments(this.documentData[index])
+        .subscribe(
+        res => {
+            let data=res.json();
+            this.documentData[index]._id= (data=='Removed' ? null:data._id);
+            this.utilityService.hideLoader('#documentsPortlet');
+        },
+        error => {
+            this.utilityService.hideLoader('#documentsPortlet');
+        });
+    }
+
+    viewDocument(url)
+    {
+      window.open(this.contentBase+url);
+    }
 
     resetPassword(emp_id:number)
     {
@@ -244,4 +224,24 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         error => {
         });
     }
+
+    getAge(birthdate)
+    {
+        var today = new Date();
+        var birth= new Date(birthdate);
+        var birthday = new Date(birth.getFullYear(),birth.getMonth(),birth.getDate());
+        var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+        var year_age = Math.floor(differenceInMilisecond / 31536000000);
+        var day_age = Math.floor((differenceInMilisecond % 31536000000) / 86400000);
+        var month_age = Math.floor(day_age/30);
+        day_age = day_age % 30;
+        return {
+                "year":year_age,
+                "month":month_age,
+                "days": day_age,
+                "brithday":(today.getMonth() == birthday.getMonth()) && (today.getDate() == birthday.getDate()) ? 'Happy BirthDay':null
+               }
+    }
+   
+   
 }
