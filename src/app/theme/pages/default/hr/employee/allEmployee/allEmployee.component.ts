@@ -205,7 +205,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     viewDocument(url)
     {
-      window.open(this.contentBase+url);
+      window.open(this.contentBase + url);
     }
 
     resetPassword(emp_id:number)

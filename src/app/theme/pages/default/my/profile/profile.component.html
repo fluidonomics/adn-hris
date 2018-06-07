@@ -1766,7 +1766,10 @@
                                             <label for="accountNumber">Account Number
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input class="form-control m-input m-input--air" maxlength="15" [(ngModel)]="bankDetails.accountNumber" #accountNumber="ngModel" id="accountNumber" name="accountNumber"  placeholder="Enter account number" type="text" disabled>
+                                            <input class="form-control m-input m-input--air" maxlength="15" [(ngModel)]="bankDetails.accountNumber" #accountNumber="ngModel" id="accountNumber" name="accountNumber"  placeholder="Enter account number" type="text" disabled required>
+                                            <div class="form-control-feedback has-danger"  *ngIf="!accountNumber.valid" >
+                                               This field is required
+                                            </div>
                                         </div>
                                         </div>
                                         <div class="col-md-6 adn-form__group">

@@ -36,13 +36,13 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         // });
 
 
-        this.socket.on("setReadStatusChanged",(data) => {
-            console.log(data);
-        });
+        // this.socket.on("setReadStatusChanged",(data) => {
+        //     console.log(data);
+        // });
 
-        this.socket.on("pushNotification",(data) => {
-            alert('push notification');
-        });
+        // this.socket.on("pushNotification",(data) => {
+        //     alert('push notification');
+        // });
     }
     ngAfterViewInit() {
         mLayout.initHeader();

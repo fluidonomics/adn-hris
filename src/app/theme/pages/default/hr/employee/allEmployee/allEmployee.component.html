@@ -232,9 +232,9 @@
                                                             <div class="col">
                                                                 <div class="m-widget27__legends">
                                                                         <div class="m-widget27__legend">
-                                                                                <span class="m-widget27__legend-bullet" [ngClass]="{'fa fa-male':employee.personalDetails?.gender=='Male','fa fa-female':employee.personalDetails?.gender=='Female'}"></span>
+                                                                                <span class="m-widget27__legend-bullet fa" [ngClass]="{'fa-male':employee.personalDetails?.gender=='Male','fa-female':employee.personalDetails?.gender=='Female'}"></span>
                                                                                 <span class="m-widget27__legend-text">
-                                                                                    Gender : {{employee.personalDetails?.gender}}
+                                                                                    Gender : {{employee.personalDetails?.gender ? employee.personalDetails?.gender :'Not avaliable' }}
                                                                                 </span>
                                                                             </div>
                                                                             <div class="m-widget27__legend">
@@ -246,7 +246,7 @@
                                                                     <div class="m-widget27__legend">
                                                                         <span class="m-widget27__legend-bullet fa fa-phone"></span>
                                                                         <span class="m-widget27__legend-text">
-                                                                            +880 {{employee.personalDetails?.personalMobileNumber}}
+                                                                             {{employee.personalDetails?.personalMobileNumber ? ('(+880) ' + employee.personalDetails?.personalMobileNumber):'Not avaliable'}}
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -256,20 +256,19 @@
                                                                             <div class="m-widget27__legend">
                                                                                     <span class="m-widget27__legend-bullet fa fa-calendar"></span>
                                                                                     <span class="m-widget27__legend-text">
-                                                                                        DOB: {{employee.personalDetails?.dob | date:"dd-MMM-yyyy" }} ({{employee.personalDetails?.dob !=null ? utilityService.getAge(employee?.personalDetails?.dob) :''}})
-                                                                                        <!-- {{employee.personalDetails?.dob !=null ? (getAge(employee?.personalDetails?.dob)?.year) :''}} -->
+                                                                                        DOB: {{employee.personalDetails?.dob ? (employee.personalDetails?.dob | date:'dd-MMM-yyyy') : 'Not avaliable' }} {{employee.personalDetails?.dob ? ('(' +utilityService.getAge(employee?.personalDetails?.dob) +')') :''}}
                                                                                     </span>
                                                                                 </div>
                                                                         <div class="m-widget27__legend">
                                                                             <span class="m-widget27__legend-bullet fa fa-envelope"></span>
                                                                             <span class="m-widget27__legend-text">
-                                                                              {{employee.officeDetails?.officeEmail}}
+                                                                              {{employee.officeDetails?.officeEmail ? employee.officeDetails?.officeEmail :'Not avaliable'}}
                                                                             </span>
                                                                         </div>
                                                                         <div class="m-widget27__legend">
                                                                             <span class="m-widget27__legend-bullet fa fa-phone"></span>
                                                                             <span class="m-widget27__legend-text">
-                                                                                +880 {{employee.officeDetails?.personalMobileNumber}}
+                                                                                 {{employee.officeDetails?.officeMobile ? ('(+880)' + employee.officeDetails?.officeMobile ) :'Not avaliable'}}
                                                                             </span>
                                                                         </div>
                                                                         

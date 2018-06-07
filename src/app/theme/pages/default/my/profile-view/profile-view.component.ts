@@ -361,7 +361,7 @@ export class ProfileViewComponent implements OnInit {
                 if (isSendBack) {
 
                     swal({
-                        title: 'Send Back!?',
+                        title: 'Send Back',
                         text: "Profile sent back successfully to HR",
                         type: 'success',
                         allowOutsideClick: false,
