@@ -52,7 +52,8 @@
 									<div class="m-form__group form-group">
 										<label for="form_control_1">Remarks</label>
 										<span class="required" aria-required="true"> * </span>
-										<textarea name="remark" id="remarks" class="form-control m-input m-input--air" rows="3" (ngModelChange)="isRemarkEmpty=false;" [(ngModel)]="remarks" required></textarea>
+										<!-- <textarea name="remark" id="remarks" class="form-control m-input m-input--air" rows="3" (ngModelChange)="hideValidation()"
+										 [(ngModel)]="remarks" required></textarea> -->
 										<div class="form-control-feedback has-danger" *ngIf="isRemarkEmpty">
 											Remarks cannot be empty
 										</div>
@@ -210,10 +211,84 @@
 							</div>
 							<div class="m-accordion__item-body collapse" id="m_accordion_7_item_2_body" role="tabpanel" aria-labelledby="m_accordion_7_item_2_head"
 							 data-parent="#m_accordion_7">
-								<div class="m-accordion__item-content">
-									<p class="no-data-block">
-										No Data
-									</p>
+								<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded employeeLeaveTable" *ngIf="employeeLeaveList && employeeLeaveList.length > 0">
+									<table class="m-datatable__table">
+										<thead class="m-datatable__head">
+											<tr class="m-datatable__row">
+												<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+													<span>
+														Name
+														<i class="la" *ngIf="leaveSort == 'Name'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+													<span>
+														Date
+														<i class="la" *ngIf="leaveSort == 'Date'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+													<span>
+														Reason
+														<i class="la" *ngIf="leaveSort == 'Reason'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+											</tr>
+										</thead>
+										<tbody class="m-datatable__body">
+											<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of employeeLeaveList | orderBy: leaveSort : leaveReverse | filter: leaveFilter | paginate: { itemsPerPage: 8, currentPage: leavePageNo };let even=even;let i=index">
+												<td class="m-datatable__cell" width="20%">
+													<span>{{leave.emp_name}}</span>
+												</td>
+												<td class="m-datatable__cell" width="40%">
+													<span>{{leave.fromDate | date:'dd MMM yy'}} - {{leave.toDate | date:'dd MMM yy'}}</span>
+												</td>
+												<td class="m-datatable__cell" width="40%">
+													<span>{{leave.reason}}</span>
+												</td>
+											</tr>
+											<tr class="no-data-block" *ngIf="employeeLeaveList?.length == 0">
+												<th colspan="5">
+													No Data
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									<pagination-template #p="paginationApi" (pageChange)="leavePageNo = $event" class="paginationtemplate">
+										<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+											<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+													 (click)="p.setCurrent(1)">
+														<i class="la la-angle-double-left"></i>
+													</a>
+												</li>
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+													 (click)="p.previous()">
+														<i class="la la-angle-left"></i>
+													</a>
+												</li>
+												<li *ngFor="let page of p.pages">
+													<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+														{{ page.label }}
+													</a>
+												</li>
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+													 (click)="p.next()">
+														<i class="la la-angle-right"></i>
+													</a>
+												</li>
+												<li>
+													<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+													 (click)="p.setCurrent(p.pages.length + 1)">
+														<i class="la la-angle-double-right"></i>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</pagination-template>
 								</div>
 							</div>
 						</div>
