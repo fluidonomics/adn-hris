@@ -11,17 +11,18 @@ declare let $: any;
 @Component({
     selector: "app-header-nav",
     templateUrl: "./header-nav.component.html",
+    styleUrls: ["./header-nav.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
-    imageBase:string;
+    imageBase: string;
     constructor(public authService: AuthService,
         private socket: Socket
     ) {
-        this.imageBase=environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
     }
     ngOnInit() {
-        this.imageBase=environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
         // this.socket.emit("initData","Hello Form init");
         // this.socket.on('insertedNotification', (data) => {
 
@@ -33,7 +34,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         // this.socket.on("sendBack",(data)=>{
         //     alert(data);
         // });
-        
+
 
     }
     ngAfterViewInit() {
@@ -44,9 +45,9 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     // {
     //     let url = "common/sendNotification";
     //     this.authService.get(url).subscribe(data=>{
-            
+
     //     });
-            
+
     // }
 
     // removeScript()
