@@ -26,10 +26,17 @@ export class DashboardDetailsComponent implements OnInit {
     ccTo: any = [];
     leaveBalance: number = 0;
     isRemarkEmpty: boolean = false;
+    employeeLeaveList: any = [];
+
     wfhFilter: string = '';
     wfhSort: string = '';
     wfhReverse: boolean = false;
     p2: number = 1;
+
+    leaveFilter: string = '';
+    leaveSort: string = '';
+    leaveReverse: boolean = false;
+    leavePageNo: number = 1;
 
     constructor(
         private authService: AuthService,
@@ -55,6 +62,7 @@ export class DashboardDetailsComponent implements OnInit {
                         console.log(this.emailList);
                     });
                 this.getWorkflowHistory();
+                this.getEmployeeOnLeaves();
             });
         })
     }
@@ -116,8 +124,25 @@ export class DashboardDetailsComponent implements OnInit {
         this.wfhReverse = !this.wfhReverse;
     }
 
+    getEmployeeOnLeaves() {
+        this.leaveService.getLeaveDetailsByRole('Supervisor', this.employee._id).subscribe(res => {
+            if (res.ok) {
+                let list = res.json() || [];
+                this.employeeLeaveList = list.filter(leave => {
+                    if (leave.status == "Approved") {
+                        return leave;
+                    }
+                })
+            }
+        })
+    }
+
     goBack() {
         this.router.navigate(['my/leaves/dashboard']);
+    }
+
+    hideValidation() {
+        this.isRemarkEmpty = false;
     }
 
     saveAcceptRejectLeave(flag: boolean) {

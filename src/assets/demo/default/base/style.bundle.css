@@ -27176,7 +27176,7 @@ body.m-content--skin-light2 {
           .m-topbar .m-topbar__nav.m-nav > .m-nav__item > .m-nav__link .m-topbar__userpic img {
             display: block;
             vertical-align: middle;
-            max-width: 41px !important;
+            max-width: 35px !important;
             margin: 0 0 0 5px; }
       .m-topbar .m-topbar__nav.m-nav > .m-nav__item.m-topbar__notifications.m-topbar__notifications--img.m-dropdown--arrow .m-dropdown__arrow {
         color: #7e55dd; }

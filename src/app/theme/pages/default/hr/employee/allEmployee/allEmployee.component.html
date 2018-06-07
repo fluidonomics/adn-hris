@@ -19,7 +19,7 @@
 								</div>
 							</div>
 				</div>
-				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" id="employeeTable">
                     <table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
@@ -102,7 +102,7 @@
 										<span>{{employee.supervisor}}</span>
 									</td>
 									<td class="m-datatable__cell" width="15%" >
-										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved'?'personal':'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
 											<i class="la la-edit"></i>
 										</a>
 										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Roles">
@@ -112,7 +112,7 @@
 											<i class="la la-reply"></i>
 										</a>
 										<a href="#" routerLink="/hr/documents-view/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Documents">
-												<i class="la la-file"></i>
+											<i class="la la-file"></i>
 										</a>
 									</td>
 							  </tr>
@@ -175,197 +175,222 @@
 
 <div class="m-content" *ngIf="param_emp_id">
     <div class="row">
-            <div class="col-xl-4">
-			
-                    <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force">
+        <div class="col-xl-4" >
+                    <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force" id="employeePortlet">
                         <div class="m-portlet__body">
                             <div class="m-widget27 m-portlet-fit--sides">
                                 <div class="m-widget27__pic" style="text-align: center">
                                     <img alt="" src="./assets/app/media/img//bg/bg-4.jpg">
                                     <h3 class="m-widget27__title m--font-light">
                                         <span style="padding-top: 40px;">
-                                                <img class="m--img-rounded" src="./assets/app/media/img/custom/users/user6.jpg" style="max-width: 80px; max-height: 80px; margin-top: 15px">
-                                                <h4 class="m--font-light" style="padding-top: 15px;">Owais Rizwi</h4>
-                                                <h6 class="m--font-light">1010004 | Marketing Manager</h6> 
-                                                <h6 class="m--font-light" style="padding-bottom: 15px;">Internationa Business</h6> 
-    
+                                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                                <ng-template #noImage>
+                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                                </ng-template>
+                                                <h4 class="m--font-light" style="padding-top: 15px;">{{employee.fullName}}</h4>
+                                                <h6 class="m--font-light">{{employee.userName}} | {{employee?.designationDetails?.designationName}}</h6> 
+                                                <!-- <h6 class="m--font-light" style="padding-bottom: 15px;">Internationa Business</h6>  -->
+                                             
                                         </span>
                                     </h3>
                                     <div class="m-widget27__btn">
-                                        <button class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" type="button">
+                                        <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee?.profileProcessDetails?.supervisorStatus=='Approved'?'personal':'office' }" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" title="View Profile">
                                             View Profile
-                                        </button>
+                                        </a>
+
+                                       
                                     </div>
                                 </div>
                                 <div class="m-widget27__container">
                                     
-                                    <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
-                                        <li class="m-widget27__nav-item nav-item">
-                                            <a class="nav-link active" data-toggle="pill" href="#m_personal_income_quater_1" ng-reflect-href="#m_personal_income_quater_1">
-                                                Quater 1
-                                            </a>
-                                        </li>
-                                        <li class="m-widget27__nav-item nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2" ng-reflect-href="#m_personal_income_quater_2">
-                                                Quater 2
-                                            </a>
-                                        </li>
-                                        <li class="m-widget27__nav-item nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_3" ng-reflect-href="#m_personal_income_quater_3">
-                                                Quater 3
-                                            </a>
-                                        </li>
-                                        <li class="m-widget27__nav-item nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_4" ng-reflect-href="#m_personal_income_quater_4">
-                                                Quater 4
-                                            </a>
-                                        </li>
-                                    </ul>
-                                                                  
-                                    <div class="m-widget27__tab tab-content m-widget27--no-padding">
-                                        <div class="tab-pane active" id="m_personal_income_quater_1">
-                                            <div class="row  align-items-center">
-                                                <div class="col">
-                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_1" style="height: 160px">
-                                                        <div class="m-widget27__stat">
-                                                            37
+                                        <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
+                                            
+                                            <li class="m-widget27__nav-item nav-item">
+                                                <a class="nav-link active" data-toggle="pill" href="#m_personal_income_quater_1" >
+                                                    Info
+                                                </a>
+                                            </li>
+                                            <li class="m-widget27__nav-item nav-item">
+                                                    <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2" >
+                                                        Profile
+                                                    </a>
+                                            </li>
+                                            <li class="m-widget27__nav-item nav-item">
+                                                <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_3">
+                                                    Office
+                                                </a>
+                                            </li>
+                                            <!-- <li class="m-widget27__nav-item nav-item">
+                                                <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_4" >
+                                                    KRA
+                                                </a>
+                                            </li> -->
+                                        </ul>
+                                        <div class="m-widget27__tab tab-content m-widget27--no-padding">
+                                            <div class="tab-pane active" id="m_personal_income_quater_1">
+                                                        <div class="row  align-items-center">
+                                                            <div class="col">
+                                                                <div class="m-widget27__legends">
+                                                                        <div class="m-widget27__legend">
+                                                                                <span class="m-widget27__legend-bullet" [ngClass]="{'fa fa-male':employee.personalDetails?.gender=='Male','fa fa-female':employee.personalDetails?.gender=='Female'}"></span>
+                                                                                <span class="m-widget27__legend-text">
+                                                                                    Gender : {{employee.personalDetails?.gender}}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="m-widget27__legend">
+                                                                                    <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                                                    <span class="m-widget27__legend-text">
+                                                                                       {{employee.personalDetails?.personalEmail}}
+                                                                                    </span>
+                                                                        </div>
+                                                                    <div class="m-widget27__legend">
+                                                                        <span class="m-widget27__legend-bullet fa fa-phone"></span>
+                                                                        <span class="m-widget27__legend-text">
+                                                                            +880 {{employee.personalDetails?.personalMobileNumber}}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                    <div class="m-widget27__legends">
+                                                                            <div class="m-widget27__legend">
+                                                                                    <span class="m-widget27__legend-bullet fa fa-calendar"></span>
+                                                                                    <span class="m-widget27__legend-text">
+                                                                                        DOB: {{employee.personalDetails?.dob | date:"dd-MMM-yyyy" }} ({{employee.personalDetails?.dob !=null ? utilityService.getAge(employee?.personalDetails?.dob) :''}})
+                                                                                        <!-- {{employee.personalDetails?.dob !=null ? (getAge(employee?.personalDetails?.dob)?.year) :''}} -->
+                                                                                    </span>
+                                                                                </div>
+                                                                        <div class="m-widget27__legend">
+                                                                            <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                                            <span class="m-widget27__legend-text">
+                                                                              {{employee.officeDetails?.officeEmail}}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="m-widget27__legend">
+                                                                            <span class="m-widget27__legend-bullet fa fa-phone"></span>
+                                                                            <span class="m-widget27__legend-text">
+                                                                                +880 {{employee.officeDetails?.personalMobileNumber}}
+                                                                            </span>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                            </div>
                                                         </div>
-                                                    <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g class="ct-series custom"><path d="M169.499,108.314A66.5,66.5,0,0,0,109.328,13.5" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#00c5dc&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.70703125px 133.70703125px" stroke-dashoffset="-133.70703125px" stroke="#00c5dc"><animate attributeName="stroke-dashoffset" id="anim0" dur="1000ms" from="-133.70703125px" to="0px" fill="freeze" stroke="#00c5dc" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M58.089,122.389A66.5,66.5,0,0,0,169.598,108.104" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#ffb822&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.9405975341797px 133.9405975341797px" stroke-dashoffset="-133.9405975341797px" stroke="#ffb822"><animate attributeName="stroke-dashoffset" id="anim1" dur="1000ms" from="-133.9405975341797px" to="0px" fill="freeze" stroke="#ffb822" begin="anim0.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M109.328,13.5A66.5,66.5,0,0,0,58.237,122.567" class="ct-slice-donut" ct:value="36" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#716aca&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="150.6541748046875px 150.6541748046875px" stroke-dashoffset="-150.6541748046875px" stroke="#716aca"><animate attributeName="stroke-dashoffset" id="anim2" dur="1000ms" from="-150.6541748046875px" to="0px" fill="freeze" stroke="#716aca" begin="anim1.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g></svg></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="m-widget27__legends">
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-accent"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                37% Case
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-warning"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                42% Events
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                19% Others
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="m_personal_income_quater_2">
-                                            <div class="row  align-items-center">
-                                                <div class="col">
-                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_2" style="height: 160px">
-                                                        <div class="m-widget27__stat">
-                                                            70
+                                            <div class="tab-pane fade" id="m_personal_income_quater_2">
+                                                    <div class="row  align-items-center">
+                                                        <div class="col">
+                                                            <div class="m-widget27__chart" id="m_chart_personal_income_quater_1" style="height: 160px">
+                                                                <div class="m-widget27__stat">
+                                                                    37
+                                                                </div>
+                                                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g class="ct-series custom"><path d="M169.499,108.314A66.5,66.5,0,0,0,109.328,13.5" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#00c5dc&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.70703125px 133.70703125px" stroke-dashoffset="-133.70703125px" stroke="#00c5dc"><animate attributeName="stroke-dashoffset" id="anim0" dur="1000ms" from="-133.70703125px" to="0px" fill="freeze" stroke="#00c5dc" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M58.089,122.389A66.5,66.5,0,0,0,169.598,108.104" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#ffb822&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.9405975341797px 133.9405975341797px" stroke-dashoffset="-133.9405975341797px" stroke="#ffb822"><animate attributeName="stroke-dashoffset" id="anim1" dur="1000ms" from="-133.9405975341797px" to="0px" fill="freeze" stroke="#ffb822" begin="anim0.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M109.328,13.5A66.5,66.5,0,0,0,58.237,122.567" class="ct-slice-donut" ct:value="36" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#716aca&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="150.6541748046875px 150.6541748046875px" stroke-dashoffset="-150.6541748046875px" stroke="#716aca"><animate attributeName="stroke-dashoffset" id="anim2" dur="1000ms" from="-150.6541748046875px" to="0px" fill="freeze" stroke="#716aca" begin="anim1.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g></svg></div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="m-widget27__legends">
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-accent"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        37% Case
+                                                                    </span>
+                                                                </div>
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-warning"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        42% Events
+                                                                    </span>
+                                                                </div>
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        19% Others
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="m-widget27__legends">
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-focus"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                57% Case
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-success"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                20% Events
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                19% Others
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="m_personal_income_quater_3">
-                                            <div class="row  align-items-center">
-                                                <div class="col">
-                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_3" style="height: 160px">
-                                                        <div class="m-widget27__stat">
-                                                            67
-                                                        </div>
+                                            <div class="tab-pane fade" id="m_personal_income_quater_3">
+                                                    <div class="row  align-items-center">
+                                                            <div class="col">
+                                                                <div class="m-widget27__legends">
+                                                                        <!-- <div class="m-widget27__legend">
+                                                                                <span class="m-widget27__legend-bullet m--bg-info"></span>
+                                                                                <span class="m-widget27__legend-text">
+                                                                                    <strong>Department - </strong> International Business
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="m-widget27__legend">
+                                                                                    <span class="m-widget27__legend-bullet m--bg-info"></span>
+                                                                                    <span class="m-widget27__legend-text">
+                                                                                        <strong>Grade - </strong> C
+                                                                                    </span>
+                                                                            </div> -->
+        
+                                                                        <!-- <div class="m-widget27__legend">
+                                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
+                                                                            <span class="m-widget27__legend-text">
+                                                                                <strong>Reviewer - </strong> Gangadhar
+                                                                            </span>
+                                                                        </div> -->
+                                                                        <div class="m-widget27__legend">
+                                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                                            <span class="m-widget27__legend-text">
+                                                                                <strong>Primary Supervisor - </strong> {{employee?.supervisorDetails?.fullName}}
+                                                                            </span>
+                                                                        </div>
+                                                                        <!-- <div class="m-widget27__legend">
+                                                                                <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                                                <span class="m-widget27__legend-text">
+                                                                                    <strong>Secondary Supervisor - </strong> Shaktimaan
+                                                                                </span>
+                                                                            </div> -->
+                                                                    </div>
+                                                            </div>
+                                                            
                                                     </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="m-widget27__legends">
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-info"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                47% Case
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                55% Events
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                27% Others
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="m_personal_income_quater_4">
-                                            <div class="row  align-items-center">
-                                                <div class="col">
-                                                    <div class="m-widget27__chart" id="m_chart_personal_income_quater_4" style="height: 160px">
-                                                        <div class="m-widget27__stat">
-                                                            77
+                                            <!-- <div class="tab-pane fade" id="m_personal_income_quater_4">
+                                                    <div class="row  align-items-center">
+                                                        <div class="col">
+                                                            <div class="m-widget27__chart" id="m_chart_personal_income_quater_4" style="height: 160px">
+                                                                <div class="m-widget27__stat">
+                                                                    77
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="m-widget27__legends">
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-warning"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        37% Case
+                                                                    </span>
+                                                                </div>
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-primary"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        65% Events
+                                                                    </span>
+                                                                </div>
+                                                                <div class="m-widget27__legend">
+                                                                    <span class="m-widget27__legend-bullet m--bg-danger"></span>
+                                                                    <span class="m-widget27__legend-text">
+                                                                        33% Others
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="m-widget27__legends">
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-warning"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                37% Case
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-primary"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                65% Events
-                                                            </span>
-                                                        </div>
-                                                        <div class="m-widget27__legend">
-                                                            <span class="m-widget27__legend-bullet m--bg-danger"></span>
-                                                            <span class="m-widget27__legend-text">
-                                                                33% Others
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
-                                    
-                                </div>
                             </div>
                         </div>
                     </div>
-                    
-            </div>
-            
+        </div>
         <div class="col-xl-4">
-                <div class="m-portlet">
+                <div class="m-portlet m-portlet--full-height " id="documentsPortlet">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
@@ -382,38 +407,17 @@
                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                         <div class="m-list-timeline__items"> 
                                         <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
-                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                            <span class="m-list-timeline__badge " [ngClass]="{'m-list-timeline__badge--success':doc.externalDocumentUrl,'m-list-timeline__badge--danger':!doc.externalDocumentUrl}" ></span>
                                             <span class="m-list-timeline__text">
                                                     {{doc.documentName}}                                                       
                                             </span>
                                             <span class="m-list-timeline__time">
-                                                    <input type="checkbox" [checked]="doc.checked"  (change)="doc.checked = !doc.checked;setDocument();"  [disabled]="doc.externalDocumentUrl!= null ? true :false">
-                                            </span>
+                                                    <i *ngIf="doc.externalDocumentUrl" (click)="viewDocument(doc.externalDocumentUrl)" class="fa fa-eye"></i>
+                                                    <input type="checkbox" [checked]="doc.checked"  (change)="doc.checked = !doc.checked;setDocument(i);"  disabled="{{doc.externalDocumentUrl}}">
+                                            </span> 
+                                            <!-- <span class="m-list-timeline__time">
+                                            </span> -->
                                          </div>
-                                                <!-- <div class="m-list-timeline__item">
-                                                        <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                        <span class="m-list-timeline__text">
-                                                                Checklist - Joining Formalities                                                        </span>
-                                                        <span class="m-list-timeline__time">
-                                                                <input type="checkbox">
-                                                        </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                    <span class="m-list-timeline__text">
-                                                            Employee Induction Program                                                       </span>
-                                                    <span class="m-list-timeline__time">
-                                                            <input type="checkbox">
-                                                    </span>
-                                                </div>
-                                                <div class="m-list-timeline__item">
-                                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                    <span class="m-list-timeline__text">
-                                                            Employee Joining Report                                                       </span>
-                                                    <span class="m-list-timeline__time">
-                                                            <input type="checkbox">
-                                                    </span>
-                                               </div> -->
                                         </div>
                                     </div>
                                 </div></div><div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 231px; max-height: 380px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
@@ -423,11 +427,9 @@
                         </div>
                     </div>
                 </div>
-                
         </div>
         <div class="col-xl-4">
-		
-                <div class="m-portlet m-portlet--head-overlay m-portlet--full-height m-portlet--rounded-force" id="configurationPortlet">
+            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height m-portlet--rounded-force" id="configurationPortlet">
                     <div class="m-portlet__body">
                         <div class="m-widget28">
                             <div class="m-widget28__pic m-portlet-fit--sides"></div>
@@ -577,17 +579,19 @@
                             </div>
                         </div>
                     </div>
-                </div> 
-                
+            </div> 
         </div>
-        <div class="col-xl-4">
+        <!-- <div class="col-xl-4">
 			
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
                     <div class="m-portlet__body">
                         <div class="m-widget17">
                             <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
                                 <div class="m-widget17__chart" style="height:340px; padding-left: 30px; padding-right:30px; margin-bottom:20px;  text-align: center">
-                                    <img class="m--img-rounded" src="./assets/app/media/img/custom/users/user6.jpg" style="max-width: 75px; max-height: 75px;">
+                                    <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                        <ng-template #noImage>
+                                        <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                    </ng-template>
                                     <h4 class="m--font-light" style="padding-top: 15px;">Owais Rizwi</h4> 
                                     <h6 class="m--font-light">Employee ID : 1010004</h6> 
                                     <h6 class="m--font-light">Marketing Manager</h6> 
@@ -647,7 +651,6 @@
                     </div>
                 </div>
                 
-        </div>
-        
+        </div> -->
     </div>
 </div>

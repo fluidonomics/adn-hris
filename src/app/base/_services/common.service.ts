@@ -31,6 +31,16 @@ export class CommonService {
         private http: Http) {
     }
 
+    getEmployee(emp_id?:number)
+    {
+        let url = "user/getALLEmployee";
+        if (emp_id) {
+            url = "common/getEmployee?emp_id=" + emp_id;
+        }
+      
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getHrSpoce(company_id?: number, emp_id?: number): Observable<Response> {
         let url = "common/getHr";
         if (company_id && emp_id) {
@@ -305,17 +315,37 @@ export class CommonService {
         // return this.http.get(url).map((response: Response) => response.json());
     }
 
+    getEmployeeRoles(emp_id)
+    {
+        let url = "common/getEmployeeRoles?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeeDocument(emp_id)
+    {
+        let url = "common/getEmployeeDocument?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getEmployeeExternalDocument(emp_id: number): Observable<Response> {
         let url = "externalDocument/getEmployeeExternalDocumentInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveEmployeeDocuments(data:any)
+    {
+      let url = "externalDocument/addEmployeeExternalDocumentInfo";
+      if(data._id)
+      {
+        url = "externalDocument/deleteEmployeeExternalDocumentInfo";
+      }
+      return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
     }
 
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
         return this.authService.post(url,{emp_id:emp_id}).map(this.extractData).catch(this.handleError);
     }
-
-    
 
     private extractData(res: Response) {
         return res || {};

@@ -36,6 +36,27 @@ export class UtilityService {
             return 0;
     }
 
+    getAge(birthdate)
+    {
+        var today = new Date();
+        var birth= new Date(birthdate);
+        var birthday = new Date(birth.getFullYear(),birth.getMonth(),birth.getDate());
+        var differenceInMilisecond = today.valueOf() - birthday.valueOf();
+        var year_age = Math.floor(differenceInMilisecond / 31536000000);
+        var day_age = Math.floor((differenceInMilisecond % 31536000000) / 86400000);
+        var month_age = Math.floor(day_age/30);
+        day_age = day_age % 30;
+        return year_age;
+        // return {
+        //         "year":year_age,
+        //         "month":month_age,
+        //         "days": day_age,
+        //         "brithday":(today.getMonth() == birthday.getMonth()) && (today.getDate() == birthday.getDate()) ? 'Happy BirthDay':null
+        //        }
+    }
+
+    
+
     showLoader(element) {
         mApp.block(element, {
             overlayColor: '#000000',
