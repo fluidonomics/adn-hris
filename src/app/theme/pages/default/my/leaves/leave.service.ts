@@ -23,7 +23,7 @@ export class LeaveService {
     }
 
     getEmployeeEmailDetails() {
-        let url = "leave/getEmployeEmailDetails";
+        let url = "common/getEmployeEmailDetails";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
