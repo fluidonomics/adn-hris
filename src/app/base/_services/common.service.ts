@@ -342,6 +342,16 @@ export class CommonService {
       return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
     }
 
+    saveEmployeeRoles(data:any)
+    {
+      let url = "common/addEmployeeRole";
+      if(data._id)
+      {
+        url = "common/deleteEmployeeRole";
+      }
+      return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    }
+
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
         return this.authService.post(url,{emp_id:emp_id}).map(this.extractData).catch(this.handleError);

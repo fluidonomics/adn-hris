@@ -31,6 +31,10 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     rolesData:any[];
     documentData:any[];
 
+    supervisorData:any[];
+
+    supervisor:any={}
+
     profileProcess = {
         isEmployeeSubmitted: false,
         isHrSubmitted: false,
@@ -41,7 +45,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     imageBase:any;
     contentBase:any;
-    
+
     constructor(private _script: ScriptLoaderService,
         private _hrService: HrService,
         private _commonService:CommonService,
@@ -143,9 +147,25 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         });
     }
 
-    setRole()
+    setRole(index)
     {
-       this.utilityService.showLoader('#configurationPortlet');
+        this.utilityService.showLoader('#configurationPortlet');
+        this._commonService.saveEmployeeRoles(this.rolesData[index])
+        .subscribe(
+        res => {
+            if(res.json().error)
+            {
+                swal("Error!", res.json().error, "error");
+                this.rolesData[index].checked=!this.rolesData[index].checked;
+            }
+            else{
+                this.rolesData[index]._id= res.json().data.data._id;  
+            }
+            this.utilityService.hideLoader('#configurationPortlet');
+        },
+        error => {
+            this.utilityService.hideLoader('#configurationPortlet');
+        });
     }
     
     loadRole()
@@ -171,7 +191,17 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     
     loadSuperviorDropdownData()
     {
-       
+        this._commonService.getSupervisor(this.employee.grade_id)
+        .subscribe(
+        res => {
+            if (res.ok) {
+                console.log()
+                this.supervisor.primarySupervisorEmp_id=this.employee.supervisorDetails._id;
+                this.supervisorData = res.json()
+            }
+        },
+        error => {
+        });
     }
     
     loadDocumentData()

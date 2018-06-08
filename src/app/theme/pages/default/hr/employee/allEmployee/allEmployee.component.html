@@ -104,16 +104,16 @@
 									<td class="m-datatable__cell" width="15%" >
 										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved'?'personal':'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
 											<i class="la la-edit"></i>
-										</a>
-										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit Roles">
+                                        </a>
+                                        <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
+                                                <i class="la la-reply"></i>
+                                            </a>
+										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
 											<i class="la la-gear"></i>
 										</a>
-										<a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
-											<i class="la la-reply"></i>
-										</a>
-										<a href="#" routerLink="/hr/documents-view/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Documents">
+										<!-- <a href="#" routerLink="/hr/documents-view/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Documents">
 											<i class="la la-file"></i>
-										</a>
+										</a> -->
 									</td>
 							  </tr>
 							  <tr class="m-datatable__row m-datatable__row--even">
@@ -477,36 +477,9 @@
                                                         </span>
                                                         <span>
                                                                 {{role.roleName}}
-                                                                <input class="pull-right" type="checkbox" [checked]="role.checked"  (change)="role.checked = !role.checked;setRole();"  [disabled]="role.roleName =='Employee'">
+                                                                <input class="pull-right" type="checkbox" [checked]="role.checked"  (change)="role.checked = !role.checked;setRole(i);"  [disabled]="role.roleName =='Employee'">
                                                         </span>
                                                     </div>
-                                                    <!--<div class="m-widget28__tab-item">
-                                                            <span>
-                                                            </span>
-                                                            <span>
-                                                                Supervisor
-                                                                <input class="pull-right" type="checkbox" checked="checked">
-
-                                                            </span>
-                                                    </div>
-                                                     <div class="m-widget28__tab-item">
-                                                                <span>
-                                                                </span>
-                                                                <span>
-                                                                    Reviewer
-                                                                    <input class="pull-right" type="checkbox">
-
-                                                                </span>
-                                                    </div>
-                                                    <div class="m-widget28__tab-item">
-                                                                    <span>
-                                                                    </span>
-                                                                    <span>
-                                                                        HR SPOC
-                                                                        <input class="pull-right" type="checkbox">
-    
-                                                                    </span>
-                                                    </div> -->
                                         </div>
                                     </div>
                                     <div class="m-widget28__tab-container tab-pane fade" id="menu21">
@@ -516,7 +489,14 @@
                                                     Primary Supervisor
                                                 </span>
                                                 <span>
-                                                <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
+                                                    <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.primarySupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select supervisor"  [clearable]="false" required>
+                                                                <ng-template ng-label-tmp let-item="item" let-index="index">
+                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                </ng-template>
+                                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                </ng-template>
+                                                    </ng-select>
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -524,16 +504,33 @@
                                                     Secondary Supervisor
                                                 </span>
                                                 <span>
-                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
-                                                    </span>
+                                                        <ng-select class="m-input m-input--air" name="secondarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.secondarySupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select secondary supervisor"  [clearable]="false" required>
+                                                            <ng-template ng-label-tmp let-item="item" let-index="index">
+                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                </ng-template>
+                                                                <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                </ng-template>
+                                                            </ng-select>
+                                                </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
                                                 <span>
                                                     Leave Supervisor
                                                 </span>
                                                 <span>
-                                                        <!-- <ng-select class="m-input m-input--air" name="primarySupervisor" [items]="primarySupervisorData" bindLabel="text" bindValue="id" placeholder="Select Primary Supervisor" [(ngModel)]="supervisorInfo.primarySupervisor" [clearable]="false" #primarySupervisor="ngModel" required></ng-select> -->
-                                                    </span>
+                                                        <ng-select class="m-input m-input--air" name="leaveSupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.leaveSupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select leave supervisor" dropdownPosition="top"  [clearable]="false" required>
+                                                                <ng-template ng-label-tmp let-item="item" let-index="index">
+                                                                        <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                    </ng-template>
+                                                                    <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+                                                                        <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                    </ng-template>
+                                                        </ng-select>
+                                                </span>
+                                            </div>
+                                            <div class="m-widget28__tab-item">
+                                                <button type="button" class="btn btn-success">Save</button>
                                             </div>
                                         </div>
                                     </div>
