@@ -315,6 +315,12 @@ export class CommonService {
         // return this.http.get(url).map((response: Response) => response.json());
     }
 
+    getEmployeeSupervisor(emp_id)
+    {
+        let url = "common/getEmployeeSupervisor?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getEmployeeRoles(emp_id)
     {
         let url = "common/getEmployeeRoles?emp_id=" + emp_id;
@@ -350,6 +356,16 @@ export class CommonService {
         url = "common/deleteEmployeeRole";
       }
       return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    }
+
+    saveSupervisor(data:any)
+    {
+        let url = "common/addEmployeeSupervisor";
+        if(data._id)
+        {
+          url = "common/updateEmployeeSupervisor";
+        }
+        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
     }
 
     resetPasswordByHr(emp_id: number): Observable<Response> {

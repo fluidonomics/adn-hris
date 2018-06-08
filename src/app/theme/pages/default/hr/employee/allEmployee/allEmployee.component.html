@@ -484,19 +484,25 @@
                                     </div>
                                     <div class="m-widget28__tab-container tab-pane fade" id="menu21">
                                         <div class="m-widget28__tab-items">
+                                        <form  (ngSubmit)="saveSupervisor()" #fsupervisor="ngForm">
                                             <div class="m-widget28__tab-item">
                                                 <span>
                                                     Primary Supervisor
                                                 </span>
                                                 <span>
-                                                    <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.primarySupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select supervisor"  [clearable]="false" required>
+                                                    <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.primarySupervisorEmp_id" bindLabel="fullName" #primarySupervisorEmp="ngModel"  bindValue="_id" placeholder="Select supervisor" (change)="loadSecondarySupervisor();"  [clearable]="false" required>
                                                                 <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                 </ng-template>
                                                                 <ng-template ng-option-tmp let-item="item" let-index="index">
-                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                 </ng-template>
                                                     </ng-select>
+                                                    <div class="form-control-feedback has-danger" *ngIf="fsupervisor.submitted">
+                                                            <span *ngIf="primarySupervisorEmp.errors?.required">
+                                                                    This field is required.
+                                                            </span>    
+                                                    </div>
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -504,14 +510,15 @@
                                                     Secondary Supervisor
                                                 </span>
                                                 <span>
-                                                        <ng-select class="m-input m-input--air" name="secondarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.secondarySupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select secondary supervisor"  [clearable]="false" required>
+                                                        <ng-select class="m-input m-input--air" name="secondarySupervisorEmp" [items]="secondarySupervisorData" [(ngModel)]="supervisor.secondarySupervisorEmp_id" bindLabel="fullName" #secondarySupervisorEmp="ngModel"   bindValue="_id" placeholder="Select secondary supervisor" (change)="loadLeaveSupervisor();"   [clearable]="false">
                                                             <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                 </ng-template>
                                                                 <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-                                                                    <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                     {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                 </ng-template>
                                                             </ng-select>
+
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -519,19 +526,25 @@
                                                     Leave Supervisor
                                                 </span>
                                                 <span>
-                                                        <ng-select class="m-input m-input--air" name="leaveSupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.leaveSupervisorEmp_id" bindLabel="fullName"  bindValue="_id" placeholder="Select leave supervisor" dropdownPosition="top"  [clearable]="false" required>
+                                                        <ng-select class="m-input m-input--air" name="leaveSupervisorEmp" [items]="leaveSupervisorData" [(ngModel)]="supervisor.leaveSupervisorEmp_id" bindLabel="fullName"  bindValue="_id" #leaveSupervisorEmp="ngModel" placeholder="Select leave supervisor" dropdownPosition="top"  [clearable]="false" [required]="supervisor.secondarySupervisorEmp_id">
                                                                 <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                        <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                         {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                     </ng-template>
                                                                     <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-                                                                        <b> {{item.fullName}} [{{item.userName}}]</b>
+                                                                         {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
                                                                     </ng-template>
                                                         </ng-select>
+                                                        <div class="form-control-feedback has-danger" *ngIf="fsupervisor.submitted">
+                                                                <span *ngIf="leaveSupervisorEmp.errors?.required">
+                                                                        This field is required.
+                                                                </span>    
+                                                        </div>
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
-                                                <button type="button" class="btn btn-success">Save</button>
+                                                <button type="submit" class="btn btn-success">Save</button>
                                             </div>
+                                           </form>
                                         </div>
                                     </div>
                                     <!-- <div class="m-widget28__tab-container tab-pane fade" id="menu31">

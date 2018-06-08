@@ -32,6 +32,8 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     documentData:any[];
 
     supervisorData:any[];
+    secondarySupervisorData:any[];
+    leaveSupervisorData:any[];
 
     supervisor:any={}
 
@@ -185,8 +187,23 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     loadSupervisorTabData()
     {
         this.utilityService.showLoader('#configurationPortlet');
-        this.loadSuperviorDropdownData();
-        this.utilityService.hideLoader('#configurationPortlet');
+        this.loadEmployeeSupervisor();
+        setTimeout(() => {
+          this.utilityService.hideLoader('#configurationPortlet');
+        }, 1000);
+    }
+
+    loadEmployeeSupervisor()
+    {
+        this._commonService.getEmployeeSupervisor(this.param_emp_id)
+        .subscribe(
+        res => {
+                this.supervisor=res.json();
+                if(res.json())
+                this.loadSuperviorDropdownData();
+        },
+        error => {
+        });
     }
     
     loadSuperviorDropdownData()
@@ -195,10 +212,41 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         .subscribe(
         res => {
             if (res.ok) {
-                console.log()
-                this.supervisor.primarySupervisorEmp_id=this.employee.supervisorDetails._id;
-                this.supervisorData = res.json()
+                this.supervisorData = res.json();
+                if(this.supervisor.primarySupervisorEmp_id)
+                   this.loadSecondarySupervisor();
             }
+        },
+        error => {
+        });
+    }
+
+    loadSecondarySupervisor()
+    {
+        this.secondarySupervisorData=[];
+        this.leaveSupervisorData=[];
+        this.secondarySupervisorData  = this.supervisorData.map(x => Object.assign({}, x));
+        let index=this.supervisorData.findIndex(x => x._id==this.supervisor.primarySupervisorEmp_id);
+        this.secondarySupervisorData[index]['disabled']=true;
+        
+        if(this.supervisor.secondarySupervisorEmp_id)
+        this.loadLeaveSupervisor();
+    }
+
+    loadLeaveSupervisor()
+    {
+        let data=[];
+        data.push(this.supervisorData[this.supervisorData.findIndex(x => x._id==this.supervisor.primarySupervisorEmp_id)]);
+        data.push(this.supervisorData[this.supervisorData.findIndex(x => x._id==this.supervisor.secondarySupervisorEmp_id)]);
+        this.leaveSupervisorData=data;
+    }
+
+    saveSupervisor()
+    {
+        this._commonService.saveSupervisor(this.supervisor)
+        .subscribe(
+        res => {
+           this.supervisor=res.json();
         },
         error => {
         });
