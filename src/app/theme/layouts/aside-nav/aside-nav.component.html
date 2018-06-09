@@ -50,13 +50,13 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1">
+			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1">
 				<h4 class="m-menu__section-text">
 					HR Panel
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
-			<li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1" routerLinkActive="m-menu__item--active"
+			<li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1" routerLinkActive="m-menu__item--active"
 			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 				<a routerLink="/hr/dashboard" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-th"></i>
@@ -74,7 +74,7 @@
 					</span>
 				</a>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1" routerLinkActive="m-menu__item--active"
+			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1" routerLinkActive="m-menu__item--active"
 			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-gear"></i>
@@ -142,7 +142,7 @@
 					</span>
 				</a>
 			</li> -->
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1" routerLinkActive="m-menu__item--active"
+			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1" routerLinkActive="m-menu__item--active"
 			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-envelope-open"></i>
@@ -178,7 +178,7 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1" routerLinkActive="m-menu__item--active"
+			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1" routerLinkActive="m-menu__item--active"
 			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-group"></i>
