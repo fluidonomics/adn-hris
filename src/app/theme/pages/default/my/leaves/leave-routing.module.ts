@@ -17,7 +17,7 @@ import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
 const routes: Routes = [{
     path: '', component: LeaveComponent,
     children: [
-        { path: 'dashboard', component: DashboardComponent },
+        { path: 'dashboard/:type', component: DashboardComponent },
         { path: 'dashboard/details/:id', component: DashboardDetailsComponent },
         { path: 'apply', component: ApplyComponent },
         { path: 'cancel', component: CancelComponent },

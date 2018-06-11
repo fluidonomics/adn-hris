@@ -5,6 +5,7 @@ import { AuthService } from "../../../../../../base/_services/authService.servic
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: "app-my-leaves-dashboard",
@@ -20,19 +21,23 @@ export class DashboardComponent implements OnInit {
     currentUser: UserData;
 
     leaveList: any;
-    dashboardTab: string = 'my';
+    dashboardTab: string = null;
     isSuperVisor: boolean = false;
     isHr: boolean = false;
 
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private route: ActivatedRoute
     ) {
 
     }
 
     ngOnInit() {
+        this.route.params.subscribe(p => {
+            this.dashboardTab = p.type;
+        });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
 
