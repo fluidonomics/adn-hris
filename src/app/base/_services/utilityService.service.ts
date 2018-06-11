@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
 import 'rxjs/add/observable/throw';
+import * as FileSaver from 'file-saver';
 
 declare var mApp;
 
@@ -53,6 +54,14 @@ export class UtilityService {
         //         "days": day_age,
         //         "brithday":(today.getMonth() == birthday.getMonth()) && (today.getDate() == birthday.getDate()) ? 'Happy BirthDay':null
         //        }
+    }
+
+    saveAsCSV(buffer:any,fileName:string)
+    {
+     const EXCEL_TYPE = 'text/csv';
+     const EXCEL_EXTENSION = '.csv';
+     let blob = new Blob([buffer], { type: EXCEL_TYPE });
+     FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
     
