@@ -13,6 +13,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 
 import { DocumentsComponent } from './documents/documents.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 const routes: Routes = [{
@@ -22,7 +23,7 @@ const routes: Routes = [{
         { path: 'profile-edit', component: ProfileEditComponent },
         { path: 'profile-view', component: ProfileViewComponent },
         { path: 'documents', component: DocumentsComponent },
-
+        { path: 'change-password', component: ChangePasswordComponent },
         { path: 'workflows', loadChildren: ".\/workflows\/my-workflows.module#MyWorkFlowsModule" },
         { path: 'leaves', loadChildren: ".\/leaves\/leave.module#LeaveModule" },
         { path: 'team', loadChildren: ".\/team\/my-team.module#MyTeamModule" }

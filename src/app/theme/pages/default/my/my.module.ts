@@ -19,6 +19,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 
 import { DocumentsComponent } from './documents/documents.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { MyService } from "./my.service"
 
@@ -41,7 +42,8 @@ import { MyService } from "./my.service"
         ProfileComponent,
         ProfileEditComponent,
         ProfileViewComponent,
-        DocumentsComponent
+        DocumentsComponent,
+        ChangePasswordComponent
     ],
     providers: [MyService]
 })

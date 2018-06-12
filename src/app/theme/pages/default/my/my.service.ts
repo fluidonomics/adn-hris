@@ -255,6 +255,13 @@ export class MyService {
         let url = "upload/deleteImage";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+    
+    changePassword(data: any): Observable<Response> {
+        {
+            let url = "user/changePassword";
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
 
     private extractData(res: Response) {
         return res || {};
