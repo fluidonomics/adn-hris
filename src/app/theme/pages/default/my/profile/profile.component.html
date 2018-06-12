@@ -837,14 +837,14 @@
                                                     <div class="form-group m-form__group">
                                                         <label for="marks">CGPA
                                                         </label>
-                                                        <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                         </div>
                                             </div>
                                             <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
                                                     <div class="form-group m-form__group">
                                                         <label for="marks">Scale
                                                             </label>
-                                                        <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                        <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     </div>
                                             </div>
                                         </div>
@@ -1767,7 +1767,7 @@
                                             <span class="required" aria-required="true"> * </span>
                                             </label>
                                             <input class="form-control m-input m-input--air" maxlength="15" [(ngModel)]="bankDetails.accountNumber" #accountNumber="ngModel" id="accountNumber" name="accountNumber"  placeholder="Enter account number" type="text" disabled required>
-                                            <div class="form-control-feedback has-danger"  *ngIf="!accountNumber.valid" >
+                                            <div class="form-control-feedback has-danger"  *ngIf="fbankDetails.submitted && !accountNumber.valid" >
                                                This field is required
                                             </div>
                                         </div>
@@ -2117,7 +2117,7 @@
                                         <div class="form-group m-form__group">
                                             <label for="privateCarUsageAllowance">Usage Allowance
                                             </label>
-                                            <input type="text" [(ngModel)]="carDetails.privateCarUsageAllowance" #privateCarUsageAllowance="ngModel" name="privateCarUsageAllowance" placeholder="Enter fuel allowance" id="fa" class="form-control m-input m-input--air" disabled OnlyNumber="true">
+                                            <input type="text" [(ngModel)]="carDetails.privateCarUsageAllowance" #privateCarUsageAllowance="ngModel" name="privateCarUsageAllowance" placeholder="Enter usage allowance" id="fa" class="form-control m-input m-input--air" disabled OnlyNumber="true">
                                         </div>
                                         </div>
                                     </div>

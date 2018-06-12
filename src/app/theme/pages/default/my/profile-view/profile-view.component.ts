@@ -398,14 +398,14 @@ export class ProfileViewComponent implements OnInit {
                     if (tabData.isPersonalInfo
                         && tabData.isAddress
                         && tabData.isDocuments
-                        && tabData.isAcademicInfo
-                        && tabData.isCertificate
-                        && tabData.isEmployment
+                       // && tabData.isAcademicInfo
+                       // && tabData.isCertificate
+                       // && tabData.isEmployment
                         && tabData.isFamilyInfo
                         && tabData.isOffice
-                        && tabData.isBankInfo
+                       // && tabData.isBankInfo
                         && tabData.isSalaryInfo
-                        && tabData.isCarInfo
+                        //&& tabData.isCarInfo
                     ) {
                         swal({
                             title: 'Are you sure?',
@@ -422,7 +422,7 @@ export class ProfileViewComponent implements OnInit {
                         });
                     }
                     else
-                        swal({ type: 'error', title: 'Oops!', titleText: "Please complete Personal Info & Office Info.", });
+                        swal({ type: 'error', title: 'Oops!', titleText: "It seems you haven't filled mandatory tabs.", });
                 }
             },
             error => {

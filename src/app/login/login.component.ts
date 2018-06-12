@@ -53,12 +53,11 @@ export class LoginComponent implements OnInit {
         this._authService.login(this.loginModel)
             .subscribe(
             data => {
-
                 this._router.navigate([this.returnUrl]);
             },
             error => {
-                // this.errorMsg = error.json().error.message || error "Error to login";
-                this.errorMsg = "Error to login";
+                this.errorMsg = error.json().error.message || "Error to login";
+                //this.errorMsg = "Error to login";
                 this.error = true;
                 this.loading = false;
             });
