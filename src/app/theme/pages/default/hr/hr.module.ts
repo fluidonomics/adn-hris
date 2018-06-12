@@ -24,7 +24,7 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrPapComponent } from './workFlows/pap/pap.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
-import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
+//import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
 
@@ -55,7 +55,7 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
-        DocumentsViewComponent
+        //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard]
 })
