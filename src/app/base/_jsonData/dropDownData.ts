@@ -296,8 +296,8 @@ export const results = [
         "text": "Awarded"
     },
     {
-        "id": "Do not Mention",
-        "text": "Do not Mention"
+        "id": "Do Not Mention",
+        "text": "Do Not Mention"
     },
     {
         "id": "Pass",

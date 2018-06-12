@@ -414,9 +414,9 @@ export class ProfileComponent implements OnInit {
                 if (tabData.isPersonalInfo
                     && tabData.isAddress
                     && tabData.isDocuments
-                    && tabData.isAcademicInfo
-                    && tabData.isCertificate
-                    && tabData.isEmployment
+                    //&& tabData.isAcademicInfo
+                   // && tabData.isCertificate
+                    //&& tabData.isEmployment
                     && tabData.isFamilyInfo) {
                     this.saveProfileStatus();
                 }

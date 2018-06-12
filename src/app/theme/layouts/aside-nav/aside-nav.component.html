@@ -1,9 +1,7 @@
-<!-- BEGIN: Left Aside -->
 <button class="m-aside-left-close  m-aside-left-close--skin-light" id="m_aside_left_close_btn" appunwraptag="">
 	<i class="la la-close"></i>
 </button>
 <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-light">
-	<!-- BEGIN: Aside Menu -->
 	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light" data-menu-vertical="true"
 	 data-menu-scrollable="false" data-menu-dropdown-timeout="500">
 		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
@@ -65,11 +63,6 @@
 							<span class="m-menu__link-text">
 								Dashboard
 							</span>
-							<!-- <span class="m-menu__link-badge">
-									<span class="m-badge m-badge--danger">
-										2
-									</span>
-								</span> -->
 						</span>
 					</span>
 				</a>
@@ -106,42 +99,9 @@
 								</span>
 							</a>
 						</li>
-						<!-- <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/learning" class="m-menu__link">
-								<i class="m-menu__link-bullet la la-book">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Learning
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/pip" class="m-menu__link">
-								<i class="m-menu__link-bullet la la-lightbulb-o">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									PIP
-								</span>
-							</a>
-						</li> -->
 					</ul>
 				</div>
 			</li>
-			<!-- <li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1" routerLinkActive="m-menu__item--active"
-			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/hr/directory" class="m-menu__link">
-					<i class="m-menu__link-icon fa fa-folder-open"></i>
-					<span class="m-menu__link-title">
-						<span class="m-menu__link-wrap">
-							<span class="m-menu__link-text">
-								Directory
-							</span>
-						</span>
-					</span>
-				</a>
-			</li> -->
 			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
 			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
@@ -164,17 +124,6 @@
 								</span>
 							</a>
 						</li>
-						<!-- <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/email/broadcast" class="m-menu__link">
-								<i class="m-menu__link-bullet fa fa-bullhorn">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Broadcasts
-								</span>
-							</a>
-						</li> -->
-
 					</ul>
 				</div>
 			</li>
@@ -375,36 +324,6 @@
 								</span>
 							</a>
 						</li>
-						<!-- <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/my/workflows/pap" class="m-menu__link">
-								<i class="m-menu__link-bullet la la-tasks">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									PAP
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/my/workflows/learning" class="m-menu__link">
-								<i class="m-menu__link-bullet la la-book">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Learning
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/my/workflows/pip" class="m-menu__link">
-								<i class="m-menu__link-bullet  la la-lightbulb-o">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									PIP
-								</span>
-							</a>
-						</li> -->
 					</ul>
 				</div>
 			</li>
@@ -489,14 +408,6 @@
 					</span>
 				</a>
 			</li>
-			<!-- <li class="m-menu__section">
-					<h4 class="m-menu__section-text">
-						My Apps
-					</h4>
-					<i class="m-menu__section-icon flaticon-more-v3"></i>
-				</li> -->
 		</ul>
 	</div>
-	<!-- END: Aside Menu -->
 </div>
-<!-- END: Left Aside -->
