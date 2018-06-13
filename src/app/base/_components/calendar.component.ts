@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { templateJitUrl } from '@angular/compiler';
+import { ScriptLoaderService } from '../../_services/script-loader.service';
 
 
 
@@ -17,23 +18,37 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
 
 
     @Input() data: any = [];
+    @Input() options: CalendarOptions = {
+        editable: false
+    };
+    @Output() dayClick: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() { }
+    constructor(
+        private _script: ScriptLoaderService
+    ) { }
 
     ngOnInit() {
+        this._script.loadScripts('head', ['assets/vendors/custom/fullcalendar/fullcalendar.bundle.js'], true);
+
+
     }
 
     ngAfterViewInit(): void {
         setTimeout(() => {
             this.initCalendar();
+            this.bindDayClickEvent();
         }, 100);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         // this.initCalendar();
         if (changes.data.currentValue && changes.data.currentValue.length > 0) {
+            this.data.forEach(leave => {
+                leave.editable = this.options.editable;
+            });
             // $('#appCalendar').fullCalendar('updateEvents', changes.data.currentValue)
             $('#appCalendar').fullCalendar('refetchEvents');
+
         }
     }
 
@@ -49,11 +64,11 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             navLinks: true,
-            events: function(start, end, timezone, callback) {
+            events: function (start, end, timezone, callback) {
                 callback(calendarComp.data);
             },
 
-            eventRender: function(event, element) {
+            eventRender: function (event, element) {
                 if (element.hasClass('fc-day-grid-event')) {
                     element.data('content', event.description);
                     element.data('placement', 'top');
@@ -66,4 +81,17 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
             }
         });
     }
+
+    bindDayClickEvent() {
+        $('.fc-day').on('click', (e) => {
+            let data = $(e.currentTarget).data();
+            if (data) {
+                this.dayClick.emit(data);
+            }
+        });
+    }
+}
+
+export interface CalendarOptions {
+    editable?: boolean;
 }
