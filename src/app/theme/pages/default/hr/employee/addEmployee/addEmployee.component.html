@@ -23,7 +23,7 @@
 							   <div class="m-form__group form-group">
 								  <label for="form_control_1">Full Name</label>
 								  <span class="required" aria-required="true">* </span>
-								  <input type="text" class="form-control  m-input m-input--air name-input" name="fullName" id="fullName" [(ngModel)]="addemp.fullName" #fullName="ngModel" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" placeholder="Enter full name" required>
+								  <input type="text" class="form-control  m-input m-input--air name-input" name="fullName" id="fullName" [(ngModel)]="addemp.fullName" #fullName="ngModel" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'" placeholder="Enter full name" required>
 								  <div class="form-control-feedback has-danger" *ngIf="!fullName.valid">
 									 <span *ngIf="faddemp.submitted && !fullName.valid">This field is required.</span>
 									 <span *ngIf="fullName.errors?.pattern">special character is not allowed only space is allowed</span>
