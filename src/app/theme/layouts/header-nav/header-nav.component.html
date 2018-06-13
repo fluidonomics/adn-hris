@@ -266,19 +266,19 @@
 								<div class="m-dropdown__wrapper">
 									<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
 									<div class="m-dropdown__inner">
-										<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/custom/misc/notification_bg1.jpg); background-size: cover;">
+										<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/custom/misc/notification_bg1.jpg); background-size: cover; word-wrap: break-word !important">
 											<div class="m-card-user m-card-user--skin-dark">
 												<div class="m-card-user__pic">
 														<img *ngIf="authService.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless" alt="">
 														<ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded m--marginless"></ng-template>
 												</div>
-												<div class="m-card-user__details">
+												<div class="m-card-user__details" >
 													<span class="m-card-user__name m--font-weight-500">
 														{{authService.atCurrentUserData?.fullName}}
 												
 														[{{authService.atCurrentUserData?.userName}}]
 													</span>
-													<span class="m-card-user__email m--font-weight-300">
+													<span class="m-card-user__email m--font-weight-300" >
 														{{authService.atCurrentUserData?.officeEmail ? authService.atCurrentUserData?.officeEmail :authService.atCurrentUserData?.personalEmail}}
 													</span>
 												</div>
@@ -294,7 +294,7 @@
 													</li>
 													<li class="m-nav__item">
 														<a routerLink="/my/profile" class="m-nav__link" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR2')==-1">
-															<i class="m-nav__link-icon flaticon-profile-1"></i>
+															<i class="m-nav__link-icon fa fa-user"></i>
 															<span class="m-nav__link-title">
 																<span class="m-nav__link-wrap">
 																	<span class="m-nav__link-text">
@@ -311,7 +311,7 @@
 													</li>
 													 <li class="m-nav__item">
 														<a routerLink="/my/change-password" class="m-nav__link">
-															<i class="m-nav__link-icon flaticon-share"></i>
+															<i class="m-nav__link-icon fa fa-key"></i>
 															<span class="m-nav__link-text">
 																Change Password
 															</span>
