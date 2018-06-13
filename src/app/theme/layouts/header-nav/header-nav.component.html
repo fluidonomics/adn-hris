@@ -70,13 +70,13 @@
 									</div>
 								</div>
 							</li> -->
-							<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" data-dropdown-toggle="click" data-dropdown-persistent="true">
+							<!-- <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" data-dropdown-toggle="click" data-dropdown-persistent="true">
 								<a href="#"(click)="setReadStatus(); isReaded=true" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-									<!-- <span class="m-nav__link-badge m-badge m-badge--success">
+									<span class="m-nav__link-badge m-badge m-badge--success">
 									<span class="m-nav__link-badge m-badge m-badge--success" [hidden]="isReaded" *ngIf="notificationData?.unReadCount!==0">
 										9
 										{{notificationData?.unReadCount ? notificationData?.unReadCount:''}}
-									</span> -->
+									</span>
 									<span class="m-nav__link-icon">
 										<i class="flaticon-alert-2"></i>
 									</span>
@@ -87,7 +87,7 @@
 										<div class="m-dropdown__header m--align-center" style="background: url(./assets/app/media/img/custom/misc/notification_bg1.jpg); background-size: cover;">
 											<span class="m-dropdown__header-title">
 												9 New
-										        <!-- {{notificationData.unReadCount? notificationData.unReadCount +' New' :'No New'}} -->
+										        {{notificationData.unReadCount? notificationData.unReadCount +' New' :'No New'}}
 											</span>
 											<span class="m-dropdown__header-subtitle">
 												View All
@@ -100,7 +100,7 @@
 														<div class="m-scrollable" data-scrollable="true" data-max-height="250" data-mobile-max-height="200">
 															<div class="m-list-timeline m-list-timeline--skin-light">
 																<div class="m-list-timeline__items">
-																	<!-- <div class="m-list-timeline__item"  *ngFor="let notify of notificationData?.notifications ;let i=index">
+																	<div class="m-list-timeline__item"  *ngFor="let notify of notificationData?.notifications ;let i=index">
 																				<span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
 																				<span class="m-list-timeline__text">
 																					{{notify?.message}}
@@ -108,7 +108,7 @@
 																				<span class="m-list-timeline__time">
 																					{{getTime(notify?.createdAt)}}
 																				</span>
-																	</div> -->
+																	</div>
 																	<div class="m-list-timeline__item">
 																		<span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
 																		<span class="m-list-timeline__text">
@@ -194,7 +194,7 @@
 										</div>
 									</div>
 								</div>
-							</li>
+							</li> -->
 							<!-- <li class="m-nav__item m-topbar__quick-actions m-topbar__quick-actions--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light"  data-dropdown-toggle="click">
 								<a href="#" class="m-nav__link m-dropdown__toggle">
 									<span class="m-nav__link-badge m-badge m-badge--dot m-badge--info m--hide"></span>
