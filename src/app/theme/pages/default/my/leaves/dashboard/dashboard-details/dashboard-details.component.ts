@@ -12,7 +12,7 @@ import 'rxjs/add/observable/forkJoin';
 @Component({
     selector: "app-dashboard-details",
     templateUrl: "./dashboard-details.component.html",
-    styleUrls: ["./dashboard-details.component.scss"],
+    styleUrls: ['./dashboard-details.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class DashboardDetailsComponent implements OnInit {
