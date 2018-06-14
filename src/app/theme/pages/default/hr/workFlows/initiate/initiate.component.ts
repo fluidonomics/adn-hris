@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { HrService } from '../../hr.service';
+import {environment} from '../../../../../../../environments/environment'
 import swal from 'sweetalert2';
 
 @Component({
@@ -38,6 +39,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     search: any;
     isCheckAll: boolean = false;
 
+    imageBase:any;
+
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -51,7 +54,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initDropdown();
             });
-
+        this.imageBase=environment.content_api_base.imgBase;
     }
 
     initDropdown() {

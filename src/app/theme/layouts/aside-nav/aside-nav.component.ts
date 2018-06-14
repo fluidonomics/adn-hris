@@ -6,6 +6,7 @@ declare let mLayout: any;
 @Component({
     selector: "app-aside-nav",
     templateUrl: "./aside-nav.component.html",
+    //styles:['.m-aside-left {top: 0;bottom: 0;position: fixed;height: auto!important;left: 0;z-index: 98;-webkit-backface-visibility: hidden;backface-visibility: hidden;transition: width .2s ease;width: 255px;top: 70px}'],
     encapsulation: ViewEncapsulation.None,
 })
 export class AsideNavComponent implements OnInit, AfterViewInit {

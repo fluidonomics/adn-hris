@@ -68,7 +68,7 @@
 								</div>
 							</div>
 				</div>
-				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeData | orderBy: key : reverse | filter:search)?.length==0 }">
 					<table class="m-datatable__table">
 							<thead class="m-datatable__head">
 									<tr class="m-datatable__row" >
@@ -115,7 +115,7 @@
 										</label>
 									</td>	
 									<td class="m-datatable__cell" width="5%" >
-										  <img *ngIf="employee?.ProfileImage; else noImage" src="{{employee?.ProfileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+										  <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									</td>
 								    <td class="m-datatable__cell" width="20%" >
@@ -131,11 +131,13 @@
 										<span>{{employee.supervisor}}</span>
 									</td>
 							  </tr>
-							  <tr class="m-datatable__row m-datatable__row--even">
+
+							  <span *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
+							  <!-- <tr class="m-datatable__row m-datatable__row--even">
 								<td class="m-datatable__cell" colspan="5"  *ngIf="p.pages.length==0">
 									No record found.
 								</td>
-							  </tr>
+							  </tr> -->
 							</tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
