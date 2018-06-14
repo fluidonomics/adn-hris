@@ -64,7 +64,29 @@ export class UtilityService {
      FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
-    
+    saveAsxls(buffer:any,fileName:string)
+    {
+     const EXCEL_TYPE = 'application/vnd.ms-excel';
+     const EXCEL_EXTENSION = '.xls';
+     let blob = new Blob([buffer], { type: EXCEL_TYPE });
+     FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+    saveAsxlsx(buffer:any,fileName:string)
+    {
+     const EXCEL_TYPE ='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+     const EXCEL_EXTENSION = '.xlsx';
+     let blob = new Blob([buffer], { type: EXCEL_TYPE });
+     FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+    saveAstxt(buffer:any,fileName:string)
+    {
+     const EXCEL_TYPE ='text/plain';
+     const EXCEL_EXTENSION = '.txt';
+     let blob = new Blob([buffer], { type: EXCEL_TYPE });
+     FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
 
     showLoader(element) {
         mApp.block(element, {
