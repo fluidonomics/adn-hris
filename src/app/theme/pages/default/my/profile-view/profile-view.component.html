@@ -1378,7 +1378,7 @@
                                                                 <label for="familyName">Name
                                                                 </label>
                                                                 <span class="required" aria-required="true"> * </span>
-                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName"  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName"  [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                     placeholder="Enter name" type="text" required disabled>
                                                                     <div class="form-control-feedback has-danger"  *ngIf="!familyName.valid" >
                                                                         <span *ngIf="ffamilyInfo.submitted && !familyName.errors?.pattern">This field is required.</span>
@@ -2029,7 +2029,7 @@
                                                             <label for="bankName">Bank Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName"  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName"  [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                 placeholder="Enter bank name" type="text" required disabled>
                                                                 <div class="form-control-feedback has-danger"  *ngIf="!bankName.valid" >
                                                                     <span *ngIf="fbankDetails.submitted && !bankName.errors?.pattern">This field is required.</span>
@@ -2042,7 +2042,7 @@
                                                             <label for="accountName">Account Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                 name="accountName" placeholder="Enter Account Name" type="text"
                                                                 required disabled>
                                                                 <div class="form-control-feedback has-danger"  *ngIf="!accountName.valid" >

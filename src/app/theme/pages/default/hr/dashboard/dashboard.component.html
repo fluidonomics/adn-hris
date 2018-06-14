@@ -35,7 +35,7 @@
 								</h3>
 							</div>
 						</div>
-						<div class="m-portlet__head-tools">
+						<!-- <div class="m-portlet__head-tools">
 							<ul class="m-portlet__nav">
 								<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
 									<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
@@ -97,7 +97,7 @@
 									</div>
 								</li>
 							</ul>
-						</div>
+						</div> -->
 					</div>
 					<div class="m-portlet__body">
 						<div class="m-widget17">
@@ -189,7 +189,7 @@
 																Quick Actions
 															</span>
 														</li>
-														<li class="m-nav__item">
+														<!-- <li class="m-nav__item">
 															<a class="m-nav__link" (click)="downloadProfileCsv();" >
 																<i class="m-nav__link-icon flaticon-share"></i>
 																<span class="m-nav__link-text">
@@ -220,11 +220,11 @@
 																	Support
 																</span>
 															</a>
-														</li>
+														</li> -->
 														<li class="m-nav__separator m-nav__separator--fit"></li>
 														<li class="m-nav__item">
-															<a class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" href="#" ng-reflect-href="#">
-																Cancel
+															<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadProfileCsv();">
+																Export to Excel
 															</a>
 														</li>
 													</ul>
@@ -249,21 +249,23 @@
 												{{calculatePercentage(true)}}
 											</span>
 											<span class="m-widget15__text">
-											    Profile Active
+											 Active
 											</span>
 											<div class="m--space-10"></div>
 											<div class="progress m-progress--sm">
-												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-danger" role="progressbar" [style.width]="profileStatusPercentage?.isAccountActive"></div>
+												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-brand" role="progressbar" [style.width]="profileStatusPercentage?.isAccountActive"></div>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col">
 										<div class="m-widget15__item">
 											<span class="m-widget15__stats" *ngIf="employeesData?.length">
 												{{calculatePercentage('Submitted','employeeStatus')}}
 											</span>
 											<span class="m-widget15__text">
-													Employee Submitted
+													Personal Profile
 											</span>
 											<div class="m--space-10"></div>
 											<div class="progress m-progress--sm">
@@ -279,25 +281,27 @@
 													{{calculatePercentage('Submitted','hrStatus')}}
 											</span>
 											<span class="m-widget15__text">
-													HR Submitted
+													Office Profile
 											</span>
 											<div class="m--space-10"></div>
 											<div class="progress m-progress--sm">
-												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-success" role="progressbar" [style.width]="profileStatusPercentage?.hrStatusSubmitted" ></div>
+												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-primary" role="progressbar" [style.width]="profileStatusPercentage?.hrStatusSubmitted" ></div>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col">
 										<div class="m-widget15__item">
 											<span class="m-widget15__stats" *ngIf="employeesData?.length">
 													{{calculatePercentage('Approved','supervisorStatus')}}
 											</span>
 											<span class="m-widget15__text">
-													Supervisor Submitted
+													Profile Approved
 											</span>
 											<div class="m--space-10"></div>
 											<div class="progress m-progress--sm">
-												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-primary" role="progressbar" [style.width]="profileStatusPercentage?.supervisorStatusApproved"></div>
+												<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar bg-success" role="progressbar" [style.width]="profileStatusPercentage?.supervisorStatusApproved"></div>
 											</div>
 										</div>
 									</div>

@@ -4,6 +4,7 @@ import { ScriptLoaderService } from '../../../../../../_services/script-loader.s
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
+import { CalendarOptions } from '../../../../../../base/_components/calendar.component';
 
 declare var $;
 declare var moment;
@@ -22,6 +23,7 @@ export class CalenderComponent implements OnInit {
     selectedLeaves: any = [];
 
     reverse: boolean = false;
+    calendarOptions: CalendarOptions;
 
     constructor(
         private authService: AuthService,
@@ -34,6 +36,10 @@ export class CalenderComponent implements OnInit {
             this.currentUser = this.authService.currentUserData;
             this.getLeaveDetailsByRole();
         });
+
+        this.calendarOptions = {
+            editable: false
+        };
     }
 
     getLeaveDetailsByRole() {
@@ -83,6 +89,10 @@ export class CalenderComponent implements OnInit {
                 });
             }
         })
+    }
+
+    onDayClick(data: any) {
+        
     }
 
 }

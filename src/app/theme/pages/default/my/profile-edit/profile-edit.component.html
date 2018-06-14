@@ -352,7 +352,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="fatherName">Father's Name
                                                                 </label>
-                                                                <input type="text" name="fatherName" [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
+                                                                <input type="text" name="fatherName" [(ngModel)]="personalInfo.fatherName" #fatherName="ngModel" placeholder="Enter father's name" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'" 
                                                                     id="fatherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
@@ -360,7 +360,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="motherName">Mother's Name
                                                                 </label>
-                                                                <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
+                                                                <input type="text" name="motherName" [(ngModel)]="personalInfo.motherName" #motherName="ngModel" placeholder="Enter mother's name" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'" 
                                                                     id="motherName" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
                                                         </div>
@@ -371,7 +371,7 @@
                                                             <label for="emergencyContactName">Emergency Contact Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'" 
+                                                            <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'" 
                                                                 placeholder="Enter emergency contact name" id="emergencyContactName"
                                                                 class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactName.valid ">
@@ -1390,7 +1390,7 @@
                                                                 <label for="familyName">Name
                                                                 </label>
                                                                 <span class="required" aria-required="true"> * </span>
-                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName"  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                                <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName"  [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                     placeholder="Enter name" type="text" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                     <div class="form-control-feedback has-danger"  *ngIf="!familyName.valid" >
                                                                         <span *ngIf="ffamilyInfo.submitted && !familyName.errors?.pattern">This field is required.</span>
@@ -2057,7 +2057,7 @@
                                                             <label for="bankName">Bank Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName"  [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.bankName" #bankName="ngModel" id="bankName" name="bankName"  [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                 placeholder="Enter bank name" type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                                 <div class="form-control-feedback has-danger"  *ngIf="!bankName.valid" >
                                                                     <span *ngIf="fbankDetails.submitted && !bankName.errors?.pattern">This field is required.</span>
@@ -2070,7 +2070,7 @@
                                                             <label for="accountName">Account Name
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" [pattern]="'^[a-zA-Z]+(([\'\ \.\-][a-zA-Z])?[a-zA-Z]*)*$'"
+                                                            <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
                                                                 name="accountName" placeholder="Enter Account Name" type="text"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                                 <div class="form-control-feedback has-danger"  *ngIf="!accountName.valid" >
