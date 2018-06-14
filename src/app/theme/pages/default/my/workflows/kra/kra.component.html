@@ -115,85 +115,104 @@
                 </div> 
                 <div class="m-portlet__head-tools">
                    <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
-                      <li class="nav-item m-tabs__item">
-                         <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false">
-                         <i class="la la-print"></i>
-                         Print
-                         </a>
-                      </li>
+                    <li class="nav-item m-tabs__item" *ngIf="isDisabled" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'">
+                            <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow();" >Submit</button>	
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false">
+                        <i class="la la-print"></i>
+                        Print
+                        </a>
+                    </li>
                    </ul>
                 </div>
              </div>
              <div class="m-portlet__body">
                 <div class="m-section" >
                    <div class="m-section__content">  
+                    <!-- <form (ngSubmit)="fkraInfo.valid && submitKraWorkFlow()" #fkraInfo="ngForm" novalidate="novalidate"> -->
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        KRA
-                                    </th>
-                                    <th style="width: 170px;">
-                                        KRA Category
-                                    </th>
-                                    <th>
-                                        Weightage
-                                    </th>
-                                    <th>
-                                        Unit of Success
-                                    </th>
-                                    <th>
-                                        Measure of Success
-                                    </th>
-                                    <th>
-                                        Supervisor
-                                    </th>
-                                    <th>
-                                        Send Back Comment
-                                    </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let kraInfo of kraInfoData;let i=index">
-                                       <th scope="row">
-                                            {{i+1}}
-                                       </th> 
-                                        <td>
-                                            <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
-                                        </td>
-                                        <td>
-                                            <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled"></ng-select>
-                                        </td>
-                                        <td>
-                                            <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled"></ng-select>
-                                        </td>
-                                        <td>
-                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
-                                        </td>
-                                        <td>
-                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
-                                        </td>
-                                        <td>
-                                            <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled"></ng-select>
-                                        </td>
-                                        <td>
-                                            <!-- <textarea name="sendBackComment" id="sendBackComment" #sendBackComment="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea> -->
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            KRA
+                                        </th>
+                                        <th style="width: 170px;">
+                                            KRA Category
+                                        </th>
+                                        <th>
+                                            Weightage
+                                        </th>
+                                        <th>
+                                            Unit of Success
+                                        </th>
+                                        <th>
+                                            Measure of Success
+                                        </th>
+                                        <th>
+                                            Supervisor
+                                        </th>
+                                        <th>
+                                            Send Back Comment (Supervisor)
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index" >
+                                        <th scope="row">
+                                                {{i+1}}
+                                        </th> 
+                                            <td>
+                                                <textarea name="kraOne{{i}}" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></textarea>
+                                            </td>
+                                            <td>
+                                                <ng-select class="m-input m-input--air border-danger" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+                                            </td>
+                                            <td>
+                                                <ng-select class="m-input m-input--air" name="kraWeightage{{i}}" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+                                            </td>
+                                            <td>
+                                                <textarea name="unitOfSuccess{{i}}" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="measureOfSuccess{{i}}" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></textarea>
+                                            </td>
+                                            <td>
+                                                <ng-select class="m-input m-input--air" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+                                            </td>
+                                            <td>
+                                                <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment" class="form-control m-input m-input--air" disabled></textarea>
+                                            </td>
+                                            <td>
+                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+                                                <i class="la la-save"></i>
+                                               </button>
+                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+                                                    <i class="la la-remove"></i>
+                                               </button>
+                                               <!-- <button *ngIf="kraInfo.supervisorStatus!='Approved' "  type="button" (click)="saveKraDetails(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'"> <i class="fa fa-save"></i></button>
+                                               <button *ngIf="kraInfo.supervisorStatus!='Approved'" type="button" (click)="deleteKraHtml(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved' "> <i class="fa fa-remove"></i></button> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9" >
+                                               <button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" (click)="addKraHtml()"><i class="la la-plus "></i></button>
+                                            </td>
+                                       </tr>
+                                    </tbody>
+                                </table>
                         </div>
                         <br>
-                        <button class="btn btn-success m-btn--air" type="button" (click)="onKraSubmit(false)"  [disabled]="isDisabled">
+                        <!-- <button class="btn btn-success m-btn--air" type="submit" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'">
                            Submit
-                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button  class="btn btn-metal m-btn--air" type="button" (click)="onKraSubmit(true)" [disabled]="isDisabled">
-                           Save as Draft
-                        </button>
+                        </button> -->
                     <!-- </form> -->
                    </div><br><br>
                    <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isKraAvaliable">

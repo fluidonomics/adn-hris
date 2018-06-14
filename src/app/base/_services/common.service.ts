@@ -295,12 +295,12 @@ export class CommonService {
 
 
     getKraCategory() {
-        let url = "kra/getKraCategoryInfo";
+        let url = "common/getKraCategoryInfo";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getKraWeightage() {
-        let url = "kra/getKraWeightageInfo";
+        let url = "common/getKraWeightageInfo";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

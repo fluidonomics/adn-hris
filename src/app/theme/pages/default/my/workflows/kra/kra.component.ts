@@ -32,7 +32,7 @@ export class MyKraComponent {
     param_id: number;
     kraWorkFlowData: any = [];
 
-    isDisabled:boolean=false;
+    isDisabled:boolean=true;
 
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -93,7 +93,11 @@ export class MyKraComponent {
                 this.kraInfoData = res.json().data;
                 let status= res.json().status;
                 this.isDisabled = status =="Initiated" || status=="SendBack" ? false :true ;
-                this.addDummyRow((7 - this.kraInfoData.length));
+                if(this.kraInfoData.length==0)
+                {
+                    this.addKraHtml(); 
+                }
+                //this.addDummyRow((7 - this.kraInfoData.length));
             },
             error => {
             });;
@@ -129,28 +133,28 @@ export class MyKraComponent {
             });
     }
 
-    onKraSubmit(isSaveDraft: boolean) {
-        var filterKraData=[];
-        for (let i = 0; i < this.kraInfoData.length; i++) {
-           if(this.kraInfoData[i].kra && this.kraInfoData[i].category_id && this.kraInfoData[i].weightage_id && this.kraInfoData[i].unitOfSuccess && this.kraInfoData[i].measureOfSuccess && this.kraInfoData[i].supervisor_id)
-           {
-                filterKraData.push(this.kraInfoData[i])
-           }
-           if(i == this.kraInfoData.length-1)
-           {
-                this._kraService.saveKra({"kraInfo":filterKraData,"kraWorkflow_id":this.param_id,"isSaveDraft":isSaveDraft})
-                .subscribe(
-                data => {
-                        let messageString= isSaveDraft ? 'save':'submitted';
-                        swal("Kra is " + messageString, "", "success");
-                        this.loadKraInfo();
-                },
-                error => {
-                });
-           }
-        }
+    // onKraSubmit(isSaveDraft: boolean) {
+    //     var filterKraData=[];
+    //     for (let i = 0; i < this.kraInfoData.length; i++) {
+    //        if(this.kraInfoData[i].kra && this.kraInfoData[i].category_id && this.kraInfoData[i].weightage_id && this.kraInfoData[i].unitOfSuccess && this.kraInfoData[i].measureOfSuccess && this.kraInfoData[i].supervisor_id)
+    //        {
+    //             filterKraData.push(this.kraInfoData[i])
+    //        }
+    //        if(i == this.kraInfoData.length-1)
+    //        {
+    //             this._kraService.saveKra({"kraInfo":filterKraData,"kraWorkflow_id":this.param_id,"isSaveDraft":isSaveDraft})
+    //             .subscribe(
+    //             data => {
+    //                     let messageString= isSaveDraft ? 'save':'submitted';
+    //                     swal("Kra is " + messageString, "", "success");
+    //                     this.loadKraInfo();
+    //             },
+    //             error => {
+    //             });
+    //        }
+    //     }
         
-    };
+    // };
 
     addDummyRow(loopLength) {
         for (let j = 0; j < loopLength; j++) {
@@ -162,9 +166,141 @@ export class MyKraComponent {
                 unitOfSuccess: "",
                 measureOfSuccess: "",
                 supervisor_id: "",
+                sendBackComment:"",
                 kraWorkflow_id: this.param_id
             };
             this.kraInfoData.push(data);
         }
+    }
+
+
+    addKraHtml()
+    {
+        if(this.kraInfoData.length < 7)
+        {
+            let data = {_id:null,kra: "",category_id: "",weightage_id: "",unitOfSuccess: "",measureOfSuccess: "",supervisor_id: "",sendBackComment:"",kraWorkflow_id: this.param_id};
+            this.kraInfoData.push(data);
+        }
+        else{
+            swal({
+                    title: 'Oops!',
+                    text:"You can't add more than 7 KRAs",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    deleteKraHtml(index:number)
+    {
+       swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete the KRA ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes'
+         }).then((result) => {
+            if (result.value) {
+                if(this.kraInfoData[index]._id)
+                this.deleteKra(this.kraInfoData[index]._id,index);
+                else
+                {
+                  delete this.kraInfoData[index];
+                  if(this.kraInfoData.length==0)
+                  {
+                      this.addKraHtml();
+                  }
+                }
+            }
+        });
+    }
+
+    deleteKra(_id:number,index:number)
+    {
+        this._kraService.deleteKra(_id)
+        .subscribe(
+        res => {
+                if(res.ok)
+                {
+                   this.kraInfoData = this.kraInfoData.filter(x => x._id != _id);
+                   //delete this.kraInfoData[index];
+                   if(this.kraInfoData.length==0)
+                   {
+                     this.addKraHtml();
+                   }
+                   swal({
+                    title: 'Deleted',
+                    text:"KRA has been deleted successfully.",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#D33',
+                    confirmButtonText: 'OK'
+                });
+                }
+        },
+        error => {
+        });
+    }
+
+    saveKraDetails(index:number)
+    {
+        this.kraInfoData[index].supervisorStatus=null;
+        this._kraService.saveKra(this.kraInfoData[index])
+        .subscribe(
+        res => {
+                if(res.ok)
+                {
+                   this.kraInfoData[index]=res.json();
+                swal({
+                    title: 'Success',
+                    text:"KRA has been Saved.",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+                }
+        },
+        error => {
+        });
+    }
+
+    submitKraWorkFlow()
+    {
+        if(this.kraInfoData.filter(x => x.supervisorStatus != 'SendBack').length==this.kraInfoData.length)
+        {
+            this._kraService.saveKraWorkFlow({_id:this.param_id,status:'Submitted'})
+            .subscribe(
+            res => {
+                    if(res.ok)
+                    {
+                        swal({
+                            title: 'Submitted Successfully!',
+                            text:"KRA has been submitted for Supervisor Approval.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                       this.loadKraInfo();
+                    }
+            },
+            error => {
+            });
+        }
+        else{
+            swal({
+                title: 'Oops!',
+                text:'Please save unsaved KRAs before submitting',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        } 
     }
 }

@@ -54,15 +54,9 @@
                                     <th>
                                         Supervisor
                                     </th>
-                                    <th *ngIf="status=='SendBack'">
+                                    <th>
                                         Send Back Comment
                                     </th>
-                                    <!-- <th>
-                                        Approve
-                                    </th>
-                                    <th>
-                                        Send Back
-                                    </th> -->
                                     <th>
                                         Action
                                     </th>
@@ -74,40 +68,32 @@
                                             {{i+1}}
                                        </th> 
                                         <td>
-                                            <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                            <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air" disabled></textarea>
                                         </td>
                                         <td>
-                                            <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled"></ng-select>
+                                            <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
                                         </td>
                                         <td>
-                                            <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled"></ng-select>
+                                            <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel" disabled></ng-select>
                                         </td>
                                         <td>
-                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                            <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled></textarea>
                                         </td>
                                         <td>
-                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+                                            <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled></textarea>
                                         </td>
                                         <td>
-                                            <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled"></ng-select>
-                                        </td>
-                                        <td  *ngIf="status=='SendBack'">
-                                            <textarea name="sendBackComment" id="sendBackComment"  class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
-                                        </td>
-                                        <!-- <td>
-                                                <button class="btn btn-success" type="button">
-                                                        Approve
-                                                    </button>
-                                                  
+                                            <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" disabled></ng-select>
                                         </td>
                                         <td>
-                                                    <button class="btn btn-danger" type="button">
-                                                            SendBack
-                                                    </button>
-                                        </td> -->
+                                            <textarea name="sendBackComment" id="sendBackComment" [(ngModel)]="kraInfo.sendBackComment"  class="form-control m-input m-input--air" [disabled]="kraInfo.supervisor_id!=_authService.atCurrentUserData._id || kraInfo.supervisorStatus"></textarea>
+                                        </td>
                                         <td>
-                                            <button class="btn btn-danger" type="button">
-                                                SendBack
+                                            <button class="btn btn-success" type="button" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id" [disabled]="kraInfo.supervisorStatus" (click)="preSaveKraDetails(i,'Approved')">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-danger" type="button" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id" [disabled]="kraInfo.supervisorStatus" (click)="preSaveKraDetails(i,'SendBack')">
+                                                <i class="fa fa-remove"></i>
                                             </button>
                                         </td>
                                     </tr>

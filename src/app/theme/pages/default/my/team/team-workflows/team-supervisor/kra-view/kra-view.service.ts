@@ -23,8 +23,24 @@ export class KraViewService {
 
     saveKra(data: any): Observable<Response> {
         let url = "kra/addKraInfo"
+        if(data._id)
+        {
+            url="kra/updateKraInfo"
+        }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+
+    
+    saveKraWorkFlow(data:any):Observable<Response> 
+    {
+        let url = "kra/addKraWorkFlowInfo"
+        if(data._id)
+        {
+            url = "kra/updateKraWorkFlowInfo"
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+    
     private extractData(res: Response) {
         return res || {};
     }
