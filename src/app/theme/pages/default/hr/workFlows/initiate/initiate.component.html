@@ -74,8 +74,9 @@
 									<tr class="m-datatable__row" >
 										
 										<th class="m-datatable__cell" width="5%">
-												<label>
+												<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
 														<input type="checkbox" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0" (change)="selectAllEmployee($event)">
+													<span></span>
 												</label>
 										</th>
 										<th class="m-datatable__cell" width="5%" ></th>
@@ -108,8 +109,9 @@
 							<tbody class="m-datatable__body">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 									<td class="m-datatable__cell" width="5%" >
-										<label>
-											<input type="checkbox" [(ngModel)]="employee.checked">
+										<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+												<input type="checkbox" [(ngModel)]="employee.checked">
+											<span></span>
 										</label>
 									</td>	
 									<td class="m-datatable__cell" width="5%" >
