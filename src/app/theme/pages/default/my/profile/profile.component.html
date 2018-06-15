@@ -1175,7 +1175,7 @@
                                                 <span class="required" aria-required="true"> * </span>
                                                 <input class="form-control m-input m-input--air" [(ngModel)]="family.name" #familyName="ngModel" id="familyName" name="familyName" placeholder="Enter name" type="text" required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack"  [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'">
                                                 <div class="form-control-feedback has-danger"  *ngIf="!familyName.valid" >
-                                                    <span *ngIf="ffamilyInfo.submitted && !familyName.errors?.pattern">This field is required.</span>
+                                                    <span *ngIf="ffamilyInfo.submitted && familyName.errors?.required">This field is required.</span>
                                                     <span *ngIf="familyName.errors?.pattern">Special characters not allowed. only space is allowed</span>
                                                 </div>
 
@@ -1742,7 +1742,7 @@
                                                 This field is required.
                                             </div>
                                             <div class="form-control-feedback has-danger"  *ngIf="!bankName.valid" >
-                                                <span *ngIf="fbankDetails.submitted && !bankName.errors?.pattern">This field is required.</span>
+                                                <span *ngIf="fbankDetails.submitted && bankName.errors?.required">This field is required.</span>
                                                 <span *ngIf="bankName.errors?.pattern">Special characters are not allowed. Only space is allowed</span>
                                             </div>
                                         </div>
@@ -1754,7 +1754,7 @@
                                             </label>
                                             <input class="form-control m-input m-input--air" [(ngModel)]="bankDetails.accountName" #accountName="ngModel" id="accountName" name="accountName" placeholder="Enter Account Name" type="text" required  disabled [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'">
                                             <div class="form-control-feedback has-danger"  *ngIf="!accountName.valid" >
-                                                <span *ngIf="fbankDetails.submitted && !accountName.errors?.pattern">This field is required.</span>
+                                                <span *ngIf="fbankDetails.submitted && accountName.errors?.required">This field is required.</span>
                                                 <span *ngIf="accountName.errors?.pattern">Special characters are not allowed. Only space is allowed</span>
                                             </div>
                                         </div>
