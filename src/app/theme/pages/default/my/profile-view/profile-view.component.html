@@ -9,8 +9,8 @@
                             <div class="col-md-2">
                                 <div class="m-widget4__item">
                                     <div class="m-widget4__img m-widget4__img--pic">
-                                        <img *ngIf="profileProcess.profileImage; else noImage" src="{{profileProcess.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
-                                        <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"></ng-template>
+                                            <img *ngIf="profileProcess.profileImage; else noImage" src="{{imageBase+profileProcess.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
+                                            <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"></ng-template>
                                     </div>
                                     <div class="m-widget4__info">
                                         <span class="m-widget4__title">
@@ -211,10 +211,8 @@
                                                         </div>
                                                         <div class="col-md-2 profile--image-div pull-right">
                                                             <span >
-                                                                <img *ngIf="_authService?.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+_authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--marginless m--img-centered profile--image" alt="">
-                                                                <ng-template #noImage>
-                                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--marginless m--img-centered profile--image">
-                                                                </ng-template>
+                                                                <img class="m--img-rounded m--marginless m--img-centered profile--image" *ngIf="profileProcess.profileImage; else noImage" src="{{imageBase+profileProcess.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
+                                                                <ng-template #noImage><img class="m--img-rounded m--marginless m--img-centered profile--image" src="./assets/app/media/img/custom/users/user6.jpg"></ng-template>
                                                             </span>
                                                         </div>`
                                                 </div>
@@ -310,7 +308,7 @@
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
                                                             <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail"
-                                                                (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                                                (blur)="checkEmailExists(personalEmail,savedPersonalEmailId)" #personalEmail="ngModel" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                                                 placeholder="Enter email" type="email" required disabled>
                                                             <div class="form-control-feedback has-danger">
                                                                 <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
@@ -1565,7 +1563,7 @@
                                                             <label for="officeEmailId">Office Email ID
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail)" placeholder="Enter office email id"
+                                                            <input [(ngModel)]="officeInfo.officeEmail" #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail,savedOfficeEmailId)" placeholder="Enter office email id"
                                                                 name="officeEmailId" type="text" class="form-control m-input m-input--air" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                                                 required disabled>
                                                             <div class="form-control-feedback has-danger">

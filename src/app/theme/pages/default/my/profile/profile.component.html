@@ -149,9 +149,9 @@
                                                 </div>
                                         <div class="col-md-2 profile--image-div pull-right">
                                             <span >
-                                                <img *ngIf="_authService?.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+_authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--marginless m--img-centered profile--image" alt="">
+                                                <img *ngIf="_authService?.atCurrentUserData?.profileImage; else noImage" src="{{imageBase+_authService?.atCurrentUserData?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered profile--image" alt="">
                                                 <ng-template #noImage>
-                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--marginless m--img-centered profile--image">
+                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded m--marginless m--img-centered profile--image">
                                                 </ng-template>
                                                 <input type="file"  name="profileImage" ngFileSelect [options]="options" (uploadOutput)="onUploadOutputProfile($event,'profileImage')" [uploadInput]="uploadInput" #profileImage>
                                             </span>
@@ -240,7 +240,7 @@
                                                     <label for="personalEmail">Personal Email
                                                     <span class="required" aria-required="true"> * </span>
                                                     </label>
-                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (blur)="checkEmailExists(personalEmail)" #personalEmail="ngModel" placeholder="Enter email" type="email"  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
+                                                    <input class="form-control m-input m-input--air" id="personalEmail" name="personalEmail" [(ngModel)]="personalInfo.personalEmail" lowerCase pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (blur)="checkEmailExists(personalEmail,savedPersonalEmailId)" #personalEmail="ngModel" placeholder="Enter email" type="email"  required [disabled]="profileProcess.isEmployeeSubmitted &&  !profileProcess.isHrSendBack">
                                                     <div class="form-control-feedback has-danger">
                                                         <span *ngIf="fpersonalInfo.submitted && personalEmail.errors?.required">This field is required.</span>
                                                         <span *ngIf="personalEmail.errors?.pattern">Personal Email not valid.</span> 
@@ -1339,7 +1339,7 @@
                                             <label for="officeEmailId">Office Email ID
                                                 <span class="required" aria-required="true"> * </span>
                                             </label>
-                                            <input  [(ngModel)]="officeInfo.officeEmail"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail)" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" required disabled>
+                                            <input  [(ngModel)]="officeInfo.officeEmail"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail,savedOfficeEmailId)" placeholder="Enter office email id" name="officeEmailId" type="text" class="form-control m-input m-input--air" required disabled>
                                             <div class="form-control-feedback has-danger">
                                                 <span *ngIf="fofficeInfo.submitted && officeEmail.errors?.required">This field is required.</span>
                                                 <span *ngIf="officeEmail.errors?.pattern">Offcie Email not valid.</span> 
