@@ -12,9 +12,17 @@ export class OnlyPercentageDirective {
     @HostListener('keydown', ['$event']) onKeyDown(event) {
         let e = <KeyboardEvent>event;
         if (this.OnlyPercentage) {
-            if(this.el.nativeElement.value.length==2 && e.keyCode===46)
+            if ([46, 8].indexOf(e.keyCode) !== -1)
+            {
+                return;
+            }
+            if(this.el.nativeElement.value.length==2 && e.keyCode===190)
             {
               return;
+            }
+            if(this.el.nativeElement.value.length==2 && e.keyCode!==190)
+            {
+                event.preventDefault();
             }
             else{
                 var value = this.el.nativeElement.value + "" + e.key;

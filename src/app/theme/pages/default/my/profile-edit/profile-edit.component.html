@@ -973,11 +973,11 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="marks">Marks in %
                                                                 </label>
-                                                                <input type="text" name="marks" [(ngModel)]="academic.marks" maxlength="3" OnlyNumber="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
+                                                                <input type="text" name="marks" [(ngModel)]="academic.marks"  OnlyPercentage="true" #marks="ngModel" placeholder="Enter marks in %" id="marks" class="form-control m-input m-input--air" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                             </div>
-                                                            <div class="form-control-feedback has-danger" *ngIf="academic.marks > 100">
+                                                            <!-- <div class="form-control-feedback has-danger" *ngIf="academic.marks > 100">
                                                                 Marks cannot be more than 100%
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
                                                                 <div class="form-group m-form__group">
