@@ -15,6 +15,9 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
+import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
+
+
 
 const routes: Routes = [{
     path: '', component: MyComponent,

@@ -22,7 +22,7 @@ import { DocumentsComponent } from './documents/documents.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { MyService } from "./my.service"
-
+import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
 
 @NgModule({
     imports: [
@@ -45,7 +45,7 @@ import { MyService } from "./my.service"
         DocumentsComponent,
         ChangePasswordComponent
     ],
-    providers: [MyService]
+    providers: [MyService,EmployeeGuard]
 })
 export class MyModule {
 }

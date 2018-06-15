@@ -6,14 +6,14 @@ import { JwtHelper } from 'angular2-jwt';
 
 
 @Injectable()
-export class HrGuard implements CanActivate {
+export class EmployeeGuard implements CanActivate {
 
     jwtHelper: JwtHelper = new JwtHelper();
 
     isHr() {
         let userInfo = sessionStorage.getItem('accessToken') ? this.jwtHelper.decodeToken(sessionStorage.getItem('accessToken')) : null;
         if (userInfo) {
-            if (userInfo.roles.indexOf('HR') > -1 || userInfo.roles.indexOf('HR2') > -1  ) {
+            if (userInfo.roles.indexOf('Employee') > -1) {
                 return true;
             }
         }
