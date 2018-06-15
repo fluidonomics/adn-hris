@@ -111,6 +111,8 @@ export class ProfileComponent implements OnInit {
         isSupervisorSendBack: false
     }
 
+    savedPersonalEmailId:string;
+    savedOfficeEmailId:string;
     imageBase:string;
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -456,24 +458,31 @@ export class ProfileComponent implements OnInit {
                 swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
+                this.savedPersonalEmailId= this.personalInfo.personalEmail;
             },
             error => {
                 mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
 
-    checkEmailExists(_element) {
+    checkEmailExists(_element,oldValue) {
         if (_element.valid) {
-            this._commonService.checkEmailExists(_element.value)
-                .subscribe(
-                data => {
-                    if (data.json())
-                        _element.control.setErrors({ "emailExists": true })
-                },
-                error => {
-                    _element.control.setErrors(null)
+            if(oldValue && oldValue ==_element.value)
+            {
+                _element.control.setErrors(null)
+            }
+            else
+            {
+                this._commonService.checkEmailExists(_element.value)
+                    .subscribe(
+                    data => {
+                        if (data.json())
+                            _element.control.setErrors({ "emailExists": true })
+                    },
+                    error => {
+                        _element.control.setErrors(null)
                 });
-
+            }
         }
     }
 
@@ -928,7 +937,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
-
+                this.savedPersonalEmailId= this.personalInfo.personalEmail;
             },
             error => {
             });
@@ -1204,6 +1213,7 @@ export class ProfileComponent implements OnInit {
                 this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
                 this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
                 this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
+                this.savedOfficeEmailId=this.officeInfo.officeEmail;
             },
             error => {
             });

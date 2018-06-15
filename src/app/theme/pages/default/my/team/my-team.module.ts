@@ -13,6 +13,8 @@ import { MyTeamReviewerComponent } from './team-workflows/team-reveiwer/team-rev
 import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team-supervisor.component';
 import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
 
+import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
+import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 
 @NgModule({
     imports: [
@@ -30,7 +32,7 @@ import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kr
         MyTeamSupervisorComponent,
         MyTeamKraComponent
     ],
-    providers: [MyTeamService]
+    providers: [MyTeamService,ReviewerGuard,SupervisorGuard]
 })
 export class MyTeamModule {
 }
