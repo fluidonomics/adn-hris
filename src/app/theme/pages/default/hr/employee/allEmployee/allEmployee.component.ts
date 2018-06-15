@@ -161,7 +161,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                 this.rolesData[index].checked=!this.rolesData[index].checked;
             }
             else{
-                this.rolesData[index]._id= res.json().data.data._id;  
+                this.rolesData[index]._id= res.json().data._id || null;  
             }
             this.utilityService.hideLoader('#configurationPortlet');
         },
@@ -243,12 +243,15 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
 
     saveSupervisor()
     {
+        this.utilityService.showLoader('#configurationPortlet');
         this._commonService.saveSupervisor(this.supervisor)
         .subscribe(
         res => {
+           this.utilityService.hideLoader('#configurationPortlet');
            this.supervisor=res.json();
         },
         error => {
+            this.utilityService.hideLoader('#configurationPortlet');
         });
     }
     
