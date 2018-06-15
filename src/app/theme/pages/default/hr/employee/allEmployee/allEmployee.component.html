@@ -19,11 +19,11 @@
                                 </div>
                                 <div class="col-xl-4 order-2 order-xl-1">
                                     <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
-                                            <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle" href="#" ng-reflect-href="#">
+                                            <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
                                                     <i class="la la-plus m--hide"></i>
                                                     <i class="la la-ellipsis-h"></i>
                                             </span>
-                                            <div class="m-dropdown__wrapper" style="z-index: 101;">
+                                            <div class="m-dropdown__wrapper">
                                                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
                                                     <div class="m-dropdown__inner">
                                                         <div class="m-dropdown__body">
@@ -31,35 +31,59 @@
                                                                 <ul class="m-nav">
                                                                     <li class="m-nav__item">
                                                                         <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon flaticon-share"></i>
+                                                                            <i class="m-nav__link-icon fa fa-exclamation-triangle m--font-danger"></i>
                                                                             <span class="m-nav__link-text">
-                                                                                Activity
+                                                                                Inactive
                                                                             </span>
                                                                         </a>
                                                                     </li>
                                                                     <li class="m-nav__item">
                                                                         <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                                            <i class="m-nav__link-icon fa fa-circle-o m--font-warning"></i>
                                                                             <span class="m-nav__link-text">
-                                                                                Messages
+                                                                                Personal Profile Incomplete
                                                                             </span>
                                                                         </a>
                                                                     </li>
                                                                     <li class="m-nav__item">
-                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                FAQ
-                                                                            </span>
-                                                                        </a>
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Personal Profile Submitted
+                                                                                </span>
+                                                                            </a>
                                                                     </li>
                                                                     <li class="m-nav__item">
-                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Support
-                                                                            </span>
-                                                                        </a>
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-danger"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Personal Profile Sent Back
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Office Profile Submitted
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-danger"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Office Profile Sent Back
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Profile Completed
+                                                                                </span>
+                                                                            </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -208,7 +232,7 @@
 					</pagination-template>
 					<div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
 						
-						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="-98">
+						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="1">
 								<option value=10>10</option>
 								<option value=20>20</option>
 								<option value=30>30</option>
@@ -235,14 +259,14 @@
                                     <img alt="" src="./assets/app/media/img//bg/bg-4.jpg">
                                     <h3 class="m-widget27__title m--font-light">
                                         <span style="padding-top: 40px;">
-                                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                                <div class="m--space-10"></div>
+                                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered" style="height:80px; width:80px;">
                                                 <ng-template #noImage>
-                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
+                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="height:80px; width:80px;">
                                                 </ng-template>
-                                                <h4 class="m--font-light" style="padding-top: 15px;">{{employee.fullName}}</h4>
+                                                <h5 class="m--font-light" style="padding-top: 15px;">{{employee.fullName}}</h5>
                                                 <h6 class="m--font-light">{{employee.userName}} | {{employee?.designationDetails?.designationName}}</h6> 
-                                                <!-- <h6 class="m--font-light" style="padding-bottom: 15px;">Internationa Business</h6>  -->
-                                             
+                                                <div class="m--space-30"></div>
                                         </span>
                                     </h3>
                                     <div class="m-widget27__btn">
@@ -264,7 +288,7 @@
                                             </li>
                                             <li class="m-widget27__nav-item nav-item">
                                                     <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2" >
-                                                        Profile
+                                                        Contact
                                                     </a>
                                             </li>
                                             <li class="m-widget27__nav-item nav-item">
@@ -284,45 +308,18 @@
                                                             <div class="col">
                                                                 <div class="m-widget27__legends">
                                                                         <div class="m-widget27__legend">
-                                                                                <span class="m-widget27__legend-bullet fa" [ngClass]="{'fa-male':employee.personalDetails?.gender=='Male','fa-female':employee.personalDetails?.gender=='Female'}"></span>
+                                                                                <span class="m-widget27__legend-bullet fa" [ngClass]="{'fa-male':employee.personalDetails?.gender=='Male','fa-female':employee.personalDetails?.gender=='Female', 'fa-user':!employee.personalDetails?.gender}"></span>
                                                                                 <span class="m-widget27__legend-text">
                                                                                     Gender : {{employee.personalDetails?.gender ? employee.personalDetails?.gender :'Not avaliable' }}
                                                                                 </span>
                                                                             </div>
-                                                                            <div class="m-widget27__legend">
-                                                                                    <span class="m-widget27__legend-bullet fa fa-envelope"></span>
-                                                                                    <span class="m-widget27__legend-text">
-                                                                                       {{employee.personalDetails?.personalEmail}}
-                                                                                    </span>
-                                                                        </div>
-                                                                    <div class="m-widget27__legend">
-                                                                        <span class="m-widget27__legend-bullet fa fa-phone"></span>
-                                                                        <span class="m-widget27__legend-text">
-                                                                             {{employee.personalDetails?.personalMobileNumber ? ('(+880) ' + employee.personalDetails?.personalMobileNumber):'Not avaliable'}}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                    <div class="m-widget27__legends">
                                                                             <div class="m-widget27__legend">
                                                                                     <span class="m-widget27__legend-bullet fa fa-calendar"></span>
                                                                                     <span class="m-widget27__legend-text">
                                                                                         DOB: {{employee.personalDetails?.dob ? (employee.personalDetails?.dob | date:'dd-MMM-yyyy') : 'Not avaliable' }} {{employee.personalDetails?.dob ? ('(' +utilityService.getAge(employee?.personalDetails?.dob) +')') :''}}
                                                                                     </span>
                                                                                 </div>
-                                                                        <div class="m-widget27__legend">
-                                                                            <span class="m-widget27__legend-bullet fa fa-envelope"></span>
-                                                                            <span class="m-widget27__legend-text">
-                                                                              {{employee.officeDetails?.officeEmail ? employee.officeDetails?.officeEmail :'Not avaliable'}}
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="m-widget27__legend">
-                                                                            <span class="m-widget27__legend-bullet fa fa-phone"></span>
-                                                                            <span class="m-widget27__legend-text">
-                                                                                 {{employee.officeDetails?.officeMobile ? ('(+880)' + employee.officeDetails?.officeMobile ) :'Not avaliable'}}
-                                                                            </span>
-                                                                        </div>
+                                                                  
                                                                         
                                                                     </div>
                                                             </div>
@@ -330,35 +327,39 @@
                                             </div>
                                             <div class="tab-pane fade" id="m_personal_income_quater_2">
                                                     <div class="row  align-items-center">
-                                                        <div class="col">
-                                                            <div class="m-widget27__chart" id="m_chart_personal_income_quater_1" style="height: 160px">
-                                                                <div class="m-widget27__stat">
-                                                                    37
-                                                                </div>
-                                                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-donut" style="width: 100%; height: 100%;"><g class="ct-series custom"><path d="M169.499,108.314A66.5,66.5,0,0,0,109.328,13.5" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#00c5dc&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.70703125px 133.70703125px" stroke-dashoffset="-133.70703125px" stroke="#00c5dc"><animate attributeName="stroke-dashoffset" id="anim0" dur="1000ms" from="-133.70703125px" to="0px" fill="freeze" stroke="#00c5dc" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M58.089,122.389A66.5,66.5,0,0,0,169.598,108.104" class="ct-slice-donut" ct:value="32" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#ffb822&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="133.9405975341797px 133.9405975341797px" stroke-dashoffset="-133.9405975341797px" stroke="#ffb822"><animate attributeName="stroke-dashoffset" id="anim1" dur="1000ms" from="-133.9405975341797px" to="0px" fill="freeze" stroke="#ffb822" begin="anim0.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g><g class="ct-series custom"><path d="M109.328,13.5A66.5,66.5,0,0,0,58.237,122.567" class="ct-slice-donut" ct:value="36" ct:meta="{&amp;quot;data&amp;quot;:{&amp;quot;color&amp;quot;:&amp;quot;#716aca&amp;quot;}}" style="stroke-width: 17px;" stroke-dasharray="150.6541748046875px 150.6541748046875px" stroke-dashoffset="-150.6541748046875px" stroke="#716aca"><animate attributeName="stroke-dashoffset" id="anim2" dur="1000ms" from="-150.6541748046875px" to="0px" fill="freeze" stroke="#716aca" begin="anim1.end" calcMode="spline" keySplines="0.23 1 0.32 1" keyTimes="0;1"></animate></path></g></svg></div>
-                                                        </div>
-                                                        <div class="col">
+                                                            <div class="col">
+                                                        
                                                             <div class="m-widget27__legends">
-                                                                <div class="m-widget27__legend">
-                                                                    <span class="m-widget27__legend-bullet m--bg-accent"></span>
-                                                                    <span class="m-widget27__legend-text">
-                                                                        37% Case
-                                                                    </span>
+                                                                    <div class="m-widget27__legend">
+                                                                            <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                                            <span class="m-widget27__legend-text">
+                                                                              Personal: {{employee.personalDetails?.personalEmail}}
+                                                                            </span>
                                                                 </div>
                                                                 <div class="m-widget27__legend">
-                                                                    <span class="m-widget27__legend-bullet m--bg-warning"></span>
-                                                                    <span class="m-widget27__legend-text">
-                                                                        42% Events
-                                                                    </span>
-                                                                </div>
+                                                                        <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                                        <span class="m-widget27__legend-text">
+                                                                                Office: {{employee.officeDetails?.officeEmail ? employee.officeDetails?.officeEmail :'Not avaliable'}}
+                                                                        </span>
+                                                                    </div>
+                                                            <div class="m-widget27__legend">
+                                                                <span class="m-widget27__legend-bullet fa fa-phone"></span>
+                                                                <span class="m-widget27__legend-text">
+                                                                        Personal: {{employee.personalDetails?.personalMobileNumber ? ('(+880) ' + employee.personalDetails?.personalMobileNumber):'Not avaliable'}}
+                                                                </span>
+                                                            </div>
+                                                       
+                                                                
+                                                             
                                                                 <div class="m-widget27__legend">
-                                                                    <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                                    <span class="m-widget27__legend-bullet fa fa-phone"></span>
                                                                     <span class="m-widget27__legend-text">
-                                                                        19% Others
+                                                                         Office: {{employee.officeDetails?.officeMobile ? ('(+880)' + employee.officeDetails?.officeMobile ) :'Not avaliable'}}
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                       
                                                     </div>
                                             </div>
                                             <div class="tab-pane fade" id="m_personal_income_quater_3">
@@ -450,6 +451,56 @@
                                 </h3>
                             </div>
                         </div>
+                        <div class="m-portlet__head-tools">
+                                <ul class="m-portlet__nav">
+                                    <li aria-expanded="true"  [class.m-dropdown--open]="docMouseOvered" (mouseout)="docMouseOvered=false" (mouseover)="docMouseOvered=true" class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push">
+                                        <a class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle" href="#" ng-reflect-href="#">
+                                            <i class="la la-ellipsis-h m--font-success"></i>
+                                        </a>
+                                        <div class="m-dropdown__wrapper" style="z-index: 101;">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                                                    <div class="m-list-timeline__items"> 
+                                                                    <div class="m-list-timeline__item" >
+                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--secondary"></span>
+                                                                        <span class="m-list-timeline__text">
+                                                                               Not Assigned                                                      
+                                                                        </span>
+                                                                     </div>
+                                                            </div>
+                                                        </div>
+                                                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                                                    <div class="m-list-timeline__items"> 
+                                                                    <div class="m-list-timeline__item" >
+                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                                                        <span class="m-list-timeline__text">
+                                                                                Not Uploaded                                                    
+                                                                        </span>
+                                                                     </div>
+                                                                    </div>
+                                                            </div>
+                                                            
+                                                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                                                    <div class="m-list-timeline__items"> 
+                                                                    <div class="m-list-timeline__item" >
+                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                                        <span class="m-list-timeline__text">
+                                                                               Uploaded                                                      
+                                                                        </span>
+                                                                     </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="tab-content">
@@ -458,7 +509,7 @@
                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                         <div class="m-list-timeline__items"> 
                                         <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
-                                            <span class="m-list-timeline__badge " [ngClass]="{'m-list-timeline__badge--success':doc.externalDocumentUrl,'m-list-timeline__badge--danger':!doc.externalDocumentUrl}" ></span>
+                                            <span class="m-list-timeline__badge " [ngClass]="{'m-list-timeline__badge--secondary':!doc._id, 'm-list-timeline__badge--success': doc.externalDocumentUrl,'m-list-timeline__badge--warning':doc._id && !doc.externalDocumentUrl}" ></span>
                                             <span class="m-list-timeline__text">
                                                     {{doc.documentName}}                                                       
                                             </span>
