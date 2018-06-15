@@ -7396,6 +7396,11 @@ body.m--skin-dark {
   height: 0;
   margin-bottom: 5px; }
 
+.m--space-7 {
+  display: block;
+  height: 0;
+  margin-bottom: 7px; }
+
 .m--space-10 {
   display: block;
   height: 0;
@@ -7406,11 +7411,16 @@ body.m--skin-dark {
   height: 0;
   margin-bottom: 15px; }
 
-.m--space-20 {
-  display: block;
-  height: 0;
-  margin-bottom: 20px; }
+  .m--space-20 {
+    display: block;
+    height: 0;
+    margin-bottom: 20px; }
 
+    .m--space-25 {
+      display: block;
+      height: 0;
+      margin-bottom: 25px; }
+    
 .m--space-30 {
   display: block;
   height: 0;
@@ -9619,7 +9629,7 @@ body.m--skin-dark {
   .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__head .m-datatable__row > .m-datatable__cell .m-checkbox.m-checkbox--solid > input:checked ~ span,
   .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__body .m-datatable__row > .m-datatable__cell .m-checkbox.m-checkbox--solid > input:checked ~ span,
   .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__foot .m-datatable__row > .m-datatable__cell .m-checkbox.m-checkbox--solid > input:checked ~ span {
-    background: #716aca; }
+    background: #198F4A; }
   .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__head .m-datatable__row > .m-datatable__cell,
   .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__foot .m-datatable__row > .m-datatable__cell {
     background: #f4f3fb; }

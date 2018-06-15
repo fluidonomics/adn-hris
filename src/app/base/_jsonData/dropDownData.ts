@@ -355,6 +355,13 @@ export const separationType = [
     }
 ]
 
+export const batchType = [
+    {
+        "id": "KRA",
+        "text": "KRA"
+    }
+]
+
 export const festivalAllowance = [
     {
         "id": "Basic",
