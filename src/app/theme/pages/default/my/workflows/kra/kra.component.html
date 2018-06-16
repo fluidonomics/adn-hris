@@ -115,11 +115,12 @@
                 </div> 
                 <div class="m-portlet__head-tools">
                    <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
-                    <li class="nav-item m-tabs__item" *ngIf="isDisabled" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'">
-                            <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow();" >Submit</button>	
+                        <!-- [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" -->
+                    <li class="nav-item m-tabs__item" *ngIf="!isDisabled">
+                        <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)=" fkraInfo.valid && submitKraWorkFlow()" >Submit</button>	
                     </li>
                     <li class="nav-item m-tabs__item">
-                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false" (click)="printDiv(printKra)">
                         <i class="la la-print"></i>
                         Print
                         </a>
@@ -130,9 +131,9 @@
              <div class="m-portlet__body">
                 <div class="m-section" >
                    <div class="m-section__content">  
-                    <!-- <form (ngSubmit)="fkraInfo.valid && submitKraWorkFlow()" #fkraInfo="ngForm" novalidate="novalidate"> -->
+                    <form #fkraInfo="ngForm" novalidate="novalidate">
                         <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
+                                <table class="table table-bordered table-hover" #printKra>
                                     <thead>
                                         <tr>
                                         <th>
@@ -156,16 +157,16 @@
                                         <th>
                                             Supervisor
                                         </th>
-                                        <th>
+                                        <th *ngIf="!isDisabled">
                                             Send Back Comment (Supervisor)
                                         </th>
-                                        <th>
+                                        <th *ngIf="!isDisabled">
                                             Action
                                         </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index" >
+                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index" ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup" >
                                         <th scope="row">
                                                 {{i+1}}
                                         </th> 
@@ -187,11 +188,12 @@
                                             <td>
                                                 <ng-select class="m-input m-input--air" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
                                             </td>
-                                            <td>
+                                            <td *ngIf="!isDisabled">
                                                 <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment" class="form-control m-input m-input--air" disabled></textarea>
                                             </td>
-                                            <td>
-                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+                                            <td *ngIf="!isDisabled">
+                                                    <!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
+                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i,controlRow)" [disabled]="!controlRow.valid">
                                                 <i class="la la-save"></i>
                                                </button>
                                                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
@@ -201,8 +203,8 @@
                                                <button *ngIf="kraInfo.supervisorStatus!='Approved'" type="button" (click)="deleteKraHtml(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved' "> <i class="fa fa-remove"></i></button> -->
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="9" >
+                                        <tr *ngIf="!isDisabled">
+                                            <td colspan="9">
                                                <button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" (click)="addKraHtml()"><i class="la la-plus "></i></button>
                                             </td>
                                        </tr>
@@ -210,10 +212,11 @@
                                 </table>
                         </div>
                         <br>
-                        <!-- <button class="btn btn-success m-btn--air" type="submit" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'">
+                        <!-- [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" -->
+                        <!-- <button class="btn btn-success m-btn--air" type="submit">
                            Submit
                         </button> -->
-                    <!-- </form> -->
+                    </form>
                    </div><br><br>
                    <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isKraAvaliable">
                         <div class="tab-content">

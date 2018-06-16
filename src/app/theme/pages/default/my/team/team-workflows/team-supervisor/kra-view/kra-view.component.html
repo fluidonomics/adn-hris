@@ -54,10 +54,10 @@
                                     <th>
                                         Supervisor
                                     </th>
-                                    <th>
+                                    <th *ngIf="!isDisabled">
                                         Send Back Comment
                                     </th>
-                                    <th>
+                                    <th *ngIf="!isDisabled">
                                         Action
                                     </th>
                                     </tr>
@@ -85,15 +85,17 @@
                                         <td>
                                             <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel" disabled></ng-select>
                                         </td>
-                                        <td>
+                                        <td *ngIf="!isDisabled">
                                             <textarea name="sendBackComment" id="sendBackComment" [(ngModel)]="kraInfo.sendBackComment"  class="form-control m-input m-input--air" [disabled]="kraInfo.supervisor_id!=_authService.atCurrentUserData._id || kraInfo.supervisorStatus"></textarea>
                                         </td>
-                                        <td>
-                                            <button class="btn btn-success" type="button" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id" [disabled]="kraInfo.supervisorStatus" (click)="preSaveKraDetails(i,'Approved')">
-                                                <i class="fa fa-check"></i>
+                                        <td *ngIf="!isDisabled">
+                                                <!-- [disabled]="kraInfo.supervisorStatus" -->
+                                            <button class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" type="button" title="Approved" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id && !kraInfo.supervisorStatus"  (click)="preSaveKraDetails(i,'Approved')">
+                                                <i class="la la-check"></i>
                                             </button>
-                                            <button class="btn btn-danger" type="button" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id" [disabled]="kraInfo.supervisorStatus" (click)="preSaveKraDetails(i,'SendBack')">
-                                                <i class="fa fa-remove"></i>
+                                            <!-- [disabled]="kraInfo.supervisorStatus" -->
+                                            <button class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" type="button" title="SendBack" *ngIf="kraInfo.supervisor_id==_authService.atCurrentUserData._id  && !kraInfo.supervisorStatus"  (click)="preSaveKraDetails(i,'SendBack')">
+                                                <i class="la la-remove"></i>
                                             </button>
                                         </td>
                                     </tr>

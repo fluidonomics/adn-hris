@@ -7,10 +7,12 @@ import { KraService } from "./kra.service"
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
+import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./kra.component.html",
+    styles:[".ng-select.ng-invalid .ng-control ,.input.ng-invalid, textarea.ng-invalid {border-color: #ff0000!important;} "],
     encapsulation: ViewEncapsulation.None,
     providers: [KraService]
 })
@@ -91,8 +93,10 @@ export class MyKraComponent {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
                 this.kraInfoData = res.json().data;
+                console.log(res.json().status);
                 let status= res.json().status;
-                this.isDisabled = status =="Initiated" || status=="SendBack" ? false :true ;
+                this.isDisabled = status == "Initiated" || status =="SendBack" ? false :true ;
+                console.log(this.isDisabled);
                 if(this.kraInfoData.length==0)
                 {
                     this.addKraHtml(); 
@@ -248,29 +252,35 @@ export class MyKraComponent {
 
     saveKraDetails(index:number)
     {
-        this.kraInfoData[index].supervisorStatus=null;
-        this._kraService.saveKra(this.kraInfoData[index])
-        .subscribe(
-        res => {
-                if(res.ok)
-                {
-                   this.kraInfoData[index]=res.json();
-                swal({
-                    title: 'Success',
-                    text:"KRA has been Saved.",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
-                }
-        },
-        error => {
-        });
+            this.kraInfoData[index].supervisorStatus=null;
+            this._kraService.saveKra(this.kraInfoData[index])
+            .subscribe(
+            res => {
+                    if(res.ok)
+                    {
+                    this.kraInfoData[index]=res.json();
+                    swal({
+                        title: 'Success',
+                        text:"KRA has been Saved.",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                    }
+            },
+            error => {
+            });
     }
 
     submitKraWorkFlow()
     {
+
+      
+        let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
+        let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
+        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
+
         if(this.kraInfoData.filter(x => x.supervisorStatus != 'SendBack').length==this.kraInfoData.length)
         {
             this._kraService.saveKraWorkFlow({_id:this.param_id,status:'Submitted'})
