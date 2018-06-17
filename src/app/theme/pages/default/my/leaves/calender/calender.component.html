@@ -59,10 +59,10 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-                                                    <table class="m-datatable__table">
+                                                    <table class="m-datatable__table selectedLeaves">
                                                         <thead class="m-datatable__head">
                                                             <tr class="m-datatable__row">
-                                                                <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                                                                <th class="m-datatable__cell m-datatable__cell--sort" width="30%">
                                                                     <span>
                                                                         Name
                                                                         <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
@@ -84,20 +84,20 @@
                                                         </thead>
                                                         <tbody class="m-datatable__body">
                                                             <tr class="m-datatable__row" *ngFor="let leave of selectedLeaves">
-                                                                <td class="m-datatable__cell" width="25%">
-                                                                    <span>{{leave.empName}}</span>
+                                                                <td class="m-datatable__cell" width="30%">
+                                                                    <span>{{leave.emp_name}}</span>
                                                                 </td>
                                                                 <td class="m-datatable__cell" width="25%">
-                                                                    <span>{{leave.empId}}</span>
+                                                                    <span>{{leave.emp_id}}</span>
                                                                 </td>
                                                                 <td class="m-datatable__cell" width="50%">
-                                                                    <span>{{leave.leaveType}} - {{leave.description}}</span>
+                                                                    <span>{{leave.leave_type_name}} - {{leave.reason}}</span>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                         <tfoot class="m-datatable__head">
                                                             <tr>
-                                                                Total Item : {{calendardata.length}}
+                                                                Total Item : {{selectedLeaves.length}}
                                                             </tr>
                                                         </tfoot>
                                                     </table>
