@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../base/_services/authService.servic
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
 import { CalendarOptions } from '../../../../../../base/_components/calendar.component';
+import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 
 declare var $;
 declare var moment;
@@ -27,7 +28,8 @@ export class CalenderComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private leaveService: LeaveService
+        private leaveService: LeaveService,
+        private utilityService: UtilityService
     ) {
 
     }
@@ -92,9 +94,16 @@ export class CalenderComponent implements OnInit {
     }
 
     onDayClick(data: any) {
-        
+        this.selectedLeaves = [];
+        if (data.date) {
+            let date = new Date(data.date);
+            this.selectedLeaves = this.leaveDetails.filter(leave => {
+                if (this.utilityService.compareDates(data.date, leave.fromDate) == 1 && this.utilityService.compareDates(data.date, leave.toDate) == -1) {
+                    return leave;
+                }
+            })
+        }
     }
-
 }
 
 

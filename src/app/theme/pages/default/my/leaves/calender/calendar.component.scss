@@ -1,4 +1,11 @@
 app-my-leaves-calendar {
     flex: 1;
-    
+
+    .selectedLeaves {
+        td, th {
+            span {
+                font-size: 0.8rem;
+            }
+        }
+    }
 }
