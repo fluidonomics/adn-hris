@@ -353,7 +353,7 @@ export class CommonService {
       let url = "common/addEmployeeRole";
       if(data._id)
       {
-        url = "common/deleteEmployeeRole";
+        url = "common/updateEmployeeRole";
       }
       return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
     }

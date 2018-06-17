@@ -161,7 +161,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                 this.rolesData[index].checked=!this.rolesData[index].checked;
             }
             else{
-                this.rolesData[index]._id= res.json().data._id || null;  
+                this.rolesData[index]._id= res.json().data._id || null;
             }
             this.utilityService.hideLoader('#configurationPortlet');
         },
