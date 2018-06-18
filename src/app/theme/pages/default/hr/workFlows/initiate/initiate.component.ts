@@ -93,6 +93,9 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 if (res.ok) {
                     this.employeeData = [];
                     this.gradeData = res.json();
+                    this.gradeData=this.gradeData.filter(item=>
+                        item._id < 13
+                    );
                 }
             },
             error => {
@@ -107,7 +110,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                     let data = res.json().data || [];
                     if (data.length > 0) {
                         if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id));
+                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                             //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
                         }
                         if (this.filterBy.grades && this.filterBy.grades.length > 0) {
