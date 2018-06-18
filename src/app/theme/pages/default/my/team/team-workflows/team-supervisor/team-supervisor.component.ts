@@ -16,6 +16,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     kraData:any=[];
     imageBase:any;
     kraReverse:boolean=true;
+    employeeReverse:boolean=true;
 
     constructor(
         private _myteamService: MyTeamService,
