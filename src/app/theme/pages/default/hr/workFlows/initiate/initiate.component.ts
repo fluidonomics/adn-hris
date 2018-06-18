@@ -41,6 +41,12 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     imageBase:any;
 
+    batchTypes:any=[
+       {_id:"KRA" ,batchTypeName:"KRA", },
+       {_id:"Learning" ,batchTypeName:"Learning",disabled: true},
+       {_id:"PIP" ,batchTypeName:"PIP",disabled: true},
+    ]
+
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -121,7 +127,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         }
     }
 
-    saveBulkKra() {
+    saveBulkKra(form) {
 
         this.batchData.emp_id = this.employeeData.filter(function(employee, index, array) {
             return employee.checked;
@@ -134,6 +140,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             res => {
                 if (res.ok) {
                     swal("KRA Workflow", "Initiated", "success");
+                    form.resetForm();
                     this.clearForm();
                 }
             },

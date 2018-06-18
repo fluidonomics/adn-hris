@@ -184,19 +184,21 @@
 			        <span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
 				</div>
 				<div class="form-actions" style="margin-top: 25px;">
-				  <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiateWorkflow.valid && saveBulkKra()" #finitiateWorkflow="ngForm" novalidate="novalidate">
+				  <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiateWorkflow.valid && saveBulkKra(finitiateWorkflow)" #finitiateWorkflow="ngForm" novalidate="novalidate">
 					<div class="row">
 						<div class="col-md-4">
 								<div class="form-group m-form__group">
 										<label for="batchName">Workflow Type
 											</label>
 										<span class="required" aria-required="true"> * </span>
-										<select #batchTypes="ngModel" name="workflow" [(ngModel)]="batchData.batchType" class="form-control m-input m-input--air" data-width="70px" data-selected="50" required>
+										<!-- <select #batchTypes="ngModel" name="workflow" [(ngModel)]="batchData.batchType" class="form-control m-input m-input--air" data-width="70px" data-selected="50" required>
 												<option value="KRA">KRA</option>
 												<option value="Learning" disabled>Learning</option>
 												<option value="PIP" disabled>PIP</option>
-										</select>	
-										<div class="form-control-feedback has-danger" *ngIf="finitiateWorkflow.submitted && !batchTypes.valid">
+										</select>	 -->
+										<ng-select class="m-input m-input--air" name="workflow" [items]="batchTypes" bindLabel="batchTypeName"  bindValue="_id" placeholder="Select Workflow Type" [(ngModel)]="batchData.batchType"  #workflowType="ngModel" [clearable]="false" required>
+										</ng-select>
+										<div class="form-control-feedback has-danger" *ngIf="finitiateWorkflow.submitted && !workflowType.valid">
 												This field is required.
 										</div>									
 									</div>
