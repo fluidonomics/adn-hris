@@ -12,7 +12,7 @@ import { forEach } from "@angular/router/src/utils/collection";
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./kra.component.html",
-    styles:[".ng-select.ng-invalid .ng-control ,.input.ng-invalid, textarea.ng-invalid {border-color: #ff0000!important;} "],
+    styles:[".ng-select.customError.ng-invalid .ng-control ,.input.ng-invalid, textarea.ng-invalid {border-color: #ff0000!important;} "],
     encapsulation: ViewEncapsulation.None,
     providers: [KraService]
 })
