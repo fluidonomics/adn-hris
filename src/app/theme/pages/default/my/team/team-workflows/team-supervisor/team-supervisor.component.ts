@@ -15,6 +15,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     _currentEmpId: number;
     kraData:any=[];
     imageBase:any;
+    kraReverse:boolean=true;
 
     constructor(
         private _myteamService: MyTeamService,
@@ -40,7 +41,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved" );
                     let kraData = data.filter(obj =>  obj.kraWorkflow && obj.kraWorkflow.status == "Submitted" );
                     this.employeeData = profileData || [];
-                    this.kraData=kraData||[];
+                    this.kraData= kraData || [];
                 }
                 else
                     this.employeeData = data.json().data || [];
