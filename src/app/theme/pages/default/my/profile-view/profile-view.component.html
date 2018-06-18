@@ -568,7 +568,7 @@
                                                                                     This field is required.
                                                                             </span>    
                                                                             <span *ngIf="currentAddressPostCode.errors?.maxlength || currentAddressPostCode.errors?.minlength">
-                                                                                    Please enter your 6 digit number
+                                                                                    Please enter a 4 digit number
                                                                             </span>
                                                                     </div>
                                                             </div>
@@ -600,7 +600,7 @@
                                                                 <label for="permanentAddressLine1">Address Line 1
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine1}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{address.currentAddressLine1}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <input type="text" [(ngModel)]="address.permanentAddressLine1" #permanentAddLine="ngModel" placeholder="Enter Permanent Address Line 1"
                                                                         class="form-control m-input m-input--air" name="permanentAddressLin"
@@ -615,7 +615,7 @@
                                                             <div class="form-group m-form__group">
                                                                 <label for="permanentAddressLine2">Address Line 2
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressLine2}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{address.currentAddressLine2}}</span>
                                                                 <input type="text" *ngIf="!address.isSameAsCurrent" [(ngModel)]="address.permanentAddressLine2" #permanentAddressLine2="ngModel"
                                                                     class="form-control m-input m-input--air" placeholder="Enter Permanent Address Line 2"
                                                                     id="permanentAddressLine2" name="permanentAddressLine2" disabled>
@@ -628,7 +628,7 @@
                                                                 <label for="permanentAddressDivision">Division
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDivision?.selectedItems[0]?.label}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{currentDivision?.selectedItems[0]?.label}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <ng-select class="m-input m-input--air" name="permanentAddressDivision" [items]="permanentAddressDivisionData" (change)="loadpermanentAddressDistrictData(address.permanentAddressDivision_id)"
                                                                         bindLabel="locationName" bindValue="_id" placeholder="Select Division"
@@ -645,7 +645,7 @@
                                                                 <label for="permanentAddressDistrict">District
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentDistrict?.selectedItems[0]?.label}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{currentDistrict?.selectedItems[0]?.label}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <ng-select class="m-input m-input--air" name="permanentAddressDistrict" (change)="loadpermanentAddressThanaData(address.permanentAddressDistrict_id)"
                                                                         [items]="permanentAddressDistrictData" bindLabel="locationName"
@@ -665,7 +665,7 @@
                                                                 <label for="permanentAddressThana">Upazila/Thana
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{currentThana?.selectedItems[0]?.label}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <ng-select class="m-input m-input--air" name="permanentAddressThana" [items]="permanentAddressThanaData" bindLabel="locationName"
                                                                         bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.permanentAddressThana_id"
@@ -682,7 +682,7 @@
                                                                 <label for="permanentAddressPostCode">Post Code
                                                                     <span class="required" aria-required="true"> * </span>
                                                                 </label>
-                                                                <span class="form-control m-input m-input--air" *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
+                                                                <span class="form-control m-input m-input--air permanantAdressSpan " *ngIf="address.isSameAsCurrent">{{address.currentAddressPostCode}}</span>
                                                                 <ng-container *ngIf="!address.isSameAsCurrent">
                                                                     <input type="text" maxlength="4" minlength="4" [(ngModel)]="address.permanentAddressPostCode" #permanentAddressPostCode="ngModel" placeholder="Enter Permanent Post Code"
                                                                         class="form-control m-input m-input--air" id="permanentAddressPostCode"
@@ -693,7 +693,7 @@
                                                                                         This field is required.
                                                                                 </span>    
                                                                                 <span *ngIf="permanentAddressPostCode.errors?.maxlength || permanentAddressPostCode.errors?.minlength">
-                                                                                        Please enter your 6 digit number
+                                                                                        Please enter a 4 digit number
                                                                                 </span>
                                                                         </div>
                                                                 </ng-container>
@@ -714,7 +714,7 @@
                                     <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_9_head" data-toggle="collapse" href="#m_accordion_5_item_9_body"
                                         aria-expanded="false">
                                         <span class="m-accordion__item-icon">
-                                            <i class="fa fa-file"></i>
+                                            <i class="flaticon-file"></i>
                                         </span>
                                         <span class="m-accordion__item-title">Documents</span>
                                         <span class="m-accordion__item-mode"></span>
@@ -2339,7 +2339,7 @@
                                         <div class="m-accordion__item-content">
                                             <form class="m-form m-form--fit m-form--label-align-right" #fcarDetails="ngForm" (ngSubmit)="fcarDetails.valid && saveCarDetails()"
                                                 novalidate="novalidate">
-                                                <h5 class="m--font-success">Company Car</h5>
+                                                <h5 class="title">Company Car</h5>
                                                 <div class="row adn-form__group">
                                                     <div class="col-md-6 adn-form__group" hidden="true">
                                                         <div class="form-group m-form__group">
@@ -2432,7 +2432,7 @@
                                                 </div>
                                                 <div class="form-group m-form__group m--margin-top-5">
                                                 </div>
-                                                <h5 class="m--font-success .adn-form-title">Personal Car</h5>
+                                                <h5 class="title">Personal Car</h5>
 
                                                 <div class="row">
                                                     <div class="col-md-6 adn-form__group">
