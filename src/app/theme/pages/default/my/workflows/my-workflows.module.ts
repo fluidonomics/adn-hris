@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '../.././../../layouts/layout.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { MyWorkFlowsRoutingModule } from './my-workflows.routing.model';
 
@@ -26,6 +27,7 @@ import { MyKraComponent } from './kra/kra.component';
         ReactiveFormsModule,
         NgSelectModule,
         NgUploaderModule,
+        NgxPaginationModule,
         BsDatepickerModule.forRoot(),
         BaseModule,
         MyWorkFlowsRoutingModule,

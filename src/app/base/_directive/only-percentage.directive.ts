@@ -16,11 +16,11 @@ export class OnlyPercentageDirective {
             {
                 return;
             }
-            if(this.el.nativeElement.value.length==2 && e.keyCode===190)
+            if(this.el.nativeElement.value.length==2 && (e.keyCode===190 || e.keyCode===110))
             {
               return;
             }
-            if(this.el.nativeElement.value.length==2 && e.keyCode!==190)
+            if(this.el.nativeElement.value.length==2 && (e.keyCode!==190 && e.keyCode!==110))
             {
                 event.preventDefault();
             }
