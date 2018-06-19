@@ -13,22 +13,25 @@ import { ReportsComponent } from './reports/reports.component';
 import { PostLeaveTransactionComponent } from './post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './employee-leaves/employee-leaves.component';
 import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
+import { EmployeeGuard } from '../../../../../base/_guard/employee.guard';
+import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
+import { HrGuard } from '../../../../../base/_guard/hr.guard';
 
 const routes: Routes = [{
     path: '', component: LeaveComponent,
     children: [
-        { path: 'dashboard/:type', component: DashboardComponent },
-        { path: 'dashboard/details/:id', component: DashboardDetailsComponent },
-        { path: 'apply', component: ApplyComponent },
-        { path: 'cancel', component: CancelComponent },
-        { path: 'list', component: TrackLeaveComponent },
-        { path: 'list/details/:id', component: TrackLeaveDetailsComponent },
-        { path: 'holidays', component: HolidaysComponent },
-        { path: 'calender', component: CalenderComponent },
-        { path: 'reports', component: ReportsComponent },
-        { path: 'post-leave-transaction', component: PostLeaveTransactionComponent },
-        { path: 'employee-leaves', component: EmployeeLeavesComponent },
-        { path: 'grant-leave', component: GrantLeaveComponent }
+        { path: 'dashboard/:type', component: DashboardComponent, canActivate: [EmployeeGuard] },
+        { path: 'dashboard/details/:id', component: DashboardDetailsComponent, canActivate: [SupervisorGuard, HrGuard] },
+        { path: 'apply', component: ApplyComponent, canActivate: [EmployeeGuard] },
+        { path: 'cancel', component: CancelComponent, canActivate: [EmployeeGuard] },
+        { path: 'list', component: TrackLeaveComponent, canActivate: [EmployeeGuard] },
+        { path: 'list/details/:id', component: TrackLeaveDetailsComponent, canActivate: [EmployeeGuard] },
+        { path: 'holidays', component: HolidaysComponent, canActivate: [HrGuard] },
+        { path: 'calender', component: CalenderComponent, canActivate: [HrGuard] },
+        { path: 'reports', component: ReportsComponent, canActivate: [HrGuard] },
+        { path: 'post-leave-transaction', component: PostLeaveTransactionComponent, canActivate: [HrGuard] },
+        { path: 'employee-leaves', component: EmployeeLeavesComponent, canActivate: [HrGuard, SupervisorGuard] },
+        { path: 'grant-leave', component: GrantLeaveComponent, canActivate: [HrGuard] }
     ]
 
 }]

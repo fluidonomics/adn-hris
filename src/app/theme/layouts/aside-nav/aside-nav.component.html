@@ -206,7 +206,7 @@
 				</div>
 			</li>
 			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">

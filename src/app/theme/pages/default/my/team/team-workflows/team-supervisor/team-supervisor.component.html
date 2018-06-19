@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="m-portlet__body">
-						<div class="no-records" *ngIf="employeeData.length==0 || (employeesData | orderBy: 'profileProcessDetails.updatedAt' : employeeReverse | filter:employeeSearch)?.length==0">
+						<div class="no-records" *ngIf="employeeData.length==0 || (employeeData | orderBy: 'profileProcessDetails.updatedAt' : employeeReverse | filter:employeeSearch)?.length==0">
 							<span class="align--center">No records found</span>
 						</div>
 						<div class="m-widget4">

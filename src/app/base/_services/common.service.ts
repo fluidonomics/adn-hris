@@ -332,6 +332,16 @@ export class CommonService {
         let url = "common/getEmployeeDocument?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    
+    getBatchInfo(): Observable<Response> {
+        let url = "batch/getBatchInfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraWorkFlowInfoByBatch(batch_id:number): Observable<Response> {
+        let url = "kra/getKraWorkFlowInfoByBatch?batch_id="+batch_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     getEmployeeExternalDocument(emp_id: number): Observable<Response> {
         let url = "externalDocument/getEmployeeExternalDocumentInfo?emp_id=" + emp_id;

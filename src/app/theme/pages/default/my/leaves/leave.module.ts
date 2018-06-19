@@ -32,6 +32,9 @@ import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
 //--------- Services -------------
 import { LeaveService } from './leave.service';
 import { CommonService } from '../../../../../base/_services/common.service';
+import { EmployeeGuard } from '../../../../../base/_guard/employee.guard';
+import { HrGuard } from '../../../../../base/_guard/hr.guard';
+import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 
 
 @NgModule({
@@ -63,7 +66,7 @@ import { CommonService } from '../../../../../base/_services/common.service';
         EmployeeLeavesComponent,
         GrantLeaveComponent
     ],
-    providers: [LeaveService, CommonService]
+    providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard]
 })
 export class LeaveModule {
 }
