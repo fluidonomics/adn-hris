@@ -11,6 +11,8 @@ import { environment } from "../../../../../../../../environments/environment";
 })
 export class MyTeamSupervisorComponent implements AfterViewInit {
 
+    employeeSearch: any;
+    kraSearch: any;
     employeeData: any = [];
     _currentEmpId: number;
     kraData:any=[];
