@@ -14,7 +14,7 @@ declare var mApp;
 declare var $;
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile.m-body",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--profile",
     templateUrl: "./profile.component.html",
     encapsulation: ViewEncapsulation.None,
 })
