@@ -42,9 +42,9 @@ export class CancelComponent implements OnInit {
     ngOnInit(): void {
         this.authService.validateToken().subscribe(res => {
             this.employee = this.authService.currentUserData;
-            this.loadEmployeeLeaves();
-            this.getEmployeeSupervisor();
-            this.getEmployeeEmails();
+            // this.loadEmployeeLeaves();
+            // this.getEmployeeSupervisor();
+            // this.getEmployeeEmails();
         });
     }
 

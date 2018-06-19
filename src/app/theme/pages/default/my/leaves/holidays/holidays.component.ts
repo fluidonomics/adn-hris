@@ -62,6 +62,7 @@ export class HolidaysComponent implements OnInit {
 
     setYear(year) {
         this.year = year;
+        this.getHolidays();
     }
 
     sort(key: string) {

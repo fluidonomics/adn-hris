@@ -27,7 +27,7 @@ export class MyTeamKraComponent {
 
     isKraAvaliable: boolean = false;
  
-   // param_emp_id: number;
+    param_emp_id: number;
     param_id: number;
     kraWorkFlowData: any = [];
 
@@ -56,14 +56,11 @@ export class MyTeamKraComponent {
         this._authService.validateToken().subscribe(
             res => {
                 this._route.params.subscribe(params => {
-                    if (params['id']) {
+                    if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
+                        this.param_emp_id = parseInt(params['emp_id']);
                         this.initData();
                     }
-                    // if (params['emp_id']) {
-                    //     this.param_emp_id = params['emp_id'];
-                    //     this.initData();
-                    // }
                 });
             });
 
@@ -109,13 +106,13 @@ export class MyTeamKraComponent {
     }
 
     loadSupervisorData() {
-        // this._commonService.getKraSupervisor(this._currentEmpId)
-        //     .subscribe(
-        //     data => {
-        //         this.supervisorData = data.json();
-        //     },
-        //     error => {
-        //     });
+        this._commonService.getKraSupervisor(this.param_emp_id)
+            .subscribe(
+            data => {
+                this.supervisorData = data.json();
+            },
+            error => {
+            });
     }
 
     preSaveKraDetails(index:number,status:string)

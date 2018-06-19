@@ -12,8 +12,8 @@ import { forEach } from "@angular/router/src/utils/collection";
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./kra.component.html",
-    styles:[".ng-select.customError.ng-invalid .ng-control ,.input.ng-invalid, textarea.ng-invalid {border-color: #ff0000!important;} "],
     encapsulation: ViewEncapsulation.None,
+    styleUrls:['./kra.component.css'],
     providers: [KraService]
 })
 export class MyKraComponent {
@@ -35,6 +35,14 @@ export class MyKraComponent {
     kraWorkFlowData: any = [];
 
     isDisabled:boolean=true;
+    employee:any={};
+
+
+    key: string = ''; //set default
+    reverse: boolean = false;
+    p2: number = 1;
+    search: any;
+    itemPerPage: number = 10;
 
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -83,20 +91,30 @@ export class MyKraComponent {
     }
 
     initData() {
+        this.loadEmployee();
         this.loadKraCategoryData();
         this.loadWeightAgeData();
         this.loadSupervisorData();
         this.loadKraInfo();
     }
 
+    loadEmployee()
+    {
+        this._commonService.getEmployee(this._currentEmpId)
+        .subscribe(
+        res => {
+            this.employee = res.json() || {};
+        },
+        error => {
+        });
+    }
+
     loadKraInfo() {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
                 this.kraInfoData = res.json().data;
-                console.log(res.json().status);
                 let status= res.json().status;
                 this.isDisabled = status == "Initiated" || status =="SendBack" ? false :true ;
-                console.log(this.isDisabled);
                 if(this.kraInfoData.length==0)
                 {
                     this.addKraHtml(); 
@@ -137,44 +155,9 @@ export class MyKraComponent {
             });
     }
 
-    // onKraSubmit(isSaveDraft: boolean) {
-    //     var filterKraData=[];
-    //     for (let i = 0; i < this.kraInfoData.length; i++) {
-    //        if(this.kraInfoData[i].kra && this.kraInfoData[i].category_id && this.kraInfoData[i].weightage_id && this.kraInfoData[i].unitOfSuccess && this.kraInfoData[i].measureOfSuccess && this.kraInfoData[i].supervisor_id)
-    //        {
-    //             filterKraData.push(this.kraInfoData[i])
-    //        }
-    //        if(i == this.kraInfoData.length-1)
-    //        {
-    //             this._kraService.saveKra({"kraInfo":filterKraData,"kraWorkflow_id":this.param_id,"isSaveDraft":isSaveDraft})
-    //             .subscribe(
-    //             data => {
-    //                     let messageString= isSaveDraft ? 'save':'submitted';
-    //                     swal("Kra is " + messageString, "", "success");
-    //                     this.loadKraInfo();
-    //             },
-    //             error => {
-    //             });
-    //        }
-    //     }
-        
-    // };
-
-    addDummyRow(loopLength) {
-        for (let j = 0; j < loopLength; j++) {
-            let data = {
-                _id: "",
-                kra: "",
-                category_id: "",
-                weightage_id: "",
-                unitOfSuccess: "",
-                measureOfSuccess: "",
-                supervisor_id: "",
-                sendBackComment:"",
-                kraWorkflow_id: this.param_id
-            };
-            this.kraInfoData.push(data);
-        }
+    sort(key) {
+        this.key = key;
+        this.reverse = !this.reverse;
     }
 
 
@@ -273,36 +256,59 @@ export class MyKraComponent {
             });
     }
 
-    submitKraWorkFlow()
+    isWeightage()
     {
-
-      
-        let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
-        let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
-        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
-
-        if(this.kraInfoData.filter(x => x.supervisorStatus != 'SendBack').length==this.kraInfoData.length)
+        let isKraWeightAge= this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0)==100 ? true :false;
+        if(!isKraWeightAge)
         {
-            this._kraService.saveKraWorkFlow({_id:this.param_id,status:'Submitted'})
-            .subscribe(
-            res => {
-                    if(res.ok)
-                    {
-                        swal({
-                            title: 'Submitted Successfully!',
-                            text:"KRA has been submitted for Supervisor Approval.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
-                        });
-                       this.loadKraInfo();
-                    }
-            },
-            error => {
+            swal({
+                title: 'Oops!',
+                text:'100%',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
             });
+            return isKraWeightAge;
         }
-        else{
+        else
+        {
+          return isKraWeightAge;
+        }
+    }
+
+    isCategoryUnique()
+    {
+       let categoryUnique = Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id))).length==this.kraInfoData.length ? true:false;
+       if(!categoryUnique)
+       {
+            swal({
+                title: 'Are you sure?',
+                text: "category unique",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#9a9caf',
+                confirmButtonText: 'Yes',
+            }).then((result) => {
+                if(result.value)
+                {
+                    this.saveKraWorkFlow();  
+                }
+            });
+       }
+       else
+       {
+         this.saveKraWorkFlow();
+       }
+    }
+
+    isSendBackOrNewKraSaved()
+    {
+        let isSendBackNotSaved=this.kraInfoData.filter(x => x.supervisorStatus != 'SendBack').length==this.kraInfoData.length ? true:false;
+        let isAllKraSaved=this.kraInfoData.filter(x=> x._id==null || x._id==undefined).length==0 ? true:false;
+        if(!isSendBackNotSaved || !isAllKraSaved)
+        {
             swal({
                 title: 'Oops!',
                 text:'Please save unsaved KRAs before submitting',
@@ -311,6 +317,73 @@ export class MyKraComponent {
                 confirmButtonColor: '#66BB6A',
                 confirmButtonText: 'OK'
             });
-        } 
+            return false;
+        }
+        else
+        {
+          return true;
+        }
+    }
+
+    isRequiredWorkFlowLength()
+    {
+       return this.employee.grade_id <= 2 && this.kraInfoData.length >=5 ? true : ( this.employee.grade_id > 2 && this.kraInfoData.length >= 3 ? true : false) 
+    }
+
+    submitKraWorkFlow()
+    {
+        //let requiredWorkFlowLength= 
+        //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
+        //let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
+        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
+        if(this.isSendBackOrNewKraSaved())
+        {
+            if(this.isWeightage())
+            {
+                if(!this.isRequiredWorkFlowLength())
+                {
+                    let kraLength=this.employee.grade_id <=2 ? 5 :3;
+                    swal({
+                        title: 'Are you sure?',
+                        text: "Do you want to submit kra minimum " + kraLength +" is required",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#9a9caf',
+                        confirmButtonText: 'Yes',
+                        }).then((result) => {
+                            if (result.value) {
+                                this.isCategoryUnique();
+                            }
+                        });
+                }
+                else
+                {
+                    this.isCategoryUnique();
+                }
+            }
+        }
+    }
+
+    saveKraWorkFlow()
+    {
+        this._kraService.saveKraWorkFlow({_id:this.param_id,status:'Submitted'})
+        .subscribe(
+        res => {
+                        if(res.ok)
+                        {
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text:"KRA has been submitted for Supervisor Approval.",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            this.loadKraInfo();
+                        }
+        },
+        error => {
+        });
     }
 }

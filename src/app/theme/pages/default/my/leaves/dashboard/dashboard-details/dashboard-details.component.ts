@@ -138,7 +138,7 @@ export class DashboardDetailsComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['my/leaves/dashboard']);
+        this.router.navigate(['my/leaves/dashboard/team']);
     }
 
     hideValidation() {

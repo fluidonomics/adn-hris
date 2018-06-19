@@ -252,7 +252,7 @@
 						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 						 *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1">
 							<a routerLink="/my/leaves/post-leave-transaction" class="m-menu__link">
-								<i class="m-menu__link-bullet fa fa-bar-chart-o">
+								<i class="m-menu__link-bullet fa fa-plus-square-o">
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
@@ -274,7 +274,7 @@
 						<li class="m-menu__item hide" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 						 *ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') > -1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
 							<a routerLink="/my/leaves/employee-leaves" class="m-menu__link">
-								<i class="m-menu__link-bullet fa fa-bar-chart-o">
+								<i class="m-menu__link-bullet fa fa-user">
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
@@ -285,7 +285,7 @@
 						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 						 *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1">
 							<a routerLink="/my/leaves/grant-leave" class="m-menu__link">
-								<i class="m-menu__link-bullet fa fa-bar-chart-o">
+								<i class="m-menu__link-bullet fa fa-calendar-plus-o">
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">

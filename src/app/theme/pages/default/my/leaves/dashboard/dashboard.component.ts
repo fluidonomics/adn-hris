@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     dashboardTab: string = null;
     isSuperVisor: boolean = false;
     isHr: boolean = false;
+    isSpin: boolean = false;
 
     constructor(
         private leaveService: LeaveService,
@@ -40,28 +41,32 @@ export class DashboardComponent implements OnInit {
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
-
-            if (this.currentUser.roles.indexOf('HR') > -1) {
-                this.getHolidays();
-                this.getTransactions();
-                this.getLeaveBalance();
-                this.getLeaveDetails('HR');
-                this.isHr = true;
-            } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
-                this.getHolidays();
-                this.getTransactions();
-                this.getLeaveBalance();
-                this.getLeaveDetails('Supervisor');
-                this.isSuperVisor = true;
-            } else {
-                this.getHolidays();
-                this.getTransactions();
-                this.getLeaveBalance();
-            }
+            this.loadDashboard();
         });
     }
 
+    loadDashboard() {
+        if (this.currentUser.roles.indexOf('HR') > -1) {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
+            this.getLeaveDetails('HR');
+            this.isHr = true;
+        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
+            this.getLeaveDetails('Supervisor');
+            this.isSuperVisor = true;
+        } else {
+            this.getHolidays();
+            this.getTransactions();
+            this.getLeaveBalance();
+        }
+    }
+
     getLeaveDetails(role) {
+        this.leaveList = [];
         if (!role) {
             if (this.currentUser.roles.indexOf('HR') > -1) {
                 role = 'HR';
@@ -88,6 +93,8 @@ export class DashboardComponent implements OnInit {
             },
             error => {
                 console.error(error);
+            }, () => {
+                this.isSpin = false;
             });
     }
 
@@ -131,5 +138,10 @@ export class DashboardComponent implements OnInit {
                 });
             }
         })
+    }
+
+    refresh() {
+        this.isSpin = true;
+        this.loadDashboard();
     }
 }

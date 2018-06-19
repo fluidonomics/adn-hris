@@ -10,7 +10,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [ReviewerGuard] },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent,canActivate: [SupervisorGuard] },
-    { path: 'workflows/kra-view/:id', component: MyTeamKraComponent }
+    { path: 'workflows/kra-view/:id/:emp_id', component: MyTeamKraComponent }
 ]
 
 

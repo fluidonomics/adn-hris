@@ -7,6 +7,7 @@ import { LayoutModule } from '../.././../../layouts/layout.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { MyTeamRoutingModule } from './my-team-routing.model';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { MyTeamService } from "./my-team.service"
 import { BaseModule } from '../../../../../base/base.module';
 import { MyTeamReviewerComponent } from './team-workflows/team-reveiwer/team-reviewer.component';
@@ -25,6 +26,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         MyTeamRoutingModule,
         NgSelectModule,
         NgUploaderModule,
+        NgxPaginationModule,
         BsDatepickerModule.forRoot(),
         BaseModule
     ], declarations: [

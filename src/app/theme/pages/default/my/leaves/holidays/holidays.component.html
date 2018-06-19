@@ -3,7 +3,7 @@
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text flaticon-user-add">
+                    <h3 class="m-portlet__head-text flaticon-suitcase">
                         Holidays
                         <small></small>
                     </h3>
@@ -36,27 +36,12 @@
                                     <a *ngFor="let year of years" class="dropdown-item" href="#" (click)="setYear(year)">{{year}}</a>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-default" (click)="getHolidays()">Show</button>
+
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="row" style="border: 1px solid rgba(0, 0, 0, 0.1);padding: 5px;margin-left:  2px;">
-                                    <div class="col-md-6">
-                                        {{isGeneralHolidayCount}} General Holidays
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6"></div>
-                            <!-- <div class="col-md-2">
-                                <button type="button" class="btn btn-default">Excel Export</button>
-                            </div> -->
-                        </div>
-                    </div>
                     <div class="col-md-12" style="margin-top: 14px;">
                         <div class="row">
                             <div class="col-md-12">
@@ -102,12 +87,13 @@
                                                 <td class="m-datatable__cell" width="15%">
                                                     <span>{{holiday.day}}</span>
                                                 </td>
-                                                <td class="m-datatable__cell actions" width="15%">
-                                                    <a>
-                                                        <i class="fa fa-pencil" (click)="openEditModal(templateEdit, holiday)"></i>
+                                                <td class="m-datatable__cell" width="15%">
+                                                    <a class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View" (click)="openEditModal(templateEdit, holiday)">
+                                                        <i class="la la-edit"></i>
                                                     </a>
-                                                    <a>
-                                                        <i class="fa fa-trash-o" (click)="onDeleteHoliday(holiday)"></i>
+                                                    <a (click)="onDeleteHoliday(holiday)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                        title="Reset Password">
+                                                        <i class="la la-trash"></i>
                                                     </a>
                                                 </td>
                                             </tr>

@@ -83,8 +83,9 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     bindDayClickEvent() {
-        $('.fc-day').on('click', (e) => {
-            let data = $(e.currentTarget).data();
+        $('.fc-row').on('click', (e) => {
+            debugger;
+            let data = $(e.target).data();
             if (data) {
                 this.dayClick.emit(data);
             }

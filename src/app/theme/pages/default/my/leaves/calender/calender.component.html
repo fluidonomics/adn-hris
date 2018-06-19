@@ -3,7 +3,7 @@
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text flaticon-user-add">
+                    <h3 class="m-portlet__head-text flaticon-calendar">
                         Calender
                         <small></small>
                     </h3>
@@ -19,92 +19,67 @@
                         </h5>
                     </div>
                     <div class="col-md-8"></div>
-                    <!-- <div class="col-md-2">
-                        <div class="row">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    2018
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">2016</a>
-                                    <a class="dropdown-item" href="#">2017</a>
-                                    <a class="dropdown-item" href="#">2018</a>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-default">Show</button>
-                        </div>
-                    </div> -->
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12" style="margin-top: 14px;">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div [ngClass]="selectedLeaves && selectedLeaves.length > 0 ? 'col-md-7' : 'col-md-12'">
                                 <div class="row">
                                     <calendar [data]="calendardata" [options]="calendarOptions" (dayClick)="onDayClick($event)"></calendar>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-5" *ngIf="selectedLeaves && selectedLeaves.length > 0">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <!-- <div style="text-align: center; font-size: 16px; padding-bottom: 10px;">
-                                            01 Apr 2018
-                                        </div> -->
+                                        <button type="button" class="btn btn-success pull-right">
+                                            <i class="fa fa-download"></i> Excel Export</button>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="button" class="btn btn-default pull-right">Excel Export</button>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-                                                    <table class="m-datatable__table selectedLeaves">
-                                                        <thead class="m-datatable__head">
-                                                            <tr class="m-datatable__row">
-                                                                <th class="m-datatable__cell m-datatable__cell--sort" width="30%">
-                                                                    <span>
-                                                                        Name
-                                                                        <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
-                                                                    <span>
-                                                                        Employees No.
-                                                                        <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                                    </span>
-                                                                </th>
-                                                                <th class="m-datatable__cell m-datatable__cell--sort" width="50%">
-                                                                    <span>
-                                                                        Details
-                                                                        <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                                    </span>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="m-datatable__body">
-                                                            <tr class="m-datatable__row" *ngFor="let leave of selectedLeaves">
-                                                                <td class="m-datatable__cell" width="30%">
-                                                                    <span>{{leave.emp_name}}</span>
-                                                                </td>
-                                                                <td class="m-datatable__cell" width="25%">
-                                                                    <span>{{leave.emp_id}}</span>
-                                                                </td>
-                                                                <td class="m-datatable__cell" width="50%">
-                                                                    <span>{{leave.leave_type_name}} - {{leave.reason}}</span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <tfoot class="m-datatable__head">
-                                                            <tr>
-                                                                Total Item : {{selectedLeaves.length}}
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                        <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                            <table class="m-datatable__table selectedLeaves">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row">
+                                                        <th class="m-datatable__cell m-datatable__cell--sort" width="30%">
+                                                            <span>
+                                                                Name
+                                                                <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                            </span>
+                                                        </th>
+                                                        <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                                                            <span>
+                                                                Employees No.
+                                                                <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                            </span>
+                                                        </th>
+                                                        <th class="m-datatable__cell m-datatable__cell--sort" width="50%">
+                                                            <span>
+                                                                Details
+                                                                <i class="la" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                            </span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="m-datatable__body">
+                                                    <tr class="m-datatable__row" *ngFor="let leave of selectedLeaves">
+                                                        <td class="m-datatable__cell" width="30%">
+                                                            <span>{{leave.emp_name}}</span>
+                                                        </td>
+                                                        <td class="m-datatable__cell" width="25%">
+                                                            <span>{{leave.emp_id}}</span>
+                                                        </td>
+                                                        <td class="m-datatable__cell" width="50%">
+                                                            <span>{{leave.leave_type_name}} - {{leave.reason}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot class="m-datatable__head">
+                                                    <tr>
+                                                        Total Item : {{selectedLeaves.length}}
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
-                                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                     </div>
                                 </div>
                                 <!-- END EXAMPLE TABLE PORTLET-->
