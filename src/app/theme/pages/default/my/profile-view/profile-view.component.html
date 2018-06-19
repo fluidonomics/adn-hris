@@ -983,14 +983,14 @@
                                                                 <div class="form-group m-form__group">
                                                                     <label for="marks">CGPA
                                                                     </label>
-                                                                    <input type="text" name="marks" [(ngModel)]="academic.cgpa" maxlength="4" #marks="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" disabled>
+                                                                    <input type="text" name="cgpa" [(ngModel)]="academic.cgpa" maxlength="4" #cgpa="ngModel" placeholder="Enter your CGPA" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" disabled>
                                                                     </div>
                                                         </div>
                                                         <div class="col-md-3 adn-form__group" *ngIf="academic.result=='Grade'">
                                                                 <div class="form-group m-form__group">
                                                                     <label for="marks">Scale
                                                                         </label>
-                                                                    <input type="text" name="marks" [(ngModel)]="academic.scale" maxlength="4" #marks="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" disabled>
+                                                                    <input type="text" name="scale" [(ngModel)]="academic.scale" maxlength="4" #scale="ngModel" placeholder="Enter CGPA Scale" id="marks" class="form-control m-input m-input--air" OnlyNumber="true" disabled>
                                                                 </div>
                                                         </div>
                                                     </div>
