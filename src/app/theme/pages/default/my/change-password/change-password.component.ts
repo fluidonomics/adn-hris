@@ -55,16 +55,26 @@ export class ChangePasswordComponent implements OnInit {
         res => {
             if(res.ok)
             {
-                form.resetForm();
-                swal({
-                    type: 'success',
-                    title: 'Success',
-                    titleText: "Password changed successfully.",
-                });
+                if(res.status==201)
+                {
+                    swal({
+                        type: 'warning',
+                        title: 'Oops!',
+                        text: "Old password didn't match."
+                    });
+                }
+                else{
+                    form.resetForm();
+                    swal({
+                        type: 'success',
+                        title: 'Success',
+                        titleText: "Password changed successfully.",
+                    });
+               }
             }
         },
         error => {
-             
+            var d="abc";
         });
     }
 
