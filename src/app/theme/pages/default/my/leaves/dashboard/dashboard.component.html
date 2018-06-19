@@ -151,7 +151,8 @@
                             <div class="row">
                                 <div class="col-xl-2">
                                     <div class="d-inline-block align-top imageDiv">
-                                        <img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
+                                        <img class="m--marginless emp-list-image"  *ngIf="leave.url" src="{{imageBase+leave.url}}">
+                                        <img class="m--marginless emp-list-image"  *ngIf="!leave.url" src="assets/app/media/img/custom/users/user6.jpg">
                                     </div>
                                     <div class="d-inline-block">
                                         <span class="emp-list-name d-block">{{leave.emp_name}}</span>

@@ -76,6 +76,7 @@ export class LeaveForwardComponent implements OnInit {
                     updatedBy: this.employee._id,
                     reason: this.remark,
                     remarks: this.remark,
+                    cancelReason:this.remark,
                     status: flag ? 'Approved' : 'Rejected'
                 }
                 if (this.leave.status == 'Cancel Pending') {

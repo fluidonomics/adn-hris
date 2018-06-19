@@ -6,6 +6,7 @@ import { UtilityService } from '../../../../../../base/_services/utilityService.
 import { UserData } from '../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../leave.service';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from "../../../../../../../environments/environment";
 
 @Component({
     selector: "app-my-leaves-dashboard",
@@ -19,7 +20,7 @@ export class DashboardComponent implements OnInit {
     recentTransactions: any = [];
     employeeList: any;
     currentUser: UserData;
-
+    imageBase: string;
     leaveList: any;
     dashboardTab: string = null;
     isSuperVisor: boolean = false;
@@ -32,10 +33,11 @@ export class DashboardComponent implements OnInit {
         private utilityService: UtilityService,
         private route: ActivatedRoute
     ) {
-
+        this.imageBase = environment.content_api_base.imgBase;
     }
 
     ngOnInit() {
+        this.imageBase = environment.content_api_base.imgBase;
         this.route.params.subscribe(p => {
             this.dashboardTab = p.type;
         });
@@ -102,7 +104,9 @@ export class DashboardComponent implements OnInit {
         this.leaveService.getLeaveHolidays(2018).subscribe(res => {
             if (res.ok) {
                 this.upcomingHolidays = res.json() || [];
-                this.upcomingHolidays = this.upcomingHolidays.filter(hol => new Date(hol.date) > new Date());
+                let todaysDate=new Date(); 
+                let nextmonth=new Date(todaysDate.getFullYear(),todaysDate.getMonth()+2,0); 
+                this.upcomingHolidays = this.upcomingHolidays.filter(hol => (new Date(hol.date) > new Date() && new Date(hol.date) < nextmonth));
             }
         })
     }

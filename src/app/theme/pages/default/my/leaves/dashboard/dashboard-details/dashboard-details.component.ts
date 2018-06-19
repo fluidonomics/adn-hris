@@ -37,6 +37,7 @@ export class DashboardDetailsComponent implements OnInit {
     leaveSort: string = '';
     leaveReverse: boolean = false;
     leavePageNo: number = 1;
+    imageBase: string;
 
     constructor(
         private authService: AuthService,
@@ -44,12 +45,10 @@ export class DashboardDetailsComponent implements OnInit {
         private utilityService: UtilityService,
         private router: Router,
         private route: ActivatedRoute
-    ) {
-
+    ) {        
     }
 
-    ngOnInit(): void {
-
+    ngOnInit(): void {       
         this.route.params.subscribe(param => {
             this.leaveId = param.id;
             this.authService.validateToken().subscribe(res => {
