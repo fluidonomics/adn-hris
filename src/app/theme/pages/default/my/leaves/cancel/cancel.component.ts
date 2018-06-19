@@ -131,11 +131,11 @@ export class CancelComponent implements OnInit {
             } else if (this.selectedLeave.status == 'Approved') {
                 leave.status = "Cancel Pending";
                 leave.isCancelled = false;
-                this.finalCancelMessage = "Leave Cancel Sent For Approval";
+                this.finalCancelMessage = "Leave Cancellation Sent for approval";
             } else if (this.selectedLeave.status == 'Cancel Rejected') {
                 leave.status = "Cancel Pending";
                 leave.isCancelled = false;
-                this.finalCancelMessage = "Leave Cancel Sent For Approval";
+                this.finalCancelMessage = "Leave Cancellation Sent for approval";
             }
             this.utilityService.showLoader('.cancel-portlet');
             this.leaveService.saveCancelLeave(leave).subscribe(res => {

@@ -65,8 +65,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     InitValues() {
-        this.leaveapplication.days = 0;
-        this.leaveapplication.balance = 0;
+        this.leaveapplication.days = null;
+        this.leaveapplication.balance = null;
         this.getEmployeeLeaveBalance();
         this.fromDateValidation = {
             isValid: true,
@@ -137,7 +137,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
+        this.isBalanceValid = !(data.balance || data.balance <= 0 || data.balance < data.days);
 
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
@@ -245,6 +245,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     calculateDays(e: any, type: string) {
         if (type === 'fromDate') {
+            this.leaveapplication.toDate = null;
             this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
         }
         else {
