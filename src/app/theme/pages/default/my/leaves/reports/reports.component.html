@@ -16,7 +16,7 @@
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
                                 <ng-select class="m-input m-input--air" name="leaveType" bindValue="year" bindLabel="year" [items]="yearList" [(ngModel)]="currentYear"
-                                    id="currentYear" placeholder="Select Year" required></ng-select>
+                                    id="currentYear" placeholder="Select Year" [clearable]="false" required></ng-select>
                             </li>
                         </ul>
                     </div>
@@ -40,7 +40,7 @@
                                         <div class="col-md-12 m--margin-bottom-10">
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error' : !leaveData || leaveData.length == 0}">
                                                 <table class="m-datatable__table">
                                                     <thead class="m-datatable__head">
                                                         <tr class="m-datatable__row">
@@ -76,11 +76,7 @@
                                                                 <span>{{leave.days}}</span>
                                                             </td>
                                                         </tr>
-                                                        <tr class="no-data-block" *ngIf="!leaveData || leaveData.length == 0">
-                                                            <th colspan="5">
-                                                                No Data
-                                                            </th>
-                                                        </tr>
+                                                        <span *ngIf="!leaveData || leaveData.length == 0" class="m-datatable--error">No records found</span>
                                                     </tbody>
                                                 </table>
                                                 <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">

@@ -3,27 +3,22 @@
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text flaticon-user-add">
+                    <h3 class="m-portlet__head-text flaticon-squares-4">
                         Dashboard
                         <small>
                         </small>
                     </h3>
                 </div>
             </div>
-            <!-- <div class="m-portlet__head-tools">
+            <div class="m-portlet__head-tools">
                 <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
                     <li class="nav-item m-tabs__item">
-                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabActive" role="tab" (click)="dashboardTab = 'my'">
-                            My Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item m-tabs__item" *ngIf="isSuperVisor || isHr">
-                        <a class="nav-link m-tabs__link" data-toggle="tab" href="#tabCompleted" role="tab" (click)="dashboardTab = 'team'">
-                            My Team
+                        <a class="nav-link m-tabs__link active" data-toggle="tab" href="#tabActive" role="tab" (click)="refresh();">
+                            <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i> Refresh
                         </a>
                     </li>
                 </ul>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
@@ -155,12 +150,11 @@
                         <div class="m-accordion__item-title">
                             <div class="row">
                                 <div class="col-xl-2">
-                                    <div class="d-inline-block align-top">
+                                    <div class="d-inline-block align-top imageDiv">
                                         <img class="m--marginless emp-list-image" src="assets/app/media/img/custom/users/user6.jpg">
                                     </div>
                                     <div class="d-inline-block">
                                         <span class="emp-list-name d-block">{{leave.emp_name}}</span>
-                                        <span class="emp-list-empid d-block">#PP{{leave.emp_id}}</span>
                                     </div>
                                 </div>
                                 <div class="col-xl-4">

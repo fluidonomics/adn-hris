@@ -1,12 +1,18 @@
 app-my-leaves-dashboard {
     width: 100%;
 
-    .nav.nav-pills.nav-pills--brand .nav-link {
-        color: white;
+    & > .m-content {
+        padding-bottom: 0px !important;
+    }
 
+    .nav.nav-pills.nav-pills--brand .nav-link {
         &.active {
             background: whitesmoke;
             color: black;
+        }
+
+        i {
+            color: #198F4A !important;
         }
     }
 
@@ -89,6 +95,9 @@ app-my-leaves-dashboard {
     }
 
     .hr-leave-dashboard {
+        margin-bottom: 6rem;
+        padding-top: 0px !important;
+
         .m-accordion__item {
             border-radius: 0;
 
@@ -99,8 +108,13 @@ app-my-leaves-dashboard {
                 .m-accordion__item-title {
                     font-size: 12px !important;
 
-                    .emp-list-image {
-                        width: 35px;
+                    .imageDiv {
+                        padding-right: 10px;
+
+                        .emp-list-image {
+                            width: 35px;
+                            border-radius: 2rem;
+                        }
                     }
 
                     .emp-list-name, .emp-list-empid {
@@ -109,7 +123,6 @@ app-my-leaves-dashboard {
 
                     .emp-list-leavedate {
                         font-size: 11px;
-                        color: #666666;
                     }
                 }
             }

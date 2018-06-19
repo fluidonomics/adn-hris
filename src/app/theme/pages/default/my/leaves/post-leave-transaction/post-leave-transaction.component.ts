@@ -40,8 +40,8 @@ export class PostLeaveTransactionComponent implements OnInit {
         this.getLeaveTypes();
     }
     InitValues() {
-        this.leavetransaction.days = 0;
-        this.leavetransaction.balance = 0;
+        this.leavetransaction.days = null;
+        this.leavetransaction.balance = null;
         this.authService.validateToken().subscribe(
             res => {
                 this.currentEmpId = this.authService.currentUserData._id;
@@ -110,7 +110,7 @@ export class PostLeaveTransactionComponent implements OnInit {
 
     postLeaveTransactionDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
+        this.isBalanceValid = !(data.balance == null || data.balance <= 0 || data.balance < data.days);
 
         if (form.valid && this.areDaysValid && this.isBalanceValid) {
             let _postData: any = {};
@@ -170,6 +170,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     calculateDays(e: any, type: string) {
         if (type === 'fromDate') {
             this.leavetransaction.days = this.utilityService.subtractDates(e, this.leavetransaction.toDate);
+            this.leavetransaction.toDate = null;
         }
         else {
             this.leavetransaction.days = this.utilityService.subtractDates(this.leavetransaction.fromDate, e);

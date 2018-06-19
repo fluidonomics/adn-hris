@@ -31,9 +31,7 @@ export class LeaveForwardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authService.validateToken().subscribe(res => {
-            this.employee = this.authService.currentUserData;
-        });
+        this.employee = this.authService.currentUserData;
     }
 
     navigateToDetails(event) {

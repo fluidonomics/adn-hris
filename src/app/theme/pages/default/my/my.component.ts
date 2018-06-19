@@ -4,7 +4,7 @@ import { ScriptLoaderService } from '../../../../_services/script-loader.service
 
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-body",
+    selector: ".m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop",
     templateUrl: "./my.component.html",
     encapsulation: ViewEncapsulation.None,
 })

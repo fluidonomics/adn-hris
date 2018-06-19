@@ -1,7 +1,7 @@
 <div class="m-content">
 	<div class="m-portlet m-portlet--mobile">
 		<div class="m-portlet__body">
-			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error':!leaveData || leaveData.length == 0}">
 				<table class="m-datatable__table">
 					<thead class="m-datatable__head">
 						<tr class="m-datatable__row">
@@ -79,13 +79,8 @@
 							<td class="m-datatable__cell" width="20%">
 								<span>{{leave.reason}}</span>
 							</td>
-
 						</tr>
-						<tr *ngIf="!leaveData || leaveData.length == 0" class="no-data-block">
-							<th colspan="5">
-								No Data
-							</th>
-						</tr>
+						<span *ngIf="!leaveData || leaveData.length == 0" class="m-datatable--error">No records found</span>
 					</tbody>
 				</table>
 				<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
@@ -144,7 +139,7 @@
 														<label for="form_control_1">Apply To</label>
 														<span class="required" aria-required="true"> * </span>
 														<ng-select class="m-input m-input--air" name="applyto" [items]="supervisorList" [(ngModel)]="leaveCancel.applyto" #applyto="ngModel"
-														 bindLabel="fullName" bindValue="_id" required></ng-select>
+														 bindLabel="fullName" bindValue="_id" [clearable]="false" required></ng-select>
 														<div class="form-control-feedback has-danger" *ngIf="fleavecancel.submitted">
 															<span *ngIf="!applyto.valid">This field is required.</span>
 														</div>
@@ -170,7 +165,7 @@
 													<div class="m-form__group form-group">
 														<label for="form_control_1">CC To</label>
 														<ng-select class="m-input m-input--air" name="ccTo" [items]="employeeEmailList" [(ngModel)]="leaveCancel.ccTo" #ccTo="ngModel"
-														 bindLabel="personalEmail" bindValue="_id" multiple="true"></ng-select>
+														 bindLabel="personalEmail" bindValue="_id" multiple="true" [clearable]="false"></ng-select>
 													</div>
 												</div>
 											</div>

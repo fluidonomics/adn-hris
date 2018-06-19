@@ -5,7 +5,7 @@
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text flaticon-user-add">
+                            <h3 class="m-portlet__head-text flaticon-add">
                                 Post Leave Transaction
                                 <small>
                                 </small>
@@ -26,21 +26,19 @@
                                                 <span class="required" aria-required="true"> * </span>
                                                 <ng-select class="m-input m-input--air" name="employee" bindValue="_id" bindLabel="fullName" [items]="employeeList" [(ngModel)]="leavetransaction.employee"
                                                     (ngModelChange)="onChangeEmployee()" id="employees" #employee="ngModel" placeholder=""
-                                                    required></ng-select>
+                                                    [clearable]="false" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted && !employee.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Leave Type</label>
                                                 <span class="required" aria-required="true"> * </span>
                                                 <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesDetails" [(ngModel)]="leavetransaction.leavetype"
                                                     (ngModelChange)="onChangeLeaveType()" [disabled]="fetchingBalances" id="leavetype"
-                                                    #leavetype="ngModel" placeholder="" required></ng-select>
+                                                    #leavetype="ngModel" placeholder="" [clearable]="false" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted && !leavetype.valid ">
                                                     This field is required.
                                                 </div>
@@ -66,7 +64,7 @@
                                                 <label for="form_control_1">To Date</label>
                                                 <span class="required" aria-required="true">* </span>
                                                 <input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
-                                                    bsDatepicker [maxDate]="currentDate" [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                                    bsDatepicker [minDate]="leavetransaction.fromDate" [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                     id="toDate" [(ngModel)]="leavetransaction.toDate" #toDate="ngModel" required>
                                                 <div class="form-control-feedback has-danger" *ngIf="!toDate.valid">
                                                     <span *ngIf="fleavetransaction.submitted && !toDate.valid">This field is required.</span>
@@ -78,9 +76,7 @@
                                         <div class="col-md-6 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Days</label>
-                                                <span class="required" aria-required="true">* </span>
-                                                <input type="text" name="days" class="form-control m-input m-input--air" OnlyNumber="true" [(ngModel)]="leavetransaction.days"
-                                                    #days="ngModel" disabled>
+                                                <span class="pl1r">{{leavetransaction.days}}</span>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted">
                                                     <span *ngIf="!areDaysValid">Days cant be 0</span>
                                                 </div>
@@ -89,9 +85,7 @@
                                         <div class="col-md-6 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Balance</label>
-                                                <span class="required" aria-required="true">* </span>
-                                                <input type="text" class="form-control m-input m-input--air" name="balance" id="balance" [(ngModel)]="leavetransaction.balance"
-                                                    #balance="ngModel" OnlyNumber="true" disabled>
+                                                <span class="pl1r">{{leavetransaction.balance}}</span>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted">
                                                     <span *ngIf="!isBalanceValid">Not enough balance</span>
                                                 </div>

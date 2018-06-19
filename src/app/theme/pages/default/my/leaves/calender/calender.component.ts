@@ -94,6 +94,7 @@ export class CalenderComponent implements OnInit {
     }
 
     onDayClick(data: any) {
+        debugger;
         this.selectedLeaves = [];
         if (data.date) {
             let date = new Date(data.date);
@@ -101,7 +102,8 @@ export class CalenderComponent implements OnInit {
                 if (this.utilityService.compareDates(data.date, leave.fromDate) == 1 && this.utilityService.compareDates(data.date, leave.toDate) == -1) {
                     return leave;
                 }
-            })
+            });
+            console.log(this.selectedLeaves);
         }
     }
 }

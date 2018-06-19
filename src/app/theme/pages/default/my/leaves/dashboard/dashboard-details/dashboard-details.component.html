@@ -65,7 +65,7 @@
 									<div class="m-form__group form-group">
 										<label for="form_control_1">CC</label>
 										<ng-select class="m-input m-input--air" name="employees" bindValue="_id" bindLabel="personalEmail" [items]="emailList" [(ngModel)]="ccTo"
-										 id="ccTo" placeholder="" multiple="true" required></ng-select>
+										 id="ccTo" placeholder="" multiple="true" [clearable]="false" required></ng-select>
 									</div>
 								</div>
 							</div>
@@ -101,7 +101,7 @@
 					</div>
 					<br>
 					<div class="">
-						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error':workFlowHistory?.length == 0}">
 							<table class="m-datatable__table">
 								<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
@@ -154,11 +154,7 @@
 											<span>{{wfh.status}}</span>
 										</td>
 									</tr>
-									<tr class="no-data-block" *ngIf="workFlowHistory?.length == 0">
-										<th colspan="5">
-											No Data
-										</th>
-									</tr>
+									<span *ngIf="workFlowHistory?.length == 0" class="m-datatable--error">No records found</span>
 								</tbody>
 							</table>
 							<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
@@ -211,7 +207,8 @@
 							</div>
 							<div class="m-accordion__item-body collapse" id="m_accordion_7_item_2_body" role="tabpanel" aria-labelledby="m_accordion_7_item_2_head"
 							 data-parent="#m_accordion_7">
-								<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded employeeLeaveTable" *ngIf="employeeLeaveList && employeeLeaveList.length > 0">
+								<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded employeeLeaveTable" [ngClass]="{'m-datatable--error' : employeeLeaveList?.length == 0}"
+								 *ngIf="employeeLeaveList && employeeLeaveList.length > 0">
 									<table class="m-datatable__table">
 										<thead class="m-datatable__head">
 											<tr class="m-datatable__row">
@@ -247,11 +244,7 @@
 													<span>{{leave.reason}}</span>
 												</td>
 											</tr>
-											<tr class="no-data-block" *ngIf="employeeLeaveList?.length == 0">
-												<th colspan="5">
-													No Data
-												</th>
-											</tr>
+											<span *ngIf="employeeLeaveList?.length == 0" class="m-datatable--error">No records found</span>
 										</tbody>
 									</table>
 									<pagination-template #p="paginationApi" (pageChange)="leavePageNo = $event" class="paginationtemplate">
