@@ -198,16 +198,8 @@
 										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
 											<i class="la la-gear"></i>
 										</a>
-										<!-- <a href="#" routerLink="/hr/documents-view/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Documents">
-											<i class="la la-file"></i>
-										</a> -->
 									</td>
 							  </tr>
-							  <!-- <tr class="m-datatable__row m-datatable__row--even">
-								<td class="m-datatable__cell" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0">
-									No record found.
-								</td>
-                              </tr> -->
                               <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
 							</tbody>
 					</table>

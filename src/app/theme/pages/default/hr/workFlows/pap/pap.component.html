@@ -1,486 +1,253 @@
-<!-- BEGIN: Subheader -->
-<div class="m-subheader">
-    <div class="d-flex align-items-center">
-        <div class="mr-auto">
-            <h3 class="m-subheader__title">
-                Dashboard
-            </h3>
-        </div>
-        <!-- <div>
-            <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
-                <span class="m-subheader__daterange-label">
-                    <span class="m-subheader__daterange-title"></span>
-                    <span class="m-subheader__daterange-date m--font-brand"></span>
-                </span>
-                <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-                    <i class="la la-angle-down"></i>
-                </a>
-            </span>
-        </div> -->
-    </div>
-</div>
-<!-- END: Subheader -->
 <div class="m-content">
-    <!--Begin::Main Portlet-->
-    <div class="row">
-        <div class="col-xl-4">
-            <!--begin:: Widgets/Activity-->
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light">
+        <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
                 <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text m--font-light">
-                                Quick links
-                            </h3>
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    <i class="fa fa-list"></i> 
+                                      Batch 
+                                    <small>
+                                    </small>
+                                </h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-                                <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-                                    <i class="fa fa-genderless m--font-light"></i>
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__content">
-                                                <ul class="m-nav">
-                                                    <li class="m-nav__section m-nav__section--first">
-                                                        <span class="m-nav__section-text">
-                                                            Quick Actions
-                                                        </span>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Activity
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Messages
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                            <span class="m-nav__link-text">
-                                                                FAQ
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Support
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                    <li class="m-nav__item">
-                                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-                                                            Cancel
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                </div>
+			<div class="m-portlet__body">
+				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+				    <div class="row align-items-center">
+								<div class="col-xl-8 order-2 order-xl-1">
+									<div class="form-group m-form__group row align-items-center">
+										<div class="col-md-4">
+											<div class="m-input-icon m-input-icon--left">
+												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
+												<span class="m-input-icon__icon m-input-icon__icon--left">
+													<span>
+														<i class="la la-search"></i>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+                                </div>
+                                <div class="col-xl-4 order-2 order-xl-1">
+                                    <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
+                                            <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                                                    <i class="la la-plus m--hide"></i>
+                                                    <i class="la la-ellipsis-h"></i>
+                                            </span>
+                                            <div class="m-dropdown__wrapper">
+                                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
+                                                    <div class="m-dropdown__inner">
+                                                        <div class="m-dropdown__body">
+                                                            <div class="m-dropdown__content">
+                                                                <ul class="m-nav">
+                                                                    <li class="m-nav__item">
+                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                            <i class="m-nav__link-icon fa fa-exclamation-triangle m--font-danger"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Inactive
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                            <i class="m-nav__link-icon fa fa-circle-o m--font-warning"></i>
+                                                                            <span class="m-nav__link-text">
+                                                                                Personal Profile Incomplete
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Personal Profile Submitted
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-danger"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Personal Profile Sent Back
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Office Profile Submitted
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-danger"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Office Profile Sent Back
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                    <li class="m-nav__item">
+                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
+                                                                                <i class="m-nav__link-icon fa fa-circle m--font-success"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    Profile Completed
+                                                                                </span>
+                                                                            </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget17">
-                        <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-                            <div class="m-widget17__chart" style="height:320px;">
-                                <canvas id="m_chart_activities"></canvas>
-                            </div>
-                        </div>
-                        <div class="m-widget17__stats">
-                            <div class="m-widget17__items m-widget17__items-col1">
-                                <div class="m-widget17__item">
-                                    <span class="m-widget17__icon">
-                                        <i class="flaticon-paper-plane m--font-brand"></i>
+				    </div>
+				</div>
+				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"  [ngClass]="{'m-datatable--error': (batchData | orderBy: key : reverse | filter:search)?.length==0 }">
+                    <table class="m-datatable__table">
+                            <thead class="m-datatable__head">
+							    <tr class="m-datatable__row">
+										<th class="m-datatable__cell" width="10%"></th>
+										<th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort" width="18%" >
+												<span>
+                                                TITLE
+												<i class="la" *ngIf="key == 'batchName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+												</span>
+										</th>
+										<th (click)="sort('batchType')" class="m-datatable__cell m-datatable__cell--sort" width="18%" >
+											<span>
+											  TYPE
+											<i class="la" *ngIf="key == 'batchType'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+                                        </th>
+                                        <th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="18%" >
+                                                <span>
+                                                INITIATED BY
+                                                <i class="la" *ngIf="key == 'createdBy'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                </span>
+                                        </th>
+										<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort" width="18%" >
+											<span>
+                                            INITIATED ON
+											<i class="la" *ngIf="key == 'createdAt'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+                                        </th>
+                                        <th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort" width="18%" >
+                                                <span>
+                                                LAST DATE
+                                                <i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                </span>
+                                        </th>
+								</tr>
+							</thead>
+							<tbody class="m-datatable__body">
+                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
+                                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
+                                            <td class="m-datatable__cell" width="10%">
+                                                <i class="la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(i,batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+                                            </td>
+                                            <td class="m-datatable__cell" width="18%" >
+                                                <span>{{batch.batchName}}</span>
+                                            </td>
+                                            <td class="m-datatable__cell" width="18%" >
+                                                <span>{{batch.batchType}}</span>
+                                            </td>
+                                            <td class="m-datatable__cell" width="18%" >
+                                                    <span>{{batch.createdBy}}</span>
+                                            </td>
+                                            <td class="m-datatable__cell" width="18%" >
+                                                <span>{{batch.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                            </td>
+                                            <td class="m-datatable__cell" width="18%" >
+                                                <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                            </td>
+                                    </tr>
+                                    <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
+                                            <td colspan="5" style="padding-left:80px;padding-right:80px">
+                                                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                                    <table class="m-datatable__table" >
+                                                        <thead class="m-datatable__head">
+                                                        <tr class="m-datatable__row">
+                                                                <th class="m-datatable__cell" width="50%">
+                                                                    Name
+                                                                </th>
+                                                                <th class="m-datatable__cell" width="50%">
+                                                                   TimeLine
+                                                                </th>
+                                                                <th class="m-datatable__cell" width="10%">
+                                                                    Status
+                                                                </th>
+                                                        <tr>
+                                                        </thead>
+                                                        <tbody class="m-datatable__body"> 
+                                                            <ng-container *ngFor="let accordionRow of batch?.kraWorkFlowData">
+                                                                <tr class="m-datatable__row">
+                                                                        <td class="m-datatable__cell" width="50%" >
+                                                                                <span>{{accordionRow.userName}}</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="50%" >
+                                                                                <span>{{accordionRow.timeline_id}}</span>
+                                                                        </td>
+                                                                        <td class="m-datatable__cell" width="10%" >
+                                                                                <span>{{accordionRow.status}}</span>
+                                                                        </td>
+                                                                </tr>
+                                                                <span *ngIf="batch?.kraWorkFlowData?.length==0" class="m-datatable--error">No records found</span>
+                                                            </ng-container>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                    </tr>
+                                  <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
+                                </ng-container>
+                            </tbody>
+					</table>
+					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
+						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+								<li>
+									<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)" >
+										<i class="la la-angle-double-left"></i>
                                     </span>
-                                    <span class="m-widget17__subtitle">
-                                        Initiate KRA
-                                    </span>
-                                    <span class="m-widget17__desc">
-                                        <!-- 15 New Paskages -->
-                                    </span>
-                                </div>
-                                <div class="m-widget17__item">
-                                    <span class="m-widget17__icon">
-                                         <i class="flaticon-pie-chart m--font-brand"></i>
-                                    </span>
-                                    <span class="m-widget17__subtitle">
-                                        Reports
-                                    </span>
-                                    <span class="m-widget17__desc">
-                                        <!-- 72 Support Cases -->
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="m-widget17__items m-widget17__items-col2">
-                                <div class="m-widget17__item">
-                                    <span class="m-widget17__icon">
-                                        <i class="flaticon-book m--font-brand"></i>
-                                    </span>
-                                    <span class="m-widget17__subtitle">
-                                        Approvals
-                                    </span>
-                                    <span class="m-widget17__desc">
-                                        <!-- 72 New Items -->
-                                    </span>
-                                </div>
-                                <div class="m-widget17__item ">
-                                    <span class="m-widget17__icon">
-                                     <i class="flaticon-diagram m--font-brand" ></i>
-                                    </span>
-                                    <span class="m-widget17__subtitle">
-                                        Timeline
-                                    </span>
-                                    <span class="m-widget17__desc">
-                                        <!-- 34 Upgraded Boxes -->
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end:: Widgets/Activity-->
-        </div>
-        <div class="col-xl-4">
-            
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                Stats
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item m-portlet__nav-item--last m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover">
-                                <a class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl" href="#" ng-reflect-href="#">
-                                    <i class="fa fa-genderless m--font-brand"></i>
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__content">
-                                                <ul class="m-nav">
-                                                    <li class="m-nav__section m-nav__section--first">
-                                                        <span class="m-nav__section-text">
-                                                            Quick Actions
-                                                        </span>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Activity
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Messages
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                            <span class="m-nav__link-text">
-                                                                FAQ
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Support
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                    <li class="m-nav__item">
-                                                        <a class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" href="#" ng-reflect-href="#">
-                                                            Cancel
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    
-                    <div class="m-widget15">
-                        <div class="m-widget15__chart" style="height:180px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                            <canvas id="m_chart_sales_stats" width="772" height="180" class="chartjs-render-monitor" style="display: block; height: 180px; width: 772px;"></canvas>
-                        </div>
-                        <div class="m-widget15__items">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="m-widget15__item">
-                                        <span class="m-widget15__stats">
-                                            22%
-                                        </span>
-                                        <span class="m-widget15__text">
-                                            KRA Sent Back
-                                        </span>
-                                        <div class="m--space-10"></div>
-                                        <div class="progress m-progress--sm">
-                                            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-bar bg-danger" role="progressbar" style="width: 25%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="m-widget15__item">
-                                        <span class="m-widget15__stats">
-                                            28%
-                                        </span>
-                                        <span class="m-widget15__text">
-                                            KRA Submitted
-                                        </span>
-                                        <div class="m--space-10"></div>
-                                        <div class="progress m-progress--sm">
-                                            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress-bar bg-warning" role="progressbar" style="width: 40%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="m-widget15__item">
-                                        <span class="m-widget15__stats">
-                                            47%
-                                        </span>
-                                        <span class="m-widget15__text">
-                                            KRA Approved
-                                        </span>
-                                        <div class="m--space-10"></div>
-                                        <div class="progress m-progress--sm">
-                                            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="progress-bar bg-success" role="progressbar" style="width: 55%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="m-widget15__item">
-                                        <span class="m-widget15__stats">
-                                            3%
-                                        </span>
-                                        <span class="m-widget15__text">
-                                            KRA Pending
-                                        </span>
-                                        <div class="m--space-10"></div>
-                                        <div class="progress m-progress--sm">
-                                            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar bg-primary" role="progressbar" style="width: 60%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="m-widget15__desc">
-                            <!-- * lorem ipsum dolor sit amet consectetuer sediat elit -->
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            
-        </div>
-        <div class="col-xl-4">
-            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                Approvals
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
-                                <a class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand" href="#" ng-reflect-href="#">
-                                    All
-                                </a>
-                                <div class="m-dropdown__wrapper">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 45px;"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__content">
-                                                <ul class="m-nav">
-                                                    <li class="m-nav__section m-nav__section--first">
-                                                        <span class="m-nav__section-text">
-                                                            Quick Actions
-                                                        </span>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Leaves
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                            <span class="m-nav__link-text">
-                                                                KRA
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Learning
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    
-                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                    <li class="m-nav__item">
-                                                        <a class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm" href="#" ng-reflect-href="#">
-                                                            Cancel
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <div class="m-widget4">
-                        <div class="m-widget4__item">
-                            <div class="m-widget4__img m-widget4__img--logo">
-                                <img alt="" src="">
-                            </div>
-                            <div class="m-widget4__info">
-                                <span class="m-widget4__title">
-                                    Salman Khana
-                                </span>
-                                <br>
-                                <span class="m-widget4__sub">
-                                    29-Sep-2018, 10:15AM
-                                </span>
-                            </div>
-                            <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
-                                    <!-- +$2500 -->
-                                </span>
-                            </span>
-                        </div>
-                        <div class="m-widget4__item">
-                            <div class="m-widget4__img m-widget4__img--logo">
-                                <img alt="" src="">
-                            </div>
-                            <div class="m-widget4__info">
-                                <span class="m-widget4__title">
-                                    Deepak Singh
-                                </span>
-                                <br>
-                                <span class="m-widget4__sub">
-                                    20-April-2018, 10:15AM
-                                </span>
-                            </div>
-                            <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
-                                    <!-- -$290 -->
-                                </span>
-                            </span>
-                        </div>
-                        <div class="m-widget4__item">
-                            <div class="m-widget4__img m-widget4__img--logo">
-                                <img alt="" src="">
-                            </div>
-                            <div class="m-widget4__info">
-                                <span class="m-widget4__title">
-                                    Ravi Dubey
-                                </span>
-                                <br>
-                                <span class="m-widget4__sub">
-                                    15-June-2018, 10:15AM
-                                </span>
-                            </div>
-                            <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
-                                    <!-- +$17 -->
-                                </span>
-                            </span>
-                        </div>
-                        <div class="m-widget4__item">
-                            <div class="m-widget4__img m-widget4__img--logo">
-                                <img alt="" src="">
-                            </div>
-                            <div class="m-widget4__info">
-                                <span class="m-widget4__title">
-                                    Supriya Singh
-                                </span>
-                                <br>
-                                <span class="m-widget4__sub">
-                                    29-Jan-2018, 10:15AM
-                                </span>
-                            </div>
-                            <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
-                                    <!-- -$2.50 -->
-                                </span>
-                            </span>
-                        </div>
-                        <div class="m-widget4__item">
-                            <div class="m-widget4__img m-widget4__img--logo">
-                                <img alt="" src="">
-                            </div>
-                            <div class="m-widget4__info">
-                                <span class="m-widget4__title">
-                                    Divya Rai
-                                </span>
-                                <br>
-                                <span class="m-widget4__sub">
-                                    15-Dec-2018, 12:15AM
-                                </span>
-                            </div>
-                            <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
-                                    <!-- +$200 -->
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>	
-        </div>
-    </div>
-    <!--End::Main Portlet-->  <!--Begin::Main Portlet-->
-    
+								</li>
+								<li>
+									<span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
+										<i class="la la-angle-left"></i>
+									</span>
+								</li>
+								<li *ngFor="let page of p.pages">
+									<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+										{{ page.label }}
+									</span>
+								</li>
+								<li>
+									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+										<i class="la la-angle-right"></i>
+									</span>
+								</li>
+								<li>
+									<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
+										<i class="la la-angle-double-right"></i>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</pagination-template>
+					<div class="pager-display-size" *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length!=0">
+						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="1">
+								<option value=10>10</option>
+								<option value=20>20</option>
+								<option value=30>30</option>
+								<option value=50>50</option>
+								<option value=100>100</option>
+						</select>
+                        <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length ? (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }} of {{(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length}} </span>
+					</div>
+				</div>  
+			</div>
+	</div>
 </div>
