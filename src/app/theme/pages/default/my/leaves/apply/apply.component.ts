@@ -137,7 +137,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = !(data.balance || data.balance <= 0 || data.balance < data.days);
+        this.isBalanceValid = data.balance || !(data.balance <= 0 || data.balance < data.days);
 
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
@@ -259,6 +259,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
         let msg = "";
         if (err.error.message) {
             msg = err.error.message;
+        } else if (err.body.error.message) {
+            msg = err.body.error.message;
         }
         swal("An Error Occured", msg, "error");
     }

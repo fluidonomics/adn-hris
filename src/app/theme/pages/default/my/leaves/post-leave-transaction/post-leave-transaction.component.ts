@@ -110,7 +110,7 @@ export class PostLeaveTransactionComponent implements OnInit {
 
     postLeaveTransactionDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = !(data.balance == null || data.balance <= 0 || data.balance < data.days);
+        this.isBalanceValid = data.balance || !(data.balance <= 0 || data.balance < data.days);
 
         if (form.valid && this.areDaysValid && this.isBalanceValid) {
             let _postData: any = {};

@@ -54,7 +54,10 @@ export class CalenderComponent implements OnInit {
         this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(res => {
             if (res.ok) {
                 this.leaveDetails = res.json() || [];
-                this.calendardata = this.leaveDetails.map(leave => {
+                this.calendardata = this.leaveDetails.filter(leave => {
+                    if (leave.isApproved)
+                        return leave;
+                }).map(leave => {
                     let data: any = {};
                     let fromdate, toDate;
                     if (leave.fromDate)
