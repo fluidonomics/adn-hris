@@ -1,5 +1,5 @@
 <div class="m-content">
-        <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+    <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
                 <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
@@ -123,12 +123,13 @@
 											<i class="la" *ngIf="key == 'batchType'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
                                         </th>
-                                        <th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
+                                        <!-- <th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
                                                 <span>
                                                 INITIATED BY
                                                 <i class="la" *ngIf="key == 'createdBy'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                 </span>
-                                        </th>
+                                        </th> -->
+                                         
 										<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
 											<span>
                                             INITIATED ON
@@ -141,6 +142,12 @@
                                                 <i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                 </span>
                                         </th>
+                                        <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
+                                                <span>
+                                                Status
+                                                <i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                </span>
+                                         </th>
                                         <th class="m-datatable__cell m-datatable__cell--sort" width="15%" >
                                             <span>
                                             ACTION
@@ -151,7 +158,7 @@
 							<tbody class="m-datatable__body">
                                 <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
-                                            <td class="m-datatable__cell" width="10%">
+                                           <td class="m-datatable__cell" width="10%">
                                                 <i class="la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(i,batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" >
@@ -160,24 +167,27 @@
                                             <td class="m-datatable__cell" width="15%" >
                                                 <span>{{batch.batchType}}</span>
                                             </td>
-                                            <td class="m-datatable__cell" width="15%" >
-                                                    <span>{{batch.createdBy}}</span>
-                                            </td>
+                                            <!-- <td class="m-datatable__cell" width="15%" >
+                                                <span>{{batch.createdBy}}</span>
+                                            </td> -->
+                                           
                                             <td class="m-datatable__cell" width="15%" >
                                                 <span>{{batch.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                             </td>
+                                            
                                             <td class="m-datatable__cell" width="15%" >
                                                 <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" >
-                                                <span *ngIf="batch.status!='Terminated'">
-                                                        <a (click)="" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
+                                                <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Started','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
+                                            </td>
+                                            <td class="m-datatable__cell" width="15%" >
+                                                <!-- <span *ngIf="batch.status!='Terminated'"> -->
+                                                        <a (click)="openEditModal(templateEdit,batch)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
                                                             <i class="la la-edit"></i>
                                                         </a>
-                                                         <a (click)="saveBatchStatus(i,'Terminated')" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
-                                                             <i class="la la-remove"></i>
-                                                         </a>
-                                                </span>
+                                                         
+                                                <!-- </span> -->
                                             </td>
                                     </tr>
                                     <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
@@ -201,7 +211,7 @@
                                                         <tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body"> 
-                                                            <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData">
+                                                            <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData;let j=index">
                                                                 <tr class="m-datatable__row">
                                                                         <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.userName}}</span>
@@ -210,14 +220,17 @@
                                                                                 <span>{{kraRow.timeline_id}}</span>
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="10%" >
-                                                                             <span style="width: 100px;"><span class="m-badge  m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
+                                                                             <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="10%">
-                                                                            <span *ngIf="kraRow.status!='Terminated'">
-                                                                                <a (click)="saveKraWorkFlow(i,'Terminated')" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
+                                                                            <span *ngIf="batch.status!='Terminated'">
+                                                                                <a (click)="saveKraWorkFlow(i,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
                                                                                     <i class="la la-remove"></i>
                                                                                 </a>
-                                                                           </span>
+                                                                                <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
+                                                                                  <i class="la la-edit"></i>
+                                                                                </a>
+                                                                            </span>
                                                                         </td>
                                                                 </tr>
                                                                 <span *ngIf="batch?.batchData?.length==0" class="m-datatable--error">No records found</span>
@@ -274,5 +287,78 @@
 					</div>
 				</div>  
 			</div>
-	</div>
+    </div>
+    <ng-template #templateEdit>
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Edit Batch</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="m-form m-form--fit m-form--label-align-right" id="editBatch" #feditBatch="ngForm" (submit)="feditBatch.valid && saveBatch(feditBatch)">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12 adn-form__group">
+                                <div class="m-form__group form-group">
+                                        <label for="batchName">Workflow Type
+										</label>
+										<ng-select class="m-input m-input--air" name="workflowTypes" [items]="batchTypes" bindLabel="batchTypeName"  bindValue="_id" placeholder="Select Workflow Type" [(ngModel)]="editBatch.batchType" #workflowTypes="ngModel" [clearable]="false" disabled="disabled">
+										</ng-select>
+								</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 adn-form__group">
+                                <div class="m-form__group form-group">
+                                        <label for="batchName">Batch Name
+                                            </label>
+                                            <span class="required" aria-required="true"> * </span>
+                                            <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel" placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required>
+                                            <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchName.valid">
+                                                    This field is required.
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 adn-form__group">
+                                <div class="m-form__group form-group">
+                                    <label for="batchEndDate">Batch End Date
+                                        </label>
+                                        <span class="required" aria-required="true"> * </span>
+                                        <input name="batchEndDate" class="form-control m-input m-input--air" #batchEndDate="ngModel" placeholder="Enter Batch End Date" [(ngModel)]="editBatch.batchEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #batchEndDate="ngModel" placement="top" required>
+                                        <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchEndDate.valid">
+                                                This field is required.
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12 adn-form__group">
+                                    <div class="m-form__group form-group">
+                                        <label for="batchEndDate">Batch Status
+                                            </label>
+                                            <span class="required" aria-required="true"> * </span>
+                                            <ng-select class="m-input m-input--air" name="batchstatus" [items]="statusTypes" bindLabel="name"  bindValue="_id" placeholder="Select Status" [(ngModel)]="editBatch.status" #batchstatus="ngModel" [clearable]="false">
+                                                </ng-select>
+                                            <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchstatus.valid">
+                                                This field is required.
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="m-form__actions">
+                                    <button class="btn btn-success submitForm" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </ng-template>
 </div>

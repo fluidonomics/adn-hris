@@ -10,6 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TagInputModule } from 'ngx-chips';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HrRoutingModule } from './hr-routing.module';
+import { ModalModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
 
 import { HrComponent } from './hr.component';
@@ -21,7 +22,7 @@ import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.comp
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
 import { HrLearningComponent } from './workFlows/learning/learning.component';
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
-import { HrPapComponent } from './workFlows/pap/pap.component';
+import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
@@ -42,6 +43,7 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         TagInputModule,
         BaseModule,
         BsDatepickerModule.forRoot(),
+        ModalModule.forRoot()
     ], declarations: [
         HrComponent,
         DashboardComponent,
@@ -50,7 +52,7 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         AllEmployeeComponent,
         AddEmployeeComponent,
         HrLearningComponent,
-        HrPapComponent,
+        HrBatchComponent,
         HrPipComponent,
         DirectoryComponent,
         EditEmployeeComponent,

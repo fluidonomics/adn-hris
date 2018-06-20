@@ -378,11 +378,11 @@ export class CommonService {
         return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
     }
 
-    saveBatchStatus(data:any):Observable<Response>
-    {
-        let url = "kra/updateBatchStatus";
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
-    }
+    // saveBatchStatus(data:any):Observable<Response>
+    // {
+    //     let url = "kra/updateBatchStatus";
+    //     return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+    // }
 
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
