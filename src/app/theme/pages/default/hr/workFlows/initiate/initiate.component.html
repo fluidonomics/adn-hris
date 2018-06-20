@@ -180,8 +180,8 @@
 						<option value=30>30</option>
 						<option value=50>50</option>
 						<option value=100>100</option>
-				    </select>
-			        <span class="m-datatable__pager-detail">Displaying {{getStart()}} -  {{getEnd((employeeData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}}</span>
+					</select>
+					<span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeeData | orderBy: key : reverse | filter:search)?.length ? (employeeData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }} of {{(employeeData | orderBy: key : reverse | filter:search)?.length}} </span>
 				</div>
 				<div class="form-actions" style="margin-top: 25px;">
 				  <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiateWorkflow.valid && saveBulkKra(finitiateWorkflow)" #finitiateWorkflow="ngForm" novalidate="novalidate">
