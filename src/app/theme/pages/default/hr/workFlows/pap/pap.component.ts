@@ -13,6 +13,12 @@ export class HrPapComponent implements OnInit {
     batchData: any = [];
     activeRowNumber:number=-1;
 
+    key: string = ''; //set default
+    reverse: boolean = false;
+    p2: number = 1;
+    search: any;
+    itemPerPage: number = 10;
+
     constructor(
         private _commonService: CommonService,
         public _authService: AuthService) {

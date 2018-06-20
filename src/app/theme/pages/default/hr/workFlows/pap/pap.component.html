@@ -195,7 +195,7 @@
                                                                                 <span>{{accordionRow.status}}</span>
                                                                         </td>
                                                                 </tr>
-                                                                <span *ngIf="batch?.kraWorkFlowData?.length==0" class="m-datatable--error">No records found</span>
+                                                                <span *ngIf="batch?.batchData?.length==0" class="m-datatable--error">No records found</span>
                                                             </ng-container>
                                                         </tbody>
                                                     </table>
@@ -244,8 +244,8 @@
 								<option value=30>30</option>
 								<option value=50>50</option>
 								<option value=100>100</option>
-						</select>
-                        <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length ? (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }} of {{(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length}} </span>
+                        </select>
+                        <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (batchData | orderBy: key : reverse | filter:search)?.length ? (batchData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }} of {{(batchData | orderBy: key : reverse | filter:search)?.length}} </span>
 					</div>
 				</div>  
 			</div>
