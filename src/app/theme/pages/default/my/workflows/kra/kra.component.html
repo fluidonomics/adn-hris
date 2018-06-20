@@ -144,7 +144,7 @@
                                             <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 <span>
                                                 ACTIONS  
-                                                <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                 <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                 </span>
                                             </th>
                                         </tr>
@@ -173,9 +173,11 @@
                                             <span style="width: 100px;"><span class="m-badge  m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraworkflow.status=='Initiated','m-badge--brand':kraworkflow.status=='Submitted','m-badge--danger':kraworkflow.status=='SendBack','m-badge--success':kraworkflow.status=='Approved','m-badge--secondary':kraworkflow.status=='Terminated'}">{{kraworkflow.status}}</span></span>
                                         </td>
                                         <td class="m-datatable__cell" width="15%" >
+                                            <span *ngIf="kraworkflow.status!='Terminated'">
                                                 <a routerLink="/my/workflows/kra" [queryParams]="{ id: kraworkflow._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
-                                                  <i class="la" [ngClass]="kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
-                                                </a>  
+                                                    <i class="la" [ngClass]="kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
+                                                </a>
+                                            </span>  
                                         </td>
                                   </tr>
                                   <span *ngIf="(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>

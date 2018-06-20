@@ -34,7 +34,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     p2: number = 1;
 
     _currentEmpId: number;
-    itemPerPage: number = 30;
+    itemPerPage: number = 20;
 
     search: any;
     isCheckAll: boolean = false;
@@ -132,43 +132,39 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     saveBulkKra(form) {
 
+
         this.batchData.emp_id = this.employeeData.filter(function(employee, index, array) {
             return employee.checked;
         }).map(item => {
             return item._id
         });
 
-        this._hrService.saveBulkKra(this.batchData)
-            .subscribe(
-            res => {
-                if (res.ok) {
-                    swal("KRA Workflow", "Initiated", "success");
-                    form.resetForm();
-                    this.clearForm();
-                }
-            },
-            error => {
+        if(this.batchData.emp_id.length > 0)
+        {
+            this._hrService.saveBulkKra(this.batchData)
+                .subscribe(
+                res => {
+                    if (res.ok) {
+                        swal("KRA Workflow", "Initiated", "success");
+                        form.resetForm();
+                        this.clearForm();
+                    }
+                },
+                error => {
             });
+        }
+        else{
+            swal('Warning','Please Select at least one employee','warning')
+        }
     }
 
-    getColumnName(column) {
-        return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
-    }
+    // getColumnName(column) {
+    //     return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
+    // }
 
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
-    }
-
-
-
-    getStart() {
-        return Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1)
-    }
-
-    getEnd(filterCount) {
-        let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
-        return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 
     selectAllEmployee($event) {
