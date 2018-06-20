@@ -196,7 +196,7 @@ export class MyKraComponent {
                 this.deleteKra(this.kraInfoData[index]._id,index);
                 else
                 {
-                  delete this.kraInfoData[index];
+                  this.kraInfoData.splice(index, 1);
                   if(this.kraInfoData.length==0)
                   {
                       this.addKraHtml();
