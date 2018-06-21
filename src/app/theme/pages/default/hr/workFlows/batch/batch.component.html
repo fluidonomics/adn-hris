@@ -182,12 +182,11 @@
                                                 <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Started','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" >
-                                                <!-- <span *ngIf="batch.status!='Terminated'"> -->
+                                                <span *ngIf="batch.status!='Terminated'">
                                                         <a (click)="openEditModal(templateEdit,batch)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
                                                             <i class="la la-edit"></i>
                                                         </a>
-                                                         
-                                                <!-- </span> -->
+                                                </span>
                                             </td>
                                     </tr>
                                     <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
@@ -227,9 +226,9 @@
                                                                                 <a (click)="saveKraWorkFlow(i,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
                                                                                     <i class="la la-remove"></i>
                                                                                 </a>
-                                                                                <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
+                                                                                <!-- <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
                                                                                   <i class="la la-edit"></i>
-                                                                                </a>
+                                                                                </a> -->
                                                                             </span>
                                                                         </td>
                                                                 </tr>
