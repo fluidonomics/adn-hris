@@ -133,8 +133,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     saveBulkKra(form) {
-
-
         this.batchData.emp_id = this.employeeData.filter(function(employee, index, array) {
             return employee.checked;
         }).map(item => {
@@ -147,7 +145,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 .subscribe(
                 res => {
                     if (res.ok) {
-                        swal("KRA Workflow", "Initiated", "success");
+                        swal("Success", "Batch Initiated Successfully", "success");
                         form.resetForm();
                         this.clearForm();
                     }
@@ -156,7 +154,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             });
         }
         else{
-            swal('Warning','Please Select at least one employee','warning')
+            swal('Oops!','No employee selected','warning')
         }
     }
 

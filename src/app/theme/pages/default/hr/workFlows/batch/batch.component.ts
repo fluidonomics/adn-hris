@@ -81,14 +81,26 @@ export class HrBatchComponent implements OnInit {
 
     saveKraWorkFlow(batchIndex,kraWorkFlowIndex,status)
     {
-       this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex].status=status;
-       this._batchService.saveKraWorkFlow(this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex])
-        .subscribe(
-         res => {   
-             
-         },
-         error => {
-         }); 
+        swal({
+            title: 'Are you sure?',
+            text: "Terminate workflow? It can't be undone!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Terminate'
+        }).then((result) => {
+            if (result.value) {
+                this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex].status=status;
+                this._batchService.saveKraWorkFlow(this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex])
+                    .subscribe(
+                    res => {   
+                        swal('Success','Batch Terminated Successfully','success')
+                    },
+                    error => {
+                    }); 
+                        }
+        })
     }
 
     openEditModal(template: TemplateRef<any>, batch,index) {
@@ -107,9 +119,16 @@ export class HrBatchComponent implements OnInit {
             this.activeRowNumber=-1;
             this.loadBatch();
             this.modalRef.hide();
+            swal('Success','Batch Saved Successfully','success')
          },
          error => {
          }); 
+    }
+
+    
+    sort(key) {
+        this.key = key;
+        this.reverse = !this.reverse;
     }
 
 }
