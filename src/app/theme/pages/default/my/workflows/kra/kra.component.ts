@@ -263,7 +263,7 @@ export class MyKraComponent {
         {
             swal({
                 title: 'Oops!',
-                text:'100%',
+                text:'Sum of weightages should be 100%',
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',
@@ -283,13 +283,13 @@ export class MyKraComponent {
        if(!categoryUnique)
        {
             swal({
-                title: 'Are you sure?',
-                text: "category unique",
+                title: 'Do you want to Submit?',
+                text: "Make sure you have covered all categories.",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#9a9caf',
-                confirmButtonText: 'Yes',
+                confirmButtonText: 'Proceed Anyway',
             }).then((result) => {
                 if(result.value)
                 {
@@ -344,13 +344,13 @@ export class MyKraComponent {
                 {
                     let kraLength=this.employee.grade_id <=2 ? 5 :3;
                     swal({
-                        title: 'Are you sure?',
-                        text: "Do you want to submit kra minimum " + kraLength +" is required",
+                        title: 'Do you want to Submit?',
+                        text: "For your grade ateast" + kraLength +" KRAs are required",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
                         cancelButtonColor: '#9a9caf',
-                        confirmButtonText: 'Yes',
+                        confirmButtonText: 'Proceed Anyway',
                         }).then((result) => {
                             if (result.value) {
                                 this.isCategoryUnique();
