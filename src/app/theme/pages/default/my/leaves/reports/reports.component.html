@@ -24,59 +24,65 @@
                 <div class="m-portlet__body">
                     <div class="tab-content">
                         <div class="tab-pane active show" id="reportsPanel" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div id="chartEmployee" class="chartEmployee">
-                                        <h5>Leaves taken by Month (All Employees)</h5>
-                                        <div id="leave_by_month" class="d3-chart" #chart></div>
-                                    </div>
-                                    <div id="chartLeaves" class="chartLeaves">
-                                        <h5>Leaves taken by Leave Type</h5>
-                                        <div id="leave_by_type" class="d3-chart" #leaveChart></div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1">
+                                        Graphical View
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2">
+                                        Tabular View
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="chartEmployee" class="chartEmployee">
+                                                <h5>Leaves taken by Month (All Employees)</h5>
+                                                <div id="leave_by_month" class="d3-chart" #chart></div>
+                                            </div>
+                                            <div id="chartLeaves" class="chartLeaves">
+                                                <h5>Leaves taken by Leave Type</h5>
+                                                <div id="leave_by_type" class="d3-chart" #leaveChart></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-md-12 m--margin-bottom-10">
-                                        </div>
+
                                         <div class="col-md-12">
                                             <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error' : !leaveData || leaveData.length == 0}">
                                                 <table class="m-datatable__table">
                                                     <thead class="m-datatable__head">
                                                         <tr class="m-datatable__row">
-                                                            <th (click)="sort('leavetype')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                                            <th (click)="sort('leavetype')" class="m-datatable__cell m-datatable__cell--sort" width="40%">
                                                                 <span>
-                                                                    Leave Type
+                                                                    Month
                                                                     <i class="la" *ngIf="key == 'leavetype'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                                 </span>
                                                             </th>
                                                             <th (click)="sort('fromDate')" class="m-datatable__cell m-datatable__cell--sort" width="60%">
                                                                 <span>
-                                                                    Details
+                                                                    Leaves
                                                                     <i class="la" *ngIf="key == 'fromDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                                </span>
-                                                            </th>
-                                                            <th (click)="sort('toDate')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
-                                                                <span>
-                                                                    Days
-                                                                    <i class="la" *ngIf="key == 'toDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                                 </span>
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="m-datatable__body">
-                                                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of leaveData | orderBy: key : reverse | filter:search;let even=even;">
-                                                            <td class="m-datatable__cell" width="20%">
-                                                                <span>{{leave.leave_type_name}}</span>
+                                                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of empChartData | orderBy: key : reverse | filter:search;let even=even;">
+                                                            <td class="m-datatable__cell" width="40%">
+                                                                <span>{{leave[0]}}</span>
                                                             </td>
-                                                            <td class="m-datatable__cell" width="20%">
-                                                                <span>{{leave.details}}</span>
-                                                            </td>
-                                                            <td class="m-datatable__cell" width="20%">
-                                                                <span>{{leave.days}}</span>
+                                                            <td class="m-datatable__cell" width="60%">
+                                                                <span>{{leave[1]}}</span>
                                                             </td>
                                                         </tr>
-                                                        <span *ngIf="!leaveData || leaveData.length == 0" class="m-datatable--error">No records found</span>
+                                                        <span *ngIf="!empChartData || empChartData.length == 0" class="m-datatable--error">No records found</span>
                                                     </tbody>
                                                 </table>
                                                 <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">

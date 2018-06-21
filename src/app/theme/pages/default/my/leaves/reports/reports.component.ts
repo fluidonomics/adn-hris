@@ -33,7 +33,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('chart') private chartContainer: ElementRef;
   @ViewChild('leaveChart') private leaveChartContainer: ElementRef;
-  private empChartData: Array<any>;
+  public empChartData: Array<any>;
   private leaveChartData: Array<any>;
   private margin: any = { top: 20, bottom: 20, left: 20, right: 20 };
   private chart: any;
@@ -79,6 +79,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   getEmployeeLeavesByMonth() {
+    debugger;
     this.empChartData = [];
     this.leaveService.getLeavesByMonth().subscribe(
       res => {
