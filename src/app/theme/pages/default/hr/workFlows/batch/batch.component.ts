@@ -104,6 +104,7 @@ export class HrBatchComponent implements OnInit {
         this._batchService.saveBatch(this.editBatch)
         .subscribe(
          res => {   
+            this.activeRowNumber=-1;
             this.loadBatch();
             this.modalRef.hide();
          },
