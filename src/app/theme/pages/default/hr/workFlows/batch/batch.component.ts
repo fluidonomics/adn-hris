@@ -35,7 +35,7 @@ export class HrBatchComponent implements OnInit {
      ]
 
     statusTypes:any=[
-        {_id:"Started" ,name:"Started", },
+        {_id:"Active" ,name:"Active", },
         {_id:"Terminated" ,name:"Terminated"},
      ]
 
