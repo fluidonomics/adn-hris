@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { ConfigureComponent } from './configure/configure.component';
 import { MasterDataComponent } from './masterData/masterData.component';
 import { AdminGuard } from "./_guard/admin.guard";
+import { AdminDashboardComponent } from './dashboard/dashboard.component';
 
 
 // const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [{
     children: [
         { path: 'masterData', component: MasterDataComponent },
         { path: 'configure', component: ConfigureComponent },
+        { path: 'dashboard', component: AdminDashboardComponent },
     ]
 }
 

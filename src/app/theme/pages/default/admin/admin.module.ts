@@ -10,6 +10,7 @@ import { ConfigureComponent } from './configure/configure.component';
 import { MasterDataComponent } from './masterData/masterData.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminGuard } from "./_guard/admin.guard";
+import { AdminDashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import { AdminGuard } from "./_guard/admin.guard";
         AdminComponent,
         ConfigureComponent,
         MasterDataComponent,
+        AdminDashboardComponent
     ],
     providers: [AdminGuard]
 })
