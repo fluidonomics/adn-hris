@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
+import { AdminService } from '../admin.service';
 //import { ModalDismissReasons, NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const now = new Date();
@@ -11,8 +12,12 @@ const now = new Date();
 })
 export class AdminDashboardComponent {
 
-    constructor(
+    public transactionYear: any = {};
+    public yearList: any = [];
 
+
+    constructor(
+        private adminService: AdminService
     ) {
     }
     // constructor(private formBuilder: FormBuilder,
@@ -20,6 +25,15 @@ export class AdminDashboardComponent {
     // }
 
     ngOnInit() {
+        this.adminService.getFinancialYear().subscribe(res => {
+            if (res.ok) {
+                this.yearList = res.json() || [];
+                console.log(this.yearList);
+            }
+        })
+    }
+
+    onTranYearSubmit(form) {
 
     }
 }

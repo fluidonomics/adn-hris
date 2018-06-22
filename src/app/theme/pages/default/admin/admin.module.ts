@@ -11,6 +11,8 @@ import { MasterDataComponent } from './masterData/masterData.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminGuard } from "./_guard/admin.guard";
 import { AdminDashboardComponent } from './dashboard/dashboard.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AdminService } from './admin.service';
 
 @NgModule({
     imports: [
@@ -19,14 +21,15 @@ import { AdminDashboardComponent } from './dashboard/dashboard.component';
         //NgbModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        NgSelectModule
     ], declarations: [
         AdminComponent,
         ConfigureComponent,
         MasterDataComponent,
         AdminDashboardComponent
     ],
-    providers: [AdminGuard]
+    providers: [AdminGuard, AdminService]
 })
 export class AdminModule {
 }

@@ -1,0 +1,68 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                Dashboard
+            </h3>
+        </div>
+    </div>
+</div>
+
+<!-- END: Subheader -->
+<div class="m-content">
+    <!--Begin::Main Portlet-->
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Transaction Year
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget15">
+                        <div class="m-widget15__items">
+                            <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onTranYearSubmit(fTransactionYear)" id="fTransactionYear"
+                                #fTransactionYear="ngForm">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-12 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Leave Type</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select #tranYears class="m-input m-input--air" name="tranYears" bindValue="_id" bindLabel="type" [items]="yearList" [(ngModel)]="transactionYear.tranYear"
+                                                    id="tranYear" #tranYear="ngModel" placeholder="Select Transaction Year" [clearable]="false"
+                                                    required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="fTransactionYear.submitted && !tranYear.valid">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="m-form__actions">
+                                                <button class="btn btn-success submitForm" type="submit" id="submitForm">Process</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--End::Main Portlet-->
+    <!--Begin::Main Portlet-->
+
+</div>
