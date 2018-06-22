@@ -59,6 +59,8 @@ export class GrantLeaveComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.leaveTypesList = res.json();
+                    this.leaveTypesList = this.leaveTypesList.filter(lt => lt._id != 1);
+                    this.leaveTypesList = this.leaveTypesList.filter(lt => lt._id != 2);
                     this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
                 }
             },
@@ -107,10 +109,12 @@ export class GrantLeaveComponent implements OnInit {
 
     onChangeEmployee() {
         let selectedEmployee = this.employeeList.find(emp => emp._id == this.grantLeave.employee);
-        if (selectedEmployee.gender == 'Female') {
-            this.filteredLeaveTypesList = this.leaveTypesList;
-        } else {
-            this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+        if (selectedEmployee != undefined) {
+            if (selectedEmployee.gender == 'Female') {
+                this.filteredLeaveTypesList = this.leaveTypesList;
+            } else {
+                this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+            }
         }
     }
 
