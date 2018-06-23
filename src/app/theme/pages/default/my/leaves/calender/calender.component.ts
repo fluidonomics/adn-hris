@@ -74,7 +74,7 @@ export class CalenderComponent implements OnInit {
                     if (fromdate && toDate) {
                         data.start = fromdate;
                         if (fromdate != toDate) {
-                            data.end = toDate;
+                            data.end =moment(toDate).add(1,'days');
                         }
                     }
 
