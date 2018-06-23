@@ -14,10 +14,11 @@ import { forEach } from "@angular/router/src/utils/collection";
     templateUrl: "./kra.component.html",
     encapsulation: ViewEncapsulation.None,
     styleUrls:['./kra.component.css'],
-    providers: [KraService]
+    providers: [KraService],
 })
 export class MyKraComponent {
 
+    window: any = window;
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
@@ -345,7 +346,7 @@ export class MyKraComponent {
                     let kraLength=this.employee.grade_id <=2 ? 5 :3;
                     swal({
                         title: 'Do you want to Submit?',
-                        text: "For your grade ateast" + kraLength +" KRAs are required",
+                        text: "For your grade ateast " + kraLength +" KRAs are required",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',

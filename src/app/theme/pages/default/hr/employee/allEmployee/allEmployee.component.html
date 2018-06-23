@@ -222,12 +222,12 @@
 									</span>
 								</li>
 								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
 										<i class="la la-angle-right"></i>
 									</span>
 								</li>
 								<li>
-									<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
+									<span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
 										<i class="la la-angle-double-right"></i>
 									</span>
 								</li>

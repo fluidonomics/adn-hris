@@ -144,7 +144,7 @@
                                             <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 <span>
                                                 ACTIONS  
-                                                 <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                                <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                 </span>
                                             </th>
                                         </tr>
@@ -173,11 +173,9 @@
                                             <span style="width: 100px;"><span class="m-badge  m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraworkflow.status=='Initiated','m-badge--brand':kraworkflow.status=='Submitted','m-badge--danger':kraworkflow.status=='SendBack','m-badge--success':kraworkflow.status=='Approved','m-badge--secondary':kraworkflow.status=='Terminated'}">{{kraworkflow.status}}</span></span>
                                         </td>
                                         <td class="m-datatable__cell" width="15%" >
-                                            <span *ngIf="kraworkflow.status!='Terminated'">
                                                 <a routerLink="/my/workflows/kra" [queryParams]="{ id: kraworkflow._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
-                                                    <i class="la" [ngClass]="kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
-                                                </a>
-                                            </span>  
+                                                  <i class="la" [ngClass]="kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
+                                                </a>  
                                         </td>
                                   </tr>
                                   <span *ngIf="(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
@@ -335,7 +333,7 @@
                 <div class="m-portlet__head-caption">
                    <div class="m-portlet__head-title">
                       <h3 class="m-portlet__head-text">
-                         Submit KRA
+                            {{isDisabled ?'My KRA' :'Submit KRA' }}
                          <small>
                          </small>
                       </h3>
@@ -348,10 +346,10 @@
                         <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)=" fkraInfo.valid && submitKraWorkFlow()" >Submit</button>	
                     </li>
                     <li class="nav-item m-tabs__item">
-                        <!-- <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_9_1" role="tab" aria-selected="false" (click)="printDiv()">
+                        <a class="nav-link m-tabs__link" (click)="window.print();">
                         <i class="la la-print"></i>
                         Print
-                        </a> -->
+                        </a>
                     </li>
                    </ul>
                 </div>
@@ -361,7 +359,7 @@
                    <div class="m-section__content">  
                     <form #fkraInfo="ngForm" novalidate="novalidate">
                         <div class="table-responsive">
-                                <table class="table table-bordered table-hover" #printKra>
+                                <table class="table table-bordered table-hover" #print_div>
                                     <thead>
                                         <tr>
                                         <th>
@@ -432,20 +430,15 @@
                                             </td>
                                         </tr>
                                         <tr *ngIf="!isDisabled">
-                                            <td colspan="9">
-                                               <button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" (click)="addKraHtml()"><i class="la la-plus "></i></button>
-                                            </td>
-                                       </tr>
+                                                <td colspan="9">
+                                                   <button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" (click)="addKraHtml()"><i class="la la-plus "></i></button>
+                                                </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                         </div>
-                        <br>
-                        <!-- [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" -->
-                        <!-- <button class="btn btn-success m-btn--air" type="submit">
-                           Submit
-                        </button> -->
                     </form>
-                   </div><br><br>
+                   </div>
                    <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isKraAvaliable">
                         <div class="tab-content">
                             <div class="m-widget3">

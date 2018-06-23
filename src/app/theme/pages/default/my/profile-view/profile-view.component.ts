@@ -421,7 +421,7 @@ export class ProfileViewComponent implements OnInit {
                             showCancelButton: true,
                             confirmButtonColor: '#66BB6A',
                             cancelButtonColor: '#9a9caf',
-                            confirmButtonText: 'Approved'
+                            confirmButtonText: 'Approve'
                         }).then((result) => {
                             if (result.value) {
                                 this.saveProfileStatus(status);

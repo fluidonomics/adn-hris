@@ -159,7 +159,7 @@
                                 <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
                                            <td class="m-datatable__cell" width="10%">
-                                                <i class="la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(i,batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+                                                <i class="la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" >
                                                 <span>{{batch.batchName}}</span>

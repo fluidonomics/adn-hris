@@ -16,6 +16,7 @@ import swal from 'sweetalert2';
 })
 export class MyTeamKraComponent {
 
+    window: any = window;
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
@@ -129,14 +130,23 @@ export class MyTeamKraComponent {
           });
         }
         else{
+            let text="Do you want to approve kra ?";
+            let confirmButtonText="Approve";
+            let confirmButtonColor="#66BB6A";
+            if(status=='SendBack')
+            {
+                text="Do you want to approve kra ?";
+                confirmButtonText="Send Back";
+                confirmButtonColor="#f22d4e";           
+            }
             swal({
                     title: 'Are you sure?',
-                    text: "Do you want to " + status.toLowerCase() + " kra ?",
+                    text: text,
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#66BB6A',
+                    confirmButtonColor: confirmButtonColor,
                     cancelButtonColor: '#9a9caf',
-                    confirmButtonText: 'Submit'
+                    confirmButtonText: confirmButtonText
             }).then((result) => {
                     if (result.value) {
                         this.saveKraDetails(index,status);
@@ -175,5 +185,7 @@ export class MyTeamKraComponent {
         error => {
         });
     }
+
+    
 
 }

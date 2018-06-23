@@ -68,12 +68,12 @@ export class HrBatchComponent implements OnInit {
             });
     }
 
-    loadkraWorkFlowDetails(index:number,batch_id:number)
+    loadkraWorkFlowDetails(batch_id:number)
     {
        this._commonService.getKraWorkFlowInfoByBatch(batch_id)
        .subscribe(
         res => {
-            this.batchData[index].kraWorkFlowData = res.json().data;
+            this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData = res.json().data;
         },
         error => {
         });  
