@@ -56,7 +56,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.getAllSupervisorDetails();
             this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
-            this.fleaveapplication.valueChanges.subscribe(val => {
+            this.fleaveapplication.valueChanges.subscribe(val => {               
                 this.areDaysValid = true;
                 this.isBalanceValid = true;
                 this.isAttachmentRequired = false;
@@ -137,8 +137,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = data.balance || !(data.balance <= 0 || data.balance < data.days);
-
+        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);        
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
                 this.isAttachmentRequired = true;
@@ -188,7 +187,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (this.inProbation) {
                 swal({
                     title: 'Are you sure?',
-                    text: 'You are under Probation',
+                    text: 'Leave during probabtion are not encouraged until unless its an emergency case',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
