@@ -38,6 +38,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     employeeBalances: any = [];
     fromDateValidation: any = {};
     inProbation: boolean = false;
+    isMaternity: boolean = false;
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -56,7 +57,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.getAllSupervisorDetails();
             this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
-            this.fleaveapplication.valueChanges.subscribe(val => {               
+            this.fleaveapplication.valueChanges.subscribe(val => {
                 this.areDaysValid = true;
                 this.isBalanceValid = true;
                 this.isAttachmentRequired = false;
@@ -127,17 +128,29 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     onChangeLeaveType() {
+        debugger;
         let empBal = this.employeeBalances.find(bal => {
             if (bal) {
                 return bal.leaveType == this.leaveapplication.leaveType;
             }
         });
         this.leaveapplication.balance = empBal ? empBal.leaveBalance : 0;
+
+        // Maternity Leave
+        if (this.leaveapplication.leaveType == 3) {
+            this.isMaternity = true;
+            this.leaveapplication.fromDate = "";
+            this.leaveapplication.toDate = "";
+        } else {
+            this.isMaternity = false;
+            this.leaveapplication.fromDate = null;
+            this.leaveapplication.toDate = null;
+        }
     }
 
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
-        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);        
+        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             if (!data.attachment) {
                 this.isAttachmentRequired = true;

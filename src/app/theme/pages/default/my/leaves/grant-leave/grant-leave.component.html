@@ -69,8 +69,8 @@
                                                 <label for="form_control_1">Leave Type</label>
                                                 <span class="required" aria-required="true"> * </span>
                                                 <ng-select class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="filteredLeaveTypesList"
-                                                    [(ngModel)]="grantLeave.leaveType" id="leavetype" #leavetype="ngModel" placeholder=""
-                                                    [clearable]="false" required></ng-select>
+                                                    (ngModelChange)="onChangeLeaveType($event)" [(ngModel)]="grantLeave.leaveType"
+                                                    id="leavetype" #leavetype="ngModel" placeholder="" [clearable]="false" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="!leavetype.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !leavetype.valid">This field is required.</span>
                                                 </div>
@@ -96,7 +96,8 @@
                                                 <span class="required" aria-required="true">* </span>
                                                 <input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
                                                     bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                                                    id="toDate" [(ngModel)]="grantLeave.toDate" #toDate="ngModel" required>
+                                                    id="toDate" [(ngModel)]="grantLeave.toDate" [minDate]="grantLeave.fromDate"
+                                                    #toDate="ngModel" required>
                                                 <div class="form-control-feedback has-danger" *ngIf="!toDate.valid">
                                                     <span *ngIf="fGrantLeave.submitted && !toDate.valid">This field is required.</span>
                                                 </div>
@@ -112,7 +113,7 @@
                                                     #days="ngModel" [disabled]="isGrantingSpecialLeaves" (change)="onDaysChange($event)"
                                                     required>
                                                 <div class="form-control-feedback has-danger" *ngIf="fGrantLeave.submitted">
-                                                    <span *ngIf="fGrantLeave.submitted && !days.valid">This field is required.</span>
+                                                    <span *ngIf="fGrantLeave.submitted && !days.valid && grantLeave.leaveType != 3">This field is required.</span>
                                                     <span *ngIf="fGrantLeave.submitted && days.value == 0">Days cannot be zero.</span>
                                                     <span *ngIf="fGrantLeave.submitted && maxDaysValidation.isValid">{{maxDaysValidation.msg}}</span>
                                                 </div>

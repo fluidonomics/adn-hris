@@ -118,6 +118,16 @@ export class GrantLeaveComponent implements OnInit {
         }
     }
 
+    onChangeLeaveType(leaveType) {
+        if (leaveType == 3) {
+            this.grantLeave.days = null;
+            this.isGrantingSpecialLeaves = true;
+        } else {
+            this.grantLeave.days = 1;
+            this.isGrantingSpecialLeaves = false;
+        }
+    }
+
     onGrantLeaveSubmit(form) {
         if (this.grantLeave.days <= 0)
             return;
@@ -135,6 +145,14 @@ export class GrantLeaveComponent implements OnInit {
             this.maxDaysValidation = {
                 isValid: true,
                 msg: 'Sick Leaves cannot be granted more than ' + (14 * this.proRatedMultiplier) + ' days.'
+            }
+            return;
+        }
+        // Maternity Leave
+        else if (this.grantLeave.leaveType == 3 && this.grantLeave.days > 120) {
+            this.maxDaysValidation = {
+                isValid: true,
+                msg: 'Maternity Leaves cannot be granted more than ' + 120 + ' days.'
             }
             return;
         }
