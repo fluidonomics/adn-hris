@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
                     this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-                    this.fiscalYearId =  this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
+                    this.fiscalYearId =  this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                     this.loadDashboard();
 
                 }
@@ -139,6 +139,7 @@ export class DashboardComponent implements OnInit {
     }
 
     getLeaveBalance() {
+        debugger;
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
