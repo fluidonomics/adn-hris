@@ -42,8 +42,8 @@ export class LeaveService {
         return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getEmployeeLeaveDetails(_empId: number): Observable<Response> {
-        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId;
+    getEmployeeLeaveDetails(_empId: number, fiscalYearId: any): Observable<Response> {
+        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId="+fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -72,8 +72,8 @@ export class LeaveService {
         return this.authService.post(url, grantLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getEmployeeLeaveBalance(empId: number) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
+    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 

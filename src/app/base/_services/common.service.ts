@@ -40,7 +40,10 @@ export class CommonService {
       
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-
+    getFinancialYear(){
+        let url = "common/getFinincialYear";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     getHrSpoce(company_id?: number, emp_id?: number): Observable<Response> {
         let url = "common/getHr";
         if (company_id && emp_id) {
