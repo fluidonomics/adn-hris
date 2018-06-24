@@ -19,7 +19,7 @@ export class TrackLeaveComponent implements OnInit {
     employee: UserData;
     activeLeaveData: any = [];
     completedLeaveData: any = [];
-
+    fiscalYearId: string;
     constructor(
         private authService: AuthService,
         private leaveService: LeaveService,
@@ -36,7 +36,7 @@ export class TrackLeaveComponent implements OnInit {
     }
 
     loadLeaveTransactions() {
-        this.leaveService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.leaveService.getEmployeeLeaveDetails(this.employee._id, this.fiscalYearId).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leaveData = body.data.map(leave => {

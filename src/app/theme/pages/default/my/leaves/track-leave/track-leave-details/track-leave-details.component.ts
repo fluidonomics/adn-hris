@@ -24,7 +24,7 @@ export class TrackLeaveDetailsComponent implements OnInit {
     wfhSort: string = '';
     wfhReverse: boolean = false;
     p2: number = 1;
-
+    fiscalYearId: string;
     constructor(
         private authService: AuthService,
         private leaveService: LeaveService,
@@ -47,13 +47,13 @@ export class TrackLeaveDetailsComponent implements OnInit {
     }
 
     loadLeaveDetails() {
-        this.leaveService.getEmployeeLeaveDetails(this.employee._id).subscribe(data => {
+        this.leaveService.getEmployeeLeaveDetails(this.employee._id, this.fiscalYearId).subscribe(data => {
             let body = data.json();
             if (body.data) {
                 this.leave = body.data.find(leave => leave._id == this.leaveId);
                 if (this.leave) {
                     this.leave.days = this.utilityService.subtractDates(this.leave.fromDate, this.leave.toDate);
-                    this.leaveService.getEmployeeLeaveBalance(this.employee._id).subscribe(res => {
+                    this.leaveService.getEmployeeLeaveBalance(this.employee._id, this.fiscalYearId).subscribe(res => {
                         if (res.ok) {
                             let bal = res.json();
                             if (bal.length > 0) {

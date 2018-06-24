@@ -39,7 +39,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-
+    fiscalYearId: string;
+    
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
         private leaveService: LeaveService,
@@ -76,7 +77,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     getLeaveTypes() {
-        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypeByEmpId(this.currentUser._id).subscribe(data => {
+        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypeByEmpId(this.currentUser._id, this.fiscalYearId).subscribe(data => {
             this.leaveTypeList.push(data);
             this.leaveTypesDetails = this.leaveTypeList;
         });
@@ -109,8 +110,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     getEmployeeLeaveBalance() {
-        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id).subscribe(res => {
-            if (res.ok) {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
+    
+    if (res.ok) {
                 this.employeeBalances = res.json() || [];
             }
         })

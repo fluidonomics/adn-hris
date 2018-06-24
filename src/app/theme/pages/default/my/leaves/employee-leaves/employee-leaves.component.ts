@@ -20,7 +20,7 @@ export class EmployeeLeavesComponent implements OnInit {
     employeeList: any;
     selectedEmployee: any;
     leaveDetails: any = [];
-
+    fiscalYearId: string;
     p2: number = 1;
     key: string = '';
     reverse: boolean = false;
@@ -79,7 +79,7 @@ export class EmployeeLeavesComponent implements OnInit {
     }
 
     getEmployeeLeaves() {
-        this.leaveService.getEmployeeLeaveDetails(this.selectedEmployee).subscribe(
+        this.leaveService.getEmployeeLeaveDetails(this.selectedEmployee, this.fiscalYearId).subscribe(
             res => {
                 if (res.ok) {
                     let body = res.json();

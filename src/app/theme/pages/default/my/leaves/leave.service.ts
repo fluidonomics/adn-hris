@@ -71,7 +71,10 @@ export class LeaveService {
         let url = "leave/grantLeaveByEmployee";
         return this.authService.post(url, grantLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-
+    grantMaternityLeave(grantMaternityLeave: any){
+        let url ="leave/grantMaternityLeave";
+        return this.authService.post(url, grantMaternityLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
     getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
         let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
@@ -127,9 +130,9 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveTypeByEmpId(empId: number): Subject<any> {
+    getLeaveTypeByEmpId(empId: number, fiscalYearId: string): Subject<any> {
         let leaveTypes: Subject<any> = new Subject<any>();
-        this.getEmployeeLeaveBalance(empId).subscribe(resBalance => {
+        this.getEmployeeLeaveBalance(empId, fiscalYearId).subscribe(resBalance => {
             if (resBalance.ok) {
                 let leaveBalance = resBalance.json() || [];
                 if (leaveBalance.length > 0) {

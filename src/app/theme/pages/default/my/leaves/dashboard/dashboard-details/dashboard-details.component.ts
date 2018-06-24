@@ -27,7 +27,7 @@ export class DashboardDetailsComponent implements OnInit {
     leaveBalance: number = 0;
     isRemarkEmpty: boolean = false;
     employeeLeaveList: any = [];
-
+    fiscalYearId: string;
     wfhFilter: string = '';
     wfhSort: string = '';
     wfhReverse: boolean = false;
@@ -86,7 +86,7 @@ export class DashboardDetailsComponent implements OnInit {
                         this.ccTo.push(parseInt(cc));
                     });
                 }
-                this.leaveService.getEmployeeLeaveBalance(this.leave.emp_id).subscribe(leaveBalanceResponse => {
+                this.leaveService.getEmployeeLeaveBalance(this.leave.emp_id, this.fiscalYearId).subscribe(leaveBalanceResponse => {
                     if (leaveBalanceResponse.ok) {
                         let leaveBalance = leaveBalanceResponse.json();
                         if (leaveBalance.length > 0) {

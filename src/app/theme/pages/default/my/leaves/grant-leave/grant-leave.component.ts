@@ -37,6 +37,7 @@ export class GrantLeaveComponent implements OnInit {
     ngOnInit(): void {
         this.authService.validateToken().subscribe(res => {
             this.employee = this.authService.currentUserData;
+
             this.initValues();
             this.getLeaveTypes();
             this.getEmployeeList();
@@ -105,6 +106,8 @@ export class GrantLeaveComponent implements OnInit {
         this.grantLeave.department = null;
         this.grantLeave.employee = null;
         this.grantLeave.leaveType = null;
+        this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+
     }
 
     onChangeEmployee() {
@@ -171,15 +174,14 @@ export class GrantLeaveComponent implements OnInit {
                     let body: any = {
                         "leave_type": this.grantLeave.leaveType,
                         "balance": this.grantLeave.days,
-                        "updatedBy": this.employee._id,
-                        "createdBy": this.employee._id,
-                        "lapseDate": new Date(),
-                        "createdDate": new Date(),
-                        "updatedDate": new Date()
                     };
-                    if (this.grantLeave.leaveType == 3 || this.grantLeave.leaveType == 4) {
+                    //sick leave
+                    if (this.grantLeave.leaveType == 3 ) {
                         body.fromDate = this.grantLeave.fromDate;
                         body.toDate = this.grantLeave.toDate;
+                    }
+                    if(this.grantLeave.leaveType == 4) {
+
                     }
                     switch (this.currentCategory) {
                         case 'all': {
@@ -215,15 +217,28 @@ export class GrantLeaveComponent implements OnInit {
                         case 'single': {
                             this.utilityService.showLoader('#fGrantLeave');
                             body.emp_id = this.grantLeave.employee;
-                            this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
-                                if (res.ok) {
-                                    this.utilityService.hideLoader('#fGrantLeave');
-                                    swal("Leaves Granted", "", "success");
-                                    this.resetForm(form);
+                            if (this.grantLeave.leaveType == 4) {
+                                this.leaveService.grantLeaveByEmployee(body).subscribe(res => {
+                                    if (res.ok) {
+                                        this.utilityService.hideLoader('#fGrantLeave');
+                                        swal("Leaves Granted", "", "success");
+                                        this.resetForm(form);
+                                    }
+                                },
+                                    err => this.handleError(this, err, form)
+                                );}
+                                if(this.grantLeave.leaveType == 3){
+                                    this.leaveService.grantMaternityLeave(body).subscribe(res => {
+                                        if (res.ok) {
+                                            this.utilityService.hideLoader('#fGrantLeave');
+                                            swal("Leaves Granted", "", "success");
+                                            this.filteredLeaveTypesList = this.leaveTypesList.filter(lt => lt._id != 3);
+                                            this.resetForm(form);
+                                        }
+                                    },
+                                        err => this.handleError(this, err, form)
+                                    ); 
                                 }
-                            },
-                                err => this.handleError(this, err, form)
-                            );
                             break;
 
                         }

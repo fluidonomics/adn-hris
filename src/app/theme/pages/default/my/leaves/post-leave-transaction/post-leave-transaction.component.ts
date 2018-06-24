@@ -26,7 +26,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     inProbation: boolean = false;
     fetchingBalances: boolean = false;
     currentDate: Date = new Date()
-
+    fiscalYearId: string;
     constructor(
         private leaveService: LeaveService,
         private commonService: CommonService,
@@ -87,7 +87,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     onChangeEmployee() {
         this.fetchingBalances = true;
         this.employeeBalances = [];
-        this.leaveService.getEmployeeLeaveBalance(this.leavetransaction.employee).subscribe(res => {
+        this.leaveService.getEmployeeLeaveBalance(this.leavetransaction.employee, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
                 this.employeeBalances = res.json() || [];
             }
