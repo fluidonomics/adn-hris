@@ -130,7 +130,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     onChangeLeaveType() {
-        debugger;
+        if(this.leaveapplication.leaveType === 3){
+            this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
+                if(res.ok) {
+                    let startDate = new Date(res.json().result[0].startDate);
+                    let endDate = new Date( res.json().result[0].endDate);
+                    this.leaveapplication.fromDate = startDate;
+                    this.leaveapplication.toDate = endDate;
+                    this.leaveapplication.days = Number(res.json().result[0].balance);
+                }
+            })
+        }
+        else{
+            this.leaveapplication.days = 0;
+
+        }
         let empBal = this.employeeBalances.find(bal => {
             if (bal) {
                 return bal.leaveType == this.leaveapplication.leaveType;

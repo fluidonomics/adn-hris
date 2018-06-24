@@ -157,4 +157,8 @@ export class LeaveService {
         let url = "leave/getEmployeeProbationDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+    getMaternityLeaveDetails(empId: number){
+        let url = "leave/getEmpMaternityLeaveDetails?id=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }

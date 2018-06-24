@@ -139,7 +139,6 @@ export class DashboardComponent implements OnInit {
     }
 
     getLeaveBalance() {
-        debugger;
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
