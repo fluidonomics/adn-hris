@@ -239,8 +239,8 @@
                                                 </div>
                                             </td>
                                     </tr>
-                                  <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
                                 </ng-container>
+                                <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
                             </tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >

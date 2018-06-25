@@ -40,6 +40,8 @@ export class HrBatchComponent implements OnInit {
         {_id:"Terminated" ,name:"Terminated"},
      ]
 
+     _currentEmpId:number;
+
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
@@ -51,6 +53,7 @@ export class HrBatchComponent implements OnInit {
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
+                this._currentEmpId = this._authService.currentUserData._id;
                 this.initData();
             });
     }
@@ -67,6 +70,7 @@ export class HrBatchComponent implements OnInit {
             res => {
                 this.utilityService.hideLoader('#batch-loader');
                 this.batchData=res.json().data;
+                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
             },
             error => {
                 this.utilityService.hideLoader('#batch-loader');
