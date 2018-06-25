@@ -161,7 +161,7 @@
                                          <div class="m-widget4__item">
                                             <div class="m-widget4__ext documents--ext">
                                                <button type="button" class="btn btn-success"  name="test" (click)="documentsPdf.click()" >{{document?.employeeExternalDocumentUrl ? 'Change':'Upload'}}</button>
-                                               <input type="file" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName,i)" [uploadInput]="uploadInput">
+                                               <input type="file" accept="application/pdf" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName,i)" [uploadInput]="uploadInput">
                                             </div>
                                             <div class="m-widget4__ext documents--ext" *ngIf="document.employeeExternalDocumentUrl">
                                                <a class="btn btn-secondary" (click)="goToUrl(document.employeeExternalDocumentUrl)">
