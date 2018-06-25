@@ -120,7 +120,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                             data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
                             //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
                         }
-
+                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                        // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                         this.employeeData = data || [];
                         this.utilityService.hideLoader('#initiate-loader');
