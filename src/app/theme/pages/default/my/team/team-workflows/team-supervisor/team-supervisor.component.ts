@@ -46,7 +46,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
             .subscribe(
             res => {
                 let data = res.json().data || [];
-                data=data.filter(obj=>obj.supervisor_id==this._currentEmpId || obj.secondarySupervisor_id==this._currentEmpId);
+                data=data.filter(obj=>obj.supervisor_id==this._currentEmpId);
                 if (data.length > 0) {
                     let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved" );
                     this.employeeData = profileData || [];
@@ -92,6 +92,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     loadKraData(data:any)
     {
         let __this =this;
+        data=data.filter(obj=>obj.supervisor_id==this._currentEmpId || obj.secondarySupervisor_id==this._currentEmpId);
         data.forEach(function(element) {
             if(element.kraWorkflow)
             {
