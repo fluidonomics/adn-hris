@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation,TemplateRef } from '@angular/core';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { BatchService } from "./batchService.service";
 import {environment} from '../../../../../../../environments/environment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -43,6 +44,7 @@ export class HrBatchComponent implements OnInit {
         private modalService: BsModalService,
         private _commonService: CommonService,
         private _batchService: BatchService,
+        public utilityService: UtilityService,
         public _authService: AuthService) {
     }
 
@@ -59,12 +61,15 @@ export class HrBatchComponent implements OnInit {
 
     loadBatch()
     {
+        this.utilityService.showLoader('#batch-loader');
         this._commonService.getBatchInfo()
             .subscribe(
             res => {
+                this.utilityService.hideLoader('#batch-loader');
                 this.batchData=res.json().data;
             },
             error => {
+                this.utilityService.hideLoader('#batch-loader');
             });
     }
 

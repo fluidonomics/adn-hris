@@ -155,7 +155,7 @@
                                        </th>
 								</tr>
 							</thead>
-							<tbody class="m-datatable__body">
+							<tbody class="m-datatable__body" id="batch-loader">
                                 <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
                                            <td class="m-datatable__cell" width="10%">

@@ -150,7 +150,7 @@
 										</th>
 									</tr>
 							</thead>
-							<tbody class="m-datatable__body">
+							<tbody class="m-datatable__body" id="allEmployee-loader">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 									<td class="m-datatable__cell" width="5%" >
 									

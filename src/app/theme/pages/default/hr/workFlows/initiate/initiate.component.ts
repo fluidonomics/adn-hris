@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { HrService } from '../../hr.service';
 import {environment} from '../../../../../../../environments/environment'
 import swal from 'sweetalert2';
@@ -50,6 +51,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
+        private utilityService: UtilityService,
         public _authService: AuthService) {
         //this.batchData.emp_id=[];
     }
@@ -104,6 +106,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     loadAllEmployee() {
         if (this.filterBy.grades || this.filterBy.departments) {
+            this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
                 .subscribe(
                 res => {
@@ -120,11 +123,16 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
                        // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                         this.employeeData = data || [];
+                        this.utilityService.hideLoader('#initiate-loader');
                     }
-                    else
+                    else{
                         this.employeeData = data.json().data || [];
+                        this.utilityService.hideLoader('#initiate-loader');
+                    }
+                        
                 },
                 error => {
+                    this.utilityService.hideLoader('#initiate-loader');
                 });
         }
         else {
@@ -141,16 +149,19 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
         if(this.batchData.emp_id.length > 0)
         {
+            this.utilityService.showLoader('#initiate-loader');
             this._hrService.saveBulkKra(this.batchData)
                 .subscribe(
                 res => {
                     if (res.ok) {
+                        this.utilityService.hideLoader('#initiate-loader');
                         swal("Success", "Batch Initiated Successfully", "success");
                         form.resetForm();
                         this.clearForm();
                     }
                 },
                 error => {
+                    this.utilityService.hideLoader('#initiate-loader');
             });
         }
         else{
