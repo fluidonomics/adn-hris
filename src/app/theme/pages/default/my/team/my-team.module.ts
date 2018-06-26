@@ -13,6 +13,8 @@ import { BaseModule } from '../../../../../base/base.module';
 import { MyTeamReviewerComponent } from './team-workflows/team-reveiwer/team-reviewer.component';
 import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team-supervisor.component';
 import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
+import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
+
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
@@ -32,7 +34,8 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
     ], declarations: [
         MyTeamReviewerComponent,
         MyTeamSupervisorComponent,
-        MyTeamKraComponent
+        MyTeamKraComponent,
+        AllEmployeeComponent
     ],
     providers: [MyTeamService,ReviewerGuard,SupervisorGuard]
 })
