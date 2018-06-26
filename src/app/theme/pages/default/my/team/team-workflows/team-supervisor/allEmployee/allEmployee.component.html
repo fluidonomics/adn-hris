@@ -157,59 +157,91 @@
 									</tr>
 							</thead>
 							<tbody class="m-datatable__body" id="allEmployee-loader">
-                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-									<td class="m-datatable__cell" width="5%" >
-									
-											<!-- <i class="status--icon fa" [ngClass]="
-											!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
-											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
-											((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
-											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'fa-adjust m--font-success':
-											(employee.profileProcessDetails.hrStatus=='SendBack'? 'fa-circle-o m--font-danger':
-											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'fa-circle-o m--font-success':
-											'fa-circle-o m--font-warning')))))" 
+									<ng-container *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
+										<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}">
+											<td class="m-datatable__cell" width="10%">
+												<i class="la" (click)="activeRowNumber==employee._id ? activeRowNumber=null:activeRowNumber=employee._id;loadBatchData(employee._id)" [ngClass]="employee._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+											</td>
+											<td class="m-datatable__cell" width="5%" >
 											
-											[title]="!employee.isAccountActive ?'Inactive':
-											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'Profile Complete' :
-											(employee.profileProcessDetails.supervisorStatus == 'SendBack' ? 'Office Profile Sent Back' :
-											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'Office Profile Submitted':
-											(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
-											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))"> </i> -->
+													<!-- <i class="status--icon fa" [ngClass]="
+													!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
+													(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
+													((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
+													(employee.profileProcessDetails.hrStatus=='Submitted' ? 'fa-adjust m--font-success':
+													(employee.profileProcessDetails.hrStatus=='SendBack'? 'fa-circle-o m--font-danger':
+													(employee.profileProcessDetails.employeeStatus=='Submitted'? 'fa-circle-o m--font-success':
+													'fa-circle-o m--font-warning')))))" 
+													
+													[title]="!employee.isAccountActive ?'Inactive':
+													(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'Profile Complete' :
+													(employee.profileProcessDetails.supervisorStatus == 'SendBack' ? 'Office Profile Sent Back' :
+													(employee.profileProcessDetails.hrStatus=='Submitted' ? 'Office Profile Submitted':
+													(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
+													(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))"> </i> -->
 
-										  <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
-									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-									</td>
-									<td class="m-datatable__cell" width="5%" >
-										<span>{{employee.userName}}</span>
-									</td>
-								    <td class="m-datatable__cell" width="20%" >
-										<span>{{employee.fullName}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<span>{{employee.officeEmail}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<span>{{employee.designation}}</span>
-									</td>
-								    <td class="m-datatable__cell" width="15%" >
-                                        <span>{{employee.supervisor}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-                                        <span>{{employee.secondarySupervisor}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<a routerLink="/my/profile-view" *ngIf="employee.profileProcessDetails.supervisorStatus=='Approved' && (_currentEmpId==employee.groupHrHead_id || _currentEmpId==employee.businessHrHead_id )" [queryParams]="{ id: employee._id , tabName:'personal'}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-											<i class="la la-edit"></i>
-                                        </a>
-                                        <!-- <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
-                                                <i class="la la-reply"></i>
-                                            </a>
-										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
-											<i class="la la-gear"></i>
-										</a> -->
-									</td>
-							  </tr>
-                              <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
+												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
+											</td>
+											<td class="m-datatable__cell" width="5%" >
+												<span>{{employee.userName}}</span>
+											</td>
+											<td class="m-datatable__cell" width="20%" >
+												<span>{{employee.fullName}}</span>
+											</td>
+											<td class="m-datatable__cell" width="15%" >
+												<span>{{employee.officeEmail}}</span>
+											</td>
+											<td class="m-datatable__cell" width="15%" >
+												<span>{{employee.designation}}</span>
+											</td>
+											<td class="m-datatable__cell" width="15%" >
+												<span>{{employee.supervisor}}</span>
+											</td>
+											<td class="m-datatable__cell" width="15%" >
+												<span>{{employee.secondarySupervisor}}</span>
+											</td>
+											<td class="m-datatable__cell" width="15%" >
+												<a routerLink="/my/profile-view" *ngIf="employee.profileProcessDetails.supervisorStatus=='Approved' && (_currentEmpId==employee.groupHrHead_id || _currentEmpId==employee.businessHrHead_id )" [queryParams]="{ id: employee._id , tabName:'personal'}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+													<i class="la la-edit"></i>
+												</a>
+												<!-- <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
+														<i class="la la-reply"></i>
+													</a>
+												<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
+													<i class="la la-gear"></i>
+												</a> -->
+											</td>
+										</tr>
+
+										<tr class="m-datatable__row" *ngIf="activeRowNumber==employee._id">
+												<td colspan="9" style="padding-left:80px;padding-right:80px">
+													<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+														<table class="m-datatable__table" >
+															<tbody class="m-datatable__body"> 
+																<ng-container *ngFor="let batch of employee?.batchData;let j=index">
+																	<tr class="m-datatable__row">
+																			<td class="m-datatable__cell" width="80%" >
+																					<span>{{batch.batchName}}</span>
+																			</td>
+																			<td class="m-datatable__cell" width="20%">
+																				<span>
+																						<!-- <a class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View"> -->
+																					<a routerLink="/my/team/workflows/kra-view/{{batch.kraworkflowdetails[0]._id}}/{{employee._id}}"  class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View">
+																						<i class="la la-edit"></i>
+																					</a>
+																				</span>
+																			</td>
+																	</tr>
+																	<span *ngIf="employee?.batchData?.length==0" class="m-datatable--error">No records found</span>
+																</ng-container>
+															</tbody>
+														</table>
+													</div>
+												</td>
+										</tr>
+							        </ng-container>
+                                   <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
 							</tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >

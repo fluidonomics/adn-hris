@@ -44,6 +44,11 @@ export class MyTeamService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getBatchInfoByEmp(emp_id:number) {
+        let url = "batch/getBatchInfoByEmp?emp_id="+emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }

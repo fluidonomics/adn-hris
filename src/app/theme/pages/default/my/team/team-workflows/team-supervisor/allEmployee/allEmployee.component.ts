@@ -31,6 +31,8 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         isSupervisorSendBack: false
     }
 
+    activeRowNumber:number=-1;
+
     imageBase:any;
     contentBase:any;
 
@@ -71,6 +73,19 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
             error => {
                 this.utilityService.hideLoader('#allEmployee-loader');
             });
+    }
+
+    loadBatchData(emp_id:number)
+    {
+        this._myTeamService.getBatchInfoByEmp(emp_id)
+        .subscribe(
+        res => {
+            this.employeesData[this.employeesData.findIndex(x => x._id==emp_id)].batchData = res.json().data;
+            this.utilityService.hideLoader('#allEmployee-loader');
+        },
+        error => {
+            this.utilityService.hideLoader('#allEmployee-loader');
+        });
     }
 
     getColumnName(column) {
