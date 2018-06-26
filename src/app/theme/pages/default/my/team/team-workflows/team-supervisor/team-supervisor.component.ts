@@ -52,7 +52,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     this.employeeData = profileData || [];
                     this._utilityService.hideLoader("#employeeApproval");
 
-                    this.loadKraData(data);
+                    this.loadKraData(res.json().data);
                    
                 //    for (var i = 0; i < data.length; i++) { 
                 //             if(data[i].kraWorkflow)
