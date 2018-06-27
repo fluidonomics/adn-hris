@@ -88,7 +88,7 @@ export class HrBatchComponent implements OnInit {
         });  
     }
 
-    saveKraWorkFlow(batchIndex,kraWorkFlowIndex,status)
+    saveKraWorkFlow(batch_id,kraWorkFlowIndex,status)
     {
         swal({
             title: 'Are you sure?',
@@ -100,8 +100,8 @@ export class HrBatchComponent implements OnInit {
             confirmButtonText: 'Terminate'
         }).then((result) => {
             if (result.value) {
-                this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex].status=status;
-                this._batchService.saveKraWorkFlow(this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex])
+                this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex].status=status;
+                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex])
                     .subscribe(
                     res => {   
                         swal('Success','Batch Terminated Successfully','success')

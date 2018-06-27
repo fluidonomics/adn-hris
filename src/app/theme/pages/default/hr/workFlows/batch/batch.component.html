@@ -223,7 +223,7 @@
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="20%">
                                                                             <span *ngIf="batch.status!='Terminated'">
-                                                                                <a (click)="saveKraWorkFlow(i,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
+                                                                                <a (click)="saveKraWorkFlow(batch._id,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
                                                                                     <i class="la la-remove"></i>
                                                                                 </a>
                                                                                 <!-- <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
