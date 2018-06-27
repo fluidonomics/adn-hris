@@ -254,7 +254,7 @@
 																						</td>
 																						<td class="m-datatable__cell" width="20%">
 																							<span>
-																								<a *ngIf="batch.status!='Terminated' && batch.kraworkflowdetails[0].status!='Terminated'" routerLink="/my/team/workflows/kra-view/{{batch.kraworkflowdetails[0]._id}}/{{employee._id}}"  class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View">
+																								<a *ngIf="batch.status!='Terminated' && batch.kraworkflowdetails[0].status=='Approved'" routerLink="/my/team/workflows/kra-view/{{batch.kraworkflowdetails[0]._id}}/{{employee._id}}"  class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View">
 																									<i class="la la-edit"></i>
 																								</a>
 																							</span>
