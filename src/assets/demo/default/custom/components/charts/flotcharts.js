@@ -438,7 +438,7 @@ var FlotchartsDemo = function() {
             $.plot($("#m_flotcharts_5"),
 
                 [{
-                    label: "sales",
+                    label: "Reports",
                     data: d1,
                     lines: {
                         lineWidth: 1,

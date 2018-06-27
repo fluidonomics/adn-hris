@@ -153,15 +153,15 @@ var MorrisChartsDemo = function() {
         new Morris.Donut({
             element: 'm_morris_4',
             data: [{
-                    label: "Download Sales",
+                    label: "Download Report",
                     value: 12
                 },
                 {
-                    label: "In-Store Sales",
+                    label: "Organisation Report",
                     value: 30
                 },
                 {
-                    label: "Mail-Order Sales",
+                    label: "Mail Report",
                     value: 20
                 }
             ]
