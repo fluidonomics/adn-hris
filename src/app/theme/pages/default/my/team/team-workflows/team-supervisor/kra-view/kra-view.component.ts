@@ -135,7 +135,7 @@ export class MyTeamKraComponent {
             let confirmButtonColor="#66BB6A";
             if(status=='SendBack')
             {
-                text="Do you want to approve kra ?";
+                text="Do you want to send back kra ?";
                 confirmButtonText="Send Back";
                 confirmButtonColor="#f22d4e";           
             }

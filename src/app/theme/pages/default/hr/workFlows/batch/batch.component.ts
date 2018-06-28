@@ -95,7 +95,7 @@ export class HrBatchComponent implements OnInit {
                 this._batchService.saveKraWorkFlow(this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex])
                     .subscribe(
                     res => {   
-                        swal('Success','Batch Terminated Successfully','success')
+                        swal('Success','Employee Workflow Terminated Successfully','success')
                     },
                     error => {
                     }); 
@@ -119,7 +119,14 @@ export class HrBatchComponent implements OnInit {
             this.activeRowNumber=-1;
             this.loadBatch();
             this.modalRef.hide();
-            swal('Success','Batch Saved Successfully','success')
+            if(this.editBatch.status=='Terminated')
+            {
+                swal('Success','Batch Terminated Successfully','success')
+            }
+            else
+            {
+              swal('Success','Batch Saved Successfully','success')
+            }
          },
          error => {
          }); 
