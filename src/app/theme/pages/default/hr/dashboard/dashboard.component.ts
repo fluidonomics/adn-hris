@@ -60,6 +60,7 @@ initData()
 
 loadAllEmployee()
 {
+    this.utilityService.showLoader('#stats-loader');
     this._hrService.getAllEmployee()
     .subscribe(
     res => {
@@ -68,8 +69,11 @@ loadAllEmployee()
             data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
             this.employeesData = data || [];
         }
+        this.utilityService.hideLoader('#stats-loader');
+       
     },
     error => {
+        this.utilityService.hideLoader('#stats-loader');
     });
 }
 

@@ -232,7 +232,7 @@
                                                             <input name="birthDate" class="form-control m-input m-input--air" placeholder="Enter Birth of Date" [(ngModel)]="personalInfo.dob"
                                                                 bsDatepicker [readonly]="true" [maxDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
                                                                 #birthDate="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !birthDate.valid">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && birthDate.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -253,7 +253,7 @@
                                                                     <input type="text" name="mobileNo" [(ngModel)]="personalInfo.personalMobileNumber" #mobileNo="ngModel" OnlyMobileNumber="true" minlength=10 maxlength=10 placeholder="Enter mobile number" id="mobileNo" maxlength="10" aria-describedby="mobileNo" aria-invalid="true" class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 </div>
                                                             <div class="form-control-feedback has-danger" *ngIf="!mobileNo.valid">
-                                                                        <span *ngIf="fpersonalInfo.submitted && !mobileNo.valid">This field is required.</span>
+                                                                        <span *ngIf="fpersonalInfo.submitted && mobileNo.errors?.required">This field is required.</span>
                                                                         <span *ngIf="mobileNo.errors?.maxlength">Please enter valid mobile number</span>
                                                             </div>
                                                         </div>
@@ -298,7 +298,7 @@
                                                             <ng-select class="m-input m-input--air" name="bloodGroup" [items]="bloodGropData" bindLabel="text" bindValue="id" placeholder="Select Blood Group"
                                                                 [(ngModel)]="personalInfo.bloodGroup" [clearable]="false" #bloodGroup="ngModel"
                                                                 required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !bloodGroup.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && bloodGroup.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -311,7 +311,7 @@
                                                             <ng-select class="m-input m-input--air" name="religion" [items]="religionData" bindLabel="text" bindValue="id" placeholder="Select Religion"
                                                                 [(ngModel)]="personalInfo.religion" [clearable]="false" #religion="ngModel"
                                                                 required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !religion.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && religion.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -326,7 +326,7 @@
                                                             <ng-select class="m-input m-input--air" name="maritalStatus" [items]="maritialStatusData" bindLabel="text" bindValue="id"
                                                                 placeholder="Select marital status" [(ngModel)]="personalInfo.maritialStatus"
                                                                 [clearable]="false" #maritalStatus="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !maritalStatus.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && maritalStatus.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -339,7 +339,7 @@
                                                             <ng-select class="m-input m-input--air" name="nationality" [items]="nationalityData" bindLabel="text" bindValue="id" placeholder="Select nationality"
                                                                 [(ngModel)]="personalInfo.nationality" [clearable]="false" #nationality="ngModel"
                                                                 required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !nationality.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && nationality.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -372,7 +372,7 @@
                                                             <input type="text" name="emergencyContactName" [(ngModel)]="personalInfo.emergencyContactPerson" #emergencyContactName="ngModel" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'" 
                                                                 placeholder="Enter emergency contact name" id="emergencyContactName"
                                                                 class="form-control m-input m-input--air" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactName.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && emergencyContactName.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -394,7 +394,7 @@
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 </div>
                                                             
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && !emergencyContactNo.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpersonalInfo.submitted && emergencyContactNo.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -463,7 +463,7 @@
                                                                 <input class="form-control m-input m-input--air" id="addressLine1" name="addressLine1" [(ngModel)]="address.currentAddressLine1"
                                                                     #addressLine1="ngModel" placeholder="Enter address line 1"
                                                                     type="text" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !addressLine1.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && addressLine1.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -489,7 +489,7 @@
                                                                     bindLabel="locationName" bindValue="_id" placeholder="Select Division"
                                                                     [(ngModel)]="address.currentAddressDivision_id" [clearable]="false"
                                                                     #currentAddressDivision="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressDivision.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && currentAddressDivision.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -504,7 +504,7 @@
                                                                     bindValue="_id" placeholder="Select District" [(ngModel)]="address.currentAddressDistrict_id"
                                                                     [clearable]="false" #currentAddressDistrict="ngModel" required
                                                                     [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressDistrict.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && currentAddressDistrict.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -521,7 +521,7 @@
                                                                     [(ngModel)]="address.currentAddressThana_id" [clearable]="false"
                                                                     #currentAddressthane="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"
                                                                     [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !currentAddressthane.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && currentAddressthane.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -578,7 +578,7 @@
                                                                     <input type="text" [(ngModel)]="address.permanentAddressLine1" #permanentAddLine="ngModel" placeholder="Enter Permanent Address Line 1"
                                                                         class="form-control m-input m-input--air" name="permanentAddressLin"
                                                                         required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddLine.valid">
+                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && permanentAddLine.errors?.required">
                                                                         This field is required.
                                                                     </div>
                                                                 </ng-container>
@@ -607,7 +607,7 @@
                                                                         bindLabel="locationName" bindValue="_id" placeholder="Select Division"
                                                                         [(ngModel)]="address.permanentAddressDivision_id" [clearable]="false"
                                                                         #permanentAddressDivision="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDivision.valid ">
+                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && permanentAddressDivision.errors?.required">
                                                                         This field is required.
                                                                     </div>
                                                                 </ng-container>
@@ -625,7 +625,7 @@
                                                                         bindValue="_id" placeholder="Select District" [(ngModel)]="address.permanentAddressDistrict_id"
                                                                         [clearable]="false" #permanentAddressDistrict="ngModel"
                                                                         required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressDistrict.valid ">
+                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && permanentAddressDistrict.errors?.required">
                                                                         This field is required.
                                                                     </div>
                                                                 </ng-container>
@@ -644,7 +644,7 @@
                                                                         bindValue="_id" placeholder="Select Thana" [(ngModel)]="address.permanentAddressThana_id"
                                                                         [clearable]="false" #permanentAddressThana="ngModel"
                                                                         required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && !permanentAddressThana.valid ">
+                                                                    <div class="form-control-feedback has-danger" *ngIf="faddress.submitted && permanentAddressThana.errors?.required">
                                                                         This field is required.
                                                                     </div>
                                                                 </ng-container>
@@ -746,7 +746,7 @@
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIdSmartCard" name="changeNationalIdSmartCard" *ngIf="profileProcess.isEmployeeSubmitted && profileProcess.isSupervisorSendBack && documents.nationalIdSmartCard"
                                                                         style="margin-right: 6px;"  (click)="nationalIdSmartCard.click()" [style.cursor] = "!profileProcess.isSupervisorSendBack && !documents.nationalIdSmartCard ? 'not-allowed' : ''">Upload</button>
                                                                         
-                                                                        <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #nationalIdSmartCard (uploadOutput)="onUploadOutput($event,'smartCard')"
+                                                                        <input type="file" accept="image/*" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #nationalIdSmartCard (uploadOutput)="onUploadOutput($event,'smartCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIdSmartCard">
                                                                             <input type="text" hidden="hidden" name="newImage" [(ngModel)]="documents.nationalIdSmartCardDocURL" #nationalIdImage="ngModel" [required]="documents.nationalIdSmartCard ? true:false">
                                                                     
@@ -775,7 +775,7 @@
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" tabindex="-1" id="changeNationalIDOldFormat" name="changeNationalIDOldFormat" *ngIf="profileProcess.isEmployeeSubmitted && profileProcess.isSupervisorSendBack && documents.nationalIDOldFormat"
                                                                         style="margin-right: 6px;"  (click)="nationalIDOldFormat.click()" [style.cursor] = "!profileProcess.isSupervisorSendBack && !documents.nationalIDOldFormat? 'not-allowed' : ''">Upload</button>
-                                                                        <input type="file" name="profileDocuments" hidden="hidden" #nationalIDOldFormat ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')"
+                                                                        <input type="file" accept="image/*" name="profileDocuments" hidden="hidden" #nationalIDOldFormat ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,'smartOldCard')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.nationalIDOldFormat">
                                                                     <input type="text" hidden="hidden" name="oldImage" [(ngModel)]="documents.nationalIDOldFormatDocURL" #nationalOldIdImage="ngModel" [required]="documents.nationalIDOldFormat ? true:false">
                                                                     <button type="button" class="btn btn-success" name="viewNationalIDOldFormat" style="margin-right: 6px;" (click)="showDocumentImagePopUp('smartOldCard')">View</button>
@@ -804,7 +804,7 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" name="changeBirthRegistrationNumber" style="margin-right: 6px;"  (click)="birthRegistrationNumber.click()" [style.cursor] = "!profileProcess.isSupervisorSendBack && !documents.birthRegistrationNumber? 'not-allowed' : ''" *ngIf="profileProcess.isEmployeeSubmitted && profileProcess.isSupervisorSendBack && documents.birthRegistrationNumber">Upload</button>
-                                                                        <input type="file" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #birthRegistrationNumber (uploadOutput)="onUploadOutput($event,'birth')"
+                                                                        <input type="file" accept="image/*" name="profileDocuments" hidden="hidden" ngFileSelect [options]="options" #birthRegistrationNumber (uploadOutput)="onUploadOutput($event,'birth')"
                                                                             [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.birthRegistrationNumber">
                                                                         <input type="text" hidden="hidden" name="birthImage" [(ngModel)]="documents.birthRegistrationNumberDocURL" #birthImage="ngModel" [required]="documents.birthRegistrationNumber ? true:false">
                                                                         <button type="button" class="btn btn-success" name="viewBirthRegistrationNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('birth')">View</button>
@@ -831,7 +831,7 @@
                                                             <div class="col-md-6 adn-form__group">
                                                                 <div class="input-group-btn">
                                                                     <button type="button" class="btn btn-success" name="changePassportNumber" style="margin-right: 6px;"  (click)="passportNumber.click()" [style.cursor] = "!profileProcess.isSupervisorSendBack && !documents.passportNumber? 'not-allowed' : ''" *ngIf="profileProcess.isEmployeeSubmitted && profileProcess.isSupervisorSendBack && documents.passportNumber">Upload</button>
-                                                                    <input type="file" name="profileDocuments"hidden="hidden" ngFileSelect [options]="options" #passportNumber (uploadOutput)="onUploadOutput($event,'passport')"
+                                                                    <input type="file" accept="image/*" name="profileDocuments"hidden="hidden" ngFileSelect [options]="options" #passportNumber (uploadOutput)="onUploadOutput($event,'passport')"
                                                                     [uploadInput]="uploadInput" [disabled]="profileProcess.isSupervisorApproved ||!documents.passportNumber">
                                                                     <input type="text" hidden="hidden" name="passportImage" [(ngModel)]="documents.passportNumberDocURL" #passportNumberImage="ngModel" [required]="documents.passportNumber ? true:false">
                                                                     <button type="button" class="btn btn-success" name="viewPassportNumber" style="margin-right: 6px;" (click)="showDocumentImagePopUp('passport')">View</button>
@@ -915,7 +915,7 @@
                                                                     bindValue="_id" placeholder="Select level of education" (change)="loadExamDegreeTitle(academic.levelOfEducation_id,i)"
                                                                     [(ngModel)]="academic.levelOfEducation_id" [clearable]="false"
                                                                     #levelOfEducation="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !levelOfEducation.valid">
+                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && levelOfEducation.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -928,7 +928,7 @@
                                                                 <ng-select class="m-input m-input--air" name="examDegreeTitle" [items]="academic.examDegreeTitleData" bindLabel="educationName"
                                                                     bindValue="_id" placeholder="Select exam degree title" [(ngModel)]="academic.examDegreeTitle_id"
                                                                     [clearable]="false" #examDegreeTitle="ngModel" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !examDegreeTitle.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && examDegreeTitle.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -964,7 +964,7 @@
                                                                 <ng-select class="m-input m-input--air" name="result" [items]="resultsData" bindLabel="text" bindValue="id" placeholder="Select Result" (ngModelChange)="academic.marks='';academic.cgpa='';academic.scale=''"
                                                                     [(ngModel)]="academic.result" [clearable]="false" #result="ngModel"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && !result.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="facademicInfo.submitted && result.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1092,7 +1092,7 @@
                                                                     id="certificationTrainingTitle" name="certificationTrainingTitle"
                                                                     placeholder="Enter certification / training title" required
                                                                     type="text" [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !certificationTrainingTitle.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && certificationTrainingTitle.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1124,7 +1124,7 @@
                                                                 <input type="text" [(ngModel)]="certifications.duration" #durationInMonths="ngModel" name="durationInMonths" placeholder="Enter duration"
                                                                     id="durationInMonths" class="form-control m-input m-input--air"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && !durationInMonths.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fcertificationsandTrainingInfo.submitted && durationInMonths.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1215,7 +1215,7 @@
                                                                 <input class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.companyName" #companyName="ngModel" id="companyName"
                                                                     name="companyName" placeholder="Enter company name" type="text"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyName.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && companyName.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1230,7 +1230,7 @@
                                                                 <!-- <input type="text" [(ngModel)]="previousEmployment.companyBusiness" #companyBusiness="ngModel" name="companyBusiness" placeholder="Enter company business"
                                                                     id="companyBusiness" class="form-control m-input m-input--air"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"> -->
-                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !companyBusiness.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && companyBusiness.errors?.required ">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1245,7 +1245,7 @@
                                                                 <input type="text" [(ngModel)]="previousEmployment.designation" #prevDesignation="ngModel" name="prevDesignation" placeholder="Enter Previous Designation "
                                                                     id="prevDesignation" class="form-control m-input m-input--air"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
-                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !prevDesignation.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && prevDesignation.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1300,7 +1300,7 @@
                                                                 <textarea class="form-control m-input m-input--air" [(ngModel)]="previousEmployment.areaOfExperience" #areaofExperience="ngModel"
                                                                     id="areaofExperience" name="areaofExperience" placeholder="Enter area of experience"
                                                                     type="text" rows="3" required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack"></textarea>
-                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && !areaofExperience.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpreviousEmploymentDetails.submitted && areaofExperience.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1405,7 +1405,7 @@
                                                                     [(ngModel)]="family.relation_id" #relation="ngModel" [clearable]="false"
                                                                     required [disabled]="profileProcess.isEmployeeSubmitted || profileProcess.isSupervisorSendBack">
                                                                 </ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && !relation.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="ffamilyInfo.submitted && relation.errors?.required">
                                                                     This field is required.
                                                                 </div>
                                                             </div>
@@ -1536,7 +1536,7 @@
                                                             <input type="text" name="idCardNumber" [(ngModel)]="officeInfo.idCardNumber" #idCardNumber="ngModel" placeholder="Enter ID card No" 
                                                                 id="idCardNumber" maxlength="15" class="form-control m-input m-input--air"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !idCardNumber.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && idCardNumber.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1600,7 +1600,7 @@
                                                             </ng-select>
                                                             <!-- <input class="form-control m-input m-input--air" [(ngModel)]="officeInfo.facility" #facility="ngModel" id="facility" name="facility"
                                                                 placeholder="Enter facility" type="text"  required> -->
-                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && !facility.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fofficeInfo.submitted && facility.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1745,7 +1745,7 @@
                                                                 placeholder="Select Company Name" [(ngModel)]="positionDetails.company_id"
                                                                 #companyName="ngModel" (change)="loadHRSpoce(positionDetails.company_id)"
                                                                 [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !companyName.valid ">
+                                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && companyName.errors?.required ">
                                                                     This field is required.
                                                                 </div>
                                                         </div>
@@ -1760,7 +1760,7 @@
                                                                 (change)="loadDepartment(positionDetails.division_id)" [(ngModel)]="positionDetails.division_id"
                                                                 #division="ngModel" (change)="loadDepartment(positionDetails.division_id)"
                                                                 [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !division.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && division.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1773,7 +1773,7 @@
                                                                 placeholder="Select Department" (change)="loadVertical(positionDetails.department_id)"
                                                                 [(ngModel)]="positionDetails.department_id" [clearable]="false"
                                                                 #department="ngModel" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !department.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && department.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1807,7 +1807,7 @@
                                                                 bindValue="_id" placeholder="Select Management Type" [(ngModel)]="positionDetails.managementType_id"
                                                                 (change)="loadEmploymentType(positionDetails.managementType_id)"
                                                                 #managementType="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !managementType.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && managementType.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1820,7 +1820,7 @@
                                                                 bindValue="_id" placeholder="Select Employment Type" [(ngModel)]="positionDetails.employmentType_id"
                                                                 (change)="loadGrade(positionDetails.managementType_id,positionDetails.employmentType_id)"
                                                                 #employmentType="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !employmentType.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && employmentType.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1835,7 +1835,7 @@
                                                                 bindValue="_id" placeholder="Select Confirmation/Probation Status"
                                                                 [(ngModel)]="positionDetails.employmentStatus_id" #confirmationStatus="ngModel"
                                                                 [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !confirmationStatus.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && confirmationStatus.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1846,7 +1846,7 @@
                                                             <span class="required" aria-required="true"> * </span>
                                                             <input type="text" name="tenure" id="tenure" class="form-control m-input m-input--air" [(ngModel)]="positionDetails.tenureOfContract"
                                                                 #tenure="ngModel" OnlyNumber="true" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !tenure.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && tenure.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1860,7 +1860,7 @@
                                                                 [(ngModel)]="positionDetails.grade_id" #employeeGrade="ngModel"
                                                                 (change)="loadSupervisor(positionDetails.grade_id)" [clearable]="false"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !employeeGrade.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && employeeGrade.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1874,7 +1874,7 @@
                                                             <ng-select class="m-input m-input--air" name="designation" [items]="designationData" bindLabel="designationName" bindValue="_id"
                                                                 placeholder="Select Designation" [(ngModel)]="positionDetails.designation_id"
                                                                 #designation="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !designation.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && designation.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1896,7 +1896,7 @@
                                                                 placeholder="Select Supervisor" [(ngModel)]="positionDetails.primarySupervisorEmp_id"
                                                                 #primarySupervisorEmp="ngModel" [clearable]="false" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !primarySupervisorEmp.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && primarySupervisorEmp.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1908,7 +1908,7 @@
                                                             <ng-select class="m-input m-input--air" name="hrspoc" [items]="hrspocData" bindLabel="fullName" bindValue="_id" placeholder="Select HR SPOC"
                                                                 [(ngModel)]="positionDetails.hrspoc_id" #hrspoc="ngModel" (change)="loadBuisnessHrHead(positionDetails.hrspoc_id)"
                                                                 [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !hrspoc.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && hrspoc.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1924,7 +1924,7 @@
                                                                 placeholder="Select Business HR Head" [(ngModel)]="positionDetails.businessHrHead_id"
                                                                 #businessHrHead="ngModel" (change)="loadGroupHrHead(positionDetails.businessHrHead_id)"
                                                                 [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !businessHrHead.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && businessHrHead.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1937,7 +1937,7 @@
                                                             <ng-select class="m-input m-input--air" name="groupHrHead" [items]="groupHrHeadData" bindLabel="fullName" bindValue="_id"
                                                                 placeholder="Select Group HR Head" [(ngModel)]="positionDetails.groupHrHead_id"
                                                                 #groupHrHead="ngModel" [clearable]="false" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !groupHrHead.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && groupHrHead.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -1949,7 +1949,7 @@
                                                 <label for="form_control_1">User Role</label>
                                                 <span class="required" aria-required="true">* </span>
                                                 <ng-select class="m-input m-input--air" name="role" [items]="rolesData" [multiple]="true" bindLabel="roleName" bindValue="_id" placeholder="Select User Role" [(ngModel)]="positionDetails.roles" #role="ngModel" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && !role.valid ">
+                                                <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && role.errors?.required ">
                                                     This field is required.
                                                 </div>
                                             </div>
@@ -2087,7 +2087,7 @@
                                                             <input class="form-control m-input m-input--air" maxlength="15" [(ngModel)]="bankDetails.accountNumber" #accountNumber="ngModel"
                                                                 id="accountNumber" name="accountNumber" placeholder="Enter account number"
                                                                 type="text" [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" required>
-                                                            <div class="form-control-feedback has-danger"  *ngIf="fbankDetails.submitted && !accountNumber.valid" >
+                                                            <div class="form-control-feedback has-danger"  *ngIf="fbankDetails.submitted && accountNumber.errors?.required" >
                                                                     This field is required
                                                             </div>
                                                         </div>
@@ -2163,7 +2163,7 @@
                                                             </label>
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.basic" #basic="ngModel" id="basic" OnlyNumber="true" name="basic"
                                                                 placeholder="Enter basic" type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !basic.valid" >
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && basic.errors?.required" >
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2176,7 +2176,7 @@
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.hra" #houseRent="ngModel"  OnlyNumber="true" id="houseRent" name="houseRent"
                                                                 placeholder="Enter house rent allowance (HRA)" type="text" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !houseRent.valid">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && houseRent.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2220,7 +2220,7 @@
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.specialAllowance" #specialAllowance="ngModel"
                                                                 id="specialAllowance" name="specialAllowance" placeholder="Enter special allowance"
                                                                 type="text" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !specialAllowance.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && specialAllowance.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2264,7 +2264,7 @@
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.grossSalary" #grossSalary="ngModel" id="grossSalary"
                                                                 name="grossSalary" placeholder="Enter gross salary" type="text"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !grossSalary.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && grossSalary.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2279,7 +2279,7 @@
                                                             <input class="form-control m-input m-input--air" [(ngModel)]="salaryDetails.totalEarnings" #totalEarnings="ngModel" id="totalEarnings"
                                                                 name="totalEarnings" placeholder="Enter total earnings" type="text"
                                                                 required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack" OnlyNumber="true">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !totalEarnings.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && totalEarnings.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2294,7 +2294,7 @@
                                                             <ng-select class="m-input m-input--air" name="festivalAllowance" [items]="festivalAllowanceData" bindLabel="text" bindValue="id"
                                                                 placeholder="Select Festival Allowance" [(ngModel)]="salaryDetails.festivalAllowance"
                                                                 [clearable]="false" #festivalAllowance="ngModel" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !festivalAllowance.valid">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && festivalAllowance.errors?.required">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2307,7 +2307,7 @@
                                                             <ng-select class="m-input m-input--air" name="providentFund" [items]="providentFundMemberShipData" bindLabel="text" bindValue="id"
                                                                 placeholder="Select Provident Fund Membership" [(ngModel)]="salaryDetails.providentFundMembership"
                                                                 [clearable]="false" #providentFund="ngModel" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !providentFund.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && errors?.requiredprovidentFund.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2322,7 +2322,7 @@
                                                             <ng-select class="m-input m-input--air" name="gLifeInsurance" [items]="groupLifeInsuranceData" bindLabel="text" bindValue="id"
                                                                 placeholder="Select Group Life Insurance" [(ngModel)]="salaryDetails.groupLifeInsurance"
                                                                 [clearable]="false" #gLifeInsurance="ngModel" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !gLifeInsurance.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && gLifeInsurance.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2336,7 +2336,7 @@
                                                                 bindValue="id" placeholder="Select Group Life Insurance" [(ngModel)]="salaryDetails.hospitalizationScheme"
                                                                 [clearable]="false" #hospitalizationScheme="ngModel" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
-                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && !hospitalizationScheme.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && hospitalizationScheme.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>
@@ -2402,7 +2402,7 @@
                                                                 placeholder="Enter Registration number" id="companyRegistrationNumber"
                                                                 maxlength="15" class="form-control m-input m-input--air" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
-                                                            <div class="form-control-feedback has-danger" *ngIf="fcarDetails.submitted && !companyRegistrationNumber.valid ">
+                                                            <div class="form-control-feedback has-danger" *ngIf="fcarDetails.submitted && companyRegistrationNumber.errors?.required ">
                                                                 This field is required.
                                                             </div>
                                                         </div>

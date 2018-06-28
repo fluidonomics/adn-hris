@@ -304,11 +304,11 @@ export class MyKraComponent {
        }
     }
 
-    isSendBackOrNewKraSaved()
+    isSendBackOrNewKraSaved(isFormDirty)
     {
         let isSendBackNotSaved=this.kraInfoData.filter(x => x.supervisorStatus != 'SendBack').length==this.kraInfoData.length ? true:false;
         let isAllKraSaved=this.kraInfoData.filter(x=> x._id==null || x._id==undefined).length==0 ? true:false;
-        if(!isSendBackNotSaved || !isAllKraSaved)
+        if(!isSendBackNotSaved || !isAllKraSaved || isFormDirty)
         {
             swal({
                 title: 'Oops!',
@@ -331,13 +331,13 @@ export class MyKraComponent {
        return this.employee.grade_id <= 2 && this.kraInfoData.length >=5 ? true : ( this.employee.grade_id > 2 && this.kraInfoData.length >= 3 ? true : false) 
     }
 
-    submitKraWorkFlow()
+    submitKraWorkFlow(isFormDirty)
     {
         //let requiredWorkFlowLength= 
         //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
         //let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
         //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
-        if(this.isSendBackOrNewKraSaved())
+        if(this.isSendBackOrNewKraSaved(isFormDirty))
         {
             if(this.isWeightage())
             {

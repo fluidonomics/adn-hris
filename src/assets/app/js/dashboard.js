@@ -265,7 +265,7 @@ var Dashboard = function() {
                     "January", "February", "March", "April"
                 ],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Employee Stats",
                     borderColor: mUtil.getColor('brand'),
                     borderWidth: 2,
                     pointBackgroundColor: mUtil.getColor('brand'),
@@ -369,7 +369,7 @@ var Dashboard = function() {
             data: {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Employee Stats",
                     backgroundColor: mUtil.getColor('danger'), // Put the gradient here as a fill color
                     borderColor: mUtil.getColor('danger'),
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
@@ -461,7 +461,7 @@ var Dashboard = function() {
                     "January", "February", "March", "April"
                 ],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Employee Stats",
                     backgroundColor: gradient, // Put the gradient here as a fill color
                     borderColor: '#0dc8de',
 
@@ -561,7 +561,7 @@ var Dashboard = function() {
                     "January", "February", "March", "April"
                 ],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Employee Stats",
                     backgroundColor: '#d2f5f9', // Put the gradient here as a fill color
                     borderColor: mUtil.getColor('brand'),
 
@@ -820,7 +820,7 @@ var Dashboard = function() {
             data: {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Employee Stats",
                     backgroundColor: gradient,
                     borderColor: '#e13a58',
 

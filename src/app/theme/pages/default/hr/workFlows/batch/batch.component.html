@@ -155,7 +155,7 @@
                                        </th>
 								</tr>
 							</thead>
-							<tbody class="m-datatable__body">
+							<tbody class="m-datatable__body" id="batch-loader">
                                 <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
                                            <td class="m-datatable__cell" width="10%">
@@ -223,7 +223,7 @@
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="20%">
                                                                             <span *ngIf="batch.status!='Terminated'">
-                                                                                <a (click)="saveKraWorkFlow(i,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
+                                                                                <a (click)="saveKraWorkFlow(batch._id,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
                                                                                     <i class="la la-remove"></i>
                                                                                 </a>
                                                                                 <!-- <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
@@ -239,8 +239,8 @@
                                                 </div>
                                             </td>
                                     </tr>
-                                  <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
                                 </ng-container>
+                                <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
                             </tbody>
 					</table>
 					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >

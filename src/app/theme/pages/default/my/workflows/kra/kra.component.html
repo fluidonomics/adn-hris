@@ -343,13 +343,13 @@
                    <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
                         <!-- [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" -->
                     <li class="nav-item m-tabs__item" *ngIf="!isDisabled">
-                        <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)=" fkraInfo.valid && submitKraWorkFlow()" >Submit</button>	
+                        <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)=" fkraInfo.valid && submitKraWorkFlow(fkraInfo.form.dirty)" >Submit</button>	
                     </li>
                     <li class="nav-item m-tabs__item">
-                        <a class="nav-link m-tabs__link" (click)="window.print();">
+                        <!-- <a class="nav-link m-tabs__link" (click)="window.print();">
                         <i class="la la-print"></i>
                         Print
-                        </a>
+                        </a> -->
                     </li>
                    </ul>
                 </div>
@@ -358,6 +358,7 @@
                 <div class="m-section" >
                    <div class="m-section__content">  
                     <form #fkraInfo="ngForm" novalidate="novalidate">
+                            
                         <div class="table-responsive">
                                 <table class="table table-bordered table-hover" #print_div>
                                     <thead>
@@ -419,7 +420,7 @@
                                             </td>
                                             <td *ngIf="!isDisabled">
                                                     <!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
-                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i,controlRow)" [disabled]="!controlRow.valid">
+                                               <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i)" [disabled]="!controlRow.valid">
                                                 <i class="la la-save"></i>
                                                </button>
                                                <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">

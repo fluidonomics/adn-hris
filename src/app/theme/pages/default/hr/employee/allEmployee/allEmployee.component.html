@@ -150,7 +150,7 @@
 										</th>
 									</tr>
 							</thead>
-							<tbody class="m-datatable__body">
+							<tbody class="m-datatable__body" id="allEmployee-loader">
                               <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 									<td class="m-datatable__cell" width="5%" >
 									
@@ -189,7 +189,7 @@
 										<span>{{employee.supervisor}}</span>
 									</td>
 									<td class="m-datatable__cell" width="15%" >
-										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved'?'personal':'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved' || employee.profileProcessDetails.employeeStatus=='Submitted' ?'personal':'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
 											<i class="la la-edit"></i>
                                         </a>
                                         <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">

@@ -87,7 +87,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        this.utilityService.showLoader('#employeeTable');
+        this.utilityService.showLoader('#allEmployee-loader');
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
@@ -95,16 +95,16 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
                 if (data.length > 0) {
                     data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                     this.employeesData = data || [];
-                    this.utilityService.hideLoader('#employeeTable');
+                    this.utilityService.hideLoader('#allEmployee-loader');
                 }
                 else
                 {
                     this.employeesData = data.json().data || [];
-                    this.utilityService.hideLoader('#employeeTable');
+                    this.utilityService.hideLoader('#allEmployee-loader');
                 }
             },
             error => {
-                this.utilityService.hideLoader('#employeeTable');
+                this.utilityService.hideLoader('#allEmployee-loader');
             });
     }
 

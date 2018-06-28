@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation,TemplateRef } from '@angular/core';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
+import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { BatchService } from "./batchService.service";
 import {environment} from '../../../../../../../environments/environment';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -39,16 +40,20 @@ export class HrBatchComponent implements OnInit {
         {_id:"Terminated" ,name:"Terminated"},
      ]
 
+     _currentEmpId:number;
+
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
         private _batchService: BatchService,
+        public utilityService: UtilityService,
         public _authService: AuthService) {
     }
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
+                this._currentEmpId = this._authService.currentUserData._id;
                 this.initData();
             });
     }
@@ -59,12 +64,16 @@ export class HrBatchComponent implements OnInit {
 
     loadBatch()
     {
+        this.utilityService.showLoader('#batch-loader');
         this._commonService.getBatchInfo()
             .subscribe(
             res => {
+                this.utilityService.hideLoader('#batch-loader');
                 this.batchData=res.json().data;
+                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
             },
             error => {
+                this.utilityService.hideLoader('#batch-loader');
             });
     }
 
@@ -79,7 +88,7 @@ export class HrBatchComponent implements OnInit {
         });  
     }
 
-    saveKraWorkFlow(batchIndex,kraWorkFlowIndex,status)
+    saveKraWorkFlow(batch_id,kraWorkFlowIndex,status)
     {
         swal({
             title: 'Are you sure?',
@@ -91,8 +100,8 @@ export class HrBatchComponent implements OnInit {
             confirmButtonText: 'Terminate'
         }).then((result) => {
             if (result.value) {
-                this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex].status=status;
-                this._batchService.saveKraWorkFlow(this.batchData[batchIndex].kraWorkFlowData[kraWorkFlowIndex])
+                this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex].status=status;
+                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex])
                     .subscribe(
                     res => {   
                         swal('Success','Employee Workflow Terminated Successfully','success')

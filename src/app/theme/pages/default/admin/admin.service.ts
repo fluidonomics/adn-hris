@@ -22,5 +22,9 @@ export class AdminService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    postLeaveTransactionYear(data) {
+        let url = "leave/postLeaveTransactionYear";
+        return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 
 }
