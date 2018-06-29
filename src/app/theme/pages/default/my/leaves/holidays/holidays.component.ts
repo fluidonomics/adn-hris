@@ -68,11 +68,6 @@ export class HolidaysComponent implements OnInit {
             });
     }
 
-    // setYear(year) {
-    //     this.year = year;
-    //     this.getHolidays();
-    // }
-
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
     }
@@ -136,8 +131,8 @@ export class HolidaysComponent implements OnInit {
                 day: dayName,
                 date: formdata.form.value.date,
                 isGeneral: formdata.form.value.isGeneral,
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                // createdAt: new Date(),
+                // updatedAt: new Date(),
                 occasion: formdata.form.value.occasion
             }
             swal({
