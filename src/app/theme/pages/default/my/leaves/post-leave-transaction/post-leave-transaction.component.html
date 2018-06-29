@@ -26,7 +26,14 @@
                                                 <span class="required" aria-required="true"> * </span>
                                                 <ng-select class="m-input m-input--air" name="employee" bindValue="_id" bindLabel="fullName" [items]="employeeList" [(ngModel)]="leavetransaction.employee"
                                                     (ngModelChange)="onChangeEmployee()" id="employees" #employee="ngModel" placeholder=""
-                                                    [clearable]="false" required></ng-select>
+                                                    [clearable]="false" required>
+                                                	<ng-template ng-label-tmp let-item="item" let-index="index">
+                                                            {{item.fullName}} [{{item.userName}}]
+                                                        </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                            {{item.fullName}} [{{item.userName}}]
+                                                        </ng-template>
+                                                </ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="fleavetransaction.submitted && !employee.valid ">
                                                     This field is required.
                                                 </div>

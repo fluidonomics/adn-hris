@@ -26,6 +26,7 @@ export class HolidaysComponent implements OnInit {
 
     key: string = '';
     p2: number;
+    itemPerPage: number = 10;
 
     @Output() action = new EventEmitter();
 
@@ -40,11 +41,18 @@ export class HolidaysComponent implements OnInit {
     ngOnInit(): void {
         this.year = now.getFullYear();
         this.getHolidays();
-        this.years = [2017, 2018, 2019, 2020]
+        this.loadYears();
+    }
+
+    loadYears()
+    {
+        for (let index = 2015; index <= this.currentDate.getFullYear(); index++) {
+            this.years.push(index)
+        }
     }
 
     public getHolidays() {
-        this.utilityService.showLoader('.m-portlet__body');
+        this.utilityService.showLoader('#holidayLoader');
         this.leaveService.getLeaveHolidays(this.year).subscribe(
             res => {
                 if (res.ok) {
@@ -56,18 +64,14 @@ export class HolidaysComponent implements OnInit {
             error => {
                 console.error(error);
             }, () => {
-                this.utilityService.hideLoader('.m-portlet__body');
+                this.utilityService.hideLoader('#holidayLoader');
             });
     }
 
-    setYear(year) {
-        this.year = year;
-        this.getHolidays();
-    }
-
-    sort(key: string) {
-
-    }
+    // setYear(year) {
+    //     this.year = year;
+    //     this.getHolidays();
+    // }
 
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template);
@@ -92,8 +96,8 @@ export class HolidaysComponent implements OnInit {
                 day: dayName,
                 date: formdata.form.value.date,
                 isGeneral: formdata.form.value.isGeneral,
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                //createdAt: new Date(),
+                //updatedAt: new Date(),
                 occasion: formdata.form.value.occasion
             }
 
@@ -113,7 +117,7 @@ export class HolidaysComponent implements OnInit {
                             this.modalRef.hide();
                         },
                         error => {
-                            console.log(error);
+                            //console.log(error);
                         });
                 }
             });
