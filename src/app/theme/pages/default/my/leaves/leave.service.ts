@@ -130,7 +130,7 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveTypeByEmpId(empId: number, fiscalYearId: string): Subject<any> {
+    getLeaveTypeByEmpId(empId: number, fiscalYearId: number): Subject<any> {
         let leaveTypes: Subject<any> = new Subject<any>();
         this.getEmployeeLeaveBalance(empId, fiscalYearId).subscribe(resBalance => {
             if (resBalance.ok) {

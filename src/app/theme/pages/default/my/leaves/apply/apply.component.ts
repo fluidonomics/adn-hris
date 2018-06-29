@@ -39,7 +39,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: string;
+    fiscalYearId: number=1;
     
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
