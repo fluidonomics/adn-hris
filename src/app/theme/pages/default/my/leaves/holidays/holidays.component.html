@@ -50,25 +50,25 @@
                                     <table class="m-datatable__table">
                                         <thead class="m-datatable__head">
                                             <tr class="m-datatable__row">
-                                                <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                                                <th  class="m-datatable__cell m-datatable__cell--sort" width="25%">
                                                     <span>
                                                         Occasion
                                                         <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                     <span>
                                                         Date
                                                         <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                     <span>
                                                         Day
                                                         <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                     <span>
                                                         Action
                                                         <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
