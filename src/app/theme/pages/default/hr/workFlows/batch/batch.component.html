@@ -144,7 +144,7 @@
                                         </th>
                                         <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
                                                 <span>
-                                                Status
+                                                BATCH STATUS
                                                 <i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                 </span>
                                          </th>
@@ -156,32 +156,34 @@
 								</tr>
 							</thead>
 							<tbody class="m-datatable__body" id="batch-loader">
-                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
+                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;" >
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
-                                           <td class="m-datatable__cell" width="10%">
-                                                <i class="la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+                                           <td class="m-datatable__cell" width="10%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                                <a class="btn btn-outline-success m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air " [ngClass]="batch._id==activeRowNumber? 'active':''">
+                                                        <i class="td-icon-color la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+                                                    </a>
                                             </td>
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span>{{batch.batchName}}</span>
                                             </td>
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span>{{batch.batchType}}</span>
                                             </td>
                                             <!-- <td class="m-datatable__cell" width="15%" >
                                                 <span>{{batch.createdBy}}</span>
                                             </td> -->
                                            
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span>{{batch.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                             </td>
                                             
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                             </td>
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
                                             </td>
-                                            <td class="m-datatable__cell" width="15%" >
+                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span *ngIf="batch.status!='Terminated'">
                                                         <a (click)="openEditModal(templateEdit,batch)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
                                                             <i class="la la-edit"></i>
@@ -190,40 +192,40 @@
                                             </td>
                                     </tr>
                                     <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
-                                            <td colspan="5" style="padding-left:80px;padding-right:80px">
+                                            <td colspan="5" style="padding:10px 30px 35px 30px; background:#e3e4f7">
                                                 <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                                                     <table class="m-datatable__table" >
                                                         <thead class="m-datatable__head">
                                                         <tr class="m-datatable__row">
-                                                                <th class="m-datatable__cell" width="60%">
-                                                                    Name
+                                                                <th class="m-datatable__cell" width="62%">
+                                                                    EMPLOYEE NAME
                                                                 </th>
                                                                 <!-- <th class="m-datatable__cell" width="40%">
                                                                    TimeLine
                                                                 </th> -->
-                                                                <th class="m-datatable__cell" width="20%">
-                                                                    Status
+                                                                <th class="m-datatable__cell" width="15%">
+                                                                    STATUS
                                                                 </th>
-                                                                <th class="m-datatable__cell" width="20%">
-                                                                    Action
+                                                                <th class="m-datatable__cell" width="10%">
+                                                                    ACTION
                                                                 </th>
                                                         <tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body"> 
                                                             <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData;let j=index">
                                                                 <tr class="m-datatable__row">
-                                                                        <td class="m-datatable__cell" width="60%" >
+                                                                        <td class="m-datatable__cell" width="62%" >
                                                                                 <span>{{kraRow.userName}}</span>
                                                                         </td>
                                                                         <!-- <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.timeline_id}}</span>
                                                                         </td> -->
-                                                                        <td class="m-datatable__cell" width="20%" >
+                                                                        <td class="m-datatable__cell" width="15%" >
                                                                              <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
                                                                         </td>
-                                                                        <td class="m-datatable__cell" width="20%">
+                                                                        <td class="m-datatable__cell" width="10%">
                                                                             <span *ngIf="batch.status!='Terminated'">
-                                                                                <a (click)="saveKraWorkFlow(batch._id,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
+                                                                                <a (click)="saveKraWorkFlow(batch._id,j,'Terminated')" *ngIf="kraRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
                                                                                     <i class="la la-remove"></i>
                                                                                 </a>
                                                                                 <!-- <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">

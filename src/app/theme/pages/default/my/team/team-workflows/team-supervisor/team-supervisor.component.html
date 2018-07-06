@@ -15,12 +15,10 @@
 						<div class="m-portlet__head-caption">
 							<div class="m-portlet__head-title">
 								<h3 class="m-portlet__head-text">
-								Employee Profile Approvals
+								Profile Approvals
 							</h3>
 							</div>
-							<a align="center" routerLink="/my/team/workflows/supervisor/employee/list">
-								All Employee
-							</a>
+						
 						</div>
 						<div class="m-portlet__head-tools">
 							<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
@@ -41,6 +39,15 @@
 						<div class="no-records" *ngIf="employeeData.length==0 || (employeeData | orderBy: 'profileProcessDetails.updatedAt' : employeeReverse | filter:employeeSearch)?.length==0">
 							<span class="align--center">No records found</span>
 						</div>
+						<div class="row">
+								<div class="col-md-9 col-xs-8">
+							
+								</div>
+								<div class="col-md-3 col-xs-4 pull-right">
+											<button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+								</div>
+							
+							</div>
 						<div class="m-widget4">
 							<div class="m-widget4__item" *ngFor="let employee of employeeData|  orderBy: 'profileProcessDetails.updatedAt' : employeeReverse| filter:employeeSearch;let i=index">
 								<div class="m-widget4__img m-widget4__img--logo">

@@ -162,7 +162,7 @@
 											<td class="m-datatable__cell" width="10%">
 												<i class="la" (click)="activeRowNumber==employee._id ? activeRowNumber=null:activeRowNumber=employee._id;loadBatchData(employee._id)" [ngClass]="employee._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
 											</td>
-											<td class="m-datatable__cell" width="5%" >
+											<td class="m-datatable__cell" width="5%" [ngClass]="{'la-arrow-up':td-active-color,'la-arrow-down':!td-active-color}">
 											
 													<!-- <i class="status--icon fa" [ngClass]="
 													!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
