@@ -13,6 +13,7 @@ import swal from 'sweetalert2';
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./batch.component.html",
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./batch.component.css'],
     providers:[BatchService]
 })
 export class HrBatchComponent implements OnInit {
