@@ -53,7 +53,7 @@
 						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
 
-								<div class="m-widget4">
+								<div class="m-widget4 workflow--hover">
 									<div class="m-widget4__item" *ngFor="let employee of employeeData|  orderBy: 'profileProcessDetails.updatedAt' : employeeReverse| filter:employeeSearch;let i=index">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center" routerLink="/my/profile-view" [queryParams]="{ id: employee._id , tabName:'personal' }">

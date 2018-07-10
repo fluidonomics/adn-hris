@@ -3766,6 +3766,13 @@ select.selectpicker {
 [disabled].noUi-handle,
 [disabled] .noUi-handle {
   cursor: not-allowed; }
+  [disabled]{
+    cursor: not-allowed;
+  }
+
+.disabled{
+    cursor: not-allowed;
+  }
 
 /* Base;
  *
