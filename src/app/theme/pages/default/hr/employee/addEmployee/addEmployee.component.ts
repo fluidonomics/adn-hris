@@ -384,6 +384,21 @@ export class AddEmployeeComponent implements OnInit {
         }
     }
 
+    checkUserNameExists(_element) {
+        if (_element.valid) {
+            this._commonService.checkUserNameExists(_element.value)
+                .subscribe(
+                data => {
+                    if (data.json())
+                        _element.control.setErrors({ "userNameExists": true })
+                },
+                error => {
+                    _element.control.setErrors(null)
+                });
+
+        }
+    }
+
     //Clear All Form Data 
     clearFormData() {
         this.addemp = {}

@@ -290,6 +290,11 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    checkUserNameExists(data: string) {
+        let url = "common/checkUserNameExists?userName=" + data
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getLevelOfEducation() {
         return levelofEducation;
         // let url=this.ApiPath+"/getNationality";
