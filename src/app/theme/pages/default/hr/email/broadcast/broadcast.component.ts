@@ -6,7 +6,7 @@ const now = new Date();
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: "./broadcast.component.1.html",
+    templateUrl: "./broadcast.component.html",
     encapsulation: ViewEncapsulation.None,
 })
 export class BroadCastComponent {
