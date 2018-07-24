@@ -1,35 +1,35 @@
 <div class="m-content">
-        <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
-                <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    <i class="fa fa-list"></i> 
-                                    All Employees
-                                    <small>
-                                    </small>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-			<div class="m-portlet__body">
-				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-							<div class="row align-items-center">
-								<div class="col-xl-8 order-2 order-xl-1">
-									<div class="form-group m-form__group row align-items-center">
-										<div class="col-md-4">
-											<div class="m-input-icon m-input-icon--left">
-												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-												<span class="m-input-icon__icon m-input-icon__icon--left">
-													<span>
-														<i class="la la-search"></i>
-													</span>
-												</span>
-											</div>
-										</div>
-									</div>
-                                </div>
-                                <!-- <div class="col-xl-4 order-2 order-xl-1">
+	<div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						<i class="fa fa-list"></i>
+						All Employees
+						<small>
+						</small>
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+				<div class="row align-items-center">
+					<div class="col-xl-8 order-2 order-xl-1">
+						<div class="form-group m-form__group row align-items-center">
+							<div class="col-md-4">
+								<div class="m-input-icon m-input-icon--left">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
+									<span class="m-input-icon__icon m-input-icon__icon--left">
+										<span>
+											<i class="la la-search"></i>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="col-xl-4 order-2 order-xl-1">
                                     <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
                                             <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
                                                     <i class="la la-plus m--hide"></i>
@@ -104,67 +104,72 @@
                                             </div>
                                     </div>
                                 </div> -->
-							</div>
 				</div>
-				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"  [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
-                    <table class="m-datatable__table">
-							<thead class="m-datatable__head">
-									<tr class="m-datatable__row">
-										<th class="m-datatable__cell" width="5%" ></th>
-										<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%" >
-												<span>
-												 ID
-												<i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-												</span>
-											</th>
-										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%" >
-											<span>
-											 NAME
-											<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										
-										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-											<span>
-											EMAIL
-											<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											DESIGNATION 
-											<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											SUPERVISOR  
-											<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th (click)="sort('secondarySupervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											SECONDARY SUPERVISOR  
-											<i class="la" *ngIf="key == 'secondarySupervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											ACTIONS  
-											<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-									</tr>
-							</thead>
-							<tbody class="m-datatable__body" id="allEmployee-loader">
-									<ng-container *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
-										<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}">
-											<td class="m-datatable__cell" width="10%">
-												<i class="la" (click)="activeRowNumber==employee._id ? activeRowNumber=null:activeRowNumber=employee._id;loadBatchData(employee._id)" [ngClass]="employee._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
-											</td>
-											<td class="m-datatable__cell" width="5%" [ngClass]="{'la-arrow-up':td-active-color,'la-arrow-down':!td-active-color}">
-											
-													<!-- <i class="status--icon fa" [ngClass]="
+			</div>
+			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+				<table class="m-datatable__table">
+					<thead class="m-datatable__head">
+						<tr class="m-datatable__row">
+							<th class="m-datatable__cell" width="5%"></th>
+							<th class="m-datatable__cell" width="5%"></th>
+							<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%">
+								<span>
+									ID
+									<i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+							<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+								<span>
+									NAME
+									<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+
+							<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+								<span>
+									EMAIL
+									<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+							<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+								<span>
+									DESIGNATION
+									<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+							<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+								<span>
+									SUPERVISOR
+									<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+							<th (click)="sort('secondarySupervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+								<span>
+									SECONDARY SUPERVISOR
+									<i class="la" *ngIf="key == 'secondarySupervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+							<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+								<span>
+									ACTIONS
+									<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+								</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody class="m-datatable__body" id="allEmployee-loader">
+						<ng-container *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;">
+							<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}">
+					
+
+								<td class="m-datatable__cell" width="5%" ng-reflect-klass="m-datatable__cell" [ngClass]="employee._id==activeRowNumber? 'td-active-color':''" >
+										<a (click)="activeRowNumber==employee._id ? activeRowNumber=null:activeRowNumber=employee._id;loadBatchData(employee._id)" class="btn btn-outline-success m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" [ngClass]="employee._id==activeRowNumber? 'td-active-button-color':''">
+												<i class="td-icon-color la" [ngClass]="employee._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+											</a>
+									</td>
+								<td class="m-datatable__cell" width="5%"  [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+
+									<!-- <i class="status--icon fa" [ngClass]="
 													!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
 													(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
 													((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
@@ -180,144 +185,159 @@
 													(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
 													(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))"> </i> -->
 
-												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
-												<ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-											</td>
-											<td class="m-datatable__cell" width="5%" >
-												<span>{{employee.userName}}</span>
-											</td>
-											<td class="m-datatable__cell" width="20%" >
-												<span>{{employee.fullName}}</span>
-											</td>
-											<td class="m-datatable__cell" width="15%" >
-												<span>{{employee.officeEmail}}</span>
-											</td>
-											<td class="m-datatable__cell" width="15%" >
-												<span>{{employee.designation}}</span>
-											</td>
-											<td class="m-datatable__cell" width="15%" >
-												<span>{{employee.supervisor}}</span>
-											</td>
-											<td class="m-datatable__cell" width="15%" >
-												<span>{{employee.secondarySupervisor}}</span>
-											</td>
-											<td class="m-datatable__cell" width="15%" >
-												<a routerLink="/my/profile-view" *ngIf="employee.profileProcessDetails.supervisorStatus=='Approved' && (_currentEmpId==employee.groupHrHead_id || _currentEmpId==employee.businessHrHead_id )" [queryParams]="{ id: employee._id , tabName:'personal'}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-													<i class="la la-edit"></i>
-												</a>
-												<!-- <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
+									<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+									    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+									<ng-template #noImage>
+										<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+									</ng-template>
+								</td>
+								<td class="m-datatable__cell" width="5%"  [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.userName}}</span>
+								</td>
+								<td class="m-datatable__cell" width="15%"  [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.fullName}}</span>
+								</td>
+								<td class="m-datatable__cell" width="15%" [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.officeEmail}}</span>
+								</td>
+								<td class="m-datatable__cell" width="15%" [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.designation}}</span>
+								</td>
+								<td class="m-datatable__cell" width="15%" [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.supervisor}}</span>
+								</td>
+								<td class="m-datatable__cell" width="15%" [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<span>{{employee.secondarySupervisor}}</span>
+								</td>
+								<td class="m-datatable__cell" width="10%"  [ngClass]="employee._id==activeRowNumber? 'td-active-color':''">
+									<a routerLink="/my/profile-view" *ngIf="employee.profileProcessDetails.supervisorStatus=='Approved' && (_currentEmpId==employee.groupHrHead_id || _currentEmpId==employee.businessHrHead_id )"
+									    [queryParams]="{ id: employee._id , tabName:'personal'}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+									    title="View">
+										<i class="la la-edit"></i>
+									</a>
+									<!-- <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
 														<i class="la la-reply"></i>
 													</a>
 												<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
 													<i class="la la-gear"></i>
 												</a> -->
-											</td>
-										</tr>
+								</td>
+							</tr>
 
-										<tr class="m-datatable__row" *ngIf="activeRowNumber==employee._id">
-												<td colspan="9" style="padding-left:80px;padding-right:80px">
-													<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-														<table class="m-datatable__table" >
-																<thead class="m-datatable__head">
-																	<tr class="m-datatable__row">
-																		<th class="m-datatable__cell" width="60%">
-																				    WorkFlow Type
-																		</th>
-																		<th class="m-datatable__cell" width="60%">
-																					Batch Name
-																		</th>
-																		<th class="m-datatable__cell" width="60%">
-																					Batch Status
-																		</th>
-																		<th class="m-datatable__cell" width="20%">
-																					Workflow Status
-																		</th>
-																		<th class="m-datatable__cell" width="20%">
-																			Action
-																		</th>
-																	<tr>
-																</thead>
-																<tbody class="m-datatable__body"> 
-																	<ng-container *ngFor="let batch of employee?.batchData;let j=index">
-																		<tr class="m-datatable__row">
-																						<td class="m-datatable__cell" width="80%" >
-																								<span>{{batch.batchType}}</span>
-																						</td>
-																						<td class="m-datatable__cell" width="80%" >
-																								<span>{{batch.batchName}}</span>
-																						</td>
-																						<td class="m-datatable__cell" width="80%" >
-																							<span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
-																						</td>
-																						<td class="m-datatable__cell" width="80%" >
-																							<span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':batch.kraworkflowdetails[0].status=='Initiated','m-badge--brand':batch.kraworkflowdetails[0].status=='Submitted','m-badge--danger':batch.status=='SendBack','m-badge--success':batch.kraworkflowdetails[0].status=='Approved','m-badge--secondary':batch.kraworkflowdetails[0].status=='Terminated'}">{{batch.kraworkflowdetails[0].status}}</span></span>
-																						</td>
-																						<td class="m-datatable__cell" width="20%">
-																							<span>
-																								<a *ngIf="batch.status!='Terminated' && batch.kraworkflowdetails[0].status=='Approved'" routerLink="/my/team/workflows/kra-view/{{batch.kraworkflowdetails[0]._id}}/{{employee._id}}"  class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View">
-																									<i class="la la-edit"></i>
-																								</a>
-																							</span>
-																						</td>
-																						<span *ngIf="employee?.batchData?.length==0" class="m-datatable--error">No records found</span>
-																						
-																		</tr>
-																	</ng-container>
-																</tbody>
-														</table>
-													</div>
-												</td>
-										</tr>
-							        </ng-container>
-                                   <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
-							</tbody>
-					</table>
-					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
-						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-								<li>
-									<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)" >
-										<i class="la la-angle-double-left"></i>
-                                    </span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-										<i class="la la-angle-left"></i>
-									</span>
-								</li>
-								<li *ngFor="let page of p.pages">
-									<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-										{{ page.label }}
-									</span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
-										<i class="la la-angle-right"></i>
-									</span>
-								</li>
-								<li>
-									<span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-										<i class="la la-angle-double-right"></i>
-									</span>
-								</li>
-							</ul>
-						</div>
-					</pagination-template>
-					<div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-						
-						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="1">
-								<option value=10>10</option>
-								<option value=20>20</option>
-								<option value=30>30</option>
-								<option value=50>50</option>
-								<option value=100>100</option>
-						</select>
-						 <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeesData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse | filter:search)?.length}}</span>
+							<tr class="m-datatable__row" *ngIf="activeRowNumber==employee._id">
+								<td colspan="9"  style="padding:30px 30px 30px 30px; background:#e3e4f7">
+									<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+										<table class="m-datatable__table">
+											<thead class="m-datatable__head">
+												<tr class="m-datatable__row">
+													<th class="m-datatable__cell" width="20%">
+														WorkFlow Type
+													</th>
+													<th class="m-datatable__cell" width="20%">
+														Batch Name
+													</th>
+													<th class="m-datatable__cell" width="20%">
+														Batch Status
+													</th>
+													<th class="m-datatable__cell" width="20%">
+														Workflow Status
+													</th>
+													<th class="m-datatable__cell" width="20%">
+														Action
+													</th>
+													<tr>
+											</thead>
+											<tbody class="m-datatable__body">
+												<ng-container *ngFor="let batch of employee?.batchData;let j=index">
+													<tr class="m-datatable__row">
+														<td class="m-datatable__cell" width="20%">
+															<span>{{batch.batchType}}</span>
+														</td>
+														<td class="m-datatable__cell" width="20%">
+															<span>{{batch.batchName}}</span>
+														</td>
+														<td class="m-datatable__cell" width="20%">
+															<span style="width: 100px;">
+																<span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span>
+															</span>
+														</td>
+														<td class="m-datatable__cell" width="20%">
+															<span style="width: 100px;">
+																<span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':batch.kraworkflowdetails[0].status=='Initiated','m-badge--brand':batch.kraworkflowdetails[0].status=='Submitted','m-badge--danger':batch.status=='SendBack','m-badge--success':batch.kraworkflowdetails[0].status=='Approved','m-badge--secondary':batch.kraworkflowdetails[0].status=='Terminated'}">{{batch.kraworkflowdetails[0].status}}</span>
+															</span>
+														</td>
+														<td class="m-datatable__cell" width="20%">
+															<span>
+																<a *ngIf="batch.status!='Terminated' && batch.kraworkflowdetails[0].status=='Approved'" routerLink="/my/team/workflows/kra-view/{{batch.kraworkflowdetails[0]._id}}/{{employee._id}}"
+																    class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Kra View">
+																	<i class="la la-edit"></i>
+																</a>
+															</span>
+														</td>
+														<span *ngIf="batch.length==0" class="m-datatable--error">No records found</span>
+
+													</tr>
+												</ng-container>
+											</tbody>
+										</table>
+									</div>
+								</td>
+								</tr>
+						</ng-container>
+						<span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
+					</tbody>
+				</table>
+				<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+					<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+						<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+							<li>
+								<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+								    (click)="p.setCurrent(1)">
+									<i class="la la-angle-double-left"></i>
+								</span>
+							</li>
+							<li>
+								<span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+								    (click)="p.previous()">
+									<i class="la la-angle-left"></i>
+								</span>
+							</li>
+							<li *ngFor="let page of p.pages">
+								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+									{{ page.label }}
+								</span>
+							</li>
+							<li>
+								<span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+								    (click)="p.isLastPage()?'null':p.next()">
+									<i class="la la-angle-right"></i>
+								</span>
+							</li>
+							<li>
+								<span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+								    (click)="p.setCurrent(p.pages.length + 1)">
+									<i class="la la-angle-double-right"></i>
+								</span>
+							</li>
+						</ul>
 					</div>
-				</div>  
+				</pagination-template>
+				<div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
+
+					<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px"
+					    data-selected="50" tabindex="1">
+						<option value=10>10</option>
+						<option value=20>20</option>
+						<option value=30>30</option>
+						<option value=50>50</option>
+						<option value=100>100</option>
+					</select>
+					<!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
+        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
+					<span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeesData
+						| orderBy: key : reverse | filter:search)?.length}}</span>
+				</div>
 			</div>
+		</div>
 	</div>
 </div>
-

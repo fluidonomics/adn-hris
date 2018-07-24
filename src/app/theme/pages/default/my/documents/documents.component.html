@@ -1,31 +1,31 @@
 <div class="m-content">
         <div class="row">
-           <div class="col-md-12">
-              <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
-                 <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                       <div class="m-portlet__head-title">
-                          <h3 class="m-portlet__head-text">
-                             <i class="fa fa-file"> </i> 
-                             Employee Documents
-                             <small>
-                             </small>
-                          </h3>
-                       </div>
-                    </div>
-                    
-                 </div>
-                 <div class="m-portlet__body">
-                        <div class="no-records" *ngIf="documentsData.length==0" >
-                                <span class="align--center">No records found</span>
-                        </div>
-                        
-                   <div class="row"  *ngIf="documentsData.length!=0" >
-                            <div class="col-md-10 col-xs-8">                                             
-                            
-                            </div>
-                            <div class="col-md-2 col-xs-4 accordian-refresh">
-                                    <!-- <ul class="m-portlet__nav">
+                <div class="col-md-12">
+                        <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+                                <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                        <h3 class="m-portlet__head-text">
+                                                                <i class="fa fa-file"> </i>
+                                                                Employee Documents
+                                                                <small>
+                                                                </small>
+                                                        </h3>
+                                                </div>
+                                        </div>
+
+                                </div>
+                                <div class="m-portlet__body">
+                                        <div class="no-records" *ngIf="documentsData.length==0">
+                                                <span class="align--center">No records found</span>
+                                        </div>
+
+                                        <div class="row" *ngIf="documentsData.length!=0">
+                                                <div class="col-md-10 col-xs-8">
+
+                                                </div>
+                                                <div class="col-md-2 col-xs-4 accordian-refresh">
+                                                        <!-- <ul class="m-portlet__nav">
                                             <li aria-expanded="true"  [class.m-dropdown--open]="docMouseOvered" (mouseout)="docMouseOvered=false" (mouseover)="docMouseOvered=true" class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push">
                                                 <a class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle">
                                                     <i class="la la-ellipsis-h m--font-secondary"></i>
@@ -83,106 +83,112 @@
                                                 </div>
                                             </li>
                                         </ul> -->
-                                        <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
-                                                <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                        <i class="la la-plus m--hide"></i>
-                                                        <i class="la la-ellipsis-h"></i>
-                                                </span>
-                                                <div class="m-dropdown__wrapper">
-                                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
-                                                        <div class="m-dropdown__inner">
-                                                            <div class="m-dropdown__body">
-                                                                <div class="m-dropdown__content">
-                                                                    <ul class="m-nav">
-                                                                            <li class="m-nav__item">
-                                                                                    <a class="m-nav__link">
-                                                                                        <i class="m-nav__link-icon fa fa-download m--font-secondary"></i>
-                                                                                        <span class="m-nav__link-text">
-                                                                                        Download the Format 
-                                                                                        </span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li class="m-nav__item">
-                                                                                        <a class="m-nav__link">
-                                                                                            <i class="m-nav__link-icon fa fa-print m--font-primary"></i>
-                                                                                            <span class="m-nav__link-text">
-                                                                                                    Print the Document
-                                                                                            </span>
-                                                                                        </a>
-                                                                                </li>   
-                                                                                <li class="m-nav__item">
-                                                                                        <a class="m-nav__link">
-                                                                                            <i class="m-nav__link-icon fa fa-edit m--font-warning"></i>
-                                                                                            <span class="m-nav__link-text">
-                                                                                                    Fill in the required information. 
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li class="m-nav__item">
-                                                                                            <a class="m-nav__link">
-                                                                                                <i class="m-nav__link-icon fa fa-upload m--font-success"></i>
-                                                                                                <span class="m-nav__link-text">
-                                                                                                        Scan and Upload in PDF Format .  
-                                                                                                </span>
-                                                                                            </a>
-                                                                                    </li>                                                                    </ul>
+                                                        <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" [class.m-dropdown--open]="mouseOvered"
+                                                                (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
+                                                                <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                                                                        <i class="la la-plus m--hide"></i>
+                                                                        <i class="la la-ellipsis-h"></i>
+                                                                </span>
+                                                                <div class="m-dropdown__wrapper">
+                                                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
+                                                                        <div class="m-dropdown__inner">
+                                                                                <div class="m-dropdown__body">
+                                                                                        <div class="m-dropdown__content">
+                                                                                                <ul class="m-nav">
+                                                                                                        <li class="m-nav__item">
+                                                                                                                <a class="m-nav__link">
+                                                                                                                        <i class="m-nav__link-icon fa fa-download m--font-secondary"></i>
+                                                                                                                        <span class="m-nav__link-text">
+                                                                                                                                Download the Format
+                                                                                                                        </span>
+                                                                                                                </a>
+                                                                                                        </li>
+                                                                                                        <li class="m-nav__item">
+                                                                                                                <a class="m-nav__link">
+                                                                                                                        <i class="m-nav__link-icon fa fa-print m--font-primary"></i>
+                                                                                                                        <span class="m-nav__link-text">
+                                                                                                                                Print the Document
+                                                                                                                        </span>
+                                                                                                                </a>
+                                                                                                        </li>
+                                                                                                        <li class="m-nav__item">
+                                                                                                                <a class="m-nav__link">
+                                                                                                                        <i class="m-nav__link-icon fa fa-edit m--font-warning"></i>
+                                                                                                                        <span class="m-nav__link-text">
+                                                                                                                                Fill in the required information.
+                                                                                                                        </span>
+                                                                                                                </a>
+                                                                                                        </li>
+                                                                                                        <li class="m-nav__item">
+                                                                                                                <a class="m-nav__link">
+                                                                                                                        <i class="m-nav__link-icon fa fa-upload m--font-success"></i>
+                                                                                                                        <span class="m-nav__link-text">
+                                                                                                                                Scan and Upload in PDF Format .
+                                                                                                                        </span>
+                                                                                                                </a>
+                                                                                                        </li>
+                                                                                                </ul>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
                                                                 </div>
-                                                            </div>
+                                                        </div>
+                                                        <div class="m-space--10"></div>
+                                                </div>
+
+                                        </div>
+                                        <div class="row" *ngFor="let document of documentsData ;let i=index">
+                                                <div class="col-md-12">
+                                                        <div class="m-widget4">
+                                                                <div class="m-widget4__item">
+                                                                        <div class="m-widget4__img m-widget4__img--icon">
+                                                                                <img alt="" src="./assets/app/media/img/files/pdf.svg">
+                                                                        </div>
+                                                                        <div class="m-widget4__info">
+                                                                                <span class="m-widget4__text">
+                                                                                        {{document.documentName}}
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="m-widget4__ext documents--ext">
+                                                                                <div class="m-space--10"></div>
+                                                                                <button class="btn btn-secondary" (click)="downloadPdf(document.documentUrl,document.documentName)">
+                                                                                        <i class="fa fa-download"></i>
+                                                                                </button>
+                                                                        </div>
+                                                                </div>
                                                         </div>
                                                 </div>
-                                        </div>
-                                        <div class="m-space--10"></div>
-                                    </div>
-                         
-                        </div>
-                    <div class="row" *ngFor="let document of documentsData ;let i=index">
-                                   <div class="col-md-12">
-                                      <div class="m-widget4">
-                                         <div class="m-widget4__item">
-                                            <div class="m-widget4__img m-widget4__img--icon">
-                                               <img alt="" src="./assets/app/media/img/files/pdf.svg">
-                                            </div>
-                                            <div class="m-widget4__info">
-                                               <span class="m-widget4__text">
-                                               {{document.documentName}} 
-                                               </span>
-                                            </div>
-                                            <div class="m-widget4__ext documents--ext">
-                                                    <div class="m-space--10"></div>
-                                               <button class="btn btn-secondary" (click)="downloadPdf(document.documentUrl,document.documentName)">
-                                                 <i class="fa fa-download"></i>
-                                               </button>
-                                            </div>
-                                         </div>
-                                      </div>
-                                   </div>
-                                   <div class="col-md-12">
-                                      <div class="m-widget4">
-                                         <div class="m-widget4__item">
-                                            <div class="m-widget4__ext documents--ext">
-                                               <button type="button" class="btn btn-success"  name="test" (click)="documentsPdf.click()" >{{document?.employeeExternalDocumentUrl ? 'Change':'Upload'}}</button>
-                                               <input type="file" accept="application/pdf" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event,document.documentName,i)" [uploadInput]="uploadInput">
-                                            </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document.employeeExternalDocumentUrl">
-                                               <a class="btn btn-secondary" (click)="goToUrl(document.employeeExternalDocumentUrl)">
-                                                  View
-                                               </a>
-                                               <!-- <a class="btn btn-secondary" (click)="downloadPdf(document.employeeExternalDocumentUrl,document.documentName)">
+                                                <div class="col-md-12">
+                                                        <div class="m-widget4">
+                                                                <div class="m-widget4__item">
+                                                                        <div class="m-widget4__ext documents--ext">
+                                                                                <button type="button" class="btn btn-success" name="test" (click)="documentsPdf.click()">{{document?.employeeExternalDocumentUrl ?
+                                                                                        'Change':'Upload'}}
+                                                                                </button>
+                                                                                <input type="file" accept="application/pdf" hidden="hidden" name="documentUpload{{i}}" #documentsPdf ngFileSelect [options]="options"
+                                                                                        (uploadOutput)="onUploadOutput($event,document.documentName,i)"
+                                                                                        [uploadInput]="uploadInput">
+                                                                        </div>
+                                                                        <div class="m-widget4__ext documents--ext" *ngIf="document.employeeExternalDocumentUrl">
+                                                                                <a class="btn btn-secondary" (click)="goToUrl(document.employeeExternalDocumentUrl)">
+                                                                                        View
+                                                                                </a>
+                                                                                <!-- <a class="btn btn-secondary" (click)="downloadPdf(document.employeeExternalDocumentUrl,document.documentName)">
                                                   View
                                                </a> -->
-                                            </div>
-                                            <div class="m-widget4__ext documents--ext" *ngIf="document._id && document.employeeExternalDocumentUrl">
-                                               <button type="button" class="btn btn-danger"  
-                                               name="documentDelete{{i}}" 
-                                               (click)="removeDocument(document.employeeExternalDocumentUrl,i)"><i class="fa fa-close"></i></button>
-                                            </div>
-                                         </div>
-                                      </div>
-                                   </div>
-                                <hr>
-                    </div>
-                 </div>
-              </div>
-           </div>
+                                                                        </div>
+                                                                        <div class="m-widget4__ext documents--ext" *ngIf="document._id && document.employeeExternalDocumentUrl">
+                                                                                <button type="button" class="btn btn-danger" name="documentDelete{{i}}" (click)="removeDocument(document.employeeExternalDocumentUrl,i)">
+                                                                                        <i class="fa fa-close"></i>
+                                                                                </button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <hr>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
         </div>
-     </div>
+</div>

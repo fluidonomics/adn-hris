@@ -1,89 +1,132 @@
 <div class="m-content">
-    <div class="m-portlet">
-        <div class="row m-row--no-padding m-row--col-separator-xl">
-            <div class="col-md-3">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Annual
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">10</span>
-                                    <span style="color: #a9a1a1 !important">/20</span>
-                                </span>
-                            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Advanced Search
+                                <small>
+                                </small>
+                            </h3>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Sick
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">10</span>
-                                    <span style="color: #a9a1a1 !important">/20</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Special
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">10</span>
-                                    <span style="color: #a9a1a1 !important">/20</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Maternity
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">120</span>
-                                    <span style="color: #a9a1a1 !important">/120</span>
-                                </span>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+
+                        <div class="m-section__content">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">From</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Select Date" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Date</div>
+
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">To</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Select Date" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Date</div>
+
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Leave Type</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Select Leave Type" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Leave Type</div>
+
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Transaction Type</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Select Leave Type" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Transaction Type</div>
+
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Search Employee</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Search Employee" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Leave Type</div>
+
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="m--space-25"></div>
+                                        <div class="m-form__actions">
+                                            <button class="btn btn-success submitForm " id="search" type="submit">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,11 +141,11 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                All Transactions
+                                Team Leaves
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
+                    <!-- <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                 m-dropdown-toggle="hover" aria-expanded="true">
@@ -192,7 +235,7 @@
                                 </div>
                             </li>
                         </ul>
-                        
+
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                 m-dropdown-toggle="hover" aria-expanded="true">
@@ -200,7 +243,7 @@
                                     href="#" ng-reflect-href="#">
                                     To
                                 </a>
-                               
+
                             </li>
                         </ul>
                         <ul class="m-portlet__nav">
@@ -210,7 +253,7 @@
                                     href="#" ng-reflect-href="#">
                                     From
                                 </a>
-                               
+
                             </li>
                         </ul>
                         <ul class="m-portlet__nav">
@@ -276,7 +319,7 @@
 
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="m-portlet__body">
                     <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
@@ -291,6 +334,17 @@
                                                     </label>
                                                 </span>
                                             </th> -->
+                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
+                                        <span style="width: 150px;">Employee Name
+                                            <i class="la la-arrow-up"></i>
+                                        </span>
+                                    </th>
+                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
+                                        <span style="width: 150px;">ID
+                                            <i class="la la-arrow-up"></i>
+                                        </span>
+                                    </th>
+
                                     <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
                                         <span style="width: 150px;">Leave Type
                                             <i class="la la-arrow-up"></i>
@@ -338,6 +392,12 @@
                                                 </span>
                                             </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
                                     <td data-field="ShipName" class="m-datatable__cell">
@@ -363,7 +423,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -376,8 +436,11 @@
                                                 <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason
                                                 </div>
                                             </div>
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -393,6 +456,12 @@
                                                     </span>
                                                 </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
                                     <td data-field="ShipName" class="m-datatable__cell">
@@ -418,7 +487,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -432,7 +501,11 @@
                                                 </div>
                                             </div>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -448,6 +521,12 @@
                                                         </span>
                                                     </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
                                     <td data-field="ShipName" class="m-datatable__cell">
@@ -473,7 +552,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -487,7 +566,11 @@
                                                 </div>
                                             </div>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -503,6 +586,12 @@
                                                             </span>
                                                         </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
                                     <td data-field="ShipName" class="m-datatable__cell">
@@ -528,7 +617,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -542,7 +631,11 @@
                                                 </div>
                                             </div>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -558,6 +651,12 @@
                                                                 </span>
                                                             </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
                                     <td data-field="ShipName" class="m-datatable__cell">
@@ -583,7 +682,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -597,7 +696,11 @@
                                                 </div>
                                             </div>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -613,60 +716,11 @@
                                                                     </span>
                                                                 </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                        <span style="width: 150px;">Annual Leave</span>
+                                        <span style="width: 150px;">Jonh Doe</span>
                                     </td>
-                                    <td data-field="ShipName" class="m-datatable__cell">
-                                        <span style="width: 80px;">10 Aug 18</span>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
                                     </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">15 Aug 18</span>
-                                    </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">3</span>
-                                    </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">5 aug 18</span>
-                                    </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">HR SPOC</span>
-                                    </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">13 Aug 18</span>
-                                    </td>
-                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                        <span style="width: 80px;">Supervisor Salman</span>
-                                    </td>
-                                    <td data-field="Status" class="m-datatable__cell">
-                                        <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
-                                        </span>
-                                    </td>
-
-                                    <td data-field="Actions" class="m-datatable__cell">
-                                        <span style="overflow: visible; position: relative; width: 110px;">
-                                            <div class="dropdown ">
-                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
-                                                    <i class="la la-ellipsis-h"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason
-                                                </div>
-                                            </div>
-
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
-                                                <i class="la la-remove"></i>
-                                            </a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                        <span style="width: 40px;">
-                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                <input type="checkbox" value="45">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </span>
-                                                                    </td> -->
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 150px;">Annual Leave</span>
                                     </td>
@@ -693,7 +747,7 @@
                                     </td>
                                     <td data-field="Status" class="m-datatable__cell">
                                         <span style="width: 80px;">
-                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
                                         </span>
                                     </td>
 
@@ -707,7 +761,76 @@
                                                 </div>
                                             </div>
 
-                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
+                                                <i class="la la-remove"></i>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
+                                                                        <span style="width: 40px;">
+                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                <input type="checkbox" value="45">
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </span>
+                                                                    </td> -->
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Jonh Doe</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">10102525</span>
+                                    </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 150px;">Annual Leave</span>
+                                    </td>
+                                    <td data-field="ShipName" class="m-datatable__cell">
+                                        <span style="width: 80px;">10 Aug 18</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">15 Aug 18</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">3</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">5 aug 18</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">HR SPOC</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">13 Aug 18</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell">
+                                        <span style="width: 80px;">Supervisor Salman</span>
+                                    </td>
+                                    <td data-field="Status" class="m-datatable__cell">
+                                        <span style="width: 80px;">
+                                            <span class="m-badge  m-badge--primary m-badge--wide">Pending</span>
+                                        </span>
+                                    </td>
+
+                                    <td data-field="Actions" class="m-datatable__cell">
+                                        <span style="overflow: visible; position: relative; width: 110px;">
+                                            <div class="dropdown ">
+                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason
+                                                </div>
+                                            </div>
+
+                                                                <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+
+                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject">
                                                 <i class="la la-remove"></i>
                                             </a>
                                         </span>
@@ -724,17 +847,17 @@
     </div>
 
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col-xl-12">
             <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Grant Transactions
+                                Team Grant Transactions
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
+                    <!-- <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                 m-dropdown-toggle="hover" aria-expanded="true">
@@ -790,7 +913,7 @@
                         </ul>
 
 
-                    </div>
+                    </div> -->
                 </div>
                 <div class="m-portlet__body">
                     <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
@@ -805,6 +928,16 @@
                                                     </label>
                                                 </span>
                                             </th> -->
+                                            <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
+                                                    <span style="width: 100px;">Employee Name
+                                                        <i class="la la-arrow-up"></i>
+                                                    </span>
+                                                </th>
+                                                <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
+                                                        <span style="width: 100px;">ID
+                                                            <i class="la la-arrow-up"></i>
+                                                        </span>
+                                                    </th>
                                     <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
                                         <span style="width: 100px;">Leave Type
                                             <i class="la la-arrow-up"></i>
@@ -834,9 +967,15 @@
                                                     </label>
                                                 </span>
                                             </td> -->
+                                            <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                                    <span style="width: 100px;">John Doe</span>
+                                                </td>
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                        <span style="width: 100px;">Special Leave</span>
+                                        <span style="width: 100px;">10102058</span>
                                     </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                            <span style="width: 100px;">Special Leave</span>
+                                        </td>
 
                                     <td data-field="ShipDate" class="m-datatable__cell">
                                         <span style="width: 80px;">30</span>
@@ -866,6 +1005,12 @@
                                                     </label>
                                                 </span>
                                             </td> -->
+                                            <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                                    <span style="width: 100px;">John Doe</span>
+                                                </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 100px;">10102058</span>
+                                    </td>
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 100px;">Maternity Leave</span>
                                     </td>
@@ -898,6 +1043,12 @@
                                                     </label>
                                                 </span>
                                             </td> -->
+                                            <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                                    <span style="width: 100px;">John Doe</span>
+                                                </td>
+                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
+                                        <span style="width: 100px;">10102058</span>
+                                    </td>
                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                         <span style="width: 100px;">Special Leave</span>
                                     </td>

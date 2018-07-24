@@ -21,11 +21,9 @@ export class KraService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    saveKraWorkFlow(data:any):Observable<Response> 
-    {
+    saveKraWorkFlow(data: any): Observable<Response> {
         let url = "kra/addKraWorkFlowInfo"
-        if(data._id)
-        {
+        if (data._id) {
             url = "kra/updateKraWorkFlowInfo"
         }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
@@ -33,16 +31,14 @@ export class KraService {
 
     saveKra(data: any): Observable<Response> {
         let url = "kra/addKraInfo"
-        if(data._id)
-        {
+        if (data._id) {
             url = "kra/updateKraInfo"
         }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    deleteKra(_id:number)
-    {
-        let url = "kra/deleteKraInfo?_id="+_id;
+    deleteKra(_id: number) {
+        let url = "kra/deleteKraInfo?_id=" + _id;
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
 

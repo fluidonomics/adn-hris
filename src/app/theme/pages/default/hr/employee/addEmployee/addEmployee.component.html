@@ -279,6 +279,20 @@
 										<ng-select class="m-input m-input--air" name="document" [items]="documentsData" [multiple]="true" bindLabel="documentName"  bindValue="_id" placeholder="Select user documents" [(ngModel)]="addemp.documents"  #document="ngModel"></ng-select>
 									</div>
 								</div>
+								<div class="col-md-6 adn-form__group">
+										<div class="m-form__group form-group">
+										   <label for="form_control_1">Employee ID</label>
+										   <span class="required" aria-required="true">* </span>
+										   <input class="form-control m-input m-input--air" name="employeeUserName" id="employeeUserName" [(ngModel)]="addemp.employeeUserName" (blur)="checkUserNameExists(employeeUserName)" #employeeUserName="ngModel"  placeholder="Enter Employee ID"   type="text" required onlyNumber="true" minlength="7" maxlength="7">
+										   <div class="form-control-feedback has-danger" *ngIf="!employeeUserName.valid">
+												 <span *ngIf="faddemp.submitted && employeeUserName.errors?.required">This field is required.</span>
+												 <span *ngIf="employeeUserName.errors?.userNameExists">Employee ID already exists.</span> 
+												 <span *ngIf="employeeUserName.errors?.maxlength">Employee ID must be 7 digit max..</span>
+												 <span *ngIf="employeeUserName.errors?.minlength">Employee ID must be 7 digit min..</span>
+										   </div>
+										</div>
+									 </div>
+							
 						 </div>
 					  </div>
 					  <div class="form-actions">
