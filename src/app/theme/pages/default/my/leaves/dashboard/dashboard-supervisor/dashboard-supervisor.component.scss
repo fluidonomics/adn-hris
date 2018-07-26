@@ -1,8 +1,24 @@
-app-my-leaves-dashboard {
+@import "../../../../../../../../assets/colors";
+
+app-my-leaves-dashboard-supervisor {
     width: 100%;
 
     & > .m-content {
         padding-bottom: 0px !important;
+    }
+
+    .leave-balance-card {
+        &.annual-leave {
+            background-color: $color-annual-leave;
+        }
+
+        &.sick-leave {
+            background-color: $color-sick-leave;
+        }
+
+        h3, div, span {
+            color: white !important;
+        }
     }
 
     .nav.nav-pills.nav-pills--brand .nav-link {

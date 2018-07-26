@@ -163,7 +163,7 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1">
+			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 || authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1">
 				<h4 class="m-menu__section-text">
 					Team
 				</h4>
@@ -206,8 +206,8 @@
 				</div>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
-			 data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
-				<a routerLink="/my/leaves/dashboard/team" class="m-menu__link m-menu__toggle">
+			 data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
+				<a routerLink="/my/leaves/dashboard/supervisor" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
 						Leaves
@@ -247,7 +247,7 @@
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 			 data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
-				<a routerLink="/my/leaves/dashboard/my" class="m-menu__link m-menu__toggle">
+				<a routerLink="/my/leaves/dashboard/employee" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
 						Leaves

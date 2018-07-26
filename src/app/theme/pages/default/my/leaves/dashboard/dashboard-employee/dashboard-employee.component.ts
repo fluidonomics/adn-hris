@@ -1,19 +1,19 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
-import { LeaveForwardComponent } from './leave-forward/leave-forward.component';
-import { AuthService } from "../../../../../../base/_services/authService.service";
-import { UtilityService } from '../../../../../../base/_services/utilityService.service';
-import { UserData } from '../../../../../../base/_interface/auth.model';
-import { LeaveService } from '../leave.service';
+import { AuthService } from "../../../../../../../base/_services/authService.service";
+import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
+import { UserData } from '../../../../../../../base/_interface/auth.model';
+import { LeaveService } from '../../leave.service';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from "../../../../../../../environments/environment";
-import { CommonService } from "../../../../../../base/_services/common.service";
+import { environment } from "../../../../../../../../environments/environment";
+import { CommonService } from "../../../../../../../base/_services/common.service";
+
 @Component({
-    selector: "app-my-leaves-dashboard",
-    templateUrl: "./dashboard.component.html",
-    encapsulation: ViewEncapsulation.None,
+    selector: "app-my-leaves-dashboard-employee",
+    templateUrl: "./dashboard-employee.component.html",
+    encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent implements OnInit {
+export class DashboardEmployeeComponent implements OnInit {
 
     leaveBalance: any = [];
     upcomingHolidays: any = [];
@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
                     this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-                    this.fiscalYearId =  this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                     this.loadDashboard();
 
                 }

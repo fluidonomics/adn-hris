@@ -14,9 +14,8 @@ import { BaseModule } from '../../../../../base/base.module';
 
 //--------- Component -------------
 import { LeaveComponent } from './leave.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LeaveForwardComponent } from './dashboard/leave-forward/leave-forward.component';
-import { DashboardDetailsComponent } from './dashboard/dashboard-details/dashboard-details.component';
+import { DashboardEmployeeComponent } from './dashboard/dashboard-employee/dashboard-employee.component';
+import { DashboardSupervisorComponent } from './dashboard/dashboard-supervisor/dashboard-supervisor.component';
 import { ApplyComponent } from './apply/apply.component';
 import { CancelComponent } from './cancel/cancel.component';
 import { TrackLeaveComponent } from './track-leave/track-leave.component';
@@ -51,9 +50,8 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         BaseModule
     ], declarations: [
         LeaveComponent,
-        DashboardComponent,
-        LeaveForwardComponent,
-        DashboardDetailsComponent,
+        DashboardEmployeeComponent,
+        DashboardSupervisorComponent,
         ApplyComponent,
         CancelComponent,
         TrackLeaveComponent,
