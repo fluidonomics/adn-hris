@@ -1,56 +1,65 @@
 <div class="m-content">
-    <div class="m-portlet">
-        <div class="row m-row--no-padding m-row--col-separator-xl">
-            <div class="col-md-3 leave-balance-card annual-leave">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Annual
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">10</span>
-                                    <span style="color: #a9a1a1 !important">/20</span>
-                                </span>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="m-portlet leave-balance-portlet">
+                <div class="row m-row--no-padding m-row--col-separator-xl">
+                    <div class="col-md-6">
+                        <div class="m-widget1">
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">
+                                            Annual
+                                        </h3>
+                                        <span class="m-widget1__desc">
+                                            Leave Balance
+                                        </span>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-accent">
+                                            <span class="big-h1">10</span>
+                                            <span style="color: #a9a1a1 !important">/20</span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3 leave-balance-card sick-leave">
-                <div class="m-widget1">
-                    <div class="m-widget1__item">
-                        <div class="row m-row--no-padding align-items-center">
-                            <div class="col">
-                                <h3 class="m-widget1__title">
-                                    Sick
-                                </h3>
-                                <span class="m-widget1__desc">
-                                    Leave Balance
-                                </span>
-                            </div>
-                            <div class="col m--align-right">
-                                <span class="m-widget1__number m--font-accent">
-                                    <span class="big-h1">10</span>
-                                    <span style="color: #a9a1a1 !important">/20</span>
-                                </span>
+                    <div class="col-md-6">
+                        <div class="m-widget1">
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">
+                                            Sick
+                                        </h3>
+                                        <span class="m-widget1__desc">
+                                            Leave Balance
+                                        </span>
+                                    </div>
+                                    <div class="col m--align-right">
+                                        <span class="m-widget1__number m--font-accent">
+                                            <span class="big-h1">10</span>
+                                            <span style="color: #a9a1a1 !important">/20</span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6 ">
+            <button class="btn btn-success pull-right" (click)="gotoApplyLeave()">
+                <i class="fa fa-plus"></i> Apply Leave</button>
+        </div>
     </div>
+
 
     <div class="row">
         <div class="col-xl-6">
-            <div class="m-portlet m-portlet--tab">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -60,6 +69,54 @@
                             <h3 class="m-portlet__head-text">
                                 Overview
                             </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Month
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#">
+                                        January
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        February
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        March
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        April
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        May
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        June
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        July
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        August
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        September
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        October
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        November
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        December
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -377,7 +434,7 @@
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="m-portlet m-portlet--full-height">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -388,119 +445,74 @@
                     </div>
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
-                                m-dropdown-toggle="hover" aria-expanded="true">
-                                <a class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand"
-                                    href="#" ng-reflect-href="#">
-                                    Month
-                                </a>
-                                <div class="m-dropdown__wrapper" style="z-index: 101;">
-                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 51px;"></span>
-                                    <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__body">
-                                            <div class="m-dropdown__content">
-                                                <ul class="m-nav">
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Jan
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Feb
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Mar
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Apr
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                May
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Jun
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                July
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Aug
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Sept
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Oct
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Nov
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                Dec
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                            <li class="m-portlet__nav-item">
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Month
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="#">
+                                                January
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                February
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                March
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                April
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                May
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                June
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                July
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                August
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                September
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                October
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                November
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                December
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Year
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="#">
+                                                2018
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                2019
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                2020
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
+                            </li>
+                            <li class="m-portlet__nav-item">
+                                <a class="m-portlet__nav-link btn btn-secondary  m-btn " href="#" ng-reflect-href="#">View All
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -565,7 +577,7 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -577,19 +589,78 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-
-                                <a class="m-portlet__nav-link btn btn-secondary  m-btn " href="#" ng-reflect-href="#">View All
-                                </a>
-
-                            </li>
-                        </ul>
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
-
                                 <a class="m-portlet__nav-link btn  btn-success  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle" href="/my/leaves/apply">
                                     <i class="la la-plus m--font-secondary"></i>
                                 </a>
-
+                            </li>
+                            <li class="m-portlet__nav-item">
+                                <a class="m-portlet__nav-link btn btn-secondary  m-btn " href="#" ng-reflect-href="#">View All
+                                </a>
+                            </li>
+                            <li class="m-portlet__nav-item">
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Month
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="#">
+                                                January
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                February
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                March
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                April
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                May
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                June
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                July
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                August
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                September
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                October
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                November
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                December
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Year
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="#">
+                                                2018
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                2019
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                2020
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -854,4 +925,3 @@
             </div>
         </div>
     </div>
-</div>

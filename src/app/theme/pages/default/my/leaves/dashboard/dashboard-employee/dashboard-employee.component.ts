@@ -4,7 +4,7 @@ import { AuthService } from "../../../../../../../base/_services/authService.ser
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { UserData } from '../../../../../../../base/_interface/auth.model';
 import { LeaveService } from '../../leave.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
 
@@ -34,7 +34,8 @@ export class DashboardEmployeeComponent implements OnInit {
         public authService: AuthService,
         private utilityService: UtilityService,
         private route: ActivatedRoute,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private router: Router
     ) {
         this.imageBase = environment.content_api_base.imgBase;
     }
@@ -49,6 +50,11 @@ export class DashboardEmployeeComponent implements OnInit {
             this.getFinancialYearDetails();
         });
     }
+
+    gotoApplyLeave() {
+        this.router.navigate(["./my/leaves/apply"]);
+    }
+
     getFinancialYearDetails() {
         this.commonService.getFinancialYear().subscribe(
             res => {

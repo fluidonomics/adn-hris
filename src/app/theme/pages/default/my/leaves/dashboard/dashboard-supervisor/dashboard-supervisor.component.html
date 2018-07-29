@@ -15,91 +15,9 @@
                 </div>
                 <div class="m-portlet__body">
                     <div class="m-section">
-
                         <div class="m-section__content">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="m-form__group form-group">
-                                            <label for="form_control_1">From</label>
-                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
-                                                name="grade" placeholder="Select Date" role="dropdown">
-                                                <div class="ng-control">
-                                                    <div class="ng-value-container">
-                                                        <div class="ng-placeholder">Select Date</div>
-
-                                                        <div class="ng-input">
-                                                            <input autocomplete="off" role="combobox" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <span class="ng-arrow-zone">
-                                                        <span class="ng-arrow"></span>
-                                                    </span>
-                                                </div>
-                                            </ng-select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="m-form__group form-group">
-                                            <label for="form_control_1">To</label>
-                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
-                                                name="grade" placeholder="Select Date" role="dropdown">
-                                                <div class="ng-control">
-                                                    <div class="ng-value-container">
-                                                        <div class="ng-placeholder">Select Date</div>
-
-                                                        <div class="ng-input">
-                                                            <input autocomplete="off" role="combobox" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <span class="ng-arrow-zone">
-                                                        <span class="ng-arrow"></span>
-                                                    </span>
-                                                </div>
-                                            </ng-select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="m-form__group form-group">
-                                            <label for="form_control_1">Leave Type</label>
-                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
-                                                name="grade" placeholder="Select Leave Type" role="dropdown">
-                                                <div class="ng-control">
-                                                    <div class="ng-value-container">
-                                                        <div class="ng-placeholder">Select Leave Type</div>
-
-                                                        <div class="ng-input">
-                                                            <input autocomplete="off" role="combobox" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <span class="ng-arrow-zone">
-                                                        <span class="ng-arrow"></span>
-                                                    </span>
-                                                </div>
-                                            </ng-select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="m-form__group form-group">
-                                            <label for="form_control_1">Transaction Type</label>
-                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
-                                                name="grade" placeholder="Select Leave Type" role="dropdown">
-                                                <div class="ng-control">
-                                                    <div class="ng-value-container">
-                                                        <div class="ng-placeholder">Select Transaction Type</div>
-
-                                                        <div class="ng-input">
-                                                            <input autocomplete="off" role="combobox" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <span class="ng-arrow-zone">
-                                                        <span class="ng-arrow"></span>
-                                                    </span>
-                                                </div>
-                                            </ng-select>
-                                        </div>
-                                    </div>
                                     <div class="col-md-3">
                                         <div class="m-form__group form-group">
                                             <label for="form_control_1">Search Employee</label>
@@ -108,7 +26,41 @@
                                                 <div class="ng-control">
                                                     <div class="ng-value-container">
                                                         <div class="ng-placeholder">Select Leave Type</div>
-
+                                                        <div class="ng-input">
+                                                            <input autocomplete="off" role="combobox" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <span class="ng-arrow-zone">
+                                                        <span class="ng-arrow"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">From</label>
+                                            <input type="text" class="form-control m-input m-input--air" name="fromDate" placeholder="Select From Date" bsDatepicker
+                                                [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="fromDate"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">To</label>
+                                            <input type="text" class="form-control m-input m-input--air" name="fromDate" placeholder="Select From Date" bsDatepicker
+                                                [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="fromDate"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Leave Type</label>
+                                            <ng-select bindlabel="gradeName" bindvalue="_id" class="m-input m-input--air ng-select ng-multiple searchable ng-untouched ng-pristine ng-valid"
+                                                name="grade" placeholder="Select Leave Type" role="dropdown">
+                                                <div class="ng-control">
+                                                    <div class="ng-value-container">
+                                                        <div class="ng-placeholder">Select Leave Type</div>
                                                         <div class="ng-input">
                                                             <input autocomplete="off" role="combobox" type="text">
                                                         </div>
@@ -136,7 +88,7 @@
     </div>
     <div class="row">
         <div class="col-xl-12">
-            <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -144,6 +96,15 @@
                                 Leave Approval
                             </h3>
                         </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <button bsDatepicker type="button" class="btn m-btn--pill pulldown btn-secondary">Apply Date
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -673,14 +634,41 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Team Grant Transactions
+                                Team Leaves
                             </h3>
                         </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                            <li class="nav-item dropdown m-tabs__item">
+                                <a aria-expanded="true" aria-haspopup="true" class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#"
+                                    role="button" ng-reflect-href="#">
+                                    Status
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-26px, 56px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item" data-toggle="tab" [ngClass]="{'active':tabName=='personal'}">
+                                        Approved
+                                    </a>
+                                    <a class="dropdown-item" data-toggle="tab" [ngClass]="{'active':tabName=='documents'}">
+                                        Pending Approval
+                                    </a>
+                                    <a class="dropdown-item" data-toggle="tab" [ngClass]="{'active':tabName=='education'}">
+                                        Pending
+                                    </a>
+                                    <a class="dropdown-item" data-toggle="tab" [ngClass]="{'active':tabName=='employment'}">
+                                        Cancelled
+                                    </a>
+                                    <a class="dropdown-item" data-toggle="tab" [ngClass]="{'active':tabName=='family'}">
+                                        Rejected
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -844,6 +832,17 @@
                             </tbody>
                         </table>
 
+                    </div>
+                </div>
+                <div class="m-portlet__foot">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span class="m--margin-left-10 pull-right">
+                                <a href="#" class="m-link m--font-bold">
+                                    View All
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

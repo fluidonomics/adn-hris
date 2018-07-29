@@ -5,6 +5,12 @@ app-my-leaves-dashboard-employee {
 
     & > .m-content {
         padding-bottom: 0px !important;
+        height: 100rem;
+    }
+
+    .m-portlet.m-portlet--warning.m-portlet--head-solid-bg {
+        background: unset;
+        background-color: unset;
     }
 
     .leave-balance-card {
@@ -18,6 +24,14 @@ app-my-leaves-dashboard-employee {
 
         h3, div, span {
             color: white !important;
+        }
+    }
+
+    .leave-balance-portlet {
+        .col-md-2 {
+            .m-widget1 {
+                padding: 1.2rem;
+            }
         }
     }
 
@@ -181,6 +195,12 @@ app-my-leaves-dashboard-employee {
     .nav {
         li {
             cursor: pointer;
+        }
+    }
+
+    .m_datatable {
+        tr:nth-child(even) {
+            background-color: #faf9fc;
         }
     }
 }

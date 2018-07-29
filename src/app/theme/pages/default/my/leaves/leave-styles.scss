@@ -9,7 +9,6 @@
 @import "calender/calendar.component";
 @import "apply/apply.component";
 
-
 // For Pagination
 .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager {
     margin-top: 20px;
@@ -179,4 +178,10 @@
 
 .pl1r {
     padding-left: 1rem;
+}
+
+.m_datatable {
+    tr:nth-child(even) {
+        background-color: #faf9fc;
+    }
 }
