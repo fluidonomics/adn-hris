@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';
 import { AuthService } from "../../../base/_services/authService.service"
-import { Socket } from 'ngx-socket-io';
 import { environment } from "../../../../environments/environment";
 
 declare let mLayout: any;
@@ -16,8 +15,7 @@ declare let $: any;
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
     imageBase: string;
-    constructor(public authService: AuthService,
-        private socket: Socket
+    constructor(public authService: AuthService
     ) {
         this.imageBase = environment.content_api_base.imgBase;
     }
@@ -57,11 +55,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
     // }
 
-    setReadStatus()
-    {
-        this.socket.emit("setReadStatus",{_id:this.authService.atCurrentUserData._id,currentDate:new Date()},);
+    setReadStatus() {
+        // this.socket.emit("setReadStatus",{_id:this.authService.atCurrentUserData._id,currentDate:new Date()},);
     }
-    
+
     // removeScript()
     // {
     //     $('script[src$="assets/vendors/base/vendors.bundle.js"]').remove();

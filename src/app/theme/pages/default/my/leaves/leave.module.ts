@@ -10,6 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LeaveRoutingModule } from './leave-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BaseModule } from '../../../../../base/base.module';
+import { AmChartsService, AmChartsModule } from '@amcharts/amcharts3-angular';
 
 
 //--------- Component -------------
@@ -27,6 +28,7 @@ import { TrackLeaveDetailsComponent } from './track-leave/track-leave-details/tr
 import { PostLeaveTransactionComponent } from './post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './employee-leaves/employee-leaves.component';
 import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
+import { MonthlyLeaveChartComponent } from './charts/monthly-leave-chart/monthly-leave-chart.component';
 
 //--------- Services -------------
 import { LeaveService } from './leave.service';
@@ -47,7 +49,8 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         NgSelectModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
-        BaseModule
+        BaseModule,
+        AmChartsModule
     ], declarations: [
         LeaveComponent,
         DashboardEmployeeComponent,
@@ -62,9 +65,10 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         TrackLeaveDetailsComponent,
         PostLeaveTransactionComponent,
         EmployeeLeavesComponent,
-        GrantLeaveComponent
+        GrantLeaveComponent,
+        MonthlyLeaveChartComponent
     ],
-    providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard]
+    providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard, AmChartsService]
 })
 export class LeaveModule {
 }
