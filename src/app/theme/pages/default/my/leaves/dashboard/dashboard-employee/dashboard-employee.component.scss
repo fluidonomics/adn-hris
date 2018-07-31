@@ -27,10 +27,29 @@ app-my-leaves-dashboard-employee {
         }
     }
 
+    .m-accordion .m-accordion__item--green {
+        border: 1px solid #198F4A !important;
+
+        .m-accordion__item-head, .m-accordion .m-accordion__item--green .m-accordion__item-head:hover {
+            background-color: #198F4A !important;
+        }
+
+        .m-accordion__item-head .m-accordion__item-mode {
+            color: #ffffff !important;
+        }
+
+        .m-accordion__item-title {
+            color: white;
+        }
+    }
+
     .leave-balance-portlet {
-        .col-md-2 {
-            .m-widget1 {
-                padding: 1.2rem;
+        .m-widget1 {
+            padding: .8rem 2rem;
+
+            .block {
+                width: 100%;
+                text-align: center;
             }
         }
     }
@@ -196,5 +215,11 @@ app-my-leaves-dashboard-employee {
         li {
             cursor: pointer;
         }
+    }
+}
+
+app-my-leaves-chart-monthly-leave {
+    #chartdiv {
+        height: 300px !important;
     }
 }
