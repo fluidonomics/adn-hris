@@ -76,12 +76,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 applyLeaveBtn">
             <button class="btn btn-success pull-right" (click)="gotoApplyLeave()">
                 <i class="fa fa-plus"></i> Apply Leave</button>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-xl-6">
@@ -141,63 +140,86 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <div class="m-widget6">
-                        <div class="m-widget6__head">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__caption">
-                                    Holiday
-                                </span>
-                                <span class="m-widget6__caption m--align-right">
-                                    Date
-                                </span>
-                            </div>
-                        </div>
-                        <div class="m-widget6__body">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__text">
-                                    Eid E Milad
-                                </span>
-                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">1-Jan-2018</span>
-                            </div>
-                        </div>
-                        <div class="m-widget6__body">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__text">
-                                    Eid E Milad
-                                </span>
-                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">1-Jan-2018</span>
-                            </div>
-                        </div>
-                        <div class="m-widget6__body">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__text">
-                                    Eid E Milad
-                                </span>
-                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">1-Jan-2018</span>
-                            </div>
-                        </div>
-                        <div class="m-widget6__body">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__text">
-                                    Eid E Milad
-                                </span>
-                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">1-Jan-2018</span>
-                            </div>
-                        </div>
-                        <div class="m-widget6__body">
-                            <div class="m-widget6__item">
-                                <span class="m-widget6__text">
-                                    Eid E Milad
-                                </span>
-                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">1-Jan-2018</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-widget6">
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-2">
-                                <button class="btn btn-success pull-right" (click)="gotoApplyLeave()">View All</button>
-                            </div>
+                    <div class="m-widget6 holidayGrid">
+                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
+                            <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
+                                <thead class="m-datatable__head">
+                                    <tr class="m-datatable__row" style="left: 0px;">
+                                        <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort">
+                                            <span>Holiday</span>
+                                        </th>
+                                        <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
+                                            <span class="pull-right">Date</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                        <td data-field="ShipName" class="m-datatable__cell">
+                                            <span>Eid E Milad</span>
+                                        </td>
+                                        <td data-field="ShipDate" class="m-datatable__cell">
+                                            <span class="pull-right">1-Jan-2018</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -207,75 +229,73 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <!--begin::Section-->
-            <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
-                <!--begin::Item-->
-                <div class="m-accordion__item m-accordion__item--green">
-                    <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
-                        aria-expanded="  false">
-                        <span class="m-accordion__item-title">
-                            Recent Transactions
-                        </span>
-                        <span class="m-accordion__item-mode"></span>
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Recent Transactions
+                            </h3>
+                        </div>
                     </div>
-                    <div class="m-accordion__item-body collapse" id="m_accordion_5_item_1_body">
-                        <div class="m-accordion__item-content">
-                            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
-                                <div class="m-portlet__head">
-                                    <div class="m-portlet__head-caption">
-                                        <div class="m-portlet__head-title">
-                                            <h3 class="m-portlet__head-text">
-
-                                            </h3>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <div class="btn-group" role="group">
+                                            <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
+                                                Select Month
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="m-portlet__head-tools">
-                                        <ul class="m-portlet__nav">
-                                            <li class="m-portlet__nav-item">
-                                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                        <div class="btn-group" role="group">
-                                                            <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                                                Select Month
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="btn-group" role="group">
-                                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            Select Status
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <a class="dropdown-item" href="#">
-                                                                Approved
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                Pending
-                                                            </a>
-                                                            <a class="dropdown-item" href="#">
-                                                                Rejected
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Select Status
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a class="dropdown-item" href="#">
+                                                Approved
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                Pending
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                Rejected
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="m-portlet__body">
-
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Section-->
+                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                        <!--begin::Item-->
+                        <div class="m-accordion__item m-accordion__item--green">
+                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
+                                aria-expanded="true">
+                                <span class="m-accordion__item-title">
+                                </span>
+                                <span class="m-accordion__item-mode"></span>
+                            </div>
+                            <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
+                                <div class="m-accordion__item-content">
                                     <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
                                         <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row" style="left: 0px;">
                                                     <!-- <th data-field="RecordID" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check">
-                                                                        <span style="width: 40px;">
-                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
-                                                                                <input type="checkbox">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </span>
-                                                                    </th> -->
+                                                                                        <span style="width: 40px;">
+                                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
+                                                                                                <input type="checkbox">
+                                                                                                <span></span>
+                                                                                            </label>
+                                                                                        </span>
+                                                                                    </th> -->
                                                     <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
                                                         <span style="width: 150px;">Leave Type
                                                             <i class="la la-arrow-up"></i>
@@ -302,13 +322,13 @@
                                             <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
                                                 <tr data-row="0" class="m-datatable__row" style="left: 0px;">
                                                     <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                        <span style="width: 40px;">
-                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                <input type="checkbox" value="45">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </span>
-                                                                    </td> -->
+                                                                                        <span style="width: 40px;">
+                                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                                <input type="checkbox" value="45">
+                                                                                                <span></span>
+                                                                                            </label>
+                                                                                        </span>
+                                                                                    </td> -->
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">Annual Leave</span>
                                                     </td>
@@ -345,13 +365,13 @@
                                                 </tr>
                                                 <tr data-row="1" class="m-datatable__row" style="left: 0px;">
                                                     <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                            <span style="width: 40px;">
-                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                    <input type="checkbox" value="45">
-                                                                                    <span></span>
-                                                                                </label>
-                                                                            </span>
-                                                                        </td> -->
+                                                                                            <span style="width: 40px;">
+                                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                                    <input type="checkbox" value="45">
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </td> -->
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">Sick Leave</span>
                                                     </td>
@@ -386,13 +406,13 @@
                                                 </tr>
                                                 <tr data-row="2" class="m-datatable__row" style="left: 0px;">
                                                     <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                <span style="width: 40px;">
-                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                        <input type="checkbox" value="45">
-                                                                                        <span></span>
-                                                                                    </label>
-                                                                                </span>
-                                                                            </td> -->
+                                                                                                <span style="width: 40px;">
+                                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                                        <input type="checkbox" value="45">
+                                                                                                        <span></span>
+                                                                                                    </label>
+                                                                                                </span>
+                                                                                            </td> -->
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">Annual Leave</span>
                                                     </td>
@@ -427,13 +447,13 @@
                                                 </tr>
                                                 <tr data-row="3" class="m-datatable__row" style="left: 0px;">
                                                     <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                            <span style="width: 40px;">
-                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                    <input type="checkbox" value="45">
-                                                                                    <span></span>
-                                                                                </label>
-                                                                            </span>
-                                                                        </td> -->
+                                                                                            <span style="width: 40px;">
+                                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                                    <input type="checkbox" value="45">
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </span>
+                                                                                        </td> -->
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">Annual Leave</span>
                                                     </td>
@@ -470,13 +490,13 @@
                                                 </tr>
                                                 <tr data-row="4" class="m-datatable__row" style="left: 0px;">
                                                     <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                <span style="width: 40px;">
-                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                        <input type="checkbox" value="45">
-                                                                                        <span></span>
-                                                                                    </label>
-                                                                                </span>
-                                                                            </td> -->
+                                                                                                <span style="width: 40px;">
+                                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                                                                                        <input type="checkbox" value="45">
+                                                                                                        <span></span>
+                                                                                                    </label>
+                                                                                                </span>
+                                                                                            </td> -->
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">Sick Leave</span>
                                                     </td>
@@ -503,30 +523,23 @@
                                                                     <i class="la la-ellipsis-h"></i>
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason</div>
-
-
                                                             </div>
-
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Cancel">
                                                                 <i class="la la-remove"></i>
                                                             </a>
                                                         </span>
                                                     </td>
                                                 </tr>
-
-
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!--end::Item-->
                     </div>
+                    <!--end::Section-->
                 </div>
-                <!--end::Item-->
             </div>
-            <!--end::Section-->
-
         </div>
     </div>
