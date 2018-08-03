@@ -183,4 +183,31 @@ app-my-leaves-dashboard-supervisor {
             cursor: pointer;
         }
     }
+
+    .teamOnLeaveGrid {
+        .m_datatable {
+            th, td {
+                width: 33.33%;
+            }
+        }
+    }
+
+    .recentTransactionPortlet, .teamLeavesPortlet {
+        .m-portlet__head-tools {
+            ul.nav {
+                li {
+                    padding: 0.1rem;
+
+                    .btn {
+                        height: 36px;
+                        color: #aaa;
+                    }
+                }
+
+                .ng-dropdown-panel {
+                    left: 0px;
+                }
+            }
+        }
+    }
 }
