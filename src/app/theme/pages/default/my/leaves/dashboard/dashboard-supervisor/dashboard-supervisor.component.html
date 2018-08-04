@@ -18,9 +18,9 @@
                             <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
-                                        <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                            Select Month
-                                        </button>
+                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="overviewChartDataFilterDate"
+                                            [(ngModel)]="overviewChartDataFilter.date" (ngModelChange)="getOverviewChartData()"
+                                            placeholder="Select Month" readonly>
                                     </div>
                                 </div>
                             </li>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height teamOnLeavePortlet">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -47,9 +47,9 @@
                             <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
-                                        <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                            Select Month
-                                        </button>
+                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="teamLeavesFilterDate"
+                                            [(ngModel)]="teamLeavesFilter.date" (ngModelChange)="getTeamLeaves()" placeholder="Select Month"
+                                            readonly>
                                     </div>
                                 </div>
                             </li>
@@ -61,7 +61,7 @@
                         <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
                             <table class="m-datatable__table">
                                 <thead class="m-datatable__head">
-                                    <tr class="m-datatable__row" style="left: 0px;">
+                                    <tr class="m-datatable__row">
                                         <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort">
                                             <span>Name</span>
                                         </th>
@@ -73,16 +73,17 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="m-datatable__body ps ps--active-x ps--active-y">
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                <tbody class="m-datatable__body ps ps--active-x ps--active-y" *ngFor="let leave of teamLeaves">
+                                    <tr data-row="0" class="m-datatable__row">
                                         <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Ateef (1020654)</span>
+                                            <span>{{leave.employeeDetails.fullName}}</span>
                                         </td>
                                         <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span>1-08-2018 to 3-08-2018</span>
+                                            <span>{{leave.leavedetails.fromDate | date:'dd MMM yyy'}} to {{leave.leavedetails.toDate
+                                                | date:'dd MMM yyy'}}</span>
                                         </td>
                                         <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span>3</span>
+                                            <span>{{leave.leavedetails.days}}</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -100,7 +101,7 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Recent Transactions
+                                Leave Approval
                             </h3>
                         </div>
                     </div>
@@ -123,9 +124,9 @@
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <div class="btn-group" role="group">
-                                    <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                        Select Month
-                                    </button>
+                                    <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="leaveApprovalFilterDate"
+                                        [(ngModel)]="leaveApprovalFilter.date" (ngModelChange)="getTeamLeavesForApproval()" placeholder="Select Month"
+                                        readonly>
                                 </div>
                             </li>
                             <li class="nav-item m-tabs__item">

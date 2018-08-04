@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
 
+
 @Component({
     selector: "app-my-leaves-dashboard-employee",
     templateUrl: "./dashboard-employee.component.html",
@@ -29,6 +30,21 @@ export class DashboardEmployeeComponent implements OnInit {
     financialYearList: any = [];
     currentFinancialYear: string;
     fiscalYearId: string;
+
+    holidayFilter: any;
+    transactionFilter: any = {
+        date: new Date(),
+        status: 'All'
+    };
+    overviewChartFilter: any = new Date();
+
+    leaveStatus = [
+        "All",
+        "Applied",
+        "Pending Approval",
+        "Cancelled"
+    ]
+
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
@@ -49,6 +65,7 @@ export class DashboardEmployeeComponent implements OnInit {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
         });
+        this.holidayFilter = new Date();
     }
 
     gotoApplyLeave() {
@@ -56,40 +73,61 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getFinancialYearDetails() {
-        this.commonService.getFinancialYear().subscribe(
-            res => {
-                if (res.ok) {
-                    this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-                    this.loadDashboard();
-
-                }
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        this.fiscalYearId = "1";
+        this.loadDashboard();
+        // this.commonService.getFinancialYear().subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             this.financialYearList = res.json() || [];
+        //             this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
+        //             this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+        //             this.loadDashboard();
+        //         }
+        //     },
+        //     error => {
+        //         console.log(error);
+        //     }
+        // );
     }
+
     loadDashboard() {
-        if (this.currentUser.roles.indexOf('HR') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('HR');
-            this.isHr = true;
-        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('Supervisor');
-            this.isSuperVisor = true;
-        } else {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
+        this.getLeaveBalance();
+        this.getHolidays();
+    }
+
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+            }
+        })
+    }
+
+    getHolidays() {
+        if (this.holidayFilter) {
+            let date = new Date(this.holidayFilter);
+            this.leaveService.getLeaveHolidays(date.getMonth() + 1, date.getFullYear()).subscribe(res => {
+                if (res.ok) {
+                    this.upcomingHolidays = res.json() || [];
+                }
+            })
         }
     }
+
+    getTransactions() {
+        if (this.transactionFilter.date && this.transactionFilter.status) {
+            this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.getMonth() + 1).subscribe(res => {
+                if (res.ok) {
+                    this.recentTransactions = res.json() || [];
+                }
+            })
+        }
+    }
+
+    getOverviewChartData() {
+
+    }
+
 
     getLeaveDetails(role) {
         this.leaveList = [];
@@ -124,49 +162,9 @@ export class DashboardEmployeeComponent implements OnInit {
             });
     }
 
-    getHolidays() {
-        this.leaveService.getLeaveHolidays(2018).subscribe(res => {
-            if (res.ok) {
-                this.upcomingHolidays = res.json() || [];
-                let todaysDate = new Date();
-                let nextmonth = new Date(todaysDate.getFullYear(), todaysDate.getMonth() + 2, 0);
-                this.upcomingHolidays = this.upcomingHolidays.filter(hol => (new Date(hol.date) > new Date() && new Date(hol.date) < nextmonth));
-            }
-        })
-    }
 
-    getTransactions() {
-        this.leaveService.getEmployeeLeaveDetails(this.currentUser._id, this.fiscalYearId).subscribe(res => {
-            if (res.ok) {
-                let body = res.json();
-                this.recentTransactions = body.data || [];
-            }
-        })
-    }
 
-    getLeaveBalance() {
-        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
-            if (res.ok) {
-                this.leaveBalance = res.json() || [];
-                this.leaveBalance.forEach(bal => {
-                    switch (bal.leaveType) {
-                        case 1:
-                            bal.type = "Annual Leave";
-                            break;
-                        case 2:
-                            bal.type = "Sick Leave";
-                            break;
-                        case 3:
-                            bal.type = "Maternity Leave";
-                            break;
-                        case 4:
-                            bal.type = "Special Leave";
-                            break;
-                    }
-                });
-            }
-        })
-    }
+
 
     refresh() {
         this.isSpin = true;

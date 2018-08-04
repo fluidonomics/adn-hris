@@ -3,71 +3,20 @@
         <div class="col-md-10">
             <div class="m-portlet leave-balance-portlet">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngFor="let bal of leaveBalance">
                         <div class="m-widget1">
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="block">
                                         <h3 class="m-widget1__title">
-                                            Annual Leave
+                                            {{bal.leaveType}}
                                         </h3>
                                     </div>
                                     <div class="block">
                                         <span class="m-widget1__number m--font-accent">
-                                            <span class="big-h1">10</span>
-                                            <span style="color: #a9a1a1 !important">/20</span>
+                                            <span class="big-h1">{{bal.appliedLeave}}</span>
+                                            <span style="color: #a9a1a1 !important">/ {{bal.allotedLeave}}</span>
                                         </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="m-widget1">
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <div class="block">
-                                        <h3 class="m-widget1__title">
-                                            Sick Leave
-                                        </h3>
-                                    </div>
-                                    <div class="block">
-                                        <span class="m-widget1__number m--font-accent">
-                                            <span class="big-h1">10</span>
-                                            <span style="color: #a9a1a1 !important">/20</span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="m-widget1">
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <div class="block">
-                                        <h3 class="m-widget1__title">
-                                            Special Leave
-                                        </h3>
-                                    </div>
-                                    <div class="block">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="m-widget1">
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <div class="block">
-                                        <h3 class="m-widget1__title">
-                                            Maternity Leave
-                                        </h3>
-                                    </div>
-                                    <div class="block">
-
                                     </div>
                                 </div>
                             </div>
@@ -101,9 +50,9 @@
                             <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
-                                        <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                            Select Month
-                                        </button>
+                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
+                                            [(ngModel)]="overviewChartFilter" (ngModelChange)="getOverviewChartData()" placeholder="Select Month"
+                                            readonly>
                                     </div>
                                 </div>
                             </li>
@@ -130,9 +79,9 @@
                             <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
-                                        <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                            Select Month
-                                        </button>
+                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
+                                            [(ngModel)]="holidayFilter" (ngModelChange)="getHolidays()" placeholder="Select Month"
+                                            readonly>
                                     </div>
                                 </div>
                             </li>
@@ -154,68 +103,12 @@
                                     </tr>
                                 </thead>
                                 <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let holiday of upcomingHolidays">
                                         <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
+                                            <span>{{holiday.occasion}}</span>
                                         </td>
                                         <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
-                                        </td>
-                                    </tr>
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                        <td data-field="ShipName" class="m-datatable__cell">
-                                            <span>Eid E Milad</span>
-                                        </td>
-                                        <td data-field="ShipDate" class="m-datatable__cell">
-                                            <span class="pull-right">1-Jan-2018</span>
+                                            <span class="pull-right">{{holiday.date | date:'dd-MMM-yyy'}}</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -244,25 +137,19 @@
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                         <div class="btn-group" role="group">
-                                            <button bsDatepicker [bsConfig]="{ dateInputFormat: 'MM-YYYY' }" id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle">
-                                                Select Month
-                                            </button>
+                                            <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
+                                                [(ngModel)]="transactionFilter.date" (ngModelChange)="getTransactions()" placeholder="Select Month"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            Select Status
+                                            {{transactionFilter.status}}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="#">
-                                                Approved
-                                            </a>
-                                            <a class="dropdown-item" href="#">
-                                                Pending
-                                            </a>
-                                            <a class="dropdown-item" href="#">
-                                                Rejected
+                                            <a class="dropdown-item" href="#" *ngFor="let status of leaveStatus" (click)="transactionFilter.status = status">
+                                                {{status}}
                                             </a>
                                         </div>
                                     </div>
@@ -285,17 +172,10 @@
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
                                     <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
-                                        <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
+                                        <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <th data-field="RecordID" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check">
-                                                                                        <span style="width: 40px;">
-                                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--all m-checkbox--solid m-checkbox--brand">
-                                                                                                <input type="checkbox">
-                                                                                                <span></span>
-                                                                                            </label>
-                                                                                        </span>
-                                                                                    </th> -->
+
                                                     <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
                                                         <span style="width: 150px;">Leave Type
                                                             <i class="la la-arrow-up"></i>
@@ -319,41 +199,32 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
-                                                <tr data-row="0" class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                        <span style="width: 40px;">
-                                                                                            <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                                <input type="checkbox" value="45">
-                                                                                                <span></span>
-                                                                                            </label>
-                                                                                        </span>
-                                                                                    </td> -->
+                                            <tbody class="m-datatable__body">
+                                                <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let tran of recentTransactions">
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">Annual Leave</span>
+                                                        <span style="width: 150px;">{{tran.LeaveType}}</span>
                                                     </td>
                                                     <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
+                                                        <span style="width: 80px;">{{tran.fromDate | date:'dd MMMM yyy'}}</span>
                                                     </td>
                                                     <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
+                                                        <span style="width: 80px;">{{tran.toDate | date:'dd MMMM yyy'}}</span>
                                                     </td>
                                                     <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">3</span>
+                                                        <span style="width: 80px;">{{tran.days}}</span>
                                                     </td>
                                                     <td data-field="Status" class="m-datatable__cell">
                                                         <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--warning m-badge--wide">Pending</span>
+                                                            <span class="m-badge  m-badge--warning m-badge--wide">{{tran.status}}</span>
                                                         </span>
                                                     </td>
-
                                                     <td data-field="Actions" class="m-datatable__cell">
                                                         <span style="overflow: visible; position: relative; width: 110px;">
                                                             <div class="dropdown ">
                                                                 <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
                                                                     <i class="la la-ellipsis-h"></i>
                                                                 </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason
+                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">{{tran.reason}}
                                                                 </div>
                                                             </div>
 
@@ -363,173 +234,7 @@
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                <tr data-row="1" class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                            <span style="width: 40px;">
-                                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                                    <input type="checkbox" value="45">
-                                                                                                    <span></span>
-                                                                                                </label>
-                                                                                            </span>
-                                                                                        </td> -->
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">Sick Leave</span>
-                                                    </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">3</span>
-                                                    </td>
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--success m-badge--wide">Approved</span>
-                                                        </span>
-                                                    </td>
-
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
-                                                            <div class="dropdown ">
-                                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
-                                                                    <i class="la la-ellipsis-h"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason</div>
-                                                            </div>
-                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Cancel">
-                                                                <i class="la la-remove"></i>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr data-row="2" class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                                <span style="width: 40px;">
-                                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                                        <input type="checkbox" value="45">
-                                                                                                        <span></span>
-                                                                                                    </label>
-                                                                                                </span>
-                                                                                            </td> -->
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">Annual Leave</span>
-                                                    </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">3</span>
-                                                    </td>
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--danger m-badge--wide">Rejected</span>
-                                                        </span>
-                                                    </td>
-
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
-                                                            <div class="dropdown ">
-                                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
-                                                                    <i class="la la-ellipsis-h"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason</div>
-
-                                                            </div>
-
-                                                        </span>
-                                                    </td>
-
-                                                </tr>
-                                                <tr data-row="3" class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                            <span style="width: 40px;">
-                                                                                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                                    <input type="checkbox" value="45">
-                                                                                                    <span></span>
-                                                                                                </label>
-                                                                                            </span>
-                                                                                        </td> -->
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">Annual Leave</span>
-                                                    </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">3</span>
-                                                    </td>
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--warning m-badge--wide">Pending</span>
-                                                        </span>
-                                                    </td>
-
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
-                                                            <div class="dropdown ">
-                                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
-                                                                    <i class="la la-ellipsis-h"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason</div>
-
-                                                            </div>
-
-                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw">
-                                                                <i class="la la-remove"></i>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr data-row="4" class="m-datatable__row" style="left: 0px;">
-                                                    <!-- <td class="m-datatable__cell--center m-datatable__cell m-datatable__cell--check" data-field="RecordID">
-                                                                                                <span style="width: 40px;">
-                                                                                                    <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                                                                                                        <input type="checkbox" value="45">
-                                                                                                        <span></span>
-                                                                                                    </label>
-                                                                                                </span>
-                                                                                            </td> -->
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">Sick Leave</span>
-                                                    </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">10 Aug 18</span>
-                                                    </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">3</span>
-                                                    </td>
-
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--brand m-badge--wide">Availed</span>
-                                                        </span>
-                                                    </td>
-
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
-                                                            <div class="dropdown ">
-                                                                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
-                                                                    <i class="la la-ellipsis-h"></i>
-                                                                </a>
-                                                                <div class="dropdown-menu dropdown-menu-right" style="padding-left: 10px">This is the Reason This is the Reason</div>
-                                                            </div>
-                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Cancel">
-                                                                <i class="la la-remove"></i>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
+                                                <!-- <span *ngIf="recentTransactions?.length==0" class="m-datatable--error">No records found</span> -->
                                             </tbody>
                                         </table>
                                     </div>

@@ -18,6 +18,9 @@ export class DashboardSupervisorComponent implements OnInit {
     leaveBalance: any = [];
     upcomingHolidays: any = [];
     recentTransactions: any = [];
+    teamLeaves: any = [];
+    financialYearList: any = [];
+
     employeeList: any;
     currentUser: UserData;
     imageBase: string;
@@ -26,9 +29,27 @@ export class DashboardSupervisorComponent implements OnInit {
     isSuperVisor: boolean = false;
     isHr: boolean = false;
     isSpin: boolean = false;
-    financialYearList: any = [];
     currentFinancialYear: string;
     fiscalYearId: string;
+
+    overviewChartDataFilter: any = {
+        date: new Date()
+    };
+
+    teamLeavesFilter: any = {
+        date: new Date()
+    };
+
+    leaveApprovalFilter: any = {
+        date: new Date()
+    };
+
+    leaveTransactionsFilter: any = {
+        date: new Date()
+    };
+
+    leavesForApproval: any = [];
+
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
@@ -50,6 +71,8 @@ export class DashboardSupervisorComponent implements OnInit {
         });
     }
     getFinancialYearDetails() {
+        this.currentFinancialYear = "1";
+        this.loadDashboard();
         this.commonService.getFinancialYear().subscribe(
             res => {
                 if (res.ok) {
@@ -66,24 +89,35 @@ export class DashboardSupervisorComponent implements OnInit {
         );
     }
     loadDashboard() {
-        if (this.currentUser.roles.indexOf('HR') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('HR');
-            this.isHr = true;
-        } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-            this.getLeaveDetails('Supervisor');
-            this.isSuperVisor = true;
-        } else {
-            this.getHolidays();
-            this.getTransactions();
-            this.getLeaveBalance();
-        }
+        this.getOverviewChartData();
+        this.getTeamLeaves();
+        this.getTeamLeavesForApproval();
     }
+
+    getOverviewChartData() {
+
+    }
+
+
+    getTeamLeaves() {
+        this.leaveService.getTeamLeaves(this.currentUser._id, this.teamLeavesFilter.date.getMonth() + 1).subscribe(res => {
+            if (res.ok) {
+                let body = res.json();
+                this.teamLeaves = body.data || [];
+            }
+        })
+    }
+
+    getTeamLeavesForApproval() {
+        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear()).subscribe(res => {
+            if (res.ok) {
+                this.leavesForApproval = res.json().data || [];
+            }
+        })
+    }
+
+
+
 
     getLeaveDetails(role) {
         this.leaveList = [];
@@ -119,14 +153,14 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getHolidays() {
-        this.leaveService.getLeaveHolidays(2018).subscribe(res => {
-            if (res.ok) {
-                this.upcomingHolidays = res.json() || [];
-                let todaysDate = new Date();
-                let nextmonth = new Date(todaysDate.getFullYear(), todaysDate.getMonth() + 2, 0);
-                this.upcomingHolidays = this.upcomingHolidays.filter(hol => (new Date(hol.date) > new Date() && new Date(hol.date) < nextmonth));
-            }
-        })
+        // this.leaveService.getLeaveHolidays(2018).subscribe(res => {
+        //     if (res.ok) {
+        //         this.upcomingHolidays = res.json() || [];
+        //         let todaysDate = new Date();
+        //         let nextmonth = new Date(todaysDate.getFullYear(), todaysDate.getMonth() + 2, 0);
+        //         this.upcomingHolidays = this.upcomingHolidays.filter(hol => (new Date(hol.date) > new Date() && new Date(hol.date) < nextmonth));
+        //     }
+        // })
     }
 
     getTransactions() {

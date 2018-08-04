@@ -211,3 +211,11 @@
         color: white;
     }
 }
+
+.m-portlet__head-tools {
+    .form-control[readonly] {
+        background-color: #ffffff !important;
+        width: 8rem;
+        cursor: pointer;
+    }
+}

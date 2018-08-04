@@ -184,10 +184,16 @@ app-my-leaves-dashboard-supervisor {
         }
     }
 
-    .teamOnLeaveGrid {
-        .m_datatable {
-            th, td {
-                width: 33.33%;
+    .teamOnLeavePortlet {
+        .m-portlet__body {
+            padding: 0;
+        }
+
+        .teamOnLeaveGrid {
+            .m_datatable {
+                th, td {
+                    width: 33.33%;
+                }
             }
         }
     }

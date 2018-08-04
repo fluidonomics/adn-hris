@@ -17,6 +17,43 @@ export class LeaveService {
     ) {
     }
 
+
+    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveHolidays(month: any, year: any) {
+        let url = "leave/getLeaveHolidays?year=" + year + "&month=" + month + "&upcoming=false";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveTransactionDetails(empId: number, month: number, year?: number) {
+        // +"year=" + year +
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getTeamLeaves(supervisorId: number, month: number, year?: number) {
+        // +"year=" + year +
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&month=" + month;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveDetailsByFilter(supervisorId: number, month: number, year: number, empId?: number, leaveType?: number) {
+        let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&month=" + month + "&year=" + year;
+        if (empId) {
+            url += "&empId=" + empId;
+        }
+        if (leaveType) {
+            url += "&leave_type=" + leaveType;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
+
+
     getCancelEmployeeLeaveDetails(_empId: number) {
         let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
@@ -43,7 +80,7 @@ export class LeaveService {
     }
 
     getEmployeeLeaveDetails(_empId: number, fiscalYearId: any): Observable<Response> {
-        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId="+fiscalYearId;
+        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -71,24 +108,17 @@ export class LeaveService {
         let url = "leave/grantLeaveByEmployee";
         return this.authService.post(url, grantLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    grantMaternityLeave(grantMaternityLeave: any){
-        let url ="leave/grantMaternityLeave";
+    grantMaternityLeave(grantMaternityLeave: any) {
+        let url = "leave/grantMaternityLeave";
         return this.authService.post(url, grantMaternityLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     getHRLeaveDetails() {
         let url = "leave/getHRLeaveDetails";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveHolidays(year: any) {
-        let url = "leave/getLeaveHolidays";
-        return this.authService.get(url + '?date=' + year).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
 
     saveLeaveHoliday(leaveHoliday: any) {
         let url = "leave/addLeaveHoliday";
@@ -157,7 +187,7 @@ export class LeaveService {
         let url = "leave/getEmployeeProbationDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    getMaternityLeaveDetails(empId: number){
+    getMaternityLeaveDetails(empId: number) {
         let url = "leave/getEmpMaternityLeaveDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
