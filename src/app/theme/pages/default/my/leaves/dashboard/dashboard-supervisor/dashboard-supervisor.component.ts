@@ -32,6 +32,7 @@ export class DashboardSupervisorComponent implements OnInit {
     currentFinancialYear: string;
     fiscalYearId: string;
 
+    overviewChartData: any = [];
     overviewChartDataFilter: any = {
         date: new Date()
     };
@@ -41,14 +42,21 @@ export class DashboardSupervisorComponent implements OnInit {
     };
 
     leaveApprovalFilter: any = {
-        date: new Date()
+        date: new Date(),
+        employeeId: null,
+        leaveTypeId: null
     };
 
     leaveTransactionsFilter: any = {
-        date: new Date()
+        date: new Date(),
+        employeeId: null,
+        leaveTypeId: null,
+        status: null
     };
 
     leavesForApproval: any = [];
+    leavesTransactions: any = [];
+    supervisorTeamEmployeeList: any = [];
 
     constructor(
         private leaveService: LeaveService,
@@ -89,13 +97,61 @@ export class DashboardSupervisorComponent implements OnInit {
         );
     }
     loadDashboard() {
+        this.loadFilterData();
         this.getOverviewChartData();
         this.getTeamLeaves();
         this.getTeamLeavesForApproval();
+        this.getTeamLeavesTransactions();
+    }
+
+    loadFilterData() {
+        this.getEmployeeList();
+        this.getLeaveTypes();
+        this.getStatusList();
+    }
+
+
+
+    getEmployeeList() {
+        this.leaveService.getSupervisorTeamMember(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                this.supervisorTeamEmployeeList = res.json().data || [];
+            }
+        })
+    }
+
+    statusList: any = [];
+    getStatusList() {
+        this.statusList = [
+            { type: "Applied" },
+            { type: "Pending Approval" },
+            { type: "Cancelled" }
+        ];
+    }
+
+    leaveTypeList: any = []
+    getLeaveTypes() {
+        this.leaveService.getLeaveTypes().subscribe(res => {
+            if (res.ok) {
+                this.leaveTypeList = res.json() || [];
+            }
+        })
     }
 
     getOverviewChartData() {
-
+        this.leaveService.getTeamLeavesByMonth(this.currentUser._id, this.overviewChartDataFilter.date.getMonth() + 1, this.overviewChartDataFilter.date.getFullYear()).subscribe(res => {
+            if (res.ok) {
+                var data = res.json().data || [];
+                let chartData = [];
+                data.forEach((leave, i) => {
+                    chartData.push({
+                        "leaveType": leave.leaveTypeName,
+                        "leaveCount": leave.totalAppliedLeaves
+                    })
+                });
+                this.overviewChartData = chartData;
+            }
+        })
     }
 
 
@@ -109,15 +165,22 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getTeamLeavesForApproval() {
-        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear()).subscribe(res => {
-            if (res.ok) {
-                this.leavesForApproval = res.json().data || [];
-            }
-        })
+        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId).subscribe(res => {
+                if (res.ok) {
+                    this.leavesForApproval = res.json().data || [];
+                }
+            })
     }
 
-
-
+    getTeamLeavesTransactions() {
+        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date.getMonth() + 1, this.leaveTransactionsFilter.date.getFullYear(),
+            this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId).subscribe(res => {
+                if (res.ok) {
+                    this.leavesTransactions = res.json().data || [];
+                }
+            })
+    }
 
     getLeaveDetails(role) {
         this.leaveList = [];

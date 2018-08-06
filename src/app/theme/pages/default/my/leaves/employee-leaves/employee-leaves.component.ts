@@ -40,7 +40,7 @@ export class EmployeeLeavesComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.leaveService.getLeaveType().subscribe(
+        this.leaveService.getLeaveTypes().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesDetails = res.json();

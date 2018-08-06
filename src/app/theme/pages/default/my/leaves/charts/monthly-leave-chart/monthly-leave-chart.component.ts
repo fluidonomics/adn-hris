@@ -1,5 +1,5 @@
 import { AmChart, AmChartsService } from "@amcharts/amcharts3-angular";
-import { ViewEncapsulation, Component } from "@angular/core";
+import { ViewEncapsulation, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { ScriptLoaderService } from "../../../../../../../_services/script-loader.service";
 
 @Component({
@@ -8,7 +8,10 @@ import { ScriptLoaderService } from "../../../../../../../_services/script-loade
     template: `<div id="chartdiv"></div>`,
     encapsulation: ViewEncapsulation.None
 })
-export class MonthlyLeaveChartComponent {
+export class MonthlyLeaveChartComponent implements OnChanges {
+
+    @Input() chartData: any = [];
+
     private chart: AmChart;
 
     constructor(
@@ -27,27 +30,25 @@ export class MonthlyLeaveChartComponent {
         this.createChart();
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.chartData.currentValue.length > 0) {
+            changes.chartData.currentValue.forEach((leave, i) => {
+                leave.color = this.colors[i];
+            });
+            this.createChart();
+        }
+    }
+
+    colors = [
+        "#FF0F00", "#FF6600", "#FF9E01"
+    ]
 
     createChart() {
-        let data = [{
-            "leaveType": "Annual",
-            "leaveCount": 6,
-            "color": "#FF0F00"
-        }, {
-            "leaveType": "Sick",
-            "leaveCount": 3,
-            "color": "#FF6600"
-        }, {
-            "leaveType": "Special",
-            "leaveCount": 2,
-            "color": "#FF9E01"
-        }];
-
         this.chart = this.AmCharts.makeChart("chartdiv", {
             "type": "serial",
             "theme": "light",
             "marginRight": 70,
-            "dataProvider": data,
+            "dataProvider": this.chartData,
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",

@@ -28,9 +28,9 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveTransactionDetails(empId: number, month: number, year?: number) {
+    getLeaveTransactionDetails(empId: number, month: number, year: number, status: string) {
         // +"year=" + year +
-        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month;
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month + "&status=" + status;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -51,7 +51,30 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    getEmployeeLeavesByMonth(empId: number, month: number, year: number) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&month=" + month + "&year=" + year;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 
+    getSupervisorTeamMember(supervisorId) {
+        // localhost:3000/api/leave/getSupervisorTeamMember?empId=3
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveTypes() {
+        let url = "leave/getLeaveTypes";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
+    getTeamLeavesByMonth(empId: number, month: number, year: number) {
+        let url = "leave/getSupervisorLeaveDetails?empId=" + empId + "&month=" + month + "&year=" + year;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
+    // --------------------------
 
 
     getCancelEmployeeLeaveDetails(_empId: number) {
@@ -69,10 +92,7 @@ export class LeaveService {
         return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveType(): Observable<Response> {
-        let url = "leave/getLeaveTypes";
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     saveEmployeeLeaveDetails(leavesData: any): Observable<Response> {
         let url = "leave/applyLeave";

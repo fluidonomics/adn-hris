@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <app-my-leaves-chart-monthly-leave></app-my-leaves-chart-monthly-leave>
+                    <app-my-leaves-chart-monthly-leave [chartData]="overviewChartData"></app-my-leaves-chart-monthly-leave>
                 </div>
             </div>
         </div>
@@ -202,7 +202,7 @@
                                             <tbody class="m-datatable__body">
                                                 <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let tran of recentTransactions">
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">{{tran.LeaveType}}</span>
+                                                        <span style="width: 150px;">{{tran.leaveTypeName}}</span>
                                                     </td>
                                                     <td data-field="ShipName" class="m-datatable__cell">
                                                         <span style="width: 80px;">{{tran.fromDate | date:'dd MMMM yyy'}}</span>
@@ -248,3 +248,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -35,12 +35,12 @@ export class ApplyComponent implements OnInit, OnDestroy {
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
     currentUser: UserData;
-    employeeBalances: any = [];
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number=1;
-    
+    fiscalYearId: number = 1;
+    leaveBalance: any = [];
+
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
         private leaveService: LeaveService,
@@ -69,18 +69,28 @@ export class ApplyComponent implements OnInit, OnDestroy {
     InitValues() {
         this.leaveapplication.days = null;
         this.leaveapplication.balance = null;
-        this.getEmployeeLeaveBalance();
+        this.getLeaveBalance();
         this.fromDateValidation = {
             isValid: true,
             msg: ''
         }
+        this.fiscalYearId = 1;
     }
 
     getLeaveTypes() {
-        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypeByEmpId(this.currentUser._id, this.fiscalYearId).subscribe(data => {
-            this.leaveTypeList.push(data);
-            this.leaveTypesDetails = this.leaveTypeList;
+        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypes().subscribe(res => {
+            if (res.ok) {
+                this.leaveTypesDetails = res.json() || [];
+            }
         });
+    }
+
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+            }
+        })
     }
 
     getAllSupervisorDetails() {
@@ -109,43 +119,35 @@ export class ApplyComponent implements OnInit, OnDestroy {
             });
     }
 
-    getEmployeeLeaveBalance() {
-        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
-    
-    if (res.ok) {
-                this.employeeBalances = res.json() || [];
-            }
-        })
-    }
-
     getEmployeeProbationDetails() {
-        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
-            if (res.ok) {
-                let data = res.json();
-                if (data) {
-                    this.inProbation = data.result || false;
-                }
-            }
-        });
+        // this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+        //     if (res.ok) {
+        //         let data = res.json();
+        //         if (data) {
+        //             this.inProbation = data.result || false;
+        //         }
+        //     }
+        // });
     }
 
     onChangeLeaveType() {
-        if(this.leaveapplication.leaveType === 3){
+        if (this.leaveapplication.leaveType === 3) {
             this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
-                if(res.ok) {
+                if (res.ok) {
                     let startDate = new Date(res.json().result[0].startDate);
-                    let endDate = new Date( res.json().result[0].endDate);
+                    let endDate = new Date(res.json().result[0].endDate);
                     this.leaveapplication.fromDate = startDate;
                     this.leaveapplication.toDate = endDate;
                     this.leaveapplication.days = Number(res.json().result[0].balance);
                 }
             })
         }
-        else{
+        else {
             this.leaveapplication.days = 0;
 
         }
-        let empBal = this.employeeBalances.find(bal => {
+        debugger;
+        let empBal = this.leaveBalance.find(bal => {
             if (bal) {
                 return bal.leaveType == this.leaveapplication.leaveType;
             }
@@ -268,7 +270,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.areDaysValid = true;
         this.isBalanceValid = true;
         this.isAttachmentRequired = false;
-        this.getEmployeeLeaveBalance();
+        this.getLeaveBalance();
     }
 
     calculateDays(e: any, type: string) {

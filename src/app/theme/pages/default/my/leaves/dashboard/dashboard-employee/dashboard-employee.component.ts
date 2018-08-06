@@ -34,12 +34,12 @@ export class DashboardEmployeeComponent implements OnInit {
     holidayFilter: any;
     transactionFilter: any = {
         date: new Date(),
-        status: 'All'
+        status: 'Applied'
     };
     overviewChartFilter: any = new Date();
+    overviewChartData: any = [];
 
     leaveStatus = [
-        "All",
         "Applied",
         "Pending Approval",
         "Cancelled"
@@ -92,7 +92,9 @@ export class DashboardEmployeeComponent implements OnInit {
 
     loadDashboard() {
         this.getLeaveBalance();
+        this.getOverviewChartData();
         this.getHolidays();
+        this.getTransactions();
     }
 
     getLeaveBalance() {
@@ -116,7 +118,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getTransactions() {
         if (this.transactionFilter.date && this.transactionFilter.status) {
-            this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.getMonth() + 1).subscribe(res => {
+            this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.date.getMonth() + 1, this.transactionFilter.date.getFullYear(), this.transactionFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.recentTransactions = res.json() || [];
                 }
@@ -125,7 +127,22 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getOverviewChartData() {
-
+        if (this.overviewChartFilter) {
+            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, this.overviewChartFilter.getMonth() + 1, this.overviewChartFilter.getFullYear()).subscribe(res => {
+                if (res.ok) {
+                    debugger;
+                    var data = res.json() || [];
+                    let chartData = [];
+                    data.forEach((leave, i) => {
+                        chartData.push({
+                            "leaveType": leave.leaveType,
+                            "leaveCount": leave.appliedLeave
+                        })
+                    });
+                    this.overviewChartData = chartData;
+                }
+            })
+        }
     }
 
 
