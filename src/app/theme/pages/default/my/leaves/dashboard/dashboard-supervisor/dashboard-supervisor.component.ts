@@ -143,6 +143,7 @@ export class DashboardSupervisorComponent implements OnInit {
             if (res.ok) {
                 var data = res.json().data || [];
                 let chartData = [];
+                data.sort((a, b) => a._id > b._id);
                 data.forEach((leave, i) => {
                     chartData.push({
                         "leaveType": leave.leaveTypeName,
@@ -166,7 +167,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
     getTeamLeavesForApproval() {
         this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
-            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId).subscribe(res => {
+            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, "Applied").subscribe(res => {
                 if (res.ok) {
                     this.leavesForApproval = res.json().data || [];
                 }
@@ -175,7 +176,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
     getTeamLeavesTransactions() {
         this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date.getMonth() + 1, this.leaveTransactionsFilter.date.getFullYear(),
-            this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId).subscribe(res => {
+            this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.leavesTransactions = res.json().data || [];
                 }

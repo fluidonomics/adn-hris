@@ -40,6 +40,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
     isMaternity: boolean = false;
     fiscalYearId: number = 1;
     leaveBalance: any = [];
+    employeeDetails: any = {};
+    primarySupervisor: any = {};
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -55,7 +57,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.currentUser = this._authService.currentUserData;
             this.InitValues();
             this.getLeaveTypes();
-            this.getAllSupervisorDetails();
+            this.getEmployeeDetails();
             this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
             this.fleaveapplication.valueChanges.subscribe(val => {
@@ -89,16 +91,20 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
+                this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
             }
         })
     }
 
-    getAllSupervisorDetails() {
-        this._commonService.getKraSupervisor(this.currentUser._id)
+    getEmployeeDetails() {
+        this.leaveService.getEmployeeDetails(this.currentUser._id)
             .subscribe(
                 res => {
                     if (res.ok) {
-                        this.supervisorDetails = res.json();
+                        this.employeeDetails = res.json().data[0] || {};
+                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                        }
                     }
                 },
                 error => {
@@ -133,6 +139,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     onChangeLeaveType() {
         if (this.leaveapplication.leaveType === 3) {
             this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
+                debugger;
                 if (res.ok) {
                     let startDate = new Date(res.json().result[0].startDate);
                     let endDate = new Date(res.json().result[0].endDate);
@@ -144,12 +151,11 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
         else {
             this.leaveapplication.days = 0;
-
         }
-        debugger;
+
         let empBal = this.leaveBalance.find(bal => {
             if (bal) {
-                return bal.leaveType == this.leaveapplication.leaveType;
+                return bal.leaveTypeId == this.leaveapplication.leaveType;
             }
         });
         this.leaveapplication.balance = empBal ? empBal.leaveBalance : 0;
@@ -192,29 +198,32 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
-            let ccToMail = [];
-            if (data.ccTo) {
-                data.ccTo.forEach(cc => {
-                    let mail = this.emailDetails.find(email => {
-                        return email._id == cc;
-                    });
-                    if (mail)
-                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-                });
-            }
+            // let ccToMail = [];
+            // if (data.ccTo) {
+            //     data.ccTo.forEach(cc => {
+            //         let mail = this.emailDetails.find(email => {
+            //             return email._id == cc;
+            //         });
+            //         if (mail)
+            //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+            //     });
+            // }
 
             let _postData: any = {};
-            _postData.applyTo = data.applyToId;
+            if (this.primarySupervisor) {
+                _postData.supervisor_id = this.primarySupervisor._id;
+            }
             _postData.fromDate = data.fromDate;
             _postData.toDate = data.toDate;
             _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
-            _postData.contactDetails = data.contactDetail;
-            _postData.ccTo = ccToMail;
+            // _postData.contactDetails = data.contactDetail;
+            // _postData.ccTo = ccToMail;
             _postData.emp_id = this.currentUser._id;
-            _postData.createdBy = this.currentUser._id;
+            _postData.apply_by_id = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
-            _postData.status = 'Applied (pending)';
+            _postData.session_id = '1';
+            _postData.status = 'Applied';
             if (this.inProbation) {
                 swal({
                     title: 'Are you sure?',

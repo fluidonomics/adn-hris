@@ -106,13 +106,8 @@
 									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="form-group m-form__group">
-												<label for="form_control_1">Apply To</label>
-												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="applyto" bindValue="_id" placeholder="Select Apply To" bindLabel="fullName"
-												 [items]="supervisorDetails" [(ngModel)]="leaveapplication.applyToId" #applyto="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="!applyto.valid && leavetype.valid">
-													<span *ngIf="fleaveapplication.submitted && !applyto.valid">This field is required.</span>
-												</div>
+												<label for="form_control_1">Approving Authority</label>
+												<span class="pl1r">{{primarySupervisor?.fullName}}</span>
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">

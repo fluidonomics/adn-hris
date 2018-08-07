@@ -100,7 +100,9 @@ export class DashboardEmployeeComponent implements OnInit {
     getLeaveBalance() {
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
+                debugger;
                 this.leaveBalance = res.json() || [];
+                this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
             }
         })
     }
@@ -132,6 +134,7 @@ export class DashboardEmployeeComponent implements OnInit {
                 if (res.ok) {
                     debugger;
                     var data = res.json() || [];
+                    data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
                     let chartData = [];
                     data.forEach((leave, i) => {
                         chartData.push({

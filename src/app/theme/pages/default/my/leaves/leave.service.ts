@@ -40,13 +40,16 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveDetailsByFilter(supervisorId: number, month: number, year: number, empId?: number, leaveType?: number) {
+    getLeaveDetailsByFilter(supervisorId: number, month: number, year: number, empId?: number, leaveType?: number, status?: string) {
         let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&month=" + month + "&year=" + year;
         if (empId) {
             url += "&empId=" + empId;
         }
         if (leaveType) {
             url += "&leave_type=" + leaveType;
+        }
+        if (status) {
+            url += "&status=" + status;
         }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
@@ -73,7 +76,10 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-
+    getEmployeeDetails(empId: number) {
+        let url = "user/getEmployeeDetails?emp_id=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
     // --------------------------
 
 
