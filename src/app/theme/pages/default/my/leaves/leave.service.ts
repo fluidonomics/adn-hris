@@ -80,6 +80,12 @@ export class LeaveService {
         let url = "user/getEmployeeDetails?emp_id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+
+    cancelApproveLeave(body: any) {
+        let url = "leave/cancelApproveLeave";
+        return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
     // --------------------------
 
 

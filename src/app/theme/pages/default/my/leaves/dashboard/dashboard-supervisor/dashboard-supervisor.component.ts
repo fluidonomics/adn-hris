@@ -7,6 +7,9 @@ import { LeaveService } from '../../leave.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
+import swal from 'sweetalert2';
+
+declare var mApp;
 
 @Component({
     selector: "app-my-leaves-dashboard-supervisor",
@@ -182,6 +185,52 @@ export class DashboardSupervisorComponent implements OnInit {
                 }
             })
     }
+
+    approveRejectLeave(leaveId, status) {
+        let body = {
+            "id": leaveId,
+            "status": status,
+            "reason": null
+        };
+
+        // let text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+        let text = '';
+        swal({
+            title: 'Are you sure?',
+            text: text,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                mApp.block('.recentTransactionPortlet', {
+                    overlayColor: '#000000',
+                    type: 'loader',
+                    state: 'success',
+                    // message: 'Please wait...'
+                });
+
+                this.leaveService.cancelApproveLeave(body).subscribe(res => {
+                    if (res.ok) {
+                        let text = status === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
+                        swal(text, "", "success");
+                        this.getTeamLeavesForApproval();
+                        this.getTeamLeavesTransactions();
+                    }
+                }, error => {
+                    console.log(error);
+                }, () => {
+                    mApp.unblock('.recentTransactionPortlet');
+                })
+            }
+        });
+
+    }
+
+
+    // --------------------------------------------------------------------------
 
     getLeaveDetails(role) {
         this.leaveList = [];
