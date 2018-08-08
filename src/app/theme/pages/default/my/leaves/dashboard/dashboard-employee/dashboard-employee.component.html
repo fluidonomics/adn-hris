@@ -148,7 +148,7 @@
                                             {{transactionFilter.status}}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="#" *ngFor="let status of leaveStatus" (click)="transactionFilter.status = status">
+                                            <a class="dropdown-item" href="#" *ngFor="let status of leaveStatuses" (click)="transactionFilter.status = status; getTransactions();">
                                                 {{status}}
                                             </a>
                                         </div>

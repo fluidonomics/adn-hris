@@ -86,6 +86,19 @@ export class LeaveService {
         return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    getLeaveStatuses() {
+        let statuses = [
+            LeaveStatus.Applied,
+            LeaveStatus.Approved,
+            LeaveStatus.Rejected,
+            LeaveStatus.PendingWithdrawal,
+            LeaveStatus.Withdrawn,
+            LeaveStatus.PendingCancellation,
+            LeaveStatus.Cancelled
+        ];
+        return Observable.from(statuses);
+    }
+
     // --------------------------
 
 
@@ -223,4 +236,14 @@ export class LeaveService {
         let url = "leave/getEmpMaternityLeaveDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+}
+
+export const LeaveStatus = {
+    Applied: 'Applied',
+    Approved: 'Approved',
+    Rejected: 'Rejected',
+    PendingWithdrawal: 'Pending Withdrawal',
+    PendingCancellation: 'Pending Cancellation',
+    Withdrawn: 'Withdrawn',
+    Cancelled: 'Cancelled'
 }

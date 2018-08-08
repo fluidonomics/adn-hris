@@ -3,7 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { UserData } from '../../../../../../../base/_interface/auth.model';
-import { LeaveService } from '../../leave.service';
+import { LeaveService, LeaveStatus } from '../../leave.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
@@ -34,16 +34,11 @@ export class DashboardEmployeeComponent implements OnInit {
     holidayFilter: any;
     transactionFilter: any = {
         date: new Date(),
-        status: 'Applied'
+        status: LeaveStatus.Applied
     };
     overviewChartFilter: any = new Date();
     overviewChartData: any = [];
-
-    leaveStatus = [
-        "Applied",
-        "Pending Approval",
-        "Cancelled"
-    ]
+    leaveStatuses: any = [];
 
     constructor(
         private leaveService: LeaveService,
@@ -91,6 +86,7 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     loadDashboard() {
+        this.getLeaveStatuses();
         this.getLeaveBalance();
         this.getOverviewChartData();
         this.getHolidays();
@@ -100,7 +96,6 @@ export class DashboardEmployeeComponent implements OnInit {
     getLeaveBalance() {
         this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
-                debugger;
                 this.leaveBalance = res.json() || [];
                 this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
             }
@@ -132,7 +127,6 @@ export class DashboardEmployeeComponent implements OnInit {
         if (this.overviewChartFilter) {
             this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, this.overviewChartFilter.getMonth() + 1, this.overviewChartFilter.getFullYear()).subscribe(res => {
                 if (res.ok) {
-                    debugger;
                     var data = res.json() || [];
                     data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
                     let chartData = [];
@@ -146,6 +140,12 @@ export class DashboardEmployeeComponent implements OnInit {
                 }
             })
         }
+    }
+
+    getLeaveStatuses() {
+        this.leaveService.getLeaveStatuses().subscribe(data => {
+            this.leaveStatuses.push(data);
+        })
     }
 
 
