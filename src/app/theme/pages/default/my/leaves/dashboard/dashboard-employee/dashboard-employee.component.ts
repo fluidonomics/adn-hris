@@ -7,7 +7,10 @@ import { LeaveService, LeaveStatus } from '../../leave.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
+import { BsModalService, BsModalRef } from '../../../../../../../../../node_modules/ngx-bootstrap';
+import swal from 'sweetalert2';
 
+declare var mApp;
 
 @Component({
     selector: "app-my-leaves-dashboard-employee",
@@ -39,6 +42,7 @@ export class DashboardEmployeeComponent implements OnInit {
     overviewChartFilter: any = new Date();
     overviewChartData: any = [];
     leaveStatuses: any = [];
+    modalRef: BsModalRef;
 
     constructor(
         private leaveService: LeaveService,
@@ -46,7 +50,8 @@ export class DashboardEmployeeComponent implements OnInit {
         private utilityService: UtilityService,
         private route: ActivatedRoute,
         private commonService: CommonService,
-        private router: Router
+        private router: Router,
+        private modalService: BsModalService
     ) {
         this.imageBase = environment.content_api_base.imgBase;
     }
@@ -143,47 +148,64 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getLeaveStatuses() {
-        this.leaveService.getLeaveStatuses().subscribe(data => {
-            this.leaveStatuses.push(data);
-        })
+        this.leaveStatuses = this.leaveService.getLeaveStatuses();
     }
 
+    leaveDetails: any = {};
+    showLeaveDetail(leaveId, templateRef) {
+        this.leaveDetails = {};
+        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
-    getLeaveDetails(role) {
-        this.leaveList = [];
-        if (!role) {
-            if (this.currentUser.roles.indexOf('HR') > -1) {
-                role = 'HR';
-            } else if (this.currentUser.roles.indexOf('Supervisor') > -1) {
-                role = 'Supervisor';
-            }
-        }
-        this.leaveService.getLeaveDetailsByRole(role, this.currentUser._id).subscribe(
-            res => {
-                if (res.ok) {
-                    this.leaveList = res.json() || [];
-                    if (this.leaveList && this.leaveList.length > 0) {
-                        this.leaveList = this.leaveList.map(leave => {
-                            leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
-                            if (!leave.status || leave.status == 'Cancelled' || leave.status == 'Rejected' || leave.status == '' || leave.status == 'Cancel Rejected' || leave.status == 'Approved') {
-                                leave.allowActions = false;
-                            } else {
-                                leave.allowActions = true;
-                            }
-                            return leave;
-                        });
-                    }
+        this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
+            if (res.ok) {
+                let body = res.json();
+                if (body.data[0]) {
+                    this.leaveDetails.leave = body.data[0];
                 }
-            },
-            error => {
-                console.error(error);
-            }, () => {
-                this.isSpin = false;
-            });
+            }
+        });
     }
 
+    cancelWithdrawLeave() {
+        debugger;
+        let body: any = {
+            "_id": this.leaveDetails.leave._id,
+            "remarks": this.leaveDetails.remarks,
+            "updatedBy": this.currentUser._id
+        };
+
+        swal({
+            title: 'Are you sure?',
+            text: '',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                mApp.block('.leaveDetailsPortlet', {
+                    overlayColor: '#000000',
+                    type: 'loader',
+                    state: 'success',
+                    // message: 'Please wait...'
+                });
+
+                this.leaveService.cancelWithdrawLeave(body).subscribe(res => {
+                    // let text = status === "Approved" ? 'Leave Withdrawn Successfully' : 'Leave Rejected Successfully';
+                    swal('Leave Withdrawal Sent To Supervisor For Approval', "", "success");
+                    this.modalRef.hide();
+                }, error => {
+                    mApp.unblock('.leaveDetailsPortlet');
+                    console.log(error);
+                }, () => {
+                    mApp.unblock('.leaveDetailsPortlet');
+                })
+            }
+        })
 
 
+    }
 
 
     refresh() {

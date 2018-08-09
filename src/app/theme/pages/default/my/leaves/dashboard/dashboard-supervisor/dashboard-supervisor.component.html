@@ -194,7 +194,7 @@
                                             <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
                                                 <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let leave of leavesForApproval">
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">{{leave.employeeDetails?.fullName}}</span>
+                                                        <span (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal)" style="width: 150px;">{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 150px;">{{leave.employeeDetails?.userName}}</span>
@@ -231,12 +231,12 @@
                                                     <td data-field="Actions" class="m-datatable__cell">
                                                         <span style="overflow: visible; position: relative; width: 110px;">
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"
-                                                                (click)="approveRejectLeave(leave.leavedetails._id,'Approved')">
+                                                                (click)="approveRejectLeave(leave.leavedetails._id, leave.leavedetails.status, 'Approved')">
                                                                 <i class="fa fa-check"></i>
                                                             </a>
 
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject"
-                                                                (click)="approveRejectLeave(leave.leavedetails._id,'Reject')">
+                                                                (click)="approveRejectLeave(leave.leavedetails._id, leave.leavedetails.status, 'Reject')">
                                                                 <i class="la la-remove"></i>
                                                             </a>
                                                         </span>
@@ -401,3 +401,106 @@
         </div>
     </div>
 </div>
+
+<ng-template #leaveDetailModal>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height leaveDetailsPortlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Leave Details
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-widget6 ">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img" src="./assets/app/media/img/custom/users/user6.jpg">
+                    </div>
+                    <div class="col-md-9">
+                        <span class="name">
+                            {{leaveDetails?.leave?.emp_name?.fullName}}
+                        </span>
+                        <span class="empId">
+                            ({{leaveDetails?.leave?.emp_name?.userName}})
+                        </span>
+                    </div>
+                </div>
+                <div class="row details">
+                    <div class="col-md-12 form-group">
+                        <span class="key">Leave Type</span>
+                        <span class="value">{{leaveDetails?.leave?.leaveTypes?.type}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">From Date</span>
+                        <span class="value">{{leaveDetails?.leave?.fromDate | date: 'dd MMM yyy'}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">To Date</span>
+                        <span class="value">{{leaveDetails?.leave?.toDate | date: 'dd MMM yyy'}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Applied On</span>
+                        <span class="value">{{leaveDetails?.leave?.createdAt | date: 'dd MMM yyy'}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Status</span>
+                        <span class="value">{{leaveDetails?.leave?.status}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Days</span>
+                        <span class="value">{{leaveDetails?.leave?.days}}</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Leave Balance</span>
+                        <span class="value"></span>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <span class="key">Apporval Authority</span>
+                        <span class="value"></span>
+                    </div>
+                    <div class="col-md-12 adn-form__group">
+                        <div class="m-form__group form-group">
+                            <label for="form_control_1">Reason</label>
+                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason}}"
+                                disabled="true"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 adn-form__group">
+                        <div class="m-form__group form-group">
+                            <label for="form_control_1">Remarks</label>
+                            <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
+                                #remarks="ngModel"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-form__actions">
+                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Approved')">Approve Leave</button>
+                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Reject')">Reject Leave</button>
+                                <button class="btn btn-secondary " (click)="modalRef.hide() " type="button ">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

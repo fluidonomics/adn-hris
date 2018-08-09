@@ -19,7 +19,8 @@ export class LeaveService {
 
 
     getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
+        // let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&year=" + 2018;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -86,6 +87,11 @@ export class LeaveService {
         return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    cancelWithdrawLeave(body: any) {
+        let url = "leave/withdrawLeave";
+        return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
     getLeaveStatuses() {
         let statuses = [
             LeaveStatus.Applied,
@@ -96,7 +102,12 @@ export class LeaveService {
             LeaveStatus.PendingCancellation,
             LeaveStatus.Cancelled
         ];
-        return Observable.from(statuses);
+        return statuses;
+    }
+
+    getLeaveDetailsById(leaveId: number) {
+        let url = "leave/getLeaveDetailsById?id=" + leaveId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
     // --------------------------
@@ -190,10 +201,7 @@ export class LeaveService {
         return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveDetailsById(leaveId: number) {
-        let url = "leave/getLeaveDetailsById?id=" + leaveId;
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     getLeavesByMonth() {
         let url = "leave/getLeavesByMonth";

@@ -3,11 +3,14 @@ import { FormBuilder } from "@angular/forms";
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { UserData } from '../../../../../../../base/_interface/auth.model';
-import { LeaveService } from '../../leave.service';
+import { LeaveService, LeaveStatus } from '../../leave.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
 import swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from '../../../../../../../../../node_modules/ngx-bootstrap';
+import { forkJoin } from '../../../../../../../../../node_modules/rxjs/observable/forkJoin';
+
 
 declare var mApp;
 
@@ -60,13 +63,15 @@ export class DashboardSupervisorComponent implements OnInit {
     leavesForApproval: any = [];
     leavesTransactions: any = [];
     supervisorTeamEmployeeList: any = [];
+    modalRef: BsModalRef;
 
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
         private utilityService: UtilityService,
         private route: ActivatedRoute,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private modalService: BsModalService
     ) {
         this.imageBase = environment.content_api_base.imgBase;
     }
@@ -169,12 +174,34 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getTeamLeavesForApproval() {
-        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
-            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, "Applied").subscribe(res => {
-                if (res.ok) {
-                    this.leavesForApproval = res.json().data || [];
+        this.leavesForApproval = [];
+        let appliedLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.Applied);
+        let withdrawnLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.PendingWithdrawal)
+        let cancelLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+            this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.PendingCancellation)
+        forkJoin(appliedLeavesSubs, withdrawnLeavesSubs, cancelLeavesSubs)
+            .subscribe(results => {
+                if (results[0].ok) {
+                    let leaves = results[0].json().data || [];
+                    if (leaves.length > 0) {
+                        this.leavesForApproval = [... this.leavesForApproval, ...leaves];
+                    }
                 }
-            })
+                if (results[1].ok) {
+                    let leaves = results[1].json().data || [];
+                    if (leaves.length > 0) {
+                        this.leavesForApproval = [... this.leavesForApproval, ...leaves];
+                    }
+                }
+                if (results[2].ok) {
+                    let leaves = results[2].json().data || [];
+                    if (leaves.length > 0) {
+                        this.leavesForApproval = [... this.leavesForApproval, ...leaves];
+                    }
+                }
+            });
     }
 
     getTeamLeavesTransactions() {
@@ -186,12 +213,18 @@ export class DashboardSupervisorComponent implements OnInit {
             })
     }
 
-    approveRejectLeave(leaveId, status) {
-        let body = {
+    approveRejectLeave(leaveId, leaveStatus, operationStatus) {
+        let body: any = {
             "id": leaveId,
-            "status": status,
+            "status": leaveStatus,
             "reason": null
         };
+
+        if (operationStatus == 'Approved') {
+            body.approved = true;
+        } else if (operationStatus == 'Reject') {
+            body.rejected = true;
+        }
 
         // let text = 'Leave during probabtion are not encouraged until unless its an emergency case';
         let text = '';
@@ -214,10 +247,13 @@ export class DashboardSupervisorComponent implements OnInit {
 
                 this.leaveService.cancelApproveLeave(body).subscribe(res => {
                     if (res.ok) {
-                        let text = status === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
+                        let text = operationStatus === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
                         swal(text, "", "success");
                         this.getTeamLeavesForApproval();
                         this.getTeamLeavesTransactions();
+                        if (this.modalRef) {
+                            this.modalRef.hide();
+                        }
                     }
                 }, error => {
                     console.log(error);
@@ -227,6 +263,21 @@ export class DashboardSupervisorComponent implements OnInit {
             }
         });
 
+    }
+
+    leaveDetails: any = {};
+    showLeaveDetail(leaveId, templateRef) {
+        this.leaveDetails = {};
+        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
+
+        this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
+            if (res.ok) {
+                let body = res.json();
+                if (body.data[0]) {
+                    this.leaveDetails.leave = body.data[0];
+                }
+            }
+        });
     }
 
 
