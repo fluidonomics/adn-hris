@@ -191,7 +191,7 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
+                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y">
                                                 <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let leave of leavesForApproval">
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal)" style="width: 150px;">{{leave.employeeDetails?.fullName}}</span>
@@ -315,7 +315,7 @@
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
                                     <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
-                                        <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
+                                        <table class="m-datatable__table" style="display: block; min-height: 300px;">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row" style="left: 0px;">
                                                     <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
@@ -347,7 +347,7 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
+                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y">
                                                 <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let leave of leavesTransactions">
                                                     <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
                                                         <span style="width: 100px;">{{leave.employeeDetails?.fullName}}</span>
@@ -493,8 +493,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Approved')">Approve Leave</button>
-                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Reject')">Reject Leave</button>
+                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Approved', leaveDetails.remarks)">Approve Leave</button>
+                                <button class="btn btn-success" (click)="approveRejectLeave(leaveDetails.leave._id, leaveDetails.leave.status, 'Reject', leaveDetails.remarks)">Reject Leave</button>
                                 <button class="btn btn-secondary " (click)="modalRef.hide() " type="button ">Cancel</button>
                             </div>
                         </div>

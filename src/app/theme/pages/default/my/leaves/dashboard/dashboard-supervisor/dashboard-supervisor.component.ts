@@ -130,11 +130,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
     statusList: any = [];
     getStatusList() {
-        this.statusList = [
-            { type: "Applied" },
-            { type: "Pending Approval" },
-            { type: "Cancelled" }
-        ];
+        this.statusList = this.leaveService.getLeaveStatuses();
     }
 
     leaveTypeList: any = []
@@ -147,7 +143,7 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getOverviewChartData() {
-        this.leaveService.getTeamLeavesByMonth(this.currentUser._id, this.overviewChartDataFilter.date.getMonth() + 1, this.overviewChartDataFilter.date.getFullYear()).subscribe(res => {
+        this.leaveService.getTeamLeavesByMonth(this.currentUser._id, this.overviewChartDataFilter.date.getMonth() + 1, this.overviewChartDataFilter.date.getFullYear(), LeaveStatus.Approved).subscribe(res => {
             if (res.ok) {
                 var data = res.json().data || [];
                 let chartData = [];
@@ -165,7 +161,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
 
     getTeamLeaves() {
-        this.leaveService.getTeamLeaves(this.currentUser._id, this.teamLeavesFilter.date.getMonth() + 1).subscribe(res => {
+        this.leaveService.getTeamLeaves(this.currentUser._id, this.teamLeavesFilter.date.getMonth() + 1, this.teamLeavesFilter.date.getFullYear(), LeaveStatus.Approved).subscribe(res => {
             if (res.ok) {
                 let body = res.json();
                 this.teamLeaves = body.data || [];
@@ -213,17 +209,33 @@ export class DashboardSupervisorComponent implements OnInit {
             })
     }
 
-    approveRejectLeave(leaveId, leaveStatus, operationStatus) {
+    approveRejectLeave(leaveId, leaveStatus, operationStatus, reason) {
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
-            "reason": null
+            "reason": reason
         };
 
         if (operationStatus == 'Approved') {
-            body.approved = true;
+            if (leaveStatus == LeaveStatus.Applied) {
+                body.approved = true;
+            }
+            else if (leaveStatus == LeaveStatus.PendingWithdrawal) {
+                body.withdrawn = true;
+            }
+            else if (leaveStatus == LeaveStatus.PendingCancellation) {
+                body.cancelled = true;
+            }
         } else if (operationStatus == 'Reject') {
-            body.rejected = true;
+            if (leaveStatus == LeaveStatus.Applied) {
+                body.rejected = true;
+            }
+            else if (leaveStatus == LeaveStatus.PendingWithdrawal) {
+                body.withdrawn = false;
+            }
+            else if (leaveStatus == LeaveStatus.PendingCancellation) {
+                body.cancelled = false;
+            }
         }
 
         // let text = 'Leave during probabtion are not encouraged until unless its an emergency case';

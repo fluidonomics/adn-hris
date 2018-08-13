@@ -31,13 +31,19 @@ export class LeaveService {
 
     getLeaveTransactionDetails(empId: number, month: number, year: number, status: string) {
         // +"year=" + year +
-        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month + "&status=" + status;
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month;
+        if (status != 'All') {
+            url += "&status=" + status
+        }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getTeamLeaves(supervisorId: number, month: number, year?: number) {
+    getTeamLeaves(supervisorId: number, month: number, year?: number, status?: string) {
         // +"year=" + year +
-        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&month=" + month;
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&month=" + month + "&year=" + year;
+        if (status) {
+            url += "&status=" + status;
+        }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -72,8 +78,11 @@ export class LeaveService {
     }
 
 
-    getTeamLeavesByMonth(empId: number, month: number, year: number) {
+    getTeamLeavesByMonth(empId: number, month: number, year: number, status?: string) {
         let url = "leave/getSupervisorLeaveDetails?empId=" + empId + "&month=" + month + "&year=" + year;
+        if (status) {
+            url += "&status=" + status;
+        }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 

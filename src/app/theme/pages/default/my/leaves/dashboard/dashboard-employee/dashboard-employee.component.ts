@@ -37,7 +37,7 @@ export class DashboardEmployeeComponent implements OnInit {
     holidayFilter: any;
     transactionFilter: any = {
         date: new Date(),
-        status: LeaveStatus.Applied
+        status: 'All'
     };
     overviewChartFilter: any = new Date();
     overviewChartData: any = [];
@@ -148,7 +148,7 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getLeaveStatuses() {
-        this.leaveStatuses = this.leaveService.getLeaveStatuses();
+        this.leaveStatuses = ['All', ...this.leaveService.getLeaveStatuses()];
     }
 
     leaveDetails: any = {};
@@ -195,6 +195,7 @@ export class DashboardEmployeeComponent implements OnInit {
                     // let text = status === "Approved" ? 'Leave Withdrawn Successfully' : 'Leave Rejected Successfully';
                     swal('Leave Withdrawal Sent To Supervisor For Approval', "", "success");
                     this.modalRef.hide();
+                    this.getTransactions();
                 }, error => {
                     mApp.unblock('.leaveDetailsPortlet');
                     console.log(error);

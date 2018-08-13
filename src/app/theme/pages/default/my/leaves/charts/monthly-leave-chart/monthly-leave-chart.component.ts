@@ -28,6 +28,9 @@ export class MonthlyLeaveChartComponent implements OnChanges {
 
     ngAfterViewInit() {
         this.createChart();
+        setTimeout(() => {
+            $('.amcharts-chart-div a').remove();
+        }, 800);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
