@@ -48,13 +48,8 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <div class="btn-group" role="group">
-                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
-                                            [(ngModel)]="overviewChartFilter" (ngModelChange)="getOverviewChartData()" placeholder="Select Month"
-                                            readonly>
-                                    </div>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="overviewChartFilter.date"
+                                    (ngModelChange)="getOverviewChartData()" placeholder="Select Month" readonly>
                             </li>
                         </ul>
                     </div>
@@ -77,13 +72,8 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <div class="btn-group" role="group">
-                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
-                                            [(ngModel)]="holidayFilter" (ngModelChange)="getHolidays()" placeholder="Select Month"
-                                            readonly>
-                                    </div>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="holidayFilter.date"
+                                    (ngModelChange)="getHolidays()" placeholder="Select Month" placement="left" readonly>
                             </li>
                         </ul>
                     </div>
@@ -134,14 +124,11 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="transactionFilter.date"
+                                    (ngModelChange)="getTransactions()" placeholder="Select Month" placement="left" readonly>
+                            </li>
+                            <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <div class="btn-group" role="group">
-                                            <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="fromDate"
-                                                [(ngModel)]="transactionFilter.date" (ngModelChange)="getTransactions()" placeholder="Select Month"
-                                                readonly>
-                                        </div>
-                                    </div>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">

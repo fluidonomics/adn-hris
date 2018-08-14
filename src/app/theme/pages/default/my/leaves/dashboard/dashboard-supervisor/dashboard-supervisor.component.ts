@@ -40,21 +40,21 @@ export class DashboardSupervisorComponent implements OnInit {
 
     overviewChartData: any = [];
     overviewChartDataFilter: any = {
-        date: new Date()
+        date: this.leaveService.getCurrentMonthDates()
     };
 
     teamLeavesFilter: any = {
-        date: new Date()
+        date: this.leaveService.getCurrentMonthDates()
     };
 
     leaveApprovalFilter: any = {
-        date: new Date(),
+        date: this.leaveService.getCurrentMonthDates(),
         employeeId: null,
         leaveTypeId: null
     };
 
     leaveTransactionsFilter: any = {
-        date: new Date(),
+        date: this.leaveService.getCurrentMonthDates(),
         employeeId: null,
         leaveTypeId: null,
         status: null
@@ -143,7 +143,7 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getOverviewChartData() {
-        this.leaveService.getTeamLeavesByMonth(this.currentUser._id, this.overviewChartDataFilter.date.getMonth() + 1, this.overviewChartDataFilter.date.getFullYear(), LeaveStatus.Approved).subscribe(res => {
+        this.leaveService.getTeamLeavesByMonth(this.currentUser._id, this.overviewChartDataFilter.date[0], this.overviewChartDataFilter.date[1], LeaveStatus.Approved).subscribe(res => {
             if (res.ok) {
                 var data = res.json().data || [];
                 let chartData = [];
@@ -161,7 +161,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
 
     getTeamLeaves() {
-        this.leaveService.getTeamLeaves(this.currentUser._id, this.teamLeavesFilter.date.getMonth() + 1, this.teamLeavesFilter.date.getFullYear(), LeaveStatus.Approved).subscribe(res => {
+        this.leaveService.getTeamLeaves(this.currentUser._id, this.teamLeavesFilter.date[0], this.teamLeavesFilter.date[1], LeaveStatus.Approved).subscribe(res => {
             if (res.ok) {
                 let body = res.json();
                 this.teamLeaves = body.data || [];
@@ -171,11 +171,11 @@ export class DashboardSupervisorComponent implements OnInit {
 
     getTeamLeavesForApproval() {
         this.leavesForApproval = [];
-        let appliedLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+        let appliedLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date[0], this.leaveApprovalFilter.date[1],
             this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.Applied);
-        let withdrawnLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+        let withdrawnLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date[0], this.leaveApprovalFilter.date[1],
             this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.PendingWithdrawal)
-        let cancelLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date.getMonth() + 1, this.leaveApprovalFilter.date.getFullYear(),
+        let cancelLeavesSubs = this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveApprovalFilter.date[0], this.leaveApprovalFilter.date[1],
             this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.PendingCancellation)
         forkJoin(appliedLeavesSubs, withdrawnLeavesSubs, cancelLeavesSubs)
             .subscribe(results => {
@@ -201,7 +201,7 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     getTeamLeavesTransactions() {
-        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date.getMonth() + 1, this.leaveTransactionsFilter.date.getFullYear(),
+        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date[0], this.leaveTransactionsFilter.date[1],
             this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.leavesTransactions = res.json().data || [];

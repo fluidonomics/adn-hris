@@ -16,13 +16,8 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <div class="btn-group" role="group">
-                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="overviewChartDataFilterDate"
-                                            [(ngModel)]="overviewChartDataFilter.date" (ngModelChange)="getOverviewChartData()"
-                                            placeholder="Select Month" readonly>
-                                    </div>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="overviewChartDataFilter.date"
+                                    (ngModelChange)="getOverviewChartData()" placeholder="Select Month" placement="bottom" readonly>
                             </li>
                         </ul>
                     </div>
@@ -45,13 +40,8 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <div class="btn-group" role="group">
-                                        <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="teamLeavesFilterDate"
-                                            [(ngModel)]="teamLeavesFilter.date" (ngModelChange)="getTeamLeaves()" placeholder="Select Month"
-                                            readonly>
-                                    </div>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="teamLeavesFilter.date"
+                                    (ngModelChange)="getTeamLeaves()" placeholder="Select Month" placement="left" readonly>
                             </li>
                         </ul>
                     </div>
@@ -113,11 +103,9 @@
                                     [clearable]="true"></ng-select>
                             </li>
                             <li class="nav-item m-tabs__item">
-                                <div class="btn-group" role="group">
-                                    <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="leaveApprovalFilterDate"
-                                        [(ngModel)]="leaveApprovalFilter.date" (ngModelChange)="getTeamLeavesForApproval()" placeholder="Select Month"
-                                        readonly>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="leaveApprovalFilter.date"
+                                    (ngModelChange)="getTeamLeavesForApproval()" placeholder="Select Month" placement="left"
+                                    readonly>
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <ng-select class="m-input m-input--air" name="employee" placeholder="Select Leave Type" bindValue="_id" bindLabel="type"
@@ -264,11 +252,9 @@
                                     [clearable]="true"></ng-select>
                             </li>
                             <li class="nav-item m-tabs__item">
-                                <div class="btn-group" role="group">
-                                    <input bsDatepicker [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" type="text" class="form-control m-input m-input--air" name="leaveTransactionsFilterDate"
-                                        [(ngModel)]="leaveTransactionsFilter.date" (ngModelChange)="getTeamLeavesTransactions()"
-                                        placeholder="Select Month" readonly>
-                                </div>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="leaveTransactionsFilter.date"
+                                    (ngModelChange)="getTeamLeavesTransactions()" placeholder="Select Month" placement="left"
+                                    readonly>
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <ng-select class="m-input m-input--air" name="status" placeholder="Select Status" bindValue="_id" bindLabel="type" [items]="statusList"

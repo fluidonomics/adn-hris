@@ -24,31 +24,31 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveHolidays(month: any, year: any) {
-        let url = "leave/getLeaveHolidays?year=" + year + "&month=" + month + "&upcoming=false";
+    getLeaveHolidays(fromDate: any, toDate: any) {
+        let url = "leave/getLeaveHolidays?fromDate=" + fromDate + "&toDate=" + toDate;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveTransactionDetails(empId: number, month: number, year: number, status: string) {
+    getLeaveTransactionDetails(empId: number, fromDate: number, toDate: number, status: string) {
         // +"year=" + year +
-        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&month=" + month;
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (status != 'All') {
             url += "&status=" + status
         }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getTeamLeaves(supervisorId: number, month: number, year?: number, status?: string) {
+    getTeamLeaves(supervisorId: number, fromDate: number, toDate?: number, status?: string) {
         // +"year=" + year +
-        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&month=" + month + "&year=" + year;
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (status) {
             url += "&status=" + status;
         }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveDetailsByFilter(supervisorId: number, month: number, year: number, empId?: number, leaveType?: number, status?: string) {
-        let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&month=" + month + "&year=" + year;
+    getLeaveDetailsByFilter(supervisorId: number, fromDate: number, toDate: number, empId?: number, leaveType?: number, status?: string) {
+        let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (empId) {
             url += "&empId=" + empId;
         }
@@ -61,8 +61,20 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getEmployeeLeavesByMonth(empId: number, month: number, year: number) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&month=" + month + "&year=" + year;
+    getEmployeeLeavesByMonth(empId: number, month?: number, year?: number, fromDate?: Date, toDate?: Date) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
+        if (month) {
+            url += "&month=" + month;
+        }
+        if (year) {
+            url += "&year=" + year;
+        }
+        if (fromDate) {
+            url += "&fromDate=" + fromDate;
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate;
+        }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -78,8 +90,8 @@ export class LeaveService {
     }
 
 
-    getTeamLeavesByMonth(empId: number, month: number, year: number, status?: string) {
-        let url = "leave/getSupervisorLeaveDetails?empId=" + empId + "&month=" + month + "&year=" + year;
+    getTeamLeavesByMonth(empId: number, fromDate: number, toDate: number, status?: string) {
+        let url = "leave/getSupervisorLeaveDetails?empId=" + empId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (status) {
             url += "&status=" + status;
         }
@@ -119,8 +131,23 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    // --------------------------
+    // ------------------------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------------------------------
 
+
+    getCurrentMonthDates() {
+        let dateRange = [];
+        let startDate = new Date();
+        startDate.setDate(1);
+        let endDate = new Date();
+        endDate.setDate(30);
+        dateRange = [startDate, endDate];
+        return dateRange;
+    }
+
+
+    // ------------------------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------------------------------
 
     getCancelEmployeeLeaveDetails(_empId: number) {
         let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;

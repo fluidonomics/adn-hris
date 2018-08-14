@@ -34,12 +34,16 @@ export class DashboardEmployeeComponent implements OnInit {
     currentFinancialYear: string;
     fiscalYearId: string;
 
-    holidayFilter: any;
+    holidayFilter: any = {
+        date: this.leaveService.getCurrentMonthDates()
+    };
     transactionFilter: any = {
-        date: new Date(),
+        date: this.leaveService.getCurrentMonthDates(),
         status: 'All'
     };
-    overviewChartFilter: any = new Date();
+    overviewChartFilter: any = {
+        date: this.leaveService.getCurrentMonthDates()
+    };
     overviewChartData: any = [];
     leaveStatuses: any = [];
     modalRef: BsModalRef;
@@ -65,7 +69,6 @@ export class DashboardEmployeeComponent implements OnInit {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
         });
-        this.holidayFilter = new Date();
     }
 
     gotoApplyLeave() {
@@ -109,8 +112,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getHolidays() {
         if (this.holidayFilter) {
-            let date = new Date(this.holidayFilter);
-            this.leaveService.getLeaveHolidays(date.getMonth() + 1, date.getFullYear()).subscribe(res => {
+            this.leaveService.getLeaveHolidays(this.holidayFilter.date[0], this.holidayFilter.date[1]).subscribe(res => {
                 if (res.ok) {
                     this.upcomingHolidays = res.json() || [];
                 }
@@ -120,7 +122,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getTransactions() {
         if (this.transactionFilter.date && this.transactionFilter.status) {
-            this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.date.getMonth() + 1, this.transactionFilter.date.getFullYear(), this.transactionFilter.status).subscribe(res => {
+            this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.date[0], this.transactionFilter.date[1], this.transactionFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.recentTransactions = res.json() || [];
                 }
@@ -130,7 +132,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getOverviewChartData() {
         if (this.overviewChartFilter) {
-            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, this.overviewChartFilter.getMonth() + 1, this.overviewChartFilter.getFullYear()).subscribe(res => {
+            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, null, null, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1]).subscribe(res => {
                 if (res.ok) {
                     var data = res.json() || [];
                     data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
