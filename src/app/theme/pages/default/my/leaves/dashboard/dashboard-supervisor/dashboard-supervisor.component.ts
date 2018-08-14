@@ -210,8 +210,9 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     approveRejectLeave(e, leaveId, leaveStatus, operationStatus, reason) {
-        debugger;
-        e.stopPropagation();
+        if (e) {
+            e.stopPropagation();
+        }
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,

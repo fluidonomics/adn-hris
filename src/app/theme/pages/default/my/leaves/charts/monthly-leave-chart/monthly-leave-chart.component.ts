@@ -31,6 +31,12 @@ export class MonthlyLeaveChartComponent implements OnChanges {
         setTimeout(() => {
             $('.amcharts-chart-div a').remove();
         }, 800);
+        setTimeout(() => {
+            $('.amcharts-chart-div a').remove();
+        }, 1000);
+        setTimeout(() => {
+            $('.amcharts-chart-div a').remove();
+        }, 2000);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -55,7 +61,8 @@ export class MonthlyLeaveChartComponent implements OnChanges {
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "Leaves Taken"
+                "title": "Leaves Taken",
+                "precision": 0
             }],
             "startDuration": 1,
             "graphs": [{

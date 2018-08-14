@@ -170,16 +170,16 @@ export class DashboardEmployeeComponent implements OnInit {
 
     leaveDetailsForm: any = {};
     cancelWithdrawLeave() {
-        debugger;
-
-        if (!this.leaveDetails.remarks) {
-            this.leaveDetailsForm.remarks = {
-                error: true
-            }
-            return;
-        } else {
-            this.leaveDetailsForm.remarks = {
-                error: false
+        if (this.leaveDetails.leave.status != LeaveStatus.Applied) {
+            if (!this.leaveDetails.remarks) {
+                this.leaveDetailsForm.remarks = {
+                    error: true
+                }
+                return;
+            } else {
+                this.leaveDetailsForm.remarks = {
+                    error: false
+                }
             }
         }
 
@@ -208,7 +208,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
                 this.leaveService.cancelWithdrawLeave(body).subscribe(res => {
                     let text = 'Leave Withdrawal Sent To Supervisor For Approval';
-                    if (status === LeaveStatus.Applied) {
+                    if (this.leaveDetails.leave.status === LeaveStatus.Applied) {
                         text = 'Leave Withdrawn Successfully';
                     }
                     swal(text, "", "success");

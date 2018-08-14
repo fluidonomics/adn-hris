@@ -171,7 +171,7 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>To</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort text-center" width="5%">
                                                         <span>Days</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
@@ -202,7 +202,7 @@
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.toDate | date:'dd MMM yy'}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="5%">
+                                                    <td class="m-datatable__cell text-center" width="5%">
                                                         <span *ngIf="tran.days">{{tran.days}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
@@ -216,11 +216,11 @@
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>
-                                                            <span class="m-badge m-badge--warning m-badge--wide">{{tran.status}}</span>
+                                                            <span class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
                                                         </span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
-                                                        <span>
+                                                        <span *ngIf="tran.status == 'Applied' || tran.status == 'Approved'">
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
                                                                 (click)="showLeaveDetail(tran._id, leaveDetailModal)">
                                                                 <i class="la la-remove"></i>
@@ -332,7 +332,7 @@
                             <span class="required" aria-required="true"> * </span>
                             <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
                                 #remarks="ngModel"></textarea>
-                            <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm.remarks.error">
+                            <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm?.remarks?.error">
                                 This field is required.
                             </div>
                         </div>
