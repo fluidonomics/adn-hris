@@ -140,103 +140,92 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
-                                                <tr class="m-datatable__row" style="left: 0px;">
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 150px;">Employee Name
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                <tr class="m-datatable__row">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Employee Name</span>
                                                     </th>
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 150px;">ID
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>ID</span>
                                                     </th>
-
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 150px;">Leave Type
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Leave Type</span>
                                                     </th>
-                                                    <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">From</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>From</span>
                                                     </th>
-                                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">To</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>To</span>
                                                     </th>
-                                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Days</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Days</span>
                                                     </th>
-
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Created On</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Created On</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Created By</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Created By</span>
                                                     </th>
-
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Updated On</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Updated On</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Updated By</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Updated By</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Status</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Status</span>
                                                     </th>
-                                                    <th data-field="Actions" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Actions</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Actions</span>
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y">
-                                                <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let leave of leavesForApproval">
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal)" style="width: 150px;">{{leave.employeeDetails?.fullName}}</span>
+                                            <tbody class="m-datatable__body">
+                                                <tr (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal)" class="m-datatable__row" *ngFor="let leave of leavesForApproval">
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">{{leave.employeeDetails?.userName}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.employeeDetails?.userName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;">{{leave.leaveTypeName}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leaveTypeName}}</span>
                                                     </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.fromDate | date:'dd MMM yyy'}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.fromDate | date:'dd MMM yyy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.toDate | date:'dd MMM yyy'}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.toDate | date:'dd MMM yyy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.days}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.days}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.createdAt | date:'dd MMM yyy'}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.createdAt | date:'dd MMM yyy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.createdByName?.fullName}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.createdByName?.fullName}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.updatedByName?.fullName}}</span>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.updatedByName?.fullName}}</span>
                                                     </td>
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge m-badge--primary m-badge--wide">{{leave.leavedetails?.status}}</span>
-                                                        </span>
+                                                    <td class="m-datatable__cell">
+                                                        <span class="m-badge m-badge--primary m-badge--wide">{{leave.leavedetails?.status}}</span>
                                                     </td>
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
+                                                    <td class="m-datatable__cell">
+                                                        <span>
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve"
-                                                                (click)="approveRejectLeave(leave.leavedetails._id, leave.leavedetails.status, 'Approved')">
+                                                                (click)="approveRejectLeave($event, leave.leavedetails._id, leave.leavedetails.status, 'Approved')">
                                                                 <i class="fa fa-check"></i>
                                                             </a>
 
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reject"
-                                                                (click)="approveRejectLeave(leave.leavedetails._id, leave.leavedetails.status, 'Reject')">
+                                                                (click)="approveRejectLeave($event, leave.leavedetails._id, leave.leavedetails.status, 'Reject')">
                                                                 <i class="la la-remove"></i>
                                                             </a>
                                                         </span>
@@ -293,7 +282,7 @@
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <div class="btn-group" role="group">
-                                    <button id="btnGroupDrop2" type="button" class="btn btn-secondary">
+                                    <button id="btnGroupDrop2" type="button" class="btn btn-success">
                                         Download Excel
                                     </button>
                                 </div>
@@ -306,74 +295,63 @@
                     <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
                         <!--begin::Item-->
                         <div class="m-accordion__item m-accordion__item--green">
-                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
+                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_teamLeaves"
                                 aria-expanded="true">
                                 <span class="m-accordion__item-title">
                                 </span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
-                            <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
+                            <div class="m-accordion__item-body collapse show" id="m_accordion_teamLeaves">
                                 <div class="m-accordion__item-content">
-                                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
-                                        <table class="m-datatable__table" style="display: block; min-height: 300px;">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                        <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
-                                                <tr class="m-datatable__row" style="left: 0px;">
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 100px;">Employee Name
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                <tr class="m-datatable__row">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Employee Name</span>
                                                     </th>
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 100px;">ID
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>ID</span>
                                                     </th>
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 100px;">Leave Type
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Leave Type</span>
                                                     </th>
-                                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Quota Days</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Quota Days</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Granted By</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Granted By</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Granted On</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                                        <span>Granted On</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 100px;">Status</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Status</span>
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body ps ps--active-x ps--active-y">
-                                                <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let leave of leavesTransactions">
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 100px;">{{leave.employeeDetails?.fullName}}</span>
+                                            <tbody class="m-datatable__body">
+                                                <tr class="m-datatable__row" *ngFor="let leave of leavesTransactions">
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 100px;">{{leave.employeeDetails?.userName}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{leave.employeeDetails?.userName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 100px;">{{leave.leaveTypeName}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{leave.leaveTypeName}}</span>
                                                     </td>
-
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.days}}</span>
+                                                    <td class="m-datatable__cell" width="5%">
+                                                        <span>{{leave.leavedetails?.days}}</span>
                                                     </td>
-
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.createdByName?.fullName}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{leave.grantedBy}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{leave.leavedetails?.createdAt | date:'dd MMM yyy'}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{leave.grantedOn}}</span>
                                                     </td>
-
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 100px;">
-                                                            <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
-                                                        </span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>

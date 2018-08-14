@@ -175,27 +175,27 @@ export class ApplyComponent implements OnInit, OnDestroy {
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
-        if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
-            if (!data.attachment) {
-                this.isAttachmentRequired = true;
-            } else {
-                this.isAttachmentRequired = false;
-            }
-        }
+        // if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
+        //     if (!data.attachment) {
+        //         this.isAttachmentRequired = true;
+        //     } else {
+        //         this.isAttachmentRequired = false;
+        //     }
+        // }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-        if (data.leaveType == 1 && data.days >= 3) {
-            var new_date = moment(new Date()).add(7, 'days');
-            if (data.fromDate < new_date._d) {
-                this.fromDateValidation = {
-                    isValid: false,
-                    msg: 'Annual leave for more than 3 days should be applied before 7 days\r\nTo Add Post leave Transaction, Contact Your HR'
-                }
-                return;
-            } else {
-                this.resetFromDateValidation();
-            }
-        }
+        // if (data.leaveType == 1 && data.days >= 3) {
+        //     var new_date = moment(new Date()).add(7, 'days');
+        //     if (data.fromDate < new_date._d) {
+        //         this.fromDateValidation = {
+        //             isValid: false,
+        //             msg: 'Annual leave for more than 3 days should be applied before 7 days\r\nTo Add Post leave Transaction, Contact Your HR'
+        //         }
+        //         return;
+        //     } else {
+        //         this.resetFromDateValidation();
+        //     }
+        // }
 
         if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
             // let ccToMail = [];
@@ -224,23 +224,25 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.updatedBy = this.currentUser._id;
             _postData.session_id = '1';
             _postData.status = 'Applied';
+
+            let text = '';
             if (this.inProbation) {
-                swal({
-                    title: 'Are you sure?',
-                    text: 'Leave during probabtion are not encouraged until unless its an emergency case',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.value) {
-                        this.postApply(_postData, form);
-                    }
-                });
-            } else {
-                this.postApply(_postData, form);
+                text = 'Leave during probabtion are not encouraged until unless its an emergency case';
             }
+
+            swal({
+                title: 'Are you sure?',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.postApply(_postData, form);
+                }
+            });
         }
     }
 

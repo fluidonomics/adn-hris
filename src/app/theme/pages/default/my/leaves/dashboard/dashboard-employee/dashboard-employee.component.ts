@@ -166,8 +166,21 @@ export class DashboardEmployeeComponent implements OnInit {
         });
     }
 
+    leaveDetailsForm: any = {};
     cancelWithdrawLeave() {
         debugger;
+
+        if (!this.leaveDetails.remarks) {
+            this.leaveDetailsForm.remarks = {
+                error: true
+            }
+            return;
+        } else {
+            this.leaveDetailsForm.remarks = {
+                error: false
+            }
+        }
+
         let body: any = {
             "_id": this.leaveDetails.leave._id,
             "remarks": this.leaveDetails.remarks,
@@ -192,8 +205,11 @@ export class DashboardEmployeeComponent implements OnInit {
                 });
 
                 this.leaveService.cancelWithdrawLeave(body).subscribe(res => {
-                    // let text = status === "Approved" ? 'Leave Withdrawn Successfully' : 'Leave Rejected Successfully';
-                    swal('Leave Withdrawal Sent To Supervisor For Approval', "", "success");
+                    let text = 'Leave Withdrawal Sent To Supervisor For Approval';
+                    if (status === LeaveStatus.Applied) {
+                        text = 'Leave Withdrawn Successfully';
+                    }
+                    swal(text, "", "success");
                     this.modalRef.hide();
                     this.getTransactions();
                 }, error => {

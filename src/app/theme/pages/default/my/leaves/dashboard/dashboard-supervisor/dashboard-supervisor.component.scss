@@ -204,9 +204,14 @@ app-my-leaves-dashboard-supervisor {
                 li {
                     padding: 0.1rem;
 
-                    .btn {
+                    .btn :not(.btn-success) {
                         height: 36px;
                         color: #aaa;
+
+                        // &.btn-success {
+                        //     color: #aaa;
+                        // }
+                   
                     }
                 }
 
@@ -215,6 +220,23 @@ app-my-leaves-dashboard-supervisor {
                 }
             }
         }
+    }
+
+    .recentTransactionPortlet {
+        .m-datatable__table {
+            th {
+                width: 8.33%;
+            }
+
+            td {
+                width: 8.33%;
+            }
+        }
+    }
+
+    .m-badge {
+        color: white !important;
+        font-size: 0.7rem;
     }
 }
 

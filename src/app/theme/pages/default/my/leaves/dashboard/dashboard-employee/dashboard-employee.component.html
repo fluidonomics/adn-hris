@@ -171,55 +171,69 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
-                                                <tr class="m-datatable__row" style="left: 0px;">
-
-                                                    <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc">
-                                                        <span style="width: 150px;">Leave Type
-                                                            <i class="la la-arrow-up"></i>
-                                                        </span>
+                                                <tr class="m-datatable__row">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Leave Type</span>
                                                     </th>
-                                                    <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">From</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>From</span>
                                                     </th>
-                                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">To</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>To</span>
                                                     </th>
-                                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Days</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                                        <span>Days</span>
                                                     </th>
-                                                    <th data-field="Status" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Status</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Reason</span>
                                                     </th>
-
-                                                    <th data-field="Actions" class="m-datatable__cell m-datatable__cell--sort">
-                                                        <span style="width: 80px;">Actions</span>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Applied To</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Remarks</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Status</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                        <span>Action</span>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let tran of recentTransactions">
-                                                    <td class="m-datatable__cell--sorted m-datatable__cell" data-field="OrderID">
-                                                        <span style="width: 150px;" (click)="showLeaveDetail(tran._id, leaveDetailModal)">{{tran.leaveTypeName}}</span>
+                                                <tr (click)="showLeaveDetail(tran._id, leaveDetailModal)" class="m-datatable__row" *ngFor="let tran of recentTransactions">
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.leaveTypeName}}</span>
                                                     </td>
-                                                    <td data-field="ShipName" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{tran.fromDate | date:'dd MMMM yyy'}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.fromDate | date:'dd MMM yy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{tran.toDate | date:'dd MMMM yyy'}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.toDate | date:'dd MMM yy'}}</span>
                                                     </td>
-                                                    <td data-field="ShipDate" class="m-datatable__cell">
-                                                        <span style="width: 80px;">{{tran.days}}</span>
+                                                    <td class="m-datatable__cell" width="5%">
+                                                        <span *ngIf="tran.days">{{tran.days}}</span>
                                                     </td>
-                                                    <td data-field="Status" class="m-datatable__cell">
-                                                        <span style="width: 80px;">
-                                                            <span class="m-badge  m-badge--warning m-badge--wide">{{tran.status}}</span>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.reason}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.appliedTo}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.supervisorReason}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>
+                                                            <span class="m-badge m-badge--warning m-badge--wide">{{tran.status}}</span>
                                                         </span>
                                                     </td>
-                                                    <td data-field="Actions" class="m-datatable__cell">
-                                                        <span style="overflow: visible; position: relative; width: 110px;">
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
                                                                 (click)="showLeaveDetail(tran._id, leaveDetailModal)">
                                                                 <i class="la la-remove"></i>
@@ -227,7 +241,6 @@
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                <!-- <span *ngIf="recentTransactions?.length==0" class="m-datatable--error">No records found</span> -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -326,11 +339,15 @@
                                 disabled="true"></textarea>
                         </div>
                     </div>
-                    <div *ngIf="leaveDetails?.leave?.status == 'Approved'" class="col-md-12 adn-form__group">
+                    <div *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'" class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
-                            <label for="form_control_1">Remarks</label>
+                            <label for="form_control_1">Reason For Withdrawal</label>
+                            <span class="required" aria-required="true"> * </span>
                             <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
                                 #remarks="ngModel"></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm.remarks.error">
+                                This field is required.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -338,7 +355,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button *ngIf="leaveDetails?.leave?.status == 'Approved'" class="btn btn-success" (click)="cancelWithdrawLeave()">Withdraw Leave</button>
+                                <button *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'" class="btn btn-success"
+                                    (click)="cancelWithdrawLeave()">Withdraw Leave</button>
                                 <button *ngIf="leaveDetails?.leave?.status == 'Availed'" class="btn btn-success" (click)="cancelWithdrawLeave()">Cancel Leave</button>
                                 <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">Cancel</button>
                             </div>

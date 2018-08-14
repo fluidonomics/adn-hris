@@ -209,7 +209,9 @@ export class DashboardSupervisorComponent implements OnInit {
             })
     }
 
-    approveRejectLeave(leaveId, leaveStatus, operationStatus, reason) {
+    approveRejectLeave(e, leaveId, leaveStatus, operationStatus, reason) {
+        debugger;
+        e.stopPropagation();
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
@@ -279,6 +281,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
     leaveDetails: any = {};
     showLeaveDetail(leaveId, templateRef) {
+        debugger;
         this.leaveDetails = {};
         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
