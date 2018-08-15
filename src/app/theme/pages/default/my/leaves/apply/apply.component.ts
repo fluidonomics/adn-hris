@@ -213,8 +213,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (this.primarySupervisor) {
                 _postData.supervisor_id = this.primarySupervisor._id;
             }
-            _postData.fromDate = data.fromDate;
-            _postData.toDate = data.toDate;
+            _postData.fromDate = moment(data.fromDate).format('L');
+            _postData.toDate = moment(data.toDate).format('L');
             _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
             // _postData.contactDetails = data.contactDetail;
