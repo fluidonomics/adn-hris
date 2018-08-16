@@ -36,6 +36,7 @@ import { CommonService } from '../../../../../base/_services/common.service';
 import { EmployeeGuard } from '../../../../../base/_guard/employee.guard';
 import { HrGuard } from '../../../../../base/_guard/hr.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
+import { DashboardHrComponent } from './dashboard/dahsboard-hr/dashboard-hr.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         LeaveComponent,
         DashboardEmployeeComponent,
         DashboardSupervisorComponent,
+        DashboardHrComponent,
         ApplyComponent,
         CancelComponent,
         TrackLeaveComponent,

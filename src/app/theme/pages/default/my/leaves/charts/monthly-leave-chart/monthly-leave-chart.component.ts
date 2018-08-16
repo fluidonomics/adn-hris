@@ -28,15 +28,7 @@ export class MonthlyLeaveChartComponent implements OnChanges {
 
     ngAfterViewInit() {
         this.createChart();
-        setTimeout(() => {
-            $('.amcharts-chart-div a').remove();
-        }, 800);
-        setTimeout(() => {
-            $('.amcharts-chart-div a').remove();
-        }, 1000);
-        setTimeout(() => {
-            $('.amcharts-chart-div a').remove();
-        }, 2000);
+        this.clearJsTag();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -46,6 +38,12 @@ export class MonthlyLeaveChartComponent implements OnChanges {
             });
             this.createChart();
         }
+    }
+
+    clearJsTag() {
+        setInterval(() => {
+            $('.amcharts-chart-div a').remove();
+        }, 1000);
     }
 
     colors = [

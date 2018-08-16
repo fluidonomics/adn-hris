@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '../.././../../layouts/layout.module';
+import { LayoutModule } from '../../../../layouts/layout.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { MyTeamRoutingModule } from './my-team-routing.model';

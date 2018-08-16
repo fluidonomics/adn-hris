@@ -21,7 +21,7 @@ import {
     country,
     levelofEducation, examDegreeTitle
 } from "../_jsonData/dropDownData";
-import { AuthService } from "../_services/authService.service"
+import { AuthService } from "./authService.service"
 
 
 

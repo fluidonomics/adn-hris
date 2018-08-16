@@ -7,7 +7,7 @@ import { LeaveService, LeaveStatus } from '../../leave.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../../../../environments/environment";
 import { CommonService } from "../../../../../../../base/_services/common.service";
-import { BsModalService, BsModalRef } from '../../../../../../../../../node_modules/ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import swal from 'sweetalert2';
 
 declare var mApp;

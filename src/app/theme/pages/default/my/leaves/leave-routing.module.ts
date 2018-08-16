@@ -16,12 +16,14 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { HrGuard } from '../../../../../base/_guard/hr.guard';
 import { DashboardEmployeeComponent } from './dashboard/dashboard-employee/dashboard-employee.component';
 import { DashboardSupervisorComponent } from './dashboard/dashboard-supervisor/dashboard-supervisor.component';
+import { DashboardHrComponent } from './dashboard/dahsboard-hr/dashboard-hr.component';
 
 const routes: Routes = [{
     path: '', component: LeaveComponent,
     children: [
         { path: 'dashboard/employee', component: DashboardEmployeeComponent, canActivate: [EmployeeGuard] },
-        { path: 'dashboard/supervisor', component: DashboardSupervisorComponent, canActivate: [EmployeeGuard] },
+        { path: 'dashboard/supervisor', component: DashboardSupervisorComponent, canActivate: [SupervisorGuard] },
+        { path: 'dashboard/hr', component: DashboardHrComponent, canActivate: [HrGuard] },
         { path: 'apply', component: ApplyComponent, canActivate: [EmployeeGuard] },
         { path: 'cancel', component: CancelComponent, canActivate: [EmployeeGuard] },
         { path: 'list', component: TrackLeaveComponent, canActivate: [EmployeeGuard] },
