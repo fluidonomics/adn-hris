@@ -44,26 +44,31 @@ export class DashboardSupervisorComponent implements OnInit {
     };
 
     teamLeavesFilter: any = {
-        date: this.leaveService.getCurrentMonthDates()
+        date: this.leaveService.getCurrentMonthDates(),
+        page: 1
     };
 
     leaveApprovalFilter: any = {
         date: this.leaveService.getCurrentMonthDates(),
         employeeId: null,
-        leaveTypeId: null
+        leaveTypeId: null,
+        page: 1
     };
 
     leaveTransactionsFilter: any = {
         date: this.leaveService.getCurrentMonthDates(),
         employeeId: null,
         leaveTypeId: null,
-        status: null
+        status: null,
+        page: 1
     };
 
     leavesForApproval: any = [];
     leavesTransactions: any = [];
     supervisorTeamEmployeeList: any = [];
     modalRef: BsModalRef;
+
+    p1: number = 1;
 
     constructor(
         private leaveService: LeaveService,
@@ -263,13 +268,13 @@ export class DashboardSupervisorComponent implements OnInit {
 
                 this.leaveService.cancelApproveLeave(body).subscribe(res => {
                     if (res.ok) {
+                        if (this.modalRef) {
+                            this.modalRef.hide();
+                        }
                         let text = operationStatus === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
                         swal(text, "", "success");
                         this.getTeamLeavesForApproval();
                         this.getTeamLeavesTransactions();
-                        if (this.modalRef) {
-                            this.modalRef.hide();
-                        }
                     }
                 }, error => {
                     console.log(error);
@@ -283,7 +288,6 @@ export class DashboardSupervisorComponent implements OnInit {
 
     leaveDetails: any = {};
     showLeaveDetail(leaveId, templateRef) {
-        debugger;
         this.leaveDetails = {};
         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
@@ -292,6 +296,17 @@ export class DashboardSupervisorComponent implements OnInit {
                 let body = res.json();
                 if (body.data[0]) {
                     this.leaveDetails.leave = body.data[0];
+                    if (this.leaveDetails.leave.emp_id) {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                            if (res.ok) {
+                                let balances = res.json() || [];
+                                if (balances.length > 0) {
+                                    let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
+                                    this.leaveDetails.leave.balance = balance.leaveBalance;
+                                }
+                            }
+                        })
+                    }
                 }
             }
         });

@@ -35,11 +35,13 @@ export class DashboardEmployeeComponent implements OnInit {
     fiscalYearId: string;
 
     holidayFilter: any = {
-        date: this.leaveService.getCurrentMonthDates()
+        date: this.leaveService.getCurrentMonthDates(),
+        page: 1
     };
     transactionFilter: any = {
         date: this.leaveService.getCurrentMonthDates(),
-        status: 'All'
+        status: 'All',
+        page: 1
     };
     overviewChartFilter: any = {
         date: this.leaveService.getCurrentMonthDates()
@@ -163,6 +165,17 @@ export class DashboardEmployeeComponent implements OnInit {
                 let body = res.json();
                 if (body.data[0]) {
                     this.leaveDetails.leave = body.data[0];
+                    if (this.leaveDetails.leave.emp_id) {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                            if (res.ok) {
+                                let balances = res.json() || [];
+                                if (balances.length > 0) {
+                                    let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
+                                    this.leaveDetails.leave.balance = balance.leaveBalance;
+                                }
+                            }
+                        })
+                    }
                 }
             }
         });
@@ -207,12 +220,12 @@ export class DashboardEmployeeComponent implements OnInit {
                 });
 
                 this.leaveService.cancelWithdrawLeave(body).subscribe(res => {
+                    this.modalRef.hide();
                     let text = 'Leave Withdrawal Sent To Supervisor For Approval';
                     if (this.leaveDetails.leave.status === LeaveStatus.Applied) {
                         text = 'Leave Withdrawn Successfully';
                     }
                     swal(text, "", "success");
-                    this.modalRef.hide();
                     this.getTransactions();
                 }, error => {
                     mApp.unblock('.leaveDetailsPortlet');
