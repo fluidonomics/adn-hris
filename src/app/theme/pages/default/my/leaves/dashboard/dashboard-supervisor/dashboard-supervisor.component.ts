@@ -101,7 +101,7 @@ export class DashboardSupervisorComponent implements OnInit {
                     this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                     this.loadDashboard();
-
+                    this.loadFilterData();
                 }
             },
             error => {
@@ -109,8 +109,8 @@ export class DashboardSupervisorComponent implements OnInit {
             }
         );
     }
+
     loadDashboard() {
-        this.loadFilterData();
         this.getOverviewChartData();
         this.getTeamLeaves();
         this.getTeamLeavesForApproval();
@@ -157,11 +157,11 @@ export class DashboardSupervisorComponent implements OnInit {
                     chartData.push({
                         "leaveType": leave.leaveTypeName,
                         "leaveCount": leave.totalAppliedLeaves
-                    })
+                    });
                 });
                 this.overviewChartData = chartData;
             }
-        })
+        });
     }
 
 
@@ -171,7 +171,7 @@ export class DashboardSupervisorComponent implements OnInit {
                 let body = res.json();
                 this.teamLeaves = body.data || [];
             }
-        })
+        });
     }
 
     getTeamLeavesForApproval() {
@@ -214,10 +214,26 @@ export class DashboardSupervisorComponent implements OnInit {
             })
     }
 
+    leaveDetailsForm: any = {};
     approveRejectLeave(e, leaveId, leaveStatus, operationStatus, reason) {
         if (e) {
             e.stopPropagation();
         }
+
+        if (operationStatus === "Reject") {
+            if (!this.leaveDetails.remarks) {
+                this.leaveDetailsForm.remarks = {
+                    error: true
+                }
+                return;
+            } else {
+                this.leaveDetailsForm.remarks = {
+                    error: false
+                }
+            }
+        }
+
+
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
@@ -268,13 +284,18 @@ export class DashboardSupervisorComponent implements OnInit {
 
                 this.leaveService.cancelApproveLeave(body).subscribe(res => {
                     if (res.ok) {
+                        debugger;
                         if (this.modalRef) {
                             this.modalRef.hide();
                         }
-                        let text = operationStatus === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
+                        let text = '';
+                        if (leaveStatus == LeaveStatus.PendingCancellation || leaveStatus == LeaveStatus.PendingWithdrawal) {
+                            text = operationStatus === "Approved" ? 'Leave Withdrawn Successfully' : 'Leave Rejected Successfully';
+                        } else {
+                            text = operationStatus === "Approved" ? 'Leave Approved Successfully' : 'Leave Rejected Successfully';
+                        }
                         swal(text, "", "success");
-                        this.getTeamLeavesForApproval();
-                        this.getTeamLeavesTransactions();
+                        this.loadDashboard();
                     }
                 }, error => {
                     console.log(error);
@@ -287,6 +308,8 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     leaveDetails: any = {};
+    btnApproveText: string = 'Approve Leave';
+    btnRejectText: string = 'Reject Leave';
     showLeaveDetail(leaveId, templateRef) {
         this.leaveDetails = {};
         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
@@ -296,6 +319,13 @@ export class DashboardSupervisorComponent implements OnInit {
                 let body = res.json();
                 if (body.data[0]) {
                     this.leaveDetails.leave = body.data[0];
+                    if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
+                        this.btnApproveText = 'Approve';
+                        this.btnRejectText = 'Reject';
+                    } else {
+                        this.btnApproveText = 'Approve Leave';
+                        this.btnRejectText = 'Reject Leave';
+                    }
                     if (this.leaveDetails.leave.emp_id) {
                         this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
                             if (res.ok) {

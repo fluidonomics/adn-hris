@@ -544,6 +544,9 @@
                             <label for="form_control_1">Remarks</label>
                             <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
                                 #remarks="ngModel"></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm?.remarks?.error">
+                                This field is required.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -551,9 +554,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Approved', leaveDetails.remarks)">Approve Leave</button>
-                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Reject', leaveDetails.remarks)">Reject Leave</button>
-                                <button class="btn btn-secondary " (click)="modalRef.hide() " type="button ">Cancel</button>
+                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Approved', leaveDetails.remarks)">{{btnApproveText}}</button>
+                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Reject', leaveDetails.remarks)">{{btnRejectText}}</button>
+                                <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">Cancel</button>
                             </div>
                         </div>
                     </div>

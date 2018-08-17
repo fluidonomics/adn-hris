@@ -127,6 +127,7 @@ export class DashboardEmployeeComponent implements OnInit {
             this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.date[0], this.transactionFilter.date[1], this.transactionFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.recentTransactions = res.json() || [];
+                    this.recentTransactions = this.recentTransactions.sort((a, b) => b._id - a._id);
                 }
             })
         }
@@ -226,17 +227,17 @@ export class DashboardEmployeeComponent implements OnInit {
                         text = 'Leave Withdrawn Successfully';
                     }
                     swal(text, "", "success");
+                    this.getOverviewChartData();
+                    this.getLeaveBalance();
                     this.getTransactions();
                 }, error => {
                     mApp.unblock('.leaveDetailsPortlet');
                     console.log(error);
                 }, () => {
                     mApp.unblock('.leaveDetailsPortlet');
-                })
+                });
             }
-        })
-
-
+        });
     }
 
 

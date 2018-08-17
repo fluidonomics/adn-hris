@@ -184,20 +184,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
         // }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-        // if (data.leaveType == 1 && data.days >= 3) {
-        //     var new_date = moment(new Date()).add(7, 'days');
-        //     if (data.fromDate < new_date._d) {
-        //         this.fromDateValidation = {
-        //             isValid: false,
-        //             msg: 'Annual leave for more than 3 days should be applied before 7 days\r\nTo Add Post leave Transaction, Contact Your HR'
-        //         }
-        //         return;
-        //     } else {
-        //         this.resetFromDateValidation();
-        //     }
-        // }
+        if (data.leaveType == 1 && data.days >= 3) {
+            var new_date = moment(new Date()).add(7, 'days');
+            if (data.fromDate < new_date._d) {
+                this.fromDateValidation = {
+                    isValid: false,
+                    msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
+                }
+                return;
+            } else {
+                this.resetFromDateValidation();
+            }
+        }
 
-        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
+        // && !this.isAttachmentRequired
+        if (form.valid && this.areDaysValid && this.isBalanceValid) {
             // let ccToMail = [];
             // if (data.ccTo) {
             //     data.ccTo.forEach(cc => {
