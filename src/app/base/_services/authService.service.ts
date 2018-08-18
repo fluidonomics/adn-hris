@@ -66,7 +66,7 @@ export class AuthService implements CanActivate {
 
     private atOptions: Angular2TokenOptions;
     private atCurrentUserType: UserType;
-    private atCurrentAuthData: AuthData;
+    public atCurrentAuthData: AuthData;
     public atCurrentUserData: UserData;
 
     constructor(

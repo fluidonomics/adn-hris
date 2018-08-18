@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '../../../../../../../node_modules/@angular/common/http';
 
 
 @Injectable()
@@ -13,7 +14,8 @@ export class LeaveService {
 
     constructor(
         private authService: AuthService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private http: HttpClient
     ) {
     }
 
@@ -131,6 +133,21 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+
+    saveEmployeeLeaveDetails(leavesData: any): Observable<Response> {
+        let url = "leave/applyLeave";
+        return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    uploadLeaveAttachement(attBody: FormData) {
+        let url = "leave/uploadSickLeaveDocument";
+        // return this.authService.post(url, attBody, {}).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+        const headers = new HttpHeaders();
+        headers.append('"access-token', this.authService.atCurrentAuthData.accessToken);
+        return this.http.post(url, attBody, { headers: headers }).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
     // ------------------------------------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -165,11 +182,6 @@ export class LeaveService {
     }
 
 
-
-    saveEmployeeLeaveDetails(leavesData: any): Observable<Response> {
-        let url = "leave/applyLeave";
-        return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
 
     getEmployeeLeaveDetails(_empId: number, fiscalYearId: any): Observable<Response> {
         let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId=" + fiscalYearId;

@@ -15,6 +15,15 @@ app-my-leaves-apply {
                         }
                     }
                 }
+
+                .fileName {
+                    margin-left: 2rem;
+
+                    i {
+                        cursor: pointer;
+                        color: #C70000;
+                    }
+                }
             }
         }
     }

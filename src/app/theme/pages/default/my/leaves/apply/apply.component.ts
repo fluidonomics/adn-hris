@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, NgForm } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
@@ -9,6 +9,8 @@ import { UtilityService } from '../../../../../../base/_services/utilityService.
 import { Subscription } from 'rxjs';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Observable } from 'rxjs/Observable';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { environment } from '../../../../../../../environments/environment';
 
 declare var mApp;
 declare var moment;
@@ -34,6 +36,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
+    isAttachmentAdded: boolean = false;
     currentUser: UserData;
     fromDateValidation: any = {};
     inProbation: boolean = false;
@@ -63,7 +66,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.fleaveapplication.valueChanges.subscribe(val => {
                 this.areDaysValid = true;
                 this.isBalanceValid = true;
-                this.isAttachmentRequired = false;
+                this.isAttachmentAdded = false;
             });
         });
     }
@@ -139,7 +142,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
     onChangeLeaveType() {
         if (this.leaveapplication.leaveType === 3) {
             this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
-                debugger;
                 if (res.ok) {
                     let startDate = new Date(res.json().result[0].startDate);
                     let endDate = new Date(res.json().result[0].endDate);
@@ -172,16 +174,34 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
     }
 
+    onFilePick(event) {
+        let reader = new FileReader();
+        if (event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.leaveapplication.attachment = {
+                    filename: file.name,
+                    filetype: file.type,
+                    value: reader.result.split(',')[1]
+                }
+            };
+        }
+    }
+
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
-        // if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
-        //     if (!data.attachment) {
-        //         this.isAttachmentRequired = true;
-        //     } else {
-        //         this.isAttachmentRequired = false;
-        //     }
-        // }
+        if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
+            this.isAttachmentRequired = true;
+            if (!this.uploadEvent || !this.uploadEvent.data) {
+                this.isAttachmentAdded = true;
+            } else {
+                this.isAttachmentAdded = false;
+            }
+        } else {
+            this.isAttachmentRequired = false;
+        }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
         if (data.leaveType == 1 && data.days >= 3) {
@@ -197,8 +217,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             }
         }
 
-        // && !this.isAttachmentRequired
-        if (form.valid && this.areDaysValid && this.isBalanceValid) {
+        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentAdded) {
             // let ccToMail = [];
             // if (data.ccTo) {
             //     data.ccTo.forEach(cc => {
@@ -247,7 +266,54 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
     }
 
+    uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
+    uploadEvent: UploadInput;
+    document: any = {}
+    options: UploaderOptions;
+    uploadOutput: UploadOutput;
+    onUploadOutput(output: UploadOutput, fileName: string): void {
+        if (output.file) {
+            this.leaveapplication.attachmentName = output.file.name
+        }
+        let atCurrentAuthData = this._authService.currentAuthData;
+        this.uploadOutput = output;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            this.uploadEvent = {
+                fieldName: 'seakleavedocument',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/leave/uploadSickLeaveDocument',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                data: { seakleavedocument: this.document, _id: "1" },
+                method: 'POST',
+            };
+        } else if (output.type === 'done') {
+            mApp.unblock('#applyLeavePanel');
+            if (output.file.responseStatus == 200) {
+                swal("Leave Applied", "", "success");
+                this.resetForm(this.leaveForm);
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
+            }
+        }
+    }
+
+    clearAttachment() {
+        this.uploadEvent = null;
+        this.document = {}
+        this.uploadOutput = null;
+        this.leaveapplication.attachmentName = null;
+    }
+
+    leaveForm: any = {};
     postApply(_postData, form) {
+        this.leaveForm = form;
         mApp.block('#applyLeavePanel', {
             overlayColor: '#000000',
             type: 'loader',
@@ -256,9 +322,14 @@ export class ApplyComponent implements OnInit, OnDestroy {
         });
         this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
             res => {
-                mApp.unblock('#applyLeavePanel');
-                swal("Leave Applied", "", "success");
-                this.resetForm(form);
+                if (this.isAttachmentRequired) {
+                    let leave = res.json();
+                    this.uploadEvent.data._id = leave._id
+                    this.uploadInput.emit(this.uploadEvent);
+                } else {
+                    swal("Leave Applied", "", "success");
+                    this.resetForm(form);
+                }
             },
             error => {
                 this.handleError(this, error);
@@ -281,7 +352,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         form.submitted = false;
         this.areDaysValid = true;
         this.isBalanceValid = true;
-        this.isAttachmentRequired = false;
+        this.isAttachmentAdded = false;
         this.getLeaveBalance();
     }
 
