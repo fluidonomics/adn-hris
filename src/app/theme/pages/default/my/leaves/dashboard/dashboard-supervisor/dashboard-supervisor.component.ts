@@ -123,12 +123,29 @@ export class DashboardSupervisorComponent implements OnInit {
         this.getStatusList();
     }
 
-
-
     getEmployeeList() {
         this.leaveService.getSupervisorTeamMember(this.currentUser._id).subscribe(res => {
             if (res.ok) {
-                this.supervisorTeamEmployeeList = res.json().data || [];
+                let finalList = res.json().data || [];
+                let tempList = [];
+                //code to show only distinct employees on team leaves filter
+                finalList.forEach(element => {
+                    if (tempList.length > 0) {
+                        let flag = false;
+                        tempList.forEach((f) => {
+                            if (f.employeeDetails.fullName == element.employeeDetails.fullName) {
+                                flag = true;
+                                return;
+                            }
+                        });
+                        if (!flag) {
+                            tempList.push(element);
+                        }
+                    } else {
+                        tempList.push(element);
+                    }
+                });
+                this.supervisorTeamEmployeeList = tempList;
             }
         })
     }
@@ -237,7 +254,7 @@ export class DashboardSupervisorComponent implements OnInit {
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
-            "reason": reason,
+            "reason2": reason,
             "updatedBy": this.currentUser._id
         };
 
@@ -281,10 +298,8 @@ export class DashboardSupervisorComponent implements OnInit {
                     state: 'success',
                     // message: 'Please wait...'
                 });
-
                 this.leaveService.cancelApproveLeave(body).subscribe(res => {
                     if (res.ok) {
-                        debugger;
                         if (this.modalRef) {
                             this.modalRef.hide();
                         }
