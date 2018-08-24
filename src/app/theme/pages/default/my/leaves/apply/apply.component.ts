@@ -353,6 +353,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.areDaysValid = true;
         this.isBalanceValid = true;
         this.isAttachmentAdded = false;
+        this.clearAttachment();
         this.getLeaveBalance();
     }
 
