@@ -16,7 +16,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { HrGuard } from '../../../../../base/_guard/hr.guard';
 import { DashboardEmployeeComponent } from './dashboard/dashboard-employee/dashboard-employee.component';
 import { DashboardSupervisorComponent } from './dashboard/dashboard-supervisor/dashboard-supervisor.component';
-import { DashboardHrComponent } from './dashboard/dahsboard-hr/dashboard-hr.component';
+import { DashboardHrComponent } from './dashboard/dashboard-hr/dashboard-hr.component';
 
 const routes: Routes = [{
     path: '', component: LeaveComponent,

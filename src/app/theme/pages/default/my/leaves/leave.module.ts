@@ -36,7 +36,7 @@ import { CommonService } from '../../../../../base/_services/common.service';
 import { EmployeeGuard } from '../../../../../base/_guard/employee.guard';
 import { HrGuard } from '../../../../../base/_guard/hr.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
-import { DashboardHrComponent } from './dashboard/dahsboard-hr/dashboard-hr.component';
+import { DashboardHrComponent } from './dashboard/dashboard-hr/dashboard-hr.component';
 import { HttpClientModule } from '../../../../../../../node_modules/@angular/common/http';
 import { NgUploaderModule } from 'ngx-uploader';
 

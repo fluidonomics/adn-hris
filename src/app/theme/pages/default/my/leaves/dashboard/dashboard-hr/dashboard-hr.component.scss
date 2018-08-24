@@ -238,6 +238,13 @@ app-my-leaves-dashboard-hr {
         color: white !important;
         font-size: 0.7rem;
     }
+
+    @media (min-width: 768px) {
+        .downloadExcel {
+            transform: translate(20px, 7rem);
+            margin-top: 8px;
+        }
+    }
 }
 
 modal-container {

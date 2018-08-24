@@ -11,6 +11,7 @@ import { ScriptLoaderService } from "../../../../../../../_services/script-loade
 export class MonthlyLeaveChartComponent implements OnChanges {
 
     @Input() chartData: any = [];
+    @Input() options: AmChartOptions = {};
 
     private chart: AmChart;
 
@@ -51,7 +52,8 @@ export class MonthlyLeaveChartComponent implements OnChanges {
     ]
 
     createChart() {
-        this.chart = this.AmCharts.makeChart("chartdiv", {
+
+        let chartOptions = {
             "type": "serial",
             "theme": "light",
             "marginRight": 70,
@@ -84,7 +86,13 @@ export class MonthlyLeaveChartComponent implements OnChanges {
             "export": {
                 "enabled": true
             }
-        });
+        };
+
+        if (this.options.valueAxes && this.options.valueAxes.precision) {
+            chartOptions.valueAxes[0].precision = this.options.valueAxes.precision;
+        }
+
+        this.chart = this.AmCharts.makeChart("chartdiv", chartOptions);
     }
 
     ngOnDestroy() {
@@ -92,4 +100,15 @@ export class MonthlyLeaveChartComponent implements OnChanges {
             this.AmCharts.destroyChart(this.chart);
         }
     }
+}
+
+export interface AmChartOptions {
+    valueAxes?: valueAxes
+}
+
+export interface valueAxes {
+    axisAlpha?: number;
+    position?: string;
+    title?: string;
+    precision?: number;
 }

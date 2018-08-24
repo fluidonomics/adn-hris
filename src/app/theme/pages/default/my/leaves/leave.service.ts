@@ -147,7 +147,45 @@ export class LeaveService {
         return this.http.post(url, attBody, { headers: headers }).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    getLeaveAvailedPercentage(empId: number, fromDate: number, toDate: number) {
+        let url = "leave/hr/getAllEmployeeLeaveBalance?fromDate=" + fromDate + "&toDate=" + toDate;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 
+    getEmployeeOnLeaves(empId: number, fromDate: number, toDate: number) {
+        let url = "leave/hr/getAllEmployeeLeaveDetails?fromDate=" + fromDate + "&toDate=" + toDate;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getAllEmployee() {
+        let url = "leave/getAllEmployee";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getHrLeaveTransactionsExcel(body) {
+        let url = "leave/hr/createLeaveTransactionReport?fromDate=" + body.fromDate + "&toDate=" + body.toDate;
+
+        if (body.leaveType) {
+            url += "&leaveType=" + body.leaveType;
+        }
+        if (body.division) {
+            url += "&divisionName=" + body.division;
+        }
+        if (body.employee) {
+            url += "&empId=" + body.employee;
+        }
+        if (body.status) {
+            url += "&status=" + body.status;
+        }
+        if (body.department) {
+            url += "&departmentName=" + body.department;
+        }
+        if (body.userName) {
+            url += "&userName=" + body.userName;
+        }
+
+        return this.authService.post(url, null).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
     // ------------------------------------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------------------------------------
 
@@ -193,10 +231,7 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getAllEmployee() {
-        let url = "leave/getAllEmployee";
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     grantLeaveAllEmployee(grantLeave: any) {
         let url = "leave/grantLeaveAllEmployee";
