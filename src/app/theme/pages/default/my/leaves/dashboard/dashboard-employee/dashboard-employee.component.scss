@@ -119,3 +119,8 @@ modal-container {
         }
     }
 }
+
+.span-scroll {
+    overflow-y: auto !important;
+    height: 50px;
+}

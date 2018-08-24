@@ -209,19 +209,19 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort text-center" width="5%">
                                                         <span>Days</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
                                                         <span>Reason</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Applied To</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
                                                         <span>Remarks</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Status</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                                         <span>Action</span>
                                                     </th>
                                                 </tr>
@@ -240,21 +240,21 @@
                                                     <td class="m-datatable__cell text-center" width="5%">
                                                         <span *ngIf="tran.days">{{tran.days}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="10%">
-                                                        <span>{{tran.reason}}</span>
+                                                    <td class="m-datatable__cell" width="20%">
+                                                        <span class="span-scroll">{{tran.reason}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.applyToFullName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="10%">
-                                                        <span>{{tran.supervisorReason}}</span>
+                                                    <td class="m-datatable__cell" width="20%" >
+                                                        <span class="span-scroll">{{tran.supervisorReason}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>
                                                             <span class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
                                                         </span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="10%">
+                                                    <td class="m-datatable__cell" width="5%">
                                                         <span *ngIf="tran.status == 'Applied' || tran.status == 'Approved'">
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
                                                                 (click)="showLeaveDetail(tran._id, leaveDetailModal)">
