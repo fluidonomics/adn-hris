@@ -61,7 +61,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.InitValues();
             this.getLeaveTypes();
             this.getEmployeeDetails();
-            this.getAllEmailListOfEmployee();
+            // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
             this.fleaveapplication.valueChanges.subscribe(val => {
                 this.areDaysValid = true;
@@ -313,6 +313,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     leaveForm: any = {};
     postApply(_postData, form) {
+        debugger;
         this.leaveForm = form;
         mApp.block('#applyLeavePanel', {
             overlayColor: '#000000',
@@ -328,6 +329,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     this.uploadInput.emit(this.uploadEvent);
                 } else {
                     swal("Leave Applied", "", "success");
+                    mApp.unblock('#applyLeavePanel');
                     this.resetForm(form);
                 }
             },

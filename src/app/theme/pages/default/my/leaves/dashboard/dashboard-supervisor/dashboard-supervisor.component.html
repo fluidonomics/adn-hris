@@ -64,7 +64,7 @@
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="teamLeaves.length > 0" class="m-datatable__body ps ps--active-x ps--active-y">
-                                    <tr data-row="0" class="m-datatable__row" *ngFor="let leave of teamLeaves  | paginate: { id:'teamLeaves', itemsPerPage: 5, currentPage: teamLeavesFilter.page };let even=even;">
+                                    <tr data-row="0" class="m-datatable__row" *ngFor="let leave of teamLeaves  | paginate: { id:'teamLeaves', itemsPerPage: 6, currentPage: teamLeavesFilter.page };let even=even;">
                                         <td data-field="ShipName" class="m-datatable__cell">
                                             <span>{{leave.employeeDetails.fullName}}</span>
                                         </td>
@@ -204,7 +204,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal)" class="m-datatable__row" *ngFor="let leave of leavesForApproval | paginate: { id: 'leavesForApproval', itemsPerPage: 5, currentPage: leaveApprovalFilter.page };let even=even;">
+                                                <tr (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, true)" class="m-datatable__row" *ngFor="let leave of leavesForApproval | paginate: { id: 'leavesForApproval', itemsPerPage: 6, currentPage: leaveApprovalFilter.page };let even=even;">
                                                     <td class="m-datatable__cell">
                                                         <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
@@ -318,7 +318,7 @@
                                     [clearable]="true"></ng-select>
                             </li>
                             <li class="nav-item m-tabs__item">
-                                <ng-select class="m-input m-input--air" name="leaveType" placeholder="Select Leave Type" bindValue="type" bindLabel="type"
+                                <ng-select class="m-input m-input--air" name="leaveType" placeholder="Select Leave Type" bindValue="_id" bindLabel="type"
                                     [items]="leaveTypeList" [(ngModel)]="leaveTransactionsFilter.leaveTypeId" (ngModelChange)="getTeamLeavesTransactions()"
                                     [clearable]="true"></ng-select>
                             </li>
@@ -376,7 +376,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr class="m-datatable__row" *ngFor="let leave of leavesTransactions | paginate: { id: 'leavesTransactions', itemsPerPage: 5, currentPage: leaveTransactionsFilter.page };let even=even;">
+                                                <tr class="m-datatable__row" (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, false)" *ngFor="let leave of leavesTransactions | paginate: { id: 'leavesTransactions', itemsPerPage: 6, currentPage: leaveTransactionsFilter.page };let even=even;">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
@@ -525,6 +525,16 @@
                         <span class="key">Apporval Authority</span>
                         <span class="value">{{leaveDetails?.leave?.primarySupervisor?.fullName}}</span>
                     </div>
+                    <div class="col-md-12 form-group" *ngIf="leaveDetails.leave && leaveDetails.leave.supervisorReason">
+                        <span class="key">Apporval Remarks</span>
+                        <span class="value">{{leaveDetails?.leave?.supervisorReason}}</span>
+                    </div>
+                    <div class="col-md-12 form-group" *ngIf="leaveDetails.leave && leaveDetails.leave.attachment">
+                        <span class="key">Attachement</span>
+                        <span class="value">
+                            <a rel="javascript(void);" (click)="viewAttachement(leaveDetails.leave)">View Attachement</a>
+                        </span>
+                    </div>
                     <div class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason</label>
@@ -532,7 +542,7 @@
                                 disabled="true"></textarea>
                         </div>
                     </div>
-                    <div class="col-md-12 adn-form__group" *ngIf="leaveDetails?.leave?.status == 'Pending Withdrawal'">
+                    <div class="col-md-12 adn-form__group" *ngIf="leaveDetails?.leave?.status == 'Pending Withdrawal' || leaveDetails?.leave?.status == 'Pending Cancellation'">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason For Withdrawal</label>
                             <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason2}}"
@@ -543,7 +553,7 @@
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Remarks</label>
                             <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
-                                #remarks="ngModel"></textarea>
+                                #remarks="ngModel" [disabled]="!showLeaveModalActionTools"></textarea>
                             <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm?.remarks?.error">
                                 This field is required.
                             </div>
@@ -554,8 +564,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Approved', leaveDetails.remarks)">{{btnApproveText}}</button>
-                                <button class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Reject', leaveDetails.remarks)">{{btnRejectText}}</button>
+                                <button *ngIf="showLeaveModalActionTools" class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Approved', leaveDetails.remarks)">{{btnApproveText}}</button>
+                                <button *ngIf="showLeaveModalActionTools" class="btn btn-success" (click)="approveRejectLeave($event, leaveDetails.leave._id, leaveDetails.leave.status, 'Reject', leaveDetails.remarks)">{{btnRejectText}}</button>
                                 <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">Cancel</button>
                             </div>
                         </div>

@@ -93,7 +93,7 @@
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="upcomingHolidays.length > 0" class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 5, currentPage: holidayFilter.page };let even=even;">
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 6, currentPage: holidayFilter.page };let even=even;">
                                         <td data-field="ShipName" class="m-datatable__cell">
                                             <span>{{holiday.occasion}}</span>
                                         </td>
@@ -227,7 +227,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr (click)="showLeaveDetail(tran._id, leaveDetailModal)" class="m-datatable__row" *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 5, currentPage: transactionFilter.page };let even=even;">
+                                                <tr (click)="showLeaveDetail(tran._id, leaveDetailModal, $event)" class="m-datatable__row" *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.leaveTypeName}}</span>
                                                     </td>
@@ -257,7 +257,7 @@
                                                     <td class="m-datatable__cell" width="5%">
                                                         <span *ngIf="tran.status == 'Applied' || tran.status == 'Approved'">
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
-                                                                (click)="showLeaveDetail(tran._id, leaveDetailModal)">
+                                                                (click)="showLeaveDetail(tran._id, leaveDetailModal, $event)">
                                                                 <i class="la la-remove"></i>
                                                             </a>
                                                         </span>

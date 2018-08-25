@@ -157,7 +157,10 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     leaveDetails: any = {};
-    showLeaveDetail(leaveId, templateRef) {
+    showLeaveDetail(leaveId, templateRef, event) {
+        if (event) {
+            event.stopPropagation();
+        }
         this.leaveDetails = {};
         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
@@ -199,8 +202,8 @@ export class DashboardEmployeeComponent implements OnInit {
 
         let body: any = {
             "_id": this.leaveDetails.leave._id,
-            "remarks": this.leaveDetails.remarks,
-            "updatedBy": this.currentUser._id
+            "updatedBy": this.currentUser._id,
+            "reason2": this.leaveDetails.remarks
         };
 
         swal({

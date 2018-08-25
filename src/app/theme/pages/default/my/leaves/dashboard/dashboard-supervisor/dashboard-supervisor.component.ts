@@ -254,29 +254,34 @@ export class DashboardSupervisorComponent implements OnInit {
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
-            "reason2": reason,
             "updatedBy": this.currentUser._id
         };
 
         if (operationStatus == 'Approved') {
             if (leaveStatus == LeaveStatus.Applied) {
                 body.approved = true;
+                body.supervisorReason = reason;
             }
             else if (leaveStatus == LeaveStatus.PendingWithdrawal) {
                 body.withdrawn = true;
+                body.supervisorReason2 = reason;
             }
             else if (leaveStatus == LeaveStatus.PendingCancellation) {
                 body.cancelled = true;
+                body.supervisorReason2 = reason;
             }
         } else if (operationStatus == 'Reject') {
             if (leaveStatus == LeaveStatus.Applied) {
                 body.rejected = true;
+                body.supervisorReason = reason;
             }
             else if (leaveStatus == LeaveStatus.PendingWithdrawal) {
                 body.withdrawn = false;
+                body.supervisorReason2 = reason;
             }
             else if (leaveStatus == LeaveStatus.PendingCancellation) {
                 body.cancelled = false;
+                body.supervisorReason2 = reason;
             }
         }
 
@@ -325,7 +330,9 @@ export class DashboardSupervisorComponent implements OnInit {
     leaveDetails: any = {};
     btnApproveText: string = 'Approve Leave';
     btnRejectText: string = 'Reject Leave';
-    showLeaveDetail(leaveId, templateRef) {
+    showLeaveModalActionTools: boolean = true;
+    showLeaveDetail(leaveId, templateRef, showActionTools) {
+        this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
@@ -357,6 +364,9 @@ export class DashboardSupervisorComponent implements OnInit {
         });
     }
 
+    viewAttachement(leave) {
+
+    }
 
     // --------------------------------------------------------------------------
 
