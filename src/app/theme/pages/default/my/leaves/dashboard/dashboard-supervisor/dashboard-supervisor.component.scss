@@ -191,9 +191,9 @@ app-my-leaves-dashboard-supervisor {
 
         .teamOnLeaveGrid {
             .m_datatable {
-                th, td {
-                    width: 33.33%;
-                }
+                // th, td {
+                //     width: 33.33%;
+                // }
             }
         }
     }
@@ -265,4 +265,8 @@ modal-container {
             }
         }
     }
+}
+.span-scroll {
+    overflow-y: auto !important;
+    height: 50px;
 }
