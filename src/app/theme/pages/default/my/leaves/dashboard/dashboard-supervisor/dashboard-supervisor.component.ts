@@ -365,7 +365,7 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     viewAttachement(leave) {
-
+        // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
     }
 
     // --------------------------------------------------------------------------

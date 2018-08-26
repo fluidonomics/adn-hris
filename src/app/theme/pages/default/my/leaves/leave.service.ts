@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '../../../../../../../node_modules/@angular/common/http';
 
+declare var moment;
 
 @Injectable()
 export class LeaveService {
@@ -191,11 +192,11 @@ export class LeaveService {
 
 
     getCurrentMonthDates() {
+        debugger;
         let dateRange = [];
         let startDate = new Date();
         startDate.setDate(1);
-        let endDate = new Date();
-        endDate.setDate(30);
+        var endDate = moment(startDate).endOf('month');
         dateRange = [startDate, endDate];
         return dateRange;
     }
