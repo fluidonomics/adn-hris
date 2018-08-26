@@ -322,13 +322,13 @@
                                     [items]="leaveTypeList" [(ngModel)]="leaveTransactionsFilter.leaveTypeId" (ngModelChange)="getTeamLeavesTransactions()"
                                     [clearable]="true"></ng-select>
                             </li>
-                            <li class="nav-item m-tabs__item">
+                            <!-- <li class="nav-item m-tabs__item">
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop2" type="button" class="btn btn-success">
                                         Download Excel
                                     </button>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -542,15 +542,15 @@
                     <div class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason</label>
-                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason}}"
+                            <textarea name="reason" id="reason" placeholder="Reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason}}"
                                 disabled="true"></textarea>
                         </div>
                     </div>
                     <div class="col-md-12 adn-form__group" *ngIf="leaveDetails?.leave?.status == 'Pending Withdrawal' || leaveDetails?.leave?.status == 'Pending Cancellation' || leaveDetails?.leave?.status == 'Cancelled' || leaveDetails?.leave?.status == 'Withdrwan'">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason For Withdrawal</label>
-                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason2}}"
-                                disabled="true"></textarea>
+                            <textarea name="reason" id="reason" placeholder="Reason For Withdrawal" class="form-control m-input m-input--air" rows="3"
+                                value="{{leaveDetails?.leave?.reason2}}" disabled="true"></textarea>
                         </div>
                     </div>
                     <div class="col-md-12 adn-form__group" *ngIf="showLeaveModalActionTools">

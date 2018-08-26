@@ -150,6 +150,7 @@
 													 (uploadOutput)="onUploadOutput($event, document.documentName)" [uploadInput]="uploadInput" (click)="documentsPdf.click()">
 													<!-- <input type="file" name="attachment" (change)="onFilePick($event)" value="Upload Document" /> -->
 												</label>
+												<!-- <span>max size 300kb</span> -->
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
 													<span *ngIf="isAttachmentAdded">This field is required.</span>
 												</div>
