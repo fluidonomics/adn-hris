@@ -80,6 +80,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             msg: ''
         }
         this.fiscalYearId = 1;
+        this.clearAttachment();
     }
 
     getLeaveTypes() {

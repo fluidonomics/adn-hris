@@ -192,11 +192,11 @@ export class LeaveService {
 
 
     getCurrentMonthDates() {
-        debugger;
         let dateRange = [];
         let startDate = new Date();
         startDate.setDate(1);
-        var endDate = moment(startDate).endOf('month');
+        let y = moment(startDate).endOf('month');
+        let endDate = y._d;
         dateRange = [startDate, endDate];
         return dateRange;
     }
