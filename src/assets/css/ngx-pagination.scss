@@ -1,18 +1,3 @@
-@import "cancel/cancel.component";
-@import "dashboard/dashboard-employee/dashboard-employee.component";
-@import "dashboard/dashboard-supervisor/dashboard-supervisor.component";
-@import "dashboard/dashboard-hr/dashboard-hr.component";
-@import "track-leave/track-leave.component";
-@import "post-leave-transaction/post-leave-transaction.component";
-@import "grant-leave/grant-leave.component";
-@import "reports/reports.component";
-@import "holidays/holidays.component";
-@import "employee-leaves/employee-leaves.component";
-@import "calender/calendar.component";
-@import "apply/apply.component";
-@import "charts/monthly-leave-chart/monthly-leave-chart";
-
-// For Pagination
 .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager {
     margin-top: 20px;
 }
@@ -75,8 +60,7 @@
     display: inline-block;
 }
 
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--more-next,
-.m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--more-prev {
+.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--more-next, .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--more-prev {
     font-weight: 600;
 }
 
@@ -127,28 +111,22 @@
     }
 }
 
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last,
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next,
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev,
-.m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first {
-    color: #716aca;
+.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev, .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first {
+    color: #198F4A;
     background: #edecf8;
 }
 
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last:hover,
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next:hover,
-.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev:hover,
-.m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first:hover {
+.m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--last:hover, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--next:hover, .m-datatable.m-datatable--default > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--prev:hover, .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--first:hover {
     background: #deddf3;
 }
 
 .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link:hover {
-    color: #716aca;
+    color: #198F4A;
     background: #edecf8;
 }
 
 .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-nav > li > .m-datatable__pager-link.m-datatable__pager-link--active {
-    background: #716aca;
+    background: #198F4A;
     color: #fff;
 }
 
@@ -169,71 +147,4 @@
 
 .m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager > .m-datatable__pager-info .m-datatable__pager-size .btn.dropdown-toggle:hover {
     background: #deddf3;
-}
-
-// Fix to align it center (horizontally)
-.m-datatable.m-datatable--default > .paginationtemplate > .m-datatable__pager {
-    margin: 20px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.no-data-block {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0px;
-}
-
-.pl1r {
-    padding-left: 1rem;
-}
-
-.m-datatable {
-    tr:nth-child(even) {
-        background-color: #f4f4f4;
-    }
-}
-
-.m-accordion .m-accordion__item--green {
-    border: 1px solid $color-them-light-green !important;
-
-    .m-accordion__item-head,
-    .m-accordion .m-accordion__item--green .m-accordion__item-head:hover {
-        background-color: $color-them-light-green !important;
-    }
-
-    .m-accordion__item-head .m-accordion__item-mode {
-        color: #ffffff !important;
-    }
-
-    .m-accordion__item-title {
-        color: white;
-    }
-}
-
-.m-portlet__head-tools {
-    .form-control[readonly] {
-        background-color: #ffffff !important;
-        width: 14rem;
-        cursor: pointer;
-    }
-
-    ul {
-        li.nav-item {
-            width: 14rem;
-        }
-    }
-}
-
-.m-datatable.m-datatable--default.m-datatable--error .m-datatable__body {
-    text-align: unset;
-    padding: 0px;
-}
-
-span.m-datatable--error {
-    padding: 30px;
-    display: block;
-    text-align: center;
 }

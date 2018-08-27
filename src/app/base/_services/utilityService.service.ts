@@ -114,13 +114,17 @@ export class UtilityService {
         FileSaver.saveAs(blob, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
-    showLoader(element) {
-        mApp.block(element, {
+    showLoader(element, msg?: string) {
+        let options: any = {
             overlayColor: '#000000',
             type: 'loader',
-            state: 'success',
-            // message: 'Please wait...'
-        });
+            state: 'success'
+        };
+
+        if (msg) {
+            options.message = msg;
+        }
+        mApp.block(element, options);
     }
 
     hideLoader(element) {

@@ -21,12 +21,9 @@ import { AuthService } from "./base/_services/authService.service";
 import { CommonService } from "./base/_services/common.service";
 
 import { BaseModule } from "./base/base.module"
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment'
 import { UtilityService } from './base/_services/utilityService.service';
 import { DocumentService } from './base/_services/documentService.service';
-
-const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} };
 
 @NgModule({
     declarations: [
@@ -41,7 +38,7 @@ const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} 
         BaseModule,
         LayoutModule,
         BrowserModule.withServerTransition({ appId: 'AdnHris' }),
-        SocketIoModule.forRoot(config),
+        // SocketIoModule.forRoot(config),
         BrowserAnimationsModule,
         AppRoutingModule,
         ThemeRoutingModule,
@@ -52,4 +49,5 @@ const config: SocketIoConfig = { url: environment.api_base.apiBase, options: {} 
     providers: [ScriptLoaderService, AuthService, CommonService, UtilityService, DocumentService],
     bootstrap: [AppComponent]
 })
+
 export class AppModule { }

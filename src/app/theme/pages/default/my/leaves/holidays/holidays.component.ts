@@ -44,8 +44,7 @@ export class HolidaysComponent implements OnInit {
         this.loadYears();
     }
 
-    loadYears()
-    {
+    loadYears() {
         for (let index = 2015; index <= this.currentDate.getFullYear(); index++) {
             this.years.push(index)
         }
@@ -53,19 +52,19 @@ export class HolidaysComponent implements OnInit {
 
     public getHolidays() {
         this.utilityService.showLoader('#holidayLoader');
-        this.leaveService.getLeaveHolidays(this.year).subscribe(
-            res => {
-                if (res.ok) {
-                    let body = res.json();
-                    this.holidayList = body || [];
-                    this.isGeneralHolidayCount = this.holidayList.filter(hol => hol.isGeneral == true).length || 0;
-                }
-            },
-            error => {
-                console.error(error);
-            }, () => {
-                this.utilityService.hideLoader('#holidayLoader');
-            });
+        // this.leaveService.getLeaveHolidays(this.year).subscribe(
+        //     res => {
+        //         if (res.ok) {
+        //             let body = res.json();
+        //             this.holidayList = body || [];
+        //             this.isGeneralHolidayCount = this.holidayList.filter(hol => hol.isGeneral == true).length || 0;
+        //         }
+        //     },
+        //     error => {
+        //         console.error(error);
+        //     }, () => {
+        //         this.utilityService.hideLoader('#holidayLoader');
+        //     });
     }
 
     openModal(template: TemplateRef<any>) {

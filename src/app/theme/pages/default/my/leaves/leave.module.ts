@@ -10,13 +10,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LeaveRoutingModule } from './leave-routing.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BaseModule } from '../../../../../base/base.module';
+import { AmChartsService, AmChartsModule } from '@amcharts/amcharts3-angular';
 
 
 //--------- Component -------------
 import { LeaveComponent } from './leave.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LeaveForwardComponent } from './dashboard/leave-forward/leave-forward.component';
-import { DashboardDetailsComponent } from './dashboard/dashboard-details/dashboard-details.component';
+import { DashboardEmployeeComponent } from './dashboard/dashboard-employee/dashboard-employee.component';
+import { DashboardSupervisorComponent } from './dashboard/dashboard-supervisor/dashboard-supervisor.component';
 import { ApplyComponent } from './apply/apply.component';
 import { CancelComponent } from './cancel/cancel.component';
 import { TrackLeaveComponent } from './track-leave/track-leave.component';
@@ -28,6 +28,7 @@ import { TrackLeaveDetailsComponent } from './track-leave/track-leave-details/tr
 import { PostLeaveTransactionComponent } from './post-leave-transaction/post-leave-transaction.component';
 import { EmployeeLeavesComponent } from './employee-leaves/employee-leaves.component';
 import { GrantLeaveComponent } from './grant-leave/grant-leave.component';
+import { MonthlyLeaveChartComponent } from './charts/monthly-leave-chart/monthly-leave-chart.component';
 
 //--------- Services -------------
 import { LeaveService } from './leave.service';
@@ -35,6 +36,9 @@ import { CommonService } from '../../../../../base/_services/common.service';
 import { EmployeeGuard } from '../../../../../base/_guard/employee.guard';
 import { HrGuard } from '../../../../../base/_guard/hr.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
+import { DashboardHrComponent } from './dashboard/dashboard-hr/dashboard-hr.component';
+import { HttpClientModule } from '../../../../../../../node_modules/@angular/common/http';
+import { NgUploaderModule } from 'ngx-uploader';
 
 
 @NgModule({
@@ -48,12 +52,15 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         NgSelectModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
-        BaseModule
+        BaseModule,
+        AmChartsModule,
+        HttpClientModule,
+        NgUploaderModule
     ], declarations: [
         LeaveComponent,
-        DashboardComponent,
-        LeaveForwardComponent,
-        DashboardDetailsComponent,
+        DashboardEmployeeComponent,
+        DashboardSupervisorComponent,
+        DashboardHrComponent,
         ApplyComponent,
         CancelComponent,
         TrackLeaveComponent,
@@ -64,9 +71,10 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         TrackLeaveDetailsComponent,
         PostLeaveTransactionComponent,
         EmployeeLeavesComponent,
-        GrantLeaveComponent
+        GrantLeaveComponent,
+        MonthlyLeaveChartComponent
     ],
-    providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard]
+    providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard, AmChartsService]
 })
 export class LeaveModule {
 }

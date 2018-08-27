@@ -1,0 +1,266 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Leave Availed Percentage
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="leaveAvailedChartDataFilter.date"
+                                    (ngModelChange)="getLeaveAvailedPercentage()" placeholder="Select Month" placement="bottom"
+                                    readonly>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <app-my-leaves-chart-monthly-leave [chartData]="leaveAvailedChartData" [options]="leaveAvailedChartOptions"></app-my-leaves-chart-monthly-leave>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text">
+                                Approved Status Percentage
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="approvedStatusChartDataFilter.date"
+                                    (ngModelChange)="getApprovedStatusPercentage()" placeholder="Select Month" placement="bottom"
+                                    readonly>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <app-my-leaves-chart-monthly-leave [chartData]="approvedStatusChartData" [options]="approvedStatusChartOptions"></app-my-leaves-chart-monthly-leave>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm recentTransactionPortlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Employee On Leave
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="employeeOnLeavesFilter.date"
+                                    (ngModelChange)="getEmployeeOnLeaves()" placeholder="Select Month" placement="left" readonly>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Section-->
+                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                        <!--begin::Item-->
+                        <div class="m-accordion__item m-accordion__item--green">
+                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
+                                aria-expanded="true">
+                                <span class="m-accordion__item-title">
+                                </span>
+                                <span class="m-accordion__item-mode"></span>
+                            </div>
+                            <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
+                                <div class="m-accordion__item-content">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                        <table class="m-datatable__table employeeOnLeavesTable">
+                                            <thead class="m-datatable__head">
+                                                <tr class="m-datatable__row">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Name</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Gender</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Department</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>From</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>To</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Days</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Leave Type</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Supervisor</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="m-datatable__body">
+                                                <tr class="m-datatable__row" *ngFor="let leave of employeeOnLeaves">
+                                                    <td class="m-datatable__cell">
+                                                        <img [src]="leave.profileImage" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
+                                                            alt="">
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.emp_name}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.gender}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.department}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.fromDate | date:'dd MMM yyy'}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.toDate | date:'dd MMM yyy'}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.days}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leave_type_name}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.applyTo_name}}</span>
+                                                    </td>
+                                                </tr>
+                                                <span *ngIf="employeeOnLeaves?.length==0" class="m-datatable--error">No records found</span>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Item-->
+                    </div>
+                    <!--end::Section-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm teamLeavesPortlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Leave Transactions Report
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">From Date</label>
+                                            <span class="required" aria-required="true">* </span>
+                                            <input type="text" class="form-control m-input m-input--air" name="fromDate" placeholder="Select From Date" [(ngModel)]="leaveTransactionsFilter.fromDate"
+                                                #fromDate="ngModel" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                                id="fromDate" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Leave Type</label>
+                                            <ng-select #ddLeaveType class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypeList"
+                                                [(ngModel)]="leaveTransactionsFilter.leaveType" id="leavetype" #leavetype="ngModel"
+                                                placeholder="Select Leave Type" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Division</label>
+                                            <ng-select #ddDivision class="m-input m-input--air" name="division" bindValue="_id" bindLabel="divisionName" [items]="divisionList"
+                                                [(ngModel)]="leaveTransactionsFilter.division" id="division" #division="ngModel"
+                                                placeholder="Select Division" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Employee</label>
+                                            <ng-select #ddemployee class="m-input m-input--air" name="employee" bindValue="_id" bindLabel="fullName" [items]="employeeList"
+                                                [(ngModel)]="leaveTransactionsFilter.employee" id="employee" #employee="ngModel"
+                                                placeholder="Select Employee" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">To Date</label>
+                                            <span class="required" aria-required="true">* </span>
+                                            <input type="text" class="form-control m-input m-input--air" name="toDate" placeholder="Select To Date" [(ngModel)]="leaveTransactionsFilter.toDate"
+                                                #toDate="ngModel" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                                id="toDate" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Status</label>
+                                            <ng-select class="m-input m-input--air" name="status" bindValue="_id" bindLabel="type" [items]="statusList" [(ngModel)]="leaveTransactionsFilter.status"
+                                                id="status" #status="ngModel" placeholder="Select Status" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Department</label>
+                                            <ng-select class="m-input m-input--air" name="department" bindValue="_id" bindLabel="departmentName" [items]="departmentList"
+                                                [(ngModel)]="leaveTransactionsFilter.department" id="department" #department="ngModel"
+                                                placeholder="Select Department" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Employee Id</label>
+                                            <ng-select class="m-input m-input--air" name="employeeId" bindValue="userName" bindLabel="userName" [items]="employeeList"
+                                                [(ngModel)]="leaveTransactionsFilter.userName" id="employeeId" #userName="ngModel"
+                                                placeholder="Select EmployeeId" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="m-form__actions">
+                                    <button class="btn btn-success downloadExcel" (click)="getHrLeaveTransactionsExcel()">Download Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

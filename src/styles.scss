@@ -1164,9 +1164,11 @@ input:read-only {
 }
 
 /******************************Readonly****************************************/
-.form-control[readonly] {
-  background-color: #ECECF5;
-}
+
+// .form-control[readonly] {
+//   background-color: #ECECF5;
+// }
+
 .formtitle{
   font-weight: 200 !important;
   color: #5A5A58 !important;

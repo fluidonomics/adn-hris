@@ -1,0 +1,138 @@
+@import "../../../../../../../../assets/colors";
+
+app-my-leaves-dashboard-employee {
+    width: 100%;
+
+    & > .m-content {
+        padding-bottom: 0px !important;
+        height: 115rem;
+    }
+
+    .m-portlet.m-portlet--warning.m-portlet--head-solid-bg {
+        background: unset;
+        background-color: unset;
+    }
+
+    .leave-balance-card {
+        &.annual-leave {
+            background-color: $color-annual-leave;
+        }
+
+        &.sick-leave {
+            background-color: $color-sick-leave;
+        }
+
+        h3, div, span {
+            color: white !important;
+        }
+    }
+
+    .applyLeaveBtn {
+        .btn {
+            margin-top: 3rem;
+        }
+    }
+
+    .leave-balance-portlet {
+        .m-widget1 {
+            padding: .8rem 2rem;
+
+            .block {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    .nav.nav-pills.nav-pills--brand .nav-link {
+        &.active {
+            background: whitesmoke;
+            color: black;
+        }
+
+        i {
+            color: #198F4A !important;
+        }
+    }
+
+    .leaveBalance {
+        .m-widget4__info {
+            span {
+                &.title {
+                    color: #000;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .nav {
+        li {
+            cursor: pointer;
+        }
+    }
+
+    .holidayGrid {
+        .m_datatable {
+            table {
+                tbody {
+                    td {
+                        padding-top: 15px !important;
+                        padding-bottom: 15px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .recentTransactions {
+        .m-accordion__item-content {
+            padding: 1.5rem 0.3rem;
+        }
+
+        .m-datatable {
+            td {
+                max-width: 50px;
+            }
+        }
+    }
+}
+
+app-my-leaves-chart-monthly-leave {
+    #chartdiv {
+        height: 300px !important;
+    }
+}
+
+modal-container {
+    .leaveDetailsPortlet {
+        .m-portlet__body {
+            .img {
+                width: 100% !important;
+            }
+
+            .name {
+                display: block;
+                font-size: 1.5rem;
+            }
+
+            .empId {
+                display: block;
+            }
+
+            .details {
+                padding-top: 2rem;
+
+                .value {
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
+}
+
+.span-scroll {
+    overflow-y: auto !important;
+    height: 50px;
+}

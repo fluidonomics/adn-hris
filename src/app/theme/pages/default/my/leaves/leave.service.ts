@@ -6,16 +6,204 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '../../../../../../../node_modules/@angular/common/http';
 
+declare var moment;
 
 @Injectable()
 export class LeaveService {
 
     constructor(
         private authService: AuthService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private http: HttpClient
     ) {
     }
+
+
+    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
+        // let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&year=" + 2018;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveHolidays(fromDate: any, toDate: any) {
+        let url = "leave/getLeaveHolidays?fromDate=" + fromDate + "&toDate=" + toDate;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveTransactionDetails(empId: number, fromDate: number, toDate: number, status: string) {
+        // +"year=" + year +
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&fromDate=" + fromDate + "&toDate=" + toDate;
+        if (status != 'All') {
+            url += "&status=" + status
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getTeamLeaves(supervisorId: number, fromDate: number, toDate?: number, status?: string) {
+        // +"year=" + year +
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
+        if (status) {
+            url += "&status=" + status;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveDetailsByFilter(supervisorId: number, fromDate: number, toDate: number, empId?: number, leaveType?: number, status?: string) {
+        let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
+        if (empId) {
+            url += "&empId=" + empId;
+        }
+        if (leaveType) {
+            url += "&leave_type=" + leaveType;
+        }
+        if (status) {
+            url += "&status=" + status;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getEmployeeLeavesByMonth(empId: number, month?: number, year?: number, fromDate?: Date, toDate?: Date) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
+        if (month) {
+            url += "&month=" + month;
+        }
+        if (year) {
+            url += "&year=" + year;
+        }
+        if (fromDate) {
+            url += "&fromDate=" + fromDate;
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getSupervisorTeamMember(supervisorId) {
+        // localhost:3000/api/leave/getSupervisorTeamMember?empId=3
+        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveTypes() {
+        let url = "leave/getLeaveTypes";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
+    getTeamLeavesByMonth(empId: number, fromDate: number, toDate: number, status?: string) {
+        let url = "leave/getSupervisorLeaveDetails?empId=" + empId + "&fromDate=" + fromDate + "&toDate=" + toDate;
+        if (status) {
+            url += "&status=" + status;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getEmployeeDetails(empId: number) {
+        let url = "user/getEmployeeDetails?emp_id=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    cancelApproveLeave(body: any) {
+        let url = "leave/cancelApproveLeave";
+        return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    cancelWithdrawLeave(body: any) {
+        let url = "leave/withdrawLeave";
+        return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveStatuses() {
+        let statuses = [
+            LeaveStatus.Applied,
+            LeaveStatus.Approved,
+            LeaveStatus.Rejected,
+            LeaveStatus.PendingWithdrawal,
+            LeaveStatus.Withdrawn,
+            LeaveStatus.PendingCancellation,
+            LeaveStatus.Cancelled
+        ];
+        return statuses;
+    }
+
+    getLeaveDetailsById(leaveId: number) {
+        let url = "leave/getLeaveDetailsById?id=" + leaveId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+
+    saveEmployeeLeaveDetails(leavesData: any): Observable<Response> {
+        let url = "leave/applyLeave";
+        return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    uploadLeaveAttachement(attBody: FormData) {
+        let url = "leave/uploadSickLeaveDocument";
+        // return this.authService.post(url, attBody, {}).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+        const headers = new HttpHeaders();
+        headers.append('"access-token', this.authService.atCurrentAuthData.accessToken);
+        return this.http.post(url, attBody, { headers: headers }).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getLeaveAvailedPercentage(empId: number, fromDate: number, toDate: number) {
+        let url = "leave/hr/getAllEmployeeLeaveBalance?fromDate=" + fromDate + "&toDate=" + toDate;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getEmployeeOnLeaves(empId: number, fromDate: number, toDate: number) {
+        let url = "leave/hr/getAllEmployeeLeaveDetails?fromDate=" + fromDate + "&toDate=" + toDate;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getAllEmployee() {
+        let url = "leave/getAllEmployee";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getHrLeaveTransactionsExcel(body) {
+        let url = "leave/hr/createLeaveTransactionReport?fromDate=" + body.fromDate + "&toDate=" + body.toDate;
+
+        if (body.leaveType) {
+            url += "&leaveType=" + body.leaveType;
+        }
+        if (body.division) {
+            url += "&divisionName=" + body.division;
+        }
+        if (body.employee) {
+            url += "&empId=" + body.employee;
+        }
+        if (body.status) {
+            url += "&status=" + body.status;
+        }
+        if (body.department) {
+            url += "&departmentName=" + body.department;
+        }
+        if (body.userName) {
+            url += "&userName=" + body.userName;
+        }
+
+        return this.authService.post(url, null).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+    // ------------------------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------------------------------
+
+
+    getCurrentMonthDates() {
+        let dateRange = [];
+        let startDate = new Date();
+        startDate.setDate(1);
+        let y = moment(startDate).endOf('month');
+        let endDate = y._d;
+        dateRange = [startDate, endDate];
+        return dateRange;
+    }
+
+
+    // ------------------------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------------------------------
 
     getCancelEmployeeLeaveDetails(_empId: number) {
         let url = "leave/getCancelEmployeeLeaveDetails?emp_id=" + _empId;
@@ -32,18 +220,10 @@ export class LeaveService {
         return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveType(): Observable<Response> {
-        let url = "leave/getLeaveTypes";
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
 
-    saveEmployeeLeaveDetails(leavesData: any): Observable<Response> {
-        let url = "leave/applyLeave";
-        return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
 
     getEmployeeLeaveDetails(_empId: number, fiscalYearId: any): Observable<Response> {
-        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId="+fiscalYearId;
+        let url = "leave/getEmployeeLeaveDetails?emp_id=" + _empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
@@ -52,10 +232,7 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getAllEmployee() {
-        let url = "leave/getAllEmployee";
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     grantLeaveAllEmployee(grantLeave: any) {
         let url = "leave/grantLeaveAllEmployee";
@@ -71,24 +248,17 @@ export class LeaveService {
         let url = "leave/grantLeaveByEmployee";
         return this.authService.post(url, grantLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    grantMaternityLeave(grantMaternityLeave: any){
-        let url ="leave/grantMaternityLeave";
+    grantMaternityLeave(grantMaternityLeave: any) {
+        let url = "leave/grantMaternityLeave";
         return this.authService.post(url, grantMaternityLeave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     getHRLeaveDetails() {
         let url = "leave/getHRLeaveDetails";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveHolidays(year: any) {
-        let url = "leave/getLeaveHolidays";
-        return this.authService.get(url + '?date=' + year).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
 
     saveLeaveHoliday(leaveHoliday: any) {
         let url = "leave/addLeaveHoliday";
@@ -115,10 +285,7 @@ export class LeaveService {
         return this.authService.post(url, leave).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveDetailsById(leaveId: number) {
-        let url = "leave/getLeaveDetailsById?id=" + leaveId;
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+
 
     getLeavesByMonth() {
         let url = "leave/getLeavesByMonth";
@@ -157,8 +324,18 @@ export class LeaveService {
         let url = "leave/getEmployeeProbationDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
-    getMaternityLeaveDetails(empId: number){
+    getMaternityLeaveDetails(empId: number) {
         let url = "leave/getEmpMaternityLeaveDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+}
+
+export const LeaveStatus = {
+    Applied: 'Applied',
+    Approved: 'Approved',
+    Rejected: 'Rejected',
+    PendingWithdrawal: 'Pending Withdrawal',
+    PendingCancellation: 'Pending Cancellation',
+    Withdrawn: 'Withdrawn',
+    Cancelled: 'Cancelled'
 }

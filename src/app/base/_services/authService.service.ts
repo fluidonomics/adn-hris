@@ -13,7 +13,6 @@ import {
 } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
-import { Socket } from 'ngx-socket-io';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/fromEvent';
@@ -67,14 +66,13 @@ export class AuthService implements CanActivate {
 
     private atOptions: Angular2TokenOptions;
     private atCurrentUserType: UserType;
-    private atCurrentAuthData: AuthData;
+    public atCurrentAuthData: AuthData;
     public atCurrentUserData: UserData;
 
     constructor(
         private http: Http,
         @Optional() private activatedRoute: ActivatedRoute,
-        @Optional() private router: Router,
-        private socket: Socket
+        @Optional() private router: Router
     ) { }
 
     userSignedIn(): boolean {
@@ -235,7 +233,6 @@ export class AuthService implements CanActivate {
         this.atCurrentUserData = null;
 
         //this.socket.emit('disconnect');
-        this.socket.disconnect(true);
         this.router.navigate(['/login']);
     }
 

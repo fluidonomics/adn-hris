@@ -1,96 +1,27 @@
 <div class="m-content">
-		<div class="m-portlet">
-				<div class="row m-row--no-padding m-row--col-separator-xl">
-					<div class="col-md-3">
-						<div class="m-widget1">
-							<div class="m-widget1__item">
-								<div class="row m-row--no-padding align-items-center">
-									<div class="col">
-										<h3 class="m-widget1__title">
-											Annual
-										</h3>
-										<span class="m-widget1__desc">
-											Leave Balance
-										</span>
-									</div>
-									<div class="col m--align-right">
-										<span class="m-widget1__number m--font-accent">
-											<span class="big-h1">10</span>
-											<span style="color: #a9a1a1 !important">/20</span>
-										</span>
-									</div>
-								</div>
+	<div class="m-portlet leave-balance-portlet">
+		<div class="row m-row--no-padding m-row--col-separator-xl">
+			<div class="col-md-3" *ngFor="let bal of leaveBalance">
+				<div *ngIf="bal.allotedLeave != 0" class="m-widget1">
+					<div class="m-widget1__item">
+						<div class="row m-row--no-padding align-items-center">
+							<div class="block">
+								<h3 class="m-widget1__title">
+									{{bal.leaveType}}
+								</h3>
 							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="m-widget1">
-							<div class="m-widget1__item">
-								<div class="row m-row--no-padding align-items-center">
-									<div class="col">
-										<h3 class="m-widget1__title">
-											Sick
-										</h3>
-										<span class="m-widget1__desc">
-											Leave Balance
-										</span>
-									</div>
-									<div class="col m--align-right">
-										<span class="m-widget1__number m--font-accent">
-											<span class="big-h1">10</span>
-											<span style="color: #a9a1a1 !important">/20</span>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="m-widget1">
-							<div class="m-widget1__item">
-								<div class="row m-row--no-padding align-items-center">
-									<div class="col">
-										<h3 class="m-widget1__title">
-											Special
-										</h3>
-										<span class="m-widget1__desc">
-											Leave Balance
-										</span>
-									</div>
-									<div class="col m--align-right">
-										<span class="m-widget1__number m--font-accent">
-											<span class="big-h1">10</span>
-											<span style="color: #a9a1a1 !important">/20</span>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="m-widget1">
-							<div class="m-widget1__item">
-								<div class="row m-row--no-padding align-items-center">
-									<div class="col">
-										<h3 class="m-widget1__title">
-											Maternity
-										</h3>
-										<span class="m-widget1__desc">
-											Leave Balance
-										</span>
-									</div>
-									<div class="col m--align-right">
-										<span class="m-widget1__number m--font-accent">
-											<span class="big-h1">120</span>
-											<span style="color: #a9a1a1 !important">/120</span>
-										</span>
-									</div>
-								</div>
+							<div class="block">
+								<span class="m-widget1__number m--font-accent">
+									<span class="big-h1">{{bal.appliedLeave}}</span>
+									<span style="color: #a9a1a1 !important">/ {{bal.allotedLeave}}</span>
+								</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
@@ -175,13 +106,8 @@
 									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="form-group m-form__group">
-												<label for="form_control_1">Apply To</label>
-												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="applyto" bindValue="_id" placeholder="Select Apply To" bindLabel="fullName"
-												 [items]="supervisorDetails" [(ngModel)]="leaveapplication.applyToId" #applyto="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="!applyto.valid && leavetype.valid">
-													<span *ngIf="fleaveapplication.submitted && !applyto.valid">This field is required.</span>
-												</div>
+												<label for="form_control_1">Approving Authority</label>
+												<span class="pl1r">{{primarySupervisor?.fullName}}</span>
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">
@@ -196,8 +122,8 @@
 											</div>
 										</div>
 									</div>
-									<!-- <div class="row">
-										<div class="col-md-6 adn-form__group">
+									<div class="row">
+										<!-- <div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Contact Detail</label>
 												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="1" placeholder="Contact Details"
@@ -210,23 +136,27 @@
 												<ng-select class="m-input m-input--air" name="ccTo" [items]="emailDetails" [(ngModel)]="leaveapplication.ccTo" #ccTo="ngModel"
 												 placeholder="Select CC To" bindLabel="personalEmail" bindValue="personalEmail" multiple="true" [clearable]="false"></ng-select>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group attachment">
-												<label for="form_control_1">Attachment</label>
-												<span class="required" aria-required="true" *ngIf="isAttachmentRequired"> * </span>
+												<label for="form_control_1">Attachment (max. size 300kb)</label>
+												<span class="required" aria-required="true" *ngIf="isAttachmentAdded"> * </span>
+												<span class="fileName" *ngIf="leaveapplication.attachmentName">{{leaveapplication?.attachmentName}}
+													<i class="fa fa-times" (click)="clearAttachment()"></i>
+												</span>
 												<label class="btn btn-default browse">
 													Browse
-													<input type="file" name="attachment" [(ngModel)]="leaveapplication.attachment" #attachment="ngModel" value="Upload Document"
-													/>
+													<input type="file" accept="application/pdf" hidden="hidden" name="attachement" #documentsPdf ngFileSelect [options]="options"
+													 (uploadOutput)="onUploadOutput($event, document.documentName)" [uploadInput]="uploadInput" (click)="documentsPdf.click()">
+													<!-- <input type="file" name="attachment" (change)="onFilePick($event)" value="Upload Document" /> -->
 												</label>
-
+												<!-- <span>max size 300kb</span> -->
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
-													<span *ngIf="isAttachmentRequired">This field is required.</span>
+													<span *ngIf="isAttachmentAdded">This field is required.</span>
 												</div>
 											</div>
 										</div>
-									</div> -->
+									</div>
 								</div>
 								<div class="form-actions">
 									<div class="row">

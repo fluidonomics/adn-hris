@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, NgForm } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
@@ -9,6 +9,8 @@ import { UtilityService } from '../../../../../../base/_services/utilityService.
 import { Subscription } from 'rxjs';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Observable } from 'rxjs/Observable';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { environment } from '../../../../../../../environments/environment';
 
 declare var mApp;
 declare var moment;
@@ -29,18 +31,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
     tosessiondropdownitems = ['text'];
     supervisorDetails: any;
     leaveTypeList: any = [];
-    leaveTypesDetails: Observable<Array<any>>;
+    leaveTypesDetails: any = [];
     emailDetails: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
+    isAttachmentAdded: boolean = false;
     currentUser: UserData;
-    employeeBalances: any = [];
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number=1;
-    
+    fiscalYearId: number = 1;
+    leaveBalance: any = [];
+    employeeDetails: any = {};
+    primarySupervisor: any = {};
+
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
         private leaveService: LeaveService,
@@ -54,14 +59,13 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
             this.InitValues();
-            this.getLeaveTypes();
-            this.getAllSupervisorDetails();
-            this.getAllEmailListOfEmployee();
+            this.getEmployeeDetails();
+            // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
             this.fleaveapplication.valueChanges.subscribe(val => {
                 this.areDaysValid = true;
                 this.isBalanceValid = true;
-                this.isAttachmentRequired = false;
+                this.isAttachmentAdded = false;
             });
         });
     }
@@ -69,26 +73,49 @@ export class ApplyComponent implements OnInit, OnDestroy {
     InitValues() {
         this.leaveapplication.days = null;
         this.leaveapplication.balance = null;
-        this.getEmployeeLeaveBalance();
+        this.getLeaveBalance();
         this.fromDateValidation = {
             isValid: true,
             msg: ''
         }
+        this.fiscalYearId = 1;
+        this.clearAttachment();
     }
 
     getLeaveTypes() {
-        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypeByEmpId(this.currentUser._id, this.fiscalYearId).subscribe(data => {
-            this.leaveTypeList.push(data);
-            this.leaveTypesDetails = this.leaveTypeList;
+        this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypes().subscribe(res => {
+            if (res.ok) {
+                let data = res.json() || [];
+                this.leaveTypesDetails = [];
+                data.forEach(leaveType => {
+                    let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leaveType._id);
+                    if (bal.allotedLeave > 0) {
+                        this.leaveTypesDetails.push(leaveType);
+                    }
+                });
+            }
         });
     }
 
-    getAllSupervisorDetails() {
-        this._commonService.getKraSupervisor(this.currentUser._id)
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+                this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
+                this.getLeaveTypes();
+            }
+        })
+    }
+
+    getEmployeeDetails() {
+        this.leaveService.getEmployeeDetails(this.currentUser._id)
             .subscribe(
                 res => {
                     if (res.ok) {
-                        this.supervisorDetails = res.json();
+                        this.employeeDetails = res.json().data[0] || {};
+                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                        }
                     }
                 },
                 error => {
@@ -109,45 +136,36 @@ export class ApplyComponent implements OnInit, OnDestroy {
             });
     }
 
-    getEmployeeLeaveBalance() {
-        this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
-    
-    if (res.ok) {
-                this.employeeBalances = res.json() || [];
-            }
-        })
-    }
-
     getEmployeeProbationDetails() {
-        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
-            if (res.ok) {
-                let data = res.json();
-                if (data) {
-                    this.inProbation = data.result || false;
-                }
-            }
-        });
+        // this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+        //     if (res.ok) {
+        //         let data = res.json();
+        //         if (data) {
+        //             this.inProbation = data.result || false;
+        //         }
+        //     }
+        // });
     }
 
     onChangeLeaveType() {
-        if(this.leaveapplication.leaveType === 3){
+        if (this.leaveapplication.leaveType === 3) {
             this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
-                if(res.ok) {
+                if (res.ok) {
                     let startDate = new Date(res.json().result[0].startDate);
-                    let endDate = new Date( res.json().result[0].endDate);
+                    let endDate = new Date(res.json().result[0].endDate);
                     this.leaveapplication.fromDate = startDate;
                     this.leaveapplication.toDate = endDate;
                     this.leaveapplication.days = Number(res.json().result[0].balance);
                 }
             })
         }
-        else{
+        else {
             this.leaveapplication.days = 0;
-
         }
-        let empBal = this.employeeBalances.find(bal => {
+
+        let empBal = this.leaveBalance.find(bal => {
             if (bal) {
-                return bal.leaveType == this.leaveapplication.leaveType;
+                return bal.leaveTypeId == this.leaveapplication.leaveType;
             }
         });
         this.leaveapplication.balance = empBal ? empBal.leaveBalance : 0;
@@ -164,15 +182,33 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
     }
 
+    onFilePick(event) {
+        let reader = new FileReader();
+        if (event.target.files && event.target.files.length > 0) {
+            let file = event.target.files[0];
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.leaveapplication.attachment = {
+                    filename: file.name,
+                    filetype: file.type,
+                    value: reader.result.split(',')[1]
+                }
+            };
+        }
+    }
+
     postEmployeeLeaveDetails(form, data: any) {
         this.areDaysValid = data.days > 0;
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
-            if (!data.attachment) {
-                this.isAttachmentRequired = true;
+            this.isAttachmentRequired = true;
+            if (!this.uploadEvent || !this.uploadEvent.data) {
+                this.isAttachmentAdded = true;
             } else {
-                this.isAttachmentRequired = false;
+                this.isAttachmentAdded = false;
             }
+        } else {
+            this.isAttachmentRequired = false;
         }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
@@ -181,7 +217,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (data.fromDate < new_date._d) {
                 this.fromDateValidation = {
                     isValid: false,
-                    msg: 'Annual leave for more than 3 days should be applied before 7 days\r\nTo Add Post leave Transaction, Contact Your HR'
+                    msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
                 }
                 return;
             } else {
@@ -189,51 +225,104 @@ export class ApplyComponent implements OnInit, OnDestroy {
             }
         }
 
-        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentRequired) {
-            let ccToMail = [];
-            if (data.ccTo) {
-                data.ccTo.forEach(cc => {
-                    let mail = this.emailDetails.find(email => {
-                        return email._id == cc;
-                    });
-                    if (mail)
-                        ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-                });
-            }
+        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentAdded) {
+            // let ccToMail = [];
+            // if (data.ccTo) {
+            //     data.ccTo.forEach(cc => {
+            //         let mail = this.emailDetails.find(email => {
+            //             return email._id == cc;
+            //         });
+            //         if (mail)
+            //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+            //     });
+            // }
 
             let _postData: any = {};
-            _postData.applyTo = data.applyToId;
-            _postData.fromDate = data.fromDate;
-            _postData.toDate = data.toDate;
+            if (this.primarySupervisor) {
+                _postData.supervisor_id = this.primarySupervisor._id;
+            }
+            _postData.fromDate = moment(data.fromDate).format('L');
+            _postData.toDate = moment(data.toDate).format('L');
             _postData.leave_type = data.leaveType;
             _postData.reason = data.reason;
-            _postData.contactDetails = data.contactDetail;
-            _postData.ccTo = ccToMail;
+            // _postData.contactDetails = data.contactDetail;
+            // _postData.ccTo = ccToMail;
             _postData.emp_id = this.currentUser._id;
-            _postData.createdBy = this.currentUser._id;
+            _postData.apply_by_id = this.currentUser._id;
             _postData.updatedBy = this.currentUser._id;
-            _postData.status = 'Applied (pending)';
+            _postData.session_id = '1';
+            _postData.status = 'Applied';
+
+            let text = '';
             if (this.inProbation) {
-                swal({
-                    title: 'Are you sure?',
-                    text: 'Leave during probabtion are not encouraged until unless its an emergency case',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.value) {
-                        this.postApply(_postData, form);
-                    }
-                });
-            } else {
-                this.postApply(_postData, form);
+                text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+            }
+
+            swal({
+                title: 'Are you sure?',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.postApply(_postData, form);
+                }
+            });
+        }
+    }
+
+    uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
+    uploadEvent: UploadInput;
+    document: any = {}
+    options: UploaderOptions;
+    uploadOutput: UploadOutput;
+    onUploadOutput(output: UploadOutput, fileName: string): void {
+        if (output.file) {
+            this.leaveapplication.attachmentName = output.file.name
+        }
+        let atCurrentAuthData = this._authService.currentAuthData;
+        this.uploadOutput = output;
+        if (output.type === 'allAddedToQueue') { // when all files added in queue
+            this.uploadEvent = {
+                fieldName: 'seakleavedocument',
+                type: 'uploadAll',
+                url: environment.api_base.apiBase + '/' + environment.api_base.apiPath + '/leave/uploadSickLeaveDocument',
+                headers: {
+                    'access-token': atCurrentAuthData.accessToken,
+                    'client': atCurrentAuthData.client,
+                    'expiry': atCurrentAuthData.expiry,
+                    'token-type': atCurrentAuthData.tokenType,
+                    'uid': atCurrentAuthData.uid
+                },
+                data: { seakleavedocument: this.document, _id: "1" },
+                method: 'POST',
+            };
+        } else if (output.type === 'done') {
+            mApp.unblock('#applyLeavePanel');
+            if (output.file.responseStatus == 200) {
+                swal("Leave Applied", "", "success");
+                this.resetForm(this.leaveForm);
+            }
+            else {
+                swal("Error!", "Error on Upload " + fileName, "error");
             }
         }
     }
 
+    clearAttachment() {
+        this.uploadEvent = null;
+        this.document = {}
+        this.uploadOutput = null;
+        this.leaveapplication.attachmentName = null;
+    }
+
+    leaveForm: any = {};
     postApply(_postData, form) {
+        debugger;
+        this.leaveForm = form;
         mApp.block('#applyLeavePanel', {
             overlayColor: '#000000',
             type: 'loader',
@@ -242,9 +331,15 @@ export class ApplyComponent implements OnInit, OnDestroy {
         });
         this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
             res => {
-                mApp.unblock('#applyLeavePanel');
-                swal("Leave Applied", "", "success");
-                this.resetForm(form);
+                if (this.isAttachmentRequired) {
+                    let leave = res.json();
+                    this.uploadEvent.data._id = leave._id
+                    this.uploadInput.emit(this.uploadEvent);
+                } else {
+                    swal("Leave Applied", "", "success");
+                    mApp.unblock('#applyLeavePanel');
+                    this.resetForm(form);
+                }
             },
             error => {
                 this.handleError(this, error);
@@ -267,8 +362,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
         form.submitted = false;
         this.areDaysValid = true;
         this.isBalanceValid = true;
-        this.isAttachmentRequired = false;
-        this.getEmployeeLeaveBalance();
+        this.isAttachmentAdded = false;
+        this.clearAttachment();
+        this.getLeaveBalance();
     }
 
     calculateDays(e: any, type: string) {

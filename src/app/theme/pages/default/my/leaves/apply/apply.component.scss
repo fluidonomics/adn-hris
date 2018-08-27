@@ -15,6 +15,26 @@ app-my-leaves-apply {
                         }
                     }
                 }
+
+                .fileName {
+                    margin-left: 2rem;
+
+                    i {
+                        cursor: pointer;
+                        color: #C70000;
+                    }
+                }
+            }
+        }
+    }
+
+    .leave-balance-portlet {
+        .m-widget1 {
+            padding: .8rem 2rem;
+
+            .block {
+                width: 100%;
+                text-align: center;
             }
         }
     }

@@ -1,8 +1,24 @@
-app-my-leaves-dashboard {
+@import "../../../../../../../../assets/colors";
+
+app-my-leaves-dashboard-hr {
     width: 100%;
 
     & > .m-content {
         padding-bottom: 0px !important;
+    }
+
+    .leave-balance-card {
+        &.annual-leave {
+            background-color: $color-annual-leave;
+        }
+
+        &.sick-leave {
+            background-color: $color-sick-leave;
+        }
+
+        h3, div, span {
+            color: white !important;
+        }
     }
 
     .nav.nav-pills.nav-pills--brand .nav-link {
@@ -165,6 +181,95 @@ app-my-leaves-dashboard {
     .nav {
         li {
             cursor: pointer;
+        }
+    }
+
+    .teamOnLeavePortlet {
+        .m-portlet__body {
+            padding: 0;
+        }
+
+        .teamOnLeaveGrid {
+            .m_datatable {
+                th, td {
+                    width: 33.33%;
+                }
+            }
+        }
+    }
+
+    .recentTransactionPortlet, .teamLeavesPortlet {
+        .m-portlet__head-tools {
+            ul.nav {
+                li {
+                    padding: 0.1rem;
+
+                    .btn :not(.btn-success) {
+                        height: 36px;
+                        color: #aaa;
+
+                        // &.btn-success {
+                        //     color: #aaa;
+                        // }
+                   
+                    }
+                }
+
+                .ng-dropdown-panel {
+                    left: 0px;
+                }
+            }
+        }
+    }
+
+    .recentTransactionPortlet {
+        .m-datatable__table {
+            th {
+                width: 8.33%;
+            }
+
+            td {
+                width: 8.33%;
+            }
+        }
+    }
+
+    .m-badge {
+        color: white !important;
+        font-size: 0.7rem;
+    }
+
+    @media (min-width: 768px) {
+        .downloadExcel {
+            transform: translate(20px, 7rem);
+            margin-top: 8px;
+        }
+    }
+}
+
+modal-container {
+    .leaveDetailsPortlet {
+        .m-portlet__body {
+            .img {
+                width: 100% !important;
+            }
+
+            .name {
+                display: block;
+                font-size: 1.5rem;
+            }
+
+            .empId {
+                display: block;
+            }
+
+            .details {
+                padding-top: 2rem;
+
+                .value {
+                    margin-left: 1rem;
+                }
+            }
         }
     }
 }

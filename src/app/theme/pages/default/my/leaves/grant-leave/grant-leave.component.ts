@@ -56,7 +56,7 @@ export class GrantLeaveComponent implements OnInit {
     }
 
     getLeaveTypes() {
-        this.leaveService.getLeaveType().subscribe(
+        this.leaveService.getLeaveTypes().subscribe(
             res => {
                 if (res.ok) {
                     this.leaveTypesList = res.json();
