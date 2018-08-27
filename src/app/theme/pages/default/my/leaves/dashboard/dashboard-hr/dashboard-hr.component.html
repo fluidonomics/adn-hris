@@ -90,7 +90,7 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
                                         <table class="m-datatable__table employeeOnLeavesTable">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
@@ -153,6 +153,7 @@
                                                         <span>{{leave.applyTo_name}}</span>
                                                     </td>
                                                 </tr>
+                                                <span *ngIf="employeeOnLeaves?.length==0" class="m-datatable--error">No records found</span>
                                             </tbody>
                                         </table>
                                     </div>

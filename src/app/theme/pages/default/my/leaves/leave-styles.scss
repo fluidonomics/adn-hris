@@ -226,3 +226,14 @@
         }
     }
 }
+
+.m-datatable.m-datatable--default.m-datatable--error .m-datatable__body {
+    text-align: unset;
+    padding: 0px;
+}
+
+span.m-datatable--error {
+    padding: 30px;
+    display: block;
+    text-align: center;
+}

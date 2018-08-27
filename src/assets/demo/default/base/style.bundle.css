@@ -9458,7 +9458,6 @@ body.m--skin-dark {
     .m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__body .m-datatable__row > .m-datatable__cell.m-datatable__cell--check > span > .m-checkbox {
       top: 1px; }
   .m-datatable.m-datatable--default.m-datatable--error .m-datatable__body {
-    padding: 30px;
     text-align: center; }
   .m-datatable.m-datatable--default.m-datatable--lock > .m-datatable__table > .m-datatable__head > .m-datatable__lock,
   .m-datatable.m-datatable--default.m-datatable--lock > .m-datatable__table > .m-datatable__body > .m-datatable__lock,

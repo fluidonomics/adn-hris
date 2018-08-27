@@ -48,7 +48,7 @@
                 </div>
                 <div class="m-portlet__body">
                     <div class="m-widget6 teamOnLeaveGrid">
-                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
+                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll m-datatable--error" id="m_datatable_latest_orders">
                             <table class="m-datatable__table">
                                 <thead class="m-datatable__head">
                                     <tr class="m-datatable__row">
@@ -76,6 +76,7 @@
                                             <span>{{leave.leavedetails.days}}</span>
                                         </td>
                                     </tr>
+                                    <span *ngIf="teamLeaves?.length==0" class="m-datatable--error">No records found</span>
                                 </tbody>
                             </table>
                             <pagination-template *ngIf="teamLeaves.length > 0" #p="paginationApi" [id]="'teamLeaves'" (pageChange)="teamLeavesFilter.page = $event"
@@ -164,7 +165,7 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
@@ -239,6 +240,7 @@
                                                         <span class="m-badge m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
                                                     </td>
                                                 </tr>
+                                                <span *ngIf="leavesForApproval?.length==0" class="m-datatable--error">No records found</span>
                                             </tbody>
                                         </table>
                                         <pagination-template *ngIf="leavesForApproval.length > 0" #p="paginationApi" [id]="'leavesForApproval'" (pageChange)="leaveApprovalFilter.page = $event"
@@ -345,7 +347,7 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_teamLeaves">
                                 <div class="m-accordion__item-content">
-                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
@@ -402,6 +404,7 @@
                                                         <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
                                                     </td>
                                                 </tr>
+                                                <span *ngIf="leavesTransactions?.length==0" class="m-datatable--error">No records found</span>
                                             </tbody>
                                         </table>
                                         <pagination-template *ngIf="leavesTransactions.length > 0" #p="paginationApi" [id]="'leavesTransactions'" (pageChange)="leaveTransactionsFilter.page = $event"

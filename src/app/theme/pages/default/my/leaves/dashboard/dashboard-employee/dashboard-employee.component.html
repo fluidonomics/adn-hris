@@ -4,7 +4,7 @@
             <div class="m-portlet leave-balance-portlet">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
                     <div class="col-md-3" *ngFor="let bal of leaveBalance">
-                        <div class="m-widget1">
+                        <div *ngIf="bal.allotedLeave != 0" class="m-widget1">
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="block">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="m-portlet__body">
                     <div class="m-widget6 holidayGrid">
-                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll" id="m_datatable_latest_orders">
+                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll m-datatable--error" id="m_datatable_latest_orders">
                             <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
                                 <thead class="m-datatable__head">
                                     <tr class="m-datatable__row" style="left: 0px;">
@@ -92,7 +92,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="upcomingHolidays.length > 0" class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
+                                <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
                                     <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 6, currentPage: holidayFilter.page };let even=even;">
                                         <td data-field="ShipName" class="m-datatable__cell">
                                             <span>{{holiday.occasion}}</span>
@@ -101,6 +101,7 @@
                                             <span class="pull-right">{{holiday.date | date:'dd-MMM-yyy'}}</span>
                                         </td>
                                     </tr>
+                                    <span *ngIf="upcomingHolidays?.length==0" class="m-datatable--error">No records found</span>
                                 </tbody>
                             </table>
                             <pagination-template *ngIf="upcomingHolidays.length > 0" #p="paginationApi" (pageChange)="holidayFilter.page = $event" class="paginationtemplate">
@@ -147,7 +148,7 @@
 
     <div class="row">
         <div class="col-xl-12">
-            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm recentTransactions">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -193,7 +194,7 @@
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
@@ -215,10 +216,10 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Applied To</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                         <span>Remarks</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                         <span>Status</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
@@ -246,10 +247,10 @@
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.applyToFullName}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="20%" >
+                                                    <td class="m-datatable__cell" width="15%">
                                                         <span class="span-scroll">{{tran.supervisorReason}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="10%">
+                                                    <td class="m-datatable__cell" width="15%">
                                                         <span>
                                                             <span class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
                                                         </span>
@@ -263,6 +264,7 @@
                                                         </span>
                                                     </td>
                                                 </tr>
+                                                <span *ngIf="recentTransactions?.length==0" class="m-datatable--error">No records found</span>
                                             </tbody>
                                         </table>
                                         <pagination-template #p="paginationApi" (pageChange)="transactionFilter.page = $event" class="paginationtemplate">

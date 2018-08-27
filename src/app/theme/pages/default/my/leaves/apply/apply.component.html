@@ -2,7 +2,7 @@
 	<div class="m-portlet leave-balance-portlet">
 		<div class="row m-row--no-padding m-row--col-separator-xl">
 			<div class="col-md-3" *ngFor="let bal of leaveBalance">
-				<div class="m-widget1">
+				<div *ngIf="bal.allotedLeave != 0" class="m-widget1">
 					<div class="m-widget1__item">
 						<div class="row m-row--no-padding align-items-center">
 							<div class="block">

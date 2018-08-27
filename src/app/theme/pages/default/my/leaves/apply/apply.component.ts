@@ -31,7 +31,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     tosessiondropdownitems = ['text'];
     supervisorDetails: any;
     leaveTypeList: any = [];
-    leaveTypesDetails: Observable<Array<any>>;
+    leaveTypesDetails: any = [];
     emailDetails: any;
     areDaysValid: boolean = true;
     isBalanceValid: boolean = true;
@@ -59,7 +59,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
             this.InitValues();
-            this.getLeaveTypes();
             this.getEmployeeDetails();
             // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
@@ -86,7 +85,14 @@ export class ApplyComponent implements OnInit, OnDestroy {
     getLeaveTypes() {
         this.getLeaveTypeByEmpIdSubs = this.leaveService.getLeaveTypes().subscribe(res => {
             if (res.ok) {
-                this.leaveTypesDetails = res.json() || [];
+                let data = res.json() || [];
+                this.leaveTypesDetails = [];
+                data.forEach(leaveType => {
+                    let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leaveType._id);
+                    if (bal.allotedLeave > 0) {
+                        this.leaveTypesDetails.push(leaveType);
+                    }
+                });
             }
         });
     }
@@ -96,6 +102,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
                 this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
+                this.getLeaveTypes();
             }
         })
     }

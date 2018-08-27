@@ -98,7 +98,6 @@ export class DashboardEmployeeComponent implements OnInit {
     loadDashboard() {
         this.getLeaveStatuses();
         this.getLeaveBalance();
-        this.getOverviewChartData();
         this.getHolidays();
         this.getTransactions();
     }
@@ -108,6 +107,7 @@ export class DashboardEmployeeComponent implements OnInit {
             if (res.ok) {
                 this.leaveBalance = res.json() || [];
                 this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
+                this.getOverviewChartData();
             }
         })
     }
@@ -141,10 +141,13 @@ export class DashboardEmployeeComponent implements OnInit {
                     data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
                     let chartData = [];
                     data.forEach((leave, i) => {
-                        chartData.push({
-                            "leaveType": leave.leaveType,
-                            "leaveCount": leave.appliedLeave
-                        })
+                        let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leave.leaveTypeId);
+                        if (bal.allotedLeave > 0) {
+                            chartData.push({
+                                "leaveType": leave.leaveType,
+                                "leaveCount": leave.appliedLeave
+                            })
+                        }
                     });
                     this.overviewChartData = chartData;
                 }
