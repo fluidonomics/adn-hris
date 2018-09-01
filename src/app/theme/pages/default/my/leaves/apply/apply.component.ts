@@ -11,6 +11,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 import { Observable } from 'rxjs/Observable';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 import { environment } from '../../../../../../../environments/environment';
+import { Router } from '../../../../../../../../node_modules/@angular/router';
 
 declare var mApp;
 declare var moment;
@@ -51,7 +52,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
         private leaveService: LeaveService,
         private _commonService: CommonService,
         private _authService: AuthService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private router: Router
     ) {
 
     }
@@ -391,5 +393,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.getLeaveTypeByEmpIdSubs.unsubscribe();
+    }
+
+    goToDashboard() {
+        this.router.navigate(['my/leaves/dashboard/employee']);
     }
 }

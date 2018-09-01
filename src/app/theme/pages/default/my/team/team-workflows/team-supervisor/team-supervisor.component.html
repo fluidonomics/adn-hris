@@ -58,7 +58,7 @@
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center" routerLink="/my/profile-view" [queryParams]="{ id: employee._id , tabName:'personal' }">
 												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
@@ -88,7 +88,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xl-4">
+		<div class="col-xl-4" *ngIf="false">
 			<div class="m-portlet m-portlet--full-height">
 				<div class="m-portlet__head">
 					<div class="m-portlet__head-caption">
@@ -139,7 +139,7 @@
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center" routerLink="/my/team/workflows/kra-view/{{kra._id}}/{{kra.emp_id}}">
 												<img *ngIf="kra?.profileImage; else noImage" src="{{imageBase+kra?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>

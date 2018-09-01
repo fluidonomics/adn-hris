@@ -202,10 +202,13 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort">
                                                         <span>Status</span>
                                                     </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>Action</span>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, true)" class="m-datatable__row" *ngFor="let leave of leavesForApproval | paginate: { id: 'leavesForApproval', itemsPerPage: 6, currentPage: leaveApprovalFilter.page };let even=even;">
+                                                <tr class="m-datatable__row" *ngFor="let leave of leavesForApproval | paginate: { id: 'leavesForApproval', itemsPerPage: 6, currentPage: leaveApprovalFilter.page };let even=even;">
                                                     <td class="m-datatable__cell">
                                                         <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
@@ -238,6 +241,14 @@
                                                     </td>
                                                     <td class="m-datatable__cell">
                                                         <span class="m-badge m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>
+                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve/Reject Leave"
+                                                                (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, true)">
+                                                                <i class="la la-info"></i>
+                                                            </a>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                                 <span *ngIf="leavesForApproval?.length==0" class="m-datatable--error">No records found</span>
@@ -375,10 +386,13 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Status</span>
                                                     </th>
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                                        <span>Action</span>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr class="m-datatable__row" (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, false)" *ngFor="let leave of leavesTransactions | paginate: { id: 'leavesTransactions', itemsPerPage: 6, currentPage: leaveTransactionsFilter.page };let even=even;">
+                                                <tr class="m-datatable__row" *ngFor="let leave of leavesTransactions | paginate: { id: 'leavesTransactions', itemsPerPage: 6, currentPage: leaveTransactionsFilter.page };let even=even;">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{leave.employeeDetails?.fullName}}</span>
                                                     </td>
@@ -402,6 +416,14 @@
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" width="5%">
+                                                        <span>
+                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve/Reject Leave"
+                                                                (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, false)">
+                                                                <i class="la la-info"></i>
+                                                            </a>
+                                                        </span>
                                                     </td>
                                                 </tr>
                                                 <span *ngIf="leavesTransactions?.length==0" class="m-datatable--error">No records found</span>

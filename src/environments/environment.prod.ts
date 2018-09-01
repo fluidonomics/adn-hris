@@ -8,6 +8,7 @@ export const environment = {
     api_base: {
         //apiBase: "http://localhost:3000",
         apiBase: "http://goforship.com:3000",
+        // apiBase: "http://adngrouphr.com:3000",
         //apiBase: "http://ec2-13-232-52-233.ap-south-1.compute.amazonaws.com:3000",
         apiPath: "api",
         resetPasswordCallback: "",

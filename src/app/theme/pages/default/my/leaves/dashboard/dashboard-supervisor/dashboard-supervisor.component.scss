@@ -194,6 +194,7 @@ app-my-leaves-dashboard-supervisor {
                 // th, td {
                 //     width: 33.33%;
                 // }
+           
             }
         }
     }
@@ -225,11 +226,11 @@ app-my-leaves-dashboard-supervisor {
     .recentTransactionPortlet {
         .m-datatable__table {
             th {
-                width: 9.09%;
+                width: 8.33%;
             }
 
             td {
-                width: 9.09%;
+                width: 8.33%;
             }
         }
     }
@@ -266,6 +267,7 @@ modal-container {
         }
     }
 }
+
 .span-scroll {
     overflow-y: auto !important;
     height: 50px;

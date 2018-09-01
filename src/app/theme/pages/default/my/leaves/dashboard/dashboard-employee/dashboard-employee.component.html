@@ -228,7 +228,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr (click)="showLeaveDetail(tran._id, leaveDetailModal, $event)" class="m-datatable__row" *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
+                                                <tr class="m-datatable__row" *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.leaveTypeName}}</span>
                                                     </td>
@@ -257,9 +257,9 @@
                                                     </td>
                                                     <td class="m-datatable__cell" width="5%">
                                                         <span *ngIf="tran.status == 'Applied' || tran.status == 'Approved'">
-                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
+                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
                                                                 (click)="showLeaveDetail(tran._id, leaveDetailModal, $event)">
-                                                                <i class="la la-remove"></i>
+                                                                <i class="la la-info"></i>
                                                             </a>
                                                         </span>
                                                     </td>
