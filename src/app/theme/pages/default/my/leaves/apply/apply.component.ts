@@ -117,6 +117,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         this.employeeDetails = res.json().data[0] || {};
                         if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
                             this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                            this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
                         }
                     }
                 },
@@ -254,6 +255,14 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.updatedBy = this.currentUser._id;
             _postData.session_id = '1';
             _postData.status = 'Applied';
+
+            debugger;
+            // Data for Email purpose
+            _postData.supervisorEmail = this.primarySupervisor.email;
+            _postData.empName = this.currentUser.fullName;
+            let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
+            _postData.leaveTypeName = leaveType.type;
+
 
             let text = '';
             if (this.inProbation) {
