@@ -103,7 +103,6 @@ export class CancelComponent implements OnInit {
 
     finalCancelMessage: string;
     onLeavecancelSubmit(data) {
-        debugger;
         if (data.valid) {
             let ccToMail = [];
             if (data.value.ccTo != undefined) {

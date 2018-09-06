@@ -27,15 +27,30 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveHolidays(fromDate: any, toDate: any) {
-        let url = "leave/getLeaveHolidays?fromDate=" + fromDate + "&toDate=" + toDate;
+    getLeaveHolidays(fromDate?: any, toDate?: any, all?: boolean) {
+        let url = 'leave/getLeaveHolidays?';
+        if (fromDate) {
+            url += '&fromDate=' + fromDate;
+        }
+        if (toDate) {
+            url += '&toDate=' + toDate;
+        }
+        if (all) {
+            url += '&all=' + all;
+        }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getLeaveTransactionDetails(empId: number, fromDate: number, toDate: number, status: string) {
+    getLeaveTransactionDetails(empId: number, fromDate?: number, toDate?: number, status?: string) {
         // +"year=" + year +
-        let url = "leave/getLeaveTransactionDetails?empId=" + empId + "&fromDate=" + fromDate + "&toDate=" + toDate;
-        if (status != 'All') {
+        let url = "leave/getLeaveTransactionDetails?empId=" + empId;
+        if (fromDate) {
+            url += "&fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        if (status && status != 'All') {
             url += "&status=" + status
         }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
@@ -186,6 +201,11 @@ export class LeaveService {
         }
 
         return this.authService.post(url, null).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getAttachement(leaveId: number) {
+        let url = "leave/downloadFile?id=" + leaveId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
     // ------------------------------------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------------------------------------

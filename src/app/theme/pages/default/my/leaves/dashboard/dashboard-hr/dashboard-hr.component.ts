@@ -244,7 +244,6 @@ export class DashboardHrComponent implements OnInit {
             body.userName = this.leaveTransactionsFilter.userName
         };
         this.leaveService.getHrLeaveTransactionsExcel(body).subscribe(res => {
-            debugger;
             if (res.ok) {
                 let data = res.json().data || [];
                 if (data && data.length > 0) {

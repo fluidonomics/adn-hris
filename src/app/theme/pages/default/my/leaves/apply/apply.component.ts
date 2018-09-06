@@ -47,6 +47,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
     employeeDetails: any = {};
     primarySupervisor: any = {};
 
+    leavesList: any = [];
+    holidayList: any = [];
+    isSandwichValid: boolean = false;
+
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
         private leaveService: LeaveService,
@@ -69,6 +73,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.isBalanceValid = true;
                 this.isAttachmentAdded = false;
             });
+            this.getHolidays();
         });
     }
 
@@ -82,6 +87,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         }
         this.fiscalYearId = 1;
         this.clearAttachment();
+        this.getEmployeeLeaves();
     }
 
     getLeaveTypes() {
@@ -148,6 +154,22 @@ export class ApplyComponent implements OnInit, OnDestroy {
         //         }
         //     }
         // });
+    }
+
+    getEmployeeLeaves() {
+        this.leaveService.getLeaveTransactionDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                this.leavesList = res.json() || [];
+            }
+        });
+    }
+
+    getHolidays() {
+        this.leaveService.getLeaveHolidays(null, null, true).subscribe(res => {
+            if (res.ok) {
+                this.holidayList = res.json() || [];
+            }
+        });
     }
 
     onChangeLeaveType() {
@@ -256,7 +278,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.session_id = '1';
             _postData.status = 'Applied';
 
-            debugger;
             // Data for Email purpose
             _postData.supervisorEmail = this.primarySupervisor.email;
             _postData.empName = this.currentUser.fullName;
@@ -332,7 +353,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     leaveForm: any = {};
     postApply(_postData, form) {
-        debugger;
         this.leaveForm = form;
         mApp.block('#applyLeavePanel', {
             overlayColor: '#000000',
@@ -379,14 +399,117 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     calculateDays(e: any, type: string) {
-        if (type === 'fromDate') {
-            this.leaveapplication.toDate = null;
-            this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
-        }
-        else {
-            this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
-        }
+        this.isSandwichValid = false;
+        this.leaveapplication.days = 0;
+        this.sandwichDates = [];
+        // if (type === 'fromDate') {
+        //     this.leaveapplication.toDate = null;
+        //     this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
+        // }
+        // else {
+        //     this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
+        // }
         this.resetFromDateValidation();
+    }
+
+    sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
+    processSandwich() {
+        this.isSandwichValid = false;
+        this.leaveapplication.days = 0;
+        this.sandwichDates = [];
+        if (this.leaveapplication.fromDate && this.leaveapplication.toDate) {
+            this.isSandwichValid = true;
+            for (let i = this.leaveapplication.fromDate; i <= this.leaveapplication.toDate;) {
+                this.addSandwichDates(i, 'L', 1)
+                i = moment(i).add(1, 'd')._d;
+            }
+            this.sandwichDates
+            let fromDate = this.getSandwichDate(this.leaveapplication.fromDate, -1);
+            let toDate = this.getSandwichDate(this.leaveapplication.toDate, +1);
+
+            let startDate, endDate;
+            let leaveDates = this.sandwichDates.filter(sd => sd.type == 'L');
+
+            let sdIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(this.leaveapplication.fromDate).format('L'));
+            let edIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(this.leaveapplication.toDate).format('L'));
+            startDate = this.getSandwichFinalDates(sdIndex, -1, this.leaveapplication.fromDate);
+            endDate = this.getSandwichFinalDates(edIndex, +1, this.leaveapplication.toDate);
+
+            let days = moment(endDate).diff(startDate, 'days') + 1;
+            this.leaveapplication.days = days;
+        }
+    }
+
+    getSandwichFinalDates(index, iterator, originalDate) {
+        let date = this.sandwichDates[index + iterator];
+        if (date.type == 'L') {
+            return this.sandwichDates[index].date;
+        } else if (date.type == 'N') {
+            return originalDate;
+        } else {
+            return this.getSandwichFinalDates(index + iterator, iterator, originalDate);
+        }
+    }
+
+    getSandwichDate(date, iterator) {
+        let checkDate = moment(date).add(iterator, 'd')._d;
+        let isHoliday = false;
+        let isLeave = false;
+        let isWeekend = false;
+
+        let dayOfWeek = moment(checkDate).day();
+        if (dayOfWeek == 5 || dayOfWeek == 6) {
+            isWeekend = true;
+            date = checkDate;
+            this.addSandwichDates(date, 'W', iterator);
+        }
+
+        if (!isWeekend) {
+            this.holidayList.forEach(holiday => {
+                let holidayDate = moment(holiday.date)._d;
+                if (!isHoliday && moment(holidayDate).format('L') == moment(checkDate).format('L')) {
+                    isHoliday = true;
+                    date = holidayDate;
+                    this.addSandwichDates(date, 'H', iterator);
+                }
+            });
+        }
+
+        if (!isHoliday) {
+            this.leavesList.forEach(leave => {
+                let fromDate = moment(leave.fromDate)._d;
+                let toDate = moment(leave.toDate)._d;
+                if (leave.status != 'Cancelled' || leave.status != 'Withdrawn' || leave.status != 'Rejected') {
+                    if (!isLeave && (moment(checkDate).format('L') <= moment(toDate).format('L') && moment(checkDate).format('L') >= moment(fromDate).format('L'))) {
+                        isLeave = true;
+                        date = fromDate;
+                        for (let i = fromDate; i <= toDate;) {
+                            this.addSandwichDates(i, 'L', iterator)
+                            i = moment(i).add(1, 'd')._d;
+                        }
+                    }
+                }
+            });
+        }
+
+        if (isHoliday || isLeave || isWeekend) {
+            return this.getSandwichDate(date, iterator);
+        } else {
+            this.addSandwichDates(checkDate, 'N', iterator)
+            return date;
+        }
+    }
+
+    addSandwichDates(date, type, iterator) {
+        let data = {
+            date: date,
+            type: type
+        }
+        if (iterator > 0) {
+            this.sandwichDates.push(data);
+        } else {
+            this.sandwichDates.unshift(data);
+        }
     }
 
     handleError(that, err) {

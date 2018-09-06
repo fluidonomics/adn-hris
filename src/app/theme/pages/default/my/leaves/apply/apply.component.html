@@ -88,6 +88,9 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Days</label>
 												<span class="pl1r">{{leaveapplication.days}}</span>
+												<span class="pl1r">
+													<button class="btn btn-success" type="button" (click)="processSandwich()">Calculate Days</button>
+												</span>
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
 													<span *ngIf="!areDaysValid">Days cant be 0</span>
 												</div>
@@ -162,7 +165,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="m-form__actions">
-												<button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button>
+												<button class="btn btn-success submitForm" type="submit" id="submitForm" [disabled]="!isSandwichValid">Apply</button>
 												<button class="btn btn-secondary" (click)="fleaveapplication.resetForm();InitValues();" type="button">Clear</button>
 												<button class="btn btn-secondary" (click)="goToDashboard();" type="button">Go Back</button>
 											</div>

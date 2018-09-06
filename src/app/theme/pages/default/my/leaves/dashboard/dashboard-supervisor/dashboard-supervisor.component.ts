@@ -365,7 +365,14 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     viewAttachement(leave) {
+        debugger;
         // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
+        this.leaveService.getAttachement(leave._id).subscribe(res => {
+            if (res.ok) {
+                debugger;
+                console.log('success');
+            }
+        })
     }
 
     // --------------------------------------------------------------------------

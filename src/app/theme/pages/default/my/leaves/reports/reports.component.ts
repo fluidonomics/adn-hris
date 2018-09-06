@@ -79,7 +79,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   getEmployeeLeavesByMonth() {
-    debugger;
     this.empChartData = [];
     this.leaveService.getLeavesByMonth().subscribe(
       res => {

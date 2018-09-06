@@ -263,6 +263,11 @@ modal-container {
                 .value {
                     margin-left: 1rem;
                 }
+
+                .link {
+                    cursor: pointer;
+                    font-weight: bold;
+                }
             }
         }
     }

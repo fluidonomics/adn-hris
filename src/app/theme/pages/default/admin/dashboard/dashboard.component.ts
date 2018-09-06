@@ -48,7 +48,6 @@ export class AdminDashboardComponent {
 
     onTranYearSubmit(form) {
         if (form.valid) {
-            debugger;
             let newYear = this.yearList.find(year => {
                 return year._id == form.value.tranYears
             });

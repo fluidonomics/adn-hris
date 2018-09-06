@@ -97,7 +97,6 @@ export class CalenderComponent implements OnInit {
     }
 
     onDayClick(data: any) {
-        debugger;
         this.selectedLeaves = [];
         if (data.date) {
             let date = new Date(data.date);
