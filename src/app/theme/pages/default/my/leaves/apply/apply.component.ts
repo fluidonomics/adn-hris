@@ -277,6 +277,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             _postData.updatedBy = this.currentUser._id;
             _postData.session_id = '1';
             _postData.status = 'Applied';
+            _postData.days = this.leaveapplication.days;
 
             // Data for Email purpose
             _postData.supervisorEmail = this.primarySupervisor.email;
@@ -402,13 +403,13 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
-        // if (type === 'fromDate') {
-        //     this.leaveapplication.toDate = null;
-        //     this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
-        // }
-        // else {
-        //     this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
-        // }
+        if (type === 'fromDate') {
+            this.leaveapplication.toDate = null;
+            // this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
+        }
+        else {
+            // this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
+        }
         this.resetFromDateValidation();
     }
 
@@ -479,7 +480,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.leavesList.forEach(leave => {
                 let fromDate = moment(leave.fromDate)._d;
                 let toDate = moment(leave.toDate)._d;
-                if (leave.status != 'Cancelled' || leave.status != 'Withdrawn' || leave.status != 'Rejected') {
+                if (leave.status != 'Cancelled' && leave.status != 'Withdrawn' && leave.status && 'Rejected') {
                     if (!isLeave && (moment(checkDate).format('L') <= moment(toDate).format('L') && moment(checkDate).format('L') >= moment(fromDate).format('L'))) {
                         isLeave = true;
                         date = fromDate;
