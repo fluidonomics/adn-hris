@@ -92,7 +92,10 @@
 													<button class="btn btn-success" type="button" (click)="processSandwich()">Calculate Days</button>
 												</span>
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
-													<span *ngIf="!areDaysValid">Please calculate days</span>
+													<span *ngIf="!areDaysValid">Please Calculate Days</span>
+												</div>
+												<div class="form-control-feedback has-danger" *ngIf="!isSandwichValid">
+													<span *ngIf="!areDaysValid">{{daysValidationMsg}}</span>
 												</div>
 											</div>
 										</div>

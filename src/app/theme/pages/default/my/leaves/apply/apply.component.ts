@@ -50,6 +50,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     leavesList: any = [];
     holidayList: any = [];
     isSandwichValid: boolean = false;
+    daysValidationMsg: string;
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -223,7 +224,11 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
-        this.areDaysValid = data.days > 0;
+        if (data.days <= 0) {
+            this.areDaysValid = false;
+        } else {
+            this.areDaysValid = true;
+        }
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             this.isAttachmentRequired = true;
@@ -371,6 +376,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     swal("Leave Applied", "", "success");
                     mApp.unblock('#applyLeavePanel');
                     this.resetForm(form);
+                    this.getEmployeeLeaves();
                 }
             },
             error => {
@@ -419,6 +425,44 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
         if (this.leaveapplication.fromDate && this.leaveapplication.toDate) {
+            let isAlreadyAppleid = this.leavesList.filter(f => {
+                let lFromDate = moment(f.fromDate).format('L');
+                let lToDate = moment(f.toDate).format('L');
+                let fromDate = moment(this.leaveapplication.fromDate).format('L');
+                let toDate = moment(this.leaveapplication.toDate).format('L');
+
+                let isBetween = f.status == 'Applied'
+                    && (moment(lFromDate).isBetween(fromDate, toDate, null, '[]')
+                        || moment(lToDate).isBetween(fromDate, toDate, null, '[]'));
+
+                return isBetween;
+            });
+
+            if (isAlreadyAppleid.length > 0) {
+                this.areDaysValid = false;
+                this.daysValidationMsg = "Leave Already applied for these dates";
+                return;
+            } else {
+                this.areDaysValid = true;
+            }
+
+            let isBetweenHolidays = this.holidayList.filter(f => {
+                let holiday = moment(f.date).format('L');
+                let fromDate = moment(this.leaveapplication.fromDate).format('L');
+                let toDate = moment(this.leaveapplication.toDate).format('L');
+
+                let isBetween = moment(holiday).isBetween(fromDate, toDate, null, '[]');
+                return isBetween;
+            });
+
+            if (isBetweenHolidays.length > 0) {
+                this.areDaysValid = false;
+                this.daysValidationMsg = "Cannot Apply leave on holidays";
+                return;
+            } else {
+                this.areDaysValid = true;
+            }
+
             this.isSandwichValid = true;
             for (let i = this.leaveapplication.fromDate; i <= this.leaveapplication.toDate;) {
                 this.addSandwichDates(i, 'L', 1)
@@ -483,7 +527,11 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 if (leave.status != 'Cancelled' && leave.status != 'Withdrawn' && leave.status && 'Rejected') {
                     if (!isLeave && (moment(checkDate).format('L') <= moment(toDate).format('L') && moment(checkDate).format('L') >= moment(fromDate).format('L'))) {
                         isLeave = true;
-                        date = fromDate;
+                        if (iterator > 0) {
+                            date = toDate;
+                        } else {
+                            date = fromDate;
+                        }
                         for (let i = fromDate; i <= toDate;) {
                             this.addSandwichDates(i, 'L', iterator)
                             i = moment(i).add(1, 'd')._d;
