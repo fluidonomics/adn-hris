@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
@@ -49,7 +49,8 @@ export class DashboardEmployeeComponent implements OnInit {
     overviewChartData: any = [];
     leaveStatuses: any = [];
     modalRef: BsModalRef;
-
+    showModal: boolean = false;
+    @ViewChild('leaveDetailModal') leaveDetailModal: TemplateRef<any>;
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
@@ -66,6 +67,9 @@ export class DashboardEmployeeComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
         this.route.params.subscribe(p => {
             this.dashboardTab = p.type;
+            if(p.leave_id !== undefined) {
+                this.showModal  =true;
+            }
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
@@ -206,7 +210,8 @@ export class DashboardEmployeeComponent implements OnInit {
         let body: any = {
             "_id": this.leaveDetails.leave._id,
             "updatedBy": this.currentUser._id,
-            "reason2": this.leaveDetails.remarks
+            "reason2": this.leaveDetails.remarks,
+            "link": window.location.origin + '/my/leaves/dashboard/supervisor'
         };
 
         swal({

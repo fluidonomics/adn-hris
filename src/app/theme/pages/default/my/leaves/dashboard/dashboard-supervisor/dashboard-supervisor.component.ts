@@ -256,12 +256,12 @@ export class DashboardSupervisorComponent implements OnInit {
             }
         }
 
-
         let body: any = {
             "id": leaveId,
             "status": leaveStatus,
-            "updatedBy": this.currentUser._id
-        };
+            "updatedBy": this.currentUser._id,
+            "link": window.location.origin + '/my/leaves/dashboard/employee'
+    };
 
         if (operationStatus == 'Approved') {
             if (leaveStatus == LeaveStatus.Applied) {
