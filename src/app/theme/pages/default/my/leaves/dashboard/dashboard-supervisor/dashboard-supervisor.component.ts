@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
@@ -20,7 +20,8 @@ declare var mApp;
     encapsulation: ViewEncapsulation.None
 })
 export class DashboardSupervisorComponent implements OnInit {
-
+    @ViewChild('leaveDetailModal') leaveDetailModal: TemplateRef<any>;
+    showModal: boolean = false;
     leaveBalance: any = [];
     upcomingHolidays: any = [];
     recentTransactions: any = [];
@@ -85,6 +86,9 @@ export class DashboardSupervisorComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
         this.route.params.subscribe(p => {
             this.dashboardTab = p.type;
+            if(p.leave_id !== undefined) {
+                this.showModal  =true;
+            }
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
@@ -227,6 +231,8 @@ export class DashboardSupervisorComponent implements OnInit {
             this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.leavesTransactions = res.json().data || [];
+                    if(this.showModal)
+                        this.showLeaveDetail(7, this.leaveDetailModal, true);
                 }
             })
     }
@@ -365,7 +371,6 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     viewAttachement(leave) {
-        debugger;
         // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
         this.leaveService.getAttachement(leave._id).subscribe(res => {
             if (res.ok) {

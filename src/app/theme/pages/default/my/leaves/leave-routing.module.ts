@@ -22,7 +22,8 @@ const routes: Routes = [{
     path: '', component: LeaveComponent,
     children: [
         { path: 'dashboard/employee', component: DashboardEmployeeComponent, canActivate: [EmployeeGuard] },
-        { path: 'dashboard/supervisor', component: DashboardSupervisorComponent, canActivate: [SupervisorGuard] },
+        { path: 'dashboard/supervisor/:leave_id',  component: DashboardSupervisorComponent, canActivate: [SupervisorGuard], },
+        { path: 'dashboard/supervisor',  component: DashboardSupervisorComponent, canActivate: [SupervisorGuard], },
         { path: 'dashboard/hr', component: DashboardHrComponent, canActivate: [HrGuard] },
         { path: 'apply', component: ApplyComponent, canActivate: [EmployeeGuard] },
         { path: 'cancel', component: CancelComponent, canActivate: [EmployeeGuard] },
