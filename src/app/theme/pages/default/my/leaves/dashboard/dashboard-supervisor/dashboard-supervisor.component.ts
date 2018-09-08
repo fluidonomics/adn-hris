@@ -68,6 +68,7 @@ export class DashboardSupervisorComponent implements OnInit {
     leavesTransactions: any = [];
     supervisorTeamEmployeeList: any = [];
     modalRef: BsModalRef;
+    modalLeaveId: any;
 
     p1: number = 1;
 
@@ -86,18 +87,20 @@ export class DashboardSupervisorComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
         this.route.params.subscribe(p => {
             this.dashboardTab = p.type;
-            if(p.leave_id !== undefined) {
-                this.showModal  =true;
+            if (p.leave_id !== undefined) {
+                this.showModal = true;
+                this.modalLeaveId = p.leave_id;
             }
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
+            if (this.showModal) {
+                this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, null);
+            }
         });
     }
     getFinancialYearDetails() {
-        this.currentFinancialYear = "1";
-        this.loadDashboard();
         this.commonService.getFinancialYear().subscribe(
             res => {
                 if (res.ok) {
@@ -231,8 +234,6 @@ export class DashboardSupervisorComponent implements OnInit {
             this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
                 if (res.ok) {
                     this.leavesTransactions = res.json().data || [];
-                    if(this.showModal)
-                        this.showLeaveDetail(7, this.leaveDetailModal, true);
                 }
             })
     }
@@ -261,7 +262,7 @@ export class DashboardSupervisorComponent implements OnInit {
             "status": leaveStatus,
             "updatedBy": this.currentUser._id,
             "link": window.location.origin + '/my/leaves/dashboard/employee'
-    };
+        };
 
         if (operationStatus == 'Approved') {
             if (leaveStatus == LeaveStatus.Applied) {
@@ -374,7 +375,6 @@ export class DashboardSupervisorComponent implements OnInit {
         // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
         this.leaveService.getAttachement(leave._id).subscribe(res => {
             if (res.ok) {
-                debugger;
                 console.log('success');
             }
         })

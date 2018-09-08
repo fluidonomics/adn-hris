@@ -19,6 +19,8 @@ declare var mApp;
 })
 export class DashboardEmployeeComponent implements OnInit {
 
+    @ViewChild('leaveDetailModal') leaveDetailModal: TemplateRef<any>;
+
     leaveBalance: any = [];
     upcomingHolidays: any = [];
     recentTransactions: any = [];
@@ -50,7 +52,8 @@ export class DashboardEmployeeComponent implements OnInit {
     leaveStatuses: any = [];
     modalRef: BsModalRef;
     showModal: boolean = false;
-    @ViewChild('leaveDetailModal') leaveDetailModal: TemplateRef<any>;
+    modalLeaveId: any;
+
     constructor(
         private leaveService: LeaveService,
         public authService: AuthService,
@@ -67,13 +70,17 @@ export class DashboardEmployeeComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
         this.route.params.subscribe(p => {
             this.dashboardTab = p.type;
-            if(p.leave_id !== undefined) {
-                this.showModal  =true;
+            if (p.leave_id !== undefined) {
+                this.showModal = true;
+                this.modalLeaveId = p.leave_id;
             }
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
+            if (this.showModal) {
+                this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, null);
+            }
         });
     }
 

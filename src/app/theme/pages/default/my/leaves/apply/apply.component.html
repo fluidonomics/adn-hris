@@ -61,7 +61,8 @@
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air" name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
 												 placeholder="Select From Date" [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true"
-												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="isMaternity" id="fromDate" required>
+												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="isMaternity" [minDate]="leaveapplication.fYear?.startDate"
+												 id="fromDate" required>
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
 													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This field is required.</span>
 													<span *ngIf="fleaveapplication.submitted && !fromDateValidation.isValid">{{fromDateValidation.msg}}</span>
@@ -74,8 +75,8 @@
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
 												 placeholder="Select To Date" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate"
-												 [(ngModel)]="leaveapplication.toDate" [minDate]="leaveapplication.fromDate" [disabled]="isMaternity" #toDate="ngModel"
-												 required>
+												 [(ngModel)]="leaveapplication.toDate" [minDate]="leaveapplication.fromDate" [maxDate]="leaveapplication.fYear?.endDate"
+												 [disabled]="isMaternity" #toDate="ngModel" required>
 												<div class="form-control-feedback has-danger" *ngIf="!toDate.valid && leavetype.valid">
 													<span *ngIf="fleaveapplication.submitted && !toDate.valid">This field is required.</span>
 

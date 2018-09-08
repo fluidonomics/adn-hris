@@ -89,6 +89,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.fiscalYearId = 1;
         this.clearAttachment();
         this.getEmployeeLeaves();
+        this.getFinancialYear();
     }
 
     getLeaveTypes() {
@@ -171,6 +172,23 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.holidayList = res.json() || [];
             }
         });
+    }
+
+    getFinancialYear() {
+        this._commonService.getFinancialYear().subscribe(res => {
+            if (res.ok) {
+                let data = res.json() || [];
+                if (data && data.length > 0) {
+                    let fYear = data.filter(d => d.isYearActive);
+                    if (fYear["0"]) {
+                        this.leaveapplication.fYear = {
+                            startDate: new Date(fYear["0"].starDate),
+                            endDate: new Date(fYear["0"].endDate)
+                        };
+                    }
+                }
+            }
+        })
     }
 
     onChangeLeaveType() {

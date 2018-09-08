@@ -256,7 +256,6 @@ export class DashboardHrComponent implements OnInit {
 
     // leaveDetails: any = {};
     // showLeaveDetail(leaveId, templateRef) {
-    //     debugger;
     //     this.leaveDetails = {};
     //     this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
