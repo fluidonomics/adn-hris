@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '../../../../../../../node_modules/@angular/common/http';
+import { environment } from '../../../../../../environments/environment';
 
 declare var moment;
 
@@ -204,9 +205,10 @@ export class LeaveService {
     }
 
     getAttachement(leaveId: number) {
-        let url = "leave/downloadFile?id=" + leaveId;
-        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
-    }
+        let url = environment.api_base.apiBase + "/api/leave/downloadFile?id=" + leaveId;
+        window.open(url, '_blank');
+    };
+
     // ------------------------------------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------------------------------------
 
