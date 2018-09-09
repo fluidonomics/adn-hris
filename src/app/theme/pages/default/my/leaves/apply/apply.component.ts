@@ -551,7 +551,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this.leavesList.forEach(leave => {
                 let fromDate = moment(leave.fromDate)._d;
                 let toDate = moment(leave.toDate)._d;
-                if (leave.status != 'Cancelled' && leave.status != 'Withdrawn' && leave.status && 'Rejected') {
+                if (leave.status != 'Cancelled' && leave.status != 'Withdrawn' && leave.status != 'Rejected') {
                     if (!isLeave && (moment(checkDate).format('L') <= moment(toDate).format('L') && moment(checkDate).format('L') >= moment(fromDate).format('L'))) {
                         isLeave = true;
                         if (iterator > 0) {
