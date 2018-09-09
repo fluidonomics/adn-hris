@@ -439,10 +439,12 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
     processSandwich() {
+        debugger;
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
         if (this.leaveapplication.fromDate && this.leaveapplication.toDate) {
+            let originalDays = moment(moment(this.leaveapplication.toDate).format('L')).diff(moment(this.leaveapplication.fromDate).format('L'), 'days') + 1;
             let isAlreadyAppleid = this.leavesList.filter(f => {
                 let lFromDate = moment(f.fromDate).format('L');
                 let lToDate = moment(f.toDate).format('L');
@@ -500,6 +502,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
             let days = moment(endDate).diff(startDate, 'days') + 1;
             this.leaveapplication.days = days;
+
         }
     }
 

@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Activ
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../_services/authService.service';
 import { JwtHelper } from 'angular2-jwt';
+import { CookieService } from '../../../../node_modules/ngx-cookie-service';
 
 
 @Injectable()
@@ -11,7 +12,7 @@ export class AdminGuard implements CanActivate {
     jwtHelper: JwtHelper = new JwtHelper();
 
     isHr() {
-        let userInfo = sessionStorage.getItem('accessToken') ? this.jwtHelper.decodeToken(sessionStorage.getItem('accessToken')) : null;
+        let userInfo = this.cookieService.get('accessToken') ? this.jwtHelper.decodeToken(this.cookieService.get('accessToken')) : null;
         if (userInfo) {
             if (userInfo.roles.indexOf('Admin') > -1) {
                 return true;
@@ -20,7 +21,11 @@ export class AdminGuard implements CanActivate {
         return false;
     }
 
-    constructor(private router: Router, private _authService: AuthService) {
+    constructor(
+        private router: Router,
+        private _authService: AuthService,
+        private cookieService: CookieService
+    ) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {

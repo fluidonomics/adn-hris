@@ -96,7 +96,7 @@ export class DashboardSupervisorComponent implements OnInit {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
             if (this.showModal) {
-                this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, null);
+                this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, true);
             }
         });
     }

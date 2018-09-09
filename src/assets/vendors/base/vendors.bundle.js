@@ -103435,7 +103435,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
                 // Check for onWarn callback function and if there is none, launch dialog
                 if (typeof opt.onWarn !== 'function') {
 					//custom edit remove below
-					sessionStorage.clear();
+					document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 					window.location = opt.redirUrl;
 					
 					//Remove Below Comment
@@ -103462,7 +103462,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
                 // Check for onRedir callback function and if there is none, launch redirect
                 if (typeof opt.onRedir !== 'function') {
 					//custom change
-					sessionStorage.clear();
+					document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
                     window.location = opt.redirUrl;
                 } else {
                     opt.onRedir(opt);
