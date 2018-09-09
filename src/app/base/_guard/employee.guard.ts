@@ -12,7 +12,6 @@ export class EmployeeGuard implements CanActivate {
     jwtHelper: JwtHelper = new JwtHelper();
 
     isHr() {
-        debugger;
         let userInfo = this.cookieService.get('accessToken') ? this.jwtHelper.decodeToken(this.cookieService.get('accessToken')) : null;
         if (userInfo) {
             if (userInfo.roles.indexOf('Employee') > -1) {

@@ -250,13 +250,13 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
         if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
             this.isAttachmentRequired = true;
-            if (!this.uploadEvent || !this.uploadEvent.data) {
-                this.isAttachmentAdded = true;
-            } else {
-                this.isAttachmentAdded = false;
-            }
         } else {
             this.isAttachmentRequired = false;
+        }
+        if (this.uploadEvent && this.uploadEvent.data) {
+            this.isAttachmentAdded = true;
+        } else {
+            this.isAttachmentAdded = false;
         }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
@@ -273,7 +273,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
             }
         }
 
-        if (form.valid && this.areDaysValid && this.isBalanceValid && !this.isAttachmentAdded) {
+        if (form.valid && this.areDaysValid && this.isBalanceValid) {
+            if (this.isAttachmentRequired && !this.isAttachmentAdded) {
+                return;
+            }
             // let ccToMail = [];
             // if (data.ccTo) {
             //     data.ccTo.forEach(cc => {
@@ -337,6 +340,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
     uploadOutput: UploadOutput;
     onUploadOutput(output: UploadOutput, fileName: string): void {
         if (output.file) {
+            if (output.file.size > 300000) {
+                swal("Error!", "File Size cannot be more than 300 KB", "error");
+                return;
+            }
             this.leaveapplication.attachmentName = output.file.name
         }
         let atCurrentAuthData = this._authService.currentAuthData;
@@ -386,7 +393,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         });
         this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
             res => {
-                if (this.isAttachmentRequired) {
+                if (this.isAttachmentAdded) {
                     let leave = res.json();
                     this.uploadEvent.data._id = leave._id
                     this.uploadInput.emit(this.uploadEvent);
@@ -439,7 +446,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
     processSandwich() {
-        debugger;
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
