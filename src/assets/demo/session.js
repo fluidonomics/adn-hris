@@ -1,7 +1,7 @@
-(function($) {
+(function ($) {
     /*jshint multistr: true */
     'use strict';
-    $.sessionTimeout = function(options) {
+    $.sessionTimeout = function (options) {
         var defaults = {
             title: 'Your Session is About to Expire!',
             message: 'Your session is about to expire.',
@@ -83,7 +83,7 @@
         // Reset timer on any of these events
         if (!opt.ignoreUserActivity) {
             var mousePosition = [-1, -1];
-            $(document).on('keyup mouseup mousemove touchend touchmove', function(e) {
+            $(document).on('keyup mouseup mousemove touchend touchmove', function (e) {
                 if (e.type === 'mousemove') {
                     // Solves mousemove even when mouse not moving issue on Chrome:
                     // https://code.google.com/p/chromium/issues/detail?id=241476
@@ -122,7 +122,7 @@
                     data: opt.ajaxData
                 });
                 keepAlivePinged = true;
-                setTimeout(function() {
+                setTimeout(function () {
                     keepAlivePinged = false;
                 }, opt.keepAliveInterval);
             }
@@ -145,19 +145,19 @@
             }
 
             // Set session timer
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 // Check for onWarn callback function and if there is none, launch dialog
                 if (typeof opt.onWarn !== 'function') {
-					//custom edit remove below
-					sessionStorage.clear();
-					window.location = opt.redirUrl;
-					
-					//Remove Below Comment
+                    //custom edit remove below
+                    document.cookie.split(";").forEach(function (c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+                    window.location = opt.redirUrl;
+
+                    //Remove Below Comment
                     //$('#session-timeout-dialog').modal('show');
                 } else {
                     opt.onWarn(opt);
-				}
-				//custome remove below comment
+                }
+                //custome remove below comment
                 // Start dialog timer
                 //startDialogTimer();
             }, opt.warnAfter);
@@ -172,11 +172,11 @@
                 startCountdownTimer('dialog', true);
             }
             // Set dialog timer
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 // Check for onRedir callback function and if there is none, launch redirect
                 if (typeof opt.onRedir !== 'function') {
-					//custom change
-					sessionStorage.clear();
+                    //custom change
+                    document.cookie.split(";").forEach(function (c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
                     window.location = opt.redirUrl;
                 } else {
                     opt.onRedir(opt);
@@ -225,7 +225,7 @@
 
             // Countdown by one second
             countdown.timeLeft = countdown.timeLeft - 1;
-            countdown.timer = setTimeout(function() {
+            countdown.timer = setTimeout(function () {
                 // Call self after one second
                 startCountdownTimer(type);
             }, 1000);

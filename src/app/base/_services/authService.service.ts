@@ -31,6 +31,7 @@ import {
 
     Angular2TokenOptions
 } from '../_interface/auth.model'
+import { CookieService } from '../../../../node_modules/ngx-cookie-service';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -72,7 +73,8 @@ export class AuthService implements CanActivate {
     constructor(
         private http: Http,
         @Optional() private activatedRoute: ActivatedRoute,
-        @Optional() private router: Router
+        @Optional() private router: Router,
+        private cookieService: CookieService
     ) { }
 
     userSignedIn(): boolean {
@@ -221,12 +223,7 @@ export class AuthService implements CanActivate {
     signOut() {
         //let observ = this.delete(this.getUserPath() + this.atOptions.signOutPath);
 
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('client');
-        sessionStorage.removeItem('expiry');
-        sessionStorage.removeItem('tokenType');
-        sessionStorage.removeItem('uid');
-
+        this.cookieService.deleteAll();
 
         this.atCurrentAuthData = null;
         this.atCurrentUserType = null;
@@ -438,7 +435,7 @@ export class AuthService implements CanActivate {
     // Try to load auth data
     private tryLoadAuthData(): void {
 
-        let userType = this.getUserTypeByName(sessionStorage.getItem('userType'));
+        let userType = this.getUserTypeByName(this.cookieService.get('userType'));
 
         if (userType)
             this.atCurrentUserType = userType;
@@ -482,17 +479,19 @@ export class AuthService implements CanActivate {
 
     // Try to get auth data from storage.
     private getAuthDataFromStorage(): void {
+        if (this.cookieService.get('accessToken') != undefined && this.cookieService.get('accessToken') != "") {
 
-        let authData: AuthData = {
-            accessToken: sessionStorage.getItem('accessToken'),
-            client: sessionStorage.getItem('client'),
-            expiry: sessionStorage.getItem('expiry'),
-            tokenType: sessionStorage.getItem('tokenType'),
-            uid: sessionStorage.getItem('uid')
-        };
+            let authData: AuthData = {
+                accessToken: this.cookieService.get('accessToken'),
+                client: this.cookieService.get('client'),
+                expiry: this.cookieService.get('expiry'),
+                tokenType: this.cookieService.get('tokenType'),
+                uid: this.cookieService.get('uid')
+            };
 
-        if (this.checkAuthData(authData))
-            this.atCurrentAuthData = authData;
+            if (this.checkAuthData(authData))
+                this.atCurrentAuthData = authData;
+        }
     }
 
     // Try to get auth data from url parameters.
@@ -525,14 +524,14 @@ export class AuthService implements CanActivate {
 
             this.atCurrentAuthData = authData;
 
-            sessionStorage.setItem('accessToken', authData.accessToken);
-            sessionStorage.setItem('client', authData.client);
-            sessionStorage.setItem('expiry', authData.expiry);
-            sessionStorage.setItem('tokenType', authData.tokenType);
-            sessionStorage.setItem('uid', authData.uid);
+            this.cookieService.set('accessToken', authData.accessToken);
+            this.cookieService.set('client', authData.client);
+            this.cookieService.set('expiry', authData.expiry);
+            this.cookieService.set('tokenType', authData.tokenType);
+            this.cookieService.set('uid', authData.uid);
 
             if (this.atCurrentUserType != null)
-                sessionStorage.setItem('userType', this.atCurrentUserType.name);
+                this.cookieService.set('userType', this.atCurrentUserType.name);
 
         }
     }

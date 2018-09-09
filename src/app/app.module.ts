@@ -24,6 +24,7 @@ import { BaseModule } from "./base/base.module"
 import { environment } from '../environments/environment'
 import { UtilityService } from './base/_services/utilityService.service';
 import { DocumentService } from './base/_services/documentService.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,7 @@ import { DocumentService } from './base/_services/documentService.service';
         FormsModule,
         HttpModule
     ],
-    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService, DocumentService],
+    providers: [ScriptLoaderService, AuthService, CommonService, UtilityService, DocumentService, CookieService],
     bootstrap: [AppComponent]
 })
 
