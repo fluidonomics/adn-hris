@@ -341,12 +341,15 @@ export class DashboardSupervisorComponent implements OnInit {
     showLeaveDetail(leaveId, templateRef, showActionTools) {
         this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
-        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
         this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
             if (res.ok) {
                 let body = res.json();
                 if (body.data[0]) {
+                    if(this.currentUser._id !== body.data[0].applyTo){
+                        return;
+                    }
+
                     this.leaveDetails.leave = body.data[0];
                     if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
                         this.btnApproveText = 'Approve';
@@ -366,6 +369,7 @@ export class DashboardSupervisorComponent implements OnInit {
                             }
                         })
                     }
+                    this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                 }
             }
         });

@@ -64,7 +64,7 @@
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="teamLeaves.length > 0" class="m-datatable__body ps ps--active-x ps--active-y">
-                                    <tr data-row="0" class="m-datatable__row" *ngFor="let leave of teamLeaves  | paginate: { id:'teamLeaves', itemsPerPage: 6, currentPage: teamLeavesFilter.page };let even=even;">
+                                    <tr data-row="0" class="m-datatable__row" *ngFor="let leave of teamLeaves  | paginate: { id:'teamLeaves', itemsPerPage: 5, currentPage: teamLeavesFilter.page };let even=even;">
                                         <td data-field="ShipName" class="m-datatable__cell" width="40%">
                                             <span>{{leave.employeeDetails.fullName}}</span>
                                         </td>
