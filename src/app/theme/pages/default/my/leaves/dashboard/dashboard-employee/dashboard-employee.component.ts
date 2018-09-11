@@ -176,13 +176,11 @@ export class DashboardEmployeeComponent implements OnInit {
             event.stopPropagation();
         }
         this.leaveDetails = {};
-        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
 
         this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
             if (res.ok) {
                 let body = res.json();
                 if (body.data[0]) {
-
                     if(this.currentUser._id !== body.data[0].emp_id){
                         return;
                     }
@@ -199,6 +197,7 @@ export class DashboardEmployeeComponent implements OnInit {
                             }
                         })
                     }
+                    this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' })); 
                 }
             }
         });
