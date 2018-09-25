@@ -115,6 +115,9 @@
 											<div class="form-group m-form__group">
 												<label for="form_control_1">Approving Authority</label>
 												<span class="pl1r">{{primarySupervisor?.fullName}}</span>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
+													<span *ngIf="!supervisorPresent">Supervisor Required</span>
+												</div>
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">
