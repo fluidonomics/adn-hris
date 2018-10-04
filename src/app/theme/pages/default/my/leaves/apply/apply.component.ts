@@ -51,6 +51,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     holidayList: any = [];
     isSandwichValid: boolean = false;
     daysValidationMsg: string;
+    supervisorPresent: boolean = false;
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -126,6 +127,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
                             this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
                             this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
+                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
+                                this.supervisorPresent = true;
+                            }
                         }
                     }
                 },
@@ -287,10 +291,13 @@ export class ApplyComponent implements OnInit, OnDestroy {
             //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
             //     });
             // }
-
             let _postData: any = {};
-            if (this.primarySupervisor) {
+            if (this.primarySupervisor && this.primarySupervisor._id) {
                 _postData.supervisor_id = this.primarySupervisor._id;
+                this.supervisorPresent = true;
+            } else {
+                this.supervisorPresent = false;
+                return;
             }
             _postData.fromDate = moment(data.fromDate).format('L');
             _postData.toDate = moment(data.toDate).format('L');

@@ -1,5 +1,5 @@
 import { FormBuilder } from "@angular/forms";
-import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
@@ -7,14 +7,17 @@ import { KraViewService } from "./kra-view.service"
 import { CommonService } from "../../../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
     templateUrl: "./kra-view.component.html",
     encapsulation: ViewEncapsulation.None,
     providers: [KraViewService]
 })
 export class MyTeamKraComponent {
+
+    @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
 
     window: any = window;
     kraCategoryData: any[];
@@ -24,25 +27,26 @@ export class MyTeamKraComponent {
     kraInfoData: any = [];
 
     isSubmitted: boolean = false;
-    
+
 
     isKraAvaliable: boolean = false;
- 
+
     param_emp_id: number;
     param_id: number;
     kraWorkFlowData: any = [];
 
-    status:any;
-    isDisabled:boolean=true;
+    status: any;
+    isDisabled: boolean = true;
+    user: any;
 
-
-    constructor( @Inject(PLATFORM_ID) private platformId: Object,
+    constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
         public _authService: AuthService,
         private _commonService: CommonService,
-        private _kraService: KraViewService
+        private _kraService: KraViewService,
+        private modalService: BsModalService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -73,14 +77,15 @@ export class MyTeamKraComponent {
         this.loadWeightAgeData();
         this.loadSupervisorData();
         this.loadKraInfo();
+        this.getEmployee();
     }
 
     loadKraInfo() {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
                 this.kraInfoData = res.json().data;
-                this.isDisabled= res.json().status=='Approved' ? true:false;
-                this.status= res.json().status;
+                this.isDisabled = res.json().status == 'Approved' ? true : false;
+                this.status = res.json().status;
             },
             error => {
             });;
@@ -89,103 +94,115 @@ export class MyTeamKraComponent {
     loadKraCategoryData() {
         this._commonService.getKraCategory()
             .subscribe(
-            data => {
-                this.kraCategoryData = data.json();
-            },
-            error => {
-            });
-    } 
+                data => {
+                    this.kraCategoryData = data.json();
+                },
+                error => {
+                });
+    }
 
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-            data => {
-                this.weightageData = data.json();
-            },
-            error => {
-            });
+                data => {
+                    this.weightageData = data.json();
+                },
+                error => {
+                });
     }
 
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this.param_emp_id)
             .subscribe(
-            data => {
-                this.supervisorData = data.json();
-            },
+                data => {
+                    this.supervisorData = data.json();
+                },
+                error => {
+                });
+    }
+
+    getEmployee() {
+        this._commonService.getEmployee(this.param_emp_id).subscribe(res => {
+            if (res.ok) {
+                this.user = res.json() || {};
+            }
+        })
+    }
+
+    preSaveKraDetails(kraId: number, status: string) {
+        let swalOption = {}
+        let index = this.kraData.no - 1;
+        this.kraInfoData[index].sendBackComment = this.kraData.sendBackComment;
+        if (status == 'SendBack' && (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "")) {
+            swal({
+                title: 'Please specify the reason!',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+        else {
+            let text = "Do you want to approve kra ?";
+            let confirmButtonText = "Approve";
+            let confirmButtonColor = "#66BB6A";
+            if (status == 'SendBack') {
+                text = "Do you want to send back kra ?";
+                confirmButtonText = "Send Back";
+                confirmButtonColor = "#f22d4e";
+            }
+            swal({
+                title: 'Are you sure?',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: confirmButtonColor,
+                cancelButtonColor: '#9a9caf',
+                confirmButtonText: confirmButtonText
+            }).then((result) => {
+                if (result.value) {
+                    this.saveKraDetails(index, status);
+                }
+            });
+        }
+    }
+
+    saveKraDetails(index: number, status: string) {
+        this.kraInfoData[index].supervisorStatus = status;
+        if (status == 'Approved') {
+            this.kraInfoData[index].sendBackComment = null;
+        }
+        this._kraService.saveKra(this.kraInfoData[index]).subscribe(res => {
+            if (res.ok) {
+                this.modalRef.hide();
+                if (status == 'SendBack' || this.kraInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.kraInfoData.length) {
+                    let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
+                    this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
+                }
+            }
+        },
             error => {
             });
     }
 
-    preSaveKraDetails(index:number,status:string)
-    {
-        let swalOption={}
-        if(status=='SendBack' && !this.kraInfoData[index].sendBackComment)
-        {
-          swal({
-             title: 'Please specify the reason!',
-             type: 'warning',
-             showCancelButton: false,
-             confirmButtonColor: '#66BB6A',
-             confirmButtonText: 'OK'
-          });
-        }
-        else{
-            let text="Do you want to approve kra ?";
-            let confirmButtonText="Approve";
-            let confirmButtonColor="#66BB6A";
-            if(status=='SendBack')
-            {
-                text="Do you want to send back kra ?";
-                confirmButtonText="Send Back";
-                confirmButtonColor="#f22d4e";           
-            }
-            swal({
-                    title: 'Are you sure?',
-                    text: text,
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: confirmButtonColor,
-                    cancelButtonColor: '#9a9caf',
-                    confirmButtonText: confirmButtonText
-            }).then((result) => {
-                    if (result.value) {
-                        this.saveKraDetails(index,status);
-                    }
-            });
-        }
-    }
-
-    saveKraDetails(index:number,status:string)
-    {
-        this.kraInfoData[index].supervisorStatus=status;
-        if(status=='Approved')
-        {
-            this.kraInfoData[index].sendBackComment=null; 
-        }
-        this._kraService.saveKra(this.kraInfoData[index]).subscribe(res=>{
-            if(res.ok)
-            {
-               if(status=='SendBack' || this.kraInfoData.filter(x => x.supervisorStatus == 'Approved').length==this.kraInfoData.length)
-               {
-                   let kraStatus= (status=='SendBack'? 'SendBack':'Approved');
-                   this.saveKraWorkFlow({_id:this.param_id,status:kraStatus})
-               }
-            }
-        },
-        error => {
-        });
-    }
-
-    saveKraWorkFlow(data)
-    {
+    saveKraWorkFlow(data) {
         this._kraService.saveKraWorkFlow(data)
-        .subscribe(
-        res => {
-        },
-        error => {
-        });
+            .subscribe(
+                res => {
+                },
+                error => {
+                });
     }
 
-    
+    modalRef: BsModalRef;
+    kraData: any = {};
+    showKraDetail(index, event) {
+        this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.kraData = this.kraInfoData[index];
+        this.kraData.no = index + 1;
+        this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
+        this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+    }
+
 
 }

@@ -18,6 +18,7 @@ import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmploy
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -30,14 +31,15 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
         NgUploaderModule,
         NgxPaginationModule,
         BsDatepickerModule.forRoot(),
-        BaseModule
+        BaseModule,
+        ModalModule.forRoot(),
     ], declarations: [
         MyTeamReviewerComponent,
         MyTeamSupervisorComponent,
         MyTeamKraComponent,
         AllEmployeeComponent
     ],
-    providers: [MyTeamService,ReviewerGuard,SupervisorGuard]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard]
 })
 export class MyTeamModule {
 }
