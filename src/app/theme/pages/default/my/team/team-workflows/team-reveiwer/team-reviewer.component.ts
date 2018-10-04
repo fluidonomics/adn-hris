@@ -26,7 +26,7 @@ export class MyTeamReviewerComponent implements OnInit {
         status: 'All',
         page: 1
     };
-    ngOnInit() {
+    ngOnInit() {        
         this.getallemployees();
         this.imageBase=environment.content_api_base.apiBase;
     }

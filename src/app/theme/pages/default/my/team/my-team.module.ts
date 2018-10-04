@@ -13,6 +13,7 @@ import { BaseModule } from '../../../../../base/base.module';
 import { MyTeamReviewerComponent } from './team-workflows/team-reveiwer/team-reviewer.component';
 import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team-supervisor.component';
 import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
+import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 
 
@@ -37,6 +38,7 @@ import { ModalModule } from 'ngx-bootstrap';
         MyTeamReviewerComponent,
         MyTeamSupervisorComponent,
         MyTeamKraComponent,
+        KraReview,
         AllEmployeeComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard]

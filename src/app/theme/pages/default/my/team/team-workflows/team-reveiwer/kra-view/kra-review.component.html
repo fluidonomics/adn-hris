@@ -1,0 +1,290 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Approve KRAs
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
+                            role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <!-- <a class="nav-link m-tabs__link" (click)="window.print();" role="tab" >
+                         <i class="la la-print"></i>
+                         Print
+                         </a> -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+                        <div class="m-section__content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                KRA
+                                            </th>
+                                            <th style="width: 170px;">
+                                                KRA Category
+                                            </th>
+                                            <th>
+                                                Weightage
+                                            </th>
+                                            <th class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index">
+                                            <th scope="row">
+                                                {{i+1}}
+                                            </th>
+                                            <td>
+                                                <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel"
+                                                    class="form-control m-input m-input--air" disabled></textarea>
+                                            </td>
+                                            <td>
+                                                <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory"
+                                                    [items]="kraCategoryData" bindLabel="kraCategoryName" bindValue="_id"
+                                                    placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id"
+                                                    [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
+                                            </td>
+                                            <td>
+                                                <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage"
+                                                    [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
+                                                    placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id"
+                                                    [clearable]="false" #kraWeightage="ngModel" disabled></ng-select>
+                                            </td>
+                                            <td class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                                <span>
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                        title="KRA Detail" (click)="showKraDetail(i, $event)">
+                                                        <i class="la la-info"></i>
+                                                    </a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <!-- </form> -->
+                        </div><br><br>
+                        <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
+                            *ngIf="isKraAvaliable">
+                            <div class="tab-content">
+                                <div class="m-widget3">
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__user-img">
+                                                <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                    alt="">
+                                            </div>
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username" id="hrName">
+                                                    Test HR
+                                                </span>
+                                                <br>
+                                                <span class="m-widget3__time" id="dateTime">
+                                                    2 day ago
+                                                </span>
+                                            </div>
+                                            <span class="m-badge m-badge--success m-badge--wide" id="kraStatus">
+                                                accepted
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text m--font-success" id="kraTimeline">
+                                                Your KRA has been Accepted.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__user-img">
+                                                <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                    alt="">
+                                            </div>
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username" id="supervisorName">
+                                                    Test Supervisor
+                                                </span>
+                                                <br>
+                                                <span class="m-widget3__time">
+                                                    1 weeks ago
+                                                </span>
+                                            </div>
+                                            <span class="m-badge m-badge--info m-badge--wide">
+                                                initiated
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text m--font-info">
+                                                Your KRA has been Initiated.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__user-img">
+                                                <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                    alt="">
+                                            </div>
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username" id="hrName">
+                                                    Test HR
+                                                </span>
+                                                <br>
+                                                <span class="m-widget3__time">
+                                                    2 weeks ago
+                                                </span>
+                                            </div>
+                                            <span class="m-badge m-badge--danger m-badge--wide">
+                                                rejected
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text m--font-danger">
+                                                Your KRA has been rejected.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget3__item">
+                                        <div class="m-widget3__header">
+                                            <div class="m-widget3__user-img">
+                                                <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                    alt="">
+                                            </div>
+                                            <div class="m-widget3__info">
+                                                <span class="m-widget3__username" id="supervisorName">
+                                                    Test Supervisor
+                                                </span>
+                                                <br>
+                                                <span class="m-widget3__time">
+                                                    3 weeks ago
+                                                </span>
+                                            </div>
+                                            <span class="m-badge m-badge--info m-badge--wide">
+                                                initiated
+                                            </span>
+                                        </div>
+                                        <div class="m-widget3__body">
+                                            <p class="m-widget3__text m--font-info">
+                                                Your KRA has been Initiated.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #kraDetailModal>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Key Responsibility Area
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-widget6 ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span>KRA No. {{kraData.no}}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span class="block"> {{user?.fullName}} ({{user?.userName}})</span>
+                                <span class="block"> {{user?.designationDetails?.designationName}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row details">
+                    <div class="col-md-6 form-group flex">
+                        <span class="key">Kra Category</span>
+                        <span class="value">{{kraData?.category?.kraCategoryName}}</span>
+                    </div>
+                    <div class="col-md-6 form-group flex">
+                        <span class="key">Weightage</span>
+                        <span class="value">{{kraData?.weightage?.kraWeightageName}}</span>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <span class="key">Key Responsibility Area (K.R.A)</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.kra}}" disabled="true"></textarea>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <span class="key">Unit Of Success</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.unitOfSuccess}}"
+                            disabled="true"></textarea>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Measure Of Success</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.measureOfSuccess}}"
+                            disabled="true"></textarea>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <span class="key">Remarks</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.sendBackComment"
+                            [disabled]="kraData.supervisor_id!=_authService.atCurrentUserData._id || kraData.supervisorStatus" disabled></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-form__actions">
+                                <button disabled *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                    class="btn btn-success" (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
+                                <button disabled *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                    class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')" type="button">Send
+                                    Back</button>
+                                <button disabled class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
