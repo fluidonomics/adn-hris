@@ -11,7 +11,7 @@ import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 
 const routes: Routes = [
-    { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [ReviewerGuard] },
+    { path: 'workflows/reveiwer', component: MyTeamReviewerComponent },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent,canActivate: [SupervisorGuard] },
     //{ path: 'workflows/:reveiwer/allEmployee', component: AllEmployeeComponent,canActivate: [ReviewerGuard] },

@@ -137,6 +137,7 @@ export class DashboardEmployeeComponent implements OnInit {
         if (this.transactionFilter.date && this.transactionFilter.status) {
             this.leaveService.getLeaveTransactionDetails(this.currentUser._id, this.transactionFilter.date[0], this.transactionFilter.date[1], this.transactionFilter.status).subscribe(res => {
                 if (res.ok) {
+                    debugger;
                     this.recentTransactions = res.json() || [];
                     this.recentTransactions = this.recentTransactions.sort((a, b) => b._id - a._id);
                 }
