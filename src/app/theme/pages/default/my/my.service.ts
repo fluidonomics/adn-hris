@@ -262,6 +262,11 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
+    getAllEmployeeByReviewerId(emp_id:number)
+    {
+        let url = "user/getAllEmployeeByReviewerId?id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     private extractData(res: Response) {
         return res || {};

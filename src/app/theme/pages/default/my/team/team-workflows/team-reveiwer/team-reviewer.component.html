@@ -47,9 +47,9 @@
                             </tr>
                         </thead>
                         <tbody class="m-datatable__body">
-                            <tr class="m-datatable__row" *ngFor="let emp of employees | paginate: { itemsPerPage: 6, currentPage: employeesFilter.page }; let even=even;">
+                            <tr class="m-datatable__row" *ngFor="let emp of employees | paginate: { itemsPerPage: 6, currentPage: employeesFilter.page }; let even=even;" >                                   
                                 <td class="m-datatable__cell" width="15%">
-                                        <a align="center" routerLink="/my/team/workflows/kra-review/298/181">
+                                        <a align="center" routerLink="/my/team/workflows/kra-review/{{emp.kra._id}}/{{emp.emp_id}}">
                                             <img *ngIf="emp?.profileImage; else noImage" src="{{imageBase+emp?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                              class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                             <ng-template #noImage>
