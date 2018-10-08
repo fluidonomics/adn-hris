@@ -50,6 +50,15 @@ export class HrBatchComponent implements OnInit {
         public utilityService: UtilityService,
         public _authService: AuthService) {
     }
+    loadBatchFilter: any = {
+        date:  this.loadBatch(),
+        status: 'All',
+        page: 1
+    };
+    batchdatafilter: any = {       
+        status: 'All',
+        page: 1
+    };
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
@@ -79,7 +88,7 @@ export class HrBatchComponent implements OnInit {
     }
 
     loadkraWorkFlowDetails(batch_id:number)
-    {
+    {       
        this._commonService.getKraWorkFlowInfoByBatch(batch_id)
        .subscribe(
         res => {

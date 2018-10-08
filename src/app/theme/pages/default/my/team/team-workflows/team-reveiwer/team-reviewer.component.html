@@ -1,12 +1,4 @@
-<div class="m-subheader">
-	<div class="d-flex align-items-center">
-		<div class="mr-auto">
-			<h3 class="m-subheader__title">
-				reviewer Dashboard
-			</h3>
-		</div>
-	</div>
-</div>
+
 <div class="m-content">
 	<div class="row">	
 		<div class="col-xl-12" *ngIf="true">
@@ -15,7 +7,7 @@
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
-								KRA Approvals
+								Review KRA
 							</h3>
 						</div>
 					</div>
@@ -29,21 +21,15 @@
                                 <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                             <span>Profile picture</span>
                                 </th>
-                                <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                     <span>Full Name</span>
                                 </th>
-                                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                     <span>Designation</span>
                                 </th>
-                                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                     <span>Office Email</span>
-                                </th>
-                                <th class="m-datatable__cell m-datatable__cell--sort text-center" width="20%">
-                                    <span>supervisor</span>
-                                </th>
-                                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
-                                    <span>userName</span>
-                                </th>                                                                                         
+                                </th>                                                                                                                        
                             </tr>
                         </thead>
                         <tbody class="m-datatable__body">
@@ -57,21 +43,15 @@
                                             </ng-template>
                                         </a>
                                 </td>
-                                <td class="m-datatable__cell" width="20%">
+                                <td class="m-datatable__cell" width="15%">
                                     <span>{{emp.fullName}}</span>
                                 </td>
-                                <td class="m-datatable__cell text-center" width="5%">
+                                <td class="m-datatable__cell text-center" width="15%">
                                     <span>{{emp.designation}}</span>
                                 </td>
-                                <td class="m-datatable__cell text-center" width="10%">
+                                <td class="m-datatable__cell text-center" width="15%">
                                     <span>{{emp.officeEmail}}</span>
-                                </td>
-                                <td class="m-datatable__cell text-center" width="20%">
-                                    <span>{{emp.supervisor}}</span>
-                                </td>
-                                <td class="m-datatable__cell text-center" width="5%">
-                                    <span>{{emp.userName}}</span>
-                                </td>                                                                                       
+                                </td>                                                                                                                     
                             </tr>
                             <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>
                         </tbody>

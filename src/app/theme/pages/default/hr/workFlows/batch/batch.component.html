@@ -156,7 +156,7 @@
 								</tr>
 							</thead>
 							<tbody class="m-datatable__body" id="batch-loader">
-                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let i=index ;let even=even;" >
+                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: loadBatchFilter.page };let i=index ;let even=even;" >
                                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
                                            <td class="m-datatable__cell" width="10%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <a class="btn btn-outline-success m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air " [ngClass]="batch._id==activeRowNumber? 'active':''">
@@ -212,7 +212,7 @@
                                                         <tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body"> 
-                                                            <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData;let j=index">
+                                                            <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                                 <tr class="m-datatable__row">
                                                                         <td class="m-datatable__cell" width="62%" >
                                                                                 <span>{{kraRow.userName}}</span>
@@ -238,6 +238,37 @@
                                                             </ng-container>
                                                         </tbody>
                                                     </table>
+                                                    <pagination-template #pdata="paginationApi" (pageChange)="batchdatafilter.page = $event" class="paginationtemplate" >
+                                                        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                                            <ul class="m-datatable__pager-nav" *ngIf="pdata.pages.length > 0">
+                                                                <li>
+                                                                    <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.setCurrent(1)" >
+                                                                        <i class="la la-angle-double-left"></i>
+                                                                    </span>
+                                                                </li>
+                                                                <li>
+                                                                    <span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.previous()" >
+                                                                        <i class="la la-angle-left"></i>
+                                                                    </span>
+                                                                </li>
+                                                                <li *ngFor="let page of pdata.pages">
+                                                                    <span (click)="pdata.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="pdata.getCurrent() === page.value">
+                                                                        {{ page.label }}
+                                                                    </span>
+                                                                </li>
+                                                                <li>
+                                                                    <span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()" (click)="pdata.next()">
+                                                                        <i class="la la-angle-right"></i>
+                                                                    </span>
+                                                                </li>
+                                                                <li>
+                                                                    <span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"  (click)="pdata.setCurrent(pdata.pages.length + 1)">
+                                                                        <i class="la la-angle-double-right"></i>
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </pagination-template>
                                                 </div>
                                             </td>
                                     </tr>
@@ -245,7 +276,7 @@
                                 <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
                             </tbody>
 					</table>
-					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
+					<pagination-template #p="paginationApi" (pageChange)="loadBatchFilter.page = $event" class="paginationtemplate" >
 						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
 							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 								<li>
