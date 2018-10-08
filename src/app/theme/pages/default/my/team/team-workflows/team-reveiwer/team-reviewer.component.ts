@@ -22,18 +22,25 @@ export class MyTeamReviewerComponent implements OnInit {
     }
     employees:any=[];
     imageBase:any;
+    employeeReverse:boolean=true;
+    employeeSearch: any;
     employeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
         page: 1
     };
+    goToAllEmployee(){
+        this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
+    }
     ngOnInit() {        
         this.getallemployees();
         this.imageBase=environment.content_api_base.apiBase;
     }
-    getallemployees(){        
+    getallemployees(){   
+        this.utilityService.showLoader("#employeeList");     
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if(res.ok){              
+            if(res.ok){   
+                this.utilityService.hideLoader("#employeeList");          
              this.employees = res.json() || [];
              this.employees = this.employees.data.sort((a, b) => b._id - a._id);
              this.employees=this.employees.filter(a=>a.kra.status=='Submitted')

@@ -168,10 +168,7 @@ export class MyTeamKraComponent {
     }
 
     saveKraDetails(index: number, status: string) {
-        this.kraInfoData[index].supervisorStatus = status;
-        if (status == 'Approved') {
-            this.kraInfoData[index].sendBackComment = null;
-        }
+        this.kraInfoData[index].supervisorStatus = status;        
         this._kraService.saveKra(this.kraInfoData[index]).subscribe(res => {
             if (res.ok) {
                 this.modalRef.hide();

@@ -5,6 +5,7 @@ import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.co
 import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team-supervisor.component';
 import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
+import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
 
 
 
@@ -13,6 +14,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [SupervisorGuard] },
+    { path: 'workflows/reveiwer/employee/list', component: AllEmployeeReviewer,canActivate: [SupervisorGuard] },
     { path: 'workflows/kra-review/:id/:emp_id', component: KraReview },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent,canActivate: [SupervisorGuard] },
