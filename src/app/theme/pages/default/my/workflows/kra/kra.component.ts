@@ -1,5 +1,5 @@
 import { FormBuilder } from "@angular/forms";
-import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter,ViewChild,TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
@@ -7,6 +7,7 @@ import { KraService } from "./kra.service"
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
@@ -17,6 +18,8 @@ import { forEach } from "@angular/router/src/utils/collection";
     providers: [KraService],
 })
 export class MyKraComponent {
+
+    @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
 
     window: any = window;
     kraCategoryData: any[];
@@ -45,14 +48,16 @@ export class MyKraComponent {
     search: any;
     itemPerPage: number = 10;
 
-
+    modalRef: BsModalRef;   
+    kraData: any = {};
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
         public _authService: AuthService,
         private _commonService: CommonService,
-        private _kraService: KraService
+        private _kraService: KraService,
+        private modalService: BsModalService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -175,6 +180,19 @@ export class MyKraComponent {
                 confirmButtonText: 'OK'
             });
         }
+    }
+
+    showKRADetails(index:number){
+        this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.kraData =JSON.parse(JSON.stringify(this.kraInfoData[index])); 
+        this.kraData.no = index + 1;
+        this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
+        this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+    }
+    saveKRADetails(id:number){
+        this.modalRef.hide();
+        this.kraInfoData[this.kraData.no-1]=JSON.parse(JSON.stringify(this.kraData));   
+        this.saveKraDetails(this.kraData.no-1);     
     }
 
     deleteKraHtml(index: number) {
