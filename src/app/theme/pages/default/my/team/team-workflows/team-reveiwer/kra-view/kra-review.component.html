@@ -27,6 +27,12 @@
                 <div class="m-portlet__body">
                     <div class="m-section">
                         <div class="m-section__content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>{{user?.fullName}}</h3>
+                                    <h4>{{user?.userName}}</h4>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
                                     <thead>
@@ -267,7 +273,8 @@
                     <div class="col-md-12 form-group">
                         <span class="key">Remarks</span>
                         <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.sendBackComment"
-                            [disabled]="kraData.supervisor_id!=_authService.atCurrentUserData._id || kraData.supervisorStatus" disabled></textarea>
+                            [disabled]="kraData.supervisor_id!=_authService.atCurrentUserData._id || kraData.supervisorStatus"
+                            disabled></textarea>
                     </div>
                 </div>
                 <div class="form-actions">

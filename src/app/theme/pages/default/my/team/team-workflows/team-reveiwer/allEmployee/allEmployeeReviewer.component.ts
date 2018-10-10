@@ -11,39 +11,39 @@ import { MyService } from "../../../../my.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
-    templateUrl: "./allEmployeeReviewer.component.html",    
+    templateUrl: "./allEmployeeReviewer.component.html",
     encapsulation: ViewEncapsulation.None,
 })
 export class AllEmployeeReviewer implements OnInit {
-    constructor(       
+    constructor(
         public authService: AuthService,
         private utilityService: UtilityService,
         private route: ActivatedRoute,
         private myService: MyService,
-        private router: Router,     
-    ) {       
+        private router: Router,
+    ) {
     }
-    employees:any=[];
-    imageBase:any;
+    employees: any = [];
+    imageBase: any;
     employeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
         page: 1
     };
-    ngOnInit() {        
+    ngOnInit() {
         this.getallemployees();
-        this.imageBase=environment.content_api_base.apiBase;
+        this.imageBase = environment.content_api_base.apiBase;
     }
-    goToKRAView(id:any,empid:any){
-        this.router.navigate(['/my/team/workflows/kra-review/'+id+'/'+empid]);
+    goToKRAView(id: any, empid: any) {
+        this.router.navigate(['/my/team/workflows/kra-review/' + id + '/' + empid]);
     }
-    getallemployees(){        
+    getallemployees() {
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if(res.ok){              
-             this.employees = res.json() || [];
-             this.employees = this.employees.data.sort((a, b) => b._id - a._id);
-             this.employees=this.employees.filter(a=>a.kra.status=='Submitted')
-             console.log(this.employees);
+            if (res.ok) {
+                this.employees = res.json() || [];
+                this.employees = this.employees.data.sort((a, b) => b._id - a._id);
+                this.employees = this.employees.filter(a => a.kra.status == 'Submitted')
+                console.log(this.employees);
             }
         })
 

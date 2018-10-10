@@ -12,42 +12,48 @@ import { environment } from "../../../../../../../../environments/environment";
 })
 export class MyTeamReviewerComponent implements OnInit {
 
-    constructor(       
+    constructor(
         public authService: AuthService,
         private utilityService: UtilityService,
         private route: ActivatedRoute,
         private myService: MyService,
-        private router: Router,     
-    ) {       
+        private router: Router,
+    ) {
     }
-    employees:any=[];
-    imageBase:any;
-    employeeReverse:boolean=true;
+    employees: any = [];
+    imageBase: any;
+    employeeReverse: boolean = true;
     employeeSearch: any;
     employeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
         page: 1
     };
-    goToAllEmployee(){
+    goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
     }
-    ngOnInit() {        
+    ngOnInit() {
         this.getallemployees();
-        this.imageBase=environment.content_api_base.apiBase;
+        this.imageBase = environment.content_api_base.apiBase;
     }
-    getallemployees(){   
-        this.utilityService.showLoader("#employeeList");     
+    getallemployees() {
+        this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if(res.ok){   
-                this.utilityService.hideLoader("#employeeList");          
-             this.employees = res.json() || [];
-             this.employees = this.employees.data.sort((a, b) => b._id - a._id);
-             this.employees=this.employees.filter(a=>a.kra.status=='Submitted')
-             console.log(this.employees);
+            if (res.ok) {
+                this.utilityService.hideLoader("#employeeList");
+                this.employees = res.json() || [];
+                this.employees = this.employees.data.sort((a, b) => b._id - a._id);
+                this.employees = this.employees.filter(a => a.kra.status == 'Submitted')
+                console.log(this.employees);
             }
         })
 
+    }
+
+    goToKraReview(employee) {
+        debugger;
+        let kra = employee.kra;
+        this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
 }
 
