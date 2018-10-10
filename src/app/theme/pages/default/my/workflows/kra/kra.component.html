@@ -412,18 +412,18 @@
 												<td>
 													<ng-select class="m-input m-input--air customError" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
 													  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel"
-													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+													   required disabled></ng-select>
 												</td>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="kraWeightage{{i}}" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"
 													  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel"
-													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+													  required disabled></ng-select>
 												</td>
 												
 												<td>
 													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
 													  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
-													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
+													   required disabled></ng-select>
 												</td>
 												<td *ngIf="!isDisabled">
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment"
