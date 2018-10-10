@@ -377,21 +377,21 @@
 												<th>
 													#
 												</th>
-												<th>
+												<!-- <th>
 													KRA
-												</th>
+												</th> -->
 												<th>
 													KRA Category
 												</th>
 												<th>
 													Weightage
 												</th>
-												<th>
+												<!-- <th>
 													Unit of Success
 												</th>
 												<th>
 													Measure of Success
-												</th>
+												</th> -->
 												<th>
 													Supervisor
 												</th>
@@ -408,11 +408,7 @@
 											  ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
-												</th>
-												<td>
-													<textarea name="kraOne{{i}}" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
-													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></textarea>
-												</td>
+												</th>												
 												<td>
 													<ng-select class="m-input m-input--air customError" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
 													  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel"
@@ -423,15 +419,7 @@
 													  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel"
 													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></ng-select>
 												</td>
-												<td>
-													<textarea name="unitOfSuccess{{i}}" id="unitOfSuccess" [(ngModel)]="kraInfo.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air customError"
-													  [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'" required></textarea>
-												</td>
-												<td>
-													<textarea name="measureOfSuccess{{i}}" id="measureOfSuccess" [(ngModel)]="kraInfo.measureOfSuccess" #measureOfSuccess="ngModel"
-													  class="form-control m-input m-input--air customError" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'"
-													  required></textarea>
-												</td>
+												
 												<td>
 													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
 													  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
@@ -442,15 +430,15 @@
 													  class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td *ngIf="!isDisabled">
-													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
-													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
-													  title="Save" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="saveKraDetails(i)" [disabled]="!controlRow.valid">
-														<i class="la la-save"></i>
-													</button>
+													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->													
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
 														<i class="la la-remove"></i>
 													</button>
+													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+													  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="showKRADetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+													  <i class="la la-info"></i>
+													</button>													
 													<!-- <button *ngIf="kraInfo.supervisorStatus!='Approved' "  type="button" (click)="saveKraDetails(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'"> <i class="fa fa-save"></i></button>
 																																															<button *ngIf="kraInfo.supervisorStatus!='Approved'" type="button" (click)="deleteKraHtml(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved' "> <i class="fa fa-remove"></i></button> -->
 												</td>
@@ -576,3 +564,93 @@
 		</div>
 	</div>
 </div>
+<ng-template #kraDetailModal>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Key Responsibility Area
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-widget6 ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span>KRA No. {{kraData.no}}</span>
+					</div> 
+					<div class="col-md-2 ">
+						KRA Category
+						</div> 
+					<div class="col-md-4">						
+						<ng-select class="m-input m-input--air customError" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData" bindLabel="kraCategoryName"
+						bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraData.category_id" [clearable]="false" #kraCategory="ngModel"
+						 required></ng-select>
+                    </div>                    
+                </div>
+                <div class="row details">   
+					<div class="col-md-2">
+							KRA Weightage
+					</div>
+					<div class="col-md-4">
+							<ng-select class="m-input m-input--air customError" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData" bindLabel="kraWeightageName"
+							bindValue="_id" placeholder="Weightage" [(ngModel)]="kraData.weightage_id" [clearable]="false" #kraWeightage="ngModel"
+							 required></ng-select>
+					</div>
+					<div class="col-md-2">
+						supervisor
+					</div>
+					<div class="col-md-4">
+							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
+							bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraData.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
+							 required></ng-select>
+					</div>
+					<div class="col-md-12 details">
+						<span>KRA</span>
+						<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
+						required></textarea>
+					</div>
+					<div class="col-md-6 details">
+							<span>Unit of Success</span>
+							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="kraData.unitOfSuccess" #unitOfSuccess="ngModel"
+							class="form-control m-input m-input--air customError" 
+												required></textarea>
+					</div>
+					<div class="col-md-6 details">
+							<span>Measure of Success</span>
+							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess" #measureOfSuccess="ngModel"
+							class="form-control m-input m-input--air customError" 
+												required></textarea>
+					</div>
+					          
+				</div>				
+                <div class="form-actions details">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-form__actions">
+                                <button 
+                                    class="btn btn-success" (click)="saveKRADetails(kraData._id)">Save</button>                                
+                                <button  class="btn btn-secondary" (click)="modalRef.hide()">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
