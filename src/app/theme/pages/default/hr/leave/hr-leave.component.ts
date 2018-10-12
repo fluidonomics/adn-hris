@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, PLATFORM_ID, AfterViewInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Meta, Title } from "@angular/platform-browser";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder,NgForm } from "@angular/forms";
 import { Helpers } from '../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 import { UtilityService } from '../../../../../base/_services/utilityService.service';
@@ -20,6 +20,9 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
     styleUrls: ['./hr-leave.component.css'],
 })
 export class HrLeaveComponent implements OnInit {
+
+    @ViewChild('leaveQuota') leaveQuota: NgForm;
+
     employees=[];
     leaveTypes=[];
     leaveBalance=[];
@@ -31,6 +34,7 @@ export class HrLeaveComponent implements OnInit {
     request={
         is_paid:false
     }
+    
     ngOnInit() {
         this._commonService.getEmployee().subscribe(res => {
             if (res.ok) {                
@@ -41,8 +45,7 @@ export class HrLeaveComponent implements OnInit {
         });
         this._hrService.getLeaveTypes().subscribe(res=>{
             if(res.ok){               
-                this.leaveTypes = res.json() || {};                
-                console.log(this.leaveTypes);
+                this.leaveTypes = res.json() || {};                               
             }          
         })
     }
@@ -56,17 +59,29 @@ export class HrLeaveComponent implements OnInit {
     ) {
        
     }
-    provideLeave(){
-        this.request["createdBy"]= this._authService.currentUserData._id
-        this.request["updatedBy"]= this._authService.currentUserData._id
-        console.log(this.request);
+    provideLeave(form){  
+        if(form.valid){          
+        this._hrService.updateLeaveQuota(this.request).subscribe(res=>{
+           if(res.ok){
+            swal("Leave quota updated", "", "success");
+            form.resetForm();
+            form.submitted = false;
+            this.request={
+                is_paid:false
+            }
+            this.annualLeaveBalance=0;
+            this.sickLeaveBalance=0;
+            this.specialLeaveBalance=0;
+            this.maternityLeaveBalance=0;
+           }
+        })
+     }
     }
     onEmployeeSelect($event){
      this._hrService.getEmployeeLeaveBalance($event._id).subscribe(res=>{
         if(res.ok){
             this.leaveBalance = res.json() || {};
-            this.request["emp_id"]=$event._id;
-            console.log(this.leaveBalance);
+            this.request["emp_id"]=$event._id;           
             this.annualLeaveBalance=(this.leaveBalance.filter(a=>a.leaveType=="Annual Leave")[0]).leaveBalance;
             this.sickLeaveBalance=(this.leaveBalance.filter(a=>a.leaveType=="Sick Leave")[0]).leaveBalance;
 
@@ -76,5 +91,15 @@ export class HrLeaveComponent implements OnInit {
             
         }
      })
+    }
+    clear(){      
+        this.leaveQuota.resetForm();        
+            this.request={
+                is_paid:false
+            }
+            this.annualLeaveBalance=0;
+            this.sickLeaveBalance=0;
+            this.specialLeaveBalance=0;
+            this.maternityLeaveBalance=0;
     }
 }

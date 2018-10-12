@@ -40,6 +40,10 @@ export class HrService {
         let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+    updateLeaveQuota(data: any) {
+        let url = "leave/updateLeaveQuota";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
 
 
     private extractData(res: Response) {
