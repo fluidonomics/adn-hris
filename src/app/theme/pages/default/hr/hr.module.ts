@@ -25,11 +25,13 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { HrLeaveComponent } from './leave/hr-leave.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
 
 import { HrGuard } from '../../../../base/_guard/hr.guard';
+import { LeaveService } from '../my/leaves/leave.service';
 
 @NgModule({
     imports: [
@@ -57,9 +59,10 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
+        HrLeaveComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard]
+    providers: [HrService, HrGuard,LeaveService]
 })
 export class HrModule {
 }
