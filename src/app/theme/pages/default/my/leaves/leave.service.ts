@@ -105,6 +105,7 @@ export class LeaveService {
 
     getLeaveTypes() {
         let url = "leave/getLeaveTypes";
+        debugger;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
