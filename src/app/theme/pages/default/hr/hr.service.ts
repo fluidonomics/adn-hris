@@ -20,14 +20,6 @@ export class HrService {
         let url = "user/getAllEmployee";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    getLeaveTypes() {
-        let url = "leave/getLeaveTypes";       
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-    getEmployeeLeaveBalance(empId: number) {       
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId+"&fiscalYearId=2";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
 
     loadDivision() {
         let url = "master/getAllDivision";
@@ -38,10 +30,6 @@ export class HrService {
 
     saveBulkKra(data: any) {
         let url = "kra/addBulkKra";
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-    updateLeaveQuota(data: any) {
-        let url = "leave/updateLeaveQuota";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
