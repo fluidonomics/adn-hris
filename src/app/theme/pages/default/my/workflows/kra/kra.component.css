@@ -23,5 +23,12 @@
 textarea.customError.ng-invalid {
     border-color: #ff0000 !important;
 }
+td > .ng-select.ng-single .ng-control{
+    background-color: #f2f3f8;
+    cursor: not-allowed;
+}
+td > .ng-select.ng-single .ng-control > *{    
+    cursor: not-allowed;
+}
 
 /* @page { size: landscape; }; */

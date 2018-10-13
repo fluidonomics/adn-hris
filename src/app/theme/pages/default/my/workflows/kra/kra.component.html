@@ -354,7 +354,7 @@
 						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
 							<!-- [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" -->
 							<li class="nav-item m-tabs__item" *ngIf="!isDisabled">
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)=" fkraInfo.valid && submitKraWorkFlow(fkraInfo.form.dirty)">Submit</button>
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow(fkraInfo.form.dirty)">Submit</button>
 							</li>
 							<li class="nav-item m-tabs__item">
 								<!-- <a class="nav-link m-tabs__link" (click)="window.print();">
@@ -409,7 +409,7 @@
 												<th scope="row">
 													{{i+1}}
 												</th>												
-												<td>
+												<td>													
 													<ng-select class="m-input m-input--air customError" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
 													  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel"
 													   required disabled></ng-select>
@@ -417,7 +417,7 @@
 												<td>
 													<ng-select class="m-input m-input--air customError" name="kraWeightage{{i}}" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"
 													  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel"
-													  required disabled></ng-select>
+													  required  disabled></ng-select>
 												</td>
 												
 												<td>
@@ -430,15 +430,16 @@
 													  class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td *ngIf="!isDisabled">
-													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->													
+													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
+													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+													  title="Edit" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="showKRADetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+													  <i class="la la-info"></i>
+													</button>														
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
 														<i class="la la-remove"></i>
 													</button>
-													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="showKRADetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
-													  <i class="la la-info"></i>
-													</button>													
+																									
 													<!-- <button *ngIf="kraInfo.supervisorStatus!='Approved' "  type="button" (click)="saveKraDetails(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'"> <i class="fa fa-save"></i></button>
 																																															<button *ngIf="kraInfo.supervisorStatus!='Approved'" type="button" (click)="deleteKraHtml(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved' "> <i class="fa fa-remove"></i></button> -->
 												</td>
@@ -587,8 +588,11 @@
                     </li>
                 </ul>
             </div>
-        </div>
+		</div>
+		
         <div class="m-portlet__body">
+				<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(KRADataForm,kraData._id)" id="KRADataForm"
+				#KRADataForm="ngForm">
             <div class="m-widget6 ">
                 <div class="row">
                     <div class="col-md-6">
@@ -601,6 +605,9 @@
 						<ng-select class="m-input m-input--air customError" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData" bindLabel="kraCategoryName"
 						bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraData.category_id" [clearable]="false" #kraCategory="ngModel"
 						 required></ng-select>
+						 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraCategory.valid">
+							This field is required.
+						</div>
                     </div>                    
                 </div>
                 <div class="row details">   
@@ -611,6 +618,9 @@
 							<ng-select class="m-input m-input--air customError" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData" bindLabel="kraWeightageName"
 							bindValue="_id" placeholder="Weightage" [(ngModel)]="kraData.weightage_id" [clearable]="false" #kraWeightage="ngModel"
 							 required></ng-select>
+							 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraWeightage.valid">
+									This field is required.
+							</div>
 					</div>
 					<div class="col-md-2">
 						supervisor
@@ -619,23 +629,35 @@
 							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
 							bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraData.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
 							 required></ng-select>
+							 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !supervisorOne.valid">
+									This field is required.
+							</div>
 					</div>
 					<div class="col-md-12 details">
 						<span>KRA</span>
 						<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
 						required></textarea>
+						<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kra.valid">
+								This field is required.
+						</div>
 					</div>
 					<div class="col-md-6 details">
 							<span>Unit of Success</span>
 							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="kraData.unitOfSuccess" #unitOfSuccess="ngModel"
 							class="form-control m-input m-input--air customError" 
 												required></textarea>
+												<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !unitOfSuccess.valid">
+														This field is required.
+												</div>
 					</div>
 					<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess" #measureOfSuccess="ngModel"
 							class="form-control m-input m-input--air customError" 
 												required></textarea>
+												<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !measureOfSuccess.valid">
+														This field is required.
+												</div>
 					</div>
 					          
 				</div>				
@@ -643,14 +665,17 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button 
-                                    class="btn btn-success" (click)="saveKRADetails(kraData._id)">Save</button>                                
-                                <button  class="btn btn-secondary" (click)="modalRef.hide()">Clear</button>
+                                <!-- <button 
+									class="btn btn-success" (click)="saveKRADetails(kraData._id)">Save</button>    -->
+									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>                             
+                                <button  class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+			</div>
+		</form>
+		</div>
+		
     </div>
 </ng-template>

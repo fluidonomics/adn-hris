@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder,NgForm } from "@angular/forms";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter,ViewChild,TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -9,6 +9,8 @@ import { AuthService } from "../../../../../../base/_services/authService.servic
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
+import { NgSelectComponent } from '@ng-select/ng-select'
+
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -20,11 +22,13 @@ import { forEach } from "@angular/router/src/utils/collection";
 export class MyKraComponent {
 
     @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
-
+    @ViewChild('KRADataForm') fleaveapplication: NgForm;   
     window: any = window;
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
+
+    isKRAsaveClicked:boolean=false;
 
     kraInfoData: any = [];
 
@@ -68,7 +72,7 @@ export class MyKraComponent {
 
     }
 
-    ngOnInit() {
+    ngOnInit() {        
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -189,10 +193,14 @@ export class MyKraComponent {
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
-    saveKRADetails(id:number){
+    saveKRADetails(form,id:number){
+        debugger;
+        if(form.valid){
         this.modalRef.hide();
         this.kraInfoData[this.kraData.no-1]=JSON.parse(JSON.stringify(this.kraData));   
         this.saveKraDetails(this.kraData.no-1);     
+        }
+       
     }
 
     deleteKraHtml(index: number) {
@@ -330,7 +338,7 @@ export class MyKraComponent {
         //let requiredWorkFlowLength= 
         //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
         //let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
-        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
+        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);       
         if (this.isSendBackOrNewKraSaved(isFormDirty)) {
             if (this.isWeightage()) {
                 if (!this.isRequiredWorkFlowLength()) {
