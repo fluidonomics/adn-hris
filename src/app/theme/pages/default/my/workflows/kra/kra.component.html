@@ -1,3 +1,4 @@
+<!-- List of Kra's -->
 <div class="m-content" *ngIf="!param_id">
 	<div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
 		<div class="m-portlet__head">
@@ -180,7 +181,8 @@
 								</a>
 							</td>
 						</tr>
-						<span *ngIf="(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
+						<span *ngIf="(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
+							records found</span>
 					</tbody>
 				</table>
 				<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
@@ -188,30 +190,31 @@
 						<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 							<li>
 								<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								  (click)="p.setCurrent(1)">
+								 (click)="p.setCurrent(1)">
 									<i class="la la-angle-double-left"></i>
 								</span>
 							</li>
 							<li>
 								<span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								  (click)="p.previous()">
+								 (click)="p.previous()">
 									<i class="la la-angle-left"></i>
 								</span>
 							</li>
 							<li *ngFor="let page of p.pages">
-								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+								 [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
 									{{ page.label }}
 								</span>
 							</li>
 							<li>
 								<span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-								  (click)="p.next()">
+								 (click)="p.next()">
 									<i class="la la-angle-right"></i>
 								</span>
 							</li>
 							<li>
-								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-								  (click)="p.setCurrent(p.pages.length + 1)">
+								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+								 [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
 									<i class="la la-angle-double-right"></i>
 								</span>
 							</li>
@@ -219,17 +222,20 @@
 					</div>
 				</pagination-template>
 				<div class="pager-display-size" *ngIf="(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length!=0">
-					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50"
-					  tabindex="1">
+					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px"
+					 data-selected="50" tabindex="1">
 						<option value=10>10</option>
 						<option value=20>20</option>
 						<option value=30>30</option>
 						<option value=50>50</option>
 						<option value=100>100</option>
 					</select>
-					<span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage
-						* (this.p2 - 1) + 1) + this.itemPerPage - 1 > (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length ?
-						(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage
+					<span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage *
+						(this.p2 - 1) + 1:1}} - {{(this.itemPerPage
+						* (this.p2 - 1) + 1) + this.itemPerPage - 1 > (kraWorkFlowData | orderBy: key : reverse | filter:search)?.length
+						?
+						(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) +
+						this.itemPerPage
 						- 1 }} of {{(kraWorkFlowData | orderBy: key : reverse | filter:search)?.length}}
 					</span>
 				</div>
@@ -237,105 +243,8 @@
 		</div>
 	</div>
 </div>
-<!-- <div class="m-content" *ngIf="!param_id">
-	<div class="row">
-			<div class="col-xl-12">
-				<div class="m-portlet m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm ">
-					<div class="m-portlet__head">
-						<div class="m-portlet__head-caption">
-							<div class="m-portlet__head-title">
-								<h3 class="m-portlet__head-text">
-									My KRAs
-								</h3>
-							</div>
-						</div>
-					</div>
-					<div class="m-portlet__body workflow--hover">
-																												<div class="row workflow--info" *ngFor="let kraworkflow of kraWorkFlowData ;let i=index;let even=even;" [ngClass]="{'workflow--info--light':!even}" >
-																																				<div class="col-md-3">
-																																								<div class="m-widget4">
-																																												<div class="m-widget4__item">
-																																																<span class="m-widget4__icon">
-																																																				<i class="fa fa-circle m--font-success"></i>
-																																																</span>
-																																																<div class="m-widget4__info">
-																																																								<span class="m-widget4__title">
-																																																											{{kraworkflow.batchName}}
-																																																								</span>
-																																																								<br>
-																																																								<span class="m-widget4__sub">
-																																																												Initiated on: <strong> {{kraworkflow.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</strong>
-																																																								</span>
-																																																</div>
-																																																<span class="m-widget4__ext">
-																																																					<span class="m-widget4__number m--font-brand">
-																																																					</span>
-																																																</span>
-																																												</div>
-																																								</div>
-																																				</div>
-																																				<div class="col-md-3">
-																																								<div class="m-widget4">
-																																												<div class="m-widget4__item">
-																																																																<div class="m-widget4__info">
-																																																																				<span class="m-widget4__title">
-																																																																							Last Date : {{kraworkflow.batchEndDate | date:"dd-MMM-yyyy hh:mm"}}
-																																																																				</span>
-																																																																				<br>
-																																																																				<span class="m-widget4__sub">
-																																																																								<strong>Note-This is some static note.</strong>
-																																																																				</span>
-																																																																</div>
-																																																																<span class="m-widget4__ext">
-																																																																				<span class="m-widget4__number m--font-brand">
-																																																																				</span>
-																																																																</span>
-																																												</div>
-																																								</div>
-																																				</div>
-																																				<div class="col-md-3">
-																																								<div class="m-widget4">
-																																												<div class="m-widget4__item">
-																																																																<div class="m-widget4__info">
-																																																																				<span class="m-widget4__title">
-																																																																							Status : {{kraworkflow.status}}
-																																																																				</span>
-																																																																				<br>
-																																																																				<span class="m-widget4__sub">
-																																																																								Initiated By: <strong>{{kraworkflow.createdBy}}</strong>
-																																																																				</span>
-																																																																</div>
-																																																																<span class="m-widget4__ext">
-																																																																				<span class="m-widget4__number m--font-brand">
-																																																																				</span>
-																																																																</span>
-																																												</div>
-																																								</div>
-																																				</div>
-																																				<div class="col-md-3">
-																																								<div class="m-widget4">
-																																												<div class="m-widget4__item">
-																																																																<div class="m-widget4__info">
-																																																																				<span class="btn" *ngIf="kraworkflow.status!='Terminated'" [ngClass]="kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'btn-success':'btn-secondary'">
-																																																																								<a routerLink="/my/workflows/kra" [queryParams]="{ id: kraworkflow._id}">
-																																																																												{{kraworkflow.status=='Initiated' || kraworkflow.status=='SendBack' ? 'Edit':'View'}}
-																																																																								</a>  
-																																																																				</span>
-																																																																</div>
-																																																																<span class="m-widget4__ext">
-																																																																				<span class="m-widget4__number m--font-brand">
-																																																																				</span>
-																																																																</span>
-																																												</div>
-																																								</div>
-																																				</div>
-																												</div>
-					</div>
-				</div>	
-			</div>
-			
-	</div>
-</div> -->
+
+<!-- Individual Kra Details -->
 <div class="m-content" *ngIf="param_id">
 	<div class="row">
 		<div class="col-md-12">
@@ -395,59 +304,59 @@
 												<th>
 													Supervisor
 												</th>
-												<th *ngIf="!isDisabled">
+												<th *ngIf="false">
 													Send Back Comment (Supervisor)
 												</th>
-												<th *ngIf="!isDisabled">
+												<th>
 													Action
 												</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr *ngFor="let kraInfo of kraInfoData;let i=index" [ngClass]="{'sendBack':kraInfoData[i].supervisorStatus=='SendBack','approved':kraInfoData[i].supervisorStatus =='Approved'}"
-											  ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
+											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
-												</th>												
-												<td>													
-													<ng-select class="m-input m-input--air customError" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
-													  bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false" #kraCategory="ngModel"
-													   required disabled></ng-select>
+												</th>
+												<td>
+													<ng-select class="m-input m-input--air customError" name="kraCategory{{i}}" id="kraCategory" [items]="kraCategoryData"
+													 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id"
+													 [clearable]="false" #kraCategory="ngModel" required disabled></ng-select>
 												</td>
 												<td>
-													<ng-select class="m-input m-input--air customError" name="kraWeightage{{i}}" id="kraWeightage" [items]="weightageData" bindLabel="kraWeightageName"
-													  bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id" [clearable]="false" #kraWeightage="ngModel"
-													  required  disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="kraWeightage{{i}}" id="kraWeightage" [items]="weightageData"
+													 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id"
+													 [clearable]="false" #kraWeightage="ngModel" required disabled></ng-select>
 												</td>
-												
+
 												<td>
-													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
-													  bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
-													   required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id"
+													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
 												<td *ngIf="!isDisabled">
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment"
-													  class="form-control m-input m-input--air" disabled></textarea>
+													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
-												<td *ngIf="!isDisabled">
+												<td>
 													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													  title="Edit" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="showKRADetails(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
-													  <i class="la la-info"></i>
-													</button>														
+													 title="Edit" (click)="showKRADetails(i)">
+														<i class="la la-info"></i>
+													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													  title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'">
+													 title="Delete" *ngIf="!isDisabled && kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
 													</button>
-																									
+
 													<!-- <button *ngIf="kraInfo.supervisorStatus!='Approved' "  type="button" (click)="saveKraDetails(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved'"> <i class="fa fa-save"></i></button>
 																																															<button *ngIf="kraInfo.supervisorStatus!='Approved'" type="button" (click)="deleteKraHtml(i)" class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air" [disabled]="isDisabled || kraInfo.supervisorStatus=='Approved' "> <i class="fa fa-remove"></i></button> -->
 												</td>
 											</tr>
 											<tr *ngIf="!isDisabled">
 												<td colspan="9">
-													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'"
-													  (click)="addKraHtml()">
+													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
+													 [attr.disabled]="kraInfoData[kraInfoData.length-1]?._id && !isDisabled ? null :'disabled'" (click)="addKraHtml()">
 														<i class="la la-plus "></i>
 													</button>
 												</td>
@@ -565,117 +474,118 @@
 		</div>
 	</div>
 </div>
+
+<!-- Kra Detail Modal -->
 <ng-template #kraDetailModal>
-    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
-        <div class="m-portlet__head">
-            <div class="m-portlet__head-caption">
-                <div class="m-portlet__head-title">
-                    <h3 class="m-portlet__head-text">
-                        Key Responsibility Area
-                    </h3>
-                </div>
-            </div>
-            <div class="m-portlet__head-tools">
-                <ul class="m-portlet__nav">
-                    <li class="m-portlet__nav-item">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+	<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Key Responsibility Area
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+						<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+							<div class="btn-group" role="group">
+								<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		
-        <div class="m-portlet__body">
-				<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(KRADataForm,kraData._id)" id="KRADataForm"
-				#KRADataForm="ngForm">
-            <div class="m-widget6 ">
-                <div class="row">
-                    <div class="col-md-6">
-                        <span>KRA No. {{kraData.no}}</span>
-					</div> 
-					<div class="col-md-2 ">
-						KRA Category
-						</div> 
-					<div class="col-md-4">						
-						<ng-select class="m-input m-input--air customError" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData" bindLabel="kraCategoryName"
-						bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraData.category_id" [clearable]="false" #kraCategory="ngModel"
-						 required></ng-select>
-						 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraCategory.valid">
-							This field is required.
+
+		<div class="m-portlet__body">
+			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(KRADataForm,kraData._id)" id="KRADataForm"
+			 #KRADataForm="ngForm">
+				<div class="m-widget6 ">
+					<div class="row">
+						<div class="col-md-6">
+							<span>KRA No. {{kraData.no}}</span>
 						</div>
-                    </div>                    
-                </div>
-                <div class="row details">   
-					<div class="col-md-2">
-							KRA Weightage
-					</div>
-					<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData" bindLabel="kraWeightageName"
-							bindValue="_id" placeholder="Weightage" [(ngModel)]="kraData.weightage_id" [clearable]="false" #kraWeightage="ngModel"
-							 required></ng-select>
-							 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraWeightage.valid">
-									This field is required.
-							</div>
-					</div>
-					<div class="col-md-2">
-						supervisor
-					</div>
-					<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
-							bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraData.supervisor_id" [clearable]="false" #supervisorOne="ngModel"
-							 required></ng-select>
-							 <div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !supervisorOne.valid">
-									This field is required.
-							</div>
-					</div>
-					<div class="col-md-12 details">
-						<span>KRA</span>
-						<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
-						required></textarea>
-						<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kra.valid">
+						<div class="col-md-2 ">
+							KRA Category
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air customError" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData"
+							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraData.category_id"
+							 [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled" required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraCategory.valid">
 								This field is required.
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6 details">
+					<div class="row details">
+						<div class="col-md-2">
+							KRA Weightage
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air customError" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData"
+							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="kraData.weightage_id"
+							 [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled" required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraWeightage.valid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-2">
+							supervisor
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraData.supervisor_id"
+							 [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !supervisorOne.valid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-12 details">
+							<span>KRA</span>
+							<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
+							 [disabled]="isDisabled" required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kra.valid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
 							<span>Unit of Success</span>
 							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="kraData.unitOfSuccess" #unitOfSuccess="ngModel"
-							class="form-control m-input m-input--air customError" 
-												required></textarea>
-												<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !unitOfSuccess.valid">
-														This field is required.
-												</div>
-					</div>
-					<div class="col-md-6 details">
+							 class="form-control m-input m-input--air customError" [disabled]="isDisabled" required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !unitOfSuccess.valid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
 							<span>Measure of Success</span>
-							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess" #measureOfSuccess="ngModel"
-							class="form-control m-input m-input--air customError" 
-												required></textarea>
-												<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !measureOfSuccess.valid">
-														This field is required.
-												</div>
+							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess"
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air customError" [disabled]="isDisabled"
+							 required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !measureOfSuccess.valid">
+								This field is required.
+							</div>
+						</div>
+
 					</div>
-					          
-				</div>				
-                <div class="form-actions details">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="m-form__actions">
-                                <!-- <button 
+					<div class="form-actions details">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="m-form__actions">
+									<!-- <button 
 									class="btn btn-success" (click)="saveKRADetails(kraData._id)">Save</button>    -->
-									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>                             
-                                <button  class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-			</div>
-		</form>
+									<button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-		
-    </div>
+
+	</div>
 </ng-template>
