@@ -1,0 +1,24 @@
+@import "../colors.scss";
+
+.disableHoverBgColor {
+    &:hover {
+        background-color: $color-disabled !important;
+    }
+}
+
+.ng-select {
+    &:disabled, &.disabled {
+        .ng-control {
+            background-color: $color-disabled !important;
+            cursor: not-allowed;
+
+            .ng-value, .ng-value-label, .ng-value-container, .ng-arrow-zone {
+                cursor: not-allowed;
+
+                &:hover {
+                    background-color: $color-disabled !important;
+                }
+            }
+        }
+    }
+}

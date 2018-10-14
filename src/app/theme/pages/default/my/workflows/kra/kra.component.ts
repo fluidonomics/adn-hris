@@ -1,5 +1,5 @@
-import { FormBuilder,NgForm } from "@angular/forms";
-import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter,ViewChild,TemplateRef } from '@angular/core';
+import { FormBuilder, NgForm } from "@angular/forms";
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
@@ -22,13 +22,13 @@ import { NgSelectComponent } from '@ng-select/ng-select'
 export class MyKraComponent {
 
     @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
-    @ViewChild('KRADataForm') fleaveapplication: NgForm;   
+    @ViewChild('KRADataForm') fleaveapplication: NgForm;
     window: any = window;
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
 
-    isKRAsaveClicked:boolean=false;
+    isKRAsaveClicked: boolean = false;
 
     kraInfoData: any = [];
 
@@ -52,7 +52,7 @@ export class MyKraComponent {
     search: any;
     itemPerPage: number = 10;
 
-    modalRef: BsModalRef;   
+    modalRef: BsModalRef;
     kraData: any = {};
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -72,7 +72,7 @@ export class MyKraComponent {
 
     }
 
-    ngOnInit() {        
+    ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -186,21 +186,20 @@ export class MyKraComponent {
         }
     }
 
-    showKRADetails(index:number){
+    showKRADetails(index: number) {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
-        this.kraData =JSON.parse(JSON.stringify(this.kraInfoData[index])); 
+        this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
-    saveKRADetails(form,id:number){
-        debugger;
-        if(form.valid){
-        this.modalRef.hide();
-        this.kraInfoData[this.kraData.no-1]=JSON.parse(JSON.stringify(this.kraData));   
-        this.saveKraDetails(this.kraData.no-1);     
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            this.modalRef.hide();
+            this.kraInfoData[this.kraData.no - 1] = JSON.parse(JSON.stringify(this.kraData));
+            this.saveKraDetails(this.kraData.no - 1);
         }
-       
+
     }
 
     deleteKraHtml(index: number) {
