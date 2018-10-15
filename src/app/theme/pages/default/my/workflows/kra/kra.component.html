@@ -304,7 +304,7 @@
 												<th>
 													Supervisor
 												</th>
-												<th *ngIf="false">
+												<th >
 													Send Back Comment (Supervisor)
 												</th>
 												<th>
@@ -334,9 +334,9 @@
 													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id"
 													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
-												<td *ngIf="!isDisabled">
+												<td >
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment"
-													 class="form-control m-input m-input--air" disabled></textarea>
+													 class="form-control m-input m-input--air" disabled *ngIf="kraInfo.supervisorStatus!='Approved'"></textarea>
 												</td>
 												<td>
 													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
@@ -345,7 +345,7 @@
 														<i class="la la-info"></i>
 													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Delete" *ngIf="!isDisabled && kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)">
+													 title="Delete" *ngIf=" kraInfo.supervisorStatus!='Approved'" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
 													</button>
 
