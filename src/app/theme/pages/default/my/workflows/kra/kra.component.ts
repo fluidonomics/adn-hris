@@ -187,9 +187,11 @@ export class MyKraComponent {
     }
 
     showKRADetails(index: number) {
+        debugger;
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;
+        this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
