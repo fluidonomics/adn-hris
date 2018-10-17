@@ -43,6 +43,7 @@ export class MyKraComponent {
     kraWorkFlowData: any = [];
 
     isDisabled: boolean = true;
+    isChangable: boolean = true;
     employee: any = {};
 
 
@@ -123,6 +124,7 @@ export class MyKraComponent {
             res => {
                 this.kraInfoData = res.json().data;
                 let status = res.json().status;
+                this.isChangable = status == "Initiated" || status == "SendBack" ? false : true;
                 this.isDisabled = status == "Initiated" || status == "SendBack" ? false : true;
                 if (this.kraInfoData.length == 0) {
                     this.addKraHtml();
@@ -169,7 +171,7 @@ export class MyKraComponent {
     }
 
 
-    addKraHtml() {
+    addKraHtml() {       
         if (this.kraInfoData.length < 7) {
             let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
             this.kraInfoData.push(data);
@@ -186,12 +188,14 @@ export class MyKraComponent {
         }
     }
 
-    showKRADetails(index: number) {
-        debugger;
+    showKRADetails(index: number) {    
+        debugger;    
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;
+        if(this.kraData.supervisorStatus)
         this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
+
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
