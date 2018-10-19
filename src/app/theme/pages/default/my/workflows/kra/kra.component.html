@@ -512,7 +512,7 @@
 							KRA Category
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData"
+							<ng-select class="m-input m-input--air" name="kraCategorydata" id="kraCategorydata" [items]="kraCategoryData"
 							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraData.category_id"
 							 [clearable]="false" #kraCategory="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraCategory.valid">
@@ -525,7 +525,7 @@
 							KRA Weightage
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData"
+							<ng-select class="m-input m-input--air" name="kraWeightagedata" id="kraWeightagedata" [items]="weightageData"
 							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="kraData.weightage_id"
 							 [clearable]="false" #kraWeightage="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kraWeightage.valid">
@@ -536,7 +536,7 @@
 							supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData"
+							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
 							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraData.supervisor_id"
 							 [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !supervisorOne.valid">
@@ -545,7 +545,7 @@
 						</div>
 						<div class="col-md-12 details">
 							<span>KRA</span>
-							<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air customError"
+							<textarea name="kraOnedata" id="kraOnedata" [(ngModel)]="kraData.kra" #kra="ngModel" class="form-control m-input m-input--air"
 							 [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !kra.valid">
 								This field is required.
@@ -554,7 +554,7 @@
 						<div class="col-md-6 details">
 							<span>Unit of Success</span>
 							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="kraData.unitOfSuccess" #unitOfSuccess="ngModel"
-							 class="form-control m-input m-input--air customError" [disabled]="isDisabled" required></textarea>
+							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !unitOfSuccess.valid">
 								This field is required.
 							</div>
@@ -562,7 +562,7 @@
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air customError" [disabled]="isDisabled"
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
 							 required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
