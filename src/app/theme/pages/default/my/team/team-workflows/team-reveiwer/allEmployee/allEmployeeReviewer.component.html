@@ -26,6 +26,12 @@
                                     <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                         <span>Full Name</span>
                                     </th>
+                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                        <span>Last Updated on</span>
+                                    </th>
+                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                        <span>Status</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="m-datatable__body">
@@ -47,6 +53,12 @@
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
                                         <span>{{emp.fullName}}</span>
+                                    </td>
+                                    <td class="m-datatable__cell" width="15%">
+                                        <span>{{emp.kra.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                    </td>
+                                    <td class="m-datatable__cell" width="15%">
+                                        <span>{{emp.kra.status}}</span>
                                     </td>
                                 </tr>
                                 <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>
