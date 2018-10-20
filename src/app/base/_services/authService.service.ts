@@ -124,7 +124,7 @@ export class AuthService implements CanActivate {
 
             signOutPath: 'auth/sign_out',
             validateTokenPath: 'auth/validate_token',
-            signOutFailedValidate: false,
+            signOutFailedValidate: true,
 
             registerAccountPath: 'auth',
             deleteAccountPath: 'auth',

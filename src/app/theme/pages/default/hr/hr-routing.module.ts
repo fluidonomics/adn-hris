@@ -17,6 +17,7 @@ import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.comp
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrGuard } from '../../../../base/_guard/hr.guard'
+import { PostComponent } from './leaves/post/post.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -33,6 +34,7 @@ const routes: Routes = [{
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'directory', component: DirectoryComponent },
+        { path: 'post/leave', component: PostComponent },
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]
