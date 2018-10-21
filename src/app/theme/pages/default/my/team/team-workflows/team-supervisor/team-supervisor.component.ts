@@ -16,9 +16,11 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
 
     employeeSearch: any;
     kraSearch: any;
+    kraSearchView: any;
     employeeData: any = [];
     _currentEmpId: number;
     kraData: any = [];
+    kraDataView: any = [];
     imageBase: any;
     kraReverse: boolean = true;
     employeeReverse: boolean = true;
@@ -43,10 +45,10 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     loadAllEmployee() {
         this._utilityService.showLoader("#employeeApproval");
         this._utilityService.showLoader("#kraApproval");
+        this._utilityService.showLoader("#kraApprovalView");
         this._myteamService.getAllEmployee()
             .subscribe(
-                res => {
-                    debugger;
+                res => {                   
                     let data = res.json().data || [];
                     data = data.filter(obj => obj.supervisor_id == this._currentEmpId);
                     if (data.length > 0) {
@@ -82,11 +84,15 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         this.employeeData = [];
                         this._utilityService.hideLoader("#employeeApproval");
                         this._utilityService.hideLoader("#kraApproval");
+                        this._utilityService.hideLoader("#kraApprovalView");
+                        
                     }
                 },
                 error => {
                     this._utilityService.hideLoader("#employeeApproval");
                     this._utilityService.hideLoader("#kraApproval");
+                    this._utilityService.hideLoader("#kraApprovalView");
+                    
                 });
     }
 
@@ -100,9 +106,16 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     kra.profileImage = element.profileImage;
                     __this.kraData.push(kra);
                 })
+                element.kraWorkflow.filter(obj => obj.status == "Approved").map(kra => {
+                    kra.fullName = element.fullName;
+                    kra.profileImage = element.profileImage;
+                    __this.kraDataView.push(kra);
+                })
             }
         });
         this._utilityService.hideLoader("#kraApproval");
+        this._utilityService.hideLoader("#kraApprovalView");
+        
     }
 
     ngAfterViewInit() {

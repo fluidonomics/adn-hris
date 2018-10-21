@@ -171,5 +171,86 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-xl-4">
+			<div class="m-portlet m-portlet--full-height">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								View KRA
+							</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools">
+						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
+						 role="tablist">
+							<li class="nav-item m-tabs__item" *ngIf="kraData.length > 0">
+								<div class="m-input-icon m-input-icon--left">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="kraSearchView">
+									<span class="m-input-icon__icon m-input-icon__icon--left">
+										<span>
+											<i class="la la-search"></i>
+										</span>
+									</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body" id="kraApprovalView">
+					<!-- <div class="row">
+						<div class="col-md-9 col-xs-8">
+
+						</div>
+						<div class="col-md-3 col-xs-4 pull-right">
+							<button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+						</div>
+
+					</div> -->
+					<div class="no-records" *ngIf="kraDataView.length==0 || (kraDataView | orderBy: 'updatedAt' : kraReverse | filter:kraSearchView)?.length==0">
+						<span class="align--center">No records found</span>
+					</div>
+
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+
+								<div class="m-widget4  workflow--hover ">
+
+
+
+									<div class="m-widget4__item m-padding--10" *ngFor="let kra of kraDataView | orderBy: 'updatedAt' : kraReverse | filter:kraSearchView;let i=index"
+									 (click)="gotoKraView(kra)">
+										<div class="m-widget4__img m-widget4__img--logo">
+											<a align="center">
+												<img *ngIf="kra?.profileImage; else noImage" src="{{imageBase+kra?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<ng-template #noImage>
+													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+												</ng-template>
+											</a>
+										</div>
+										<div class="m-widget4__info">
+											<span class="m-widget4__title">
+												{{kra.fullName}}
+											</span>
+											<br>
+											<span class="m-widget4__sub">
+												{{kra.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+											</span>
+										</div>
+										<span class="m-widget4__ext">
+											<span class="m-widget4__number m--font-brand">
+											</span>
+										</span>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
