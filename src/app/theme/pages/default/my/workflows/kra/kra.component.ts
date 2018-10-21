@@ -1,5 +1,5 @@
-import { FormBuilder } from "@angular/forms";
-import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
+import { FormBuilder, NgForm } from "@angular/forms";
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
@@ -7,7 +7,10 @@ import { KraService } from "./kra.service"
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
+import { NgSelectComponent } from '@ng-select/ng-select'
+
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -18,10 +21,14 @@ import { forEach } from "@angular/router/src/utils/collection";
 })
 export class MyKraComponent {
 
+    @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
+    @ViewChild('KRADataForm') fleaveapplication: NgForm;
     window: any = window;
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
+
+    isKRAsaveClicked: boolean = false;
 
     kraInfoData: any = [];
 
@@ -36,6 +43,7 @@ export class MyKraComponent {
     kraWorkFlowData: any = [];
 
     isDisabled: boolean = true;
+    isChangable: boolean = true;
     employee: any = {};
 
 
@@ -45,14 +53,16 @@ export class MyKraComponent {
     search: any;
     itemPerPage: number = 10;
 
-
+    modalRef: BsModalRef;
+    kraData: any = {};
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
         public _authService: AuthService,
         private _commonService: CommonService,
-        private _kraService: KraService
+        private _kraService: KraService,
+        private modalService: BsModalService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -114,6 +124,7 @@ export class MyKraComponent {
             res => {
                 this.kraInfoData = res.json().data;
                 let status = res.json().status;
+                this.isChangable = status == "Initiated" || status == "SendBack" ? false : true;
                 this.isDisabled = status == "Initiated" || status == "SendBack" ? false : true;
                 if (this.kraInfoData.length == 0) {
                     this.addKraHtml();
@@ -160,7 +171,7 @@ export class MyKraComponent {
     }
 
 
-    addKraHtml() {
+    addKraHtml() {       
         if (this.kraInfoData.length < 7) {
             let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
             this.kraInfoData.push(data);
@@ -175,6 +186,26 @@ export class MyKraComponent {
                 confirmButtonText: 'OK'
             });
         }
+    }
+
+    showKRADetails(index: number) {    
+        debugger;    
+        this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
+        this.kraData.no = index + 1;
+        if(this.kraData.supervisorStatus)
+        this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
+
+        this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
+        this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+    }
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            this.modalRef.hide();
+            this.kraInfoData[this.kraData.no - 1] = JSON.parse(JSON.stringify(this.kraData));
+            this.saveKraDetails(this.kraData.no - 1);
+        }
+
     }
 
     deleteKraHtml(index: number) {
@@ -312,7 +343,7 @@ export class MyKraComponent {
         //let requiredWorkFlowLength= 
         //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
         //let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
-        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);
+        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);       
         if (this.isSendBackOrNewKraSaved(isFormDirty)) {
             if (this.isWeightage()) {
                 if (!this.isRequiredWorkFlowLength()) {
@@ -339,7 +370,17 @@ export class MyKraComponent {
     }
 
     saveKraWorkFlow() {
-        this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {                          
+            this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
             .subscribe(
                 res => {
                     if (res.ok) {
@@ -356,5 +397,7 @@ export class MyKraComponent {
                 },
                 error => {
                 });
+            }
+        });
     }
 }
