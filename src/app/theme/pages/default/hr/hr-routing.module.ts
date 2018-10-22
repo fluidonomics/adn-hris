@@ -14,6 +14,7 @@ import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
+import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrGuard } from '../../../../base/_guard/hr.guard'
@@ -33,6 +34,7 @@ const routes: Routes = [{
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'directory', component: DirectoryComponent },
+        { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]

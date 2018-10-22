@@ -163,6 +163,19 @@
 					</ul>
 				</div>
 			</li>
+			<li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+				   <a routerLink="/hr/transferresponsiblity" class="m-menu__link">
+					   <i class="m-menu__link-icon fa fa-th"></i>
+					   <span class="m-menu__link-title">
+						   <span class="m-menu__link-wrap">
+							   <span class="m-menu__link-text">
+								  Transfer Responsibility
+							   </span>
+						   </span>
+					   </span>
+				   </a>
+			   </li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 			 data-menu-submenu-toggle="hover" *ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') > -1">
 				<a routerLink="/my/leaves/dashboard/hr" class="m-menu__link m-menu__toggle">
