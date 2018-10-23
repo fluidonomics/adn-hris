@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from "../../../../../../../base/_services/common.service";
 import { MyService } from "../../../my.service";
 import { environment } from "../../../../../../../../environments/environment";
+import { tree } from 'd3';
+declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
@@ -39,12 +41,16 @@ export class MyTeamReviewerComponent implements OnInit {
     getallemployees() {
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if (res.ok) {
+            if (res.ok) {               
                 this.utilityService.hideLoader("#employeeList");
-                this.employees = res.json() || [];
-                this.employees = this.employees.data.sort((a, b) => b._id - a._id);
+                this.employees = res.json() || [];               
+                this.employees = this.employees.data.sort((a, b) =>  {                     
+                    if(moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return 1;
+                    else if(!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return -1;
+                    else return 0;                 
+                });               
                 this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
-                console.log(this.employees);
+               
             }
         })
 
