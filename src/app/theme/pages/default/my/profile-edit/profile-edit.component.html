@@ -1960,7 +1960,7 @@
                                                             <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" bindLabel="fullName" bindValue="_id"
                                                                 placeholder="Select Supervisor" [(ngModel)]="positionDetails.primarySupervisorEmp_id"
                                                                 #primarySupervisorEmp="ngModel" [clearable]="false" required
-                                                                [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack"></ng-select>
+                                                                 disabled></ng-select>
                                                             <div class="form-control-feedback has-danger" *ngIf="fpositionDetails.submitted && primarySupervisorEmp.errors?.required ">
                                                                 This field is required.
                                                             </div>
