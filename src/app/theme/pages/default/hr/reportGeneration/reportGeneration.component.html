@@ -6,7 +6,7 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text flaticon-user-add">
-                                Reports
+                                Reports Generation
                                 <small></small>
                             </h3>
                         </div>
@@ -29,6 +29,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                Filters
+                                <small></small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
+                            <form  class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onAddEmpSubmit(faddemp)" id="addEmployee" #faddemp="ngForm">
+                                <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
@@ -95,15 +117,15 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="m-form__actions">
-                                                    <button class="btn btn-success submitForm" type="submit" id="submitForm">Download</button>
-                                                    <button class="btn btn-secondary" (click)="faddemp.resetForm();clearFormData();" type="reset">Clear</button>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="m-form__actions">
+                                                <button class="btn btn-success submitForm" type="submit" id="submitForm">Download</button>
+                                                <button class="btn btn-secondary" (click)="faddemp.resetForm();clearFormData();" type="reset">Clear</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </form>
                         </div>
                     </div>
