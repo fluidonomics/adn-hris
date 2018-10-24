@@ -25,6 +25,7 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { ReportGenerationComponent } from './reportGeneration/reportGeneration.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
@@ -57,6 +58,7 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
+        ReportGenerationComponent
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard]

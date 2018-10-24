@@ -1,0 +1,114 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                Reports
+                                <small></small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
+                            <form  class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onAddEmpSubmit(faddemp)" id="addEmployee" #faddemp="ngForm">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Generate Report For</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Report" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Status</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Status" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Select Company</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Company" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Division</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Division" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Grade</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Grade" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Department</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Department" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 adn-form__group">
+                                            <div class="m-form__group form-group">
+                                                <label for="form_control_1">Employee</label>
+                                                <span class="required" aria-required="true"> * </span>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Employee" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                    This field is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="m-form__actions">
+                                                    <button class="btn btn-success submitForm" type="submit" id="submitForm">Download</button>
+                                                    <button class="btn btn-secondary" (click)="faddemp.resetForm();clearFormData();" type="reset">Clear</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
