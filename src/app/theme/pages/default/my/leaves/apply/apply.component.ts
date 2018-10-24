@@ -152,14 +152,14 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     getEmployeeProbationDetails() {
-        // this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
-        //     if (res.ok) {
-        //         let data = res.json();
-        //         if (data) {
-        //             this.inProbation = data.result || false;
-        //         }
-        //     }
-        // });
+        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                if (data) {
+                    this.inProbation = data.result || false;
+                }
+            }
+        });
     }
 
     getEmployeeLeaves() {
