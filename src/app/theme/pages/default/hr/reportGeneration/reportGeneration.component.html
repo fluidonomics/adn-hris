@@ -22,7 +22,10 @@
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Generate Report For</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Report" required></ng-select>
+                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="reportName" 
+                                                    bindValue="_id" placeholder="Select Report" [(ngModel)]="addreport.report_id" #reportName="ngModel" 
+                                                    [clearable]="false" (change)="loadStatus(addreport.report_id)" required>
+                                                </ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
                                                     This field is required.
                                                 </div>
@@ -49,15 +52,17 @@
                 <div class="m-portlet__body">
                     <div class="tab-content">
                         <div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
-                            <form  class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onAddEmpSubmit(faddemp)" id="addEmployee" #faddemp="ngForm">
+                            <form  class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onAddEmpSubmit(freport)" id="addEmployee" #freport="ngForm">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Status</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Status" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                <ng-select class="m-input m-input--air" name="report" [items]="statusData" bindLabel="statusName" 
+                                                    bindValue="_id" placeholder="Select Status" [(ngModel)]="addreport.status_Id"  
+                                                    #statusName="ngModel" [clearable]="false" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="freport.submitted && !companyName.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
@@ -66,8 +71,11 @@
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Select Company</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Company" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                <ng-select class="m-input m-input--air" name="companyName" [items]="companiesData" 
+                                                    bindLabel="companyName"  bindValue="_id" placeholder="Select company name" 
+                                                    [(ngModel)]="addreport.company_id"  #companyName="ngModel" [clearable]="false" required>
+                                                </ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="freport.submitted && !companyName.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
@@ -75,9 +83,13 @@
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Division</label>
-                                                <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Division" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="division" [items]="divisionData" 
+                                                    bindLabel="divisionName"  bindValue="_id" placeholder="Select division" 
+                                                    (change)="loadDepartment(addreport.division_id)"  [(ngModel)]="addreport.division_id"  
+                                                    #division="ngModel" (change)="loadDepartment(addreport.division_id)" [clearable]="false" required>
+                                                </ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !division.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
@@ -87,9 +99,11 @@
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Grade</label>
-                                                <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Grade" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="employeeGrade" [items]="gradeData" bindLabel="gradeName" 
+                                                    bindValue="_id" placeholder="Select grade" [(ngModel)]="addreport.grade_id"  #employeeGrade="ngModel" 
+                                                    [clearable]="false"  required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !employeeGrade.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
@@ -97,18 +111,18 @@
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Department</label>
-                                                <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Department" required></ng-select>
-                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+                                                <span class="required" aria-required="true">* </span>
+                                                <ng-select class="m-input m-input--air" name="department" [items]="deparmentData" bindLabel="departmentName"  bindValue="_id" placeholder="Select department" (change)="loadVertical(addreport.department_id)" [(ngModel)]="addreport.department_id" [clearable]="false"  #department="ngModel" required></ng-select>
+                                                <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !department.valid ">
                                                     This field is required.
                                                 </div>
                                             </div>
-                                        </div>
+                                            </div>
                                         <div class="col-md-4 adn-form__group">
                                             <div class="m-form__group form-group">
                                                 <label for="form_control_1">Employee</label>
                                                 <span class="required" aria-required="true"> * </span>
-                                                <ng-select class="m-input m-input--air" name="report" [items]="reportsData" bindLabel="companyName"  bindValue="_id" placeholder="Select Employee" required></ng-select>
+                                                <ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="fullName" bindValue="_id" placeholder="Select Employee" [(ngModel)]="addreport.employee_Id" [clearable]="false"  #employee="ngModel" required></ng-select>
                                                 <div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
                                                     This field is required.
                                                 </div>
