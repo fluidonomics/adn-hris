@@ -370,7 +370,17 @@ export class MyKraComponent {
     }
 
     saveKraWorkFlow() {
-        this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {                          
+            this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
             .subscribe(
                 res => {
                     if (res.ok) {
@@ -387,5 +397,7 @@ export class MyKraComponent {
                 },
                 error => {
                 });
+            }
+        });
     }
 }
