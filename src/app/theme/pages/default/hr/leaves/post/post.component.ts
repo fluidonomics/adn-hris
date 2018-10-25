@@ -279,7 +279,8 @@ export class PostComponent implements OnInit {
         }
     }
 
-    postEmployeeLeaveDetails(form, data: any) {        
+    postEmployeeLeaveDetails(form, data: any) 
+    {      
         if (data.days <= 0) {
             this.areDaysValid = false;
         } else {
@@ -298,7 +299,7 @@ export class PostComponent implements OnInit {
         }
 
         // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-        if (data.leaveType == 1 && data.days >= 3) {
+        /* if (data.leaveType == 1 && data.days >= 3) {
             var new_date = moment(new Date()).add(7, 'days');
             if (data.fromDate < new_date._d) {
                 this.fromDateValidation = {
@@ -309,7 +310,7 @@ export class PostComponent implements OnInit {
             } else {
                 this.resetFromDateValidation();
             }
-        }
+        } */
 
         if (form.valid && this.areDaysValid && this.isBalanceValid) {
             if (this.isAttachmentRequired && !this.isAttachmentAdded) {
@@ -645,6 +646,7 @@ export class PostComponent implements OnInit {
     // }
 
     goToDashboard() {
-        this.router.navigate(['my/leaves/dashboard/employee']);
+        //this.router.navigate(['my/leaves/dashboard/employee']);
+        this.router.navigate(['hr/dashboard']);
     }
 }
