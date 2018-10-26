@@ -471,7 +471,7 @@ export class ProfileComponent implements OnInit {
                 _element.control.setErrors(null)
             }
             else {
-                this._commonService.checkEmailExists(_element.value)
+                this._commonService.checkEmailExists(_element.value,this._currentEmpId)
                     .subscribe(
                         data => {
                             if (data.json())

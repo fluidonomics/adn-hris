@@ -285,8 +285,8 @@ export class CommonService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    checkEmailExists(data: string) {
-        let url = "common/checkEmailExists?email=" + data
+    checkEmailExists(data: string,emp_id:number) {
+        let url = "common/checkEmailExists?email=" + data+"&&emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
