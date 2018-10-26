@@ -155,6 +155,10 @@ export class LeaveService {
         let url = "leave/applyLeave";
         return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+    postEmployeeLeaveDetails(leavesData: any): Observable<Response> {
+        let url = "leave/postLeave";
+        return this.authService.post(url, leavesData).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 
     uploadLeaveAttachement(attBody: FormData) {
         let url = "leave/uploadSickLeaveDocument";

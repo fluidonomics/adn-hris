@@ -85,7 +85,7 @@
 												<span class="pl1r">
 													<button class="btn btn-success" type="button" (click)="processSandwich()">Calculate Days</button>
 												</span>
-												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid && !isLeaveCalculated">
 													<span *ngIf="!areDaysValid">Please Calculate Days</span>
 												</div>
 												<div class="form-control-feedback has-danger" *ngIf="!isSandwichValid">
@@ -149,13 +149,13 @@
 												</span>
 												<label class="btn btn-default browse">
 													Browse
-													<input type="file" accept="application/pdf" hidden="hidden" name="attachement" #documentsPdf ngFileSelect [options]="options"
-													 (uploadOutput)="onUploadOutput($event, document.documentName)" [uploadInput]="uploadInput" (click)="documentsPdf.click()">
+													<input type="file" accept="application/pdf" hidden="hidden" name="attachment" #documentsPdf ngFileSelect [options]="options"
+													 (uploadOutput)="onUploadOutput($event, document.documentName)" [uploadInput]="uploadInput" (click)="documentsPdf.click()" required>
 													<!-- <input type="file" name="attachment" (change)="onFilePick($event)" value="Upload Document" /> -->
 												</label>
 												<!-- <span>max size 300kb</span> -->
-												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
-													<span *ngIf="isAttachmentAdded">This field is required.</span>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && isAttachmentRequired && !isAttachmentAdded">
+													<span *ngIf="!isAttachmentAdded">This field is required.</span>
 												</div>
 											</div>
 										</div>
