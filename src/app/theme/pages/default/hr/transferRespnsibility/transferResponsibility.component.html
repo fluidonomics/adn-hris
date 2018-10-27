@@ -70,7 +70,7 @@
 							 <div class="col-md-3 adn-form__group">
 								 <div class="m-form__group form-group">
 								  
-									<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData" bindLabel="name"  bindValue="id" placeholder="Select Employee" [(ngModel)]="request.transferType"  #transferType="ngModel" [clearable]="false" required></ng-select>
+									<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData" bindLabel="name"  bindValue="id" placeholder="Select Employee" [(ngModel)]="request.change_type"  #transferType="ngModel" [clearable]="false" required></ng-select>
 									<div class="form-control-feedback has-danger" *ngIf="!transferType.valid">
 									   <span *ngIf="transferForm.submitted && !transferType.valid">This field is required.</span>									 
 									</div>								  
@@ -86,7 +86,7 @@
 							 </div>	
 							 <div class="col-md-4 adn-form__group">
 								 <div class="m-form__group form-group">
-									<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisor_id"  #primarySuervisor="ngModel"  [clearable]="false" required></ng-select>
+									<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisorEmp_id"  #primarySuervisor="ngModel"  [clearable]="false" required></ng-select>
 									<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
 									   <span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>									 
 									</div>								  
@@ -100,7 +100,7 @@
 							 </div>	
 							 <div class="col-md-4 adn-form__group">
 								 <div class="m-form__group form-group">
-									<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.seconderySupervisor_id"  #seconderySuervisor="ngModel"  [clearable]="false" required></ng-select>
+									<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"  #seconderySuervisor="ngModel"  [clearable]="false" required></ng-select>
 									<div class="form-control-feedback has-danger" *ngIf="!seconderySuervisor.valid">
 									   <span *ngIf="transferForm.submitted && !seconderySuervisor.valid">This field is required.</span>									 
 									</div>								  

@@ -85,7 +85,13 @@ export class TransferResponsibilityComponent implements OnInit {
                 res => {
                     if (res.ok) {
                         let details = res.json().data[0] || {}; 
-                        this.secondarySuperviserDetails=details.supervisorDetails.secondarySupervisorDetails                                          
+                        debugger;
+                        if(details.supervisorDetails.secondarySupervisorDetails){
+                            this.secondarySuperviserDetails=details.supervisorDetails.secondarySupervisorDetails  
+                        }else{
+                            this.secondarySuperviserDetails.fullName="";
+                        }
+                                                                
                     }
                 },
                 error => {
@@ -102,6 +108,9 @@ export class TransferResponsibilityComponent implements OnInit {
     onTransferSubmit(form) {
         if (form.valid) {
            console.log(this.request);
+           this._hrService.updateSupervisortransferInfo(this.request).subscribe(data=>{
+               console.log(data);
+           });
         }
     }
 
