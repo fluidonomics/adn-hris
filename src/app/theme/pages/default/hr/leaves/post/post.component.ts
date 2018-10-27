@@ -57,6 +57,7 @@ export class PostComponent implements OnInit {
     employeesData: any = [];
     employee:any={};
     getLeaveTypeByEmpIdSubs: Subscription;
+    isLeaveCalculated:boolean=false;
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
@@ -312,7 +313,7 @@ export class PostComponent implements OnInit {
             }
         } */
 
-        if (form.valid && this.areDaysValid && this.isBalanceValid) {
+        if (form.valid && this.areDaysValid && this.isBalanceValid) {            
             if (this.isAttachmentRequired && !this.isAttachmentAdded) {
                 return;
             }
@@ -433,7 +434,7 @@ export class PostComponent implements OnInit {
             state: 'success',
             // message: 'Please wait...'
         });
-        this.leaveService.saveEmployeeLeaveDetails(_postData).subscribe(
+        this.leaveService.postEmployeeLeaveDetails(_postData).subscribe(
             res => {
                 if (this.isAttachmentAdded) {
                     let leave = res.json();
@@ -456,6 +457,7 @@ export class PostComponent implements OnInit {
             isValid: true,
             msg: ''
         }
+        this.isLeaveCalculated=false;          
     }
 
     onLeaveAppSubmit(form) {
@@ -488,6 +490,7 @@ export class PostComponent implements OnInit {
 
     sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
     processSandwich() {
+        this.isLeaveCalculated=true;
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
