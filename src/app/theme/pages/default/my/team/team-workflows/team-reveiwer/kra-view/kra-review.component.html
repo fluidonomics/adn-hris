@@ -49,7 +49,7 @@
                                             <th>
                                                 Weightage
                                             </th>
-                                            <th class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                            <th class="text-center" style="width: 70px;">
                                                 Action
                                             </th>
                                         </tr>
@@ -75,7 +75,7 @@
                                                     placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id"
                                                     [clearable]="false" #kraWeightage="ngModel" disabled></ng-select>
                                             </td>
-                                            <td class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                            <td class="text-center"  style="width: 70px;">
                                                 <span>
                                                     <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                                         title="KRA Detail" (click)="showKraDetail(i, $event)">
