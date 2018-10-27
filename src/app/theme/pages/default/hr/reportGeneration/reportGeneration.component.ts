@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from "../../../../../base/_services/common.service";
 import { HrService } from '../hr.service';
 
-
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--reports",
     templateUrl: "./reportGeneration.component.html",
@@ -19,6 +18,8 @@ export class ReportGenerationComponent implements OnInit {
     employeesData: any = [];
     statusData: any = [];
 
+    isTrue: boolean = false;
+
     constructor(private _commonService: CommonService, 
                 private _hrService: HrService) { }
 
@@ -29,12 +30,7 @@ export class ReportGenerationComponent implements OnInit {
     initDropdown() {
         this.loadCompanies();
         this.loadDivision();
-        this.loadAllEmployee();
         this.loadGrade();
-        /* this.loadManagementType();
-        this.loadEmploymentStatus();
-        this.loadDocuments(); */
-        //this.loadRoles();
     }
 
     reportsData: any = [
@@ -46,45 +42,38 @@ export class ReportGenerationComponent implements OnInit {
     loadStatus(reportId: number) {
         if(reportId == 1){
             this.getKRAList();
+            this.isTrue = false;
         }
         else if(reportId == 2){
             this.getLeaveTypes();
+            this.isTrue = false;
         }
         else if(reportId == 3){
-            this.getProfileList();
+            this.isTrue = true;
         }
     }
 
     getLeaveTypes() {
-        /*this._hrService.getLeaveTypes().subscribe(res => {
-            if (res.ok) {
-                this.statusData = res.json();
-            }
-        });*/
 
         this.statusData = [
-            { _id: '1', statusName: 'Leave Status 1' },
-            { _id: '2', statusName: 'Leave Status 2' },
-            { _id: '3', statusName: 'Leave Status 3' }
+            { _id: '1', statusName: 'Applied' },
+            { _id: '2', statusName: 'Approved' },
+            { _id: '3', statusName: 'Rejected' },
+            { _id: '4', statusName: 'PendingWithdrawal' },
+            { _id: '5', statusName: 'Withdrawn' },
+            { _id: '6', statusName: 'PendingCancellation' },
+            { _id: '7', statusName: 'Cancelled' }
         ];
     }
 
     getKRAList(){
         this.statusData = [
-            { _id: '1', statusName: 'KRA_1' },
-            { _id: '2', statusName: 'KRA_2' },
-            { _id: '3', statusName: 'KRA_3' }
+            { _id: '1', statusName: 'Submitted' },
+            { _id: '2', statusName: 'Initiated' },
+            { _id: '3', statusName: 'Approved' },
+            { _id: '4', statusName: 'SendBack' }
         ];
     }
-
-    getProfileList(){
-        this.statusData = [
-            { _id: '1', statusName: 'Profile_1' },
-            { _id: '2', statusName: 'Profile_2' },
-            { _id: '3', statusName: 'Profile_3' }
-        ];
-    }
-
 
      //load Companies Dropdown Data init
      loadCompanies() {
@@ -131,6 +120,22 @@ export class ReportGenerationComponent implements OnInit {
             });
     }
 
+    loadEmployeeByDepartment(deptId?: number){
+        if(deptId == null){
+            this.employeesData = [];
+        }
+        else {
+            this._hrService.getAllEmployee()
+            .subscribe(
+            res => {
+                this.employeesData = res.json().data;
+                this.employeesData = this.employeesData.filter(item => item.department_id == deptId)
+            },
+            error => {
+            });
+        }
+    }
+
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
@@ -146,14 +151,30 @@ export class ReportGenerationComponent implements OnInit {
             });
     }
 
-    loadAllEmployee() {
-        this._hrService.getAllEmployee()
+    loadEmployeeByGrade(dept_id?: number, grade_id?: number){
+
+        if(dept_id == null) {
+            this._hrService.getAllEmployee()
             .subscribe(
             res => {
-                this.addreport.employee_Id = null;
                 this.employeesData = res.json().data;
+                this.employeesData = this.employeesData.filter(item => item.grade_id == grade_id)
             },
             error => {
             });
+        }
+        else {
+            this._hrService.getAllEmployee()
+            .subscribe(
+            res => {
+                this.employeesData = res.json().data;
+                this.employeesData = this.employeesData.filter(
+                    item => item.department_id == dept_id && 
+                    item.grade_id == grade_id
+                )
+            },
+            error => {
+            });
+        }
     }
 }
