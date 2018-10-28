@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Meta, Title } from "@angular/platform-browser";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonService } from "../../../../../base/_services/common.service";
 import { HrService } from "../hr.service";
 import { UtilityService } from '../../../../../base/_services/utilityService.service';
+
 declare var $
 declare var mApp;
 import swal from 'sweetalert2';
@@ -15,68 +13,57 @@ import swal from 'sweetalert2';
     styleUrls: ["./transferResponsibility.component.css"],
     encapsulation: ViewEncapsulation.None,
 })
-export class TransferResponsibilityComponent implements OnInit {      
-    supervisorTransferTypeData:any=[{
-        name:"Supervisor Transfer",
-        id:"SupervisorTransfer"
-    },{
-        name:"Supervisor Correction",
-        id:"SupervisorCorrection"
+export class TransferResponsibilityComponent implements OnInit {
+    supervisorTransferTypeData: any = [{
+        name: "Supervisor Transfer",
+        id: "tranfser"
+    }, {
+        name: "Supervisor Correction",
+        id: "correction"
     }];
     employeesData: any = [];
-    secondarySuperviserDetails:any={};    
+    secondarySuperviserDetails: any = {};
     supervisorData: any = [];
-    selectedEmployee:any={};
-    request:any={};
-    companiesData: any = [];   
+    selectedEmployee: any = {};
+    request: any = {};
+    companiesData: any = [];
     _currentEmpId: number;
 
-    constructor( @Inject(PLATFORM_ID) private platformId: Object,
-        meta: Meta, title: Title,
-        private _route: ActivatedRoute,
-        private _router: Router,
+    constructor(
         private _commonService: CommonService,
         private _hrService: HrService,
         public utilityService: UtilityService,
-
     ) {
-        title.setTitle('ADN HRIS | Add New Employee');
-        meta.addTags([
-            { name: 'author', content: '' },
-            { name: 'keywords', content: 'Add new employee' },
-            { name: 'description', content: 'Add new employee.' }
-        ]);
+
     }
 
     ngOnInit() {
-        
         this.initDropdown();
     }
 
     //Filled Init Dropdown 
     initDropdown() {
-        this.loadAllEmployee();               
+        this.loadAllEmployee();
     }
-    loadAllEmployee() {      
+    loadAllEmployee() {
         this._hrService.getAllEmployee()
             .subscribe(
-            res => {
-                let data = res.json().data || [];
-                if (data.length > 0) {                   
-                    this.employeesData = data || [];
-                   
-                }
-                else
-                {
-                    this.employeesData = data.json().data || [];                   
-                }
-            },
-            error => {              
-            });
+                res => {
+                    let data = res.json().data || [];
+                    if (data.length > 0) {
+                        this.employeesData = data || [];
+
+                    }
+                    else {
+                        this.employeesData = data.json().data || [];
+                    }
+                },
+                error => {
+                });
     }
-    employeeSelected(selectedEmpId){
+    employeeSelected(selectedEmpId) {
         this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
-        this.supervisorData=this.employeesData.filter(obj=> obj._id !=selectedEmpId);
+        this.supervisorData = this.employeesData.filter(obj => obj._id != selectedEmpId);
         this.getEmployeeDetails(selectedEmpId);
     }
     getEmployeeDetails(selectedEmpId) {
@@ -84,14 +71,14 @@ export class TransferResponsibilityComponent implements OnInit {
             .subscribe(
                 res => {
                     if (res.ok) {
-                        let details = res.json().data[0] || {}; 
+                        let details = res.json().data[0] || {};
                         debugger;
-                        if(details.supervisorDetails.secondarySupervisorDetails){
-                            this.secondarySuperviserDetails=details.supervisorDetails.secondarySupervisorDetails  
-                        }else{
-                            this.secondarySuperviserDetails.fullName="";
+                        if (details.supervisorDetails.secondarySupervisorDetails) {
+                            this.secondarySuperviserDetails = details.supervisorDetails.secondarySupervisorDetails
+                        } else {
+                            this.secondarySuperviserDetails.fullName = "";
                         }
-                                                                
+
                     }
                 },
                 error => {
@@ -101,16 +88,16 @@ export class TransferResponsibilityComponent implements OnInit {
 
 
 
-    
 
-    
+
+
     //Submit Add Employee Form
     onTransferSubmit(form) {
         if (form.valid) {
-           console.log(this.request);
-           this._hrService.updateSupervisortransferInfo(this.request).subscribe(data=>{
-               console.log(data);
-           });
+            console.log(this.request);
+            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                console.log(data);
+            });
         }
     }
 
@@ -118,13 +105,13 @@ export class TransferResponsibilityComponent implements OnInit {
         if (_element.valid) {
             this._commonService.checkEmailExists(_element.value)
                 .subscribe(
-                data => {
-                    if (data.json())
-                        _element.control.setErrors({ "emailExists": true })
-                },
-                error => {
-                    _element.control.setErrors(null)
-                });
+                    data => {
+                        if (data.json())
+                            _element.control.setErrors({ "emailExists": true })
+                    },
+                    error => {
+                        _element.control.setErrors(null)
+                    });
 
         }
     }
@@ -133,20 +120,20 @@ export class TransferResponsibilityComponent implements OnInit {
         if (_element.valid) {
             this._commonService.checkUserNameExists(_element.value)
                 .subscribe(
-                data => {
-                    if (data.json())
-                        _element.control.setErrors({ "userNameExists": true })
-                },
-                error => {
-                    _element.control.setErrors(null)
-                });
+                    data => {
+                        if (data.json())
+                            _element.control.setErrors({ "userNameExists": true })
+                    },
+                    error => {
+                        _element.control.setErrors(null)
+                    });
 
         }
     }
 
     //Clear All Form Data 
-    clearFormData() { 
-        this.request={};      
+    clearFormData() {
+        this.request = {};
     }
 }
 

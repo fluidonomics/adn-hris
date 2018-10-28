@@ -1,128 +1,138 @@
- <div class="m-content">
+<div class="m-content">
 	<div class="row">
-	   <div class="col-md-12">
-		  <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
-			 <div class="m-portlet__head">
-				<div class="m-portlet__head-caption">
-				   <div class="m-portlet__head-title">
-					  <h3 class="m-portlet__head-text flaticon-user-add">
-						Superviser Revision
-						 <small>
-						 </small>
-					  </h3>
-				   </div>
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text flaticon-user-add">
+								Superviser Revision
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
 				</div>
-			 </div>
-			 <div class="m-portlet__body">
-				<div class="tab-content">
-				   <div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
-					  <form  class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onTransferSubmit(transferForm)" id="supervisorTransferForm" #transferForm="ngForm">
-					  <div class="form-body">
-						 <div class="row">
-							<div class="col-md-2 adn-form__group">
-							   <div class="m-form__group form-group">
-								  <label for="form_control_1">Employee</label>
-								  <span class="required" aria-required="true">* </span>								  								  
-							   </div>
-							</div>	
-							<div class="col-md-4 adn-form__group">
-								<div class="m-form__group form-group">								 
-								   <ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.emp_id"  #selectedemployee="ngModel" (change)="employeeSelected(request.emp_id)" [clearable]="false" required></ng-select>
-								   <div class="form-control-feedback has-danger" *ngIf="!selectedemployee.valid">
-									  <span *ngIf="transferForm.submitted && !selectedemployee.valid">This field is required.</span>									 
-								   </div>								  
+				<div class="m-portlet__body">
+					<div class="tab-content">
+						<div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
+							<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onTransferSubmit(transferForm)" id="supervisorTransferForm"
+							 #transferForm="ngForm">
+								<div class="form-body">
+									<div class="row">
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Employee</label>
+												<span class="required" aria-required="true">* </span>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group">
+												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="fullName"
+												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.emp_id" #selectedemployee="ngModel"
+												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="!selectedemployee.valid">
+													<span *ngIf="transferForm.submitted && !selectedemployee.valid">This field is required.</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1" style="text-align:left;">Primary Supervisor</label>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group ">
+												<div class="input-group">
+													<input type="text" class="form-control m-input m-input--air" name="primarySupervisor" id="primarySupervisor"
+													 [(ngModel)]="selectedEmployee.supervisor" disabled>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1" style="text-align:left;">Secondary Supervisor</label>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group ">
+												<div class="input-group">
+													<input type="text" class="form-control m-input m-input--air" name="secondarySupervisor" id="secondarySupervisor"
+													 [(ngModel)]="secondarySuperviserDetails.fullName" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Superviser Transfer Type</label>
+												<span class="required" aria-required="true">* </span>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group">
+												<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData"
+												 bindLabel="name" bindValue="id" placeholder="Select Transfer Type" [(ngModel)]="request.change_type"
+												 #transferType="ngModel" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="!transferType.valid">
+													<span *ngIf="transferForm.submitted && !transferType.valid">This field is required.</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1" style="text-align:left;">Primary Supervisor</label>
+												<span class="required" aria-required="true">* </span>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group">
+												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"
+												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisorEmp_id"
+												 #primarySuervisor="ngModel" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
+													<span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1" style="text-align:left;">Secondary Supervisor</label>
+												<span class="required" aria-required="true">* </span>
+											</div>
+										</div>
+										<div class="col-md-4 adn-form__group">
+											<div class="m-form__group form-group">
+												<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"
+												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"
+												 #seconderySuervisor="ngModel" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="!seconderySuervisor.valid">
+													<span *ngIf="transferForm.submitted && !seconderySuervisor.valid">This field is required.</span>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							 </div>							
-						 </div>
-						 <div class="row">
-							<div class="col-md-2 adn-form__group">
-							   <div class="m-form__group form-group">
-								  <label for="form_control_1" style="text-align:left;">Primary Supervisor</label>								 								  							 								  
-							   </div>
-							</div>
-							<div class="col-md-4 adn-form__group">
-								<div class="m-form__group form-group ">								  
-								   <div class="input-group">								
-									 <input type="text" class="form-control m-input m-input--air" name="primarySupervisor" id="primarySupervisor" [(ngModel)]="selectedEmployee.supervisor" disabled>
-								 </div>							 								  
+								<div class="form-actions">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="m-form__actions">
+												<button class="btn btn-success submitForm" type="submit" id="submitForm">Submit</button>
+												<button class="btn btn-secondary" (click)="transferForm.resetForm();clearFormData();" type="reset">Reset</button>
+											</div>
+										</div>
+									</div>
 								</div>
-							 </div>	
-							 <div class="col-md-2 adn-form__group">
-								<div class="m-form__group form-group">
-								   <label for="form_control_1" style="text-align:left;">Secondary Supervisor</label>								 								  							 								  
-								</div>
-							 </div>
-							 <div class="col-md-4 adn-form__group">
-								 <div class="m-form__group form-group ">								  
-									<div class="input-group">								
-									  <input type="text" class="form-control m-input m-input--air" name="secondarySupervisor" id="secondarySupervisor" [(ngModel)]="secondarySuperviserDetails.fullName" disabled>
-								  </div>							 								  
-								 </div>
-							  </div>							
-						 </div>
-						 <div class="row">
-							<div class="col-md-3 adn-form__group">
-								<div class="m-form__group form-group">
-								   <label for="form_control_1">Superviser Transfer Type</label>
-								   <span class="required" aria-required="true">* </span>								  								  
-								</div>
-							 </div>	
-							 <div class="col-md-3 adn-form__group">
-								 <div class="m-form__group form-group">
-								  
-									<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData" bindLabel="name"  bindValue="id" placeholder="Select Employee" [(ngModel)]="request.change_type"  #transferType="ngModel" [clearable]="false" required></ng-select>
-									<div class="form-control-feedback has-danger" *ngIf="!transferType.valid">
-									   <span *ngIf="transferForm.submitted && !transferType.valid">This field is required.</span>									 
-									</div>								  
-								 </div>
-							  </div>		
-						 </div>
-						 <div class="row">
-								<div class="col-md-2 adn-form__group">
-								<div class="m-form__group form-group">
-								   <label for="form_control_1" style="text-align:left;">Primary Supervisor</label>
-								   <span class="required" aria-required="true">* </span>								  								  
-								</div>
-							 </div>	
-							 <div class="col-md-4 adn-form__group">
-								 <div class="m-form__group form-group">
-									<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisorEmp_id"  #primarySuervisor="ngModel"  [clearable]="false" required></ng-select>
-									<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
-									   <span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>									 
-									</div>								  
-								 </div>
-							  </div>
-							  <div class="col-md-2 adn-form__group">
-								<div class="m-form__group form-group">
-								   <label for="form_control_1" style="text-align:left;">Secondary Supervisor</label>
-								   <span class="required" aria-required="true">* </span>								  								  
-								</div>
-							 </div>	
-							 <div class="col-md-4 adn-form__group">
-								 <div class="m-form__group form-group">
-									<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"  bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"  #seconderySuervisor="ngModel"  [clearable]="false" required></ng-select>
-									<div class="form-control-feedback has-danger" *ngIf="!seconderySuervisor.valid">
-									   <span *ngIf="transferForm.submitted && !seconderySuervisor.valid">This field is required.</span>									 
-									</div>								  
-								 </div>
-							  </div>
-						 </div>						 																		 					 												 
-					  </div>
-					  <div class="form-actions">
-						 <div class="row">
-							<div class="col-md-12">
-							   <div class="m-form__actions">
-								  <button class="btn btn-success submitForm" type="submit" id="submitForm">Submit</button>
-								  <button class="btn btn-secondary" (click)="transferForm.resetForm();clearFormData();" type="reset">Reset</button>
-							   </div>
-							</div>
-						 </div>
-					  </div>
-					  </form>
-				   </div>
+							</form>
+						</div>
+					</div>
 				</div>
-			 </div>
-		  </div>
-	   </div>
+			</div>
+		</div>
 	</div>
- </div>
+</div>
