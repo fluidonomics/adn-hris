@@ -97,17 +97,32 @@ export class TransferResponsibilityComponent implements OnInit {
             console.log(this.request);
             this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
                 if (data.ok) {
-                    swal({
-                        title: 'Responsibility transferred',
-                        text: "",
-                        type: 'success',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then((result) => {
-                        form.resetForm();
-                    });
+                    let status = data.json() || false;
+                    if (status) {
+                        swal({
+                            title: 'Supervisor Revision Successful',
+                            text: "",
+                            type: 'success',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then((result) => {
+                            form.resetForm();
+                        });
+                    } else {
+                        swal({
+                            title: '',
+                            text: "Supervisor Revision Failed",
+                            type: 'warning',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then((result) => {
+                            form.resetForm();
+                        });
+                    }
                 }
             });
         }
