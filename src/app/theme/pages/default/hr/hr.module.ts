@@ -25,6 +25,7 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
@@ -64,6 +65,7 @@ import { HttpClientModule } from "../../../../../../node_modules/@angular/common
         EditEmployeeComponent,
         HrInitiateComponent,
         PostComponent
+        TransferResponsibilityComponent
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard,LeaveService]
