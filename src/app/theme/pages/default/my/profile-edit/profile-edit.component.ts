@@ -490,7 +490,7 @@ export class ProfileEditComponent implements OnInit {
             }
             else
             {
-                this._commonService.checkEmailExists(_element.value)
+                this._commonService.checkEmailExists(_element.value,this._currentEmpId)
                     .subscribe(
                     data => {
                         if (data.json())

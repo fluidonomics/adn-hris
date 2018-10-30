@@ -466,12 +466,17 @@ export class ProfileComponent implements OnInit {
     }
 
     checkEmailExists(_element, oldValue) {
-        if (_element.valid) {
+        if (_element.valid) {          
+            if(_element.value.search("adsl.net")!=-1){
+                _element.control.setErrors({ "pattern": true })
+            }else{
+                _element.control.setErrors({ "pattern": false })
+            }
             if (oldValue && oldValue == _element.value) {
                 _element.control.setErrors(null)
             }
             else {
-                this._commonService.checkEmailExists(_element.value)
+                this._commonService.checkEmailExists(_element.value,this._currentEmpId)
                     .subscribe(
                         data => {
                             if (data.json())
