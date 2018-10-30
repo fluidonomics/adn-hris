@@ -64,11 +64,11 @@ import { HttpClientModule } from "../../../../../../node_modules/@angular/common
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
-        PostComponent
+        PostComponent,
         TransferResponsibilityComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard,LeaveService]
+    providers: [HrService, HrGuard, LeaveService]
 })
 export class HrModule {
 }

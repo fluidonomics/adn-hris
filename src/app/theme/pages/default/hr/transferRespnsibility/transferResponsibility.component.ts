@@ -71,7 +71,7 @@ export class TransferResponsibilityComponent implements OnInit {
             .subscribe(
                 res => {
                     if (res.ok) {
-                        let details = res.json().data[0] || {};                        
+                        let details = res.json().data[0] || {};
                         if (details.supervisorDetails.secondarySupervisorDetails) {
                             this.secondarySuperviserDetails = details.supervisorDetails.secondarySupervisorDetails
                         } else {
@@ -94,8 +94,8 @@ export class TransferResponsibilityComponent implements OnInit {
     onTransferSubmit(form) {
         if (form.valid) {
             console.log(this.request);
-            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {                
-                if(data.ok){
+            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                if (data.ok) {
                     swal({
                         title: 'Responsibility transferred',
                         text: "",
@@ -105,25 +105,10 @@ export class TransferResponsibilityComponent implements OnInit {
                         showConfirmButton: false,
                         timer: 1000
                     }).then((result) => {
-                        form.resetForm();                       
+                        form.resetForm();
                     });
                 }
             });
-        }
-    }
-
-    checkEmailExists(_element) {
-        if (_element.valid) {
-            this._commonService.checkEmailExists(_element.value)
-                .subscribe(
-                    data => {
-                        if (data.json())
-                            _element.control.setErrors({ "emailExists": true })
-                    },
-                    error => {
-                        _element.control.setErrors(null)
-                    });
-
         }
     }
 
