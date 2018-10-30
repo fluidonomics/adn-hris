@@ -56,7 +56,7 @@
 											<div class="m-form__group form-group ">
 												<div class="input-group">
 													<input type="text" class="form-control m-input m-input--air" name="primarySupervisor" id="primarySupervisor"
-													 [(ngModel)]="selectedEmployee.supervisor" disabled>
+													 [(ngModel)]="primarySupervisor" disabled>
 												</div>
 											</div>
 										</div>
@@ -69,7 +69,7 @@
 											<div class="m-form__group form-group ">
 												<div class="input-group">
 													<input type="text" class="form-control m-input m-input--air" name="secondarySupervisor" id="secondarySupervisor"
-													 [(ngModel)]="secondarySuperviserDetails.fullName" disabled>
+													 [(ngModel)]="seconderySupervisor" disabled>
 												</div>
 											</div>
 										</div>
@@ -102,7 +102,7 @@
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
 												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"
-												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisorEmp_id"
+												 bindValue="_id" placeholder="Select Employee"  (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)" [(ngModel)]="request.primarySupervisorEmp_id"
 												 #primarySuervisor="ngModel" [clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														{{item.fullName}} {{item.userName ? ('[' + item.userName
@@ -125,9 +125,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"
+												<ng-select class="m-input m-input--air" name="companyName" [items]="secondarySupervisorData" bindLabel="fullName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"
-												 #seconderySuervisor="ngModel" [clearable]="true">
+												 #seconderySuervisor="ngModel" [clearable]="false">
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														{{item.fullName}} {{item.userName ? ('[' + item.userName
 														+']'):''}}
