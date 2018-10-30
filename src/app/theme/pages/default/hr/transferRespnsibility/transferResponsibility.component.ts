@@ -62,10 +62,9 @@ export class TransferResponsibilityComponent implements OnInit {
     }
     employeeSelected(selectedEmpId) {
         this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
-        debugger;
-        this.supervisorData = this.employeesData.filter(obj => {
-            return obj._id != selectedEmpId && obj.grade_id == this.selectedEmployee.grade_id;
-        });
+        this._commonService.getSupervisor(this.selectedEmployee.grade_id).subscribe(res => {
+            this.supervisorData = res.json() || [];
+        })
         this.getEmployeeDetails(selectedEmpId);
     }
     getEmployeeDetails(selectedEmpId) {
