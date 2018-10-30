@@ -24,10 +24,13 @@ export class TransferResponsibilityComponent implements OnInit {
     employeesData: any = [];
     secondarySuperviserDetails: any = {};
     supervisorData: any = [];
+    secondarySupervisorData:any=[];
     selectedEmployee: any = {};
     request: any = {};
     companiesData: any = [];
     _currentEmpId: number;
+    primarySupervisor:any;
+    seconderySupervisor:any;
 
     constructor(
         private _commonService: CommonService,
@@ -62,21 +65,32 @@ export class TransferResponsibilityComponent implements OnInit {
     }
     employeeSelected(selectedEmpId) {
         this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
+        debugger;
         this._commonService.getSupervisor(this.selectedEmployee.grade_id).subscribe(res => {
             this.supervisorData = res.json() || [];
+           this.secondarySupervisorData=res.json()|| [];
         })
         this.getEmployeeDetails(selectedEmpId);
+    }
+    primarySupervisorSelected(selectedPrimarySupervisorId){
+        this.secondarySupervisorData = this.secondarySupervisorData.filter(obj => obj._id != selectedPrimarySupervisorId);
     }
     getEmployeeDetails(selectedEmpId) {
         this._hrService.getEmployeeDetails(selectedEmpId)
             .subscribe(
                 res => {
-                    if (res.ok) {
+                    if (res.ok) {                       
                         let details = res.json().data[0] || {};
+
                         if (details.supervisorDetails.secondarySupervisorDetails) {
-                            this.secondarySuperviserDetails = details.supervisorDetails.secondarySupervisorDetails
+                            this.seconderySupervisor = details.supervisorDetails.secondarySupervisorDetails.fullName +" ["+details.supervisorDetails.secondarySupervisorDetails.userName+"]";
                         } else {
-                            this.secondarySuperviserDetails.fullName = "";
+                            this.seconderySupervisor = "";
+                        }
+                        if (details.supervisorDetails.primarySupervisorDetails) {
+                            this.primarySupervisor = details.supervisorDetails.primarySupervisorDetails.fullName +" ["+details.supervisorDetails.primarySupervisorDetails.userName+"]";
+                        } else {
+                            this.primarySupervisor = "";
                         }
 
                     }
