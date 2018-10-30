@@ -52,7 +52,6 @@ export class TransferResponsibilityComponent implements OnInit {
                     let data = res.json().data || [];
                     if (data.length > 0) {
                         this.employeesData = data || [];
-
                     }
                     else {
                         this.employeesData = data.json().data || [];
@@ -63,7 +62,10 @@ export class TransferResponsibilityComponent implements OnInit {
     }
     employeeSelected(selectedEmpId) {
         this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
-        this.supervisorData = this.employeesData.filter(obj => obj._id != selectedEmpId);
+        debugger;
+        this.supervisorData = this.employeesData.filter(obj => {
+            return obj._id != selectedEmpId && obj.grade_id == this.selectedEmployee.grade_id;
+        });
         this.getEmployeeDetails(selectedEmpId);
     }
     getEmployeeDetails(selectedEmpId) {

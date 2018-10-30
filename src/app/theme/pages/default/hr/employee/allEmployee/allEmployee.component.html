@@ -1,376 +1,409 @@
 <div class="m-content" *ngIf="!param_emp_id">
-        <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
-                <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    <i class="fa fa-list"></i> 
-                                    All Employees
-                                    <small>
-                                    </small>
-                                </h3>
+    <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <i class="fa fa-list"></i>
+                        All Employees
+                        <small>
+                        </small>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                                        [(ngModel)]="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-			<div class="m-portlet__body">
-				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-							<div class="row align-items-center">
-								<div class="col-xl-8 order-2 order-xl-1">
-									<div class="form-group m-form__group row align-items-center">
-										<div class="col-md-4">
-											<div class="m-input-icon m-input-icon--left">
-												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-												<span class="m-input-icon__icon m-input-icon__icon--left">
-													<span>
-														<i class="la la-search"></i>
-													</span>
-												</span>
-											</div>
-										</div>
-									</div>
-                                </div>
-                                <div class="col-xl-4 order-2 order-xl-1">
-                                    <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
-                                            <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                                    <i class="la la-plus m--hide"></i>
-                                                    <i class="la la-ellipsis-h"></i>
-                                            </span>
-                                            <div class="m-dropdown__wrapper">
-                                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 21.5px;"></span>
-                                                    <div class="m-dropdown__inner">
-                                                        <div class="m-dropdown__body">
-                                                            <div class="m-dropdown__content">
-                                                                <ul class="m-nav">
-                                                                    <li class="m-nav__item">
-                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon fa fa-exclamation-triangle m--font-danger"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Inactive
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                        <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                            <i class="m-nav__link-icon fa fa-circle-o m--font-warning"></i>
-                                                                            <span class="m-nav__link-text">
-                                                                                Personal Profile Incomplete
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-success"></i>
-                                                                                <span class="m-nav__link-text">
-                                                                                    Personal Profile Submitted
-                                                                                </span>
-                                                                            </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                                <i class="m-nav__link-icon fa fa-circle-o m--font-danger"></i>
-                                                                                <span class="m-nav__link-text">
-                                                                                    Personal Profile Sent Back
-                                                                                </span>
-                                                                            </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-success"></i>
-                                                                                <span class="m-nav__link-text">
-                                                                                    Office Profile Submitted
-                                                                                </span>
-                                                                            </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                                <i class="m-nav__link-icon fa fa-adjust m--font-danger"></i>
-                                                                                <span class="m-nav__link-text">
-                                                                                    Office Profile Sent Back
-                                                                                </span>
-                                                                            </a>
-                                                                    </li>
-                                                                    <li class="m-nav__item">
-                                                                            <a class="m-nav__link" href="" ng-reflect-href="">
-                                                                                <i class="m-nav__link-icon fa fa-circle m--font-success"></i>
-                                                                                <span class="m-nav__link-text">
-                                                                                    Profile Completed
-                                                                                </span>
-                                                                            </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </div>
+                    <div class="col-xl-4 order-2 order-xl-1">
+                        <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                            [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
+                            <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                                <i class="la la-plus m--hide"></i>
+                                <i class="la la-ellipsis-h"></i>
+                            </span>
+                            <div class="m-dropdown__wrapper">
+                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
+                                    style="left: auto; right: 21.5px;"></span>
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__body">
+                                        <div class="m-dropdown__content">
+                                            <ul class="m-nav">
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-exclamation-triangle m--font-danger"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Inactive
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-circle-o m--font-warning"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Personal Profile Incomplete
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-circle-o m--font-success"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Personal Profile Submitted
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-circle-o m--font-danger"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Personal Profile Sent Back
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-adjust m--font-success"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Office Profile Submitted
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-adjust m--font-danger"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Office Profile Sent Back
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a class="m-nav__link" href="" ng-reflect-href="">
+                                                        <i class="m-nav__link-icon fa fa-circle m--font-success"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Profile Completed
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-							</div>
-				</div>
-				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"  [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
-                    <table class="m-datatable__table">
-							<thead class="m-datatable__head">
-									<tr class="m-datatable__row">
-										<th class="m-datatable__cell" width="5%" ></th>
-										<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%" >
-												<span>
-												 ID
-												<i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-												</span>
-											</th>
-										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%" >
-											<span>
-											 NAME
-											<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										
-										<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-											<span>
-											EMAIL
-											<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											DESIGNATION 
-											<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											SUPERVISOR  
-											<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-										<th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-											<span>
-											ACTIONS  
-											<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-										</th>
-									</tr>
-							</thead>
-							<tbody class="m-datatable__body" id="allEmployee-loader">
-                              <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-									<td class="m-datatable__cell" width="5%" >
-									
-											<i class="status--icon fa" [ngClass]="
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+                <table class="m-datatable__table">
+                    <thead class="m-datatable__head">
+                        <tr class="m-datatable__row">
+                            <th class="m-datatable__cell" width="5%"></th>
+                            <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                                <span>
+                                    ID
+                                    <i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                <span>
+                                    NAME
+                                    <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+
+                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    EMAIL
+                                    <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    DESIGNATION
+                                    <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    SUPERVISOR
+                                    <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    ACTIONS
+                                    <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="m-datatable__body" id="allEmployee-loader">
+                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                            <td class="m-datatable__cell" width="5%">
+
+                                <i class="status--icon fa" [ngClass]="
 											!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
 											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
 											((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
 											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'fa-adjust m--font-success':
 											(employee.profileProcessDetails.hrStatus=='SendBack'? 'fa-circle-o m--font-danger':
 											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'fa-circle-o m--font-success':
-											'fa-circle-o m--font-warning')))))" 
-											
-											[title]="!employee.isAccountActive ?'Inactive':
+											'fa-circle-o m--font-warning')))))"
+                                    [title]="!employee.isAccountActive ?'Inactive':
 											(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'Profile Complete' :
 											(employee.profileProcessDetails.supervisorStatus == 'SendBack' ? 'Office Profile Sent Back' :
 											(employee.profileProcessDetails.hrStatus=='Submitted' ? 'Office Profile Submitted':
 											(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
-											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))"> </i>
+											(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))">
+                                </i>
 
-										  <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
-									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-									</td>
-									<td class="m-datatable__cell" width="5%" >
-										<span>{{employee.userName}}</span>
-									</td>
-								    <td class="m-datatable__cell" width="20%" >
-										<span>{{employee.fullName}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<span>{{employee.officeEmail}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<span>{{employee.designation}}</span>
-									</td>
-								    <td class="m-datatable__cell" width="15%" >
-										<span>{{employee.supervisor}}</span>
-									</td>
-									<td class="m-datatable__cell" width="15%" >
-										<a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved' || employee.profileProcessDetails.employeeStatus=='Submitted' ?'personal':'office' }" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-											<i class="la la-edit"></i>
-                                        </a>
-                                        <a  (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password">
-                                                <i class="la la-reply"></i>
-                                            </a>
-										<a  routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Employee Dashboard">
-											<i class="la la-gear"></i>
-										</a>
-									</td>
-							  </tr>
-                              <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
-							</tbody>
-					</table>
-					<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate" >
-						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-								<li>
-									<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)" >
-										<i class="la la-angle-double-left"></i>
-                                    </span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-										<i class="la la-angle-left"></i>
-									</span>
-								</li>
-								<li *ngFor="let page of p.pages">
-									<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-										{{ page.label }}
-									</span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
-										<i class="la la-angle-right"></i>
-									</span>
-								</li>
-								<li>
-									<span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-										<i class="la la-angle-double-right"></i>
-									</span>
-								</li>
-							</ul>
-						</div>
-					</pagination-template>
-					<div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-						
-						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="1">
-								<option value=10>10</option>
-								<option value=20>20</option>
-								<option value=30>30</option>
-								<option value=50>50</option>
-								<option value=100>100</option>
-						</select>
-						 <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
+                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}"
+                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
+                                    alt="">
+                                <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
+                            </td>
+                            <td class="m-datatable__cell" width="5%">
+                                <span>{{employee.userName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.fullName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="15%">
+                                <span>{{employee.officeEmail}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="15%">
+                                <span>{{employee.designation}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="15%">
+                                <span>{{employee.supervisor}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="15%">
+                                <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved' || employee.profileProcessDetails.employeeStatus=='Submitted' ?'personal':'office' }"
+                                    class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                    title="View">
+                                    <i class="la la-edit"></i>
+                                </a>
+                                <a (click)=resetPassword(employee._id); class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                    title="Reset Password">
+                                    <i class="la la-reply"></i>
+                                </a>
+                                <a routerLink="/hr/employee/{{employee._id}}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                    title="Employee Dashboard">
+                                    <i class="la la-gear"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
+                            records found</span>
+                    </tbody>
+                </table>
+                <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                        <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--first"
+                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+                                    <i class="la la-angle-double-left"></i>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
+                                    <i class="la la-angle-left"></i>
+                                </span>
+                            </li>
+                            <li *ngFor="let page of p.pages">
+                                <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+                                    [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                    {{ page.label }}
+                                </span>
+                            </li>
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--next"
+                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
+                                    <i class="la la-angle-right"></i>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--last"
+                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+                                    <i class="la la-angle-double-right"></i>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </pagination-template>
+                <div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
+
+                    <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size"
+                        data-width="70px" data-selected="50" tabindex="1">
+                        <option value=10>10</option>
+                        <option value=20>20</option>
+                        <option value=30>30</option>
+                        <option value=50>50</option>
+                        <option value=100>100</option>
+                    </select>
+                    <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
         {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-						<span class="pager-display-title">Displaying {{getStart()}} -  {{getEnd((employeesData | orderBy: key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse | filter:search)?.length}}</span>
-					</div>
-				</div>  
-			</div>
-	</div>
+                    <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy:
+                        key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse |
+                        filter:search)?.length}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="m-content" *ngIf="param_emp_id">
     <div class="row">
-        <div class="col-xl-4" >
-                    <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force" id="employeePortlet">
-                        <div class="m-portlet__body">
-                            <div class="m-widget27 m-portlet-fit--sides">
-                                <div class="m-widget27__pic" style="text-align: center">
-                                    <img alt="" src="./assets/app/media/img//bg/bg-4.jpg">
-                                    <h3 class="m-widget27__title m--font-light">
-                                        <span style="padding-top: 40px;">
-                                                <div class="m--space-10"></div>
-                                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered" style="height:80px; width:80px;">
-                                                <ng-template #noImage>
-                                                    <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="height:80px; width:80px;">
-                                                </ng-template>
-                                                <h5 class="m--font-light" style="padding-top: 15px;">{{employee.fullName}}</h5>
-                                                <h6 class="m--font-light">{{employee.userName}} | {{employee?.designationDetails?.designationName}}</h6> 
-                                                <div class="m--space-30"></div>
-                                        </span>
-                                    </h3>
-                                    <div class="m-widget27__btn">
-                                        <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee?.profileProcessDetails?.supervisorStatus=='Approved'?'personal':'office' }" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" title="View Profile">
-                                            View Profile
-                                        </a>
+        <div class="col-xl-4">
+            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height  m-portlet--rounded-force" id="employeePortlet">
+                <div class="m-portlet__body">
+                    <div class="m-widget27 m-portlet-fit--sides">
+                        <div class="m-widget27__pic" style="text-align: center">
+                            <img alt="" src="./assets/app/media/img//bg/bg-4.jpg">
+                            <h3 class="m-widget27__title m--font-light">
+                                <span style="padding-top: 40px;">
+                                    <div class="m--space-10"></div>
+                                    <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}"
+                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded m--marginless m--img-centered"
+                                        style="height:80px; width:80px;">
+                                    <ng-template #noImage>
+                                        <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded"
+                                            style="height:80px; width:80px;">
+                                    </ng-template>
+                                    <h5 class="m--font-light" style="padding-top: 15px;">{{employee.fullName}}</h5>
+                                    <h6 class="m--font-light">{{employee.userName}} |
+                                        {{employee?.designationDetails?.designationName}}</h6>
+                                    <div class="m--space-30"></div>
+                                </span>
+                            </h3>
+                            <div class="m-widget27__btn">
+                                <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee?.profileProcessDetails?.supervisorStatus=='Approved'?'personal':'office' }"
+                                    class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--bolder" title="View Profile">
+                                    View Profile
+                                </a>
 
-                                       
-                                    </div>
-                                </div>
-                                <div class="m-widget27__container">
-                                    
-                                        <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
-                                            
-                                            <li class="m-widget27__nav-item nav-item">
-                                                <a class="nav-link active" data-toggle="pill" href="#m_personal_income_quater_1" >
-                                                    Info
-                                                </a>
-                                            </li>
-                                            <li class="m-widget27__nav-item nav-item">
-                                                    <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2" >
-                                                        Contact
-                                                    </a>
-                                            </li>
-                                            <li class="m-widget27__nav-item nav-item">
-                                                <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_3">
-                                                    Office
-                                                </a>
-                                            </li>
-                                            <!-- <li class="m-widget27__nav-item nav-item">
+
+                            </div>
+                        </div>
+                        <div class="m-widget27__container">
+
+                            <ul class="m-widget27__nav-items nav nav-pills nav-fill" role="tablist">
+
+                                <li class="m-widget27__nav-item nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#m_personal_income_quater_1">
+                                        Info
+                                    </a>
+                                </li>
+                                <li class="m-widget27__nav-item nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_2">
+                                        Contact
+                                    </a>
+                                </li>
+                                <li class="m-widget27__nav-item nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_3">
+                                        Office
+                                    </a>
+                                </li>
+                                <!-- <li class="m-widget27__nav-item nav-item">
                                                 <a class="nav-link" data-toggle="pill" href="#m_personal_income_quater_4" >
                                                     KRA
                                                 </a>
                                             </li> -->
-                                        </ul>
-                                        <div class="m-widget27__tab tab-content m-widget27--no-padding">
-                                            <div class="tab-pane active" id="m_personal_income_quater_1">
-                                                        <div class="row  align-items-center">
-                                                            <div class="col">
-                                                                <div class="m-widget27__legends">
-                                                                        <div class="m-widget27__legend">
-                                                                                <span class="m-widget27__legend-bullet fa" [ngClass]="{'fa-male':employee.personalDetails?.gender=='Male','fa-female':employee.personalDetails?.gender=='Female', 'fa-user':!employee.personalDetails?.gender}"></span>
-                                                                                <span class="m-widget27__legend-text">
-                                                                                    Gender : {{employee.personalDetails?.gender ? employee.personalDetails?.gender :'Not avaliable' }}
-                                                                                </span>
-                                                                            </div>
-                                                                            <div class="m-widget27__legend">
-                                                                                    <span class="m-widget27__legend-bullet fa fa-calendar"></span>
-                                                                                    <span class="m-widget27__legend-text">
-                                                                                        DOB: {{employee.personalDetails?.dob ? (employee.personalDetails?.dob | date:'dd-MMM-yyyy') : 'Not avaliable' }} {{employee.personalDetails?.dob ? ('(' +utilityService.getAge(employee?.personalDetails?.dob) +')') :''}}
-                                                                                    </span>
-                                                                                </div>
-                                                                  
-                                                                        
-                                                                    </div>
-                                                            </div>
-                                                        </div>
+                            </ul>
+                            <div class="m-widget27__tab tab-content m-widget27--no-padding">
+                                <div class="tab-pane active" id="m_personal_income_quater_1">
+                                    <div class="row  align-items-center">
+                                        <div class="col">
+                                            <div class="m-widget27__legends">
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa" [ngClass]="{'fa-male':employee.personalDetails?.gender=='Male','fa-female':employee.personalDetails?.gender=='Female', 'fa-user':!employee.personalDetails?.gender}"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        Gender : {{employee.personalDetails?.gender ?
+                                                        employee.personalDetails?.gender :'Not avaliable' }}
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa fa-calendar"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        DOB: {{employee.personalDetails?.dob ?
+                                                        (employee.personalDetails?.dob | date:'dd-MMM-yyyy') : 'Not
+                                                        avaliable' }} {{employee.personalDetails?.dob ? ('('
+                                                        +utilityService.getAge(employee?.personalDetails?.dob) +')')
+                                                        :''}}
+                                                    </span>
+                                                </div>
+
+
                                             </div>
-                                            <div class="tab-pane fade" id="m_personal_income_quater_2">
-                                                    <div class="row  align-items-center">
-                                                            <div class="col">
-                                                        
-                                                            <div class="m-widget27__legends">
-                                                                    <div class="m-widget27__legend">
-                                                                            <span class="m-widget27__legend-bullet fa fa-envelope"></span>
-                                                                            <span class="m-widget27__legend-text">
-                                                                              Personal: {{employee.personalDetails?.personalEmail}}
-                                                                            </span>
-                                                                </div>
-                                                                <div class="m-widget27__legend">
-                                                                        <span class="m-widget27__legend-bullet fa fa-envelope"></span>
-                                                                        <span class="m-widget27__legend-text">
-                                                                                Office: {{employee.officeDetails?.officeEmail ? employee.officeDetails?.officeEmail :'Not avaliable'}}
-                                                                        </span>
-                                                                    </div>
-                                                            <div class="m-widget27__legend">
-                                                                <span class="m-widget27__legend-bullet fa fa-phone"></span>
-                                                                <span class="m-widget27__legend-text">
-                                                                        Personal: {{employee.personalDetails?.personalMobileNumber ? ('(+880) ' + employee.personalDetails?.personalMobileNumber):'Not avaliable'}}
-                                                                </span>
-                                                            </div>
-                                                       
-                                                                
-                                                             
-                                                                <div class="m-widget27__legend">
-                                                                    <span class="m-widget27__legend-bullet fa fa-phone"></span>
-                                                                    <span class="m-widget27__legend-text">
-                                                                         Office: {{employee.officeDetails?.officeMobile ? ('(+880)' + employee.officeDetails?.officeMobile ) :'Not avaliable'}}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                       
-                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="m_personal_income_quater_2">
+                                    <div class="row  align-items-center">
+                                        <div class="col">
+
+                                            <div class="m-widget27__legends">
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        Personal: {{employee.personalDetails?.personalEmail}}
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa fa-envelope"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        Office: {{employee.officeDetails?.officeEmail ?
+                                                        employee.officeDetails?.officeEmail :'Not avaliable'}}
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa fa-phone"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        Personal: {{employee.personalDetails?.personalMobileNumber ?
+                                                        ('(+880) ' +
+                                                        employee.personalDetails?.personalMobileNumber):'Not
+                                                        avaliable'}}
+                                                    </span>
+                                                </div>
+
+
+
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet fa fa-phone"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        Office: {{employee.officeDetails?.officeMobile ? ('(+880)' +
+                                                        employee.officeDetails?.officeMobile ) :'Not avaliable'}}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div class="tab-pane fade" id="m_personal_income_quater_3">
-                                                    <div class="row  align-items-center">
-                                                            <div class="col">
-                                                                <div class="m-widget27__legends">
-                                                                        <!-- <div class="m-widget27__legend">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="m_personal_income_quater_3">
+                                    <div class="row  align-items-center">
+                                        <div class="col">
+                                            <div class="m-widget27__legends">
+                                                <!-- <div class="m-widget27__legend">
                                                                                 <span class="m-widget27__legend-bullet m--bg-info"></span>
                                                                                 <span class="m-widget27__legend-text">
                                                                                     <strong>Department - </strong> International Business
@@ -382,31 +415,32 @@
                                                                                         <strong>Grade - </strong> C
                                                                                     </span>
                                                                             </div> -->
-        
-                                                                        <!-- <div class="m-widget27__legend">
+
+                                                <!-- <div class="m-widget27__legend">
                                                                             <span class="m-widget27__legend-bullet m--bg-danger"></span>
                                                                             <span class="m-widget27__legend-text">
                                                                                 <strong>Reviewer - </strong> Gangadhar
                                                                             </span>
                                                                         </div> -->
-                                                                        <div class="m-widget27__legend">
-                                                                            <span class="m-widget27__legend-bullet m--bg-brand"></span>
-                                                                            <span class="m-widget27__legend-text">
-                                                                                <strong>Primary Supervisor - </strong> {{employee?.supervisorDetails?.fullName}}
-                                                                            </span>
-                                                                        </div>
-                                                                        <!-- <div class="m-widget27__legend">
+                                                <div class="m-widget27__legend">
+                                                    <span class="m-widget27__legend-bullet m--bg-brand"></span>
+                                                    <span class="m-widget27__legend-text">
+                                                        <strong>Primary Supervisor - </strong>
+                                                        {{employee?.supervisorDetails?.fullName}}
+                                                    </span>
+                                                </div>
+                                                <!-- <div class="m-widget27__legend">
                                                                                 <span class="m-widget27__legend-bullet m--bg-brand"></span>
                                                                                 <span class="m-widget27__legend-text">
                                                                                     <strong>Secondary Supervisor - </strong> Shaktimaan
                                                                                 </span>
                                                                             </div> -->
-                                                                    </div>
-                                                            </div>
-                                                            
-                                                    </div>
                                             </div>
-                                            <!-- <div class="tab-pane fade" id="m_personal_income_quater_4">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- <div class="tab-pane fade" id="m_personal_income_quater_4">
                                                     <div class="row  align-items-center">
                                                         <div class="col">
                                                             <div class="m-widget27__chart" id="m_chart_personal_income_quater_4" style="height: 160px">
@@ -439,131 +473,151 @@
                                                         </div>
                                                     </div>
                                             </div> -->
-                                        </div>
-                                    </div>
                             </div>
-                        </div>
-                    </div>
-        </div>
-        <div class="col-xl-4">
-                <div class="m-portlet m-portlet--full-height " id="documentsPortlet">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Documents
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="m-portlet__head-tools">
-                                <ul class="m-portlet__nav">
-                                    <li aria-expanded="true"  [class.m-dropdown--open]="docMouseOvered" (mouseout)="docMouseOvered=false" (mouseover)="docMouseOvered=true" class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push">
-                                        <a class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle" href="#" ng-reflect-href="#">
-                                            <i class="la la-ellipsis-h m--font-success"></i>
-                                        </a>
-                                        <div class="m-dropdown__wrapper" style="z-index: 101;">
-                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                            <div class="m-dropdown__inner">
-                                                <div class="m-dropdown__body">
-                                                    <div class="m-dropdown__content">
-                                                            <div class="m-list-timeline m-list-timeline--skin-light">
-                                                                    <div class="m-list-timeline__items"> 
-                                                                    <div class="m-list-timeline__item" >
-                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--secondary"></span>
-                                                                        <span class="m-list-timeline__text">
-                                                                               Not Assigned                                                      
-                                                                        </span>
-                                                                     </div>
-                                                            </div>
-                                                        </div>
-                                                            <div class="m-list-timeline m-list-timeline--skin-light">
-                                                                    <div class="m-list-timeline__items"> 
-                                                                    <div class="m-list-timeline__item" >
-                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                                                        <span class="m-list-timeline__text">
-                                                                                Not Uploaded                                                    
-                                                                        </span>
-                                                                     </div>
-                                                                    </div>
-                                                            </div>
-                                                            
-                                                            <div class="m-list-timeline m-list-timeline--skin-light">
-                                                                    <div class="m-list-timeline__items"> 
-                                                                    <div class="m-list-timeline__item" >
-                                                                        <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                                        <span class="m-list-timeline__text">
-                                                                               Uploaded                                                      
-                                                                        </span>
-                                                                     </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                    </div>
-                    <div class="m-portlet__body">
-                        <div class="tab-content">
-                            <div class="tab-pane active show" id="m_widget4_tab1_content">
-                                <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="400" data-scrollable="true" style="height: 400px; overflow: visible; max-height: 400px; position: relative;"><div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;"><div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
-                                    <div class="m-list-timeline m-list-timeline--skin-light">
-                                        <div class="m-list-timeline__items"> 
-                                        <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
-                                            <span class="m-list-timeline__badge " [ngClass]="{'m-list-timeline__badge--secondary':!doc._id, 'm-list-timeline__badge--success': doc.externalDocumentUrl,'m-list-timeline__badge--warning':doc._id && !doc.externalDocumentUrl}" ></span>
-                                            <span class="m-list-timeline__text">
-                                                    {{doc.documentName}}                                                       
-                                            </span>
-                                            <span class="m-list-timeline__time">
-                                                    <i *ngIf="doc.externalDocumentUrl" (click)="viewDocument(doc.externalDocumentUrl)" class="fa fa-eye"></i>
-                                                    <input type="checkbox" [checked]="doc.checked"  (change)="doc.checked = !doc.checked;setDocument(i);"  disabled="{{doc.externalDocumentUrl}}">
-                                            </span> 
-                                            <!-- <span class="m-list-timeline__time">
-                                            </span> -->
-                                         </div>
-                                        </div>
-                                    </div>
-                                </div></div><div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 231px; max-height: 380px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
-                            </div>
-                            <div class="tab-pane" id="m_widget4_tab2_content"></div>
-                            <div class="tab-pane" id="m_widget4_tab3_content"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="m-portlet m-portlet--full-height " id="documentsPortlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Documents
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li aria-expanded="true" [class.m-dropdown--open]="docMouseOvered" (mouseout)="docMouseOvered=false"
+                                (mouseover)="docMouseOvered=true" class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push">
+                                <a class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle"
+                                    href="#" ng-reflect-href="#">
+                                    <i class="la la-ellipsis-h m--font-success"></i>
+                                </a>
+                                <div class="m-dropdown__wrapper" style="z-index: 101;">
+                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                    <div class="m-dropdown__inner">
+                                        <div class="m-dropdown__body">
+                                            <div class="m-dropdown__content">
+                                                <div class="m-list-timeline m-list-timeline--skin-light">
+                                                    <div class="m-list-timeline__items">
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--secondary"></span>
+                                                            <span class="m-list-timeline__text">
+                                                                Not Assigned
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-list-timeline m-list-timeline--skin-light">
+                                                    <div class="m-list-timeline__items">
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                                            <span class="m-list-timeline__text">
+                                                                Not Uploaded
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-list-timeline m-list-timeline--skin-light">
+                                                    <div class="m-list-timeline__items">
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                            <span class="m-list-timeline__text">
+                                                                Uploaded
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="m_widget4_tab1_content">
+                            <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="400"
+                                data-scrollable="true" style="height: 400px; overflow: visible; max-height: 400px; position: relative;">
+                                <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside"
+                                    tabindex="0" style="max-height: none;">
+                                    <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+                                        dir="ltr">
+                                        <div class="m-list-timeline m-list-timeline--skin-light">
+                                            <div class="m-list-timeline__items">
+                                                <div class="m-list-timeline__item" *ngFor="let doc of documentData ;let i=index">
+                                                    <span class="m-list-timeline__badge " [ngClass]="{'m-list-timeline__badge--secondary':!doc._id, 'm-list-timeline__badge--success': doc.externalDocumentUrl,'m-list-timeline__badge--warning':doc._id && !doc.externalDocumentUrl}"></span>
+                                                    <span class="m-list-timeline__text">
+                                                        {{doc.documentName}}
+                                                    </span>
+                                                    <span class="m-list-timeline__time">
+                                                        <i *ngIf="doc.externalDocumentUrl" (click)="viewDocument(doc.externalDocumentUrl)"
+                                                            class="fa fa-eye"></i>
+                                                        <input type="checkbox" [checked]="doc.checked" (change)="doc.checked = !doc.checked;setDocument(i);"
+                                                            disabled="{{doc.externalDocumentUrl}}">
+                                                    </span>
+                                                    <!-- <span class="m-list-timeline__time">
+                                            </span> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical"
+                                    style="display: block;">
+                                    <div class="mCSB_draggerContainer">
+                                        <div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 231px; max-height: 380px; top: 0px;">
+                                            <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+                                        </div>
+                                        <div class="mCSB_draggerRail"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="m_widget4_tab2_content"></div>
+                        <div class="tab-pane" id="m_widget4_tab3_content"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xl-4">
             <div class="m-portlet m-portlet--head-overlay m-portlet--full-height m-portlet--rounded-force" id="configurationPortlet">
-                    <div class="m-portlet__body">
-                        <div class="m-widget28">
-                            <div class="m-widget28__pic m-portlet-fit--sides"></div>
-                            <div class="m-widget28__container">
-                                
-                                <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
-                                    <li class="m-widget28__nav-item nav-item">
-                                        <a class="nav-link active show" data-toggle="pill" href="#menu11" (click)="loadRole()">
-                                            <span>
-                                                <i class="fa flaticon-settings"></i>
-                                            </span>
-                                            <span>
-                                                Roles
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="m-widget28__nav-item nav-item">
-                                            <a class="nav-link" data-toggle="pill" href="#menu21" (click)="loadSupervisorTabData()">
-                                                <span>
-                                                    <i class="fa flaticon-users"></i>
-                                                </span>
-                                                <span>
-                                                    Supervisor
-                                                </span>
-                                            </a>
-                                        </li>
-                                        
-                                    <!-- <li class="m-widget28__nav-item nav-item">
+                <div class="m-portlet__body">
+                    <div class="m-widget28">
+                        <div class="m-widget28__pic m-portlet-fit--sides"></div>
+                        <div class="m-widget28__container">
+
+                            <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+                                <li class="m-widget28__nav-item nav-item">
+                                    <a class="nav-link active show" data-toggle="pill" href="#menu11" (click)="loadRole()">
+                                        <span>
+                                            <i class="fa flaticon-settings"></i>
+                                        </span>
+                                        <span>
+                                            Roles
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-widget28__nav-item nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#menu21" (click)="loadSupervisorTabData()">
+                                        <span>
+                                            <i class="fa flaticon-users"></i>
+                                        </span>
+                                        <span>
+                                            Supervisor
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <!-- <li class="m-widget28__nav-item nav-item">
                                         <a class="nav-link" data-toggle="pill" href="#menu31" >
                                             <span>
                                                 <i class="fa flaticon-clipboard"></i>
@@ -573,43 +627,45 @@
                                             </span>
                                         </a>
                                     </li> -->
-                                </ul>
-                                                 
-                                <div class="m-widget28__tab tab-content">
-                                    <div class="m-widget28__tab-container tab-pane active show" id="menu11">
-                                        <div class="m-widget28__tab-items">
-                                                <div class="m-widget28__tab-item" *ngFor="let role of rolesData ;let i=index">
-                                                        <span *ngIf="role.roleName=='Employee'">
-                                                            Default Role
-                                                        </span>
-                                                        <span>
-                                                                {{role.roleName}}
-                                                                <input class="pull-right" type="checkbox" [checked]="role.checked"  (change)="role.checked = !role.checked;setRole(i);"  [disabled]="role.roleName =='Employee'">
-                                                        </span>
-                                                    </div>
+                            </ul>
+
+                            <div class="m-widget28__tab tab-content">
+                                <div class="m-widget28__tab-container tab-pane active show" id="menu11">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item" *ngFor="let role of rolesData ;let i=index">
+                                            <span *ngIf="role.roleName=='Employee'">
+                                                Default Role
+                                            </span>
+                                            <span>
+                                                {{role.roleName}}
+                                                <input class="pull-right" type="checkbox" [checked]="role.checked"
+                                                    (change)="role.checked = !role.checked;setRole(i);" [disabled]="role.roleName =='Employee'">
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="m-widget28__tab-container tab-pane fade" id="menu21">
-                                        <div class="m-widget28__tab-items">
-                                        <form  (ngSubmit)="saveSupervisor()" #fsupervisor="ngForm">
+                                </div>
+                                <div class="m-widget28__tab-container tab-pane fade" id="menu21">
+                                    <div class="m-widget28__tab-items">
+                                        <form (ngSubmit)="saveSupervisor()" #fsupervisor="ngForm">
                                             <div class="m-widget28__tab-item">
                                                 <span>
                                                     Primary Supervisor
                                                 </span>
                                                 <span>
-                                                    <ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" [(ngModel)]="supervisor.primarySupervisorEmp_id" bindLabel="fullName" #primarySupervisorEmp="ngModel"  bindValue="_id" placeholder="Select supervisor" (change)="loadSecondarySupervisor();"  [clearable]="false" required>
-                                                                <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                </ng-template>
-                                                                <ng-template ng-option-tmp let-item="item" let-index="index">
-                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                </ng-template>
+                                                    <ng-select class="m-input m-input--air" name="primarySupervisorEmp"
+                                                        [items]="supervisorData" [(ngModel)]="supervisor.primarySupervisorEmp_id"
+                                                        bindLabel="fullName" #primarySupervisorEmp="ngModel" bindValue="_id"
+                                                        placeholder="Select supervisor" (change)="loadSecondarySupervisor();"
+                                                        [clearable]="false" disabled required>
+                                                        <ng-template ng-label-tmp let-item="item" let-index="index">
+                                                            {{item.fullName}} {{item.userName ? ('[' + item.userName
+                                                            +']'):''}}
+                                                        </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                            {{item.fullName}} {{item.userName ? ('[' + item.userName
+                                                            +']'):''}}
+                                                        </ng-template>
                                                     </ng-select>
-                                                    <div class="form-control-feedback has-danger" *ngIf="fsupervisor.submitted">
-                                                            <span *ngIf="primarySupervisorEmp.errors?.required">
-                                                                    This field is required.
-                                                            </span>    
-                                                    </div>
                                                 </span>
                                             </div>
                                             <div class="m-widget28__tab-item">
@@ -617,156 +673,32 @@
                                                     Secondary Supervisor
                                                 </span>
                                                 <span>
-                                                        <ng-select class="m-input m-input--air" name="secondarySupervisorEmp" [items]="secondarySupervisorData" [(ngModel)]="supervisor.secondarySupervisorEmp_id" bindLabel="fullName" #secondarySupervisorEmp="ngModel"   bindValue="_id" placeholder="Select secondary supervisor" (change)="loadLeaveSupervisor();"   [clearable]="false">
-                                                            <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                    {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                </ng-template>
-                                                                <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-                                                                     {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                </ng-template>
-                                                            </ng-select>
+                                                    <ng-select class="m-input m-input--air" name="secondarySupervisorEmp"
+                                                        [items]="secondarySupervisorData" [(ngModel)]="supervisor.secondarySupervisorEmp_id"
+                                                        bindLabel="fullName" #secondarySupervisorEmp="ngModel"
+                                                        bindValue="_id" placeholder="Select secondary supervisor"
+                                                        (change)="loadLeaveSupervisor();" [clearable]="false" disabled>
+                                                        <ng-template ng-label-tmp let-item="item" let-index="index">
+                                                            {{item.fullName}} {{item.userName ? ('[' + item.userName
+                                                            +']'):''}}
+                                                        </ng-template>
+                                                        <ng-template ng-option-tmp let-item="item" let-index="index"
+                                                            disabled>
+                                                            {{item.fullName}} {{item.userName ? ('[' + item.userName
+                                                            +']'):''}}
+                                                        </ng-template>
+                                                    </ng-select>
 
                                                 </span>
                                             </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    Leave Supervisor
-                                                </span>
-                                                <span>
-                                                        <ng-select class="m-input m-input--air" name="leaveSupervisorEmp" [items]="leaveSupervisorData" [(ngModel)]="supervisor.leaveSupervisorEmp_id" bindLabel="fullName"  bindValue="_id" #leaveSupervisorEmp="ngModel" placeholder="Select leave supervisor" dropdownPosition="top"  [clearable]="false" [required]="supervisor.secondarySupervisorEmp_id">
-                                                                <ng-template ng-label-tmp let-item="item" let-index="index">
-                                                                         {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                    </ng-template>
-                                                                    <ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-                                                                         {{item.fullName}} {{item.userName ? ('[' + item.userName +']'):''}}
-                                                                    </ng-template>
-                                                        </ng-select>
-                                                        <div class="form-control-feedback has-danger" *ngIf="fsupervisor.submitted">
-                                                                <span *ngIf="leaveSupervisorEmp.errors?.required">
-                                                                        This field is required.
-                                                                </span>    
-                                                        </div>
-                                                </span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <button type="submit" class="btn btn-success">Save</button>
-                                            </div>
-                                           </form>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="m-widget28__tab-container tab-pane fade" id="menu31">
-                                        <div class="m-widget28__tab-items">
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    Total Charges
-                                                </span>
-                                                <span>
-                                                    USD 3,450.000
-                                                </span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    Project Description
-                                                </span>
-                                                <span>
-                                                    Creating Back-end Components
-                                                </span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    Company Name
-                                                </span>
-                                                <span>
-                                                    SLT Back-end Solutions
-                                                </span>
-                                            </div>
-                                            <div class="m-widget28__tab-item">
-                                                <span>
-                                                    INE Number
-                                                </span>
-                                                <span>
-                                                    D510-7431562548
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-            </div> 
-        </div>
-        <!-- <div class="col-xl-4">
-			
-                <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
-                    <div class="m-portlet__body">
-                        <div class="m-widget17">
-                            <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-                                <div class="m-widget17__chart" style="height:340px; padding-left: 30px; padding-right:30px; margin-bottom:20px;  text-align: center">
-                                    <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
-                                        <ng-template #noImage>
-                                        <img src="./assets/app/media/img/custom/users/user6.jpg" class="m--img-rounded" style="max-width: 80px; max-height: 80px; margin-top: 15px">
-                                    </ng-template>
-                                    <h4 class="m--font-light" style="padding-top: 15px;">Owais Rizwi</h4> 
-                                    <h6 class="m--font-light">Employee ID : 1010004</h6> 
-                                    <h6 class="m--font-light">Marketing Manager</h6> 
-                            </div>
-                            </div>
-                            <div class="m-widget17__stats">
-                                <div class="m-widget17__items m-widget17__items-col1">
-                                    <div class="m-widget17__item">
-                                        <span class="m-widget17__icon">
-                                            <i class="flaticon-truck m--font-brand"></i>
-                                        </span>
-                                        <span class="m-widget17__subtitle">
-                                            Delivered
-                                        </span>
-                                        <span class="m-widget17__desc">
-                                            15 New Paskages
-                                        </span>
-                                    </div>
-                                    <div class="m-widget17__item">
-                                        <span class="m-widget17__icon">
-                                            <i class="flaticon-paper-plane m--font-info"></i>
-                                        </span>
-                                        <span class="m-widget17__subtitle">
-                                            Reporeted
-                                        </span>
-                                        <span class="m-widget17__desc">
-                                            72 Support Cases
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="m-widget17__items m-widget17__items-col2">
-                                    <div class="m-widget17__item">
-                                        <span class="m-widget17__icon">
-                                            <i class="flaticon-pie-chart m--font-success"></i>
-                                        </span>
-                                        <span class="m-widget17__subtitle">
-                                            Ordered
-                                        </span>
-                                        <span class="m-widget17__desc">
-                                            72 New Items
-                                        </span>
-                                    </div>
-                                    <div class="m-widget17__item">
-                                        <span class="m-widget17__icon">
-                                            <i class="flaticon-time m--font-danger"></i>
-                                        </span>
-                                        <span class="m-widget17__subtitle">
-                                            Arrived
-                                        </span>
-                                        <span class="m-widget17__desc">
-                                            34 Upgraded Boxes
-                                        </span>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-        </div> -->
+            </div>
+        </div>
     </div>
 </div>
