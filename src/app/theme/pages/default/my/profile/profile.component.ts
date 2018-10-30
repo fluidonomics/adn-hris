@@ -467,7 +467,7 @@ export class ProfileComponent implements OnInit {
 
     checkEmailExists(_element, oldValue) {
         if (_element.valid) {          
-            if(_element.value.search("adsl.net")!=-1){
+            if(_element.value.search("adnsl.net")!=-1){
                 _element.control.setErrors({ "pattern": true })
             }else{
                 _element.control.setErrors({ "pattern": false })
