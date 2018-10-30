@@ -103,7 +103,16 @@
 											<div class="m-form__group form-group">
 												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.primarySupervisorEmp_id"
-												 #primarySuervisor="ngModel" [clearable]="false" required></ng-select>
+												 #primarySuervisor="ngModel" [clearable]="false" required>
+													<ng-template ng-label-tmp let-item="item" let-index="index">
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
 													<span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>
 												</div>
@@ -112,17 +121,22 @@
 										<div class="col-md-2 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1" style="text-align:left;">Secondary Supervisor</label>
-												<span class="required" aria-required="true">* </span>
 											</div>
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
 												<ng-select class="m-input m-input--air" name="companyName" [items]="supervisorData" bindLabel="fullName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"
-												 #seconderySuervisor="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="!seconderySuervisor.valid">
-													<span *ngIf="transferForm.submitted && !seconderySuervisor.valid">This field is required.</span>
-												</div>
+												 #seconderySuervisor="ngModel" [clearable]="true">
+													<ng-template ng-label-tmp let-item="item" let-index="index">
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+												</ng-select>
 											</div>
 										</div>
 									</div>
