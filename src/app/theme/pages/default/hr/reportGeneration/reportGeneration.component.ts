@@ -182,33 +182,16 @@ export class ReportGenerationComponent implements OnInit {
 
     onDownload(){
        
-            /* this._hrService.getKRAReport().subscribe(
+            this._hrService.getKRAReport().subscribe(
                 res => {
                     this.kraReport = res;
+                    console.log(this.kraReport);
+
+                    var mediaType = 'text/csv';
+                    var blob = new Blob([this.kraReport['_body']], { type: mediaType });
+                    FileSaver.saveAs(blob, "kraReport.csv"); 
                 },
                 error => {
-                });     */
-                
-            this._hrService.getKRAReport().subscribe((response) => {
-
-                this.downloadFile(response)
-
-                console.log(response);
-
-                /* var mediaType = 'text/csv';
-                var blob = new Blob([response['_body']], { type: mediaType });
-                FileSaver.saveAs(blob); */
-            }, err => {
-
-            });
-
-
+                });     
     }
-
-    downloadFile(data: Response){
-        var blob = new Blob([data['_body']], { type: 'text/csv' });
-        var url= window.URL.createObjectURL(blob);
-        window.open(url);
-        FileSaver.saveAs(blob);
-    } 
 }

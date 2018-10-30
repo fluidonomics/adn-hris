@@ -27,15 +27,18 @@ export class HrService {
     }
 
     getKRAReport(){
-        let headers = new Headers();
-        headers.append('Accept', 'application/csv');
+        /* let headers = new Headers();
+        headers.append('Accept', 'text/csv');
         let url = "kra/getKRA_Report";
-        return this.authService.get(url, { headers: headers, responseType: ResponseContentType.Blob }).map(this.extractData).catch(this.handleError);
+        return this.authService.get(url, { headers: headers, responseType: ResponseContentType.Blob }).map(this.extractData).catch(this.handleError); */
 
         /* let headers = new Headers();
         headers.append('Accept', 'application/pdf'); 
         let url = this.CONTENT_API_BASE + fileUrl;
         return this._http.get(url, { headers: headers, responseType: ResponseContentType.Blob }).catch(this.handleError); */
+
+        let url = "kra/getKRA_Report";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
 
