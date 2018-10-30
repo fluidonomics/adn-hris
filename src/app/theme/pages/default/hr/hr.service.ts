@@ -1,5 +1,5 @@
 import { Injectable, } from "@angular/core";
-import { Headers, Http, RequestOptions, Response } from "@angular/http";
+import { Headers, Http, RequestOptions, Response, ResponseContentType } from "@angular/http";
 import { environment } from '../../../../../environments/environment'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -24,6 +24,18 @@ export class HrService {
     loadDivision() {
         let url = "master/getAllDivision";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKRAReport(){
+        let headers = new Headers();
+        headers.append('Accept', 'application/csv');
+        let url = "kra/getKRA_Report";
+        return this.authService.get(url, { headers: headers, responseType: ResponseContentType.Blob }).map(this.extractData).catch(this.handleError);
+
+        /* let headers = new Headers();
+        headers.append('Accept', 'application/pdf'); 
+        let url = this.CONTENT_API_BASE + fileUrl;
+        return this._http.get(url, { headers: headers, responseType: ResponseContentType.Blob }).catch(this.handleError); */
     }
 
 

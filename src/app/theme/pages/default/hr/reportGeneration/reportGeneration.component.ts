@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from "../../../../../base/_services/common.service";
 import { HrService } from '../hr.service';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--reports",
@@ -17,6 +18,7 @@ export class ReportGenerationComponent implements OnInit {
     gradeData: any = [];
     employeesData: any = [];
     statusData: any = [];
+    kraReport: any = [];
 
     isTrue: boolean = false;
 
@@ -177,4 +179,36 @@ export class ReportGenerationComponent implements OnInit {
             });
         }
     }
+
+    onDownload(){
+       
+            /* this._hrService.getKRAReport().subscribe(
+                res => {
+                    this.kraReport = res;
+                },
+                error => {
+                });     */
+                
+            this._hrService.getKRAReport().subscribe((response) => {
+
+                this.downloadFile(response)
+
+                console.log(response);
+
+                /* var mediaType = 'text/csv';
+                var blob = new Blob([response['_body']], { type: mediaType });
+                FileSaver.saveAs(blob); */
+            }, err => {
+
+            });
+
+
+    }
+
+    downloadFile(data: Response){
+        var blob = new Blob([data['_body']], { type: 'text/csv' });
+        var url= window.URL.createObjectURL(blob);
+        window.open(url);
+        FileSaver.saveAs(blob);
+    } 
 }
