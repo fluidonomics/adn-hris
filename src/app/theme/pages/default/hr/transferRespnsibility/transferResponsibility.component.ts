@@ -52,7 +52,6 @@ export class TransferResponsibilityComponent implements OnInit {
                     let data = res.json().data || [];
                     if (data.length > 0) {
                         this.employeesData = data || [];
-
                     }
                     else {
                         this.employeesData = data.json().data || [];
@@ -63,7 +62,10 @@ export class TransferResponsibilityComponent implements OnInit {
     }
     employeeSelected(selectedEmpId) {
         this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
-        this.supervisorData = this.employeesData.filter(obj => obj._id != selectedEmpId);
+        debugger;
+        this.supervisorData = this.employeesData.filter(obj => {
+            return obj._id != selectedEmpId && obj.grade_id == this.selectedEmployee.grade_id;
+        });
         this.getEmployeeDetails(selectedEmpId);
     }
     getEmployeeDetails(selectedEmpId) {
@@ -71,7 +73,7 @@ export class TransferResponsibilityComponent implements OnInit {
             .subscribe(
                 res => {
                     if (res.ok) {
-                        let details = res.json().data[0] || {};                        
+                        let details = res.json().data[0] || {};
                         if (details.supervisorDetails.secondarySupervisorDetails) {
                             this.secondarySuperviserDetails = details.supervisorDetails.secondarySupervisorDetails
                         } else {
@@ -94,8 +96,8 @@ export class TransferResponsibilityComponent implements OnInit {
     onTransferSubmit(form) {
         if (form.valid) {
             console.log(this.request);
-            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {                
-                if(data.ok){
+            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                if (data.ok) {
                     swal({
                         title: 'Responsibility transferred',
                         text: "",
@@ -105,7 +107,7 @@ export class TransferResponsibilityComponent implements OnInit {
                         showConfirmButton: false,
                         timer: 1000
                     }).then((result) => {
-                        form.resetForm();                       
+                        form.resetForm();
                     });
                 }
             });

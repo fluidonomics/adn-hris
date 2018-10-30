@@ -30,7 +30,16 @@
 											<div class="m-form__group form-group">
 												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="fullName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.emp_id" #selectedemployee="ngModel"
-												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required></ng-select>
+												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required>
+													<ng-template ng-label-tmp let-item="item" let-index="index">
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+														{{item.fullName}} {{item.userName ? ('[' + item.userName
+														+']'):''}}
+													</ng-template>
+												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!selectedemployee.valid">
 													<span *ngIf="transferForm.submitted && !selectedemployee.valid">This field is required.</span>
 												</div>
