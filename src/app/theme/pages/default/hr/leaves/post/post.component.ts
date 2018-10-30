@@ -110,6 +110,10 @@ export class PostComponent implements OnInit {
     InitValues() {
         this.leaveapplication.days = null;
         this.leaveapplication.balance = null;
+        this.leaveapplication.leaveType=null;
+        this.leaveapplication.reason="";
+        this.leaveapplication.fromDate = "";
+        this.leaveapplication.toDate = "";
         this.getLeaveBalance();
         this.fromDateValidation = {
             isValid: true,
@@ -258,10 +262,12 @@ export class PostComponent implements OnInit {
             this.isMaternity = true;
             this.leaveapplication.fromDate = "";
             this.leaveapplication.toDate = "";
+           this.leaveapplication.reason="";
         } else {
             this.isMaternity = false;
             this.leaveapplication.fromDate = null;
             this.leaveapplication.toDate = null;
+            this.leaveapplication.reason="";
         }
     }
 
