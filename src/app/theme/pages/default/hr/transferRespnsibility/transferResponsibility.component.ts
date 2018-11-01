@@ -84,15 +84,16 @@ export class TransferResponsibilityComponent implements OnInit {
 
                         if (details.supervisorDetails.secondarySupervisorDetails) {
                             this.seconderySupervisor = details.supervisorDetails.secondarySupervisorDetails.fullName +" ["+details.supervisorDetails.secondarySupervisorDetails.userName+"]";
+                            this.request.secondarySupervisorEmp_id = details.supervisorDetails.secondarySupervisorDetails._id;
                         } else {
                             this.seconderySupervisor = "";
                         }
                         if (details.supervisorDetails.primarySupervisorDetails) {
                             this.primarySupervisor = details.supervisorDetails.primarySupervisorDetails.fullName +" ["+details.supervisorDetails.primarySupervisorDetails.userName+"]";
+                            this.request.primarySupervisorEmp_id = details.supervisorDetails.primarySupervisorDetails._id;
                         } else {
                             this.primarySupervisor = "";
                         }
-
                     }
                 },
                 error => {
