@@ -102,7 +102,7 @@
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
 												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"
-												 bindValue="_id" placeholder="Select Employee"  (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)" [(ngModel)]="request.primarySupervisorEmp_id"
+												 bindValue="_id" placeholder="Select Employee" (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)" [(ngModel)]="request.primarySupervisorEmp_id"
 												 #primarySuervisor="ngModel" [clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														{{item.fullName}} {{item.userName ? ('[' + item.userName
