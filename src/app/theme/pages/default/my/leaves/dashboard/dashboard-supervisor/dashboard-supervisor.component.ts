@@ -38,6 +38,7 @@ export class DashboardSupervisorComponent implements OnInit {
     isSpin: boolean = false;
     currentFinancialYear: string;
     fiscalYearId: string;
+    isSelectedEmployeeOnProbation=false;
 
     overviewChartData: any = [];
     overviewChartDataFilter: any = {
@@ -294,6 +295,9 @@ export class DashboardSupervisorComponent implements OnInit {
 
         // let text = 'Leave during probabtion are not encouraged until unless its an emergency case';
         let text = '';
+        if(this.isSelectedEmployeeOnProbation){
+            text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+        }
         swal({
             title: 'Are you sure?',
             text: text,
@@ -363,6 +367,7 @@ export class DashboardSupervisorComponent implements OnInit {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
+                                    this.getEmployeeProbationDetails(this.leaveDetails.leave.emp_id);
                                     let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
                                     this.leaveDetails.leave.balance = balance.leaveBalance;
                                 }
@@ -375,6 +380,16 @@ export class DashboardSupervisorComponent implements OnInit {
         });
     }
 
+    getEmployeeProbationDetails(emp_id) {
+        this.leaveService.getEmployeeProbationDetails(emp_id).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                if (data) {
+                    this.isSelectedEmployeeOnProbation = data.result || false;
+                }
+            }
+        });
+    }
     viewAttachement(leave) {
         // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
         this.leaveService.getAttachement(leave._id);
