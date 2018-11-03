@@ -42,7 +42,7 @@ export class AllEmployeeReviewer implements OnInit {
             if (res.ok) {
                 this.employees = res.json() || [];
                 this.employees = this.employees.data.sort((a, b) => b._id - a._id);
-                this.employees = this.employees.filter(a => a.kra.status == 'Submitted')
+                this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
                 console.log(this.employees);
             }
         })

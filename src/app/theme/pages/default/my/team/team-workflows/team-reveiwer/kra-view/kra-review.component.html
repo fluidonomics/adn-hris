@@ -6,7 +6,7 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Approve KRAs
+                                Review KRA
                                 <small>
                                 </small>
                             </h3>
@@ -49,7 +49,7 @@
                                             <th>
                                                 Weightage
                                             </th>
-                                            <th class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                            <th class="text-center" style="width: 70px;">
                                                 Action
                                             </th>
                                         </tr>
@@ -75,7 +75,7 @@
                                                     placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id"
                                                     [clearable]="false" #kraWeightage="ngModel" disabled></ng-select>
                                             </td>
-                                            <td class="text-center" *ngIf="!isDisabled" style="width: 70px;">
+                                            <td class="text-center"  style="width: 70px;">
                                                 <span>
                                                     <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                                         title="KRA Detail" (click)="showKraDetail(i, $event)">
@@ -281,12 +281,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button disabled *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                    class="btn btn-success" (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
-                                <button disabled *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                    class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')" type="button">Send
-                                    Back</button>
-                                <button disabled class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
+                                <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>
                         </div>
                     </div>
