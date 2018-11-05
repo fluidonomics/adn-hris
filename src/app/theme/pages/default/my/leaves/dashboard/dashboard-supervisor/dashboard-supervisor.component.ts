@@ -38,6 +38,7 @@ export class DashboardSupervisorComponent implements OnInit {
     isSpin: boolean = false;
     currentFinancialYear: string;
     fiscalYearId: string;
+    applyToR: string;
 
     overviewChartData: any = [];
     overviewChartDataFilter: any = {
@@ -92,13 +93,14 @@ export class DashboardSupervisorComponent implements OnInit {
                 this.modalLeaveId = p.leave_id;
             }
         });
-        this.authService.validateToken().subscribe(res => {
-            this.currentUser = this.authService.currentUserData;
-            this.getFinancialYearDetails();
-            if (this.showModal) {
-                this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, true);
-            }
-        });
+        this.authService.validateToken().subscribe(
+            res => {
+                this.currentUser = this.authService.currentUserData;
+                this.getFinancialYearDetails();
+                if (this.showModal) {
+                    this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, true);
+                }
+            });
     }
     getFinancialYearDetails() {
         this.commonService.getFinancialYear().subscribe(
@@ -338,6 +340,7 @@ export class DashboardSupervisorComponent implements OnInit {
     btnApproveText: string = 'Approve Leave';
     btnRejectText: string = 'Reject Leave';
     showLeaveModalActionTools: boolean = true;
+
     showLeaveDetail(leaveId, templateRef, showActionTools) {
         this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
@@ -345,11 +348,38 @@ export class DashboardSupervisorComponent implements OnInit {
         this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
             if (res.ok) {
                 let body = res.json();
+                this.commonService.getEmployeeRoles(body.data[0].applyTo).subscribe(d => {
+                    let applyToRole = d.json();
+                    this.applyToR = applyToRole.data[0].roleName;
+                }) 
+
                 if (body.data[0]) {
-                    if(this.currentUser._id !== body.data[0].applyTo){
+                    if(this.currentUser._id !== body.data[0].applyTo) {
                         return;
                     }
-
+                    else if(this.applyToR == "HR"){
+                        this.leaveDetails.leave = body.data[0];
+                        if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
+                            this.btnApproveText = 'Approve';
+                            this.btnRejectText = 'Reject';
+                        } else {
+                            this.btnApproveText = 'Approve Leave';
+                            this.btnRejectText = 'Reject Leave';
+                        }
+                        if (this.leaveDetails.leave.emp_id) {
+                            this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                                if (res.ok) {
+                                    let balances = res.json() || [];
+                                    if (balances.length > 0) {
+                                        let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
+                                        this.leaveDetails.leave.balance = balance.leaveBalance;
+                                    }
+                                }
+                            })
+                        }
+                        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
+                    }
+                    
                     this.leaveDetails.leave = body.data[0];
                     if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
                         this.btnApproveText = 'Approve';
