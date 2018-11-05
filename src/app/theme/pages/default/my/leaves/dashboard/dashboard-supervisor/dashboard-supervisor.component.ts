@@ -357,7 +357,7 @@ export class DashboardSupervisorComponent implements OnInit {
                     if(this.currentUser._id !== body.data[0].applyTo) {
                         return;
                     }
-                    else if(this.applyToR == "HR"){
+                    else if(this.applyToR == "HR") {
                         this.leaveDetails.leave = body.data[0];
                         if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
                             this.btnApproveText = 'Approve';
@@ -379,27 +379,28 @@ export class DashboardSupervisorComponent implements OnInit {
                         }
                         this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                     }
-                    
-                    this.leaveDetails.leave = body.data[0];
-                    if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
-                        this.btnApproveText = 'Approve';
-                        this.btnRejectText = 'Reject';
-                    } else {
-                        this.btnApproveText = 'Approve Leave';
-                        this.btnRejectText = 'Reject Leave';
-                    }
-                    if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
-                            if (res.ok) {
-                                let balances = res.json() || [];
-                                if (balances.length > 0) {
-                                    let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
-                                    this.leaveDetails.leave.balance = balance.leaveBalance;
+                    else {
+                        this.leaveDetails.leave = body.data[0];
+                        if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
+                            this.btnApproveText = 'Approve';
+                            this.btnRejectText = 'Reject';
+                        } else {
+                            this.btnApproveText = 'Approve Leave';
+                            this.btnRejectText = 'Reject Leave';
+                        }
+                        if (this.leaveDetails.leave.emp_id) {
+                            this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                                if (res.ok) {
+                                    let balances = res.json() || [];
+                                    if (balances.length > 0) {
+                                        let balance = balances.filter(b => { return b.leaveTypeId == this.leaveDetails.leave.leave_type })[0];
+                                        this.leaveDetails.leave.balance = balance.leaveBalance;
+                                    }
                                 }
-                            }
-                        })
+                            })
+                        }
+                        this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                     }
-                    this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                 }
             }
         });
