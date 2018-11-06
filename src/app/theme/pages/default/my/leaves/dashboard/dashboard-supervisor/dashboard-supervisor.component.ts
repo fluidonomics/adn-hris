@@ -39,7 +39,6 @@ export class DashboardSupervisorComponent implements OnInit {
     isSpin: boolean = false;
     currentFinancialYear: string;
     fiscalYearId: string;
-    applyToR: string;
 
     overviewChartData: any = [];
     overviewChartDataFilter: any = {
@@ -343,18 +342,21 @@ export class DashboardSupervisorComponent implements OnInit {
     showLeaveModalActionTools: boolean = true;
 
     showLeaveDetail(leaveId, templateRef, showActionTools) {
+        debugger;
         this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
 
         this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
             if (res.ok) {
+                debugger;
                 let body = res.json();
-                this.commonService.getEmployeeRoles(body.data[0].applyTo).subscribe(d => {
+                this.commonService.getEmployeeRoles(body.data[0].applyTo).subscribe(d =>  {
+                    debugger;
                     let applyToRole = d.json();
-                    this.applyToR = applyToRole.data[0].roleName;
+                    let applyToR = applyToRole.data.find(d => d.roleName == "HR");
 
                     if (body.data[0]) {
-                        if(this.currentUser._id == body.data[0].applyTo || this.applyToR == "HR") {
+                        if(this.currentUser._id == body.data[0].applyTo || applyToR["roleName"] == "HR") {
                             this.leaveDetails.leave = body.data[0];
                             if (this.leaveDetails.leave.status == LeaveStatus.PendingCancellation || this.leaveDetails.leave.status == LeaveStatus.PendingWithdrawal) {
                                 this.btnApproveText = 'Approve';
