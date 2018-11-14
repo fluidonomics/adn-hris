@@ -371,18 +371,21 @@ export class AddEmployeeComponent implements OnInit {
 
     checkEmailExists(_element) {
         if (_element.valid) {
-            if (!this._commonService.checkPersonalEmail(_element)) {
-                this._commonService.checkEmailExists(_element.value, -1)
-                    .subscribe(
-                        data => {
-                            if (data.json())
-                                _element.control.setErrors({ "emailExists": true })
-                        },
-                        error => {
-                            _element.control.setErrors(null)
-                        });
-
+            if(this.addemp.managementType_id!="2"){
+                if (!this._commonService.checkPersonalEmail(_element)) {
+                    this._commonService.checkEmailExists(_element.value, -1)
+                        .subscribe(
+                            data => {
+                                if (data.json())
+                                    _element.control.setErrors({ "emailExists": true })
+                            },
+                            error => {
+                                _element.control.setErrors(null)
+                            });
+    
+                }
             }
+            
         }
     }
 
