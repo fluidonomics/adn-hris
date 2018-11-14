@@ -157,6 +157,7 @@ export class ProfileEditComponent implements OnInit {
 
     initData() {
         this.loadProcessInfoDetails();
+        this.loadOfficeDetails();
         switch (this.tabName) {
             case "personal":
                 this.loadPersonal();
@@ -488,17 +489,20 @@ export class ProfileEditComponent implements OnInit {
                 _element.control.setErrors(null)
             }
             else {
-                if (_element.name != "officeEmailId" && !this._commonService.checkPersonalEmail(_element)) {
-                    this._commonService.checkEmailExists(_element.value, this._currentEmpId)
-                        .subscribe(
-                            data => {
-                                if (data.json())
-                                    _element.control.setErrors({ "emailExists": true })
-                            },
-                            error => {
-                                _element.control.setErrors(null)
-                            });
+                if(this.officeInfo.managementTypeId!="2"){
+                    if (_element.name != "officeEmailId" && !this._commonService.checkPersonalEmail(_element)) {
+                        this._commonService.checkEmailExists(_element.value, this._currentEmpId)
+                            .subscribe(
+                                data => {
+                                    if (data.json())
+                                        _element.control.setErrors({ "emailExists": true })
+                                },
+                                error => {
+                                    _element.control.setErrors(null)
+                                });
+                    }
                 }
+                
             }
         }
     }
