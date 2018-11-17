@@ -1641,7 +1641,7 @@
                                                             <label for="officeEmailId">Office Email ID
                                                                 <span class="required" aria-required="true"> * </span>
                                                             </label>
-                                                            <input [(ngModel)]="officeInfo.officeEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #officeEmail="ngModel" (blur)="checkEmailExists(officeEmail,savedOfficeEmailId)"
+                                                            <input [(ngModel)]="officeInfo.officeEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #officeEmail="ngModel" (blur)="checkOfficeEmailExists(officeEmail,savedOfficeEmailId)"
                                                                 placeholder="Enter office email id" name="officeEmailId" type="text"
                                                                 class="form-control m-input m-input--air" required [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             <div class="form-control-feedback has-danger">
