@@ -489,9 +489,9 @@ export class ProfileEditComponent implements OnInit {
                 _element.control.setErrors(null)
             }
             else {
-                if(this.officeInfo.managementTypeId!="2"){
+                if(_element.value.toUpperCase()!="HRIS@ADNSL.NET"){
                     if (_element.name != "officeEmailId" && !this._commonService.checkPersonalEmail(_element)) {
-                        this._commonService.checkEmailExists(_element.value, this._currentEmpId)
+                        this._commonService.checkEmailExists(_element.value, this.param_emp_id)
                             .subscribe(
                                 data => {
                                     if (data.json())
@@ -506,6 +506,26 @@ export class ProfileEditComponent implements OnInit {
             }
         }
     }
+    checkOfficeEmailExists(_element, oldValue) {
+        if (_element.valid) {
+            if (oldValue && oldValue == _element.value) {
+                _element.control.setErrors(null)
+            }
+            else {                
+                    debugger;
+                this._commonService.checkEmailExists(_element.value, this.param_emp_id)
+                    .subscribe(
+                        data => {
+                            if (data.json())
+                                _element.control.setErrors({ "emailExists": true })
+                        },
+                        error => {
+                            _element.control.setErrors(null)
+                        });                
+            }
+                
+        }
+    }    
 
     //save Address Info
     saveAddressInfo() {

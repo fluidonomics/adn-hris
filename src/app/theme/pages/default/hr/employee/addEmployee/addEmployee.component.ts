@@ -370,8 +370,8 @@ export class AddEmployeeComponent implements OnInit {
     }
 
     checkEmailExists(_element) {
-        if (_element.valid) {
-            if(this.addemp.managementType_id!="2"){
+        if (_element.valid) {            
+            if(_element.value.toUpperCase()!="HRIS@ADNSL.NET"){
                 if (!this._commonService.checkPersonalEmail(_element)) {
                     this._commonService.checkEmailExists(_element.value, -1)
                         .subscribe(
