@@ -59,7 +59,7 @@ export class LeaveService {
 
     getTeamLeaves(supervisorId: number, fromDate: number, toDate?: number, status?: string) {
         // +"year=" + year +
-        let url = "leave/getSupervisorTeamMember?empId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
+        let url = "leave/getTeamOnLeave?empId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (status) {
             url += "&status=" + status;
         }
@@ -98,7 +98,6 @@ export class LeaveService {
     }
 
     getSupervisorTeamMember(supervisorId) {
-        // localhost:3000/api/leave/getSupervisorTeamMember?empId=3
         let url = "leave/getSupervisorTeamMember?empId=" + supervisorId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
