@@ -172,6 +172,15 @@
 					</span>
 				</a>
 			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+			 data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1">
+				<a routerLink="/hr/leave" class="m-menu__link m-menu__toggle">
+					<i class="m-menu__link-icon fa fa-calendar-plus-o"></i>
+					<span class="m-menu__link-text">
+						Quota Provider
+					</span>
+				</a>
+			</li>
 			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 || authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1">
 				<h4 class="m-menu__section-text">
 					Team
