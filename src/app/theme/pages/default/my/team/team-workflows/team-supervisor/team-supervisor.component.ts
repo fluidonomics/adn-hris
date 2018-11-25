@@ -35,7 +35,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(
-            res => {
+            res => {              
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.loadAllEmployee();
             });
@@ -55,8 +55,16 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved");
                         this.employeeData = profileData || [];
                         this._utilityService.hideLoader("#employeeApproval");
+                        this._myteamService.getKraForApproval(this._currentEmpId).subscribe(
+                            resApproval=>{
+                                debugger;
+                                this.loadKraData(resApproval.json().data);
+                            },
+                            error=>{
 
-                        this.loadKraData(res.json().data);
+                            }
+                        )   
+                        //this.loadKraData(res.json().data);
 
                         //    for (var i = 0; i < data.length; i++) { 
                         //             if(data[i].kraWorkflow)
@@ -95,22 +103,22 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     
                 });
     }
+    
 
     loadKraData(data: any) {
+        debugger;
         let __this = this;
-        data = data.filter(obj => obj.supervisor_id == this._currentEmpId || obj.secondarySupervisor_id == this._currentEmpId);
+        //data = data.filter(obj => obj.supervisor_id == this._currentEmpId || obj.secondarySupervisor_id == this._currentEmpId);
         data.forEach(function (element) {
-            if (element.kraWorkflow) {
-                element.kraWorkflow.filter(obj => obj.status == "Submitted").map(kra => {
-                    kra.fullName = element.fullName;
-                    kra.profileImage = element.profileImage;
-                    __this.kraData.push(kra);
-                })
-                element.kraWorkflow.filter(obj => obj.status == "Approved").map(kra => {
-                    kra.fullName = element.fullName;
-                    kra.profileImage = element.profileImage;
-                    __this.kraDataView.push(kra);
-                })
+            if (element) {
+               if(element.status == "Submitted") {                  
+                    element.fullName=element.emp_name;                    
+                    __this.kraData.push(element);
+                }
+                else if(element.status == "Approved"){
+                    element.fullName=element.emp_name;                   
+                    __this.kraDataView.push(element);
+                }                          
             }
         });
         this._utilityService.hideLoader("#kraApproval");
