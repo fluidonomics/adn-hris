@@ -64,8 +64,7 @@ export class TransferResponsibilityComponent implements OnInit {
                 });
     }
     employeeSelected(selectedEmpId) {
-        this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
-        debugger;
+        this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];       
         this._commonService.getSupervisor(this.selectedEmployee.grade_id).subscribe(res => {
             this.supervisorData = res.json() || [];
            this.secondarySupervisorData=res.json()|| [];
@@ -87,12 +86,14 @@ export class TransferResponsibilityComponent implements OnInit {
                             this.request.secondarySupervisorEmp_id = details.supervisorDetails.secondarySupervisorDetails._id;
                         } else {
                             this.seconderySupervisor = "";
+                            this.request.secondarySupervisorEmp_id=null;
                         }
                         if (details.supervisorDetails.primarySupervisorDetails) {
                             this.primarySupervisor = details.supervisorDetails.primarySupervisorDetails.fullName +" ["+details.supervisorDetails.primarySupervisorDetails.userName+"]";
                             this.request.primarySupervisorEmp_id = details.supervisorDetails.primarySupervisorDetails._id;
                         } else {
                             this.primarySupervisor = "";
+                            this.request.primarySupervisorEmp_id=null;
                         }
                     }
                 },

@@ -128,7 +128,28 @@ export class MyKraComponent {
                 this.isDisabled = status == "Initiated" || status == "SendBack" ? false : true;
                 if (this.kraInfoData.length == 0) {
                     this.addKraHtml();
+                   
                 }
+                else{
+                    if(this.kraInfoData[0].supervisor_id){
+                        this._commonService.getEmployee(this.kraInfoData[0].supervisor_id).subscribe(
+                            res=>{                            
+                                this.supervisorData=[];
+                                let supervisorInfoData=res.json()||{};                        
+                                this.supervisorData.push(supervisorInfoData);
+                            },error=>{
+    
+                            })
+                    }
+                    else{
+                        debugger;
+                        this.kraInfoData.forEach(element => {
+                            element.supervisor_id=this.supervisorData[0]._id;
+                        });                        
+                    }
+                    
+                }
+                
                 //this.addDummyRow((7 - this.kraInfoData.length));
             },
             error => {
