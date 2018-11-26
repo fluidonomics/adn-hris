@@ -7,6 +7,7 @@ import { MyTeamService } from '../../../my-team.service';
 import { environment } from "../../../../../../../../../environments/environment";
 import swal from 'sweetalert2';
 import { MyService } from "../../../../my.service";
+import { KraService } from '../../../../workflows/kra/kra.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class AllEmployeeReviewer implements OnInit {
         private route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
+        private kraService: KraService
     ) {
     }
     employees: any = [];
@@ -31,18 +33,19 @@ export class AllEmployeeReviewer implements OnInit {
         page: 1
     };
     ngOnInit() {
-        this.getallemployees();
+        this.getKraForReviewer();
         this.imageBase = environment.content_api_base.apiBase;
     }
     goToKRAView(id: any, empid: any) {
         this.router.navigate(['/my/team/workflows/kra-review/' + id + '/' + empid]);
     }
-    getallemployees() {
-        this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
+
+    getKraForReviewer() {
+        this.kraService.getKraForReviewer(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
                 this.employees = res.json() || [];
                 this.employees = this.employees.data.sort((a, b) => b._id - a._id);
-                this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
+                this.employees = this.employees.filter(a => a.status == 'Submitted' || a.status == 'Approved')
                 console.log(this.employees);
             }
         })

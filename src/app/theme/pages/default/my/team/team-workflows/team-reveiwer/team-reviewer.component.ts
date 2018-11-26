@@ -6,6 +6,7 @@ import { CommonService } from "../../../../../../../base/_services/common.servic
 import { MyService } from "../../../my.service";
 import { environment } from "../../../../../../../../environments/environment";
 import { tree } from 'd3';
+import { KraService } from '../../../workflows/kra/kra.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -20,6 +21,7 @@ export class MyTeamReviewerComponent implements OnInit {
         private route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
+        private kraService: KraService
     ) {
     }
     employees: any = [];
@@ -40,24 +42,21 @@ export class MyTeamReviewerComponent implements OnInit {
     }
     getallemployees() {
         this.utilityService.showLoader("#employeeList");
-        this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if (res.ok) {               
+        this.kraService.getKraForReviewer(this.authService.currentUserData._id).subscribe(res => {
+            if (res.ok) {
                 this.utilityService.hideLoader("#employeeList");
-                this.employees = res.json() || [];               
-                this.employees = this.employees.data.sort((a, b) =>  {                     
-                    if(moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return 1;
-                    else if(!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return -1;
-                    else return 0;                 
-                });               
-                this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
-               
+                this.employees = res.json() || [];
+                this.employees = this.employees.data.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+                this.employees = this.employees.filter(a => a.status == 'Submitted' || a.status == 'Approved')
             }
         })
-
     }
 
-    goToKraReview(employee) {
-        let kra = employee.kra;
+    goToKraReview(kra) {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
 }

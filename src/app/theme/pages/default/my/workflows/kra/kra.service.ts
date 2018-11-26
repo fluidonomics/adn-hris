@@ -42,6 +42,11 @@ export class KraService {
         return this.authService.delete(url).map(this.extractData).catch(this.handleError);
     }
 
+    getKraForReviewer(supervisorId?: number): Observable<Response> {
+        let url = "kra/getKraForReviewer?supervisorId=" + supervisorId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }
