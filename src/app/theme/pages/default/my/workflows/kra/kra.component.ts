@@ -131,22 +131,29 @@ export class MyKraComponent {
                    
                 }
                 else{
-                    if(this.kraInfoData[0].supervisor_id){
-                        this._commonService.getEmployee(this.kraInfoData[0].supervisor_id).subscribe(
-                            res=>{                            
-                                this.supervisorData=[];
-                                let supervisorInfoData=res.json()||{};                        
-                                this.supervisorData.push(supervisorInfoData);
-                            },error=>{
-    
-                            })
+                    for (let index = 0; index < this.kraInfoData.length; index++) {                       
+                        if(this.kraInfoData[index].supervisor_id){
+                           let supervisorinfo=this.supervisorData.filter(x=> x._id==this.kraInfoData[index].supervisor_id);
+                           if(supervisorinfo.length==0){
+                            this._commonService.getEmployee(this.kraInfoData[index].supervisor_id).subscribe(
+                                res=>{                            
+                                    this.supervisorData=[];
+                                    let supervisorInfoData=res.json()||{};                        
+                                    this.supervisorData.push(supervisorInfoData);
+                                },error=>{
+        
+                                })
+                           }
+                            
+                        }
+                        else{  
+                            this.kraInfoData[index].supervisor_id  =this.supervisorData[0]._id;                  
+                            // this.kraInfoData.forEach(element => {
+                            //     element.supervisor_id=this.supervisorData[0]._id;
+                            // });                        
+                        }
                     }
-                    else{
-                        debugger;
-                        this.kraInfoData.forEach(element => {
-                            element.supervisor_id=this.supervisorData[0]._id;
-                        });                        
-                    }
+                   
                     
                 }
                 

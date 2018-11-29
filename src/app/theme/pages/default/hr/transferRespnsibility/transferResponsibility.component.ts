@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonService } from "../../../../../base/_services/common.service";
 import { HrService } from "../hr.service";
 import { UtilityService } from '../../../../../base/_services/utilityService.service';
+import { AuthService } from "../../../../../base/_services/authService.service";
 
 declare var $
 declare var mApp;
@@ -36,12 +37,15 @@ export class TransferResponsibilityComponent implements OnInit {
         private _commonService: CommonService,
         private _hrService: HrService,
         public utilityService: UtilityService,
+        public _authService: AuthService,
     ) {
 
     }
 
     ngOnInit() {
+        this._currentEmpId = this._authService.currentUserData._id;
         this.initDropdown();
+        
     }
 
     //Filled Init Dropdown 
@@ -111,36 +115,69 @@ export class TransferResponsibilityComponent implements OnInit {
     onTransferSubmit(form) {
         if (form.valid) {
             console.log(this.request);
-            this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
-                if (data.ok) {
-                    let status = data.json() || false;
-                    if (status) {
-                        swal({
-                            title: 'Supervisor Revision Successful',
-                            text: "",
-                            type: 'success',
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            showConfirmButton: false,
-                            timer: 1000
-                        }).then((result) => {
-                            form.resetForm();
-                        });
-                    } else {
-                        swal({
-                            title: '',
-                            text: "Supervisor Revision Failed",
-                            type: 'warning',
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            showConfirmButton: false,
-                            timer: 1000
-                        }).then((result) => {
-                            form.resetForm();
+            
+            let titletxt="Supervisor Transfer";
+            let bodytxt="Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
+            if(this.request.change_type!= "tranfser"){
+                titletxt="Supervisor Corection";
+                bodytxt="Supervisor correction will change Approval authority from previous transactions(Leaves,KRA) as well Preffered for New Employees only."
+            }
+            swal({
+                title: titletxt,
+                text: bodytxt,
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                swal({
+                    title: 'Are you sure?',
+                    text: "Do you want continue?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#9a9caf',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.value) {
+                        this.request.user_id=this._currentEmpId;
+                        this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                            if (data.ok) {
+                                let status = data.json() || false;
+                                if (status) {
+                                    swal({
+                                        title: 'Supervisor Revision Successful',
+                                        text: "",
+                                        type: 'success',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    }).then((result) => {
+                                        form.resetForm();
+                                    });
+                                } else {
+                                    swal({
+                                        title: '',
+                                        text: "Supervisor Revision Failed",
+                                        type: 'warning',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    }).then((result) => {
+                                        form.resetForm();
+                                    });
+                                }
+                            }
                         });
                     }
-                }
+                });
             });
+
+            
+
+            
         }
     }
 
