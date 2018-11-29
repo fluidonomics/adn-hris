@@ -115,10 +115,16 @@ export class TransferResponsibilityComponent implements OnInit {
     onTransferSubmit(form) {
         if (form.valid) {
             console.log(this.request);
-
+            
+            let titletxt="Supervisor Transfer";
+            let bodytxt="Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
+            if(this.request.change_type!= "tranfser"){
+                titletxt="Supervisor Corection";
+                bodytxt="Supervisor correction will change Approval authority from previous transactions(Leaves,KRA) as well Preffered for New Employees only."
+            }
             swal({
-                title: 'Supervisor Revision',
-                text: 'Content',
+                title: titletxt,
+                text: bodytxt,
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',
