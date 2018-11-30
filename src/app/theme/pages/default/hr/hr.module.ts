@@ -30,6 +30,10 @@ import { DirectoryComponent } from './directory/directory.component';
 import { HrService } from './hr.service';
 
 import { HrGuard } from '../../../../base/_guard/hr.guard';
+import { LeaveService } from '../my/leaves/leave.service';
+import { PostComponent } from './leaves/post/post.component';
+import { NgUploaderModule } from 'ngx-uploader';
+import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 
 @NgModule({
     imports: [
@@ -42,6 +46,8 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         NgxPaginationModule,
         TagInputModule,
         BaseModule,
+        NgUploaderModule,
+        HttpClientModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot()
     ], declarations: [
@@ -57,9 +63,10 @@ import { HrGuard } from '../../../../base/_guard/hr.guard';
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
+        PostComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard]
+    providers: [HrService, HrGuard,LeaveService]
 })
 export class HrModule {
 }

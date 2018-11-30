@@ -1,0 +1,193 @@
+<div class="m-content">	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text flaticon-user-add">
+								Leave Application
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="tab-content">
+						<div class="tab-pane active show" id="applyLeavePanel" role="tabpanel">
+							<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onLeaveAppSubmit(fleaveapplication)" id="fleaveapplication"
+							 #fleaveapplication="ngForm">
+								<div class="form-body">
+									<div class="row">
+											<div class="col-md-6  adn-form__group">
+													<div class="m-form__group form-group">
+															<span class="required" aria-required="true"> * </span>
+														<label for="form_control_1">Employee</label>
+														<ng-select #allemployee="ngModel" 
+														id="allemployee" class="m-input m-input--air" 
+														name="allemployee" [items]="employeesData"  
+														bindLabel="fullName"  bindValue="_id" 
+														placeholder="Select Employee" [(ngModel)]="leaveapplication.emp_id"  (ngModelChange)="onChangedEmployee()"  [clearable]="false" required>
+														<ng-template ng-label-tmp let-item="item" let-index="index">
+															{{item.fullName}} {{item.userName ? ('[' + item.userName
+															+']'):''}}
+														</ng-template>
+														<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
+															{{item.fullName}} {{item.userName ? ('[' + item.userName
+															+']'):''}}
+														</ng-template>
+													
+													
+													</ng-select>
+														<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !allemployee.valid">
+																This field is required.
+															</div>
+													</div>
+												</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Leave Type</label>
+												<span class="required" aria-required="true"> * </span>
+												<ng-select #ddLeaveType class="m-input m-input--air" name="leaveType" bindValue="_id" bindLabel="type" [items]="leaveTypesDetails"
+												 [(ngModel)]="leaveapplication.leaveType" id="leavetype" #leavetype="ngModel" placeholder="Select Leave Type"
+												 (ngModelChange)="onChangeLeaveType()" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !leavetype.valid">
+													This field is required.
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">From Date</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" class="form-control m-input m-input--air" name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
+												 placeholder="Select From Date" [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true"
+												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="isMaternity" [minDate]="leaveapplication.fYear?.startDate"
+												 id="fromDate" required>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
+													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This field is required.</span>
+													<!--<span *ngIf="fleaveapplication.submitted && !fromDateValidation.isValid">{{fromDateValidation.msg}}</span>-->
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">To Date</label>
+												<span class="required" aria-required="true">* </span>
+												<input type="text" class="form-control m-input m-input--air" name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
+												 placeholder="Select To Date" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate"
+												 [(ngModel)]="leaveapplication.toDate" [minDate]="leaveapplication.fromDate" [maxDate]="leaveapplication.fYear?.endDate"
+												 [disabled]="isMaternity" #toDate="ngModel" required>
+												<div class="form-control-feedback has-danger" *ngIf="!toDate.valid && leavetype.valid">
+													<span *ngIf="fleaveapplication.submitted && !toDate.valid">This field is required.</span>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Days</label>
+												<span class="pl1r">{{leaveapplication.days}}</span>
+												<span class="pl1r">
+													<button class="btn btn-success" type="button" (click)="processSandwich()">Calculate Days</button>
+												</span>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid && !isLeaveCalculated">
+													<span *ngIf="!areDaysValid">Please Calculate Days</span>
+												</div>
+												<div class="form-control-feedback has-danger" *ngIf="!isSandwichValid">
+													<span *ngIf="!areDaysValid">{{daysValidationMsg}}</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Balance</label>
+												<span class="pl1r">{{leaveapplication.balance}}</span>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
+													<span *ngIf="!isBalanceValid">Not enough balance</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6 adn-form__group">
+											<div class="form-group m-form__group">
+												<label for="form_control_1">Approving Authority</label>
+												<span class="pl1r">{{primarySupervisor?.fullName}}</span>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
+													<span *ngIf="!supervisorPresent">Supervisor Required</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Reason</label>
+												<span class="required" aria-required="true"> * </span>
+												<textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" placeholder="Reason" [(ngModel)]="leaveapplication.reason"
+												 #reason="ngModel" required></textarea>
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !reason.valid && leavetype.valid">
+													This field is required.
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<!-- <div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">Contact Detail</label>
+												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="1" placeholder="Contact Details"
+												 [(ngModel)]="leaveapplication.contactDetail" name="contactDetail" #contactDetail="ngModel"></textarea>
+											</div>
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<label for="form_control_1">CC To</label>
+												<ng-select class="m-input m-input--air" name="ccTo" [items]="emailDetails" [(ngModel)]="leaveapplication.ccTo" #ccTo="ngModel"
+												 placeholder="Select CC To" bindLabel="personalEmail" bindValue="personalEmail" multiple="true" [clearable]="false"></ng-select>
+											</div>
+										</div> -->
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group attachment">
+												<label for="form_control_1">Attachment (max. size 300kb)</label>
+												<span class="required" aria-required="true" *ngIf="isAttachmentAdded"> * </span>
+												<span class="fileName" *ngIf="leaveapplication.attachmentName">{{leaveapplication?.attachmentName}}
+													<i class="fa fa-times" (click)="clearAttachment()"></i>
+												</span>
+												<label class="btn btn-default browse">
+													Browse
+													<input type="file" accept="application/pdf" hidden="hidden" name="attachment" #documentsPdf ngFileSelect [options]="options"
+													 (uploadOutput)="onUploadOutput($event, document.documentName)" [uploadInput]="uploadInput" (click)="documentsPdf.click()" required>
+													<!-- <input type="file" name="attachment" (change)="onFilePick($event)" value="Upload Document" /> -->
+												</label>
+												<!-- <span>max size 300kb</span> -->
+												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && isAttachmentRequired && !isAttachmentAdded">
+													<span *ngIf="!isAttachmentAdded">This field is required.</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-actions">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="m-form__actions">
+												<button class="btn btn-success submitForm" type="submit" id="submitForm">Apply</button>
+												<button class="btn btn-secondary" (click)="fleaveapplication.resetForm();InitValues();" type="button">Clear</button>
+												<button class="btn btn-secondary" (click)="goToDashboard();" type="button">Go Back</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

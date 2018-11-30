@@ -7,6 +7,7 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 import { UtilityService } from '../../../../../base/_services/utilityService.service';
 import { AuthService } from "../../../../../base/_services/authService.service";
 import { HrService } from '../hr.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -23,12 +24,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     profileStatusPercentage:any={
 
     }
+   
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
     meta: Meta, title: Title,
     private _script: ScriptLoaderService,
     private utilityService: UtilityService,
     private _hrService: HrService,
+    private router: Router,
     public _authService: AuthService,
     
 ) {
@@ -118,6 +121,10 @@ downloadProfileCsv() {
      }
      this.utilityService.saveAsCSV(csv.join("\n"),"Profile_Report")
     
+}
+
+gotoPostLeave(){
+    this.router.navigate(["./hr/post/leave"]);
 }
 
 }
