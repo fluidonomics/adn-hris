@@ -484,7 +484,7 @@ export class ProfileViewComponent implements OnInit {
             });
     }
 
-    checkEmailExists(_element,oldValue) {
+    checkEmailExists(_element,oldValue) {     
         if (_element.valid) {
             if(oldValue && oldValue ==_element.value)
             {
@@ -492,7 +492,7 @@ export class ProfileViewComponent implements OnInit {
             }
             else
             {
-                this._commonService.checkEmailExists(_element.value)
+                this._commonService.checkEmailExists(_element.value,this._currentEmpId)
                     .subscribe(
                     data => {
                         if (data.json())

@@ -112,11 +112,11 @@ export class ProfileEditComponent implements OnInit {
         isSupervisorSendBack: false
     }
 
-    savedPersonalEmailId:string;
-    savedOfficeEmailId:string;
-    imageBase:string;
+    savedPersonalEmailId: string;
+    savedOfficeEmailId: string;
+    imageBase: string;
 
-    constructor( @Inject(PLATFORM_ID) private platformId: Object,
+    constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
@@ -134,7 +134,7 @@ export class ProfileEditComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
-        this.imageBase= environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
     }
 
     ngOnInit() {
@@ -157,6 +157,7 @@ export class ProfileEditComponent implements OnInit {
 
     initData() {
         this.loadProcessInfoDetails();
+        this.loadOfficeDetails();
         switch (this.tabName) {
             case "personal":
                 this.loadPersonal();
@@ -235,7 +236,7 @@ export class ProfileEditComponent implements OnInit {
     showSpin() {
         var that = this;
         that.isSpin = true;
-        setTimeout(function() {
+        setTimeout(function () {
             that.isSpin = false;
         }, 500);
     }
@@ -344,14 +345,14 @@ export class ProfileEditComponent implements OnInit {
     loadProcessInfoDetails() {
         this._myService.getProfileProcessInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                if (data.ok) {
-                    this.profileProcess = data.json();
-                }
-            },
-            error => {
+                data => {
+                    if (data.ok) {
+                        this.profileProcess = data.json();
+                    }
+                },
+                error => {
 
-            });
+                });
     }
 
     //save Personal Info
@@ -363,31 +364,31 @@ export class ProfileEditComponent implements OnInit {
         }
         this._myService.saveProfileStatus(this.profileProcess)
             .subscribe(
-            data => {
-                this.profileProcess = data.json() || {}
-                if (isSendBack) {
-                    swal({
-                        type: 'success',
-                        title: 'Send Back!',
-                        titleText: "Profile sent back successfully to employee.",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then((result) => {
-                        this._router.navigate(['my/profile-edit'], { queryParams: { id: this.param_emp_id, tabName: 'office' } })
-                    });
-                }
-                else {
-                    swal({
-                        type: 'success',
-                        title: 'Submit!',
-                        titleText: "Profile submitted successfully to Supervisor.",
-                    });
-                }
-            },
-            error => {
-            });
+                data => {
+                    this.profileProcess = data.json() || {}
+                    if (isSendBack) {
+                        swal({
+                            type: 'success',
+                            title: 'Send Back!',
+                            titleText: "Profile sent back successfully to employee.",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then((result) => {
+                            this._router.navigate(['my/profile-edit'], { queryParams: { id: this.param_emp_id, tabName: 'office' } })
+                        });
+                    }
+                    else {
+                        swal({
+                            type: 'success',
+                            title: 'Submit!',
+                            titleText: "Profile submitted successfully to Supervisor.",
+                        });
+                    }
+                },
+                error => {
+                });
     }
 
 
@@ -395,45 +396,45 @@ export class ProfileEditComponent implements OnInit {
     loadTabStatus(status: string, isSendBack?: boolean) {
         this._commonService.getTabStatus(this.param_emp_id)
             .subscribe(
-            data => {
-                let tabData = data.json();
-                if (isSendBack) {
-                    this.saveProfileStatus(status, isSendBack);
-                }
-                else {
-                    if (tabData.isPersonalInfo
-                        && tabData.isAddress
-                        && tabData.isDocuments
-                        //&& tabData.isAcademicInfo
-                        //&& tabData.isCertificate
-                        //&& tabData.isEmployment
-                        && tabData.isFamilyInfo
-                        && tabData.isOffice
-                        //&& tabData.isBankInfo
-                        && tabData.isSalaryInfo
-                        //&& tabData.isCarInfo
-                    ) {
-                        swal({
-                            title: 'Are you sure?',
-                            text: "Do you want to submit profile to Supervisor?",
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#66BB6A',
-                            cancelButtonColor: '#9a9caf',
-                            confirmButtonText: 'Submit'
-                        }).then((result) => {
-                            if (result.value) {
-                                this.saveProfileStatus(status);
-                            }
-                        });
+                data => {
+                    let tabData = data.json();
+                    if (isSendBack) {
+                        this.saveProfileStatus(status, isSendBack);
                     }
-                    else
-                        swal({ type: 'error', title: 'Oops!', titleText: "It seems you haven't filled mandatory tabs.", });
-                }
-            },
-            error => {
-                swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
-            });
+                    else {
+                        if (tabData.isPersonalInfo
+                            && tabData.isAddress
+                            && tabData.isDocuments
+                            //&& tabData.isAcademicInfo
+                            //&& tabData.isCertificate
+                            //&& tabData.isEmployment
+                            && tabData.isFamilyInfo
+                            && tabData.isOffice
+                            //&& tabData.isBankInfo
+                            && tabData.isSalaryInfo
+                            //&& tabData.isCarInfo
+                        ) {
+                            swal({
+                                title: 'Are you sure?',
+                                text: "Do you want to submit profile to Supervisor?",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#66BB6A',
+                                cancelButtonColor: '#9a9caf',
+                                confirmButtonText: 'Submit'
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.saveProfileStatus(status);
+                                }
+                            });
+                        }
+                        else
+                            swal({ type: 'error', title: 'Oops!', titleText: "It seems you haven't filled mandatory tabs.", });
+                    }
+                },
+                error => {
+                    swal({ type: 'error', title: 'Error!', titleText: error.json().error.message, });
+                });
     }
 
     //save Personal Info
@@ -470,38 +471,61 @@ export class ProfileEditComponent implements OnInit {
         });
         this._myService.savePersonalInfo(this.personalInfo)
             .subscribe(
-            data => {
-                mApp.unblock('#m_accordion_5_item_1_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.personalInfo = data.json() || {};
-                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
-                this.savedPersonalEmailId= this.personalInfo.personalEmail;
-            },
-            error => {
-                mApp.unblock('#m_accordion_5_item_1_body');
-            });
+                data => {
+                    mApp.unblock('#m_accordion_5_item_1_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.personalInfo = data.json() || {};
+                    this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
+                    this.savedPersonalEmailId = this.personalInfo.personalEmail;
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_1_body');
+                });
     }
 
-    checkEmailExists(_element,oldValue) {
+    checkEmailExists(_element, oldValue) {
         if (_element.valid) {
-            if(oldValue && oldValue ==_element.value)
-            {
+            if (oldValue && oldValue == _element.value) {
                 _element.control.setErrors(null)
             }
-            else
-            {
-                this._commonService.checkEmailExists(_element.value)
-                    .subscribe(
-                    data => {
-                        if (data.json())
-                            _element.control.setErrors({ "emailExists": true })
-                    },
-                    error => {
-                        _element.control.setErrors(null)
-                });
+            else {
+                if(_element.value.toUpperCase()!="HRIS@ADNSL.NET"){
+                    if (_element.name != "officeEmailId" && !this._commonService.checkPersonalEmail(_element)) {
+                        this._commonService.checkEmailExists(_element.value, this.param_emp_id)
+                            .subscribe(
+                                data => {
+                                    if (data.json())
+                                        _element.control.setErrors({ "emailExists": true })
+                                },
+                                error => {
+                                    _element.control.setErrors(null)
+                                });
+                    }
+                }
+                
             }
         }
     }
+    checkOfficeEmailExists(_element, oldValue) {
+        if (_element.valid) {
+            if (oldValue && oldValue == _element.value) {
+                _element.control.setErrors(null)
+            }
+            else {                
+                    debugger;
+                this._commonService.checkEmailExists(_element.value, this.param_emp_id)
+                    .subscribe(
+                        data => {
+                            if (data.json())
+                                _element.control.setErrors({ "emailExists": true })
+                        },
+                        error => {
+                            _element.control.setErrors(null)
+                        });                
+            }
+                
+        }
+    }    
 
     //save Address Info
     saveAddressInfo() {
@@ -511,13 +535,13 @@ export class ProfileEditComponent implements OnInit {
         this.address.emp_id = this.address.emp_id != null ? this.address.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveAddressInfo(this.address)
             .subscribe(
-            data => {
-                // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.address = data.json() || {};
-            },
-            error => {
-            });
+                data => {
+                    // swal({type: 'success',title: 'Saved',text:'Successfully',showConfirmButton: false,timer: 800})
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.address = data.json() || {};
+                },
+                error => {
+                });
     }
 
     saveDocumentsInfo() {
@@ -530,14 +554,14 @@ export class ProfileEditComponent implements OnInit {
         });
         this._myService.saveDocumentsInfo(this.documents)
             .subscribe(
-            data => {
-                mApp.unblock('#m_accordion_5_item_9_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.documents = data.json() || {};
-            },
-            error => {
-                mApp.unblock('#m_accordion_5_item_9_body');
-            });
+                data => {
+                    mApp.unblock('#m_accordion_5_item_9_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.documents = data.json() || {};
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_9_body');
+                });
 
     }
 
@@ -552,29 +576,29 @@ export class ProfileEditComponent implements OnInit {
         objAcademicInfo.emp_id = objAcademicInfo.emp_id != null ? objAcademicInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveAcademicInfo(objAcademicInfo)
             .subscribe(
-            data => {
-                mApp.unblock('#m_accordion_5_item_10_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.academicInfo[index] = data.json();
-                if (this.academicInfo[index].levelOfEducation_id) {
-                    this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id, index, "init");
-                }
-            },
-            error => {
-                mApp.unblock('#m_accordion_5_item_10_body');
-            });
+                data => {
+                    mApp.unblock('#m_accordion_5_item_10_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.academicInfo[index] = data.json();
+                    if (this.academicInfo[index].levelOfEducation_id) {
+                        this.loadExamDegreeTitle(this.academicInfo[index].levelOfEducation_id, index, "init");
+                    }
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_10_body');
+                });
     }
     //save CertificationAndTraningInfo Info
     saveCertificationandTrainingInfo(objCertification: any, index: number) {
         objCertification.emp_id = objCertification.emp_id != null ? objCertification.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveCertificationInfo(objCertification)
             .subscribe(
-            data => {
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.certificationsandTrainingInfo[index] = data.json();
-            },
-            error => {
-            });
+                data => {
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.certificationsandTrainingInfo[index] = data.json();
+                },
+                error => {
+                });
     }
 
     //save EmploymentDetils Info
@@ -582,14 +606,14 @@ export class ProfileEditComponent implements OnInit {
         objPerviousEmployment.emp_id = objPerviousEmployment.emp_id != null ? objPerviousEmployment.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePreviousEmploymentInfo(objPerviousEmployment)
             .subscribe(
-            data => {
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.previousEmploymentDetails[index] = data.json();
-                this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : this.previousEmploymentDetails[index].employmentPeriodFrom;
-                this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : this.previousEmploymentDetails[index].employmentPeriodTo;
-            },
-            error => {
-            });
+                data => {
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.previousEmploymentDetails[index] = data.json();
+                    this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : this.previousEmploymentDetails[index].employmentPeriodFrom;
+                    this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : this.previousEmploymentDetails[index].employmentPeriodTo;
+                },
+                error => {
+                });
 
     }
     //save Family Info
@@ -605,41 +629,41 @@ export class ProfileEditComponent implements OnInit {
         objFamily.emp_id = objFamily.emp_id != null ? objFamily.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveFamilyInfo(objFamily)
             .subscribe(
-            data => {
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.familyInfo[index] = data.json();
-                this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : this.familyInfo[index].dateOfBirth;
-            },
-            error => {
-            });
+                data => {
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.familyInfo[index] = data.json();
+                    this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : this.familyInfo[index].dateOfBirth;
+                },
+                error => {
+                });
     }
     //save Office Info
     saveOfficeInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveOfficeInfo(this.officeInfo)
             .subscribe(
-            data => {
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.officeInfo = data.json();
-                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
-                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
-                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
-                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
-            },
-            error => {
-            });
+                data => {
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.officeInfo = data.json();
+                    this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                    this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                    this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                    this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
+                },
+                error => {
+                });
     }
     //save Office Info
     savePositionInfo() {
         this.officeInfo.emp_id = this.officeInfo.emp_id != null ? this.officeInfo.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.savePositionInfo(this.positionDetails)
             .subscribe(
-            data => {
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.positionDetails = data.json();
-            },
-            error => {
-            });
+                data => {
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.positionDetails = data.json();
+                },
+                error => {
+                });
     }
     //save Bank Info
     saveBankDetails() {
@@ -652,61 +676,61 @@ export class ProfileEditComponent implements OnInit {
         this.bankDetails.emp_id = this.bankDetails.emp_id != null ? this.bankDetails.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveBankDetails(this.bankDetails)
             .subscribe(
-            data => {
-                mApp.unblock('#m_accordion_5_item_16_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.bankDetails = data.json();
-            },
-            error => {
-                mApp.unblock('#m_accordion_5_item_16_body');
-            });
+                data => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.bankDetails = data.json();
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
+                });
     }
     //save Salary Info
     saveSalaryDetails() {
         this.salaryDetails.emp_id = this.salaryDetails.emp_id != null ? this.salaryDetails.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveSalaryDetails(this.salaryDetails)
             .subscribe(
-            data => {
-                // mApp.unblock('#m_accordion_5_item_1_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.salaryDetails = data.json();
-            },
-            error => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+                data => {
+                    // mApp.unblock('#m_accordion_5_item_1_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.salaryDetails = data.json();
+                },
+                error => {
+                    //mApp.unblock('#m_accordion_5_item_1_body');
+                });
     }
     //save Car Details
     saveCarDetails() {
         this.carDetails.emp_id = this.carDetails.emp_id != null ? this.carDetails.emp_id : (this._currentEmpId || this.param_emp_id)
         this._myService.saveCarDetails(this.carDetails)
             .subscribe(
-            data => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.carDetails = data.json();
-                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
-            },
-            error => {
-                this.carDetails = {};;
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+                data => {
+                    //mApp.unblock('#m_accordion_5_item_1_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.carDetails = data.json();
+                    this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                    this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                    this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                    this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
+                },
+                error => {
+                    this.carDetails = {};;
+                    //mApp.unblock('#m_accordion_5_item_1_body');
+                });
     }
 
     savePerformanceRatingInfo() {
         this._myService.savePerformanceRatingInfo(this.performanceDiary)
             .subscribe(
-            data => {
-                //mApp.unblock('#m_accordion_5_item_1_body');
-                swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                this.performanceDiary = data.json();
-            },
-            error => {
-                this.performanceDiary = [];
-                //mApp.unblock('#m_accordion_5_item_1_body');
-            });
+                data => {
+                    //mApp.unblock('#m_accordion_5_item_1_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.performanceDiary = data.json();
+                },
+                error => {
+                    this.performanceDiary = [];
+                    //mApp.unblock('#m_accordion_5_item_1_body');
+                });
     }
 
     //save Seperation Info
@@ -733,14 +757,14 @@ export class ProfileEditComponent implements OnInit {
             if (result.value) {
                 this._myService.deleteAcademicInfo(academicInfo_id)
                     .subscribe(
-                    data => {
-                        if (data.ok) {
-                            this.removeHtmlContain("academicInfo", academicInfo_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+                        data => {
+                            if (data.ok) {
+                                this.removeHtmlContain("academicInfo", academicInfo_id);
+                            }
+                        },
+                        error => {
+                            //mApp.unblock('#m_accordion_5_item_1_body');
+                        });
             }
         })
 
@@ -759,15 +783,15 @@ export class ProfileEditComponent implements OnInit {
             if (result.value) {
                 this._myService.deletePreviousEmploymentInfo(previousEmployment_id)
                     .subscribe(
-                    data => {
-                        if (data.ok) {
-                            swal("Deleted", "Successfully", "success");
-                            this.removeHtmlContain("employment", previousEmployment_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+                        data => {
+                            if (data.ok) {
+                                swal("Deleted", "Successfully", "success");
+                                this.removeHtmlContain("employment", previousEmployment_id);
+                            }
+                        },
+                        error => {
+                            //mApp.unblock('#m_accordion_5_item_1_body');
+                        });
             }
         })
     }
@@ -785,15 +809,15 @@ export class ProfileEditComponent implements OnInit {
             if (result.value) {
                 this._myService.deleteFamilyInfo(family_id)
                     .subscribe(
-                    data => {
-                        if (data.ok) {
-                            swal("Deleted", "Successfully", "success");
-                            this.removeHtmlContain("family", family_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+                        data => {
+                            if (data.ok) {
+                                swal("Deleted", "Successfully", "success");
+                                this.removeHtmlContain("family", family_id);
+                            }
+                        },
+                        error => {
+                            //mApp.unblock('#m_accordion_5_item_1_body');
+                        });
             }
         })
     }
@@ -812,15 +836,15 @@ export class ProfileEditComponent implements OnInit {
             if (result.value) {
                 this._myService.deleteCertificationInfo(certification_id)
                     .subscribe(
-                    data => {
-                        if (data.ok) {
-                            swal("Deleted", "Successfully", "success");
-                            this.removeHtmlContain("certification", certification_id);
-                        }
-                    },
-                    error => {
-                        //mApp.unblock('#m_accordion_5_item_1_body');
-                    });
+                        data => {
+                            if (data.ok) {
+                                swal("Deleted", "Successfully", "success");
+                                this.removeHtmlContain("certification", certification_id);
+                            }
+                        },
+                        error => {
+                            //mApp.unblock('#m_accordion_5_item_1_body');
+                        });
             }
         })
     }
@@ -947,17 +971,17 @@ export class ProfileEditComponent implements OnInit {
         this.religionData = this._commonService.getReligion();
         this.maritialStatusData = this._commonService.getMartialStatus();
         this.nationalityData = this._commonService.getNationality();
-        
+
 
         this._myService.getPersonalInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.personalInfo = data.json() || {};
-                this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
-                this.savedPersonalEmailId= this.personalInfo.personalEmail;
-            },
-            error => {
-            });
+                data => {
+                    this.personalInfo = data.json() || {};
+                    this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
+                    this.savedPersonalEmailId = this.personalInfo.personalEmail;
+                },
+                error => {
+                });
     }
     //Load Address Tab Data.
     loadAddressTabData() {
@@ -965,21 +989,21 @@ export class ProfileEditComponent implements OnInit {
         this.loadpermanentDivison();
         this._myService.getAddressInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.address = data.json() || {};
-                if (data.json()) {
-                    this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
-                    this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id, 'init');
+                data => {
+                    this.address = data.json() || {};
+                    if (data.json()) {
+                        this.loadcurrentAddressDistrictData(this.address.currentAddressDivision_id, 'init');
+                        this.loadcurrentAddressThanaData(this.address.currentAddressDistrict_id, 'init');
 
-                    this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
-                    this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
-                }
-                else {
-                    this.address.isSameAsCurrent = false;
-                }
-            },
-            error => {
-            });
+                        this.loadpermanentAddressDistrictData(this.address.permanentAddressDivision_id, 'init');
+                        this.loadpermanentAddressThanaData(this.address.permanentAddressDistrict_id, "init");
+                    }
+                    else {
+                        this.address.isSameAsCurrent = false;
+                    }
+                },
+                error => {
+                });
     }
     //Load Permanent Division Dropdown Data 
     loadpermanentDivison() {
@@ -1077,11 +1101,11 @@ export class ProfileEditComponent implements OnInit {
     loadDocuments() {
         this._myService.getDocumentsInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.documents = data.json() || {};
-            },
-            error => {
-            });
+                data => {
+                    this.documents = data.json() || {};
+                },
+                error => {
+                });
     }
 
     loadlevelOfEducation() {
@@ -1117,34 +1141,34 @@ export class ProfileEditComponent implements OnInit {
         this.loadlevelOfEducation();
         this._myService.getAcademicInfo(this.param_emp_id)
             .subscribe(
-            res => {
-                this.academicInfo = res.json().data;
-                if (this.academicInfo.length == 0) {
-                    this.academicInfo.push(new AcademicInfo());
-                }
-                else {
-                    for (let i = 0; i < this.academicInfo.length; i++) {
-                        this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id, i, "init");
+                res => {
+                    this.academicInfo = res.json().data;
+                    if (this.academicInfo.length == 0) {
+                        this.academicInfo.push(new AcademicInfo());
                     }
-                }
-            },
-            error => {
-                this.academicInfo = [];
-            });
+                    else {
+                        for (let i = 0; i < this.academicInfo.length; i++) {
+                            this.loadExamDegreeTitle(this.academicInfo[i].levelOfEducation_id, i, "init");
+                        }
+                    }
+                },
+                error => {
+                    this.academicInfo = [];
+                });
     }
 
     //Load Certification & Traning Tab Data
     loadCertificateAndTraningInfoTabData() {
         this._myService.getCertificationInfo(this.param_emp_id)
             .subscribe(
-            res => {
-                this.certificationsandTrainingInfo = res.json().data;
-                if (this.certificationsandTrainingInfo.length == 0) {
-                    this.certificationsandTrainingInfo.push(new CertificationInfo());
-                }
-            },
-            error => {
-            });
+                res => {
+                    this.certificationsandTrainingInfo = res.json().data;
+                    if (this.certificationsandTrainingInfo.length == 0) {
+                        this.certificationsandTrainingInfo.push(new CertificationInfo());
+                    }
+                },
+                error => {
+                });
     }
     //Load Education Page Data
     loadEducation() {
@@ -1156,63 +1180,63 @@ export class ProfileEditComponent implements OnInit {
         this.loadCompanyBusiness();
         this._myService.getPreviousEmploymentInfo(this.param_emp_id)
             .subscribe(
-            res => {
-                this.previousEmploymentDetails = res.json().data;
-                if (this.previousEmploymentDetails.length == 0) {
-                    this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
-                }
-                else {
-                    for (let index = 0; index < this.previousEmploymentDetails.length; index++) {
-                        this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : null;
-                        this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : null;
+                res => {
+                    this.previousEmploymentDetails = res.json().data;
+                    if (this.previousEmploymentDetails.length == 0) {
+                        this.previousEmploymentDetails.push(new PreviousEmploymentInfo());
                     }
-                }
-            },
-            error => {
-            });
+                    else {
+                        for (let index = 0; index < this.previousEmploymentDetails.length; index++) {
+                            this.previousEmploymentDetails[index].employmentPeriodFrom = this.previousEmploymentDetails[index].employmentPeriodFrom ? new Date(this.previousEmploymentDetails[index].employmentPeriodFrom) : null;
+                            this.previousEmploymentDetails[index].employmentPeriodTo = this.previousEmploymentDetails[index].employmentPeriodTo ? new Date(this.previousEmploymentDetails[index].employmentPeriodTo) : null;
+                        }
+                    }
+                },
+                error => {
+                });
     }
 
     loadCompanyBusiness() {
         this._commonService.getCompanyBusiness()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.companyBusinessData = res.json() || [];
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.companyBusinessData = res.json() || [];
+                    }
+                },
+                error => {
+                });
     }
 
 
     loadRelation() {
         this._commonService.getRelation()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.relationData = res.json() || [];
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.relationData = res.json() || [];
+                    }
+                },
+                error => {
+                });
     }
 
     loadFamilyInfo() {
         this._myService.getFamilyInfo(this.param_emp_id)
             .subscribe(
-            res => {
-                this.familyInfo = res.json().data;
-                if (this.familyInfo.length == 0) {
-                    this.familyInfo.push(new FamilyInfo());
-                }
-                else {
-                    for (let index = 0; index < this.familyInfo.length; index++) {
-                        this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : null;
+                res => {
+                    this.familyInfo = res.json().data;
+                    if (this.familyInfo.length == 0) {
+                        this.familyInfo.push(new FamilyInfo());
                     }
-                }
-            },
-            error => {
-            });
+                    else {
+                        for (let index = 0; index < this.familyInfo.length; index++) {
+                            this.familyInfo[index].dateOfBirth = this.familyInfo[index].dateOfBirth ? new Date(this.familyInfo[index].dateOfBirth) : null;
+                        }
+                    }
+                },
+                error => {
+                });
     }
 
     loadFamilyInfoTabData() {
@@ -1225,16 +1249,16 @@ export class ProfileEditComponent implements OnInit {
         this.loadFacility();
         this._myService.getOfficeDetails(this.param_emp_id)
             .subscribe(
-            data => {
-                this.officeInfo = data.json() || {};
-                this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
-                this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
-                this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
-                this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
-                this.savedOfficeEmailId=this.officeInfo.officeEmail;
-            },
-            error => {
-            });
+                data => {
+                    this.officeInfo = data.json() || {};
+                    this.officeInfo.dateOfJoining = this.officeInfo.dateOfJoining ? new Date(this.officeInfo.dateOfJoining) : this.officeInfo.dateOfJoining;
+                    this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
+                    this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
+                    this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
+                    this.savedOfficeEmailId = this.officeInfo.officeEmail;
+                },
+                error => {
+                });
     }
 
     loadFacility() {
@@ -1275,85 +1299,85 @@ export class ProfileEditComponent implements OnInit {
     loadEmploymentStatus() {
         this._commonService.getEmploymentStatus()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.employmentStatusData = res.json()
-                }
-            },
-            error => {
-                this.employmentStatusData = []
-            });
+                res => {
+                    if (res.ok) {
+                        this.employmentStatusData = res.json()
+                    }
+                },
+                error => {
+                    this.employmentStatusData = []
+                });
     }
     //load Division Dropdown Data init
     loadDivision() {
         this._commonService.getDivision()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.divisionData = res.json();
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.divisionData = res.json();
+                    }
+                },
+                error => {
+                });
     }
     //load Companies Dropdown Data init
     loadCompanies() {
         this._commonService.getComapnies()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.hrspocData = [];
-                    this.buisnessHrHeadData = [];
-                    this.groupHrHeadData = [];
-                    this.companiesData = res.json();
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.hrspocData = [];
+                        this.buisnessHrHeadData = [];
+                        this.groupHrHeadData = [];
+                        this.companiesData = res.json();
+                    }
+                },
+                error => {
+                });
     }
     //load Grade Dropdown
     loadManagementType(onLoad?: string) {
         this._commonService.getManagementType()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.employmentTypeData = [];
-                        this.gradeData = [];
-                        this.supervisorData = [];
-                        this.designationData = [];
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.employmentTypeData = [];
+                            this.gradeData = [];
+                            this.supervisorData = [];
+                            this.designationData = [];
 
-                        this.positionDetails.managementType_id = null
-                        this.positionDetails.employmentType_id = null;
-                        this.positionDetails.grade_id = null;
-                        this.positionDetails.primarySupervisorEmp_id = null;
-                        this.positionDetails.designation_id = null;
+                            this.positionDetails.managementType_id = null
+                            this.positionDetails.employmentType_id = null;
+                            this.positionDetails.grade_id = null;
+                            this.positionDetails.primarySupervisorEmp_id = null;
+                            this.positionDetails.designation_id = null;
+                        }
+                        this.managementTypeData = res.json()
                     }
-                    this.managementTypeData = res.json()
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
     //load HR Spoce By company_id
     loadHRSpoce(company_id?: number, onLoad?: string) {
         this._commonService.getHrSpoce(company_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.buisnessHrHeadData = [];
-                        this.groupHrHeadData = [];
-                        this.positionDetails.hrspoc_id = null;
-                        this.positionDetails.businessHrHead_id = null;
-                        this.positionDetails.groupHrHead_id = null;
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.buisnessHrHeadData = [];
+                            this.groupHrHeadData = [];
+                            this.positionDetails.hrspoc_id = null;
+                            this.positionDetails.businessHrHead_id = null;
+                            this.positionDetails.groupHrHead_id = null;
+                        }
+                        this.hrspocData = res.json() || [];
                     }
-                    this.hrspocData = res.json() || [];
-                }
-            },
-            error => {
-                this.hrspocData = [];
-            });
+                },
+                error => {
+                    this.hrspocData = [];
+                });
     }
     //load Buisness Hr Head By hrspoc_id
     loadBuisnessHrHead(hrspoc_id?: number, onLoad?: string) {
@@ -1375,82 +1399,82 @@ export class ProfileEditComponent implements OnInit {
     loadVertical(department_id?: number, onLoad?: string) {
         this._commonService.getVertical(department_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.verticalData = res.json()
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.verticalData = res.json()
+                    }
+                },
+                error => {
+                });
     }
     //load SubVertical Dropdown By vertical_id 
     loadSubVertical(vertical_id?: number, onLoad?: string) {
         this._commonService.getSubVertical(vertical_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.subverticalData = res.json()
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.subverticalData = res.json()
+                    }
+                },
+                error => {
+                });
     }
     //load Employment Type By managementType_id 
     loadEmploymentType(managementType_id?: number, onLoad?: string) {
         this._commonService.getEmploymentType(managementType_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.gradeData = [];
-                        this.supervisorData = [];
-                        this.designationData = [];
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.gradeData = [];
+                            this.supervisorData = [];
+                            this.designationData = [];
 
-                        this.positionDetails.employmentType_id = null;
-                        this.positionDetails.grade_id = null;
-                        this.positionDetails.primarySupervisorEmp_id = null;
-                        this.positionDetails.designation_id = null;
+                            this.positionDetails.employmentType_id = null;
+                            this.positionDetails.grade_id = null;
+                            this.positionDetails.primarySupervisorEmp_id = null;
+                            this.positionDetails.designation_id = null;
+                        }
+                        this.employmentTypeData = res.json()
                     }
-                    this.employmentTypeData = res.json()
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
     //load Grade Dropdown By managementType_id  && employmentType_id
     loadGrade(managementType_id?: number, employmentType_id?: number, onLoad?: string) {
         this._commonService.getGrade(managementType_id, employmentType_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.supervisorData = [];
-                        this.designationData = [];
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.supervisorData = [];
+                            this.designationData = [];
 
-                        this.positionDetails.grade_id = null;
-                        this.positionDetails.primarySupervisorEmp_id = null;
-                        this.positionDetails.designation_id = null;
+                            this.positionDetails.grade_id = null;
+                            this.positionDetails.primarySupervisorEmp_id = null;
+                            this.positionDetails.designation_id = null;
+                        }
+                        this.gradeData = res.json();
                     }
-                    this.gradeData = res.json();
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
     //load Supervisor By grade_id
     loadSupervisor(grade_id?: number, onLoad?: string) {
         this._commonService.getSupervisor(grade_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.positionDetails.primarySupervisorEmp_id = null;
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.positionDetails.primarySupervisorEmp_id = null;
+                        }
+                        this.supervisorData = res.json()
                     }
-                    this.supervisorData = res.json()
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
     //load Group Hr Head By hrspoc_id
     loadGroupHrHead(businessHrHead_id?: number, onLoad?: string) {
@@ -1485,21 +1509,21 @@ export class ProfileEditComponent implements OnInit {
     loadDepartment(division_id?: number, onLoad?: string) {
         this._commonService.getDepartment(division_id)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.positionDetails.department_id = null;
-                        this.positionDetails.vertical_id = null;
-                        this.positionDetails.subVertical_id = null;
+                res => {
+                    if (res.ok) {
+                        if (!onLoad) {
+                            this.positionDetails.department_id = null;
+                            this.positionDetails.vertical_id = null;
+                            this.positionDetails.subVertical_id = null;
 
-                        this.verticalData = [];
-                        this.subverticalData = [];
+                            this.verticalData = [];
+                            this.subverticalData = [];
+                        }
+                        this.deparmentData = res.json();
                     }
-                    this.deparmentData = res.json();
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
 
     loadPositionDetailsTabData() {
@@ -1511,34 +1535,34 @@ export class ProfileEditComponent implements OnInit {
         //this.loadRoles();
         this._myService.getPositionDetails(this.param_emp_id)
             .subscribe(
-            data => {
-                this.positionDetails = data.json() || {};
-                if (data.json()) {
-                    this.loadDepartment(this.positionDetails.division_id, "init")
-                    this.loadEmploymentType(this.positionDetails.managementType_id, "init")
-                    this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
-                    this.loadHRSpoce(this.positionDetails.company_id, "init");
-                    this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
-                    this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
-                    this.loadVertical(this.positionDetails.department_id, "init")
-                    this.loadSubVertical(this.positionDetails.vertical_id, "init")
-                    this.loadSupervisor(this.positionDetails.grade_id, "init")
-                    this.loadDesignation(this.positionDetails.grade_id, "init")
-                }
-            },
-            error => {
-                this.positionDetails = {};
-            });
+                data => {
+                    this.positionDetails = data.json() || {};
+                    if (data.json()) {
+                        this.loadDepartment(this.positionDetails.division_id, "init")
+                        this.loadEmploymentType(this.positionDetails.managementType_id, "init")
+                        this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
+                        this.loadHRSpoce(this.positionDetails.company_id, "init");
+                        this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
+                        this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
+                        this.loadVertical(this.positionDetails.department_id, "init")
+                        this.loadSubVertical(this.positionDetails.vertical_id, "init")
+                        this.loadSupervisor(this.positionDetails.grade_id, "init")
+                        this.loadDesignation(this.positionDetails.grade_id, "init")
+                    }
+                },
+                error => {
+                    this.positionDetails = {};
+                });
     }
 
     loadPerformanceDairyTabData() {
         this._myService.getPerformanceDairyDeatils(this.param_emp_id)
             .subscribe(
-            data => {
-                this.performanceDiary = data.json() || []
-            },
-            error => {
-            });
+                data => {
+                    this.performanceDiary = data.json() || []
+                },
+                error => {
+                });
 
     }
 
@@ -1552,12 +1576,12 @@ export class ProfileEditComponent implements OnInit {
         this.currencyArrData = this._commonService.getCurrency();
         this._myService.getBankInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.bankDetails = data.json() || {};
-            },
-            error => {
-                this.bankDetails = {};
-            });
+                data => {
+                    this.bankDetails = data.json() || {};
+                },
+                error => {
+                    this.bankDetails = {};
+                });
     }
 
     loadSalaryInfoDropdownData() {
@@ -1570,12 +1594,12 @@ export class ProfileEditComponent implements OnInit {
     loadSalaryInfo() {
         this._myService.getSalaryInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.salaryDetails = data.json() || {};
-            },
-            error => {
-                this.salaryDetails = {};
-            });
+                data => {
+                    this.salaryDetails = data.json() || {};
+                },
+                error => {
+                    this.salaryDetails = {};
+                });
     }
 
     loadSalaryInfoTabData() {
@@ -1604,16 +1628,16 @@ export class ProfileEditComponent implements OnInit {
     loadCarDetails() {
         this._myService.getCarInfo(this.param_emp_id)
             .subscribe(
-            data => {
-                this.carDetails = data.json() || {};
-                this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
-                this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
-                this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
-                this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
-            },
-            error => {
-                this.carDetails = {};
-            });
+                data => {
+                    this.carDetails = data.json() || {};
+                    this.carDetails.companyEffectiveDate = this.carDetails.companyEffectiveDate ? new Date(this.carDetails.companyEffectiveDate) : this.carDetails.companyEffectiveDate;
+                    this.carDetails.companyExpiryDate = this.carDetails.companyExpiryDate ? new Date(this.carDetails.companyExpiryDate) : this.carDetails.companyExpiryDate;
+                    this.carDetails.privateEffectiveDate = this.carDetails.privateEffectiveDate ? new Date(this.carDetails.privateEffectiveDate) : this.carDetails.privateEffectiveDate;
+                    this.carDetails.privateExpiryDate = this.carDetails.privateExpiryDate ? new Date(this.carDetails.privateExpiryDate) : this.carDetails.privateExpiryDate;
+                },
+                error => {
+                    this.carDetails = {};
+                });
     }
 
     loadPayrollDetails() {
