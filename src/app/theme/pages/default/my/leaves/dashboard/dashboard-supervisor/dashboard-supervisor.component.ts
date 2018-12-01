@@ -10,6 +10,7 @@ import { CommonService } from "../../../../../../../base/_services/common.servic
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import * as FileSaver from 'file-saver';
 
 
 declare var mApp;
@@ -38,7 +39,7 @@ export class DashboardSupervisorComponent implements OnInit {
     isSpin: boolean = false;
     currentFinancialYear: string;
     fiscalYearId: string;
-    isSelectedEmployeeOnProbation=false;
+    isSelectedEmployeeOnProbation = false;
 
     overviewChartData: any = [];
     overviewChartDataFilter: any = {
@@ -295,7 +296,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
         // let text = 'Leave during probabtion are not encouraged until unless its an emergency case';
         let text = '';
-        if(this.isSelectedEmployeeOnProbation){
+        if (this.isSelectedEmployeeOnProbation) {
             text = 'Leave during probabtion are not encouraged until unless its an emergency case';
         }
         swal({
@@ -350,7 +351,7 @@ export class DashboardSupervisorComponent implements OnInit {
             if (res.ok) {
                 let body = res.json();
                 if (body.data[0]) {
-                    if(this.currentUser._id !== body.data[0].applyTo){
+                    if (this.currentUser._id !== body.data[0].applyTo) {
                         return;
                     }
 
@@ -391,8 +392,7 @@ export class DashboardSupervisorComponent implements OnInit {
         });
     }
     viewAttachement(leave) {
-        // https://s3.ap-south-1.amazonaws.com/adn-bucket/externalDocument
-        this.leaveService.getAttachement(leave._id);
+        window.open(environment.content_api_base.imgBase + leave.attachment, '_blank');
     }
 
     // --------------------------------------------------------------------------

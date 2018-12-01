@@ -207,11 +207,6 @@ export class LeaveService {
         return this.authService.post(url, null).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getAttachement(leaveId: number) {
-        let url = environment.api_base.apiBase + "/api/leave/downloadFile?id=" + leaveId;
-        window.open(url, '_blank');
-    };
-
     // ------------------------------------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------------------------------------
 
