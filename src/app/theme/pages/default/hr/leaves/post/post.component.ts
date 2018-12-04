@@ -102,6 +102,9 @@ export class PostComponent implements OnInit {
                 {
                     this.employeesData = data.json().data || [];                  
                 }
+                this.employeesData.forEach(emp => {
+                    emp.ddLabel = emp.fullName + emp.userName;
+                });
             },
             error => {                
             });
