@@ -27,7 +27,7 @@
 														<ng-select #allemployee="ngModel" 
 														id="allemployee" class="m-input m-input--air" 
 														name="allemployee" [items]="employeesData"  
-														bindLabel="fullName"  bindValue="_id" 
+														bindLabel="ddLabel"  bindValue="_id" 
 														placeholder="Select Employee" [(ngModel)]="leaveapplication.emp_id"  (ngModelChange)="onChangedEmployee()"  [clearable]="false" required>
 														<ng-template ng-label-tmp let-item="item" let-index="index">
 															{{item.fullName}} {{item.userName ? ('[' + item.userName
@@ -37,8 +37,6 @@
 															{{item.fullName}} {{item.userName ? ('[' + item.userName
 															+']'):''}}
 														</ng-template>
-													
-													
 													</ng-select>
 														<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && !allemployee.valid">
 																This field is required.
