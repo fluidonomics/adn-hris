@@ -344,7 +344,7 @@
 														<i class="la la-info"></i>
 													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Delete" *ngIf=" kraInfo.supervisorStatus!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
+													 title="Delete" *ngIf="kraInfo.supervisorStatus!='Approved' && kraInfo.supervisorStatus!=null" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
 													</button>
 

@@ -131,19 +131,26 @@ export class MyKraComponent {
                    
                 }
                 else{
+                    this.supervisorData=[];
+                    let subervisors=[];
                     for (let index = 0; index < this.kraInfoData.length; index++) {                       
                         if(this.kraInfoData[index].supervisor_id){
-                           let supervisorinfo=this.supervisorData.filter(x=> x._id==this.kraInfoData[index].supervisor_id);
-                           if(supervisorinfo.length==0){
+                           
                             this._commonService.getEmployee(this.kraInfoData[index].supervisor_id).subscribe(
                                 res=>{                            
-                                    this.supervisorData=[];
+                                    let supervisorinfo=subervisors.filter(x=> x._id==this.kraInfoData[index].supervisor_id);
+                                    if(supervisorinfo.length==0){
                                     let supervisorInfoData=res.json()||{};                        
-                                    this.supervisorData.push(supervisorInfoData);
+                                    subervisors.push(supervisorInfoData);                                   
+                                   }                                  
+                                   if(index==this.kraInfoData.length-1){
+                                       debugger;
+                                       this.supervisorData=subervisors;
+                                   }
                                 },error=>{
         
                                 })
-                           }
+                           
                             
                         }
                         else{  
@@ -188,6 +195,7 @@ export class MyKraComponent {
             .subscribe(
                 data => {
                     this.supervisorData = data.json();
+                    debugger;
                 },
                 error => {
                 });
@@ -223,6 +231,8 @@ export class MyKraComponent {
         this.kraData.no = index + 1;
         if(this.kraData.supervisorStatus)
         this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
+        else
+        this.isDisabled=true;
 
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
