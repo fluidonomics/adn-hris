@@ -25,13 +25,13 @@ export class TransferResponsibilityComponent implements OnInit {
     employeesData: any = [];
     secondarySuperviserDetails: any = {};
     supervisorData: any = [];
-    secondarySupervisorData:any=[];
+    secondarySupervisorData: any = [];
     selectedEmployee: any = {};
     request: any = {};
     companiesData: any = [];
     _currentEmpId: number;
-    primarySupervisor:any;
-    seconderySupervisor:any;
+    primarySupervisor: any;
+    seconderySupervisor: any;
 
     constructor(
         private _commonService: CommonService,
@@ -45,7 +45,7 @@ export class TransferResponsibilityComponent implements OnInit {
     ngOnInit() {
         this._currentEmpId = this._authService.currentUserData._id;
         this.initDropdown();
-        
+
     }
 
     //Filled Init Dropdown 
@@ -68,36 +68,40 @@ export class TransferResponsibilityComponent implements OnInit {
                 });
     }
     employeeSelected(selectedEmpId) {
-        this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];       
+        this.selectedEmployee = this.employeesData.filter(obj => obj._id == selectedEmpId)[0];
         this._commonService.getSupervisor(this.selectedEmployee.grade_id).subscribe(res => {
-            this.supervisorData = res.json() || [];
-           this.secondarySupervisorData=res.json()|| [];
+            let supervisors = res.json() || [];
+            supervisors = supervisors.filter(s => {
+                return s._id != this.selectedEmployee._id;
+            })
+            this.supervisorData = supervisors;
+            this.secondarySupervisorData = supervisors;
         })
         this.getEmployeeDetails(selectedEmpId);
     }
-    primarySupervisorSelected(selectedPrimarySupervisorId){
+    primarySupervisorSelected(selectedPrimarySupervisorId) {
         this.secondarySupervisorData = this.secondarySupervisorData.filter(obj => obj._id != selectedPrimarySupervisorId);
     }
     getEmployeeDetails(selectedEmpId) {
         this._hrService.getEmployeeDetails(selectedEmpId)
             .subscribe(
                 res => {
-                    if (res.ok) {                       
+                    if (res.ok) {
                         let details = res.json().data[0] || {};
 
                         if (details.supervisorDetails.secondarySupervisorDetails) {
-                            this.seconderySupervisor = details.supervisorDetails.secondarySupervisorDetails.fullName +" ["+details.supervisorDetails.secondarySupervisorDetails.userName+"]";
+                            this.seconderySupervisor = details.supervisorDetails.secondarySupervisorDetails.fullName + " [" + details.supervisorDetails.secondarySupervisorDetails.userName + "]";
                             this.request.secondarySupervisorEmp_id = details.supervisorDetails.secondarySupervisorDetails._id;
                         } else {
                             this.seconderySupervisor = "";
-                            this.request.secondarySupervisorEmp_id=null;
+                            this.request.secondarySupervisorEmp_id = null;
                         }
                         if (details.supervisorDetails.primarySupervisorDetails) {
-                            this.primarySupervisor = details.supervisorDetails.primarySupervisorDetails.fullName +" ["+details.supervisorDetails.primarySupervisorDetails.userName+"]";
+                            this.primarySupervisor = details.supervisorDetails.primarySupervisorDetails.fullName + " [" + details.supervisorDetails.primarySupervisorDetails.userName + "]";
                             this.request.primarySupervisorEmp_id = details.supervisorDetails.primarySupervisorDetails._id;
                         } else {
                             this.primarySupervisor = "";
-                            this.request.primarySupervisorEmp_id=null;
+                            this.request.primarySupervisorEmp_id = null;
                         }
                     }
                 },
@@ -113,14 +117,26 @@ export class TransferResponsibilityComponent implements OnInit {
 
     //Submit Add Employee Form
     onTransferSubmit(form) {
+        debugger;
         if (form.valid) {
+            if (this.request.primarySupervisorEmp_id == this.request.secondarySupervisorEmp_id) {
+                swal({
+                    title: "Error",
+                    text: "Primary and secondary supervisors cannot be same",
+                    type: 'error',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
             console.log(this.request);
-            
-            let titletxt="Supervisor Transfer";
-            let bodytxt="Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
-            if(this.request.change_type!= "tranfser"){
-                titletxt="Supervisor Corection";
-                bodytxt="Supervisor correction will change Approval authority from previous transactions(Leaves,KRA) as well Preffered for New Employees only."
+
+            let titletxt = "Supervisor Transfer";
+            let bodytxt = "Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
+            if (this.request.change_type != "tranfser") {
+                titletxt = "Supervisor Corection";
+                bodytxt = "Supervisor correction will change Approval authority from previous transactions(Leaves,KRA) as well Preffered for New Employees only."
             }
             swal({
                 title: titletxt,
@@ -140,7 +156,7 @@ export class TransferResponsibilityComponent implements OnInit {
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.value) {
-                        this.request.user_id=this._currentEmpId;
+                        this.request.user_id = this._currentEmpId;
                         this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
                             if (data.ok) {
                                 let status = data.json() || false;
@@ -175,9 +191,9 @@ export class TransferResponsibilityComponent implements OnInit {
                 });
             });
 
-            
 
-            
+
+
         }
     }
 
