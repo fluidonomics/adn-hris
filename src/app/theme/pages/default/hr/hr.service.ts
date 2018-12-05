@@ -20,6 +20,10 @@ export class HrService {
         let url = "user/getAllEmployee";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getAllEmployeeForMTR() {
+        let url = "midterm/getEmpDetailsForMidTermInitiate";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     loadDivision() {
         let url = "master/getAllDivision";

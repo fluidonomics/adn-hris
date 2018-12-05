@@ -19,6 +19,7 @@ import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.comp
 import { HrGuard } from '../../../../base/_guard/hr.guard'
 import { PostComponent } from './leaves/post/post.component';
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
+import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -35,6 +36,8 @@ const routes: Routes = [{
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },
+        { path: 'workflows/mtr/batch', component: MTRBatchComponent },
+        
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },

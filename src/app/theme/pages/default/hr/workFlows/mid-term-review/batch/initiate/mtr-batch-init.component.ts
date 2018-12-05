@@ -15,6 +15,7 @@ import swal from 'sweetalert2';
 export class MtrBatchInitComponent implements OnInit {
 
     employeeData: any = [];
+    employeeFilterData:any=[];
 
     filterBy: any = {};
     divisionData: any = [];
@@ -44,11 +45,12 @@ export class MtrBatchInitComponent implements OnInit {
             });
         this.imageBase=environment.content_api_base.imgBase;
 
-    }
+    }    
     initDropdown() {
        
         this.loadDepartment();
         this.loadGrade();
+        this.getAllEmployee();
     }
 
     loadDepartment(division_id?: number) {
@@ -56,7 +58,7 @@ export class MtrBatchInitComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
-                    this.employeeData = [];
+                   // this.employeeData = [];
                     this.deparmentData = res.json();
                 }
             },
@@ -69,7 +71,7 @@ export class MtrBatchInitComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
-                    this.employeeData = [];
+                    
                     this.gradeData = res.json();
                     this.gradeData=this.gradeData.filter(item=>
                         item._id < 13
@@ -79,40 +81,75 @@ export class MtrBatchInitComponent implements OnInit {
             error => {
             });
     }
+    getAllEmployee(){  
+        this.employeeData=[];  
+        this.utilityService.showLoader('#initiate-loader');
+        this._hrService.getAllEmployeeForMTR()
+            .subscribe(
+            res => {
+                let data = res.json();                
+                if (data.result.length > 0) {
+                    
+                    data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId);
+                   // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
+                    this.employeeData = data || [];
+                    this.utilityService.hideLoader('#initiate-loader');
+                }
+                else{
+                    this.employeeData = data.json().result || [];
+                    this.utilityService.hideLoader('#initiate-loader');
+                }
+                this.employeeFilterData= this.employeeData;
+                    
+            },
+            error => {
+                this.utilityService.hideLoader('#initiate-loader');
+            });    
+
+    }
     loadAllEmployee() {
         if (this.filterBy.grades || this.filterBy.departments) {
-            this.utilityService.showLoader('#initiate-loader');
-            this._hrService.getAllEmployee()
-                .subscribe(
-                res => {
-                    let data = res.json().data || [];
-                    if (data.length > 0) {
-                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                            //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
-                        }
-                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                            //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
-                        }
-                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                       // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
-                        this.employeeData = data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
-                    }
-                    else{
-                        this.employeeData = data.json().data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
-                    }
-                        
-                },
-                error => {
-                    this.utilityService.hideLoader('#initiate-loader');
-                });
+            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                this.employeeFilterData =this.employeeData.filter(obj => this.filterBy.departments.includes(obj.emp_department_id) && obj.emp_grade_id < 13);
+                //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
+            }
+            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                this.employeeFilterData =this.employeeData.filter(obj => this.filterBy.grades.includes(obj.emp_grade_id));
+                //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
+            }
         }
         else {
-            this.employeeData = [];
+            this.employeeFilterData= this.employeeData;
         }
     }
+    saveBulkMTR(form) {
+        this.batchData.emp_id = this.employeeFilterData.filter(function(employee, index, array) {
+            return employee.checked;
+        }).map(item => {
+            return item.emp_id
+        });
+
+        if(this.batchData.emp_id.length > 0)
+        {
+            console.log(this.batchData);
+           // this.utilityService.showLoader('#initiate-loader');
+            // this._hrService.saveBulkKra(this.batchData)
+            //     .subscribe(
+            //     res => {
+            //         if (res.ok) {
+            //             this.utilityService.hideLoader('#initiate-loader');
+            //             swal("Success", "Batch Initiated Successfully", "success");
+            //             form.resetForm();                        
+            //         }
+            //     },
+            //     error => {
+            //         this.utilityService.hideLoader('#initiate-loader');
+            // });
+        }
+        else{
+            swal('Oops!','No employee selected','warning')
+        }
+    }
+
 
 }

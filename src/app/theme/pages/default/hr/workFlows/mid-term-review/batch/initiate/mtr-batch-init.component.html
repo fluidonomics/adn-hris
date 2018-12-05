@@ -69,7 +69,7 @@
                             </div>
                         </div>
             </div>
-            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeData | orderBy: key : reverse | filter:search)?.length==0 }">
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeFilterData | orderBy: key : reverse | filter:search)?.length==0 }">
                 <table class="m-datatable__table">
                         <thead class="m-datatable__head">
                                 <tr class="m-datatable__row" >
@@ -108,7 +108,7 @@
                                 </tr>
                         </thead>
                         <tbody class="m-datatable__body">
-                          <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                          <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeFilterData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
                                 <td class="m-datatable__cell" width="5%" >
                                     <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
                                             <input type="checkbox" [(ngModel)]="employee.checked">
@@ -116,14 +116,14 @@
                                     </label>
                                 </td>	
                                 <td class="m-datatable__cell" width="5%" >
-                                      <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                      <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.emp_profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                       <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
                                 </td>
                                 <td class="m-datatable__cell" width="20%" >
-                                    <span>{{employee.fullName}} [{{employee.userName}}]</span>
+                                    <span>{{employee.emp_full_name}} [{{employee.emp_userName}}]</span>
                                 </td>
                                 <td class="m-datatable__cell" width="20%" >
-                                    <span>{{employee.officeEmail}}</span>
+                                    <span>{{employee.emp_officeEmail}}</span>
                                 </td>
                                 <td class="m-datatable__cell" width="20%" >
                                     <span>{{employee.designation}}</span>
@@ -192,7 +192,7 @@
     <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__body">
                     <div class="form-actions">
-                        <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiatemtr.valid && saveBulkKra(finitiatemtr)" #finitiatemtr="ngForm" novalidate="novalidate">
+                        <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiatemtr.valid && saveBulkMTR(finitiatemtr)" #finitiatemtr="ngForm" novalidate="novalidate">
                             <div class="row">                                
                                 <div class="col-md-4">
                                         <label for="batchName">Batch Name
