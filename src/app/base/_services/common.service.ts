@@ -105,7 +105,6 @@ export class CommonService {
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-
     getVertical(department_id?: number): Observable<Response> {
         let url = "common/getVertical";
         if (department_id) {

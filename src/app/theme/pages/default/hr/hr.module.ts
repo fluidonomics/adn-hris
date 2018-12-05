@@ -26,6 +26,7 @@ import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { HrLeaveComponent } from './leave/hr-leave.component';
+import { HttpClientModule } from '@angular/common/http'; 
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
@@ -45,7 +46,8 @@ import { LeaveService } from '../my/leaves/leave.service';
         TagInputModule,
         BaseModule,
         BsDatepickerModule.forRoot(),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        HttpClientModule
     ], declarations: [
         HrComponent,
         DashboardComponent,
