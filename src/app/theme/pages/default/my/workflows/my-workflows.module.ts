@@ -17,6 +17,7 @@ import { MyLearningComponent } from './learning/learning.component';
 import { MyPapComponent } from './pap/pap.component';
 import { MyPipComponent } from './pip/pip.component';
 import { MyKraComponent } from './kra/kra.component';
+import { MyMtrComponent } from './mid-term-review/mtr.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MyKraComponent } from './kra/kra.component';
         MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
-        MyKraComponent
+        MyKraComponent,
+        MyMtrComponent
     ],
     providers: [MyService]
 })
