@@ -290,13 +290,7 @@ export class CommonService {
     }
 
     checkPersonalEmail(_element) {
-        if (_element.value.search("adnsl.net") != -1) {
-            _element.control.setErrors({ "pattern": true })
-            return false;
-        } else {
-            _element.control.setErrors({ "pattern": false })
-            return true;
-        }
+        return true;
     }
 
     checkUserNameExists(data: string) {
