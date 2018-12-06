@@ -353,19 +353,17 @@ export class AddEmployeeComponent implements OnInit {
             });
             //default roles of employee
             this.addemp.roles = [5];
-            this._hrService.addEmployee(this.addemp).subscribe(
-                data => {
-                    if (data.ok) {
-                        mApp.unblock('#m_tabs_9_1');
-                        swal("New Employee Created.", "Username:" + data.json().userName + " Welcome Email Sent!", "success");
-                        //this.userName=data.json().userName;
-                        form.resetForm();
-                        this.clearFormData();
-                    }
-                },
-                error => {
+            this._hrService.addEmployee(this.addemp).subscribe(data => {
+                if (data.ok) {
                     mApp.unblock('#m_tabs_9_1');
-                });
+                    swal("New Employee Created.", "Username:" + data.json().userName + " Welcome Email Sent!", "success");
+                    //this.userName=data.json().userName;
+                    form.resetForm();
+                    this.clearFormData();
+                }
+            }, error => {
+                mApp.unblock('#m_tabs_9_1');
+            });
         }
     }
 
@@ -383,36 +381,27 @@ export class AddEmployeeComponent implements OnInit {
 
     checkEmailExists(_element) {
         if (_element.valid) {
-            if (_element.value.toUpperCase() != "HRIS@ADNSL.NET") {
-                if (!this._commonService.checkPersonalEmail(_element)) {
-                    this._commonService.checkEmailExists(_element.value, -1)
-                        .subscribe(
-                            data => {
-                                if (data.json()) {
-                                    _element.control.setErrors({ "emailExists": true })
-                                }
-                            },
-                            error => {
-                                _element.control.setErrors(null)
-                            });
-                }
+            debugger;
+            if (this._commonService.checkPersonalEmail(_element)) {
+                this._commonService.checkEmailExists(_element.value, -1).subscribe(data => {
+                    if (data.json()) {
+                        _element.control.setErrors({ "emailExists": true })
+                    }
+                }, error => {
+                    _element.control.setErrors(null)
+                });
             }
-
         }
     }
 
     checkUserNameExists(_element) {
         if (_element.valid) {
-            this._commonService.checkUserNameExists(_element.value)
-                .subscribe(
-                    data => {
-                        if (data.json())
-                            _element.control.setErrors({ "userNameExists": true })
-                    },
-                    error => {
-                        _element.control.setErrors(null)
-                    });
-
+            this._commonService.checkUserNameExists(_element.value).subscribe(data => {
+                if (data.json())
+                    _element.control.setErrors({ "userNameExists": true })
+            }, error => {
+                _element.control.setErrors(null)
+            });
         }
     }
 

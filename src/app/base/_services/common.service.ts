@@ -290,7 +290,17 @@ export class CommonService {
     }
 
     checkPersonalEmail(_element) {
-        return true;
+        if (_element.value.toUpperCase() != "HRIS@ADNSL.NET") {
+            if (_element.value.search("adnsl.net") != -1) {
+                _element.control.setErrors({ "pattern": true });
+                return false;
+            } else {
+                _element.control.setErrors(null);
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     checkUserNameExists(data: string) {
