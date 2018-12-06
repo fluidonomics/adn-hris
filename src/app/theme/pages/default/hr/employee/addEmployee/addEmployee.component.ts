@@ -369,23 +369,35 @@ export class AddEmployeeComponent implements OnInit {
         }
     }
 
+    validateEmail(_element) {
+        let regexp = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/);
+        let test = regexp.test(_element.value);
+        if (test == false) {
+            _element.control.setErrors({ "pattern": true })
+            return;
+        } else {
+            _element.control.setErrors(null);
+        }
+        this.checkEmailExists(_element);
+    }
+
     checkEmailExists(_element) {
-        if (_element.valid) {            
-            if(_element.value.toUpperCase()!="HRIS@ADNSL.NET"){
+        if (_element.valid) {
+            if (_element.value.toUpperCase() != "HRIS@ADNSL.NET") {
                 if (!this._commonService.checkPersonalEmail(_element)) {
                     this._commonService.checkEmailExists(_element.value, -1)
                         .subscribe(
                             data => {
-                                if (data.json())
+                                if (data.json()) {
                                     _element.control.setErrors({ "emailExists": true })
+                                }
                             },
                             error => {
                                 _element.control.setErrors(null)
                             });
-    
                 }
             }
-            
+
         }
     }
 
