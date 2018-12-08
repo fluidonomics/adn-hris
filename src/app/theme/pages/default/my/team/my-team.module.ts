@@ -21,6 +21,8 @@ import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { ModalModule } from 'ngx-bootstrap';
+import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
+import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
 
 @NgModule({
     imports: [
@@ -41,7 +43,9 @@ import { ModalModule } from 'ngx-bootstrap';
         MyTeamKraComponent,
         KraReview,
         AllEmployeeComponent,
-        AllEmployeeReviewer
+        AllEmployeeReviewer,
+        MtrApprovalsComponent,
+        MtrViewComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard]
 })
