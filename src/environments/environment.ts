@@ -17,8 +17,8 @@ export const environment = {
         //validateTokenPath:'auth/validateTokenPath'
     },
     content_api_base: {
-        apiBase: "https://adn-bucket.s3.ap-south-1.amazonaws.com/",
-        imgBase: "https://adn-bucket.s3.ap-south-1.amazonaws.com/",
+        apiBase: "https://adn-test-bucket.s3.ap-south-1.amazonaws.com/",
+        imgBase: "https://adn-test-bucket.s3.ap-south-1.amazonaws.com/",
         noImagePath: "image/0e02f48c.noimageavailable.jpg"
     },
     access_deniedPath: ["access-denied"]

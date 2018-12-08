@@ -31,19 +31,29 @@ export class CommonService {
         private http: Http) {
     }
 
-    getEmployee(emp_id?:number)
-    {
+    getEmployee(emp_id?: number) {
         let url = "user/getALLEmployee";
         if (emp_id) {
             url = "common/getEmployee?emp_id=" + emp_id;
         }
-      
+
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    getFinancialYear(){
+    getFinancialYear() {
         let url = "common/getFinincialYear";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getCurrentFinancialYear() {
+        let url = "common/getFinincialYear";
+        return this.authService.get(url).map(this.extractData).map(res => {
+            let data = (res as any).json() || [];
+            if (data && data.length > 0) {
+                let currentFinYear = data.find(f => f.isYearActive == true);
+                return currentFinYear;
+            }
+        }).catch(this.handleError);
+    }
+
     getHrSpoce(company_id?: number, emp_id?: number): Observable<Response> {
         let url = "common/getHr";
         if (company_id && emp_id) {
@@ -322,31 +332,28 @@ export class CommonService {
         // return this.http.get(url).map((response: Response) => response.json());
     }
 
-    getEmployeeSupervisor(emp_id)
-    {
+    getEmployeeSupervisor(emp_id) {
         let url = "common/getEmployeeSupervisor?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getEmployeeRoles(emp_id)
-    {
+    getEmployeeRoles(emp_id) {
         let url = "common/getEmployeeRoles?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getEmployeeDocument(emp_id)
-    {
+    getEmployeeDocument(emp_id) {
         let url = "common/getEmployeeDocument?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    
+
     getBatchInfo(): Observable<Response> {
         let url = "batch/getBatchInfo";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getKraWorkFlowInfoByBatch(batch_id:number): Observable<Response> {
-        let url = "kra/getKraWorkFlowInfoByBatch?batch_id="+batch_id;
+    getKraWorkFlowInfoByBatch(batch_id: number): Observable<Response> {
+        let url = "kra/getKraWorkFlowInfoByBatch?batch_id=" + batch_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -355,34 +362,28 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    saveEmployeeDocuments(data:any)
-    {
-      let url = "externalDocument/addEmployeeExternalDocumentInfo";
-      if(data._id)
-      {
-        url = "externalDocument/deleteEmployeeExternalDocumentInfo";
-      }
-      return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
-    }
-
-    saveEmployeeRoles(data:any)
-    {
-      let url = "common/addEmployeeRole";
-      if(data._id)
-      {
-        url = "common/updateEmployeeRole";
-      }
-      return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
-    }
-
-    saveSupervisor(data:any)
-    {
-        let url = "common/addEmployeeSupervisor";
-        if(data._id)
-        {
-          url = "common/updateEmployeeSupervisor";
+    saveEmployeeDocuments(data: any) {
+        let url = "externalDocument/addEmployeeExternalDocumentInfo";
+        if (data._id) {
+            url = "externalDocument/deleteEmployeeExternalDocumentInfo";
         }
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    saveEmployeeRoles(data: any) {
+        let url = "common/addEmployeeRole";
+        if (data._id) {
+            url = "common/updateEmployeeRole";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    saveSupervisor(data: any) {
+        let url = "common/addEmployeeSupervisor";
+        if (data._id) {
+            url = "common/updateEmployeeSupervisor";
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
     // saveBatchStatus(data:any):Observable<Response>
@@ -393,7 +394,7 @@ export class CommonService {
 
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
-        return this.authService.post(url,{emp_id:emp_id}).map(this.extractData).catch(this.handleError);
+        return this.authService.post(url, { emp_id: emp_id }).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
