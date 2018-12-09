@@ -28,7 +28,7 @@ export class MtrBatchInitComponent implements OnInit {
 
 
     batchData: any = {
-        "emp_id": []
+        "emp_id_array": []
     };
 
     constructor( private _hrService: HrService,
@@ -86,13 +86,19 @@ export class MtrBatchInitComponent implements OnInit {
         this.utilityService.showLoader('#initiate-loader');
         this._hrService.getAllEmployeeForMTR()
             .subscribe(
-            res => {
+            res => {                
                 let data = res.json();                
                 if (data.result.length > 0) {
                     
                     data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId);
                    // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
-                    this.employeeData = data || [];
+
+                   data.forEach(element => {
+                    if(this.employeeData.filter(obj=>obj.emp_id==element.emp_id).length==0){
+                        this.employeeData.push(element);
+                    }
+                   });
+                   // this.employeeData = data || [];
                     this.utilityService.hideLoader('#initiate-loader');
                 }
                 else{
@@ -123,28 +129,33 @@ export class MtrBatchInitComponent implements OnInit {
         }
     }
     saveBulkMTR(form) {
-        this.batchData.emp_id = this.employeeFilterData.filter(function(employee, index, array) {
+        this.batchData.emp_id_array = this.employeeFilterData.filter(function(employee, index, array) {
             return employee.checked;
-        }).map(item => {
-            return item.emp_id
+        }).map(item => {            
+            return {
+                emp_id: item.emp_id,
+                supervisor_id: item.emp_supervisor_id,
+                officeEmail:item.emp_officeEmail                
+            }
         });
 
-        if(this.batchData.emp_id.length > 0)
+        if(this.batchData.emp_id_array.length > 0)
         {
             console.log(this.batchData);
-           // this.utilityService.showLoader('#initiate-loader');
-            // this._hrService.saveBulkKra(this.batchData)
-            //     .subscribe(
-            //     res => {
-            //         if (res.ok) {
-            //             this.utilityService.hideLoader('#initiate-loader');
-            //             swal("Success", "Batch Initiated Successfully", "success");
-            //             form.resetForm();                        
-            //         }
-            //     },
-            //     error => {
-            //         this.utilityService.hideLoader('#initiate-loader');
-            // });
+            this.batchData.createdBy=this._currentEmpId;
+           this.utilityService.showLoader('#initiate-loader');
+            this._hrService.saveBulkMtr(this.batchData)
+                .subscribe(
+                res => {
+                    if (res.ok) {
+                        this.utilityService.hideLoader('#initiate-loader');
+                        swal("Success", "Batch Initiated Successfully", "success");
+                        form.resetForm();                        
+                    }
+                },
+                error => {
+                    this.utilityService.hideLoader('#initiate-loader');
+            });
         }
         else{
             swal('Oops!','No employee selected','warning')

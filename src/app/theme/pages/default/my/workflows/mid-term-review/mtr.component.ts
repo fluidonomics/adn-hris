@@ -78,12 +78,22 @@ export class MyMtrComponent {
                         this.param_id = params['id'];                        
                     }
                     else {
-                        this.param_id = null;                        
+                        this.param_id = null; 
+                        this.loadKraWorkFlowDetails();                       
                     }
                 });
             });
+    }
 
-
+    loadKraWorkFlowDetails() {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
+            res => {
+                debugger;
+                let data=res.json();
+                this.mtrWorkFlowData = data.result.message;
+            },
+            error => {
+            });;
     }
 
 }
