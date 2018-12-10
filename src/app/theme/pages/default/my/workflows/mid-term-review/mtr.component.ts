@@ -3,7 +3,7 @@ import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { MtrService } from "./mtr.service"
+import { MtrService } from "../../../services/mtr.service"
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
