@@ -42,8 +42,8 @@ export class MyMtrComponent {
 
     mtrCategoryData: any[];
 
-    isDisabled: boolean = true;
-    isChangable: boolean = true;
+    isDisabled: boolean = false;
+    isChangable: boolean = false;
     employee: any = {};
 
     mtrInfoData: any = [];
@@ -75,22 +75,54 @@ export class MyMtrComponent {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
-                        this.param_id = params['id'];                        
+                        this.param_id = params['id']; 
+                                 this.loadData();              
                     }
                     else {
                         this.param_id = null; 
-                        this.loadKraWorkFlowDetails();                       
+                        this.loadMTRWorkFlowDetails();                       
                     }
                 });
             });
     }
+    loadData(){
+      this.loadSupervisorData();
+      this.loadMTRInfo();
+    }
+    loadSupervisorData() {
+        this._commonService.getKraSupervisor(this._currentEmpId)
+            .subscribe(
+                data => {
+                    this.supervisorData = data.json();
+                },
+                error => {
+                });
+    }
+    showMTRDetails(index: number) {           
+        this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
+        this.mtrData.no = index + 1;
+        if(this.mtrData.supervisorStatus)
+        this.isDisabled = this.mtrData.supervisorStatus == "Initiated" ||this.mtrData.supervisorStatus == "SendBack" ? false : true;
 
-    loadKraWorkFlowDetails() {
+        //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
+        //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+    }
+
+    loadMTRWorkFlowDetails() {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
-            res => {
-                debugger;
+            res => {               
                 let data=res.json();
                 this.mtrWorkFlowData = data.result.message;
+            },
+            error => {
+            });;
+    }
+    loadMTRInfo() {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
+            res => {               
+                let data=res.json();
+                this.mtrInfoData = data.result.message;
             },
             error => {
             });;

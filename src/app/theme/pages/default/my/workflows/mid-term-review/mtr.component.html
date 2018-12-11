@@ -253,7 +253,7 @@
 
 												<td>
 													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
-													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.supervisor_id"
+													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.mtr_master_supervisor_id"
 													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
 												<td >
@@ -262,7 +262,7 @@
 												</td>
 												<td>													
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Edit" >
+													 title="Edit" (click)="showMTRDetails(i)" >
 														<i class="la la-info"></i>
 													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
@@ -455,7 +455,7 @@
 						</div>
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
-							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.supervisor_id"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.mtr_master_supervisor_id"
 							 [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !supervisorOne.valid">
 								This field is required.
