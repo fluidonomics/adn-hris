@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
-import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MtrService } from '../../../../../services/mtr.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'mtr-view',
@@ -11,10 +11,12 @@ import { MtrService } from '../../../../../services/mtr.service';
 export class MtrViewComponent implements OnInit {
 
     mtrViewData: any = [];
+    mtrViewSearch: any;
+    mtrViewReverse: boolean = true;
 
     constructor(private _mtrService: MtrService,
         public _authService: AuthService,
-        private _route: ActivatedRoute
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -31,4 +33,10 @@ export class MtrViewComponent implements OnInit {
         }, error => {
         });
     }
+
+    gotomtrView(mtrView) {
+        /* this.router.navigateByUrl("/my/team/workflows/kra-view/" + mtr._id + "/" + mtr.emp_id); */
+    }
+
+   
 }
