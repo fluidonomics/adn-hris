@@ -16,6 +16,11 @@ export class MtrService {
         let url = "midterm/getMtrDetailsSingleEmployee?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
+    getMtrBySupervisor(supervisorId?: number): Observable<Response> {
+        let url = "midterm/getMtrBySupervisor?supervisor_id=" + supervisorId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     
     private extractData(res: Response) {
         return res || {};
