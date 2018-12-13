@@ -212,10 +212,10 @@
                                                         <tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body"> 
-                                                            <ng-container *ngFor="let kraRow of batch?.kraWorkFlowData |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
+                                                            <ng-container *ngFor="let kraRow of batch?.mtr_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                                 <tr class="m-datatable__row">
                                                                         <td class="m-datatable__cell" width="62%" >
-                                                                                <span>{{kraRow.userName}}</span>
+                                                                                <span>{{kraRow.emp_details?.fullName}}</span>
                                                                         </td>
                                                                         <!-- <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.timeline_id}}</span>

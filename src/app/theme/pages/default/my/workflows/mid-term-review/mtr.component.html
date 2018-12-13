@@ -212,7 +212,7 @@
 													KRA
 												</th> -->
 												<th>
-													MTR Category
+													KRA Category
 												</th>
 												<th>
 													Weightage
@@ -242,7 +242,7 @@
 												</th>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="mtrCategory{{i}}" id="mtrCategory" [items]="mtrCategoryData"
-													 bindLabel="mtrCategoryName" bindValue="_id" placeholder="Select MTR Category" [(ngModel)]="mtrInfo.category_id"
+													 bindLabel="mtrCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id"
 													 [clearable]="false" #mtrCategory="ngModel" required disabled></ng-select>
 												</td>
 												<td>
@@ -427,11 +427,11 @@
 							<span>MTR No. {{mtrData.no}}</span>
 						</div>
 						<div class="col-md-2 ">
-							MTR Category
+							KRA Category
 						</div>
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData"
-							 bindLabel="mtrCategoryName" bindValue="_id" placeholder="Select MTR Category" [(ngModel)]="mtrData.category_id"
+							 bindLabel="mtrCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrData.category_id"
 							 [clearable]="false" #mtrCategory="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtrCategory.valid">
 								This field is required.

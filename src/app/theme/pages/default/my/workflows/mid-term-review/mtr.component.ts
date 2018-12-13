@@ -9,7 +9,7 @@ import { AuthService } from "../../../../../../base/_services/authService.servic
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
-import { NgSelectComponent } from '@ng-select/ng-select'
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 
 @Component({
@@ -86,8 +86,18 @@ export class MyMtrComponent {
             });
     }
     loadData(){
+      this.loadMTRCategoryData()
       this.loadSupervisorData();
       this.loadMTRInfo();
+    }
+    loadMTRCategoryData() {
+        this._commonService.getKraCategory()
+            .subscribe(
+                data => {
+                    this.mtrCategoryData = data.json();
+                },
+                error => {
+                });
     }
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId)
@@ -114,6 +124,8 @@ export class MyMtrComponent {
             res => {               
                 let data=res.json();
                 this.mtrWorkFlowData = data.result.message;
+
+                //this.mtrWorkFlowData=
             },
             error => {
             });;

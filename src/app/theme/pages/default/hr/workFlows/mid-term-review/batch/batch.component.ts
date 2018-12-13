@@ -6,6 +6,7 @@ import { BatchService } from "../../batch/batchService.service";
 import {environment} from '../../../../../../../../environments/environment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { MtrService } from "../../../../services/mtr.service"
 
 import swal from 'sweetalert2';
 
@@ -14,7 +15,7 @@ import swal from 'sweetalert2';
     templateUrl: "./batch.component.html",
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./batch.component.css'],
-    providers:[BatchService]
+    providers:[BatchService,MtrService]
 })
 export class MTRBatchComponent implements OnInit {
     batchData: any = [];
@@ -48,7 +49,8 @@ export class MTRBatchComponent implements OnInit {
         private _commonService: CommonService,
         private _batchService: BatchService,
         public utilityService: UtilityService,
-        public _authService: AuthService) {
+        public _authService: AuthService,
+        public _mtrService: MtrService) {
     }
     loadBatchFilter: any = {
         date:  this.loadBatch(),
@@ -71,15 +73,14 @@ export class MTRBatchComponent implements OnInit {
     initData() {
         this.loadBatch();
     }
-
     loadBatch()
     {
-        this.utilityService.showLoader('#batch-loader');
-        this._commonService.getBatchInfo()
+        this.utilityService.showLoader('#batch-loader');        
+        this._mtrService.getMtrBatches(this._currentEmpId)
             .subscribe(
-            res => {
+            res => {              
                 this.utilityService.hideLoader('#batch-loader');
-                this.batchData=res.json().data;
+                this.batchData=res.json().result.message;
                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
             },
             error => {
@@ -89,13 +90,14 @@ export class MTRBatchComponent implements OnInit {
 
     loadkraWorkFlowDetails(batch_id:number)
     {       
-       this._commonService.getKraWorkFlowInfoByBatch(batch_id)
-       .subscribe(
-        res => {
-            this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData = res.json().data;
-        },
-        error => {
-        });  
+    //    this._commonService.getKraWorkFlowInfoByBatch(batch_id)
+    //    .subscribe(
+    //     res => {
+    //         this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData = res.json().data;
+    //     },
+    //     error => {
+    //     });       
+
     }
 
     saveKraWorkFlow(batch_id,kraWorkFlowIndex,status)
