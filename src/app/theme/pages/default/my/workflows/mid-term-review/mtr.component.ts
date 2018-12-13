@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
 import { NgSelectComponent } from '@ng-select/ng-select';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -123,9 +124,10 @@ export class MyMtrComponent {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
             res => {               
                 let data=res.json();
-                this.mtrWorkFlowData = data.result.message;
-
-                //this.mtrWorkFlowData=
+                this.mtrWorkFlowData = data.result.message;               
+              this.mtrWorkFlowData=  _.chain(this.mtrWorkFlowData).groupBy('mtr_batch._id').map(function(v, i){                                    
+                    return v[0];
+                }).value();               
             },
             error => {
             });;
