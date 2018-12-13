@@ -23,6 +23,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { ModalModule } from 'ngx-bootstrap';
 import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
+import { MtrService } from '../../services/mtr.service';
 
 @NgModule({
     imports: [
@@ -47,7 +48,7 @@ import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-
         MtrApprovalsComponent,
         MtrViewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, MtrService]
 })
 export class MyTeamModule {
 }

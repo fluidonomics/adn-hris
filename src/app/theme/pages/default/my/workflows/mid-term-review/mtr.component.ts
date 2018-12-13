@@ -3,13 +3,13 @@ import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { MtrService } from "./mtr.service"
 import { CommonService } from "../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
 import { NgSelectComponent } from '@ng-select/ng-select'
+import { MtrService } from "../../../services/mtr.service";
 
 
 @Component({
@@ -24,7 +24,7 @@ export class MyMtrComponent {
     @ViewChild('mtrDetailModal') kraDetailModal: TemplateRef<any>;
     @ViewChild('MTRDataForm') fleaveapplication: NgForm;
     supervisorData: any = [];
-    weightageData:any=[];
+    weightageData: any = [];
 
     param_id: number;
     _currentEmpId: number;
@@ -52,22 +52,22 @@ export class MyMtrComponent {
     mtrData: any = {};
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService,
-    private _mtrService: MtrService,
-    private modalService: BsModalService
-) {
-    title.setTitle('ADN HRIS | My Profile');
-    meta.addTags([
-        { name: 'author', content: '' },
-        { name: 'keywords', content: 'Add new employee' },
-        { name: 'description', content: 'Add new employee.' }
-    ]);
+        meta: Meta, title: Title,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private _mtrService: MtrService,
+        private modalService: BsModalService
+    ) {
+        title.setTitle('ADN HRIS | My Profile');
+        meta.addTags([
+            { name: 'author', content: '' },
+            { name: 'keywords', content: 'Add new employee' },
+            { name: 'description', content: 'Add new employee.' }
+        ]);
 
-}
+    }
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
@@ -75,11 +75,11 @@ export class MyMtrComponent {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
-                        this.param_id = params['id'];                        
+                        this.param_id = params['id'];
                     }
                     else {
-                        this.param_id = null; 
-                        this.loadKraWorkFlowDetails();                       
+                        this.param_id = null;
+                        this.loadKraWorkFlowDetails();
                     }
                 });
             });
@@ -89,7 +89,7 @@ export class MyMtrComponent {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
             res => {
                 debugger;
-                let data=res.json();
+                let data = res.json();
                 this.mtrWorkFlowData = data.result.message;
             },
             error => {
