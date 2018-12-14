@@ -16,6 +16,7 @@ import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kr
 import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
+import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
@@ -46,7 +47,8 @@ import { MtrService } from '../../services/mtr.service';
         AllEmployeeComponent,
         AllEmployeeReviewer,
         MtrApprovalsComponent,
-        MtrViewComponent
+        MtrViewComponent,
+        MtrDetailedViewComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, MtrService]
 })

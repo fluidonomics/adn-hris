@@ -36,6 +36,6 @@ export class MtrApprovalsComponent implements OnInit {
     }
 
     gotomtrData(mtr) {
-        /* this.router.navigateByUrl("/my/team/workflows/kra-view/" + mtr._id + "/" + mtr.emp_id); */
+        this.router.navigateByUrl("/my/team/workflows/mtr-detailed-view/" + mtr._id + "/" + mtr.emp_id); 
     }
 }
