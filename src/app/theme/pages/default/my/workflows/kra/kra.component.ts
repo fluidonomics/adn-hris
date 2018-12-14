@@ -195,6 +195,8 @@ export class MyKraComponent {
         this.kraData.no = index + 1;
         if(this.kraData.supervisorStatus)
         this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
+        else
+        this.isDisabled=false;
 
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
