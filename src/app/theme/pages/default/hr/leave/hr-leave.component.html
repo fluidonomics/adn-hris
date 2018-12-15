@@ -36,7 +36,7 @@
 											<ng-select class="m-input m-input--air" name="leaveType" id="leaveType" [items]="leaveTypes" bindLabel="type"
 											 bindValue="_id" placeholder="Select leaveType" [(ngModel)]="request.leave_type" [clearable]="false"
 											 (change)="leaveTypeSelect($event)" #leaveType="ngModel" required></ng-select>
-											<div class="form-control-feedback has-danger" *ngIf="leaveQuota.submitted ">
+											<div class="form-control-feedback has-danger" *ngIf="leaveType.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
 										</div>
@@ -47,7 +47,7 @@
 												 [(ngModel)]="request.balance" #quota="ngModel" required>
 											</span>
 											<span>days</span>
-											<div class="form-control-feedback has-danger" *ngIf="leaveQuota.submitted">
+											<div class="form-control-feedback has-danger" *ngIf="quota.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
 										</div>
@@ -57,8 +57,9 @@
 											<label>Select Employee Selection Type</label>
 											<ng-select class="m-input m-input--air" name="selectionType" id="selectionType" [items]="selectionType"
 											 bindLabel="selectionType" bindValue="_id" placeholder="Select Employee selection type" [clearable]="false"
-											 (change)="onSelectionTypeChange($event)"></ng-select>
-											<div class="form-control-feedback has-danger" *ngIf="leaveQuota.submitted ">
+											 (change)="onSelectionTypeChange($event)" [(ngModel)]="request.empSelectionType" #empSelType="ngModel"
+											 required></ng-select>
+											<div class="form-control-feedback has-danger" *ngIf="empSelType.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
 										</div>
@@ -69,7 +70,7 @@
 											<ng-select class="m-input m-input--air" name="allemployee" id="allemployee" [items]="employeesListToShow"
 											 bindLabel="fullName" bindValue="_id" placeholder="Select Employee (emp Id)" [(ngModel)]="request._id"
 											 [clearable]="false" #allemployee="ngModel" (change)="onEmployeeSelect($event)" required></ng-select>
-											<div class="form-control-feedback has-danger" *ngIf="leaveQuota.submitted ">
+											<div class="form-control-feedback has-danger" *ngIf="allemployee.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
 										</div>
@@ -84,9 +85,9 @@
 										<div class="col-md-6">
 											<label>Select Department</label>
 											<ng-select class="m-input m-input--air" name="departmentData" id="departmentData" [items]="departmentData"
-											 bindLabel="departmentName" bindValue="_id" placeholder="Select Department" [(ngModel)]="departmentId "
-											 [clearable]="false"  (change)="onDepartmentSelect($event)" required></ng-select>
-											<div class="form-control-feedback has-danger" *ngIf="leaveQuota.submitted ">
+											 bindLabel="departmentName" bindValue="_id" placeholder="Select Department" [(ngModel)]="departmentId"
+											 #depId="ngModel" [clearable]="false" (change)="onDepartmentSelect($event)" required></ng-select>
+											<div class="form-control-feedback has-danger" *ngIf="depId.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
 										</div>
@@ -120,14 +121,15 @@
 									</div>
 									<br />
 									<!-- employee grid -->
-									<div *ngIf="isSpecial && (displaySelection === 'All' || displaySelection ==='Department' )"class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeGridData | orderBy: key : reverse | filter:search)?.length==0 }">
+									<div *ngIf="isSpecial && (displaySelection === 'All' || displaySelection ==='Department' )" class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+									 [ngClass]="{'m-datatable--error': (employeeGridData | orderBy: key : reverse | filter:search)?.length==0 }">
 										<table class="m-datatable__table">
 											<thead class="m-datatable__head">
 												<tr class="m-datatable__row">
 													<th class="m-datatable__cell" width="5%"></th>
 													<th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%">
 														<span>
-															
+
 															<i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 														</span>
 													</th>
@@ -230,8 +232,8 @@
 										</pagination-template>
 										<div class="pager-display-size" *ngIf="(employeeGridData | orderBy: key : reverse | filter:search)?.length!=0">
 
-											<select  class="selectpicker m-datatable__pager-size" title="Select page size"
-											 data-width="70px" data-selected="50" tabindex="1">
+											<select class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px"
+											 data-selected="50" tabindex="1">
 												<option value=10>10</option>
 												<option value=20>20</option>
 												<option value=30>30</option>
@@ -239,7 +241,8 @@
 												<option value=100>100</option>
 											</select>
 											<span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeeGridData | orderBy: key :
-												reverse | filter:search)?.length)}} of {{(employeeGridData | orderBy: key : reverse | filter:search)?.length}}</span>
+												reverse | filter:search)?.length)}} of {{(employeeGridData | orderBy: key : reverse |
+												filter:search)?.length}}</span>
 										</div>
 									</div>
 									<!-- employee grid -->

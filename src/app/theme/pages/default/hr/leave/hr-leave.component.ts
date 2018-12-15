@@ -14,7 +14,7 @@ import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { environment } from "../../../../../../environments/environment";
 import * as _ from 'lodash';
-import {} from '../../../../../../../..'
+
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./hr-leave.component.html",
@@ -37,7 +37,7 @@ export class HrLeaveComponent implements OnInit {
     sickLeaveBalance = 0;
     specialLeaveBalance = 0;
     maternityLeaveBalance = 0;
-    request = {
+    request: any = {
         is_paid: false,
         leave_type: null,
         balance: null,
@@ -49,7 +49,7 @@ export class HrLeaveComponent implements OnInit {
     //grid variables
     key: string = ''; //set default
     reverse: boolean = false;
-    imageBase:any;
+    imageBase: any;
     itemPerPage: number = 10;
     p2: number = 1;
     search: any;
@@ -61,13 +61,26 @@ export class HrLeaveComponent implements OnInit {
     employeeEligibleForSpecialUnpaidLeave: any[];
     employeeNotEligibleForSpecialUnpaidLeave: any[];
     // data for grid
-   
+    currentUser: any = {};
+    currentFiscalYear: any;
 
-    constructor( private _router: Router, public _authService: AuthService, private _commonService: CommonService, 
-    private _hrService: HrService, private modalService: BsModalService, private _leaveService: LeaveService) {
+    constructor(
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private _hrService: HrService,
+        private modalService: BsModalService,
+        private _leaveService: LeaveService,
+        private authService: AuthService,
+
+    ) {
 
     }
     ngOnInit() {
+        this.currentUser = this._authService.currentUserData;
+        this._commonService.getCurrentFinancialYear().subscribe(res => {
+            this.currentFiscalYear = res;
+        });
         this.isMaternity = false;
         this.isSpecial = false;
         this.selectionType = [
@@ -78,11 +91,11 @@ export class HrLeaveComponent implements OnInit {
         this._leaveService.getAllEmployeeManagementType().subscribe(res => {
             if (res.ok) {
                 this.employees = res.json() || {};
-                this.employeeEligibleForSpecialLeave = _.filter(this.employees, (emp) => emp.leave_type !== 4 );
+                this.employeeEligibleForSpecialLeave = _.filter(this.employees, (emp) => emp.leave_type !== 4);
                 this.employeeEligibleForSpecialLeave = this.getDistinctSelectedData(this.employeeEligibleForSpecialLeave);
                 this.employeeNotEligibleForSpecialLeave = _.filter(this.employees, (emp) => emp.leave_type === 4);
                 this.employeeNotEligibleForSpecialLeave = this.getDistinctSelectedData(this.employeeNotEligibleForSpecialLeave);
-                this.employeeEligibleForSpecialUnpaidLeave = _.filter(this.employees, (emp) => emp.leave_type !== 5 );
+                this.employeeEligibleForSpecialUnpaidLeave = _.filter(this.employees, (emp) => emp.leave_type !== 5);
                 this.employeeEligibleForSpecialUnpaidLeave = this.getDistinctSelectedData(this.employeeEligibleForSpecialUnpaidLeave);
                 this.employeeNotEligibleForSpecialUnpaidLeave = _.filter(this.employees, (emp) => emp.leave_type === 5);
                 this.employeeNotEligibleForSpecialUnpaidLeave = this.getDistinctSelectedData(this.employeeNotEligibleForSpecialUnpaidLeave);
@@ -105,25 +118,25 @@ export class HrLeaveComponent implements OnInit {
             console.log(err);
         })
         //grid initialisation
-        this.imageBase= environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
     }
 
-    getDistinctSelectedData(data: any) : any {
-        var selectedColumn = ['_id', 'fullName', 'profileImage', 'officeEmail', 'designation', 'supervisorName', 'supervisorId', 'departmentId', 'supervisorEmail', 'leavebalance' ];
+    getDistinctSelectedData(data: any): any {
+        var selectedColumn = ['_id', 'fullName', 'profileImage', 'officeEmail', 'designation', 'supervisorName', 'supervisorId', 'departmentId', 'supervisorEmail', 'leavebalance'];
         return _.uniqBy(_.map(data, _.partialRight(_.pick, selectedColumn)), '_id');
     }
-    
+
     leaveTypeSelect(data: any) {
         if (data.type === "Maternity Leave") {
-            this.employeesListToShow =   this.getDistinctSelectedData(this.employees.filter(f => f.gender === "Female"));
+            this.employeesListToShow = this.getDistinctSelectedData(this.employees.filter(f => f.gender === "Female"));
             this.isMaternity = true;
             this.isSpecial = false;
         } else {
-            if(data.type === "Special Leave")
+            if (data.type === "Special Leave")
                 this.employeesListToShow = this.employeeEligibleForSpecialLeave;
-            else if(data.type === "Special Leave (unpaid)")
+            else if (data.type === "Special Leave (unpaid)")
                 this.employeesListToShow = this.employeeEligibleForSpecialUnpaidLeave;
-            this.isMaternity = false; 
+            this.isMaternity = false;
             this.isSpecial = true;
         }
     }
@@ -144,16 +157,16 @@ export class HrLeaveComponent implements OnInit {
         this.filterData();
     }
     filterData() {
-        switch(this.displaySelection) {
+        switch (this.displaySelection) {
             case "All":
                 this.employeeGridData = this.employeeEligibleForSpecialLeave;
-            break;
+                break;
             case "Department":
-                this.employeeGridData = this.employeeEligibleForSpecialLeave.filter(f => f.departmentId === this.departmentId) 
-            break;
+                this.employeeGridData = this.employeeEligibleForSpecialLeave.filter(f => f.departmentId === this.departmentId)
+                break;
             case "Single":
                 this.employeeGridData = [];
-            break;
+                break;
         }
     }
     clear() {
@@ -169,67 +182,66 @@ export class HrLeaveComponent implements OnInit {
         this.sickLeaveBalance = 0;
         this.specialLeaveBalance = 0;
         this.maternityLeaveBalance = 0;
-        this.isMaternity  =false;
+        this.isMaternity = false;
         this.isSpecial = false;
         this.employeeGridData = [];
         this.displaySelection = "";
-        
+
     }
     // on submit
     provideLeave(form) {
+        debugger;
         if (form.valid) {
-          if(this.request.leave_type === 3){
-              this.provideMaternityQuota(form);
-          }
-          else if(this.request.leave_type === 4 || this.request.leave_type === 5) {
-            this.provideSpecialLeave(form);
+            if (this.request.leave_type === 3) {
+                this.provideMaternityQuota(form);
+            }
+            else if (this.request.leave_type === 4 || this.request.leave_type === 5) {
+                this.provideSpecialLeave(form);
+            }
         }
-        } 
-            
+
     }
     provideMaternityQuota(form) {
         let currentEmpDetails = this.employees.filter(f => f._id == this.request._id);
-            let data = {
-                fullName: currentEmpDetails[0].fullName,
-                officeEmail: currentEmpDetails[0].officeEmail,
-                supervisor: currentEmpDetails[0].supervisorName,
-                supervisor_id: currentEmpDetails[0].supervisorId,
-                supervisor_email: currentEmpDetails[0].supervisorEmail,
-                emp_id: this.request._id,
-                leave_type: this.request.leave_type,
-                balance: this.request.balance,
-                fiscalYearId: 2, //need to replace with fiscalYear id
-                createdBy: 2 //need to replace with HR id
-            }
+        let data = {
+            fullName: currentEmpDetails[0].fullName,
+            officeEmail: currentEmpDetails[0].officeEmail,
+            supervisor: currentEmpDetails[0].supervisorName,
+            supervisor_id: currentEmpDetails[0].supervisorId,
+            supervisor_email: currentEmpDetails[0].supervisorEmail,
+            emp_id: this.request._id,
+            leave_type: this.request.leave_type,
+            balance: this.request.balance,
+            fiscalYearId: this.currentFiscalYear._id,
+            createdBy: this.currentUser._id
+        }
 
-            this._leaveService.addMaternityLeaveQuota(data).subscribe(res => {
-                if (res.ok) {
-                    swal("Leave quota provided", res.json().title, "success");
-                    form.resetForm();
-                    form.submitted = false;
-                    this.clear();
-                }
-            }, err => {
-                console.log(err);
-            })
+        this._leaveService.addMaternityLeaveQuota(data).subscribe(res => {
+            if (res.ok) {
+                swal("Leave quota provided", res.json().title, "success");
+                form.resetForm();
+                form.submitted = false;
+                this.clear();
+            }
+        }, err => {
+            console.log(err);
+        })
     }
-    provideSpecialLeave(form) {
-        
-        if(this.displaySelection === "All" || this.displaySelection === "Department") {
-            var selectedColumn = ['_id', 'fullName',  'officeEmail' ];
-            var emp_array =_.map(this.employeeGridData, _.partialRight(_.pick, selectedColumn));
+    provideSpecialLeave(form: NgForm) {
+        if (this.displaySelection === "All" || this.displaySelection === "Department") {
+            var selectedColumn = ['_id', 'fullName', 'officeEmail'];
+            var emp_array = _.map(this.employeeGridData, _.partialRight(_.pick, selectedColumn));
             let data = {
                 emp_id_array: emp_array,
                 leave_type: this.request.leave_type,
                 balance: this.request.balance,
-                fiscalYearId: 2, //need to replace with fiscalYear id
-                createdBy: 2 //need to replace with HR id
+                fiscalYearId: this.currentFiscalYear._id,
+                createdBy: this.currentUser._id
             }
             this._leaveService.addSpecialLeaveBulkQuota(data).subscribe(res => {
                 if (res.ok) {
                     swal("Leave quota provided", res.json().title, "success");
-                    form.resetForm();
-                    form.submitted = false;
+                    form.reset();
                     this.clear();
                 }
             }, err => {
@@ -246,23 +258,19 @@ export class HrLeaveComponent implements OnInit {
                 emp_id: this.request._id,
                 leave_type: this.request.leave_type,
                 balance: this.request.balance,
-                fiscalYearId: 2, //need to replace with fiscalYear id
-                createdBy: 2 //need to replace with HR id
+                fiscalYearId: this.currentFiscalYear._id,
+                createdBy: this.currentUser._id
             }
             this._leaveService.addSpecialLeaveQuota(data).subscribe(res => {
                 if (res.ok) {
                     swal("Leave quota provided", res.json().title, "success");
-                    form.resetForm();
-                    form.submitted = false;
+                    form.reset();
                     this.clear();
                 }
             }, err => {
                 console.log(err);
             })
         }
-            
-            
-            
     }
     // on submit
     // grid functions
@@ -278,4 +286,4 @@ export class HrLeaveComponent implements OnInit {
         return Math.min(start + this.itemPerPage - 1, filterCount);
     }
     // grid functions
- }
+}
