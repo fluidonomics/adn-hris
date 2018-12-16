@@ -86,8 +86,25 @@ export class MyMtrComponent {
                 });
             });
     }
+    addKraHtml() {       
+        if (this.mtrInfoData.length < 7) {
+            let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
+            this.mtrInfoData.push(data);
+        }
+        else {
+            swal({
+                title: 'Oops!',
+                text: "You can't add more than 7 KRAs",
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
     loadData(){
-      this.loadMTRCategoryData()
+      this.loadMTRCategoryData();
+      this.loadWeightAgeData();
       this.loadSupervisorData();
       this.loadMTRInfo();
     }
@@ -140,6 +157,111 @@ export class MyMtrComponent {
             },
             error => {
             });;
+    }
+    loadWeightAgeData() {
+        this._commonService.getKraWeightage()
+            .subscribe(
+                data => {
+                    this.weightageData = data.json();
+                },
+                error => {
+                });
+    }
+    saveKraDetails(index: number) {
+        this.mtrInfoData[index].supervisorStatus = null;
+        debugger;
+        let request={
+            mtr_master_id: this.param_id,
+            mtr_kra:this.mtrInfoData[index].mtr,
+            supervisor_id:this.mtrInfoData[index].mtr_master_supervisor_id,
+            mtr_batch_id:this.mtrInfoData[0].mtr_batch_id,
+            weightage_id:this.mtrInfoData[index].weightage_id,
+            unitOfSuccess:this.mtrInfoData[index].unitOfSuccess,
+            measureOfSuccess:this.mtrInfoData[index].measureOfSuccess,
+            isDeleted:false,
+            createdBy:this._currentEmpId
+        }
+        this._mtrService.saveKra(request)
+            .subscribe(
+                res => {
+                    if (res.ok) {
+                        //this.mtrInfoData[index] = res.json();
+                        let data=res.json();
+                        this.mtrInfoData[index]  =data.result.message
+                        swal({
+                            title: 'Success',
+                            text: "MTR has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error => {
+                });
+    }
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            debugger;
+            this.modalRef.hide();
+            this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));
+            this.saveKraDetails(this.mtrData.no - 1);
+        }
+
+    }
+
+    deleteKraHtml(index: number) {
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want to delete the KRA ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) { 
+                debugger;              
+                if (this.mtrInfoData[index]._id){                
+                    let request={
+                        _id:this.mtrInfoData[index]._id,
+                        updatedBy:this._currentEmpId
+                    }
+                    this.deleteKra(request, index);
+                }
+                else {
+                    this.mtrInfoData.splice(index, 1);
+                    if (this.mtrInfoData.length == 0) {
+                        this.addKraHtml();
+                    }
+                }
+            }
+        });
+    }
+
+    deleteKra(data: any, index: number) {
+        this._mtrService.deleteKra(data)
+            .subscribe(
+                res => {
+                    if (res.ok) {
+                        this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
+                        //delete this.kraInfoData[index];
+                        if (this.mtrInfoData.length == 0) {
+                            this.addKraHtml();
+                        }
+                        swal({
+                            title: 'Deleted',
+                            text: "KRA has been deleted successfully.",
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonColor: '#D33',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error => {
+                });
     }
 
 }
