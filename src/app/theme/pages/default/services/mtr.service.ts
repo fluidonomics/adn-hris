@@ -28,6 +28,13 @@ export class MtrService {
         let url = "midterm/postNewMtrKra"        
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+    saveKraWorkFlow(data: any): Observable<Response> {
+        let url = "midterm/mtrSubmit"
+        if (data._id) {
+            url = "midterm/mtrSubmit"
+        }
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
     
     private extractData(res: Response) {
         return res || {};

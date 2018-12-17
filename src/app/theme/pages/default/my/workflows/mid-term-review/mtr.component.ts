@@ -154,6 +154,7 @@ export class MyMtrComponent {
             res => {               
                 let data=res.json();
                 this.mtrInfoData = data.result.message;
+                //isChangable status not comming from API
             },
             error => {
             });;
@@ -262,6 +263,126 @@ export class MyMtrComponent {
                 },
                 error => {
                 });
+    }
+
+    isWeightage() {
+        let isKraWeightAge = this.mtrInfoData.reduce((prev, next) => prev + parseInt(this.weightageData.filter(c => c._id == next.weightage_id)[0].kraWeightageName.replace('%', '')), 0) == 100 ? true : false;
+        if (!isKraWeightAge) {
+            swal({
+                title: 'Oops!',
+                text: 'Sum of weightages should be 100%',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+            return isKraWeightAge;
+        }
+        else {
+            return isKraWeightAge;
+        }
+    }
+    isCategoryUnique() {
+        let categoryUnique = Array.from(new Set(this.mtrInfoData.map((item: any) => item.category_id))).length == this.mtrInfoData.length ? true : false;
+        if (!categoryUnique) {
+            swal({
+                title: 'Do you want to Submit?',
+                text: "Make sure you have covered all categories.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#9a9caf',
+                confirmButtonText: 'Proceed Anyway',
+            }).then((result) => {
+                if (result.value) {
+                    this.saveKraWorkFlow();
+                }
+            });
+        }
+        else {
+            this.saveKraWorkFlow();
+        }
+    }
+    isSendBackOrNewKraSaved(isFormDirty) {
+        let isSendBackNotSaved = this.mtrInfoData.filter(x => x.supervisorStatus != 'SendBack').length == this.mtrInfoData.length ? true : false;
+        let isAllKraSaved = this.mtrInfoData.filter(x => x._id == null || x._id == undefined).length == 0 ? true : false;
+        if (!isSendBackNotSaved || !isAllKraSaved || isFormDirty) {
+            swal({
+                title: 'Oops!',
+                text: 'Please save unsaved KRAs before submitting',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+        else {
+            return true;
+        }
+    } 
+    submitKraWorkFlow(isFormDirty) {
+        //let requiredWorkFlowLength= 
+        //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
+        //let unique=Array.from(new Set(this.kraInfoData.map((item: any) => item.category_id)));
+        //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);       
+        if (this.isSendBackOrNewKraSaved(isFormDirty)) {
+            if (this.isWeightage()) {
+                if (!this.isRequiredWorkFlowLength()) {
+                    let kraLength = this.employee.grade_id <= 2 ? 5 : 3;
+                    swal({
+                        title: 'Do you want to Submit?',
+                        text: "For your grade ateast " + kraLength + " KRAs are required",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#9a9caf',
+                        confirmButtonText: 'Proceed Anyway',
+                    }).then((result) => {
+                        if (result.value) {
+                            this.isCategoryUnique();
+                        }
+                    });
+                }
+                else {
+                    this.isCategoryUnique();
+                }
+            }
+        }
+    } 
+    isRequiredWorkFlowLength() {
+        return this.employee.grade_id <= 2 && this.mtrInfoData.length >= 5 ? true : (this.employee.grade_id > 2 && this.mtrInfoData.length >= 3 ? true : false)
+    } 
+    saveKraWorkFlow() {
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {                          
+            this._mtrService.saveKraWorkFlow({ id: this.param_id, empId: this._currentEmpId })
+            .subscribe(
+                res => {
+                    if (res.ok) {
+                        swal({
+                            title: 'Submitted Successfully!',
+                            text: "KRA has been submitted for Supervisor Approval.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                        this.loadMTRInfo();
+                    }
+                },
+                error => {
+                });
+            }
+        });
     }
 
 }
