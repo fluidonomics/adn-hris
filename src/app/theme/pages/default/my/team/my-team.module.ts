@@ -16,6 +16,7 @@ import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kr
 import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
+import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
@@ -23,6 +24,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { ModalModule } from 'ngx-bootstrap';
 import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
+import { MtrService } from '../../services/mtr.service';
 
 @NgModule({
     imports: [
@@ -45,9 +47,10 @@ import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-
         AllEmployeeComponent,
         AllEmployeeReviewer,
         MtrApprovalsComponent,
-        MtrViewComponent
+        MtrViewComponent,
+        MtrDetailedViewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, MtrService]
 })
 export class MyTeamModule {
 }

@@ -25,7 +25,7 @@ export class MyMtrComponent {
     @ViewChild('mtrDetailModal') kraDetailModal: TemplateRef<any>;
     @ViewChild('MTRDataForm') fleaveapplication: NgForm;
     supervisorData: any = [];
-    weightageData:any=[];
+    weightageData: any = [];
 
     param_id: number;
     _currentEmpId: number;
@@ -53,22 +53,22 @@ export class MyMtrComponent {
     mtrData: any = {};
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService,
-    private _mtrService: MtrService,
-    private modalService: BsModalService
-) {
-    title.setTitle('ADN HRIS | My Profile');
-    meta.addTags([
-        { name: 'author', content: '' },
-        { name: 'keywords', content: 'Add new employee' },
-        { name: 'description', content: 'Add new employee.' }
-    ]);
+        meta: Meta, title: Title,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private _mtrService: MtrService,
+        private modalService: BsModalService
+    ) {
+        title.setTitle('ADN HRIS | My Profile');
+        meta.addTags([
+            { name: 'author', content: '' },
+            { name: 'keywords', content: 'Add new employee' },
+            { name: 'description', content: 'Add new employee.' }
+        ]);
 
-}
+    }
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
