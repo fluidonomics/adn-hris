@@ -235,7 +235,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'sendBack':mtrInfoData[i].supervisorStatus=='SendBack','approved':mtrInfoData[i].supervisorStatus =='Approved'}"
+											<tr *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'sendBack':mtrInfoData[i].mtr_master_status=='SendBack','approved':mtrInfoData[i].mtr_master_status =='Approved'}"
 											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
@@ -258,7 +258,7 @@
 												</td>
 												<td >
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="mtrInfo.sendBackComment"
-													 class="form-control m-input m-input--air" disabled *ngIf="mtrInfo.supervisorStatus!='Approved'"></textarea>
+													 class="form-control m-input m-input--air" disabled *ngIf="mtrInfo.mtr_master_status!='Approved'"></textarea>
 												</td>
 												<td>													
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
@@ -266,7 +266,7 @@
 														<i class="la la-info"></i>
 													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Delete" *ngIf=" mtrInfo.supervisorStatus!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
+													 title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
 													</button>
 													

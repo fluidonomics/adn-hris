@@ -130,8 +130,8 @@ export class MyMtrComponent {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
-        if(this.mtrData.supervisorStatus)
-        this.isDisabled = this.mtrData.supervisorStatus == "Initiated" ||this.mtrData.supervisorStatus == "SendBack" ? false : true;
+        if(this.mtrData.mtr_master_status)
+        this.isDisabled = this.mtrData.mtr_master_status == "Initiated" ||this.mtrData.mtr_master_status == "SendBack" ? false : true;
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
@@ -226,7 +226,7 @@ export class MyMtrComponent {
                 debugger;              
                 if (this.mtrInfoData[index]._id){                
                     let request={
-                        _id:this.mtrInfoData[index]._id,
+                        id:this.mtrInfoData[index]._id,
                         updatedBy:this._currentEmpId
                     }
                     this.deleteKra(request, index);
@@ -250,7 +250,7 @@ export class MyMtrComponent {
                         //delete this.kraInfoData[index];
                         if (this.mtrInfoData.length == 0) {
                             this.addKraHtml();
-                        }
+                        }                        
                         swal({
                             title: 'Deleted',
                             text: "KRA has been deleted successfully.",
@@ -259,6 +259,7 @@ export class MyMtrComponent {
                             confirmButtonColor: '#D33',
                             confirmButtonText: 'OK'
                         });
+                    this.loadMTRInfo();
                     }
                 },
                 error => {
