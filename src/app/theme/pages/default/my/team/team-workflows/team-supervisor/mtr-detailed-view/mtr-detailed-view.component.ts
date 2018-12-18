@@ -3,7 +3,6 @@ import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { MtrDetailedViewService } from "./mtr-detailed-view.service"
 import { CommonService } from "../../../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
@@ -12,8 +11,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
     templateUrl: "./mtr-detailed-view.component.html",
-    encapsulation: ViewEncapsulation.None,
-    providers: [MtrDetailedViewService]
+    encapsulation: ViewEncapsulation.None
 })
 
 export class MtrDetailedViewComponent {
@@ -40,7 +38,6 @@ export class MtrDetailedViewComponent {
     private _router: Router,
     public _authService: AuthService,
     private _commonService: CommonService,
-    private _mtrService: MtrDetailedViewService,
     private modalService: BsModalService
     ) {
         title.setTitle('ADN HRIS | My Profile');
@@ -69,49 +66,37 @@ export class MtrDetailedViewComponent {
         this.loadMtrCategoryData();
         this.loadWeightAgeData();
         this.loadSupervisorData();
-        this.loadMtrInfo();
         this.getEmployee();
     }
 
-    loadMtrInfo() {
-        this._mtrService.getMtrInfo(this.param_id).subscribe(
-            res => {
-                this.mtrInfoData = res.json().data;
-                this.isDisabled = res.json().status == 'Approved' ? true : false;
-                this.status = res.json().status;
-            },
-            error => {
-            });;
-    }
-
     loadMtrCategoryData() {
-        this._commonService.getMtrCategory()
+        /* this._commonService.getMtrCategory()
             .subscribe(
                 data => {
                     this.mtrCategoryData = data.json();
                 },
                 error => {
-                });
+                }); */
     }
 
     loadWeightAgeData() {
-        this._commonService.getMtrWeightage()
+        /* this._commonService.getMtrWeightage()
             .subscribe(
                 data => {
                     this.weightageData = data.json();
                 },
                 error => {
-                });
+                }); */
     }
 
     loadSupervisorData() {
-        this._commonService.getMtrSupervisor(this.param_emp_id)
+       /*  this._commonService.getMtrSupervisor(this.param_emp_id)
             .subscribe(
                 data => {
                     this.supervisorData = data.json();
                 },
                 error => {
-                });
+                }); */
     }
 
     getEmployee() {
@@ -120,68 +105,6 @@ export class MtrDetailedViewComponent {
                 this.user = res.json() || {};
             }
         })
-    }
-
-    preSaveMtrDetails(mtrId: number, status: string) {
-        let swalOption = {}
-        let index = this.mtrData.no - 1;
-        this.mtrInfoData[index].sendBackComment = this.mtrData.sendBackComment;
-        if (status == 'SendBack' && (!this.mtrInfoData[index].sendBackComment || this.mtrInfoData[index].sendBackComment == "")) {
-            swal({
-                title: 'Please specify the reason!',
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#66BB6A',
-                confirmButtonText: 'OK'
-            });
-        }
-        else {
-            let text = "Do you want to approve kra ?";
-            let confirmButtonText = "Approve";
-            let confirmButtonColor = "#66BB6A";
-            if (status == 'SendBack') {
-                text = "Do you want to send back kra ?";
-                confirmButtonText = "Send Back";
-                confirmButtonColor = "#f22d4e";
-            }
-            swal({
-                title: 'Are you sure?',
-                text: text,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: confirmButtonColor,
-                cancelButtonColor: '#9a9caf',
-                confirmButtonText: confirmButtonText
-            }).then((result) => {
-                if (result.value) {
-                    this.saveMtrDetails(index, status);
-                }
-            });
-        }
-    }
-
-    saveMtrDetails(index: number, status: string) {
-        this.mtrInfoData[index].supervisorStatus = status;        
-        this._mtrService.saveMtr(this.mtrInfoData[index]).subscribe(res => {
-            if (res.ok) {
-                this.modalRef.hide();
-                if (status == 'SendBack' || this.mtrInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.mtrInfoData.length) {
-                    let mtrStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
-                    this.saveMtrWorkFlow({ _id: this.param_id, status: mtrStatus })
-                }
-            }
-        },
-        error => {
-        });
-    }
-
-    saveMtrWorkFlow(data) {
-        this._mtrService.saveMtrWorkFlow(data)
-            .subscribe(
-                res => {
-                },
-                error => {
-                });
     }
 
     modalRef: BsModalRef;
