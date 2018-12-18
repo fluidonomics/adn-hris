@@ -23,14 +23,23 @@ export class MyTeamReviewerComponent implements OnInit {
     ) {
     }
     employees: any = [];
+    mtrEmployees: any = [];
     imageBase: any;
     employeeReverse: boolean = true;
-    employeeSearch: any;
+    employeeSearch: any;    
     employeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
         page: 1
     };
+    mTRemployeeReverse: boolean = true;
+    mTRemployeeSearch: any;    
+    mTRemployeesFilter: any = {
+        date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
+        status: 'All',
+        page: 1
+    };
+
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
     }
@@ -59,6 +68,10 @@ export class MyTeamReviewerComponent implements OnInit {
     goToKraReview(employee) {
         let kra = employee.kra;
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
+    }
+    goToMtrReview(employee){
+        let kra = employee.kra;
+        this.router.navigateByUrl('my/team/workflows/mtr-review/' + kra._id + '/' + kra.emp_id);
     }
 }
 
