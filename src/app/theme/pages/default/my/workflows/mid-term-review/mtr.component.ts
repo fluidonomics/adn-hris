@@ -130,8 +130,9 @@ export class MyMtrComponent {
         else{
             this.isPreviousKRA=false;
         }
-        if (this.mtrData.mtr_master_status)
-            this.isDisabled = this.mtrData.mtr_master_status == "Initiated" || this.mtrData.mtr_master_status == "SendBack" ? false : true;
+        if (this.mtrData.status){          
+            this.isDisabled = this.mtrData.status == "Initiated" || this.mtrData.status == "SendBack" || this.mtrData.status== "Pending" ? false : true;
+        }
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
