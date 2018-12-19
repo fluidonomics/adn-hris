@@ -35,6 +35,7 @@ export class MtrDetailedViewComponent {
     user: any;
     modalRef: BsModalRef;
     mtrData: any = {};
+    _currentEmpId: number;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -56,6 +57,7 @@ export class MtrDetailedViewComponent {
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
+                this._currentEmpId = this._authService.currentUserData._id;
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
@@ -120,5 +122,55 @@ export class MtrDetailedViewComponent {
         this.mtrData.no = index + 1;
         this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         this.mtrData.category = this.kraCategoryData.find(f => f._id == this.mtrData.category_id);
+    }
+    saveMtr(mtrData:any,Remarks:String){                
+        if (Remarks == 'SendBack' && (!mtrData.supervisorComment || mtrData.supervisorComment == "")) {
+            swal({
+                title: 'Please specify the reason!',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+        else {
+            let text = "Do you want to approve kra ?";
+            let confirmButtonText = "Approve";
+            let confirmButtonColor = "#66BB6A";
+            if (Remarks == 'SendBack') {
+                text = "Do you want to send back kra ?";
+                confirmButtonText = "Send Back";
+                confirmButtonColor = "#f22d4e";
+            }
+            swal({
+                title: 'Are you sure?',
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: confirmButtonColor,
+                cancelButtonColor: '#9a9caf',
+                confirmButtonText: confirmButtonText
+            }).then((result) => {
+                if (result.value) {
+                    let isApproved:boolean=false;
+                    if(Remarks=="Approved"){
+                        isApproved=true;
+                    }
+                    let request={
+                        mtrDetailId:mtrData._id,
+                        supervisorComment:mtrData.supervisorComment,
+                        empId:this._currentEmpId,
+                        isApproved:isApproved
+                    }
+                    this.mtrService.mtrApproval(request).subscribe(res=>{
+                        if (res.ok) {
+                            this.loadMtrInfoData();
+                            this.modalRef.hide();
+                        }
+                    })
+                }
+            });
+        }
+                
     }
 }

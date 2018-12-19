@@ -50,6 +50,9 @@ export class MtrService {
         let url = "midterm/getMtrDetails?mtrMasterId=" + mtrMasterId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    mtrApproval(data:any):Observable<Response>{        
+        return this.authService.post("midterm/mtrApproval", data).map(this.extractData).catch(this.handleError);
+    }
 
     private extractData(res: Response) {
         return res || {};
