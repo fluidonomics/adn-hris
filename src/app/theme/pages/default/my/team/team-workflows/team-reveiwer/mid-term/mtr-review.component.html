@@ -60,7 +60,7 @@
                                                 {{i+1}}
                                             </th>
                                             <td>
-                                                <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel"
+                                                <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.mtr_kra" #kra="ngModel"
                                                     class="form-control m-input m-input--air" disabled></textarea>
                                             </td>
                                             <td>
@@ -257,7 +257,7 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Key Responsibility Area (K.R.A)</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.kra}}" disabled="true"></textarea>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.mtr_kra}}" disabled="true"></textarea>
                     </div>
 
                     <div class="col-md-6 form-group">
@@ -272,7 +272,7 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Remarks</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.sendBackComment"
+                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.supervisorComment"
                             [disabled]="kraData.supervisor_id!=_authService.atCurrentUserData._id || kraData.supervisorStatus"
                             disabled></textarea>
                     </div>

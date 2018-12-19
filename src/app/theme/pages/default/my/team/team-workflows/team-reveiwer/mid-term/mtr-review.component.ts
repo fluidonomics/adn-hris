@@ -23,7 +23,7 @@ export class MtrReview {
     kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
-
+    _currentEmpId: number;
     kraInfoData: any = [];
 
     isSubmitted: boolean = false;
@@ -60,6 +60,7 @@ export class MtrReview {
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
+                this._currentEmpId = this._authService.currentUserData._id;
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
@@ -78,9 +79,18 @@ export class MtrReview {
         this.loadSupervisorData();
         this.loadKraInfo();
         this.getEmployee();
+        this.loadMtrInfoData();
     }
 
     loadKraInfo() {        
+    }
+    loadMtrInfoData() {
+        this._mtrService.getMtrDetails(this.param_id).subscribe(res => {
+            let data = res.json().result.message;
+            if (data.length > 0) {                
+                this.kraInfoData = data[0].mtr_details;
+            }
+        })
     }
 
     loadKraCategoryData() {

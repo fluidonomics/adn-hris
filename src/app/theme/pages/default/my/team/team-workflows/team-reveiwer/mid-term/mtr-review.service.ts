@@ -20,6 +20,14 @@ export class MtrReviewService {
         let url = "kra/getKraInfo?kraWorkflow_id=" + kraWorkflow_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getMTRByReviewer(emp_id:number) : Observable<Response>{
+        let url = "midterm/getMtrByReviewer?reviewerId=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getMtrDetails(mtrMasterId?: number): Observable<Response> {
+        let url = "midterm/getMtrDetails?mtrMasterId=" + mtrMasterId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     saveKra(data: any): Observable<Response> {
         let url = "kra/addKraInfo"

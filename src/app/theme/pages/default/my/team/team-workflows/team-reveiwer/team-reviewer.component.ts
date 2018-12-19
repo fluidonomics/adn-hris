@@ -32,7 +32,7 @@ export class MyTeamReviewerComponent implements OnInit {
         status: 'All',
         page: 1
     };
-    mTRemployeeReverse: boolean = true;
+    mTRemployeeReverse: boolean = true;    
     mTRemployeeSearch: any;    
     mTRemployeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
@@ -45,8 +45,21 @@ export class MyTeamReviewerComponent implements OnInit {
     }
     ngOnInit() {
         this.getallemployees();
+        this.loadMTRInfo();
         this.imageBase = environment.content_api_base.apiBase;
     }
+    loadMTRInfo(){
+        this.myService.getMTRByReviewer(this.authService.currentUserData._id).subscribe(res=>{
+            if(res.ok){
+                debugger;
+                let data=res.json();
+                this.mtrEmployees=data.result.message;
+                console.log(data);
+            }
+            
+        })
+    }
+    
     getallemployees() {
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
@@ -70,8 +83,8 @@ export class MyTeamReviewerComponent implements OnInit {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
     goToMtrReview(employee){
-        let kra = employee.kra;
-        this.router.navigateByUrl('my/team/workflows/mtr-review/' + kra._id + '/' + kra.emp_id);
+        let mtr_master_details = employee.mtr_master_details;
+        this.router.navigateByUrl('my/team/workflows/mtr-review/' + mtr_master_details.batch_id + '/' + employee.emp_details._id);
     }
 }
 
