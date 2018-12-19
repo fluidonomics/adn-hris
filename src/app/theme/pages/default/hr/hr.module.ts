@@ -35,6 +35,9 @@ import { LeaveService } from '../my/leaves/leave.service';
 import { PostComponent } from './leaves/post/post.component';
 import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
+import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
+import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+
 
 @NgModule({
     imports: [
@@ -66,6 +69,9 @@ import { HttpClientModule } from "../../../../../../node_modules/@angular/common
         HrInitiateComponent,
         PostComponent,
         TransferResponsibilityComponent
+        PostComponent,
+        MtrBatchInitComponent,
+        MTRBatchComponent
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService]

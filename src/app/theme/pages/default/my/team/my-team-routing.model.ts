@@ -6,20 +6,24 @@ import { MyTeamSupervisorComponent } from './team-workflows/team-supervisor/team
 import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kra-view.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
+import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
 
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
+import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/reveiwer/employee/list', component: AllEmployeeReviewer,canActivate: [SupervisorGuard] },
     { path: 'workflows/kra-review/:id/:emp_id', component: KraReview },
+    { path: 'workflows/mtr-review/:id/:emp_id', component: MtrReview },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent,canActivate: [SupervisorGuard] },
     //{ path: 'workflows/:reveiwer/allEmployee', component: AllEmployeeComponent,canActivate: [ReviewerGuard] },
-    { path: 'workflows/kra-view/:id/:emp_id', component: MyTeamKraComponent }
+    { path: 'workflows/kra-view/:id/:emp_id', component: MyTeamKraComponent },
+    { path: 'workflows/mtr-detailed-view/:id/:emp_id', component: MtrDetailedViewComponent }
 ]
 
 

@@ -1,58 +1,56 @@
-import { Injectable, } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
-import { environment } from '../../../../../environments/environment'
+import { environment } from '../../../../../../../../../environments/environment'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { AuthService } from "../../../../base/_services/authService.service"
+import { AuthService } from "../../../../../../../../base/_services/authService.service";
 
 @Injectable()
-export class HrService {
+export class MtrReviewService {
     constructor(private authService: AuthService) {
     }
 
-    addEmployee(data: any): Observable<Response> {
-        let url = "user/addEmployee";
+    getEmployeeKraWorkFlowInfo(emp_id?: number): Observable<Response> {
+        let url = "kra/getEmployeeKraWorkFlowInfo?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraInfo(kraWorkflow_id?: number): Observable<Response> {
+        let url = "kra/getKraInfo?kraWorkflow_id=" + kraWorkflow_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getMTRByReviewer(emp_id:number) : Observable<Response>{
+        let url = "midterm/getMtrByReviewer?reviewerId=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getMtrDetails(mtrMasterId?: number): Observable<Response> {
+        let url = "midterm/getMtrDetails?mtrMasterId=" + mtrMasterId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveKra(data: any): Observable<Response> {
+        let url = "kra/addKraInfo"
+        if(data._id)
+        {
+            url="kra/updateKraInfo"
+        }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getAllEmployee() {
-        let url = "user/getAllEmployee";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-    getEmployeeDetails(empId: number) {
-        let url = "user/getEmployeeDetails?emp_id=" + empId;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-    getAllEmployeeForMTR() {
-        let url = "midterm/getEmpDetailsForMidTermInitiate";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-
-    loadDivision() {
-        let url = "master/getAllDivision";
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
-    updateSupervisortransferInfo(data: any){
-        let url="user/updateSupervisortransferInfo";
+    
+    saveKraWorkFlow(data:any):Observable<Response> 
+    {
+        let url = "kra/addKraWorkFlowInfo"
+        if(data._id)
+        {
+            url = "kra/updateKraWorkFlowInfo"
+        }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
     
-
-
-
-    saveBulkKra(data: any) {
-        let url = "kra/addBulkKra";
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-    saveBulkMtr(data: any) {
-        let url = "midterm/initiateMidTermProcess";
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }    
     private extractData(res: Response) {
         return res || {};
-        // let body = res.json();
-        // return body || { };
     }
 
     private handleError(error: Response | any) {
@@ -66,4 +64,5 @@ export class HrService {
         }
         return Observable.throw(errMsg);
     }
+
 }
