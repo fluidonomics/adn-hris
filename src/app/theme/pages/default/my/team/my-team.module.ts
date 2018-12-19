@@ -53,7 +53,7 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
         MtrViewComponent,
         MtrDetailedViewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
 export class MyTeamModule {
 }
