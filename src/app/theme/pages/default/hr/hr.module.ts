@@ -68,7 +68,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         EditEmployeeComponent,
         HrInitiateComponent,
         PostComponent,
-        TransferResponsibilityComponent
+        TransferResponsibilityComponent,
         PostComponent,
         MtrBatchInitComponent,
         MTRBatchComponent
