@@ -168,15 +168,19 @@ export class MyMtrComponent {
         this.mtrInfoData[index].supervisorStatus = null;
         debugger;
         let request = {
+            _id: this.mtrInfoData[index]._id,
             mtr_master_id: this.param_id,
             mtr_kra: this.mtrInfoData[index].mtr,
             supervisor_id: this.mtrInfoData[index].mtr_master_supervisor_id,
             mtr_batch_id: this.mtrInfoData[0].mtr_batch_id,
             weightage_id: this.mtrInfoData[index].weightage_id,
+            category_id: this.mtrInfoData[index].category_id,
             unitOfSuccess: this.mtrInfoData[index].unitOfSuccess,
             measureOfSuccess: this.mtrInfoData[index].measureOfSuccess,
             isDeleted: false,
-            createdBy: this._currentEmpId
+            createdBy: this._currentEmpId,
+            empId: this._currentEmpId,
+            employeeComment: this.mtrInfoData[index].employeeComment
         }
         this._mtrService.saveKra(request)
             .subscribe(
@@ -193,6 +197,7 @@ export class MyMtrComponent {
                             confirmButtonColor: '#66BB6A',
                             confirmButtonText: 'OK'
                         });
+                        this.loadMTRInfo();
                     }
                 },
                 error => {

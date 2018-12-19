@@ -469,8 +469,8 @@
 							</div>
 						</div>
 						<div class="col-md-12 details">
-							<span>Employee Remarks</span>
-							<textarea name="mtrOnedata" id="mtrOnedata" [(ngModel)]="mtrData.mtr" #mtr="ngModel" class="form-control m-input m-input--air"
+							<span>KRA</span>
+							<textarea name="mtr_kra" id="mtr_kra" [(ngModel)]="mtrData.mtr_kra" #mtr_kra="ngModel" class="form-control m-input m-input--air"
 							 [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtr.valid">
 								This field is required.
@@ -492,7 +492,14 @@
 								This field is required.
 							</div>
 						</div>
-
+						<div class="col-md-12 details">
+							<span>Employee Remarks</span>
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel"
+							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtr.valid">
+								This field is required.
+							</div>
+						</div>
 					</div>
 					<div class="form-actions details">
 						<div class="row">

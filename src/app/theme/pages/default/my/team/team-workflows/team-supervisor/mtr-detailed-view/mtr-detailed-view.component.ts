@@ -7,10 +7,12 @@ import { CommonService } from "../../../../../../../../base/_services/common.ser
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { MtrService } from "../../../../../services/mtr.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
     templateUrl: "./mtr-detailed-view.component.html",
+    styleUrls: ['mtr-detailed-view.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
@@ -19,7 +21,7 @@ export class MtrDetailedViewComponent {
     @ViewChild('mtrDetailModal') mtrDetailModal: TemplateRef<any>;
 
     window: any = window;
-    mtrCategoryData: any[];
+    kraCategoryData: any[];
     weightageData: any = [];
     supervisorData: any = [];
     mtrInfoData: any = [];
@@ -31,14 +33,17 @@ export class MtrDetailedViewComponent {
     status: any;
     isDisabled: boolean = true;
     user: any;
+    modalRef: BsModalRef;
+    mtrData: any = {};
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService,
-    private modalService: BsModalService
+        meta: Meta, title: Title,
+        private _route: ActivatedRoute,
+        private _router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService,
+        private modalService: BsModalService,
+        private mtrService: MtrService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -50,7 +55,7 @@ export class MtrDetailedViewComponent {
 
     ngOnInit() {
         this._authService.validateToken().subscribe(
-            res => {    
+            res => {
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
@@ -67,36 +72,28 @@ export class MtrDetailedViewComponent {
         this.loadWeightAgeData();
         this.loadSupervisorData();
         this.getEmployee();
+        this.loadMtrInfoData();
     }
 
     loadMtrCategoryData() {
-        /* this._commonService.getMtrCategory()
-            .subscribe(
-                data => {
-                    this.mtrCategoryData = data.json();
-                },
-                error => {
-                }); */
+        this._commonService.getKraCategory().subscribe(data => {
+            this.kraCategoryData = data.json();
+        }, error => {
+        });
     }
 
     loadWeightAgeData() {
-        /* this._commonService.getMtrWeightage()
-            .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                }); */
+        this._commonService.getKraWeightage().subscribe(data => {
+            this.weightageData = data.json();
+        }, error => {
+        });
     }
 
     loadSupervisorData() {
-       /*  this._commonService.getMtrSupervisor(this.param_emp_id)
-            .subscribe(
-                data => {
-                    this.supervisorData = data.json();
-                },
-                error => {
-                }); */
+        this._commonService.getKraSupervisor(this.param_emp_id).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
+        });
     }
 
     getEmployee() {
@@ -107,14 +104,21 @@ export class MtrDetailedViewComponent {
         })
     }
 
-    modalRef: BsModalRef;
-    mtrData: any = {};
-    showMtrDetail(index, event) {
-        this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
-        this.mtrData = this.mtrInfoData[index];
-        this.mtrData.no = index + 1;
-        this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
-        this.mtrData.category = this.mtrCategoryData.find(f => f._id == this.mtrData.category_id);
+    loadMtrInfoData() {
+        this.mtrService.getMtrDetails(this.param_id).subscribe(res => {
+            let data = res.json().result.message;
+            if (data.length > 0) {
+                this.mtrInfoData = data[0];
+            }
+        })
     }
 
+
+    showMtrDetail(index, event) {
+        this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.mtrData = this.mtrInfoData.mtr_details[index] || {};
+        this.mtrData.no = index + 1;
+        this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
+        this.mtrData.category = this.kraCategoryData.find(f => f._id == this.mtrData.category_id);
+    }
 }

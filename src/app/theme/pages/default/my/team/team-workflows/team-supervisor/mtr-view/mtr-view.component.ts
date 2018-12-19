@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import { MtrService } from '../../../../../services/mtr.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../../../../../environments/environment';
 
 @Component({
     selector: 'mtr-view',
@@ -13,6 +14,7 @@ export class MtrViewComponent implements OnInit {
     mtrViewData: any = [];
     mtrViewSearch: any;
     mtrViewReverse: boolean = true;
+    imageBase: any;
 
     constructor(private _mtrService: MtrService,
         public _authService: AuthService,
@@ -20,6 +22,7 @@ export class MtrViewComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             let _currentEmpId = this._authService.currentUserData._id;
             this.loadMtrBySupervisor(_currentEmpId);
@@ -28,8 +31,7 @@ export class MtrViewComponent implements OnInit {
 
     loadMtrBySupervisor(emp_Id: number) {
         this._mtrService.getMtrBySupervisor(emp_Id, 'Approved').subscribe(res => {
-            debugger;
-            this.mtrViewData = res.json().data || [];
+            this.mtrViewData = res.json().result.message || [];
         }, error => {
         });
     }
@@ -38,5 +40,5 @@ export class MtrViewComponent implements OnInit {
         /* this.router.navigateByUrl("/my/team/workflows/kra-view/" + mtr._id + "/" + mtr.emp_id); */
     }
 
-   
+
 }

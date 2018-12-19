@@ -27,12 +27,15 @@ export class MtrService {
         let url = "midterm/getMtrBatches?empId=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    deleteKra(data:any): Observable<Response>{
+    deleteKra(data: any): Observable<Response> {
         let url = "midterm/deleteMtrKra";
-        return this.authService.post(url,data).map(this.extractData).catch(this.handleError);
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
     saveKra(data: any): Observable<Response> {
-        let url = "midterm/postNewMtrKra"        
+        let url = "midterm/postNewMtrKra";
+        if (data._id) {
+            url = "midterm/updateMtr";
+        }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
     saveKraWorkFlow(data: any): Observable<Response> {
@@ -42,7 +45,12 @@ export class MtrService {
         }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
-    
+
+    getMtrDetails(mtrMasterId?: number): Observable<Response> {
+        let url = "midterm/getMtrDetails?mtrMasterId=" + mtrMasterId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }
