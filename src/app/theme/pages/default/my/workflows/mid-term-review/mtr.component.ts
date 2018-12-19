@@ -31,7 +31,7 @@ export class MyMtrComponent {
     _currentEmpId: number;
 
     isMtrAvaliable: boolean = false;
-
+    isPreviousKRA:boolean=false;
 
     mtrWorkFlowData: any = [];
 
@@ -124,6 +124,12 @@ export class MyMtrComponent {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
+        if(this.mtrData.kra_details && this.mtrData.kra_details._id){
+            this.isPreviousKRA=true;
+        }
+        else{
+            this.isPreviousKRA=false;
+        }
         if (this.mtrData.mtr_master_status)
             this.isDisabled = this.mtrData.mtr_master_status == "Initiated" || this.mtrData.mtr_master_status == "SendBack" ? false : true;
 
