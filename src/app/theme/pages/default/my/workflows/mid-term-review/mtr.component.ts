@@ -23,7 +23,7 @@ import * as _ from 'lodash';
 export class MyMtrComponent {
 
     @ViewChild('mtrDetailModal') kraDetailModal: TemplateRef<any>;
-    @ViewChild('MTRDataForm') fleaveapplication: NgForm;
+
     supervisorData: any = [];
     weightageData: any = [];
 
@@ -76,17 +76,17 @@ export class MyMtrComponent {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
-                        this.param_id = params['id']; 
-                                 this.loadData();              
+                        this.param_id = params['id'];
+                        this.loadData();
                     }
                     else {
-                        this.param_id = null; 
-                        this.loadMTRWorkFlowDetails();                       
+                        this.param_id = null;
+                        this.loadMTRWorkFlowDetails();
                     }
                 });
             });
     }
-    addKraHtml() {       
+    addKraHtml() {
         if (this.mtrInfoData.length < 7) {
             let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
             this.mtrInfoData.push(data);
@@ -102,62 +102,52 @@ export class MyMtrComponent {
             });
         }
     }
-    loadData(){
-      this.loadMTRCategoryData();
-      this.loadWeightAgeData();
-      this.loadSupervisorData();
-      this.loadMTRInfo();
+    loadData() {
+        this.loadMTRCategoryData();
+        this.loadWeightAgeData();
+        this.loadSupervisorData();
+        this.loadMTRInfo();
     }
     loadMTRCategoryData() {
-        this._commonService.getKraCategory()
-            .subscribe(
-                data => {
-                    this.mtrCategoryData = data.json();
-                },
-                error => {
-                });
+        this._commonService.getKraCategory().subscribe(data => {
+            this.mtrCategoryData = data.json();
+        }, error => {
+        });
     }
     loadSupervisorData() {
-        this._commonService.getKraSupervisor(this._currentEmpId)
-            .subscribe(
-                data => {
-                    this.supervisorData = data.json();
-                },
-                error => {
-                });
+        this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
+        });
     }
-    showMTRDetails(index: number) {           
+    showMTRDetails(index: number) {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
-        if(this.mtrData.mtr_master_status)
-        this.isDisabled = this.mtrData.mtr_master_status == "Initiated" ||this.mtrData.mtr_master_status == "SendBack" ? false : true;
+        if (this.mtrData.mtr_master_status)
+            this.isDisabled = this.mtrData.mtr_master_status == "Initiated" || this.mtrData.mtr_master_status == "SendBack" ? false : true;
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
 
     loadMTRWorkFlowDetails() {
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
-            res => {               
-                let data=res.json();
-                this.mtrWorkFlowData = data.result.message;               
-              this.mtrWorkFlowData=  _.chain(this.mtrWorkFlowData).groupBy('mtr_batch._id').map(function(v, i){                                    
-                    return v[0];
-                }).value();               
-            },
-            error => {
-            });;
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+            let data = res.json();
+            this.mtrWorkFlowData = data.result.message;
+            this.mtrWorkFlowData = _.chain(this.mtrWorkFlowData).groupBy('mtr_batch._id').map(function (v, i) {
+                return v[0];
+            }).value();
+        }, error => {
+        });;
     }
     loadMTRInfo() {
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(
-            res => {               
-                let data=res.json();
-                this.mtrInfoData = data.result.message;
-                //isChangable status not comming from API
-            },
-            error => {
-            });;
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+            let data = res.json();
+            this.mtrInfoData = data.result.message;
+            //isChangable status not comming from API
+        }, error => {
+        });;
     }
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
@@ -171,24 +161,24 @@ export class MyMtrComponent {
     saveKraDetails(index: number) {
         this.mtrInfoData[index].supervisorStatus = null;
         debugger;
-        let request={
+        let request = {
             mtr_master_id: this.param_id,
-            mtr_kra:this.mtrInfoData[index].mtr,
-            supervisor_id:this.mtrInfoData[index].mtr_master_supervisor_id,
-            mtr_batch_id:this.mtrInfoData[0].mtr_batch_id,
-            weightage_id:this.mtrInfoData[index].weightage_id,
-            unitOfSuccess:this.mtrInfoData[index].unitOfSuccess,
-            measureOfSuccess:this.mtrInfoData[index].measureOfSuccess,
-            isDeleted:false,
-            createdBy:this._currentEmpId
+            mtr_kra: this.mtrInfoData[index].mtr,
+            supervisor_id: this.mtrInfoData[index].mtr_master_supervisor_id,
+            mtr_batch_id: this.mtrInfoData[0].mtr_batch_id,
+            weightage_id: this.mtrInfoData[index].weightage_id,
+            unitOfSuccess: this.mtrInfoData[index].unitOfSuccess,
+            measureOfSuccess: this.mtrInfoData[index].measureOfSuccess,
+            isDeleted: false,
+            createdBy: this._currentEmpId
         }
         this._mtrService.saveKra(request)
             .subscribe(
                 res => {
                     if (res.ok) {
                         //this.mtrInfoData[index] = res.json();
-                        let data=res.json();
-                        this.mtrInfoData[index]  =data.result.message
+                        let data = res.json();
+                        this.mtrInfoData[index] = data.result.message
                         swal({
                             title: 'Success',
                             text: "MTR has been Saved.",
@@ -222,12 +212,12 @@ export class MyMtrComponent {
             cancelButtonColor: '#9a9caf',
             confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result.value) { 
-                debugger;              
-                if (this.mtrInfoData[index]._id){                
-                    let request={
-                        id:this.mtrInfoData[index]._id,
-                        updatedBy:this._currentEmpId
+            if (result.value) {
+                debugger;
+                if (this.mtrInfoData[index]._id) {
+                    let request = {
+                        id: this.mtrInfoData[index]._id,
+                        updatedBy: this._currentEmpId
                     }
                     this.deleteKra(request, index);
                 }
@@ -250,7 +240,7 @@ export class MyMtrComponent {
                         //delete this.kraInfoData[index];
                         if (this.mtrInfoData.length == 0) {
                             this.addKraHtml();
-                        }                        
+                        }
                         swal({
                             title: 'Deleted',
                             text: "KRA has been deleted successfully.",
@@ -259,7 +249,7 @@ export class MyMtrComponent {
                             confirmButtonColor: '#D33',
                             confirmButtonText: 'OK'
                         });
-                    this.loadMTRInfo();
+                        this.loadMTRInfo();
                     }
                 },
                 error => {
@@ -321,7 +311,7 @@ export class MyMtrComponent {
         else {
             return true;
         }
-    } 
+    }
     submitKraWorkFlow(isFormDirty) {
         //let requiredWorkFlowLength= 
         //let total = this.kraInfoData.reduce((prev,next) => prev + parseInt(this.weightageData.filter(c=>c._id==next.weightage_id)[0].kraWeightageName.replace('%','')) ,0);
@@ -350,10 +340,10 @@ export class MyMtrComponent {
                 }
             }
         }
-    } 
+    }
     isRequiredWorkFlowLength() {
         return this.employee.grade_id <= 2 && this.mtrInfoData.length >= 5 ? true : (this.employee.grade_id > 2 && this.mtrInfoData.length >= 3 ? true : false)
-    } 
+    }
     saveKraWorkFlow() {
         swal({
             title: 'Are you sure?',
@@ -364,24 +354,24 @@ export class MyMtrComponent {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result.value) {                          
-            this._mtrService.saveKraWorkFlow({ id: this.param_id, empId: this._currentEmpId })
-            .subscribe(
-                res => {
-                    if (res.ok) {
-                        swal({
-                            title: 'Submitted Successfully!',
-                            text: "KRA has been submitted for Supervisor Approval.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
+            if (result.value) {
+                this._mtrService.saveKraWorkFlow({ id: this.param_id, empId: this._currentEmpId })
+                    .subscribe(
+                        res => {
+                            if (res.ok) {
+                                swal({
+                                    title: 'Submitted Successfully!',
+                                    text: "KRA has been submitted for Supervisor Approval.",
+                                    type: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonColor: '#66BB6A',
+                                    confirmButtonText: 'OK'
+                                });
+                                this.loadMTRInfo();
+                            }
+                        },
+                        error => {
                         });
-                        this.loadMTRInfo();
-                    }
-                },
-                error => {
-                });
             }
         });
     }

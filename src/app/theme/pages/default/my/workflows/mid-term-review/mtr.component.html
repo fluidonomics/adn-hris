@@ -29,7 +29,7 @@
 								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</div>
 			</div>
 			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (mtrWorkFlowData | orderBy: key : reverse | filter:search)?.length==0 }">
@@ -183,7 +183,7 @@
 						</div>
 					</div>
 					<div class="m-portlet__head-tools">
-						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">							
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="!isChangable">
 								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow(fmtrInfo.form.dirty)">Submit</button>
 							</li>
@@ -226,7 +226,10 @@
 												<th>
 													Supervisor
 												</th>
-												<th >
+												<th>
+													Employee Remarks
+												</th>
+												<th>
 													Send Back Comment (Supervisor)
 												</th>
 												<th>
@@ -242,7 +245,7 @@
 												</th>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="mtrCategory{{i}}" id="mtrCategory" [items]="mtrCategoryData"
-													 bindLabel="mtrCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id"
+													 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id"
 													 [clearable]="false" #mtrCategory="ngModel" required disabled></ng-select>
 												</td>
 												<td>
@@ -256,26 +259,30 @@
 													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.mtr_master_supervisor_id"
 													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
-												<td >
-													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="mtrInfo.sendBackComment"
-													 class="form-control m-input m-input--air" disabled *ngIf="mtrInfo.mtr_master_status!='Approved'"></textarea>
+												<td>
+													<textarea name="employeeComment{{i}}" id="employeeComment" #employeeComment="ngModel" [(ngModel)]="mtrInfo.employeeComment"
+													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
-												<td>													
+												<td>
+													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="mtrInfo.supervisorComment"
+													 class="form-control m-input m-input--air" disabled></textarea>
+												</td>
+												<td>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Edit" (click)="showMTRDetails(i)" >
+													 title="Edit" (click)="showMTRDetails(i)">
 														<i class="la la-info"></i>
 													</button>
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													 title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
 													</button>
-													
+
 												</td>
 											</tr>
 											<tr *ngIf="!isChangable">
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
-													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && !isChangable ? null :'disabled'" (click)="addKraHtml()" >
+													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && !isChangable ? null :'disabled'" (click)="addKraHtml()">
 														<i class="la la-plus "></i>
 													</button>
 												</td>
@@ -480,8 +487,7 @@
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
-							 required></textarea>
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
 							</div>
@@ -491,7 +497,7 @@
 					<div class="form-actions details">
 						<div class="row">
 							<div class="col-md-12">
-								<div class="m-form__actions">									
+								<div class="m-form__actions">
 									<button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
