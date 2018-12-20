@@ -117,16 +117,18 @@ export class MtrDetailedViewComponent {
 
 
     showMtrDetail(index, event) {
+        debugger;
         this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = this.mtrInfoData.mtr_details[index] || {};
         this.mtrData.no = index + 1;
         this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         this.mtrData.category = this.kraCategoryData.find(f => f._id == this.mtrData.category_id);
     }
-    saveMtr(mtrData:any,Remarks:String){                
-        if (Remarks == 'SendBack' && (!mtrData.supervisorComment || mtrData.supervisorComment == "")) {
+    saveMtr(mtrData: any, Remarks: String) {
+        debugger;
+        if (!mtrData.supervisorComment) {
             swal({
-                title: 'Please specify the reason!',
+                title: 'Please fill remarks!',
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',
@@ -134,35 +136,35 @@ export class MtrDetailedViewComponent {
             });
         }
         else {
-            let text = "Do you want to approve kra ?";
-            let confirmButtonText = "Approve";
-            let confirmButtonColor = "#66BB6A";
-            if (Remarks == 'SendBack') {
-                text = "Do you want to send back kra ?";
-                confirmButtonText = "Send Back";
-                confirmButtonColor = "#f22d4e";
-            }
+            // let text = "Do you want to approve kra ?";
+            // let confirmButtonText = "Approve";
+            // let confirmButtonColor = "#66BB6A";
+            // if (Remarks == 'SendBack') {
+            //     text = "Do you want to send back kra ?";
+            //     confirmButtonText = "Send Back";
+            //     confirmButtonColor = "#f22d4e";
+            // }
             swal({
                 title: 'Are you sure?',
-                text: text,
+                // text: text,
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: confirmButtonColor,
+                // confirmButtonColor: confirmButtonColor,
                 cancelButtonColor: '#9a9caf',
-                confirmButtonText: confirmButtonText
+                // confirmButtonText: confirmButtonText
             }).then((result) => {
                 if (result.value) {
-                    let isApproved:boolean=false;
-                    if(Remarks=="Approved"){
-                        isApproved=true;
+                    let isApproved: boolean = false;
+                    if (Remarks == "Approved") {
+                        isApproved = true;
                     }
-                    let request={
-                        mtrDetailId:mtrData._id,
-                        supervisorComment:mtrData.supervisorComment,
-                        empId:this._currentEmpId,
-                        isApproved:isApproved
+                    let request = {
+                        mtrDetailId: mtrData._id,
+                        supervisorComment: mtrData.supervisorComment,
+                        empId: this._currentEmpId,
+                        isApproved: isApproved
                     }
-                    this.mtrService.mtrApproval(request).subscribe(res=>{
+                    this.mtrService.mtrApproval(request).subscribe(res => {
                         if (res.ok) {
                             this.loadMtrInfoData();
                             this.modalRef.hide();
@@ -171,6 +173,6 @@ export class MtrDetailedViewComponent {
                 }
             });
         }
-                
+
     }
 }

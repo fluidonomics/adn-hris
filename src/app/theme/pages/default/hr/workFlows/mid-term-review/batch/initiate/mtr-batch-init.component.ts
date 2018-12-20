@@ -91,33 +91,28 @@ export class MtrBatchInitComponent implements OnInit {
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
-        this._hrService.getAllEmployeeForMTR()
-            .subscribe(
-                res => {
-                    let data = res.json();
-                    if (data.result.length > 0) {
-
-                        data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId);
-                        // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
-
-                        data.forEach(element => {
-                            if (this.employeeData.filter(obj => obj.emp_id == element.emp_id).length == 0) {
-                                this.employeeData.push(element);
-                            }
-                        });
-                        // this.employeeData = data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
+        this._hrService.getAllEmployeeForMTR().subscribe(res => {
+            let data = res.json();
+            if (data.result.length > 0) {
+                data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId);
+                // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
+                data.forEach(element => {
+                    if (this.employeeData.filter(obj => obj.emp_id == element.emp_id).length == 0) {
+                        this.employeeData.push(element);
                     }
-                    else {
-                        this.employeeData = data.json().result || [];
-                        this.utilityService.hideLoader('#initiate-loader');
-                    }
-                    this.employeeFilterData = this.employeeData;
-
-                },
-                error => {
-                    this.utilityService.hideLoader('#initiate-loader');
                 });
+                // this.employeeData = data || [];
+                this.utilityService.hideLoader('#initiate-loader');
+            }
+            else {
+                this.employeeData = data.json().result || [];
+                this.utilityService.hideLoader('#initiate-loader');
+            }
+            this.employeeFilterData = this.employeeData.filter(obj=> !obj.mtr_batch_id);
+
+        }, error => {
+            this.utilityService.hideLoader('#initiate-loader');
+        });
 
     }
     loadAllEmployee() {
