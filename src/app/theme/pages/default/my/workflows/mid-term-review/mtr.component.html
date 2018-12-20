@@ -272,14 +272,13 @@
 													 title="Edit" (click)="showMTRDetails(i)">
 														<i class="la la-info"></i>
 													</button>
-													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+													<!-- <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													 title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
 														<i class="la la-remove"></i>
-													</button>
-
+													</button> -->
 												</td>
 											</tr>
-											<tr *ngIf="!isChangable">
+											<tr *ngIf="!areAllMtrSubmitted">
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
 													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && !isChangable ? null :'disabled'" (click)="addKraHtml()">
@@ -439,8 +438,8 @@
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData"
 							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrData.category_id"
-							 [clearable]="false" #mtrCategory="ngModel" [disabled]="isDisabled" required></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtrCategory.valid">
+							 [clearable]="false" #mtrCategory="ngModel" [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtrCategory.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -458,7 +457,7 @@
 							</div>
 						</div>
 						<div class="col-md-2">
-							supervisor
+							Supervisor
 						</div>
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
@@ -471,8 +470,8 @@
 						<div class="col-md-12 details">
 							<span>KRA</span>
 							<textarea name="mtr_kra" id="mtr_kra" [(ngModel)]="mtrData.mtr_kra" #mtr_kra="ngModel" class="form-control m-input m-input--air"
-							 [disabled]="isDisabled" required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtr.valid">
+							 [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtr_kra.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -492,11 +491,29 @@
 								This field is required.
 							</div>
 						</div>
+						<div class="col-md-6 details">
+							<span>Status</span>
+							<ng-select class="m-input m-input--air " name="progressStatus" id="progressStatus" [items]="progressStatuses"
+							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" [clearable]="false"
+							 #progressStatus="ngModel" [disabled]="isDisabled" required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Color Status</span>
+							<ng-select class="m-input m-input--air " name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label"
+							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
+							 #colorStatus="ngModel" [disabled]="isDisabled" required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && colorStatus.invalid">
+								This field is required.
+							</div>
+						</div>
 						<div class="col-md-12 details">
 							<span>Employee Remarks</span>
 							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel"
 							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtr.valid">
+							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
 								This field is required.
 							</div>
 						</div>

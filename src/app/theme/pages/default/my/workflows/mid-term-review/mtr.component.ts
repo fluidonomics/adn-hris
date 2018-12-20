@@ -31,7 +31,7 @@ export class MyMtrComponent {
     _currentEmpId: number;
 
     isMtrAvaliable: boolean = false;
-    isPreviousKRA:boolean=false;
+    isPreviousKRA: boolean = false;
 
     mtrWorkFlowData: any = [];
 
@@ -51,6 +51,37 @@ export class MyMtrComponent {
 
     modalRef: BsModalRef;
     mtrData: any = {};
+
+    progressStatuses = [
+        {
+            id: "InProgress",
+            label: "In progress"
+        },
+        {
+            id: "Completed",
+            label: "Completed"
+        },
+        {
+            id: "Dropped",
+            label: "Dropped"
+        }
+    ];
+
+    // Red(Not able to do complete KRA  ), Amber(Need help to complete KRA) and Green(going good)
+    colorStatuses = [
+        {
+            id: "Green",
+            label: "Green(going good)"
+        },
+        {
+            id: "Amber",
+            label: "Amber(Need help to complete KRA)"
+        },
+        {
+            id: "Red",
+            label: "Red(Not able to do complete KRA)"
+        }
+    ];
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -124,14 +155,14 @@ export class MyMtrComponent {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
-        if(this.mtrData.kra_details && this.mtrData.kra_details._id){
-            this.isPreviousKRA=true;
+        if (this.mtrData.kra_details && this.mtrData.kra_details._id) {
+            this.isPreviousKRA = true;
         }
-        else{
-            this.isPreviousKRA=false;
+        else {
+            this.isPreviousKRA = false;
         }
-        if (this.mtrData.status){          
-            this.isDisabled = this.mtrData.status == "Initiated" || this.mtrData.status == "SendBack" || this.mtrData.status== "Pending" ? false : true;
+        if (this.mtrData.status) {
+            this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Approved" || this.mtrData.status == "Pending" ? false : true;
         }
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
@@ -152,7 +183,7 @@ export class MyMtrComponent {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.mtrInfoData = data.result.message;
-            //isChangable status not comming from API
+            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted").length > 0;
         }, error => {
         });;
     }
@@ -165,9 +196,16 @@ export class MyMtrComponent {
                 error => {
                 });
     }
-    saveKraDetails(index: number) {
-        this.mtrInfoData[index].supervisorStatus = null;
-        debugger;
+
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            this.modalRef.hide();
+            this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));
+            this.saveMtrDetails(this.mtrData.no - 1);
+        }
+    }
+
+    saveMtrDetails(index: number) {
         let request = {
             _id: this.mtrInfoData[index]._id,
             mtr_master_id: this.param_id,
@@ -181,38 +219,29 @@ export class MyMtrComponent {
             isDeleted: false,
             createdBy: this._currentEmpId,
             empId: this._currentEmpId,
-            employeeComment: this.mtrInfoData[index].employeeComment
+            employeeComment: this.mtrInfoData[index].employeeComment,
+            progressStatus: this.mtrInfoData[index].progressStatus,
+            colorStatus: this.mtrInfoData[index].colorStatus
         }
-        this._mtrService.saveKra(request)
-            .subscribe(
-                res => {
-                    if (res.ok) {
-                        //this.mtrInfoData[index] = res.json();
-                        let data = res.json();
-                        this.mtrInfoData[index] = data.result.message
-                        swal({
-                            title: 'Success',
-                            text: "MTR has been Saved.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
-                        });
-                        this.loadMTRInfo();
-                    }
-                },
-                error => {
+        this._mtrService.saveKra(request).subscribe(res => {
+            if (res.ok) {
+                //this.mtrInfoData[index] = res.json();
+                let data = res.json();
+                this.mtrInfoData[index] = data.result.message
+                swal({
+                    title: 'Success',
+                    text: "MTR has been Saved.",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
                 });
+                this.loadMTRInfo();
+            }
+        }, error => {
+        });
     }
-    saveKRADetails(form, id: number) {
-        if (form.valid) {
-            debugger;
-            this.modalRef.hide();
-            this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));
-            this.saveKraDetails(this.mtrData.no - 1);
-        }
 
-    }
 
     deleteKraHtml(index: number) {
         swal({
@@ -225,7 +254,6 @@ export class MyMtrComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
-                debugger;
                 if (this.mtrInfoData[index]._id) {
                     let request = {
                         id: this.mtrInfoData[index]._id,
@@ -269,8 +297,17 @@ export class MyMtrComponent {
     }
 
     isWeightage() {
-        let isKraWeightAge = this.mtrInfoData.reduce((prev, next) => prev + parseInt(this.weightageData.filter(c => c._id == next.weightage_id)[0].kraWeightageName.replace('%', '')), 0) == 100 ? true : false;
-        if (!isKraWeightAge) {
+        let weightage = 0;
+        this.mtrInfoData.forEach(mtr => {
+            if (mtr.progressStatus != "Dropped") {
+                let w = parseInt(this.weightageData.find(c => c._id == mtr.weightage_id).kraWeightageName.replace('%', ''));
+                if (!isNaN(w)) {
+                    weightage += w;
+                }
+            }
+        });
+
+        if (weightage != 100) {
             swal({
                 title: 'Oops!',
                 text: 'Sum of weightages should be 100%',
@@ -279,10 +316,10 @@ export class MyMtrComponent {
                 confirmButtonColor: '#66BB6A',
                 confirmButtonText: 'OK'
             });
-            return isKraWeightAge;
+            return false;
         }
         else {
-            return isKraWeightAge;
+            return true;
         }
     }
     isCategoryUnique() {
@@ -331,7 +368,7 @@ export class MyMtrComponent {
         //let unique=this.kraInfoData.map(item => item.category_id).filter((value, index, self) => self.indexOf(value) === index);       
         if (this.isSendBackOrNewKraSaved(isFormDirty)) {
             if (this.isWeightage()) {
-                if (!this.isRequiredWorkFlowLength()) {
+                if (this.isEmployeeCommentsFilled()) {
                     let kraLength = this.employee.grade_id <= 2 ? 5 : 3;
                     swal({
                         title: 'Do you want to Submit?',
@@ -347,14 +384,26 @@ export class MyMtrComponent {
                         }
                     });
                 }
-                else {
-                    this.isCategoryUnique();
-                }
             }
         }
     }
     isRequiredWorkFlowLength() {
         return this.employee.grade_id <= 2 && this.mtrInfoData.length >= 5 ? true : (this.employee.grade_id > 2 && this.mtrInfoData.length >= 3 ? true : false)
+    }
+    isEmployeeCommentsFilled() {
+        let mtrs = this.mtrInfoData.filter((mtr) => { return mtr.employeeComment == null || mtr.employeeComment == undefined || mtr.employeeComment == '' });
+        if (mtrs.length > 0) {
+            swal({
+                title: 'Oops!',
+                text: 'Please fill Employee Remarks before submitting',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+        return true;
     }
     saveKraWorkFlow() {
         swal({
