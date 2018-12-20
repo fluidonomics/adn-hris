@@ -132,6 +132,8 @@ export class TransferResponsibilityComponent implements OnInit {
             }
             console.log(this.request);
 
+            this.checkEmployeesOpenRequests();
+
             let titletxt = "Supervisor Transfer";
             let bodytxt = "Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
             if (this.request.change_type != "tranfser") {
@@ -190,11 +192,12 @@ export class TransferResponsibilityComponent implements OnInit {
                     }
                 });
             });
-
-
-
-
         }
+    }
+
+    checkEmployeesOpenRequests() {
+        debugger;
+        this.request;
     }
 
     checkUserNameExists(_element) {
