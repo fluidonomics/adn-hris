@@ -101,7 +101,7 @@ export class MtrBatchInitComponent implements OnInit {
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
-            this.employeeFilterData = this.employeeData;
+            this.employeeFilterData = this.employeeData.filter(obj=> !obj.mtr_batch_id);
 
         }, error => {
             this.utilityService.hideLoader('#initiate-loader');
