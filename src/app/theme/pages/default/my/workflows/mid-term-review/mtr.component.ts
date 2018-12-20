@@ -162,7 +162,7 @@ export class MyMtrComponent {
             this.isPreviousKRA = false;
         }
         if (this.mtrData.status) {
-            this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Approved" || this.mtrData.status == "Pending" ? false : true;
+            this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
         }
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
@@ -209,7 +209,7 @@ export class MyMtrComponent {
         let request = {
             _id: this.mtrInfoData[index]._id,
             mtr_master_id: this.param_id,
-            mtr_kra: this.mtrInfoData[index].mtr,
+            mtr_kra: this.mtrInfoData[index].mtr_kra,
             supervisor_id: this.mtrInfoData[index].mtr_master_supervisor_id,
             mtr_batch_id: this.mtrInfoData[0].mtr_batch_id,
             weightage_id: this.mtrInfoData[index].weightage_id,

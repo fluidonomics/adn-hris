@@ -184,7 +184,7 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
-							<li class="nav-item m-tabs__item" *ngIf="!isChangable">
+							<li class="nav-item m-tabs__item" *ngIf="isChangable">
 								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow(fmtrInfo.form.dirty)">Submit</button>
 							</li>
 							<li class="nav-item m-tabs__item">
@@ -278,10 +278,10 @@
 													</button> -->
 												</td>
 											</tr>
-											<tr *ngIf="!areAllMtrSubmitted">
+											<tr>
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
-													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && !isChangable ? null :'disabled'" (click)="addKraHtml()">
+													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && isChangable ? null :'disabled'" (click)="addKraHtml()">
 														<i class="la la-plus "></i>
 													</button>
 												</td>
