@@ -230,7 +230,6 @@ export class MyMtrComponent {
         this.showDroppedKraConfirmation(request).then(res => {
             if (res) {
                 this.modalRef.hide();
-                request.weightage_id = null;
                 this._mtrService.saveKra(request).subscribe(res => {
                     if (res.ok) {
                         //this.mtrInfoData[index] = res.json();

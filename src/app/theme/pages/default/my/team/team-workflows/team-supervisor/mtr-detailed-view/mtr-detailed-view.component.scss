@@ -1,5 +1,38 @@
+.bgColor {
+    &.Green {
+        color: green;
+    }
+
+    &.Amber {
+        color: orangered;
+    }
+
+    &.Red {
+        color: red;
+    }
+}
+
 .mtrDetailsPortlet {
     img {
         width: 100%;
+    }
+
+    .value {
+        padding-left: 5px;
+        font-weight: bold;
+    }
+
+    .colorStatus {
+        .value {
+            @extend .bgColor;
+        }
+    }
+}
+
+.gridColorStatus {
+    text-align: center;
+
+    i.fa.fa-circle {
+        @extend .bgColor;
     }
 }

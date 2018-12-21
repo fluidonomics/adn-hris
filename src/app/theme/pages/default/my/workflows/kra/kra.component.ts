@@ -189,7 +189,6 @@ export class MyKraComponent {
     }
 
     showKRADetails(index: number) {    
-        debugger;    
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;

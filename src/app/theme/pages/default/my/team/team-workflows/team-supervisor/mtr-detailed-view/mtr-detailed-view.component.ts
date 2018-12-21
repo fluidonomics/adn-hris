@@ -117,7 +117,6 @@ export class MtrDetailedViewComponent {
 
 
     showMtrDetail(index, event) {
-        debugger;
         this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = this.mtrInfoData.mtr_details[index] || {};
         this.mtrData.no = index + 1;
@@ -125,7 +124,6 @@ export class MtrDetailedViewComponent {
         this.mtrData.category = this.kraCategoryData.find(f => f._id == this.mtrData.category_id);
     }
     saveMtr(mtrData: any, Remarks: String) {
-        debugger;
         if (!mtrData.supervisorComment) {
             swal({
                 title: 'Please fill remarks!',
@@ -159,6 +157,7 @@ export class MtrDetailedViewComponent {
                         isApproved = true;
                     }
                     let request = {
+                        mtrMasterId: mtrData.mtr_master_id,
                         mtrDetailId: mtrData._id,
                         supervisorComment: mtrData.supervisorComment,
                         empId: this._currentEmpId,
