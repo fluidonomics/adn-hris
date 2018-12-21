@@ -37,7 +37,6 @@ export class MtrBatchInitComponent implements OnInit {
     currentDate = new Date();
     isCheckAll: any;
 
-
     constructor(private _hrService: HrService,
         private _commonService: CommonService,
         private utilityService: UtilityService,
@@ -94,7 +93,7 @@ export class MtrBatchInitComponent implements OnInit {
         this._hrService.getAllEmployeeForMTR().subscribe(res => {
             let data = res.json();
             if (data.result.length > 0) {
-                data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId);
+                data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId && !obj.mtr_batch_id);
                 // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                 data.forEach(element => {
                     if (this.employeeData.filter(obj => obj.emp_id == element.emp_id).length == 0) {
@@ -108,8 +107,7 @@ export class MtrBatchInitComponent implements OnInit {
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
-            this.employeeFilterData = this.employeeData.filter(obj=> !obj.mtr_batch_id);
-
+            this.loadAllEmployee();
         }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
@@ -131,35 +129,46 @@ export class MtrBatchInitComponent implements OnInit {
         }
     }
     saveBulkMTR(form) {
-        this.batchData.emp_id_array = this.employeeFilterData.filter(function (employee, index, array) {
-            return employee.checked;
-        }).map(item => {
-            return {
-                emp_id: item.emp_id,
-                supervisor_id: item.emp_supervisor_id,
-                officeEmail: item.emp_officeEmail
-            }
-        });
+        if (form.valid) {
+            this.batchData.emp_id_array = this.employeeFilterData.filter(function (employee, index, array) {
+                return employee.checked;
+            }).map(item => {
+                return {
+                    emp_id: item.emp_id,
+                    supervisor_id: item.emp_supervisor_id,
+                    officeEmail: item.emp_officeEmail
+                }
+            });
 
-        if (this.batchData.emp_id_array.length > 0) {
-            console.log(this.batchData);
-            this.batchData.createdBy = this._currentEmpId;
-            this.utilityService.showLoader('#initiate-loader');
-            this._hrService.saveBulkMtr(this.batchData)
-                .subscribe(
-                    res => {
-                        if (res.ok) {
+            if (this.batchData.emp_id_array.length > 0) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.value) {
+                        this.batchData.createdBy = this._currentEmpId;
+                        this.utilityService.showLoader('#initiate-loader');
+                        this._hrService.saveBulkMtr(this.batchData).subscribe(res => {
+                            if (res.ok) {
+                                this.utilityService.hideLoader('#initiate-loader');
+                                swal("Success", "Batch Initiated Successfully", "success");
+                                form.reset();
+                            }
+                            this.getAllEmployee();
+                        }, error => {
                             this.utilityService.hideLoader('#initiate-loader');
-                            swal("Success", "Batch Initiated Successfully", "success");
-                            form.resetForm();
-                        }
-                    },
-                    error => {
-                        this.utilityService.hideLoader('#initiate-loader');
-                    });
-        }
-        else {
-            swal('Oops!', 'No employee selected', 'warning')
+                        });
+                    }
+                })
+            }
+            else {
+                swal('Oops!', 'No employee selected', 'warning')
+            }
         }
     }
 

@@ -17,6 +17,31 @@
 			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
 				<div class="row align-items-center">
 					<div class="col-xl-8 order-2 order-xl-1">
+						<div class="form-group m-form__group row align-items-center instructions">
+							<div class="col-md-8">
+								<h4>Instructions</h4>
+							</div>
+							<div class="col-md-8 points">
+								<span>1. Before Dropping and Adding new KRA, Please consult with your respective Supervisor </span>
+								<span>2. Weightage of Dropped KRA will be set to 0 by default </span>
+								<span>3. Weightage of each and every KRA is editable and total weightage must be 100 </span>
+								<span>4. Choose status according to current KRA status </span>
+								<span>5. Colour status values are as follows </span>
+								<span>6. Please provide Remarks against each KRA </span>
+								<span>7. Submit MTR after adding all details </span>
+							</div>
+							<div class="col-md-8 flags">
+								<span><i class="fa fa-square green"></i>KRA progress is going good </span>
+								<span><i class="fa fa-square amber"></i>Need Help to Complete KRA </span>
+								<span><i class="fa fa-square red"></i>Not able to complete KRA </span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+				<div class="row align-items-center">
+					<div class="col-xl-8 order-2 order-xl-1">
 						<div class="form-group m-form__group row align-items-center">
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
@@ -491,20 +516,24 @@
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-6 details">
+						<div class="col-md-6 details" *ngIf="mtrData.mtr_master_kraDetailId">
 							<span>Status</span>
-							<ng-select class="m-input m-input--air " name="progressStatus" id="progressStatus" [items]="progressStatuses"
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
 							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" [clearable]="false"
 							 #progressStatus="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-6 details">
+						<div class="col-md-6 details" *ngIf="mtrData.mtr_master_kraDetailId">
 							<span>Color Status</span>
-							<ng-select class="m-input m-input--air " name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label"
+							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label"
 							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
-							 #colorStatus="ngModel" [disabled]="isDisabled" required></ng-select>
+							 #colorStatus="ngModel" [disabled]="isDisabled" required>
+								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+									<div class="{{item.id}}"></div>
+								</ng-template>
+							</ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && colorStatus.invalid">
 								This field is required.
 							</div>
