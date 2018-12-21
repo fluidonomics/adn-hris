@@ -34,10 +34,6 @@
         cursor: not-allowed;
     }
 
-    .details {
-        padding-top: 2rem;
-    }
-
     .instructions {
         .points {
             span {
@@ -63,14 +59,28 @@
             }
         }
     }
+}
+
+#MTRDataForm {
+    .details {
+        padding-top: 2rem;
+    }
 
     #colorStatus {
-        .ng-select {
-            .ng-option {
-                background-color: green;
+        .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+            div {
+                display: list-item;
 
-                .Green {
+                &.Green {
                     background-color: green;
+                }
+
+                &.Amber {
+                    background-color: orangered;
+                }
+
+                &.Red {
+                    background-color: red;
                 }
             }
         }
