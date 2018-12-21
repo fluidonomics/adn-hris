@@ -14,11 +14,10 @@ import * as _ from 'lodash';
 
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.my-workflows-mtr",
     templateUrl: "./mtr.component.html",
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./mtr.component.css'],
-    providers: [MtrService],
+    providers: [MtrService]
 })
 export class MyMtrComponent {
 
@@ -161,9 +160,14 @@ export class MyMtrComponent {
         else {
             this.isPreviousKRA = false;
         }
-        if (this.mtrData.status) {
-            this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
+        if (this.mtrData.progressStatus == "Dropped") {
+            this.isDisabled = true;
+        } else {
+            if (this.mtrData.status) {
+                this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
+            }
         }
+
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
