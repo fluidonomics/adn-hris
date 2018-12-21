@@ -183,7 +183,7 @@ export class MyMtrComponent {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.mtrInfoData = data.result.message;
-            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted").length > 0;
+            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved").length > 0;
         }, error => {
         });;
     }
@@ -199,7 +199,6 @@ export class MyMtrComponent {
 
     saveKRADetails(form, id: number) {
         if (form.valid) {
-            this.modalRef.hide();
             this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));
             this.saveMtrDetails(this.mtrData.no - 1);
         }
@@ -223,23 +222,52 @@ export class MyMtrComponent {
             progressStatus: this.mtrInfoData[index].progressStatus,
             colorStatus: this.mtrInfoData[index].colorStatus
         }
-        this._mtrService.saveKra(request).subscribe(res => {
-            if (res.ok) {
-                //this.mtrInfoData[index] = res.json();
-                let data = res.json();
-                this.mtrInfoData[index] = data.result.message
-                swal({
-                    title: 'Success',
-                    text: "MTR has been Saved.",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
+
+        this.showDroppedKraConfirmation(request).then(res => {
+            if (res) {
+                this.modalRef.hide();
+                request.weightage_id = null;
+                this._mtrService.saveKra(request).subscribe(res => {
+                    if (res.ok) {
+                        //this.mtrInfoData[index] = res.json();
+                        let data = res.json();
+                        this.mtrInfoData[index] = data.result.message
+                        swal({
+                            title: 'Success',
+                            text: "MTR has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                    this.loadMTRInfo();
+                }, error => {
+                    this.modalRef.hide();
                 });
-                this.loadMTRInfo();
             }
-        }, error => {
         });
+    }
+
+    showDroppedKraConfirmation(request) {
+        let promise = new Promise((res, reject) => {
+            if (request.progressStatus == "Dropped") {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You want to drop this KRA",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    res(result.value);
+                });
+            } else {
+                res(true);
+            }
+        });
+        return promise;
     }
 
 
@@ -405,6 +433,7 @@ export class MyMtrComponent {
         }
         return true;
     }
+
     saveKraWorkFlow() {
         swal({
             title: 'Are you sure?',
