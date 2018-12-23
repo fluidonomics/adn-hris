@@ -1,35 +1,18 @@
+.bgColor {
+    &.Green, &.green {
+        color: green;
+    }
+
+    &.Amber, &.amber {
+        color: orangered;
+    }
+
+    &.Red, &.red {
+        color: red;
+    }
+}
+
 .mtr-detailed-view {
-    .bgColor {
-        &.Green, &.green {
-            color: green;
-        }
-
-        &.Amber, &.amber {
-            color: orangered;
-        }
-
-        &.Red, &.red {
-            color: red;
-        }
-    }
-
-    .mtrDetailsPortlet {
-        img {
-            width: 100%;
-        }
-
-        .value {
-            padding-left: 5px;
-            font-weight: bold;
-        }
-
-        .colorStatus {
-            .value {
-                @extend .bgColor;
-            }
-        }
-    }
-
     .gridColorStatus {
         text-align: center;
 
@@ -55,6 +38,23 @@
 
                 @extend .bgColor;
             }
+        }
+    }
+}
+
+.mtrDetailsPortlet {
+    img {
+        width: 100%;
+    }
+
+    .value {
+        padding-left: 5px;
+        font-weight: bold;
+    }
+
+    .colorStatus {
+        .value {
+            @extend .bgColor;
         }
     }
 }

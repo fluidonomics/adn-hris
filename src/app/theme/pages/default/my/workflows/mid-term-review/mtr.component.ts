@@ -11,6 +11,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
 import { NgSelectComponent } from '@ng-select/ng-select';
 import * as _ from 'lodash';
+import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 
 
 @Component({
@@ -90,7 +91,8 @@ export class MyMtrComponent {
         public _authService: AuthService,
         private _commonService: CommonService,
         private _mtrService: MtrService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private utilityService: UtilityService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -134,7 +136,6 @@ export class MyMtrComponent {
         }
     }
     loadData() {
-        debugger;
         this.loadMTRCategoryData();
         this.loadWeightAgeData();
         this.loadSupervisorData();
@@ -200,13 +201,16 @@ export class MyMtrComponent {
     }
 
     loadMTRWorkFlowDetails() {
+        this.utilityService.showLoader('.m-datatable');
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+            this.utilityService.hideLoader('.m-datatable');
             let data = res.json();
             this.mtrWorkFlowData = data.result.message;
             this.mtrWorkFlowData = _.chain(this.mtrWorkFlowData).groupBy('mtr_batch._id').map(function (v, i) {
                 return v[0];
             }).value();
         }, error => {
+            this.utilityService.hideLoader('.m-datatable');
         });;
     }
 
@@ -239,7 +243,9 @@ export class MyMtrComponent {
         this.showDroppedKraConfirmation(request).then(res => {
             if (res) {
                 this.modalRef.hide();
+                this.utilityService.showLoader('.m-content');
                 this._mtrService.saveKra(request).subscribe(res => {
+                    this.utilityService.hideLoader('.m-content');
                     if (res.ok) {
                         //this.mtrInfoData[index] = res.json();
                         let data = res.json();
@@ -255,6 +261,7 @@ export class MyMtrComponent {
                     }
                     this.loadMTRInfo();
                 }, error => {
+                    this.utilityService.hideLoader('.m-content');
                     this.modalRef.hide();
                 });
             }
@@ -465,7 +472,9 @@ export class MyMtrComponent {
                     supervisor_name: this.currentEmployee.supervisorDetails.fullName,
                     action_link: window.location.origin + '/my/team/workflows/supervisor'
                 }
+                this.utilityService.showLoader('.m-content');
                 this._mtrService.saveKraWorkFlow(data).subscribe(res => {
+                    this.utilityService.hideLoader('.m-content');
                     if (res.ok) {
                         swal({
                             title: 'Submitted Successfully!',
@@ -478,6 +487,7 @@ export class MyMtrComponent {
                         this.loadMTRInfo();
                     }
                 }, error => {
+                    this.utilityService.hideLoader('.m-content');
                 });
             }
         });

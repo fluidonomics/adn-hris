@@ -26,14 +26,14 @@ export class MyTeamReviewerComponent implements OnInit {
     mtrEmployees: any = [];
     imageBase: any;
     employeeReverse: boolean = true;
-    employeeSearch: any;    
+    employeeSearch: any;
     employeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
         page: 1
     };
-    mTRemployeeReverse: boolean = true;    
-    mTRemployeeSearch: any;    
+    mTRemployeeReverse: boolean = true;
+    mTRemployeeSearch: any;
     mTRemployeesFilter: any = {
         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
         status: 'All',
@@ -48,31 +48,30 @@ export class MyTeamReviewerComponent implements OnInit {
         this.loadMTRInfo();
         this.imageBase = environment.content_api_base.apiBase;
     }
-    loadMTRInfo(){
-        this.myService.getMTRByReviewer(this.authService.currentUserData._id).subscribe(res=>{
-            if(res.ok){
-                debugger;
-                let data=res.json();
-                this.mtrEmployees=data.result.message;
+    loadMTRInfo() {
+        this.myService.getMTRByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            if (res.ok) {
+                let data = res.json();
+                this.mtrEmployees = data.result.message;
                 console.log(data);
             }
-            
+
         })
     }
-    
+
     getallemployees() {
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
-            if (res.ok) {               
+            if (res.ok) {
                 this.utilityService.hideLoader("#employeeList");
-                this.employees = res.json() || [];               
-                this.employees = this.employees.data.sort((a, b) =>  {                     
-                    if(moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return 1;
-                    else if(!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt))return -1;
-                    else return 0;                 
-                });               
+                this.employees = res.json() || [];
+                this.employees = this.employees.data.sort((a, b) => {
+                    if (moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return 1;
+                    else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
+                    else return 0;
+                });
                 this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
-               
+
             }
         })
 
@@ -82,7 +81,7 @@ export class MyTeamReviewerComponent implements OnInit {
         let kra = employee.kra;
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
-    goToMtrReview(employee){
+    goToMtrReview(employee) {
         let mtr_master_details = employee.mtr_master_details;
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + mtr_master_details.batch_id + '/' + employee.emp_details._id);
     }

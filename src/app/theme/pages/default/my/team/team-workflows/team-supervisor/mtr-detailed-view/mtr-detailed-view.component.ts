@@ -8,6 +8,7 @@ import { AuthService } from "../../../../../../../../base/_services/authService.
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { MtrService } from "../../../../../services/mtr.service";
+import { UtilityService } from "../../../../../../../../base/_services/utilityService.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mtr-detailed-view",
@@ -44,7 +45,8 @@ export class MtrDetailedViewComponent {
         public _authService: AuthService,
         private _commonService: CommonService,
         private modalService: BsModalService,
-        private mtrService: MtrService
+        private mtrService: MtrService,
+        private utilityService: UtilityService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -107,11 +109,15 @@ export class MtrDetailedViewComponent {
     }
 
     loadMtrInfoData() {
+        this.utilityService.showLoader('m-content');
         this.mtrService.getMtrDetails(this.param_id).subscribe(res => {
+            this.utilityService.hideLoader('m-content');
             let data = res.json().result.message;
             if (data.length > 0) {
                 this.mtrInfoData = data[0];
             }
+        }, err => {
+            this.utilityService.hideLoader('m-content');
         })
     }
 
@@ -156,7 +162,6 @@ export class MtrDetailedViewComponent {
                     if (Remarks == "Approved") {
                         isApproved = true;
                     }
-                    debugger;
                     let request = {
                         mtrMasterId: mtrData.mtr_master_id,
                         mtrDetailId: mtrData._id,
@@ -167,11 +172,15 @@ export class MtrDetailedViewComponent {
                         isApproved: isApproved,
                         supervisorComment: mtrData.supervisorComment,
                     }
+                    this.utilityService.showLoader('.mtrDetailsPortlet');
                     this.mtrService.mtrApproval(request).subscribe(res => {
+                        this.utilityService.hideLoader('.mtrDetailsPortlet');
                         if (res.ok) {
                             this.loadMtrInfoData();
                             this.modalRef.hide();
                         }
+                    }, err => {
+                        this.utilityService.hideLoader('.mtrDetailsPortlet');
                     })
                 }
             });

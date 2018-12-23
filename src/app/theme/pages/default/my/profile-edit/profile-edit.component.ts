@@ -489,7 +489,7 @@ export class ProfileEditComponent implements OnInit {
                 _element.control.setErrors(null)
             }
             else {
-                if(_element.value.toUpperCase()!="HRIS@ADNSL.NET"){
+                if (_element.value.toUpperCase() != "HRIS@ADNSL.NET") {
                     if (_element.name != "officeEmailId" && !this._commonService.checkPersonalEmail(_element)) {
                         this._commonService.checkEmailExists(_element.value, this.param_emp_id)
                             .subscribe(
@@ -502,7 +502,7 @@ export class ProfileEditComponent implements OnInit {
                                 });
                     }
                 }
-                
+
             }
         }
     }
@@ -511,8 +511,7 @@ export class ProfileEditComponent implements OnInit {
             if (oldValue && oldValue == _element.value) {
                 _element.control.setErrors(null)
             }
-            else {                
-                    debugger;
+            else {
                 this._commonService.checkEmailExists(_element.value, this.param_emp_id)
                     .subscribe(
                         data => {
@@ -521,11 +520,11 @@ export class ProfileEditComponent implements OnInit {
                         },
                         error => {
                             _element.control.setErrors(null)
-                        });                
+                        });
             }
-                
+
         }
-    }    
+    }
 
     //save Address Info
     saveAddressInfo() {
