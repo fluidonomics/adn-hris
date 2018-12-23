@@ -348,6 +348,11 @@ export class LeaveService {
         let url = "leave/getEmpMaternityLeaveDetails?id=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+
+    getLeaveDetailsByEmployeeId(empId: number) {
+        let url = "leave/getLeaveDetailsByFilter?empId=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }
 
 export const LeaveStatus = {
