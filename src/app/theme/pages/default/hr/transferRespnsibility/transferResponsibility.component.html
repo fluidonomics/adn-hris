@@ -10,6 +10,7 @@
 								<small>
 								</small>
 							</h3>
+							<!-- <button (click)="checkEmployeesOpenRequests()">Check Open Requests</button> -->
 						</div>
 					</div>
 				</div>
@@ -158,3 +159,126 @@
 		</div>
 	</div>
 </div>
+
+<ng-template #openRequestsModal>
+	<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Employee Open KRA & Leaves
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+						<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+							<div class="btn-group" role="group">
+								<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<div class="m-widget6 ">
+				<div class="row">
+					<div class="col-md-12 pendingKra">
+						<h3>Pending KRA Requests</h3>
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenKraRequest?.length==0 }">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
+										<th class="m-datatable__cell m-datatable__cell--sort" width="60%">
+											<span>KRA</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Weightage</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Status</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let kra of employeeOpenKraRequest;let even=even;">
+										<td class="m-datatable__cell" width="60%">
+											<span>{{kra.kra}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{kra.weightage_id}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{kra.supervisorStatus == null ? 'Pending': kra.supervisorStatus}}</span>
+										</td>
+									</tr>
+									<span *ngIf="employeeOpenKraRequest?.length==0" class="m-datatable--error">No records found</span>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-12 pendingLeave">
+						<h3>Pending Leave Requests</h3>
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenLeaveRequest?.length==0 }">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>From</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>To</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+											<span>Reason</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Status</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let leave of employeeOpenLeaveRequest;let even=even;">
+										<td class="m-datatable__cell" width="20%">
+											<span>{{leave?.leavedetails?.fromDate | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{leave?.leavedetails?.toDate | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="40%">
+											<span>{{leave?.leavedetails?.reason}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{leave?.leavedetails?.status}}</span>
+										</td>
+									</tr>
+									<span *ngIf="employeeOpenLeaveRequest?.length==0" class="m-datatable--error">No records found</span>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-12 msg">
+						<span class="">This employee has some pending requests to be considered by previous supervisor. Do you still
+							want to transfer the supervisor</span>
+					</div>
+				</div>
+				<div class="form-actions">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="m-form__actions pull-right">
+								<button class="btn btn-success" (click)="proceedToTransfer()">Proceed</button>
+								<button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

@@ -47,6 +47,11 @@ export class KraService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getKraByEmployeeId(empId: number) {
+        let url = "kra/getKraByEmployeeId?empId=" + empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }
