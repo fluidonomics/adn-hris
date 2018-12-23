@@ -40,9 +40,6 @@ export class MtrService {
     }
     saveKraWorkFlow(data: any): Observable<Response> {
         let url = "midterm/mtrSubmit"
-        if (data._id) {
-            url = "midterm/mtrSubmit"
-        }
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
@@ -50,7 +47,7 @@ export class MtrService {
         let url = "midterm/getMtrDetails?mtrMasterId=" + mtrMasterId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    mtrApproval(data:any):Observable<Response>{        
+    mtrApproval(data: any): Observable<Response> {
         return this.authService.post("midterm/mtrApproval", data).map(this.extractData).catch(this.handleError);
     }
 

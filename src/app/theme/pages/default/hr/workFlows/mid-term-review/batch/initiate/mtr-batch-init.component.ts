@@ -157,7 +157,7 @@ export class MtrBatchInitComponent implements OnInit {
                             if (res.ok) {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");
-                                form.reset();
+                                form.resetForm();
                             }
                             this.getAllEmployee();
                         }, error => {

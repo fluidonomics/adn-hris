@@ -10,7 +10,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { MtrService } from "../../../../../services/mtr.service";
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mtr-detailed-view",
     templateUrl: "./mtr-detailed-view.component.html",
     styleUrls: ['mtr-detailed-view.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -156,12 +156,16 @@ export class MtrDetailedViewComponent {
                     if (Remarks == "Approved") {
                         isApproved = true;
                     }
+                    debugger;
                     let request = {
                         mtrMasterId: mtrData.mtr_master_id,
                         mtrDetailId: mtrData._id,
+                        empId: this.user._id,
+                        supervisorId: this._currentEmpId,
+                        supervisor_name: this.user.supervisorDetails.fullName,
+                        action_link: window.location.origin + '/my/workflows/mtr',
+                        isApproved: isApproved,
                         supervisorComment: mtrData.supervisorComment,
-                        empId: this._currentEmpId,
-                        isApproved: isApproved
                     }
                     this.mtrService.mtrApproval(request).subscribe(res => {
                         if (res.ok) {

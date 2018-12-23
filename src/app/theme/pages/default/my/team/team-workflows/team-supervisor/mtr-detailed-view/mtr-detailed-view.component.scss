@@ -1,38 +1,60 @@
-.bgColor {
-    &.Green {
-        color: green;
+.mtr-detailed-view {
+    .bgColor {
+        &.Green, &.green {
+            color: green;
+        }
+
+        &.Amber, &.amber {
+            color: orangered;
+        }
+
+        &.Red, &.red {
+            color: red;
+        }
     }
 
-    &.Amber {
-        color: orangered;
-    }
+    .mtrDetailsPortlet {
+        img {
+            width: 100%;
+        }
 
-    &.Red {
-        color: red;
-    }
-}
-
-.mtrDetailsPortlet {
-    img {
-        width: 100%;
-    }
-
-    .value {
-        padding-left: 5px;
-        font-weight: bold;
-    }
-
-    .colorStatus {
         .value {
+            padding-left: 5px;
+            font-weight: bold;
+        }
+
+        .colorStatus {
+            .value {
+                @extend .bgColor;
+            }
+        }
+    }
+
+    .gridColorStatus {
+        text-align: center;
+
+        i.fa.fa-circle {
             @extend .bgColor;
         }
     }
-}
 
-.gridColorStatus {
-    text-align: center;
+    .instructions {
+        margin-bottom: 2rem;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
 
-    i.fa.fa-circle {
-        @extend .bgColor;
+        .points {
+            span {
+                display: block;
+            }
+        }
+
+        .flags {
+            i {
+                padding: 0px 10px;
+
+                @extend .bgColor;
+            }
+        }
     }
 }

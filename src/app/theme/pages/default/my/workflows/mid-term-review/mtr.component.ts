@@ -50,6 +50,7 @@ export class MyMtrComponent {
 
     modalRef: BsModalRef;
     mtrData: any = {};
+    currentEmployee: any = {};
 
     progressStatuses = [
         {
@@ -133,10 +134,12 @@ export class MyMtrComponent {
         }
     }
     loadData() {
+        debugger;
         this.loadMTRCategoryData();
         this.loadWeightAgeData();
         this.loadSupervisorData();
         this.loadMTRInfo();
+        this.loadEmployeeDetails();
     }
     loadMTRCategoryData() {
         this._commonService.getKraCategory().subscribe(data => {
@@ -144,12 +147,35 @@ export class MyMtrComponent {
         }, error => {
         });
     }
+    loadWeightAgeData() {
+        this._commonService.getKraWeightage()
+            .subscribe(
+                data => {
+                    this.weightageData = data.json();
+                },
+                error => {
+                });
+    }
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
     }
+    loadMTRInfo() {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+            let data = res.json();
+            this.mtrInfoData = data.result.message;
+            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved").length > 0;
+        }, error => {
+        });;
+    }
+    loadEmployeeDetails() {
+        this._commonService.getEmployee(this._currentEmpId).subscribe(res => {
+            this.currentEmployee = res.json() || {};
+        });
+    }
+
     showMTRDetails(index: number) {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
@@ -182,23 +208,6 @@ export class MyMtrComponent {
             }).value();
         }, error => {
         });;
-    }
-    loadMTRInfo() {
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
-            let data = res.json();
-            this.mtrInfoData = data.result.message;
-            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved").length > 0;
-        }, error => {
-        });;
-    }
-    loadWeightAgeData() {
-        this._commonService.getKraWeightage()
-            .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
     }
 
     saveKRADetails(form, id: number) {
@@ -448,25 +457,29 @@ export class MyMtrComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (result.value) {
-                this._mtrService.saveKraWorkFlow({ id: this.param_id, empId: this._currentEmpId })
-                    .subscribe(
-                        res => {
-                            if (res.ok) {
-                                swal({
-                                    title: 'Submitted Successfully!',
-                                    text: "KRA has been submitted for Supervisor Approval.",
-                                    type: 'success',
-                                    showCancelButton: false,
-                                    confirmButtonColor: '#66BB6A',
-                                    confirmButtonText: 'OK'
-                                });
-                                this.loadMTRInfo();
-                            }
-                        },
-                        error => {
+                let data = {
+                    id: this.param_id,
+                    empId: this._currentEmpId,
+                    supervisor_id: this.currentEmployee.supervisorDetails._id,
+                    emp_name: this.currentEmployee.fullName,
+                    supervisor_name: this.currentEmployee.supervisorDetails.fullName,
+                    action_link: window.location.origin + '/my/team/workflows/supervisor'
+                }
+                this._mtrService.saveKraWorkFlow(data).subscribe(res => {
+                    if (res.ok) {
+                        swal({
+                            title: 'Submitted Successfully!',
+                            text: "KRA has been submitted for Supervisor Approval.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
                         });
+                        this.loadMTRInfo();
+                    }
+                }, error => {
+                });
             }
         });
     }
-
 }
