@@ -36,8 +36,8 @@ export class MtrViewComponent implements OnInit {
         });
     }
 
-    gotomtrView(mtrView) {
-        /* this.router.navigateByUrl("/my/team/workflows/kra-view/" + mtr._id + "/" + mtr.emp_id); */
+    gotomtrView(mtr) {
+        this.router.navigateByUrl("/my/team/workflows/mtr-detailed-view/" + mtr.mtr_master_details._id + "/" + mtr.emp_details._id);
     }
 
 

@@ -509,7 +509,6 @@ export class ProfileEditComponent implements OnInit {
                 _element.control.setErrors(null)
             }
             else {
-                debugger;
                 this._commonService.checkEmailExists(_element.value, this.param_emp_id)
                     .subscribe(
                         data => {
