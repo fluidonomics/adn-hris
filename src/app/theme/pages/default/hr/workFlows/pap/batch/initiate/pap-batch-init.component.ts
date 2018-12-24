@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef } from "@angular/core";
 
 
 @Component({
@@ -9,5 +9,22 @@ import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 
 export class PapBatchInitComponent implements OnInit {
 
-
+    constructor( private cd:ChangeDetectorRef) { }
+    ngOnInit(){
+            
+    }
+    
+    filterBy:any={};
+    batchData: any = {
+        "emp_id_array": []
+    };
+    onFilterSelected(filterBy){       
+        this.filterBy={};       
+        Object.assign(this.filterBy,filterBy);
+        this.cd.detectChanges();        
+    }
+    OnemployeeChecked(selectedEmployee){
+        console.log(selectedEmployee);
+    }
+    
 }
