@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
 
 
 @Component({
@@ -6,15 +7,24 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     templateUrl: "./pap.component.html",
     encapsulation: ViewEncapsulation.None
 })
-export class MyPapComponent implements OnInit {
+export class MyPapComponent {
 
+    @ViewChild('papDetailModal') papDetailModal: TemplateRef<any>;
+
+    search: any;
+    papWorkFlowData: any = [];
+    isPapAvaliable: boolean = false;
+
+    modalRef: BsModalRef;
+
+    constructor() { }
 
     ngOnInit() {
 
     }
 
-    constructor() {
-
+    saveKRADetails(form, id: number) {
+       
     }
 
 
