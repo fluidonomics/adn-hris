@@ -25,6 +25,8 @@ import { ModalModule } from 'ngx-bootstrap';
 import { KraService } from '../workflows/kra/kra.service';
 import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
+import { PapApprovalsComponent } from './team-workflows/team-supervisor/portlets/pap-approvals/pap-approvals.component';
+import { PapViewComponent } from './team-workflows/team-supervisor/portlets/pap-view/pap-view.component';
 import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
 
@@ -51,7 +53,9 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
         AllEmployeeReviewer,
         MtrApprovalsComponent,
         MtrViewComponent,
-        MtrDetailedViewComponent
+        MtrDetailedViewComponent,
+        PapApprovalsComponent,
+        PapViewComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
