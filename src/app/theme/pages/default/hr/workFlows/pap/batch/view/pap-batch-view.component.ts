@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 
 export class PapBatchViewComponent implements OnInit {
 
-        ngOnInit(){
-            
-        }
+    ngOnInit() {
+
+    }
 }

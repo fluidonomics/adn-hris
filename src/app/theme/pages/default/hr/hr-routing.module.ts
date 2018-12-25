@@ -38,9 +38,9 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: HrLearningComponent },
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
-        { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },        
+        { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
-        { path: 'workflows/pap/batch/init', component: PapBatchInitComponent },        
+        { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
 
         
         { path: 'directory', component: DirectoryComponent },

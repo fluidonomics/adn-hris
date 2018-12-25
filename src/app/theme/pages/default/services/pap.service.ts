@@ -12,9 +12,23 @@ export class PapService {
         private authService: AuthService
     ) { }
 
+    getEmployeesForPapInitiate() {
+        let url = "pap/getEmployeesForPapInitiate";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    initiatePapProcess(data) {
+        let url = "pap/initiatePapProcess";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
 
     private extractData(res: Response) {
-        return res || {};
+        let data = res.json() || {};
+        if (data.result && data.result.message) {
+            return data.result.message;
+        } else {
+            return null;
+        }
     }
     private handleError(error: Response | any) {
         let errMsg: string;
