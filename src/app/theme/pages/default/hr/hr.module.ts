@@ -40,6 +40,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
 import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
 import { DepartmentGradeFilterComponent } from '../shared/components/department-grade-filter/department-grade-filter.component';
 import { EmployeeBatchSelectionGridComponent } from '../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component';
+import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { EmployeeBatchSelectionGridComponent } from '../shared/components/employ
         MTRBatchComponent,
         PapBatchInitComponent,
         DepartmentGradeFilterComponent,
-        EmployeeBatchSelectionGridComponent
+        EmployeeBatchSelectionGridComponent,
+        PapBatchViewComponent
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService]

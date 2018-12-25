@@ -41,6 +41,7 @@ const routes: Routes = [{
         { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
         { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
+        { path: 'workflows/pap/batch', component: PapBatchViewComponent },
 
         
         { path: 'directory', component: DirectoryComponent },
