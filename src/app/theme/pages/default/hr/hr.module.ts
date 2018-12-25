@@ -37,6 +37,9 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
+import { DepartmentGradeFilterComponent } from '../shared/components/department-grade-filter/department-grade-filter.component';
+import { EmployeeBatchSelectionGridComponent } from '../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component';
 
 
 @NgModule({
@@ -71,7 +74,10 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         TransferResponsibilityComponent,
         PostComponent,
         MtrBatchInitComponent,
-        MTRBatchComponent
+        MTRBatchComponent,
+        PapBatchInitComponent,
+        DepartmentGradeFilterComponent,
+        EmployeeBatchSelectionGridComponent
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService]

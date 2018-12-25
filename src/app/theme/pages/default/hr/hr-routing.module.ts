@@ -21,6 +21,8 @@ import { HrGuard } from '../../../../base/_guard/hr.guard'
 import { PostComponent } from './leaves/post/post.component';
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
+import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -36,8 +38,10 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: HrLearningComponent },
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
-        { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },
+        { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
+        { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
+
         
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
