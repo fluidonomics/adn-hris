@@ -6,13 +6,15 @@ import { BatchService } from "../../../batch/batchService.service";
 import { UtilityService } from "../../../../../../../../base/_services/utilityService.service";
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import { MtrService } from "../../../../../services/mtr.service";
+import { PapService } from "../../../../../services/pap.service";
+
 import swal from 'sweetalert2';
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper.papBatchView',
     templateUrl: 'pap-batch-view.component.html',
     encapsulation: ViewEncapsulation.None,
-    providers:[BatchService,MtrService]
+    providers:[BatchService,PapService]
 })
 
 export class PapBatchViewComponent implements OnInit {
@@ -47,8 +49,8 @@ export class PapBatchViewComponent implements OnInit {
         private _commonService: CommonService,
         private _batchService: BatchService,
         public utilityService: UtilityService,
-        public _authService: AuthService,
-        public _mtrService: MtrService) {
+        public _authService: AuthService,       
+        public _papService: PapService) {
     }
     loadBatchFilter: any = {
         date:  this.loadBatch(),
@@ -73,11 +75,12 @@ export class PapBatchViewComponent implements OnInit {
     loadBatch()
     {
         this.utilityService.showLoader('#batch-loader');        
-        this._mtrService.getMtrBatches(this._currentEmpId)
+        this._papService.getPAPBatches(this._currentEmpId)
             .subscribe(
-            res => {              
+            res => { 
+                debugger;             
                 this.utilityService.hideLoader('#batch-loader');
-                this.batchData=res.json().result.message;
+                this.batchData=res;
                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
             },
             error => {
