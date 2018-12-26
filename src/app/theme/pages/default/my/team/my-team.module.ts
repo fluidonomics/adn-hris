@@ -29,6 +29,8 @@ import { PapApprovalsComponent } from './team-workflows/team-supervisor/portlets
 import { PapViewComponent } from './team-workflows/team-supervisor/portlets/pap-view/pap-view.component';
 import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-detailed-view/pap-detailed-view.component';
+import { PapService } from '../../services/pap.service';
 
 @NgModule({
     imports: [
@@ -55,9 +57,10 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
         MtrViewComponent,
         MtrDetailedViewComponent,
         PapApprovalsComponent,
-        PapViewComponent
+        PapViewComponent,
+        PapDetailedViewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]
 })
 export class MyTeamModule {
 }

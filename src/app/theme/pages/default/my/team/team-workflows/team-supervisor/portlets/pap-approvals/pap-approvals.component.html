@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="m-portlet__body" id="papApprovalView">
-        <div class="no-records" *ngIf="papData.length==0 || (papData | orderBy: 'updatedAt' : papDataReverse | filter:papDataReverse)?.length==0">
+        <div class="no-records" *ngIf="papData.length==0 || (papData)?.length==0">
             <span class="align--center">No records found</span>
         </div>
 
@@ -33,8 +33,7 @@
             <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
                 <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
                     <div class="m-widget4  workflow--hover ">
-                        <div class="m-widget4__item m-padding--10" *ngFor="let pap of papData | orderBy: 'updatedAt' : papDataReverse | filter:papDataSearch;let i=index"
-                            (click)="gotopapData(pap)">
+                        <div class="m-widget4__item m-padding--10" *ngFor="let pap of papData;let i=index" (click)="gotopapData(pap)">
                             <div class="m-widget4__img m-widget4__img--logo">
                                 <a align="center">
                                     <img *ngIf="pap.emp_details.profileImage; else noImage" src="{{imageBase+pap.emp_details.profileImage}}"
@@ -51,7 +50,7 @@
                                 </span>
                                 <br>
                                 <span class="m-widget4__sub">
-                                    {{pap.pap_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+                                    {{pap.papmasters.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
                                 </span>
                             </div>
                             <span class="m-widget4__ext">

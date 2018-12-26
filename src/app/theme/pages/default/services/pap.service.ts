@@ -31,6 +31,11 @@ export class PapService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getPapBySupervisor(empId: number) {
+        let url = "pap/getPapBySupervisor?empId=" + empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let data = res.json() || {};
         if (data.result && data.result.message) {
