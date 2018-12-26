@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { PapService } from '../../../services/pap.service';
-
+import * as _ from 'lodash';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
@@ -29,7 +29,7 @@ export class MyPapComponent {
     search: any;
     itemPerPage: number = 10;
 
-    papMasterData = {};
+    papMasterData = [];
 
     constructor(
         private _route: ActivatedRoute,
@@ -62,7 +62,12 @@ export class MyPapComponent {
     loadPapDetails() {
         this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
             debugger;
-            this.papMasterData = res || {};
+            let papDetails = res || [];
+            if (papDetails.length > 0) {
+                this.papMasterData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                    return v[0];
+                }).value();
+            }
         });
     }
 
