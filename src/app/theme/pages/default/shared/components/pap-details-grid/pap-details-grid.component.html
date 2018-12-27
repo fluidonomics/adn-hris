@@ -24,10 +24,10 @@
                     Supervisor
                 </th>
                 <th>
-                    Employee Remarks
+                    Employee Rating
                 </th>
                 <th>
-                    Send Back Comment (Supervisor)
+                    Employee Comment
                 </th>
                 <th>
                     Action
@@ -36,7 +36,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}"
-                ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
+               >
                 <th scope="row">
                     {{i+1}}
                 </th>
@@ -55,16 +55,16 @@
 
                 <td>
                     <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
-                        bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.midtermdetails"
+                        bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
                         [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
                 </td>
                 <td>
                     <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
-                        bindLabel="ratingScale-nomenclature" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
+                        bindLabel="displayName" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.emp_ratingScaleId"
                         [clearable]="false" #paprating="ngModel" required disabled></ng-select>
                 </td>
                 <td>
-                    <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="papInfo.midtermdetails.supervisorComment"
+                    <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="papInfo.empRemark"
                         class="form-control m-input m-input--air" disabled></textarea>
                 </td>
                 <td>
