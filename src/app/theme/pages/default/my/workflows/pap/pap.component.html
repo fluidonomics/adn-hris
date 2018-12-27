@@ -192,191 +192,8 @@
 					<div class="m-section">
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
-
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover" #print_div>
-										<thead>
-											<tr>
-												<th>
-													#
-												</th>
-												<!-- <th>
-													PAP
-												</th> -->
-												<th>
-													KRA Category
-												</th>
-												<th>
-													Weightage
-												</th>
-												<!-- <th>
-													Unit of Success
-												</th>
-												<th>
-													Measure of Success
-												</th> -->
-												<th>
-													Supervisor
-												</th>
-												<th>
-													Employee Remarks
-												</th>
-												<th>
-													Send Back Comment (Supervisor)
-												</th>
-												<th>
-													Action
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}"
-											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
-												<th scope="row">
-													{{i+1}}
-												</th>
-												<td>
-													<ng-select class="m-input m-input--air customError" name="papCategory{{i}}" id="papCategory" [items]="papCategoryData"
-													 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select PAP Category" [(ngModel)]="papInfo.midtermdetails.category_id"
-													 [clearable]="false" #papCategory="ngModel" required disabled></ng-select>
-												</td>
-												<td>
-													<ng-select class="m-input m-input--air customError" name="papWeightage{{i}}" id="papWeightage" [items]="weightageData"
-													 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papInfo.midtermdetails.weightage_id"
-													 [clearable]="false" #mtrWeightage="ngModel" required disabled></ng-select>
-												</td>
-
-												<td>
-													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
-													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.midtermdetails"
-													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
-												</td>
-												<td>
-													<ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
-													bindLabel="ratingScale-nomenclature" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
-													 [clearable]="false" #paprating="ngModel" required disabled></ng-select>
-												</td>
-												<td>
-													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="papInfo.midtermdetails.supervisorComment"
-													 class="form-control m-input m-input--air" disabled></textarea>
-												</td>
-												<td>
-													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Edit" (click)="showPAPDetails(i)">
-														<i class="la la-info"></i>
-													</button>
-													<!-- <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
-														<i class="la la-remove"></i>
-													</button> -->
-												</td>
-											</tr>											
-										</tbody>
-									</table>
-								</div>
+								<pap-details-grid></pap-details-grid>
 							</form>
-						</div>
-						<div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isPapAvaliable">
-							<div class="tab-content">
-								<div class="m-widget3">
-									<div class="m-widget3__item">
-										<div class="m-widget3__header">
-											<div class="m-widget3__user-img">
-												<img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
-											</div>
-											<div class="m-widget3__info">
-												<span class="m-widget3__username" id="hrName">
-													Test HR
-												</span>
-												<br>
-												<span class="m-widget3__time" id="dateTime">
-													2 day ago
-												</span>
-											</div>
-											<span class="m-badge m-badge--success m-badge--wide" id="papStatus">
-												accepted
-											</span>
-										</div>
-										<div class="m-widget3__body">
-											<p class="m-widget3__text m--font-success" id="papTimeline">
-												Your PAP has been Accepted.
-											</p>
-										</div>
-									</div>
-									<div class="m-widget3__item">
-										<div class="m-widget3__header">
-											<div class="m-widget3__user-img">
-												<img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
-											</div>
-											<div class="m-widget3__info">
-												<span class="m-widget3__username" id="supervisorName">
-													Test Supervisor
-												</span>
-												<br>
-												<span class="m-widget3__time">
-													1 weeks ago
-												</span>
-											</div>
-											<span class="m-badge m-badge--info m-badge--wide">
-												initiated
-											</span>
-										</div>
-										<div class="m-widget3__body">
-											<p class="m-widget3__text m--font-info">
-												Your PAP has been Initiated.
-											</p>
-										</div>
-									</div>
-									<div class="m-widget3__item">
-										<div class="m-widget3__header">
-											<div class="m-widget3__user-img">
-												<img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
-											</div>
-											<div class="m-widget3__info">
-												<span class="m-widget3__username" id="hrName">
-													Test HR
-												</span>
-												<br>
-												<span class="m-widget3__time">
-													2 weeks ago
-												</span>
-											</div>
-											<span class="m-badge m-badge--danger m-badge--wide">
-												rejected
-											</span>
-										</div>
-										<div class="m-widget3__body">
-											<p class="m-widget3__text m--font-danger">
-												Your PAP has been rejected.
-											</p>
-										</div>
-									</div>
-									<div class="m-widget3__item">
-										<div class="m-widget3__header">
-											<div class="m-widget3__user-img">
-												<img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg" alt="">
-											</div>
-											<div class="m-widget3__info">
-												<span class="m-widget3__username" id="supervisorName">
-													Test Supervisor
-												</span>
-												<br>
-												<span class="m-widget3__time">
-													3 weeks ago
-												</span>
-											</div>
-											<span class="m-badge m-badge--info m-badge--wide">
-												initiated
-											</span>
-										</div>
-										<div class="m-widget3__body">
-											<p class="m-widget3__text m--font-info">
-												Your PAP has been Initiated.
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -447,7 +264,7 @@
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
 							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
-							 [clearable]="false" #supervisorOne="ngModel"disabled required></ng-select>
+							 [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !supervisorOne.valid">
 								This field is required.
 							</div>
@@ -455,15 +272,15 @@
 						<div class="col-md-12 details">
 							<span>KRA</span>
 							<textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra" #pap_kra="ngModel" class="form-control m-input m-input--air"
-							disabled [required]="!papData.pap_master_kraDetailId"></textarea>
+							 disabled [required]="!papData.pap_master_kraDetailId"></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && pap_kra.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Unit of Success</span>
-							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="papData.midtermdetails.unitOfSuccess" #unitOfSuccess="ngModel"
-							 class="form-control m-input m-input--air" disabled required></textarea>
+							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
+							 #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !unitOfSuccess.valid">
 								This field is required.
 							</div>
@@ -476,20 +293,20 @@
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-6 details" >
+						<div class="col-md-6 details">
 							<span>Status</span>
 							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
-							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus" [clearable]="false"
-							 #progressStatus="ngModel" disabled required></ng-select>
+							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus"
+							 [clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-6 details" >
+						<div class="col-md-6 details">
 							<span>Rating Scale</span>
-							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData" bindLabel="displayName"
-							 bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.colorStatus" [clearable]="false"
-							 #colorStatus="ngModel" [disabled]="isDisabled" required>								
+							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
+							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.colorStatus"
+							 [clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled" required>
 							</ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && colorStatus.invalid">
 								This field is required.
