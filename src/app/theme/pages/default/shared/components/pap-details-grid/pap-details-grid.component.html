@@ -1,0 +1,83 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" #print_div>
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <!-- <th>
+                        PAP
+                    </th> -->
+                <th>
+                    KRA Category
+                </th>
+                <th>
+                    Weightage
+                </th>
+                <!-- <th>
+                        Unit of Success
+                    </th>
+                    <th>
+                        Measure of Success
+                    </th> -->
+                <th>
+                    Supervisor
+                </th>
+                <th>
+                    Employee Remarks
+                </th>
+                <th>
+                    Send Back Comment (Supervisor)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}"
+                ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
+                <th scope="row">
+                    {{i+1}}
+                </th>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="papCategory{{i}}" id="papCategory"
+                        [items]="papCategoryData" bindLabel="kraCategoryName" bindValue="_id" placeholder="Select PAP Category"
+                        [(ngModel)]="papInfo.midtermdetails.category_id" [clearable]="false" #papCategory="ngModel"
+                        required disabled></ng-select>
+                </td>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="papWeightage{{i}}" id="papWeightage"
+                        [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage"
+                        [(ngModel)]="papInfo.midtermdetails.weightage_id" [clearable]="false" #mtrWeightage="ngModel"
+                        required disabled></ng-select>
+                </td>
+
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+                        bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.midtermdetails"
+                        [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
+                </td>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
+                        bindLabel="ratingScale-nomenclature" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
+                        [clearable]="false" #paprating="ngModel" required disabled></ng-select>
+                </td>
+                <td>
+                    <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="papInfo.midtermdetails.supervisorComment"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                        title="Edit" (click)="showPAPDetails(i)">
+                        <i class="la la-info"></i>
+                    </button>
+                    <!-- <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                         title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
+                            <i class="la la-remove"></i>
+                        </button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
