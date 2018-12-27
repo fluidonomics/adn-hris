@@ -128,42 +128,41 @@ export class MyKraComponent {
                 this.isDisabled = status == "Initiated" || status == "SendBack" ? false : true;
                 if (this.kraInfoData.length == 0) {
                     this.addKraHtml();
-                   
+
                 }
-                else{
-                    this.supervisorData=[];
-                    let subervisors=[];
-                    for (let index = 0; index < this.kraInfoData.length; index++) {                       
-                        if(this.kraInfoData[index].supervisor_id){
-                           
+                else {
+                    this.supervisorData = [];
+                    let subervisors = [];
+                    for (let index = 0; index < this.kraInfoData.length; index++) {
+                        if (this.kraInfoData[index].supervisor_id) {
+
                             this._commonService.getEmployee(this.kraInfoData[index].supervisor_id).subscribe(
-                                res=>{                            
-                                    let supervisorinfo=subervisors.filter(x=> x._id==this.kraInfoData[index].supervisor_id);
-                                    if(supervisorinfo.length==0){
-                                    let supervisorInfoData=res.json()||{};                        
-                                    subervisors.push(supervisorInfoData);                                   
-                                   }                                  
-                                   if(index==this.kraInfoData.length-1){
-                                       debugger;
-                                       this.supervisorData=subervisors;
-                                   }
-                                },error=>{
-        
+                                res => {
+                                    let supervisorinfo = subervisors.filter(x => x._id == this.kraInfoData[index].supervisor_id);
+                                    if (supervisorinfo.length == 0) {
+                                        let supervisorInfoData = res.json() || {};
+                                        subervisors.push(supervisorInfoData);
+                                    }
+                                    if (index == this.kraInfoData.length - 1) {
+                                        this.supervisorData = subervisors;
+                                    }
+                                }, error => {
+
                                 })
-                           
-                            
+
+
                         }
-                        else{  
-                            this.kraInfoData[index].supervisor_id  =this.supervisorData[0]._id;                  
+                        else {
+                            this.kraInfoData[index].supervisor_id = this.supervisorData[0]._id;
                             // this.kraInfoData.forEach(element => {
                             //     element.supervisor_id=this.supervisorData[0]._id;
                             // });                        
                         }
                     }
-                   
-                    
+
+
                 }
-                
+
                 //this.addDummyRow((7 - this.kraInfoData.length));
             },
             error => {
@@ -195,7 +194,6 @@ export class MyKraComponent {
             .subscribe(
                 data => {
                     this.supervisorData = data.json();
-                    debugger;
                 },
                 error => {
                 });
@@ -207,7 +205,7 @@ export class MyKraComponent {
     }
 
 
-    addKraHtml() {       
+    addKraHtml() {
         if (this.kraInfoData.length < 7) {
             let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
             this.kraInfoData.push(data);
@@ -224,15 +222,15 @@ export class MyKraComponent {
         }
     }
 
-    showKRADetails(index: number) {    
+    showKRADetails(index: number) {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;
-        if(this.kraData.supervisorStatus)
-        this.isDisabled = this.kraData.supervisorStatus == "Initiated" ||this.kraData.supervisorStatus == "SendBack" ? false : true;
-        else
-        this.isDisabled=true;
-
+        if (this.kraData.supervisorStatus == null || this.kraData.supervisorStatus == undefined || this.kraData.supervisorStatus == "Initiated" || this.kraData.supervisorStatus == "SendBack") {
+            this.isDisabled = false;
+        } else {
+            this.isDisabled = true;
+        }
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
@@ -416,24 +414,24 @@ export class MyKraComponent {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result.value) {                          
-            this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
-            .subscribe(
-                res => {
-                    if (res.ok) {
-                        swal({
-                            title: 'Submitted Successfully!',
-                            text: "KRA has been submitted for Supervisor Approval.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
+            if (result.value) {
+                this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
+                    .subscribe(
+                        res => {
+                            if (res.ok) {
+                                swal({
+                                    title: 'Submitted Successfully!',
+                                    text: "KRA has been submitted for Supervisor Approval.",
+                                    type: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonColor: '#66BB6A',
+                                    confirmButtonText: 'OK'
+                                });
+                                this.loadKraInfo();
+                            }
+                        },
+                        error => {
                         });
-                        this.loadKraInfo();
-                    }
-                },
-                error => {
-                });
             }
         });
     }
