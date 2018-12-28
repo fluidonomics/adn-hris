@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PapService } from '../../../../../../services/pap.service';
 import { AuthService } from '../../../../../../../../../base/_services/authService.service';
 import { environment } from '../../../../../../../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'pap-approvals',
@@ -19,7 +20,8 @@ export class PapApprovalsComponent {
 
     constructor(
         private authService: AuthService,
-        private papService: PapService
+        private papService: PapService,
+        private router: Router
     ) {
         this.imageBase = environment.content_api_base.apiBase;
         this.authService.validateToken().subscribe(res => {
@@ -35,6 +37,7 @@ export class PapApprovalsComponent {
     }
 
     gotopapData(pap) {
-
+debugger;
+          this.router.navigateByUrl("/my/team/workflows/pap-detailed-view/" + pap.papmasters._id + "/" + pap._id);
     }
 }

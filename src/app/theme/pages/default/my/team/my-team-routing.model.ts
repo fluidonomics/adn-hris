@@ -13,6 +13,7 @@ import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-d
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-detailed-view/pap-detailed-view.component';
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [SupervisorGuard] },
@@ -23,7 +24,8 @@ const routes: Routes = [
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent,canActivate: [SupervisorGuard] },
     //{ path: 'workflows/:reveiwer/allEmployee', component: AllEmployeeComponent,canActivate: [ReviewerGuard] },
     { path: 'workflows/kra-view/:id/:emp_id', component: MyTeamKraComponent },
-    { path: 'workflows/mtr-detailed-view/:id/:emp_id', component: MtrDetailedViewComponent }
+    { path: 'workflows/mtr-detailed-view/:id/:emp_id', component: MtrDetailedViewComponent },
+    { path: 'workflows/pap-detailed-view/:id/:emp_id', component: PapDetailedViewComponent }
 ]
 
 

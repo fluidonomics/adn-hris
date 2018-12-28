@@ -108,7 +108,7 @@ export class MyPapComponent {
             });
     }
     loadSupervisorData() {
-        this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
+        this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
