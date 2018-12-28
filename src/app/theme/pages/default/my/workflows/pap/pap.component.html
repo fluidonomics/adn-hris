@@ -168,7 +168,7 @@
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
-								{{isChangable ?'My PAP' :'Submit PAP' }}
+								{{isChangable ?'Submit PAP' :'My PAP' }}
 								<small>
 								</small>
 							</h3>
@@ -192,7 +192,7 @@
 					<div class="m-section">
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
-								<pap-details-grid></pap-details-grid>
+								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id" (showDetails)="showPAPDetails($event)"></pap-details-grid>
 							</form>
 						</div>
 					</div>
@@ -254,7 +254,7 @@
 							<ng-select class="m-input m-input--air" name="papWeightagedata" id="papWeightagedata" [items]="weightageData"
 							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
 							 [clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !papWeightage.valid">
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && papWeightage.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -265,7 +265,7 @@
 							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
 							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
 							 [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !supervisorOne.valid">
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supervisorOne.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -281,7 +281,7 @@
 							<span>Unit of Success</span>
 							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
 							 #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !unitOfSuccess.valid">
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && unitOfSuccess.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -289,7 +289,7 @@
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="papData.midtermdetails.measureOfSuccess"
 							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && !measureOfSuccess.valid">
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && measureOfSuccess.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -305,7 +305,7 @@
 						<div class="col-md-6 details">
 							<span>Rating Scale</span>
 							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
-							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.colorStatus"
+							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
 							 [clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled" required>
 							</ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && colorStatus.invalid">
@@ -314,7 +314,7 @@
 						</div>
 						<div class="col-md-12 details">
 							<span>Employee Remarks</span>
-							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.employeeComment" #employeeComment="ngModel"
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.empRemark" #employeeComment="ngModel"
 							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && employeeComment.invalid">
 								This field is required.
