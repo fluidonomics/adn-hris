@@ -27,6 +27,12 @@ export class MtrService {
         let url = "midterm/getMtrBatches?empId=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
+    updateBatch(data) {
+        let url = "midterm/updateBatch";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
     deleteKra(data: any): Observable<Response> {
         let url = "midterm/deleteMtrKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);

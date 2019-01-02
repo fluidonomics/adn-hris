@@ -192,9 +192,9 @@ export class MyMtrComponent {
             this.isDisabled = true;
         } else {
             if (this.mtrData.status) {
-                this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
+                this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" || this.mtrData.status == "New" ? false : true;
             }
-            else{
+            else {
                 this.isDisabled = false;
             }
         }
