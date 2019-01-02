@@ -178,6 +178,7 @@ export class MyMtrComponent {
     }
 
     showMTRDetails(index: number) {
+        debugger;
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
@@ -192,6 +193,9 @@ export class MyMtrComponent {
         } else {
             if (this.mtrData.status) {
                 this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
+            }
+            else{
+                this.isDisabled = false;
             }
         }
 

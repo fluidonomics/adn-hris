@@ -531,7 +531,7 @@
 							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
 							 #colorStatus="ngModel" [disabled]="isDisabled" required>
 								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-									<div class="{{item.id}}"></div>
+								<span>{{item.label}}</span>	<div class="{{item.id}}"></div>
 								</ng-template>
 							</ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && colorStatus.invalid">

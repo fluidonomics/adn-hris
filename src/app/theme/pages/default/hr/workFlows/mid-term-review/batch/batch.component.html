@@ -326,9 +326,9 @@
                                             </label>
                                             <span class="required" aria-required="true"> * </span>
                                             <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel" placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required disabled="disabled">
-                                            <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchName.valid">
+                                            <!-- <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchName.valid">
                                                     This field is required.
-                                            </div>
+                                            </div> -->
                                 </div>
                             </div>
                         </div>
@@ -338,7 +338,7 @@
                                     <label for="batchEndDate">Batch End Date
                                         </label>
                                         <span class="required" aria-required="true"> * </span>
-                                        <input name="batchEndDate" class="form-control m-input m-input--air" #batchEndDate="ngModel" placeholder="Enter Batch End Date" [(ngModel)]="editBatch.batchEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #batchEndDate="ngModel" placement="top" required>
+                                        <input name="batchEndDate" class="form-control m-input m-input--air" #batchEndDate="ngModel" placeholder="Enter Batch End Date" [(ngModel)]="editBatch.batchEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #batchEndDate="ngModel" placement="bottom" required>
                                         <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchEndDate.valid">
                                                 This field is required.
                                         </div>
