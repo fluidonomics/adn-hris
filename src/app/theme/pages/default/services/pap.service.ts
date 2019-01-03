@@ -19,7 +19,7 @@ export class PapService {
 
     initiatePapProcess(data) {
         let url = "pap/initiatePapProcess";
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        return this.authService.post(url, data).catch(this.handleError);
     }
     getPAPBatches(emp_id?: number): Observable<Response> {
         let url = "pap/getPapBatches?currentUserId=" + emp_id;

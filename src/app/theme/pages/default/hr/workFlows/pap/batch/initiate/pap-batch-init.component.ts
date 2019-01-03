@@ -56,7 +56,10 @@ export class PapBatchInitComponent implements OnInit {
 
     initiateBatch(form) {
         if (form.valid) {
-            let data: any = {};
+            let data: any = {
+                batchName: this.batchData.batchName,
+                batchEndDate: this.batchData.batchEndDate
+            };
             data.emp_id_array = this.selectedEmployees.map(item => {
                 debugger;
                 return {
@@ -64,8 +67,7 @@ export class PapBatchInitComponent implements OnInit {
                     mtr_master_id: item.mtr_master_id,
                     supervisor_id: item.supervisor_id,
                     officeEmail: item.emp_emailId,
-                    batchName: this.batchData.batchName,
-                    batchEndDate: this.batchData.batchEndDate
+                    
                 }
             });
 
@@ -83,6 +85,7 @@ export class PapBatchInitComponent implements OnInit {
                         data.createdBy = this._currentEmpId;
                         this.utilityService.showLoader('#initiate-loader');
                         this.papService.initiatePapProcess(data).subscribe(res => {
+                            debugger;
                             if (res.ok) {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");
