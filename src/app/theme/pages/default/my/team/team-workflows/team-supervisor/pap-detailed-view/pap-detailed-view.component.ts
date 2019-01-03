@@ -77,7 +77,7 @@ export class PapDetailedViewComponent implements OnInit {
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.papGridInput.empId=parseInt(params['emp_id']);                       
-                        this.papGridInput.param_id=parseInt(params['_id']);  
+                        this.papGridInput.param_id=parseInt(params['id']);  
                         this.loadData();                                             
                     }
                 });
@@ -100,8 +100,7 @@ export class PapDetailedViewComponent implements OnInit {
         this.loadPAPCategoryData();
         this.loadRatingScaleData();
     }
-    loadPapDetails() {
-        debugger;
+    loadPapDetails() {       
         this.papService.getPapDetailsSingleEmployee(this.papGridInput.empId).subscribe(res => {            
             let papDetails = res || [];
             if (papDetails.length > 0) {
@@ -146,9 +145,7 @@ export class PapDetailedViewComponent implements OnInit {
         }, error => {
         });
     }
-    showPAPDetails(index) {
-      
-        debugger;
+    showPAPDetails(index) {              
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
@@ -165,8 +162,7 @@ export class PapDetailedViewComponent implements OnInit {
                 "sup_ratingScaleId": this.papData.sup_ratingScaleId
             }
             console.log(request);
-            this.papService.papUpdateSupervisor(request).subscribe(res=>{
-                debugger;
+            this.papService.papUpdateSupervisor(request).subscribe(res=>{               
                 if(res.ok){
                     this.papGridInput={};
                     let gridInput={
@@ -176,7 +172,6 @@ export class PapDetailedViewComponent implements OnInit {
                     // this.papGridInput.empId=this._currentEmpId;
                     // this.papGridInput.param_id=this.param_id;
                     Object.assign(this.papGridInput,gridInput)
-
                     this.loadPapDetails();
                     swal({
                         title: 'Success',
@@ -190,6 +185,43 @@ export class PapDetailedViewComponent implements OnInit {
             },error=>{
 
             })        
+    }
+    submitPapWorkFlow(){
+        let dataWithoutPendingStatus=this.papInfoData.filter(obj=> obj.sup_ratingScaleId==null);
+
+        if(dataWithoutPendingStatus.length==0){            
+            let request={
+                pap_master_id:this.papGridInput.param_id,
+                updatedBy:this._currentEmpId
+            }
+            this.papService.papSubmitToReviewer(request).subscribe(
+                res=>{
+                    if(res.ok){
+                        this.loadPapDetails()
+                        swal({
+                            title: 'Success',
+                            text: "PAP has been submited.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },error=>{
+
+                }
+            )
+    }
+    else{
+        swal({
+            title: 'Oops!',
+            text: 'All PAP need to be saved before submitting',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#66BB6A',
+            confirmButtonText: 'OK'
+        });
+    }
     }
     
 }

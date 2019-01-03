@@ -80,6 +80,7 @@ export class PapDetailsGridComponent implements OnInit {
                 let papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
                     return v[0];
                 }).value();
+                debugger;
                 this.papInfoData=papWorkFlowData[0].papdetails;
                 console.log(papWorkFlowData);
             }

@@ -37,6 +37,10 @@ export class PapService {
         let url = "pap/papSubmit";
         return this.authService.post(url,data).catch(this.handleError);
     }
+    papSubmitToReviewer(data: any): Observable<Response> {
+        let url = "pap/papSubmitToReviewer";
+        return this.authService.post(url,data).catch(this.handleError);
+    }
     
     
 
