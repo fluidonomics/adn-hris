@@ -120,7 +120,8 @@ export class MyMtrComponent {
             });
     }
     addKraHtml() {
-        if (this.mtrInfoData.length < 7) {
+        let mtrs = this.mtrInfoData.filter(mtr => mtr.progressStatus != 'Dropped');
+        if (mtrs && mtrs.length < 7) {
             let data = { _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id };
             this.mtrInfoData.push(data);
         }
@@ -135,6 +136,7 @@ export class MyMtrComponent {
             });
         }
     }
+
     loadData() {
         this.loadMTRCategoryData();
         this.loadWeightAgeData();
@@ -178,7 +180,6 @@ export class MyMtrComponent {
     }
 
     showMTRDetails(index: number) {
-        debugger;
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
@@ -199,7 +200,6 @@ export class MyMtrComponent {
             }
         }
 
-
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
         //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
@@ -215,7 +215,7 @@ export class MyMtrComponent {
             }).value();
         }, error => {
             this.utilityService.hideLoader('.m-datatable');
-        });;
+        });
     }
 
     saveKRADetails(form, id: number) {
@@ -268,6 +268,11 @@ export class MyMtrComponent {
                     this.utilityService.hideLoader('.m-content');
                     this.modalRef.hide();
                 });
+            } else {
+                let mtr = this.mtrInfoData[index];
+                mtr.progressStatus = null;
+                mtr.employeeComment = null;
+                mtr.colorStatus = null;
             }
         });
     }
