@@ -30,13 +30,18 @@
                     Employee Comment
                 </th>
                 <th>
+                    Supervisor Rating
+                </th>
+                <th>
+                    Supervisor Comment
+                </th>
+                <th>
                     Action
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}"
-               >
+            <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}">
                 <th scope="row">
                     {{i+1}}
                 </th>
@@ -64,7 +69,16 @@
                         [clearable]="false" #paprating="ngModel" required disabled></ng-select>
                 </td>
                 <td>
-                    <textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="papInfo.empRemark"
+                    <textarea name="empRemark{{i}}" id="empRemark" #empRemark="ngModel" [(ngModel)]="papInfo.empRemark"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
+                        bindLabel="displayName" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.sup_ratingScaleId"
+                        [clearable]="false" #paprating="ngModel" required disabled></ng-select>
+                </td>
+                <td>
+                    <textarea name="supRemark{{i}}" id="supRemark" #supRemark="ngModel" [(ngModel)]="papInfo.supRemark"
                         class="form-control m-input m-input--air" disabled></textarea>
                 </td>
                 <td>

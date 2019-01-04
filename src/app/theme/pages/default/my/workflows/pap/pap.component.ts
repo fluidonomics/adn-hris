@@ -7,6 +7,7 @@ import { PapService } from '../../../services/pap.service';
 import * as _ from 'lodash';
 import swal from 'sweetalert2';
 import { ignoreElements } from 'rxjs/operator/ignoreElements';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
@@ -20,16 +21,16 @@ export class MyPapComponent {
 
     papWorkFlowData: any = [];
     isPapAvaliable: boolean = false;
-    isChangable:boolean=true;
+    isChangable: boolean = true;
 
     supervisorData: any = [];
     weightageData: any = [];
-    papCategoryData:any=[];
-    papRatingScaleData:any=[];
+    papCategoryData: any = [];
+    papRatingScaleData: any = [];
 
     papData: any = {};
-    papGridInput:any={};
-    isDisabled:boolean=true;
+    papGridInput: any = {};
+    isDisabled: boolean = true;
 
     progressStatuses = [
         {
@@ -45,7 +46,7 @@ export class MyPapComponent {
             label: "Dropped"
         }
     ];
-   
+
 
     modalRef: BsModalRef;
     param_id: number;
@@ -58,8 +59,8 @@ export class MyPapComponent {
     itemPerPage: number = 10;
 
     papMasterData = [];
-
-    papInfoData:any=[];
+    papInfoData: any = [];
+    papChanges: Subject<any> = new Subject<any>();
 
     constructor(
         private _route: ActivatedRoute,
@@ -76,8 +77,8 @@ export class MyPapComponent {
             this._route.queryParams.subscribe(params => {
                 if (params['id']) {
                     this.param_id = params['id'];
-                    this.papGridInput.empId=this._currentEmpId;
-                    this.papGridInput.param_id=this.param_id;
+                    this.papGridInput.empId = this._currentEmpId;
+                    this.papGridInput.param_id = this.param_id;
                     this.loadData();
                 }
                 else {
@@ -87,6 +88,7 @@ export class MyPapComponent {
             });
         });
     }
+
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
@@ -96,17 +98,19 @@ export class MyPapComponent {
                 error => {
                 });
     }
-    loadRatingScaleData(){
+
+    loadRatingScaleData() {
         this._commonService.getPapRatingScale().subscribe(
             data => {
                 this.papRatingScaleData = data.json().result;
                 this.papRatingScaleData.forEach(element => {
-                    element.displayName=element.ratingScale+"-"+element.nomenclature
+                    element.displayName = element.ratingScale + "-" + element.nomenclature
                 });
                 console.log(this.papRatingScaleData);
             }, error => {
             });
     }
+
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
             this.supervisorData = data.json();
@@ -121,72 +125,72 @@ export class MyPapComponent {
         this.loadPAPCategoryData();
         this.loadRatingScaleData();
     }
+
     loadPAPCategoryData() {
         this._commonService.getKraCategory().subscribe(data => {
             this.papCategoryData = data.json();
         }, error => {
         });
     }
+
     loadPapDetails() {
-        this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {            
-            let papDetails = res || [];
-            if (papDetails.length > 0) {
-                this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
-                    return v[0];
-                }).value();
-                this.papInfoData=this.papWorkFlowData[0].papdetails;
-                this.isChangable=this.papInfoData.filter(obj=> obj.status=="Submitted").length!=0?false:true;
-                console.log(this.papWorkFlowData);
-            }
-        });
+        return new Promise((resolve, reject) => {
+            this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
+                let papDetails = res || [];
+                if (papDetails.length > 0) {
+                    this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                        return v[0];
+                    }).value();
+                    this.papInfoData = this.papWorkFlowData[0].papdetails;
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                    console.log(this.papWorkFlowData);
+                    resolve(this.papInfoData);
+                }
+            });
+        })
     }
+
     showPAPDetails(index) {
-      
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
         console.log(this.papData);
 
-        // if (this.papData.kra_details && this.papData.kra_details._id) {
-        //     this.isPreviousKRA = true;
-        // }
-        // else {
-        //     this.isPreviousKRA = false;
-        // }
-        // if (this.papData.progressStatus == "Dropped") {
-        //     this.isDisabled = true;
-        // } else {
-        //     if (this.mtrData.status) {
-        //         this.isDisabled = this.mtrData.status == "SendBack" || this.mtrData.status == "Pending" ? false : true;
-        //     }
-        // }
-        this.isDisabled = this.papData.status == "Submitted" || this.papData.status == "Pending" ? true : false;                
-        //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
-        //this.mtrData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+        if (this.papData.status == "Submitted") {
+            this.isDisabled = true;
+        } else if (this.papData.status == "Initiated" || this.papData.status == "Pending") {
+            this.isDisabled = false;
+        } else {
+            this.isDisabled = false;
+        }
     }
-    saveKRADetails(form, id: number){
-        if(form.valid){
-            this.modalRef.hide();            
-            let request={
-                "papDetailsId" : this.papData._id,
+
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            this.modalRef.hide();
+            let request = {
+                "papDetailsId": this.papData._id,
                 "updatedBy": this._currentEmpId,
                 "empRemark": this.papData.empRemark,
                 "emp_ratingScaleId": this.papData.emp_ratingScaleId
             }
             console.log(request);
-            this.papService.papUpdate(request).subscribe(res=>{
+            this.papService.papUpdate(request).subscribe(res => {
                 debugger;
-                if(res.ok){
-                    this.papGridInput={};
-                    let gridInput={
-                        empId:this._currentEmpId,
-                        param_id:this.param_id
+                if (res.ok) {
+                    this.papGridInput = {};
+                    let gridInput = {
+                        empId: this._currentEmpId,
+                        param_id: this.param_id
                     }
                     // this.papGridInput.empId=this._currentEmpId;
                     // this.papGridInput.param_id=this.param_id;
-                    Object.assign( this.papGridInput,gridInput)
+                    Object.assign(this.papGridInput, gridInput)
 
-                    this.loadPapDetails();
+                    this.loadPapDetails().then(res => {
+                        this.papChanges.next(res);
+                    });
+
                     swal({
                         title: 'Success',
                         text: "PAP has been Saved.",
@@ -196,22 +200,31 @@ export class MyPapComponent {
                         confirmButtonText: 'OK'
                     });
                 }
-            },error=>{
+            }, error => {
 
             })
         }
     }
-    submitPapWorkFlow(isdirty){            
-        let dataWithoutPendingStatus=this.papInfoData.filter(obj=> obj.status!="Pending");
+    submitPapWorkFlow(isdirty) {
+        let dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.status != "Pending");
         console.log(dataWithoutPendingStatus);
-        if(dataWithoutPendingStatus.length==0){
-                let request={
-                    pap_master_id:this.param_id,
-                    updatedBy:this._currentEmpId
-                }
-                this.papService.papSubmit(request).subscribe(
-                    res=>{
-                        if(res.ok){
+        if (dataWithoutPendingStatus.length == 0) {
+            let request = {
+                pap_master_id: this.param_id,
+                updatedBy: this._currentEmpId
+            }
+            swal({
+                title: 'Are you sure?',
+                text: "You want to submit PAP to supervisor",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.papService.papSubmit(request).subscribe(res => {
+                        if (res.ok) {
                             this.loadPapDetails()
                             swal({
                                 title: 'Success',
@@ -222,12 +235,13 @@ export class MyPapComponent {
                                 confirmButtonText: 'OK'
                             });
                         }
-                    },error=>{
+                    }, error => {
 
-                    }
-                )
+                    })
+                }
+            });
         }
-        else{
+        else {
             swal({
                 title: 'Oops!',
                 text: 'All PAP need to be saved before submitting',

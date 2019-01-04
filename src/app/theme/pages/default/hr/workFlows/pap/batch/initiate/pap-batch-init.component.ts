@@ -29,14 +29,13 @@ export class PapBatchInitComponent implements OnInit {
         private utilityService: UtilityService,
         public _authService: AuthService
     ) {
-
-        this._authService.validateToken().subscribe(res => {
-            this._currentEmpId = this._authService.currentUserData._id;
-        });
     }
 
     ngOnInit() {
-        this.getEmployeesForPap();
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.getEmployeesForPap();
+        });
     }
 
     onFilterSelected(filterBy) {
@@ -50,7 +49,11 @@ export class PapBatchInitComponent implements OnInit {
 
     getEmployeesForPap() {
         this.papService.getEmployeesForPapInitiate().subscribe(res => {
-            this.employees = res || [];
+            debugger;
+            let employees = res || [];
+            if (employees.length > 0) {
+                this.employees = employees.filter(obj => obj.hrspoc_id == this._currentEmpId && !obj.pap_master_id);
+            }
         });
     }
 
@@ -61,13 +64,12 @@ export class PapBatchInitComponent implements OnInit {
                 batchEndDate: this.batchData.batchEndDate
             };
             data.emp_id_array = this.selectedEmployees.map(item => {
-                debugger;
                 return {
                     emp_id: item.emp_id,
                     mtr_master_id: item.mtr_master_id,
                     supervisor_id: item.supervisor_id,
                     officeEmail: item.emp_emailId,
-                    
+
                 }
             });
 
@@ -85,7 +87,6 @@ export class PapBatchInitComponent implements OnInit {
                         data.createdBy = this._currentEmpId;
                         this.utilityService.showLoader('#initiate-loader');
                         this.papService.initiatePapProcess(data).subscribe(res => {
-                            debugger;
                             if (res.ok) {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");

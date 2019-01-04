@@ -82,7 +82,7 @@
 								<span>{{papworkflow.papbatches.createdAt | date:"dd-MMM-yyyy hh:mm"}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
-								<span>{{papworkflow.papbatches.createdBy}}</span>
+								<span>{{papworkflow.papbatches.createdBy_empDetails.fullName}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
 								<span>{{papworkflow.papbatches.batchEndDate | date:"dd-MMM-yyyy hh:mm"}}</span>
@@ -192,7 +192,8 @@
 					<div class="m-section">
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
-								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id" (showDetails)="showPAPDetails($event)"></pap-details-grid>
+								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id" [papChanges]="papChanges"
+								 (showDetails)="showPAPDetails($event)"></pap-details-grid>
 							</form>
 						</div>
 					</div>
