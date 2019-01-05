@@ -56,8 +56,8 @@
                                     <h4>{{user?.userName}}</h4>
                                 </div>
                             </div>
-                            <pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id"
-                                [papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
+                            <pap-details-grid [empId]="papEmployeeId" [papMasterId]="papMasterId" [papChanges]="papChanges"
+                                (showDetails)="showPAPDetails($event)"></pap-details-grid>
                             <br>
                             <!-- </form> -->
                         </div><br><br>

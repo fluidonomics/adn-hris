@@ -64,6 +64,8 @@ export class PapDetailedViewComponent implements OnInit {
     papInfoData: any = [];
     user: any;
     papChanges: Subject<any> = new Subject<any>();
+    papEmployeeId;
+    papMasterId;
 
     constructor(
         public _authService: AuthService,
@@ -78,8 +80,8 @@ export class PapDetailedViewComponent implements OnInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
-                        this.papGridInput.empId = parseInt(params['emp_id']);
-                        this.papGridInput.param_id = parseInt(params['id']);
+                        this.papEmployeeId = parseInt(params['emp_id']);
+                        this.papMasterId = parseInt(params['id']);
                         this.loadData();
                     }
                 });
@@ -87,7 +89,7 @@ export class PapDetailedViewComponent implements OnInit {
         );
     }
     getEmployee() {
-        this._commonService.getEmployee(this.papGridInput.empId).subscribe(res => {
+        this._commonService.getEmployee(this.papEmployeeId).subscribe(res => {
             if (res.ok) {
                 this.user = res.json() || {};
             }
@@ -103,15 +105,16 @@ export class PapDetailedViewComponent implements OnInit {
         this.loadRatingScaleData();
     }
     loadPapDetails() {
+        debugger;
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this.papGridInput.empId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = true;//this.papInfoData.filter(obj=> obj.status=="Pending Reviewer").length== this.papInfoData.length?false:true;
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Pending Reviewer").length == this.papInfoData.length ? false : true;
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
@@ -119,7 +122,7 @@ export class PapDetailedViewComponent implements OnInit {
         });
     }
     loadSupervisorData() {
-        this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
+        this._commonService.getKraSupervisor(this.papEmployeeId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
@@ -138,7 +141,7 @@ export class PapDetailedViewComponent implements OnInit {
             data => {
                 this.papRatingScaleData = data.json().result;
                 this.papRatingScaleData.forEach(element => {
-                    element.displayName = element.ratingScale + "-" + element.nomenclature
+                    element.displayName = element.ratingScale + "-" + element.nomenclature;
                 });
                 console.log(this.papRatingScaleData);
             }, error => {
@@ -170,14 +173,12 @@ export class PapDetailedViewComponent implements OnInit {
         this.papService.papUpdateSupervisor(request).subscribe(res => {
             debugger;
             if (res.ok) {
-                this.papGridInput = {};
-                let gridInput = {
-                    empId: this._currentEmpId,
-                    param_id: this.param_id
-                }
-                // this.papGridInput.empId=this._currentEmpId;
-                // this.papGridInput.param_id=this.param_id;
-                Object.assign(this.papGridInput, gridInput)
+                // this.papGridInput = {};
+                // let gridInput = {
+                //     empId: this._currentEmpId,
+                //     param_id: this.param_id
+                // }
+                // Object.assign(this.papGridInput, gridInput)
                 this.loadPapDetails().then(res => {
                     this.papChanges.next(res);
                 });
@@ -199,7 +200,7 @@ export class PapDetailedViewComponent implements OnInit {
 
         if (dataWithoutPendingStatus.length == 0) {
             let request = {
-                pap_master_id: this.papGridInput.param_id,
+                papMasterId: this.papMasterId,
                 updatedBy: this._currentEmpId
             }
             swal({

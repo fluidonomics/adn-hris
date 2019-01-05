@@ -27,22 +27,22 @@ export class PapService {
     }
     papUpdate(data: any): Observable<Response> {
         let url = "pap/papUpdate";
-        return this.authService.post(url,data).catch(this.handleError);
+        return this.authService.post(url, data).catch(this.handleError);
     }
     papUpdateSupervisor(data: any): Observable<Response> {
         let url = "pap/papUpdateSupervisor";
-        return this.authService.post(url,data).catch(this.handleError);
+        return this.authService.post(url, data).catch(this.handleError);
     }
     papSubmit(data: any): Observable<Response> {
         let url = "pap/papSubmit";
-        return this.authService.post(url,data).catch(this.handleError);
+        return this.authService.post(url, data).catch(this.handleError);
     }
     papSubmitToReviewer(data: any): Observable<Response> {
         let url = "pap/papSubmitToReviewer";
-        return this.authService.post(url,data).catch(this.handleError);
+        return this.authService.post(url, data).catch(this.handleError);
     }
-    
-    
+
+
 
     getPapDetailsSingleEmployee(emp_id: number) {
         let url = "pap/getPapDetailsSingleEmployee?emp_id=" + emp_id;
@@ -51,6 +51,11 @@ export class PapService {
 
     getPapBySupervisor(empId: number) {
         let url = "pap/getPapBySupervisor?empId=" + empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getPapByReviewer(empId: number) {
+        let url = "pap/getPapByReviewer?empId=" + empId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
