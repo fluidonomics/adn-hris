@@ -36,6 +36,9 @@
                     Supervisor Comment
                 </th>
                 <th>
+                    Reviewer Remark
+                </th>
+                <th>
                     Action
                 </th>
             </tr>
@@ -79,6 +82,10 @@
                 </td>
                 <td>
                     <textarea name="supRemark{{i}}" id="supRemark" #supRemark="ngModel" [(ngModel)]="papInfo.supRemark"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td>
+                    <textarea name="revRemark{{i}}" id="revRemark" #reviewerRemark="ngModel" [(ngModel)]="papInfo.reviewerRemark"
                         class="form-control m-input m-input--air" disabled></textarea>
                 </td>
                 <td>

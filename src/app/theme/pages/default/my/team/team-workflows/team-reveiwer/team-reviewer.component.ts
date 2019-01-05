@@ -108,6 +108,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     goToPapReview(pap) {
+        debugger;
         this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
     }
 }

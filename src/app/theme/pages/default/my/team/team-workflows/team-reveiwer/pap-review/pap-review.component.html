@@ -87,7 +87,7 @@
         </div>
         <div class="m-portlet__body">
             <div class="m-widget6 ">
-                <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(PAPDataForm,papData._id)"
+                <form class="m-form m-form--fit m-form--label-align-right"
                     id="PAPDataForm" #PAPDataForm="ngForm">
                     <div class="m-widget6 ">
                         <div class="row">
@@ -172,7 +172,7 @@
                                 <ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
                                     [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id" placeholder="Select Rating"
                                     [(ngModel)]="papData.sup_ratingScaleId" [clearable]="false" #colorStatus="ngModel"
-                                    [disabled]="isDisabled" required>
+                                    disabled required>
                                 </ng-select>
                                 <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supRatingScaleId?.invalid">
                                     This field is required.
@@ -181,8 +181,16 @@
                             <div class="col-md-12 details">
                                 <span>supervisor Remarks</span>
                                 <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark" #supComment="ngModel"
-                                    class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+                                    class="form-control m-input m-input--air" disabled required></textarea>
                                 <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supComment?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12 details">
+                                <span>Reviewer Remarks</span>
+                                <textarea name="reviewerRemark" id="reviewerRemark" [(ngModel)]="papData.reviewerRemark" #reviewerRemark="ngModel"
+                                    class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && reviewerRemark?.invalid">
                                     This field is required.
                                 </div>
                             </div>
@@ -191,8 +199,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
-                                        <button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm" (click)="saveKRADetails(PAPDataForm,papData._id,true)"  id="submitForm">Approved</button>
+                                        <button *ngIf="!isDisabled" class="btn btn-danger" type="button" (click)="saveKRADetails(PAPDataForm,papData._id,false)">Send Back</button>
+                                        <button *ngIf="isDisabled" class="btn btn-secondary" type="button" (click)="modalRef.hide()">close</button>
                                     </div>
                                 </div>
                             </div>

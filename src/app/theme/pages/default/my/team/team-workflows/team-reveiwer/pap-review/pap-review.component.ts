@@ -105,8 +105,7 @@ export class PapReviewComponent implements OnInit {
         })
     }
 
-    loadPapDetails() {
-        debugger;
+    loadPapDetails() {       
         return new Promise((resolve, reject) => {
             this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
                 let papDetails = res || [];
@@ -159,6 +158,38 @@ export class PapReviewComponent implements OnInit {
         this.papData.no = index + 1;
 
         console.log(this.papData);
-        this.isDisabled = this.papData.status == "Pending Reviewer" ? true : false;
+        this.isDisabled = this.papData.status == "SendBack" || this.papData.status == "Approved" ? true : false;
+    }
+    saveKRADetails(form, id: number,isApproved :boolean){
+        this.modalRef.hide();
+        let request = {
+            "papDetailsId": this.papData._id,
+            "updatedBy": this._currentEmpId,
+            "isApproved":isApproved,
+            "reviewerRemark": this.papData.reviewerRemark
+        }    
+        this.papService.papUpdateReviewer(request).subscribe(res => {           
+            if (res.ok) {
+                // this.papGridInput = {};
+                // let gridInput = {
+                //     empId: this._currentEmpId,
+                //     param_id: this.param_id
+                // }
+                // Object.assign(this.papGridInput, gridInput)
+                this.loadPapDetails().then(res => {
+                    this.papChanges.next(res);
+                });
+                swal({
+                    title: 'Success',
+                    text: "PAP has been Saved.",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }, error => {
+
+        })       
     }
 }
