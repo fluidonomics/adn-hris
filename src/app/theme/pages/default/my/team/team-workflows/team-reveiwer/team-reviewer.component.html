@@ -86,7 +86,7 @@
 		<div class="col-xl-4">
 			<div class="m-portlet m-portlet--full-height">
 				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption" (click)="goToAllEmployee()" style="cursor:pointer;">
+					<div class="m-portlet__head-caption" style="cursor:pointer;">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
 								Review MTR
@@ -149,18 +149,18 @@
 							</div>
 						</div>
 					</div>
-					<span class="footer pull-right">
+					<!-- <span class="footer pull-right">
 						<a (click)="goToAllEmployee()">
 							View All
 						</a>
-					</span>
+					</span> -->
 				</div>
 			</div>
 		</div>
 		<div class="col-xl-4">
 			<div class="m-portlet m-portlet--full-height">
 				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption" (click)="goToAllEmployee()" style="cursor:pointer;">
+					<div class="m-portlet__head-caption" style="cursor:pointer;">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
 								PAP Approvals
@@ -170,7 +170,7 @@
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
 						 role="tablist">
-							<li class="nav-item m-tabs__item" *ngIf="employees.length > 0">
+							<li class="nav-item m-tabs__item" *ngIf="papData.length > 0">
 								<div class="m-input-icon m-input-icon--left">
 									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="papEmployeeSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
@@ -184,7 +184,7 @@
 					</div>
 				</div>
 				<div class="m-portlet__body" id="papApprovalList">
-					<div class="no-records" *ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : papEmployeeReverse | filter:papEmployeeSearch)?.length==0">
+					<div class="no-records" *ngIf="papData.length==0 || (papData | orderBy: 'updatedAt' : papEmployeeReverse | filter:papEmployeeSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
 
@@ -192,11 +192,11 @@
 						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let employee of mtrEmployees |slice:0:5| filter:mTRemployeeSearch;let i=index"
-									 (click)="goToMtrReview(employee)">
+									<div class="m-widget4__item m-padding--10" *ngFor="let pap of papData |slice:0:5| filter:papEmployeeSearch;let i=index"
+									 (click)="goToPapReview(pap)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
 												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
@@ -205,29 +205,29 @@
 										</div>
 										<div class="m-widget4__info">
 											<span class="m-widget4__title">
-												{{employee.emp_details.fullName}}
+												{{pap.fullName}}
 											</span>
 											<br>
 											<span class="m-widget4__sub">
-												{{employee.mtr_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+												{{pap.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
 											</span>
 										</div>
-										<span class="m-widget4__ext">
+										<!-- <span class="m-widget4__ext">
 											<span class="m--font-brand">
-												{{employee.mtr_master_details.status}}
+												{{employee.status}}
 											</span>
-										</span>
+										</span> -->
 									</div>
 
 								</div>
 							</div>
 						</div>
 					</div>
-					<span class="footer pull-right">
+					<!-- <span class="footer pull-right">
 						<a (click)="goToAllEmployee()">
 							View All
 						</a>
-					</span>
+					</span> -->
 				</div>
 			</div>
 		</div>

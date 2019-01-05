@@ -91,14 +91,11 @@ export class MyTeamReviewerComponent implements OnInit {
         this.utilityService.showLoader("#papApprovalList");
         this.papService.getPapByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.utilityService.hideLoader("#papApprovalList");
-            debugger;
             this.papData = res.sort((a, b) => {
-                debugger;
-                if (moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return 1;
-                else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
+                if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
                 else return 0;
             });
-            this.papData = this.papData.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
         });
     }
 
@@ -108,6 +105,10 @@ export class MyTeamReviewerComponent implements OnInit {
     goToMtrReview(employee) {
         let mtr_master_details = employee.mtr_master_details;
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + mtr_master_details.batch_id + '/' + employee.emp_details._id);
+    }
+
+    goToPapReview(pap) {
+        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
     }
 }
 

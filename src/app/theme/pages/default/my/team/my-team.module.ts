@@ -32,6 +32,7 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
 import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-detailed-view/pap-detailed-view.component';
 import { PapService } from '../../services/pap.service';
 import { PapDetailsGridComponent } from '../../shared/components/pap-details-grid/pap-details-grid.component';
+import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { PapDetailsGridComponent } from '../../shared/components/pap-details-gri
         PapApprovalsComponent,
         PapViewComponent,
         PapDetailedViewComponent,
-        PapDetailsGridComponent
+        PapDetailsGridComponent,
+        PapReviewComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]
 })
