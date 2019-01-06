@@ -175,7 +175,7 @@
                                     required></textarea>
                             </div>
                             <div class="col-md-6 details">
-                                <span>supervisor Rating Scale</span>
+                                <span>Supervisor Rating Scale</span>
                                 <ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
                                     [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id" placeholder="Select Rating"
                                     [(ngModel)]="papData.sup_ratingScaleId" [clearable]="false" #colorStatus="ngModel"
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 details">
-                                <span>supervisor Remarks</span>
+                                <span>Supervisor Remarks</span>
                                 <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark" #supComment="ngModel"
                                     class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
                                 <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supComment?.invalid">

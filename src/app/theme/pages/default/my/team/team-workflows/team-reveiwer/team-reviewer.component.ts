@@ -48,6 +48,7 @@ export class MyTeamReviewerComponent implements OnInit {
     papEmployeeReverse: boolean = true;
     papEmployeeSearch: any;
     papData: any = [];
+    papViewData: any = [];
 
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
@@ -91,11 +92,34 @@ export class MyTeamReviewerComponent implements OnInit {
         this.utilityService.showLoader("#papApprovalList");
         this.papService.getPapByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.utilityService.hideLoader("#papApprovalList");
-            this.papData = res.sort((a, b) => {
-                if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
-                else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
-                else return 0;
-            });
+            let papData = res;
+            if (papData.length > 0) {
+                this.papData = papData.filter(p => {
+                    let submittedCount = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
+                    }
+                    return submittedCount == p.kra_details.length;
+                })
+                this.papData = this.papData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+
+                this.papViewData = papData.filter(p => {
+                    let count = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        count = p.kra_details.filter(pDetails => pDetails.status == "Approved").length;
+                    }
+                    return count == p.kra_details.length;
+                })
+                this.papViewData = this.papViewData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+            }
         });
     }
 
