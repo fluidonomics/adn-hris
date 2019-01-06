@@ -72,9 +72,8 @@ export class HrLeaveComponent implements OnInit {
         private modalService: BsModalService,
         private _leaveService: LeaveService,
         private authService: AuthService,
-
+        private utilityService: UtilityService
     ) {
-
     }
     ngOnInit() {
         this.currentUser = this._authService.currentUserData;
@@ -139,6 +138,7 @@ export class HrLeaveComponent implements OnInit {
             this.isMaternity = false;
             this.isSpecial = true;
         }
+        this.request._id = null;
     }
     //show leave balance for single employee 
     onEmployeeSelect($event) {
@@ -192,6 +192,7 @@ export class HrLeaveComponent implements OnInit {
     provideLeave(form) {
         debugger;
         if (form.valid) {
+            this.utilityService.showLoader('.m-portlet__body');
             if (this.request.leave_type === 3) {
                 this.provideMaternityQuota(form);
             }
@@ -216,16 +217,7 @@ export class HrLeaveComponent implements OnInit {
             createdBy: this.currentUser._id
         }
 
-        this._leaveService.addMaternityLeaveQuota(data).subscribe(res => {
-            if (res.ok) {
-                swal("Leave quota provided", res.json().title, "success");
-                form.resetForm();
-                form.submitted = false;
-                this.clear();
-            }
-        }, err => {
-            console.log(err);
-        })
+        this._leaveService.addMaternityLeaveQuota(data).subscribe((res) => this.handleSuccess(res), (err) => this.handleError(err));
     }
     provideSpecialLeave(form: NgForm) {
         if (this.displaySelection === "All" || this.displaySelection === "Department") {
@@ -238,15 +230,7 @@ export class HrLeaveComponent implements OnInit {
                 fiscalYearId: this.currentFiscalYear._id,
                 createdBy: this.currentUser._id
             }
-            this._leaveService.addSpecialLeaveBulkQuota(data).subscribe(res => {
-                if (res.ok) {
-                    swal("Leave quota provided", res.json().title, "success");
-                    form.reset();
-                    this.clear();
-                }
-            }, err => {
-                console.log(err);
-            })
+            this._leaveService.addSpecialLeaveBulkQuota(data).subscribe((res) => this.handleSuccess(res), (err) => this.handleError(err));
         } else {
             let currentEmpDetails = this.employees.filter(f => f._id == this.request._id);
             let data = {
@@ -261,17 +245,29 @@ export class HrLeaveComponent implements OnInit {
                 fiscalYearId: this.currentFiscalYear._id,
                 createdBy: this.currentUser._id
             }
-            this._leaveService.addSpecialLeaveQuota(data).subscribe(res => {
-                if (res.ok) {
-                    swal("Leave quota provided", res.json().title, "success");
-                    form.reset();
-                    this.clear();
-                }
-            }, err => {
-                console.log(err);
-            })
+            this._leaveService.addSpecialLeaveQuota(data).subscribe((res) => this.handleSuccess(res), (err) => this.handleError(err));
         }
     }
+
+    handleSuccess(res) {
+        debugger;
+        this.utilityService.hideLoader('.m-portlet__body');
+        if (res.ok) {
+            swal("Leave quota provided", res.json().title, "success");
+            this.leaveQuota.resetForm();
+            this.clear();
+        }
+    }
+    handleError(err) {
+        debugger;
+        this.utilityService.hideLoader('.m-portlet__body');
+        console.log(err);
+        if (err.error) {
+            let error = err.error.json() || {};
+            swal('Error', error.error.message, "error");
+        }
+    }
+
     // on submit
     // grid functions
     sort(key) {
