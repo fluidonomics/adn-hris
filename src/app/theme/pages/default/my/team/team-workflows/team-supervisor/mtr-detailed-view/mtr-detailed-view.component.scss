@@ -18,7 +18,15 @@
 
         i.fa.fa-circle {
             @extend .bgColor;
-        }
+        }        
+    }
+    .newKRA{
+        background-color: #239023db !important;
+        border: 0px !important;
+    }
+    .newKRA:hover{
+        background-color: #239023db !important;
+        border: 0px !important;
     }
 
     .instructions {

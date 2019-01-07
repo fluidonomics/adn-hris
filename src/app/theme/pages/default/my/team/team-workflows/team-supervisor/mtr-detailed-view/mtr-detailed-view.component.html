@@ -85,7 +85,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index">
+                                        <tr *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{'newKRA':!mtrInfoData.mtr_details[i].kraDetailId}">
                                             <th scope="row">
                                                 {{i+1}}
                                             </th>
