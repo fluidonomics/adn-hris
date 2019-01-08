@@ -42,7 +42,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number = 1;
+    fiscalYearId: number = 2;
     leaveBalance: any = [];
     employeeDetails: any = {};
     primarySupervisor: any = {};

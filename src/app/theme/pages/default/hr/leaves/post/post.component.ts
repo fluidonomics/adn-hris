@@ -44,7 +44,7 @@ export class PostComponent implements OnInit {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number = 1;
+    fiscalYearId: number = 2;
     leaveBalance: any = [];
     employeeDetails: any = {};
     primarySupervisor: any = {};
@@ -55,9 +55,9 @@ export class PostComponent implements OnInit {
     daysValidationMsg: string;
     supervisorPresent: boolean = false;
     employeesData: any = [];
-    employee:any={};
+    employee: any = {};
     getLeaveTypeByEmpIdSubs: Subscription;
-    isLeaveCalculated:boolean=false;
+    isLeaveCalculated: boolean = false;
     constructor(
         private leaveService: LeaveService,
         private _commonService: CommonService,
@@ -73,7 +73,7 @@ export class PostComponent implements OnInit {
             this.currentUser = this._authService.currentUserData;
             // this.InitValues();
             // this.getEmployeeDetails();
-           this.loadAllEmployee();
+            this.loadAllEmployee();
             // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
             this.fleaveapplication.valueChanges.subscribe(val => {
@@ -84,37 +84,36 @@ export class PostComponent implements OnInit {
             this.getHolidays();
         });
     }
-    onChangedEmployee() {     
-            this.employee=this.employeesData.filter(obj=>obj._id==this.leaveapplication.emp_id)[0];            
-            this.InitValues();
-            this.getEmployeeDetails();
+    onChangedEmployee() {
+        this.employee = this.employeesData.filter(obj => obj._id == this.leaveapplication.emp_id)[0];
+        this.InitValues();
+        this.getEmployeeDetails();
     }
-    loadAllEmployee() {       
+    loadAllEmployee() {
         this._hrService.getAllEmployee()
             .subscribe(
-            res => {
-                let data = res.json().data || [];
-                if (data.length > 0) {
-                    data = data.filter(obj => obj.hrScope_id == this.currentUser._id);
-                    this.employeesData = data || [];                  
-                }
-                else
-                {
-                    this.employeesData = data.json().data || [];                  
-                }
-                this.employeesData.forEach(emp => {
-                    emp.ddLabel = emp.fullName + emp.userName;
+                res => {
+                    let data = res.json().data || [];
+                    if (data.length > 0) {
+                        data = data.filter(obj => obj.hrScope_id == this.currentUser._id);
+                        this.employeesData = data || [];
+                    }
+                    else {
+                        this.employeesData = data.json().data || [];
+                    }
+                    this.employeesData.forEach(emp => {
+                        emp.ddLabel = emp.fullName + emp.userName;
+                    });
+                },
+                error => {
                 });
-            },
-            error => {                
-            });
     }
 
     InitValues() {
         this.leaveapplication.days = null;
         this.leaveapplication.balance = null;
-        this.leaveapplication.leaveType=null;
-        this.leaveapplication.reason="";
+        this.leaveapplication.leaveType = null;
+        this.leaveapplication.reason = "";
         this.leaveapplication.fromDate = "";
         this.leaveapplication.toDate = "";
         this.getLeaveBalance();
@@ -144,7 +143,7 @@ export class PostComponent implements OnInit {
     }
 
     getLeaveBalance() {
-        if(this.employee){
+        if (this.employee) {
             this.leaveService.getEmployeeLeaveBalance(this.employee._id, this.fiscalYearId).subscribe(res => {
                 if (res.ok) {
                     this.leaveBalance = res.json() || [];
@@ -153,29 +152,29 @@ export class PostComponent implements OnInit {
                 }
             })
         }
-       
+
     }
 
     getEmployeeDetails() {
-        if(this.employee){
-        this.leaveService.getEmployeeDetails(this.employee._id)
-            .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeDetails = res.json().data[0] || {};
-                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
-                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
-                            this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
-                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
-                                this.supervisorPresent = true;
+        if (this.employee) {
+            this.leaveService.getEmployeeDetails(this.employee._id)
+                .subscribe(
+                    res => {
+                        if (res.ok) {
+                            this.employeeDetails = res.json().data[0] || {};
+                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                                this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                                this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
+                                if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
+                                    this.supervisorPresent = true;
+                                }
                             }
                         }
-                    }
-                },
-                error => {
-                    console.log(error);
-                });
-            }
+                    },
+                    error => {
+                        console.log(error);
+                    });
+        }
     }
 
     getAllEmailListOfEmployee() {
@@ -203,13 +202,13 @@ export class PostComponent implements OnInit {
     }
 
     getEmployeeLeaves() {
-        if(this.employee){
-        this.leaveService.getLeaveTransactionDetails(this.employee._id).subscribe(res => {
-            if (res.ok) {
-                this.leavesList = res.json() || [];
-            }
-        });
-     }
+        if (this.employee) {
+            this.leaveService.getLeaveTransactionDetails(this.employee._id).subscribe(res => {
+                if (res.ok) {
+                    this.leavesList = res.json() || [];
+                }
+            });
+        }
     }
 
     getHolidays() {
@@ -265,12 +264,12 @@ export class PostComponent implements OnInit {
             this.isMaternity = true;
             this.leaveapplication.fromDate = "";
             this.leaveapplication.toDate = "";
-           this.leaveapplication.reason="";
+            this.leaveapplication.reason = "";
         } else {
             this.isMaternity = false;
             this.leaveapplication.fromDate = null;
             this.leaveapplication.toDate = null;
-            this.leaveapplication.reason="";
+            this.leaveapplication.reason = "";
         }
     }
 
@@ -289,8 +288,7 @@ export class PostComponent implements OnInit {
         }
     }
 
-    postEmployeeLeaveDetails(form, data: any) 
-    {      
+    postEmployeeLeaveDetails(form, data: any) {
         if (data.days <= 0) {
             this.areDaysValid = false;
         } else {
@@ -322,7 +320,7 @@ export class PostComponent implements OnInit {
             }
         } */
 
-        if (form.valid && this.areDaysValid && this.isBalanceValid) {            
+        if (form.valid && this.areDaysValid && this.isBalanceValid) {
             if (this.isAttachmentRequired && !this.isAttachmentAdded) {
                 return;
             }
@@ -466,7 +464,7 @@ export class PostComponent implements OnInit {
             isValid: true,
             msg: ''
         }
-        this.isLeaveCalculated=false;          
+        this.isLeaveCalculated = false;
     }
 
     onLeaveAppSubmit(form) {
@@ -479,8 +477,8 @@ export class PostComponent implements OnInit {
         this.areDaysValid = true;
         this.isBalanceValid = true;
         this.isAttachmentAdded = false;
-        this.primarySupervisor={};
-        this.clearAttachment();        
+        this.primarySupervisor = {};
+        this.clearAttachment();
     }
 
     calculateDays(e: any, type: string) {
@@ -499,7 +497,7 @@ export class PostComponent implements OnInit {
 
     sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
     processSandwich() {
-        this.isLeaveCalculated=true;
+        this.isLeaveCalculated = true;
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
