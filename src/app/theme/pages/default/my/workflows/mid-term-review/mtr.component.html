@@ -16,12 +16,12 @@
 		<div class="m-portlet__body">
 			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
 				<div class="row align-items-center">
-					<div class="col-xl-8 order-2 order-xl-1">
+					<div class="col-xl-12 order-2 order-xl-1">
 						<div class="form-group m-form__group row align-items-center instructions">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<h4>Instructions</h4>
 							</div>
-							<div class="col-md-8 points">
+							<div class="col-md-12 points">
 								<span>1. Before Dropping and Adding new KRA, Please consult with your respective Supervisor </span>
 								<span>2. Weightage of Dropped KRA will be set to 0 by default </span>
 								<span>3. Weightage of each and every KRA is editable and total weightage must be 100 </span>
@@ -30,7 +30,7 @@
 								<span>6. Please provide Remarks against each KRA </span>
 								<span>7. Submit Mid Term Review after adding all details </span>
 							</div>
-							<div class="col-md-8 flags">
+							<div class="col-md-12 flags">
 								<span><i class="fa fa-square green"></i>KRA progress is going good </span>
 								<span><i class="fa fa-square amber"></i>Need Help to Complete KRA </span>
 								<span><i class="fa fa-square red"></i>Not able to complete KRA </span>
@@ -255,7 +255,7 @@
 													Employee Remarks
 												</th>
 												<th>
-													Send Back Comment (Supervisor)
+													Supervisor Remarks
 												</th>
 												<th>
 													Action
@@ -546,6 +546,11 @@
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
 								This field is required.
 							</div>
+						</div>
+						<div class="col-md-12 details" *ngIf="mtrData.supervisorComment">
+							<span>Supervisor Remarks</span>
+							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="mtrData.supervisorComment"
+							 #supervisorComment="ngModel" class="form-control m-input m-input--air" disabled></textarea>
 						</div>
 					</div>
 					<div class="form-actions details">

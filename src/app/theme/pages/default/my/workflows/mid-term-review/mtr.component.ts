@@ -52,37 +52,8 @@ export class MyMtrComponent {
     modalRef: BsModalRef;
     mtrData: any = {};
     currentEmployee: any = {};
-
-    progressStatuses = [
-        {
-            id: "InProgress",
-            label: "In progress"
-        },
-        {
-            id: "Completed",
-            label: "Completed"
-        },
-        {
-            id: "Dropped",
-            label: "Dropped"
-        }
-    ];
-
-    // Red(Not able to do complete KRA  ), Amber(Need help to complete KRA) and Green(going good)
-    colorStatuses = [
-        {
-            id: "Green",
-            label: "Green(going good)"
-        },
-        {
-            id: "Amber",
-            label: "Amber(Need help to complete KRA)"
-        },
-        {
-            id: "Red",
-            label: "Red(Not able to do complete KRA)"
-        }
-    ];
+    progressStatuses = [];
+    colorStatuses = [];
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -100,7 +71,8 @@ export class MyMtrComponent {
             { name: 'keywords', content: 'Add new employee' },
             { name: 'description', content: 'Add new employee.' }
         ]);
-
+        this.progressStatuses = this._mtrService.progressStatuses;
+        this.colorStatuses = this._mtrService.colorStatuses;
     }
 
     ngOnInit() {

@@ -82,8 +82,7 @@ export class MyTeamReviewerComponent implements OnInit {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
     goToMtrReview(employee) {
-        let mtr_master_details = employee.mtr_master_details;
-        this.router.navigateByUrl('my/team/workflows/mtr-review/' + mtr_master_details.batch_id + '/' + employee.emp_details._id);
+        this.router.navigateByUrl('my/team/workflows/mtr-review/' + employee.mtr_master_details._id + '/' + employee.emp_details._id);
     }
 }
 
