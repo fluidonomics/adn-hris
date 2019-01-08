@@ -24,7 +24,7 @@ export class LeaveService {
 
     getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
         // let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&year=" + 2018;
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 

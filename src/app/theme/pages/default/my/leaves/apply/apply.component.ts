@@ -87,7 +87,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             isValid: true,
             msg: ''
         }
-        this.fiscalYearId = 1;
+        this.fiscalYearId = 2;
         this.clearAttachment();
         this.getEmployeeLeaves();
         this.getFinancialYear();
