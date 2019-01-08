@@ -89,7 +89,7 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getFinancialYearDetails() {
-        this.fiscalYearId = "1";
+        this.fiscalYearId = "2";
         this.loadDashboard();
         // this.commonService.getFinancialYear().subscribe(
         //     res => {
