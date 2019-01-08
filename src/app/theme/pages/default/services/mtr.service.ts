@@ -9,6 +9,37 @@ import { AuthService } from "../../../../base/_services/authService.service";
 @Injectable()
 export class MtrService {
 
+    progressStatuses = [
+        {
+            id: "InProgress",
+            label: "In progress"
+        },
+        {
+            id: "Completed",
+            label: "Completed"
+        },
+        {
+            id: "Dropped",
+            label: "Dropped"
+        }
+    ];
+
+    // Red(Not able to do complete KRA  ), Amber(Need help to complete KRA) and Green(going good)
+    colorStatuses = [
+        {
+            id: "Green",
+            label: "Green(going good)"
+        },
+        {
+            id: "Amber",
+            label: "Amber(Need help to complete KRA)"
+        },
+        {
+            id: "Red",
+            label: "Red(Not able to do complete KRA)"
+        }
+    ];
+
     constructor(private authService: AuthService) {
     }
 

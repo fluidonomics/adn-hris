@@ -35,7 +35,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(
-            res => {              
+            res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.loadAllEmployee();
             });
@@ -48,7 +48,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
         this._utilityService.showLoader("#kraApprovalView");
         this._myteamService.getAllEmployee()
             .subscribe(
-                res => {                   
+                res => {
                     let data = res.json().data || [];
                     data = data.filter(obj => obj.supervisor_id == this._currentEmpId);
                     if (data.length > 0) {
@@ -56,14 +56,13 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         this.employeeData = profileData || [];
                         this._utilityService.hideLoader("#employeeApproval");
                         this._myteamService.getKraForApproval(this._currentEmpId).subscribe(
-                            resApproval=>{
-                                debugger;
+                            resApproval => {
                                 this.loadKraData(resApproval.json().data);
                             },
-                            error=>{
+                            error => {
 
                             }
-                        )   
+                        )
                         //this.loadKraData(res.json().data);
 
                         //    for (var i = 0; i < data.length; i++) { 
@@ -93,37 +92,36 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         this._utilityService.hideLoader("#employeeApproval");
                         this._utilityService.hideLoader("#kraApproval");
                         this._utilityService.hideLoader("#kraApprovalView");
-                        
+
                     }
                 },
                 error => {
                     this._utilityService.hideLoader("#employeeApproval");
                     this._utilityService.hideLoader("#kraApproval");
                     this._utilityService.hideLoader("#kraApprovalView");
-                    
+
                 });
     }
-    
+
 
     loadKraData(data: any) {
-        debugger;
         let __this = this;
         //data = data.filter(obj => obj.supervisor_id == this._currentEmpId || obj.secondarySupervisor_id == this._currentEmpId);
         data.forEach(function (element) {
             if (element) {
-               if(element.status == "Submitted") {                  
-                    element.fullName=element.emp_name;                    
+                if (element.status == "Submitted") {
+                    element.fullName = element.emp_name;
                     __this.kraData.push(element);
                 }
-                else if(element.status == "Approved"){
-                    element.fullName=element.emp_name;                   
+                else if (element.status == "Approved") {
+                    element.fullName = element.emp_name;
                     __this.kraDataView.push(element);
-                }                          
+                }
             }
         });
         this._utilityService.hideLoader("#kraApproval");
         this._utilityService.hideLoader("#kraApprovalView");
-        
+
     }
 
     ngAfterViewInit() {

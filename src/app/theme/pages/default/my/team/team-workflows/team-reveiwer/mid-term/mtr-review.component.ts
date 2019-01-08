@@ -3,17 +3,18 @@ import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Meta, Title } from "@angular/platform-browser";
-import { MtrReviewService } from "./mtr-review.service"
 import { CommonService } from "../../../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { MtrService } from "../../../../../services/mtr.service";
+import { environment } from "../../../../../../../../../environments/environment.prod";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
     templateUrl: "./mtr-review.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [MtrReviewService]
+    providers: [MtrService]
 })
 export class MtrReview {
 
@@ -38,6 +39,9 @@ export class MtrReview {
     status: any;
     isDisabled: boolean = true;
     user: any;
+    progressStatuses = [];
+    colorStatuses = [];
+    imageBase = "";
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -45,7 +49,7 @@ export class MtrReview {
         private _router: Router,
         public _authService: AuthService,
         private _commonService: CommonService,
-        private _mtrService: MtrReviewService,
+        private _mtrService: MtrService,
         private modalService: BsModalService
     ) {
         title.setTitle('ADN HRIS | My Profile');
@@ -54,7 +58,9 @@ export class MtrReview {
             { name: 'keywords', content: 'Add new employee' },
             { name: 'description', content: 'Add new employee.' }
         ]);
-
+        this.progressStatuses = this._mtrService.progressStatuses;
+        this.colorStatuses = this._mtrService.colorStatuses;
+        this.imageBase = environment.content_api_base.imgBase;
     }
 
     ngOnInit() {
@@ -82,13 +88,14 @@ export class MtrReview {
         this.loadMtrInfoData();
     }
 
-    loadKraInfo() {        
+    loadKraInfo() {
     }
     loadMtrInfoData() {
         this._mtrService.getMtrDetails(this.param_id).subscribe(res => {
             let data = res.json().result.message;
-            if (data.length > 0) {                
-                this.kraInfoData = data[0].mtr_details;
+            if (data.length > 0) {
+                let mtrDetails = data[0].mtr_details;
+                this.kraInfoData = mtrDetails.filter(mtr => mtr.progressStatus != "Dropped");
             }
         })
     }
@@ -129,7 +136,7 @@ export class MtrReview {
                 this.user = res.json() || {};
             }
         })
-    }   
+    }
 
     modalRef: BsModalRef;
     kraData: any = {};
