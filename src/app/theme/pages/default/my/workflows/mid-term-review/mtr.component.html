@@ -32,8 +32,9 @@
 							</div>
 							<div class="col-md-8 flags">
 								<span><i class="fa fa-square green"></i>KRA progress is going good </span>
-								<span><i class="fa fa-square amber"></i>Need Help to Complete KRA </span>
-								<span><i class="fa fa-square red"></i>Not able to complete KRA </span>
+								<span><i class="fa fa-square yellow"></i>Need Help to Complete KRA </span>
+								<span><i class="fa fa-square amber"></i>Not able to complete KRA </span>
+								<span><i class="fa fa-square drop"></i>Dropped</span>
 							</div>
 						</div>
 					</div>
@@ -275,7 +276,7 @@
 												</td>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="mtrWeightage{{i}}" id="mtrWeightage" [items]="weightageData"
-													 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="mtrInfo.weightage_id"
+													 bindLabel="kraWeightageName" bindValue="_id" [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="mtrInfo.weightage_id"
 													 [clearable]="false" #mtrWeightage="ngModel" required disabled></ng-select>
 												</td>
 
@@ -519,7 +520,7 @@
 						<div class="col-md-6 details" *ngIf="mtrData.mtr_master_kraDetailId">
 							<span>Status</span>
 							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
-							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" [clearable]="false"
+							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" (change)="onStatusChange($event)" [clearable]="false"
 							 #progressStatus="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
 								This field is required.
@@ -529,7 +530,7 @@
 							<span>Color Status</span>
 							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label"
 							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
-							 #colorStatus="ngModel" [disabled]="isDisabled" required>
+							 #colorStatus="ngModel" [disabled]="isDisabled || mtrData.progressStatus=='Dropped'" required>
 								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
 								<span>{{item.label}}</span>	<div class="{{item.id}}"></div>
 								</ng-template>
