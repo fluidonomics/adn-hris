@@ -180,6 +180,12 @@ export class MtrDetailedViewComponent {
                             this.modalRef.hide();
                         }
                     }, err => {
+                        if (err.status == 300) {
+                            let error = err.json() || {};
+                            swal("Error", error.title, "error");
+                            this.loadMtrInfoData();
+                            this.modalRef.hide();
+                        }
                         this.utilityService.hideLoader('.mtrDetailsPortlet');
                     })
                 }

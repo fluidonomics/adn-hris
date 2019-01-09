@@ -57,7 +57,6 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         this._utilityService.hideLoader("#employeeApproval");
                         this._myteamService.getKraForApproval(this._currentEmpId).subscribe(
                             resApproval=>{
-                                debugger;
                                 this.loadKraData(resApproval.json().data);
                             },
                             error=>{
@@ -106,7 +105,6 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     
 
     loadKraData(data: any) {
-        debugger;
         let __this = this;
         //data = data.filter(obj => obj.supervisor_id == this._currentEmpId || obj.secondarySupervisor_id == this._currentEmpId);
         data.forEach(function (element) {

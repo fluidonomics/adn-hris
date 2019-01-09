@@ -54,7 +54,7 @@ export class MtrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     mtrApproval(data: any): Observable<Response> {
-        return this.authService.post("midterm/mtrApproval", data).map(this.extractData).catch(this.handleError);
+        return this.authService.post("midterm/mtrApproval", data);
     }
 
     private extractData(res: Response) {
