@@ -234,7 +234,7 @@
                                     class="btn btn-danger" (click)="saveMtr(mtrData,'SendBack')" type="button">Send
                                     Back</button>
                                 <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.kraDetailId && mtrData.progressStatus != 'Dropped'"
-                                    class="btn btn-success" (click)="saveMtr(mtrData,'Approved')">Submit</button>
+                                    class="btn btn-success" (click)="saveMtr(mtrData,'Approved')">Approve</button>
                                 <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>
                         </div>
