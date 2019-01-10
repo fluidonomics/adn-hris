@@ -6,7 +6,7 @@
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
 						<i class="fa fa-check"></i>
-						My MTRs
+						My Mid Term Review
 						<small>
 						</small>
 					</h3>
@@ -16,21 +16,21 @@
 		<div class="m-portlet__body">
 			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
 				<div class="row align-items-center">
-					<div class="col-xl-8 order-2 order-xl-1">
+					<div class="col-xl-12 order-2 order-xl-1">
 						<div class="form-group m-form__group row align-items-center instructions">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<h4>Instructions</h4>
 							</div>
-							<div class="col-md-8 points">
+							<div class="col-md-12 points">
 								<span>1. Before Dropping and Adding new KRA, Please consult with your respective Supervisor </span>
 								<span>2. Weightage of Dropped KRA will be set to 0 by default </span>
 								<span>3. Weightage of each and every KRA is editable and total weightage must be 100 </span>
 								<span>4. Choose status according to current KRA status </span>
 								<span>5. Colour status values are as follows </span>
 								<span>6. Please provide Remarks against each KRA </span>
-								<span>7. Submit MTR after adding all details </span>
+								<span>7. Submit Mid Term Review after adding all details </span>
 							</div>
-							<div class="col-md-8 flags">
+							<div class="col-md-12 flags">
 								<span><i class="fa fa-square green"></i>KRA progress is going good </span>
 								<span><i class="fa fa-square yellow"></i>Need Help to Complete KRA </span>
 								<span><i class="fa fa-square amber"></i>Not able to complete KRA </span>
@@ -202,7 +202,7 @@
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
-								{{isChangable ?'My MTR' :'Submit MTR' }}
+								{{isChangable ?'My Mid Term Review' :'Submit Mid Term Review' }}
 								<small>
 								</small>
 							</h3>
@@ -256,7 +256,7 @@
 													Employee Remarks
 												</th>
 												<th>
-													Send Back Comment (Supervisor)
+													Supervisor Remarks
 												</th>
 												<th>
 													Action
@@ -340,7 +340,7 @@
 										</div>
 										<div class="m-widget3__body">
 											<p class="m-widget3__text m--font-success" id="mtrTimeline">
-												Your MTR has been Accepted.
+												Your Mid Term Review has been Accepted.
 											</p>
 										</div>
 									</div>
@@ -364,7 +364,7 @@
 										</div>
 										<div class="m-widget3__body">
 											<p class="m-widget3__text m--font-info">
-												Your MTR has been Initiated.
+												Your Mid Term Review has been Initiated.
 											</p>
 										</div>
 									</div>
@@ -388,7 +388,7 @@
 										</div>
 										<div class="m-widget3__body">
 											<p class="m-widget3__text m--font-danger">
-												Your MTR has been rejected.
+												Your Mid Term Review has been rejected.
 											</p>
 										</div>
 									</div>
@@ -412,7 +412,7 @@
 										</div>
 										<div class="m-widget3__body">
 											<p class="m-widget3__text m--font-info">
-												Your MTR has been Initiated.
+												Your Mid Term Review has been Initiated.
 											</p>
 										</div>
 									</div>
@@ -456,7 +456,7 @@
 				<div class="m-widget6 ">
 					<div class="row">
 						<div class="col-md-6">
-							<span>MTR No. {{mtrData.no}}</span>
+							<span>Mid Term Review No. {{mtrData.no}}</span>
 						</div>
 						<div class="col-md-2 ">
 							KRA Category
@@ -472,7 +472,7 @@
 					</div>
 					<div class="row details">
 						<div class="col-md-2">
-							MTR Weightage
+							Mid Term Review Weightage
 						</div>
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air" name="mtrWeightagedata" id="mtrWeightagedata" [items]="weightageData"
@@ -532,7 +532,8 @@
 							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
 							 #colorStatus="ngModel" [disabled]="isDisabled || mtrData.progressStatus=='Dropped'" required>
 								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-								<span>{{item.label}}</span>	<div class="{{item.id}}"></div>
+									<span>{{item.label}}</span>
+									<div class="{{item.id}}"></div>
 								</ng-template>
 							</ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && colorStatus.invalid">
@@ -546,6 +547,11 @@
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
 								This field is required.
 							</div>
+						</div>
+						<div class="col-md-12 details" *ngIf="mtrData.supervisorComment">
+							<span>Supervisor Remarks</span>
+							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="mtrData.supervisorComment"
+							 #supervisorComment="ngModel" class="form-control m-input m-input--air" disabled></textarea>
 						</div>
 					</div>
 					<div class="form-actions details">
