@@ -264,7 +264,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'dropped':mtrInfoData[i].progressStatus =='Dropped','sendBack':mtrInfoData[i].mtr_master_status=='SendBack','approved':mtrInfoData[i].mtr_master_status =='Approved'}"
+											<tr *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'dropped':mtrInfoData[i].progressStatus =='Dropped','sendBack':mtrInfoData[i].status=='SendBack','approved':mtrInfoData[i].status =='Approved'}"
 											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
