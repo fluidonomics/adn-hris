@@ -45,6 +45,7 @@
                                             <span><i class="fa fa-square green"></i>KRA progress is going good </span>
                                             <span><i class="fa fa-square yellow"></i>Need Help to Complete KRA </span>
                                             <span><i class="fa fa-square amber"></i>Not able to complete KRA </span>
+                                            <span><i class="fa fa-square drop"></i>Dropped</span>
                                         </div>
                                     </div>
                                 </div>
@@ -102,8 +103,9 @@
                                             <td>
                                                 <ng-select class="m-input m-input--air" name="mtrWeightage" id="mtrWeightage"
                                                     [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
-                                                    placeholder="Weightage" [(ngModel)]="mtrInfo.weightage_id"
-                                                    [clearable]="false" #mtrWeightage="ngModel" disabled></ng-select>
+                                                    [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'"
+                                                    [(ngModel)]="mtrInfo.weightage_id" [clearable]="false"
+                                                    #mtrWeightage="ngModel" disabled></ng-select>
                                             </td>
                                             <td>
                                                 <textarea name="employeeComment" [(ngModel)]="mtrInfo.employeeComment"
@@ -111,7 +113,7 @@
                                                     disabled></textarea>
                                             </td>
                                             <td>
-                                                <span *ngIf="mtrInfo.kraDetailId">{{mtrInfo.progressStatus}}</span>
+                                                <span>{{mtrInfo.progressStatus}}</span>
                                             </td>
                                             <td class="gridColorStatus">
                                                 <i *ngIf="mtrInfo.kraDetailId" class="fa fa-circle" [ngClass]="mtrInfo.colorStatus"></i>
@@ -218,23 +220,21 @@
                         <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.employeeComment"
                             disabled></textarea>
                     </div>
-                    <div class="col-md-12 form-group" *ngIf="mtrData.progressStatus != 'Dropped'">
+                    <div class="col-md-12 form-group">
                         <span class="key">Supervisor Remarks</span>
                         <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.supervisorComment"
-                            [disabled]="mtrData?.supervisor_id != _authService.atCurrentUserData._id || mtrData.status == 'Approved' || mtrData.status == 'SendBack'"></textarea>
+                            [disabled]="mtrData?.supervisor_id != _authService.atCurrentUserData._id || mtrData.status == 'Approved' || mtrData.status == 'SendBack' || mtrData.status == 'Dropped'"></textarea>
                     </div>
                 </div>
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && !mtrData.kraDetailId && mtrData.progressStatus != 'Dropped'"
+                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.status != 'Dropped'"
                                     class="btn btn-success" (click)="saveMtr(mtrData,'Approved')">Approve</button>
-                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && !mtrData.kraDetailId && mtrData.progressStatus != 'Dropped'"
+                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.status != 'Dropped'"
                                     class="btn btn-danger" (click)="saveMtr(mtrData,'SendBack')" type="button">Send
                                     Back</button>
-                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.kraDetailId && mtrData.progressStatus != 'Dropped'"
-                                    class="btn btn-success" (click)="saveMtr(mtrData,'Approved')">Approve</button>
                                 <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>
                         </div>

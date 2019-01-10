@@ -91,11 +91,19 @@ export class MyMtrComponent {
                 });
             });
     }
-    onStatusChange(event){
-           if(event.id=="Dropped"){
-           this.mtrData.colorStatus="Dropped"
-           }
-    }   
+    onStatusChange(event) {
+        if (event.id == "Dropped") {
+            this.mtrData.colorStatus = "Dropped"
+        } else {
+            this.mtrData.colorStatus = null;
+        }
+    }
+    onColorStatusChange(event) {
+        if (event.id == "Dropped") {
+            this.mtrData.progressStatus = "Dropped"
+        }
+    }
+
     addKraHtml() {
         let mtrs = this.mtrInfoData.filter(mtr => mtr.progressStatus != 'Dropped');
         if (mtrs && mtrs.length < 7) {
@@ -166,7 +174,7 @@ export class MyMtrComponent {
         else {
             this.isPreviousKRA = false;
         }
-        if (this.mtrData.progressStatus == "Dropped") {
+        if (this.mtrData.status == "Dropped") {
             this.isDisabled = true;
         } else {
             if (this.mtrData.status) {
@@ -197,7 +205,7 @@ export class MyMtrComponent {
 
     saveKRADetails(form, id: number) {
         if (form.valid) {
-            this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));           
+            this.mtrInfoData[this.mtrData.no - 1] = JSON.parse(JSON.stringify(this.mtrData));
             this.saveMtrDetails(this.mtrData.no - 1);
         }
     }
@@ -220,11 +228,11 @@ export class MyMtrComponent {
             progressStatus: this.mtrInfoData[index].progressStatus,
             colorStatus: this.mtrInfoData[index].colorStatus
         }
-        let isError:boolean=false;
-        if(request.colorStatus=="Dropped" && request.progressStatus!="Dropped"){
-            isError=true;
+        let isError: boolean = false;
+        if (request.colorStatus == "Dropped" && request.progressStatus != "Dropped") {
+            isError = true;
         }
-        if(isError){
+        if (isError) {
             swal({
                 title: 'Oops!',
                 text: ' Dropped colour status need status as Dropped only',
@@ -234,7 +242,7 @@ export class MyMtrComponent {
                 confirmButtonText: 'OK'
             });
         }
-        else{            
+        else {
             this.showDroppedKraConfirmation(request).then(res => {
                 if (res) {
                     this.modalRef.hide();
@@ -488,6 +496,7 @@ export class MyMtrComponent {
                         this.loadMTRInfo();
                     }
                 }, error => {
+                    this.loadMTRInfo();
                     this.utilityService.hideLoader('.m-content');
                 });
             }

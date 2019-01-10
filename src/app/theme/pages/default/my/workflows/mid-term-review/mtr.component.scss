@@ -1,3 +1,5 @@
+@import "../../../../../../../assets/colors.scss";
+
 .my-workflows-mtr {
     .sendBack {
         background-color: #FFEBEE !important;
@@ -8,13 +10,14 @@
         background-color: #FFEBEE !important;
         border: 0px !important;
     }
+
     .dropped {
-        background-color: #ff7171 !important;
+        background-color: #ffb0b0 !important;
         border: 0px !important;
     }
 
     .dropped:hover {
-        background-color: #ff7171 !important;
+        background-color: #ffb0b0 !important;
         border: 0px !important;
     }
 
@@ -55,18 +58,19 @@
                 padding: 0px 10px;
 
                 &.green {
-                    color: green;
+                    color: $status-green;
                 }
 
                 &.amber {
-                    color: orangered;
+                    color: $status-amber;
                 }
+
                 &.yellow {
-                    color: yellow;
+                    color: $status-yellow;
                 }
 
                 &.drop {
-                    color: red;
+                    color: $status-drop;
                 }
             }
         }
@@ -84,18 +88,19 @@
                 display: list-item;
 
                 &.Green {
-                    background-color: green;
+                    background-color: $status-green;
                 }
 
                 &.Amber {
-                    background-color: orangered;
+                    background-color: $status-amber;
                 }
-                &.Yellow{
-                    background-color:  yellow;
-                }                
+
+                &.Yellow {
+                    background-color: $status-yellow;
+                }
 
                 &.Dropped {
-                    background-color: red;
+                    background-color: $status-drop;
                 }
             }
         }

@@ -171,6 +171,7 @@ export class MtrDetailedViewComponent {
                         action_link: window.location.origin + '/my/workflows/mtr',
                         isApproved: isApproved,
                         supervisorComment: mtrData.supervisorComment,
+                        progressStatus: mtrData.progressStatus
                     }
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this.mtrService.mtrApproval(request).subscribe(res => {

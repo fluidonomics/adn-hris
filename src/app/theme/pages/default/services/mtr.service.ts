@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { AuthService } from "../../../../base/_services/authService.service";
+import swal from 'sweetalert2';
 
 @Injectable()
 export class MtrService {
@@ -31,12 +32,16 @@ export class MtrService {
             label: "Green(going good)"
         },
         {
-            id: "Amber",
-            label: "Amber(Need help to complete KRA)"
+            id: "Yellow",
+            label: "Yellow(Need help to complete KRA)"
         },
         {
-            id: "Red",
-            label: "Red(Not able to do complete KRA)"
+            id: "Amber",
+            label: "Amber(Not able to do complete KRA)"
+        },
+        {
+            id: "Dropped",
+            label: "Dropped"
         }
     ];
 
@@ -91,15 +96,13 @@ export class MtrService {
     private extractData(res: Response) {
         return res || {};
     }
-    private handleError(error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
+    private handleError(err: Response | any) {
+        debugger;
+        if (err.status == 300) {
+            let error = err.json() || {};
+            swal("Error", error.title, "error");
         }
-        return Observable.throw(errMsg);
+
+        return Observable.throw(err);
     }
 }
