@@ -61,8 +61,11 @@
                 &.amber {
                     color: orangered;
                 }
+                &.yellow {
+                    color: yellow;
+                }
 
-                &.red {
+                &.drop {
                     color: red;
                 }
             }
@@ -87,8 +90,11 @@
                 &.Amber {
                     background-color: orangered;
                 }
+                &.Yellow{
+                    background-color:  yellow;
+                }                
 
-                &.Red {
+                &.Dropped {
                     background-color: red;
                 }
             }
