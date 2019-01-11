@@ -27,6 +27,8 @@ import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-appr
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
 import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import {employeeSearchComponent} from './subordinate-transaction-history/employee-search/employee-search.component'
+import { transactionHistoryComponent } from './subordinate-transaction-history/transaction-history/transaction-history.component';
 
 @NgModule({
     imports: [
@@ -51,7 +53,9 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
         AllEmployeeReviewer,
         MtrApprovalsComponent,
         MtrViewComponent,
-        MtrDetailedViewComponent
+        MtrDetailedViewComponent,
+        employeeSearchComponent,
+        transactionHistoryComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
