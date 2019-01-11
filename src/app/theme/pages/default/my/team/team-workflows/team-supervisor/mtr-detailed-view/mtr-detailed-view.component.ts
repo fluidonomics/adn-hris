@@ -171,6 +171,7 @@ export class MtrDetailedViewComponent {
                         action_link: window.location.origin + '/my/workflows/mtr',
                         isApproved: isApproved,
                         supervisorComment: mtrData.supervisorComment,
+                        progressStatus: mtrData.progressStatus
                     }
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this.mtrService.mtrApproval(request).subscribe(res => {
@@ -180,6 +181,12 @@ export class MtrDetailedViewComponent {
                             this.modalRef.hide();
                         }
                     }, err => {
+                        if (err.status == 300) {
+                            let error = err.json() || {};
+                            swal("Error", error.title, "error");
+                            this.loadMtrInfoData();
+                            this.modalRef.hide();
+                        }
                         this.utilityService.hideLoader('.mtrDetailsPortlet');
                     })
                 }

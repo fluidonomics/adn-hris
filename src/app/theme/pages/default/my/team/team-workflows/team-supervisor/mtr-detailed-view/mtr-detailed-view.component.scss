@@ -1,14 +1,20 @@
+@import "../../../../../../../../../assets/colors.scss";
+
 .bgColor {
     &.Green, &.green {
-        color: green;
+        color: $status-green;
     }
 
     &.Amber, &.amber {
-        color: orangered;
+        color: $status-amber;
     }
 
-    &.Red, &.red {
-        color: red;
+    &.Yellow, &.yellow {
+        color: $status-yellow;
+    }
+
+    &.Dropped, &.drop {
+        color: $status-drop;
     }
 }
 
@@ -18,14 +24,16 @@
 
         i.fa.fa-circle {
             @extend .bgColor;
-        }        
+        }
     }
-    .newKRA{
-        background-color: #239023db !important;
+
+    .newKRA {
+        background-color: $status-approved !important;
         border: 0px !important;
     }
-    .newKRA:hover{
-        background-color: #239023db !important;
+
+    .newKRA:hover {
+        background-color: $status-approved !important;
         border: 0px !important;
     }
 

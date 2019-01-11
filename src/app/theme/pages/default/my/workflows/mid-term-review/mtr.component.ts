@@ -91,6 +91,19 @@ export class MyMtrComponent {
                 });
             });
     }
+    onStatusChange(event) {
+        if (event.id == "Dropped") {
+            this.mtrData.colorStatus = "Dropped"
+        } else {
+            this.mtrData.colorStatus = null;
+        }
+    }
+    onColorStatusChange(event) {
+        if (event.id == "Dropped") {
+            this.mtrData.progressStatus = "Dropped"
+        }
+    }
+
     addKraHtml() {
         let mtrs = this.mtrInfoData.filter(mtr => mtr.progressStatus != 'Dropped');
         if (mtrs && mtrs.length < 7) {
@@ -161,7 +174,7 @@ export class MyMtrComponent {
         else {
             this.isPreviousKRA = false;
         }
-        if (this.mtrData.progressStatus == "Dropped") {
+        if (this.mtrData.status == "Dropped") {
             this.isDisabled = true;
         } else {
             if (this.mtrData.status) {
@@ -215,38 +228,53 @@ export class MyMtrComponent {
             progressStatus: this.mtrInfoData[index].progressStatus,
             colorStatus: this.mtrInfoData[index].colorStatus
         }
-
-        this.showDroppedKraConfirmation(request).then(res => {
-            if (res) {
-                this.modalRef.hide();
-                this.utilityService.showLoader('.m-content');
-                this._mtrService.saveKra(request).subscribe(res => {
-                    this.utilityService.hideLoader('.m-content');
-                    if (res.ok) {
-                        //this.mtrInfoData[index] = res.json();
-                        let data = res.json();
-                        this.mtrInfoData[index] = data.result.message
-                        swal({
-                            title: 'Success',
-                            text: "MTR has been Saved.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                    this.loadMTRInfo();
-                }, error => {
-                    this.utilityService.hideLoader('.m-content');
+        let isError: boolean = false;
+        if (request.colorStatus == "Dropped" && request.progressStatus != "Dropped") {
+            isError = true;
+        }
+        if (isError) {
+            swal({
+                title: 'Oops!',
+                text: ' Dropped colour status need status as Dropped only',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+        else {
+            this.showDroppedKraConfirmation(request).then(res => {
+                if (res) {
                     this.modalRef.hide();
-                });
-            } else {
-                let mtr = this.mtrInfoData[index];
-                mtr.progressStatus = null;
-                mtr.employeeComment = null;
-                mtr.colorStatus = null;
-            }
-        });
+                    this.utilityService.showLoader('.m-content');
+                    this._mtrService.saveKra(request).subscribe(res => {
+                        this.utilityService.hideLoader('.m-content');
+                        if (res.ok) {
+                            //this.mtrInfoData[index] = res.json();
+                            let data = res.json();
+                            this.mtrInfoData[index] = data.result.message
+                            swal({
+                                title: 'Success',
+                                text: "MTR has been Saved.",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                        this.loadMTRInfo();
+                    }, error => {
+                        this.utilityService.hideLoader('.m-content');
+                        this.modalRef.hide();
+                    });
+                } else {
+                    let mtr = this.mtrInfoData[index];
+                    mtr.progressStatus = null;
+                    mtr.employeeComment = null;
+                    mtr.colorStatus = null;
+                }
+            });
+        }
     }
 
     showDroppedKraConfirmation(request) {
@@ -468,6 +496,7 @@ export class MyMtrComponent {
                         this.loadMTRInfo();
                     }
                 }, error => {
+                    this.loadMTRInfo();
                     this.utilityService.hideLoader('.m-content');
                 });
             }
