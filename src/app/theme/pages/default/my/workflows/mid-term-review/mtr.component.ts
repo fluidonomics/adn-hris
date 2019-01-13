@@ -45,6 +45,7 @@ export class MyMtrComponent {
 
     isDisabled: boolean = false;
     isChangable: boolean = false;
+    isSendBack: boolean = false;
     employee: any = {};
 
     mtrInfoData: any = [];
@@ -55,7 +56,7 @@ export class MyMtrComponent {
     progressStatuses = [];
     colorStatuses = [];
 
-    constructor(@Inject(PLATFORM_ID) private platformId: Object,
+    constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
@@ -153,11 +154,11 @@ export class MyMtrComponent {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
@@ -198,6 +199,13 @@ export class MyMtrComponent {
             else {
                 this.isDisabled = false;
             }
+        }
+
+        if (this.mtrData.mtr_master_status == "SendBack" && this.mtrData.status != "Dropped") {
+            this.isSendBack = true;
+        }
+        else {
+            this.isSendBack = false;
         }
 
         //this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);
@@ -345,26 +353,26 @@ export class MyMtrComponent {
     deleteKra(data: any, index: number) {
         this._mtrService.deleteKra(data)
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
-                        //delete this.kraInfoData[index];
-                        if (this.mtrInfoData.length == 0) {
-                            this.addKraHtml();
-                        }
-                        swal({
-                            title: 'Deleted',
-                            text: "KRA has been deleted successfully.",
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonColor: '#D33',
-                            confirmButtonText: 'OK'
-                        });
-                        this.loadMTRInfo();
+            res => {
+                if (res.ok) {
+                    this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
+                    //delete this.kraInfoData[index];
+                    if (this.mtrInfoData.length == 0) {
+                        this.addKraHtml();
                     }
-                },
-                error => {
-                });
+                    swal({
+                        title: 'Deleted',
+                        text: "KRA has been deleted successfully.",
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#D33',
+                        confirmButtonText: 'OK'
+                    });
+                    this.loadMTRInfo();
+                }
+            },
+            error => {
+            });
     }
 
     isWeightage() {

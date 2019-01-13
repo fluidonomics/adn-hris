@@ -38,32 +38,32 @@
     }
 
     .sendBack {
-        background-color: #FFEBEE !important;
+        background-color: $status-sendBack !important;
         border: 0px !important;
     }
 
     .sendBack:hover {
-        background-color: #FFEBEE !important;
+        background-color: $status-sendBack !important;
         border: 0px !important;
     }
 
     .dropped {
-        background-color: #ffb0b0 !important;
+        background-color: $status-dropped !important;
         border: 0px !important;
     }
 
     .dropped:hover {
-        background-color: #ffb0b0 !important;
+        background-color: $status-dropped !important;
         border: 0px !important;
     }
 
     .approved {
-        background-color: #E8F5E9 !important;
+        background-color: $status-approved !important;
         border: 0px !important;
     }
 
     .approved :hover {
-        background-color: #E8F5E9 !important;
+        background-color: $status-approved !important;
         border: 0px !important;
     }
 
