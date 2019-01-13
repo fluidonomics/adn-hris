@@ -128,6 +128,13 @@ export class MtrBatchInitComponent implements OnInit {
             this.employeeFilterData = this.employeeData;
         }
     }
+
+    onSelectAll($event) {
+        this.employeeFilterData.forEach(emp => {
+            emp.checked = $event.target.checked;
+        });
+    }
+
     saveBulkMTR(form) {
         if (form.valid) {
             this.batchData.emp_id_array = this.employeeFilterData.filter(function (employee, index, array) {
@@ -158,6 +165,7 @@ export class MtrBatchInitComponent implements OnInit {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");
                                 form.resetForm();
+                                this.search = null;
                             }
                             this.getAllEmployee();
                         }, error => {

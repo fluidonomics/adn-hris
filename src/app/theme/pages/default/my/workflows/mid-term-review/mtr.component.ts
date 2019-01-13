@@ -100,7 +100,22 @@ export class MyMtrComponent {
     }
     onColorStatusChange(event) {
         if (event.id == "Dropped") {
-            this.mtrData.progressStatus = "Dropped"
+            swal({
+                title: 'Are you sure?',
+                text: "Selecting Dropped will automatically select the progress status as Dropped. Do you wish to continue",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                width: "45rem"
+            }).then((result) => {
+                if (result.value) {
+                    this.mtrData.progressStatus = "Dropped"
+                } else {
+                    this.mtrData.colorStatus = null;
+                }
+            });
         }
     }
 
@@ -154,7 +169,7 @@ export class MyMtrComponent {
         this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.mtrInfoData = data.result.message;
-            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved").length > 0;
+            this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
     }
