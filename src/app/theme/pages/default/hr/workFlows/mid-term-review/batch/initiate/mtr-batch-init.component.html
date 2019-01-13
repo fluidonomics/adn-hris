@@ -83,7 +83,7 @@
 
                             <th class="m-datatable__cell" width="5%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-                                    <input type="checkbox" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0">
+                                    <input type="checkbox" (change)="onSelectAll($event)" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0">
                                     <span></span>
                                 </label>
                             </th>

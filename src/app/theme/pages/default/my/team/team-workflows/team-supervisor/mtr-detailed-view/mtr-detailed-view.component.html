@@ -86,10 +86,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{'newKRA':!mtrInfoData.mtr_details[i].kraDetailId}">
-                                            <th scope="row">
+                                        <tr *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{
+                                             'newKRA':mtrInfoData.mtr_details[i].status == 'Submitted' && !mtrInfoData.mtr_details[i].kraDetailId,
+                                             'dropped':mtrInfoData.mtr_details[i].status == 'Dropped' || mtrInfoData.mtr_details[i].progressStatus == 'Dropped',
+                                             'approved':mtrInfoData.mtr_details[i].status == 'Approved',
+                                             'sendBack':mtrInfoData.mtr_details[i].status == 'SendBack'
+                                            }">
+                                            <td scope="row">
                                                 {{i+1}}
-                                            </th>
+                                            </td>
                                             <td>
                                                 <textarea name="mtrOne" id="mtrOne" [(ngModel)]="mtrInfo.mtr_kra" #mtr="ngModel"
                                                     class="form-control m-input m-input--air" disabled></textarea>
@@ -189,7 +194,8 @@
                     </div>
                     <div class="col-md-6 form-group flex">
                         <span class="key">Weightage</span>
-                        <span class="value">{{mtrData?.weightage?.kraWeightageName}}</span>
+                        <span *ngIf="mtrData?.progressStatus != 'Dropped'" class="value">{{mtrData?.weightage?.kraWeightageName}}</span>
+                        <span *ngIf="mtrData?.progressStatus == 'Dropped'" class="value">Dropped</span>
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Key Responsibility Area</span>

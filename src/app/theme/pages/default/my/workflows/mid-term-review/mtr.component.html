@@ -26,9 +26,9 @@
 								<span>2. Weightage of Dropped KRA will be set to 0 by default </span>
 								<span>3. Weightage of each and every KRA is editable and total weightage must be 100 </span>
 								<span>4. Choose status according to current KRA status </span>
-								<span>5. Colour status values are as follows </span>
-								<span>6. Please provide Remarks against each KRA </span>
-								<span>7. Submit Mid Term Review after adding all details </span>
+								<span>5. Please provide Remarks against each KRA </span>
+								<span>6. Submit Mid Term Review after adding all details </span>
+								<span>7. Colour status values are as follows </span>
 							</div>
 							<div class="col-md-12 flags">
 								<span><i class="fa fa-square green"></i>KRA progress is going good </span>
@@ -476,8 +476,8 @@
 						</div>
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air" name="mtrWeightagedata" id="mtrWeightagedata" [items]="weightageData"
-							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="mtrData.weightage_id"
-							 [clearable]="false" #mtrWeightage="ngModel" [disabled]="isDisabled" required></ng-select>
+							 bindLabel="kraWeightageName" bindValue="_id" [placeholder]="mtrData.progressStatus =='Dropped'? 'Dropped': 'Weightage'"
+							 [(ngModel)]="mtrData.weightage_id" [clearable]="false" #mtrWeightage="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !mtrWeightage.valid">
 								This field is required.
 							</div>
