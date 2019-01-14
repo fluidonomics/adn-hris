@@ -224,24 +224,23 @@
 					<div class="m-section">
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
-
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover" #print_div>
-										<thead>
-											<tr>
-												<th>
+								<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+									<table class="m-datatable__table" #print_div>
+										<thead class="m-datatable__head">
+											<tr class="m-datatable__row">
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													#
 												</th>
 												<!-- <th>
 													KRA
 												</th> -->
-												<th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="40%">
 													KRA Category
 												</th>
-												<th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Weightage
 												</th>
-												<th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Status
 												</th>
 												<!-- <th>
@@ -250,53 +249,53 @@
 												<th>
 													Measure of Success
 												</th> -->
-												<th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Supervisor
 												</th>
-												<th>
+												<!-- <th>
 													Employee Remarks
-												</th>
-												<th>
+												</th> -->
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Supervisor Remarks
 												</th>
-												<th>
+												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Action
 												</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'dropped':mtrInfoData[i].progressStatus =='Dropped','sendBack':mtrInfoData[i].status=='SendBack','approved':mtrInfoData[i].status =='Approved'}"
+										<tbody class="m-datatable__body">
+											<tr class="m-datatable__row" *ngFor="let mtrInfo of mtrInfoData;let i=index" [ngClass]="{'dropped':mtrInfoData[i].progressStatus =='Dropped','sendBack':mtrInfoData[i].status=='SendBack','approved':mtrInfoData[i].status =='Approved'}"
 											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
-												<th scope="row">
+												<td class="m-datatable__cell" scope="row" width="10%">
 													{{i+1}}
-												</th>
-												<td>
+												</td>
+												<td class="m-datatable__cell" width="40%">
 													<ng-select class="m-input m-input--air customError" name="mtrCategory{{i}}" id="mtrCategory" [items]="mtrCategoryData" bindLabel="kraCategoryName"
 													 bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id" [clearable]="false" #mtrCategory="ngModel"
 													 required disabled></ng-select>
 												</td>
-												<td>
+												<td class="m-datatable__cell" width="10%">
 													<ng-select class="m-input m-input--air customError" name="mtrWeightage{{i}}" id="mtrWeightage" [items]="weightageData" bindLabel="kraWeightageName"
 													 bindValue="_id" [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="mtrInfo.weightage_id"
 													 [clearable]="false" #mtrWeightage="ngModel" required disabled></ng-select>
 												</td>
-												<td>
+												<td class="m-datatable__cell" width="10%">
 													<span>{{mtrInfo.status}}</span>
 												</td>
-												<td>
+												<td class="m-datatable__cell" width="10%">
 													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
 													 bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.mtr_master_supervisor_id" [clearable]="false"
 													 #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
-												<td>
+												<!-- <td>
 													<textarea name="employeeComment{{i}}" id="employeeComment" #employeeComment="ngModel" [(ngModel)]="mtrInfo.employeeComment"
 													 class="form-control m-input m-input--air" disabled></textarea>
-												</td>
-												<td>
+												</td> -->
+												<td class="m-datatable__cell" width="10%">
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="mtrInfo.supervisorComment"
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
-												<td>
+												<td class="m-datatable__cell" width="10%">
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													 title="Edit" (click)="showMTRDetails(i)">
 														<i class="la la-info"></i>
