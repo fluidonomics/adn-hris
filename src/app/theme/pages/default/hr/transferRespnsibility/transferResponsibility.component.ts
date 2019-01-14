@@ -12,13 +12,15 @@ import { LeaveService } from '../../my/leaves/leave.service';
 import { KraService } from '../../my/workflows/kra/kra.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { NgForm } from '@angular/forms';
+import { MtrService } from '../../services/mtr.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--addemployee",
     templateUrl: "./transferResponsibility.component.html",
     styleUrls: ["./transferResponsibility.component.scss"],
     encapsulation: ViewEncapsulation.None,
-    providers: [KraService, LeaveService]
+    providers: [KraService, LeaveService, MtrService]
 })
 export class TransferResponsibilityComponent implements OnInit {
 
@@ -45,6 +47,7 @@ export class TransferResponsibilityComponent implements OnInit {
     modalRef: BsModalRef;
     employeeOpenLeaveRequest: any[] = [];
     employeeOpenKraRequest: any[] = [];
+    employeeOpenMtrRequest: any[] = [];
 
     constructor(
         private _commonService: CommonService,
@@ -53,7 +56,8 @@ export class TransferResponsibilityComponent implements OnInit {
         public _authService: AuthService,
         private modalService: BsModalService,
         private leaveService: LeaveService,
-        private kraService: KraService
+        private kraService: KraService,
+        private mtrService: MtrService
     ) {
 
     }
@@ -76,6 +80,9 @@ export class TransferResponsibilityComponent implements OnInit {
             else {
                 this.employeesData = data.json().data || [];
             }
+            this.employeesData.forEach(element => {
+                element.combinedName = element.fullName + "[" + element.userName + "]";
+            });
         }, error => {
         });
     }
@@ -90,6 +97,13 @@ export class TransferResponsibilityComponent implements OnInit {
             })
             this.supervisorData = supervisors;
             this.secondarySupervisorData = supervisors;
+
+            this.supervisorData.forEach(element => {
+                element.combinedName = element.fullName + "[" + element.userName + "]";
+            });
+            this.secondarySupervisorData.forEach(element => {
+                element.combinedName = element.fullName + "[" + element.userName + "]";
+            });
         })
         this.getEmployeeDetails(selectedEmpId);
     }
@@ -149,6 +163,54 @@ export class TransferResponsibilityComponent implements OnInit {
             });
         }
     }
+    transfer() {
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want continue?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this.request.user_id = this._currentEmpId;
+                this.utilityService.showLoader('.m-content');
+                this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                    if (data.ok) {
+                        let status = data.json() || false;
+                        if (status) {
+                            swal({
+                                title: 'Supervisor Revision Successful',
+                                text: "",
+                                type: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then((result) => {
+                                this.transferForm.resetForm();
+                                this.reset();
+                            });
+                        } else {
+                            swal({
+                                title: '',
+                                text: "Supervisor Revision Failed",
+                                type: 'warning',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then((result) => {
+                                this.transferForm.resetForm();
+                                this.reset();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
 
     proceedToTransfer(form) {
         if (this.modalRef) {
@@ -168,56 +230,29 @@ export class TransferResponsibilityComponent implements OnInit {
             confirmButtonColor: '#66BB6A',
             confirmButtonText: 'OK'
         }).then((result) => {
-            swal({
-                title: 'Are you sure?',
-                text: "Do you want continue?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#9a9caf',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    this.request.user_id = this._currentEmpId;
-                    this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
-                        if (data.ok) {
-                            let status = data.json() || false;
-                            if (status) {
-                                swal({
-                                    title: 'Supervisor Revision Successful',
-                                    text: "",
-                                    type: 'success',
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                }).then((result) => {
-                                    this.transferForm.resetForm();
-                                    this.reset();
-                                });
-                            } else {
-                                swal({
-                                    title: '',
-                                    text: "Supervisor Revision Failed",
-                                    type: 'warning',
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                }).then((result) => {
-                                    this.transferForm.resetForm();
-                                    this.reset();
-                                });
-                            }
-                        }
-                    });
-                }
-            });
+            if (this.request.change_type != "tranfser") {
+                swal({
+                    title: "Supervisor Corection",
+                    text: "Audit trail will be gone. Please use this feature only for temporary supervisor change.",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    this.transfer();
+                })
+            }
+            else {
+                this.transfer();
+            }
+
+
         });
     }
 
     reset() {
         this.request = {};
+        this.utilityService.hideLoader('.m-content');
     }
 
     checkUserNameExists(_element) {
@@ -242,21 +277,38 @@ export class TransferResponsibilityComponent implements OnInit {
                 this.employeeOpenKraRequest = [];
                 forkJoin(
                     this.leaveService.getLeaveDetailsByEmployeeId(this.request.emp_id),
-                    this.kraService.getKraByEmployeeId(this.request.emp_id)
+                    this.kraService.getKraByEmployeeId(this.request.emp_id),
+                    this.mtrService.getEmployeeMtrWorkFlowInfo(this.request.emp_id)
                 ).subscribe(res => {
                     let leaveData = res[0].json().data || [];
                     let kraData = res[1].json().data || [];
+                    let mtrData = res[2].json().result.message || [];
 
                     this.employeeOpenLeaveRequest = leaveData.filter(leave => {
-                        return leave.status != "Approved" && leave.status != "Cancelled" && leave.status != "Withdrawn";
-                    })
+                        return leave.leaveStatus != "Approved" && leave.leaveStatus != "Cancelled" && leave.leaveStatus != "Withdrawn" && leave.leaveStatus != "Rejected";
+                    });
 
                     this.employeeOpenKraRequest = kraData.filter(kra => {
                         return kra.supervisorStatus != "Approved";
-                    })
-                    if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0) {
+                    });
+
+                    mtrData = mtrData.filter(mtr => {
+                        return mtr.mtr_master_status != "Approved";
+                    });
+                    this.employeeOpenMtrRequest = _.chain(mtrData)
+                        .groupBy("mtr_master_id").map(function (v, i) {
+                            return {
+                                mtrDetailCount: v.length,
+                                status: v[0].mtr_master_status,
+                                createdAt: v[0].mtr_master_details.createdAt,
+                                updatedAt: v[0].mtr_master_details.updatedAt
+                            }
+                        }).value();
+
+                    if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0 || this.employeeOpenMtrRequest.length > 0) {
                         this.request.leaveIds = this.employeeOpenLeaveRequest.map(leave => leave._id);
                         this.request.kraIds = this.employeeOpenKraRequest.map(kra => kra._id);
+                        this.request.mtrIds = mtrData.map(mtr => mtr._id);
                         this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
                         resolve(data);
                     } else {
