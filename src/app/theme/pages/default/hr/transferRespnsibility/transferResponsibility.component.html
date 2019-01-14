@@ -29,9 +29,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="combinedName"
-												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.emp_id" #selectedemployee="ngModel"
-												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required>													
+												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="combinedName" bindValue="_id"
+												 placeholder="Select Employee" [(ngModel)]="request.emp_id" #selectedemployee="ngModel" (change)="employeeSelected(request.emp_id)"
+												 [clearable]="false" required>
 												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!selectedemployee.valid">
 													<span *ngIf="transferForm.submitted && !selectedemployee.valid">This field is required.</span>
@@ -48,8 +48,8 @@
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group ">
 												<div class="input-group">
-													<input type="text" class="form-control m-input m-input--air" name="primarySupervisor" id="primarySupervisor"
-													 [(ngModel)]="primarySupervisor" disabled>
+													<input type="text" class="form-control m-input m-input--air" name="primarySupervisor" id="primarySupervisor" [(ngModel)]="primarySupervisor"
+													 disabled>
 												</div>
 											</div>
 										</div>
@@ -61,8 +61,8 @@
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group ">
 												<div class="input-group">
-													<input type="text" class="form-control m-input m-input--air" name="secondarySupervisor" id="secondarySupervisor"
-													 [(ngModel)]="seconderySupervisor" disabled>
+													<input type="text" class="form-control m-input m-input--air" name="secondarySupervisor" id="secondarySupervisor" [(ngModel)]="seconderySupervisor"
+													 disabled>
 												</div>
 											</div>
 										</div>
@@ -76,9 +76,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData"
-												 bindLabel="name" bindValue="id" placeholder="Select Transfer Type" [(ngModel)]="request.change_type"
-												 #transferType="ngModel" [clearable]="false" required></ng-select>
+												<ng-select class="m-input m-input--air" name="supervisorTransferTypeData" [items]="supervisorTransferTypeData" bindLabel="name"
+												 bindValue="id" placeholder="Select Transfer Type" [(ngModel)]="request.change_type" #transferType="ngModel" [clearable]="false"
+												 required></ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!transferType.valid">
 													<span *ngIf="transferForm.submitted && !transferType.valid">This field is required.</span>
 												</div>
@@ -93,9 +93,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="combinedName"
-												 bindValue="_id" placeholder="Select Employee" (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)"
-												 [(ngModel)]="request.primarySupervisorEmp_id" #primarySuervisor="ngModel" [clearable]="false" required>													
+												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="combinedName" bindValue="_id"
+												 placeholder="Select Employee" (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)" [(ngModel)]="request.primarySupervisorEmp_id"
+												 #primarySuervisor="ngModel" [clearable]="false" required>
 												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
 													<span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>
@@ -109,9 +109,8 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="companyName" [items]="secondarySupervisorData" bindLabel="combinedName"
-												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"
-												 #seconderySuervisor="ngModel" [clearable]="false">													
+												<ng-select class="m-input m-input--air" name="companyName" [items]="secondarySupervisorData" bindLabel="combinedName" bindValue="_id"
+												 placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id" #seconderySuervisor="ngModel" [clearable]="false">
 												</ng-select>
 											</div>
 										</div>
@@ -163,41 +162,6 @@
 		<div class="m-portlet__body">
 			<div class="m-widget6 ">
 				<div class="row">
-					<div class="col-md-12 pendingKra">
-						<h3>Pending KRA Requests</h3>
-						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenKraRequest?.length==0 }">
-							<table class="m-datatable__table">
-								<thead class="m-datatable__head">
-									<tr class="m-datatable__row">
-										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
-										<th class="m-datatable__cell m-datatable__cell--sort" width="60%">
-											<span>KRA</span>
-										</th>
-										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
-											<span>Weightage</span>
-										</th>
-										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
-											<span>Status</span>
-										</th>
-									</tr>
-								</thead>
-								<tbody class="m-datatable__body">
-									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let kra of employeeOpenKraRequest;let even=even;">
-										<td class="m-datatable__cell" width="60%">
-											<span>{{kra.kra}}</span>
-										</td>
-										<td class="m-datatable__cell" width="20%">
-											<span>{{kra.weightage_id}}</span>
-										</td>
-										<td class="m-datatable__cell" width="20%">
-											<span>{{kra.supervisorStatus == null ? 'Pending': kra.supervisorStatus}}</span>
-										</td>
-									</tr>
-									<span *ngIf="employeeOpenKraRequest?.length==0" class="m-datatable--error">No records found</span>
-								</tbody>
-							</table>
-						</div>
-					</div>
 					<div class="col-md-12 pendingLeave">
 						<h3>Pending Leave Requests</h3>
 						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenLeaveRequest?.length==0 }">
@@ -235,6 +199,82 @@
 										</td>
 									</tr>
 									<span *ngIf="employeeOpenLeaveRequest?.length==0" class="m-datatable--error">No records found</span>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-12 pendingKra">
+						<h3>Pending KRA Requests</h3>
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenKraRequest?.length==0 }">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
+										<th class="m-datatable__cell m-datatable__cell--sort" width="60%">
+											<span>KRA</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Weightage</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Status</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let kra of employeeOpenKraRequest;let even=even;">
+										<td class="m-datatable__cell" width="60%">
+											<span>{{kra.kra}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{kra.weightage_id}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{kra.supervisorStatus == null ? 'Pending': kra.supervisorStatus}}</span>
+										</td>
+									</tr>
+									<span *ngIf="employeeOpenKraRequest?.length==0" class="m-datatable--error">No records found</span>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-12 pendingLeave">
+						<h3>Pending Mid Term Reviews</h3>
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenLeaveRequest?.length==0 }">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Total Kra's</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="30%">
+											<span>Midterm Created On</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="30%">
+											<span>Midterm Last Updated On</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Status</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let mtr of employeeOpenMtrRequest;let even=even;">
+										<td class="m-datatable__cell" width="20%">
+											<span>{{mtr?.mtrDetailCount}}</span>
+										</td>
+										<td class="m-datatable__cell" width="30%">
+											<span>{{mtr?.createdAt | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="30%">
+											<span>{{mtr?.updatedAt | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{mtr?.status}}</span>
+										</td>
+									</tr>
+									<span *ngIf="employeeOpenMtrRequest?.length==0" class="m-datatable--error">No records found</span>
 								</tbody>
 							</table>
 						</div>
