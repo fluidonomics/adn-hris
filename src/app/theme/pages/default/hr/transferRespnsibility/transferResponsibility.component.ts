@@ -75,7 +75,10 @@ export class TransferResponsibilityComponent implements OnInit {
             }
             else {
                 this.employeesData = data.json().data || [];
-            }
+            }            
+            this.employeesData.forEach(element => {
+                element.combinedName=element.fullName + "["+element.userName +"]";
+            });
         }, error => {
         });
     }
@@ -90,6 +93,13 @@ export class TransferResponsibilityComponent implements OnInit {
             })
             this.supervisorData = supervisors;
             this.secondarySupervisorData = supervisors;
+
+            this.supervisorData.forEach(element => {
+                element.combinedName=element.fullName + "["+element.userName +"]";
+            });
+            this.secondarySupervisorData.forEach(element => {
+                element.combinedName=element.fullName + "["+element.userName +"]";
+            });
         })
         this.getEmployeeDetails(selectedEmpId);
     }
@@ -149,6 +159,53 @@ export class TransferResponsibilityComponent implements OnInit {
             });
         }
     }
+    transfer(){
+        swal({
+            title: 'Are you sure?',
+            text: "Do you want continue?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this.request.user_id = this._currentEmpId;
+                this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
+                    if (data.ok) {
+                        let status = data.json() || false;
+                        if (status) {
+                            swal({
+                                title: 'Supervisor Revision Successful',
+                                text: "",
+                                type: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then((result) => {
+                                this.transferForm.resetForm();
+                                this.reset();
+                            });
+                        } else {
+                            swal({
+                                title: '',
+                                text: "Supervisor Revision Failed",
+                                type: 'warning',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then((result) => {
+                                this.transferForm.resetForm();
+                                this.reset();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
 
     proceedToTransfer(form) {
         if (this.modalRef) {
@@ -167,52 +224,24 @@ export class TransferResponsibilityComponent implements OnInit {
             showCancelButton: false,
             confirmButtonColor: '#66BB6A',
             confirmButtonText: 'OK'
-        }).then((result) => {
-            swal({
-                title: 'Are you sure?',
-                text: "Do you want continue?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#9a9caf',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    this.request.user_id = this._currentEmpId;
-                    this._hrService.updateSupervisortransferInfo(this.request).subscribe(data => {
-                        if (data.ok) {
-                            let status = data.json() || false;
-                            if (status) {
-                                swal({
-                                    title: 'Supervisor Revision Successful',
-                                    text: "",
-                                    type: 'success',
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                }).then((result) => {
-                                    this.transferForm.resetForm();
-                                    this.reset();
-                                });
-                            } else {
-                                swal({
-                                    title: '',
-                                    text: "Supervisor Revision Failed",
-                                    type: 'warning',
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                }).then((result) => {
-                                    this.transferForm.resetForm();
-                                    this.reset();
-                                });
-                            }
-                        }
-                    });
-                }
-            });
+        }).then((result) => {            
+            if (this.request.change_type != "tranfser") {
+                swal({
+                    title: "Supervisor Corection",
+                    text: "Audit trail will be gone. Please use this feature only for temporary supervisor change.",
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                }).then((result)=>{
+                        this.transfer();
+                })
+            }
+            else{
+                this.transfer();
+            }
+            
+            
         });
     }
 

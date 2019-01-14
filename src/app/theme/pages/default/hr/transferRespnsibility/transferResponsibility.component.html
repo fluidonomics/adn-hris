@@ -29,17 +29,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="fullName"
+												<ng-select class="m-input m-input--air" name="employee" [items]="employeesData" bindLabel="combinedName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.emp_id" #selectedemployee="ngModel"
-												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required>
-													<ng-template ng-label-tmp let-item="item" let-index="index">
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
-													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
+												 (change)="employeeSelected(request.emp_id)" [clearable]="false" required>													
 												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!selectedemployee.valid">
 													<span *ngIf="transferForm.submitted && !selectedemployee.valid">This field is required.</span>
@@ -101,17 +93,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="fullName"
+												<ng-select class="m-input m-input--air" name="supervisorData" [items]="supervisorData" bindLabel="combinedName"
 												 bindValue="_id" placeholder="Select Employee" (change)="primarySupervisorSelected(request.primarySupervisorEmp_id)"
-												 [(ngModel)]="request.primarySupervisorEmp_id" #primarySuervisor="ngModel" [clearable]="false" required>
-													<ng-template ng-label-tmp let-item="item" let-index="index">
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
-													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
+												 [(ngModel)]="request.primarySupervisorEmp_id" #primarySuervisor="ngModel" [clearable]="false" required>													
 												</ng-select>
 												<div class="form-control-feedback has-danger" *ngIf="!primarySuervisor.valid">
 													<span *ngIf="transferForm.submitted && !primarySuervisor.valid">This field is required.</span>
@@ -125,17 +109,9 @@
 										</div>
 										<div class="col-md-4 adn-form__group">
 											<div class="m-form__group form-group">
-												<ng-select class="m-input m-input--air" name="companyName" [items]="secondarySupervisorData" bindLabel="fullName"
+												<ng-select class="m-input m-input--air" name="companyName" [items]="secondarySupervisorData" bindLabel="combinedName"
 												 bindValue="_id" placeholder="Select Employee" [(ngModel)]="request.secondarySupervisorEmp_id"
-												 #seconderySuervisor="ngModel" [clearable]="false">
-													<ng-template ng-label-tmp let-item="item" let-index="index">
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
-													<ng-template ng-option-tmp let-item="item" let-index="index" disabled>
-														{{item.fullName}} {{item.userName ? ('[' + item.userName
-														+']'):''}}
-													</ng-template>
+												 #seconderySuervisor="ngModel" [clearable]="false">													
 												</ng-select>
 											</div>
 										</div>
