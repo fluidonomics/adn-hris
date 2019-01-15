@@ -409,10 +409,10 @@
                                                         <span>{{leave.leavedetails?.reason}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
-                                                        <span>{{leave.leavedetails?.supervisorDetails[0]?.fullName}}</span>
+                                                        <span>{{leave.leavedetails?.supervisorDetails?.fullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
-                                                        <span>{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
+                                                        <span *ngIf="leave.leavedetails.status == 'Approved'">{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
