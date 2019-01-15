@@ -142,7 +142,7 @@
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
-									learning Batch
+									Learning Batch
 								</span>
 							</a>
 						</li>
@@ -363,6 +363,19 @@
 						<span class="m-menu__link-wrap">
 							<span class="m-menu__link-text">
 								Documents
+							</span>
+						</span>
+					</span>
+				</a>
+			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+			 aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				<a routerLink="/my/learning" class="m-menu__link">
+					<i class="m-menu__link-icon fa fa-file"></i>
+					<span class="m-menu__link-title">
+						<span class="m-menu__link-wrap">
+							<span class="m-menu__link-text">
+								Learning
 							</span>
 						</span>
 					</span>
