@@ -62,7 +62,7 @@ export class employeeSearchComponent implements OnInit {
         this._hrService.getAllEmployee().subscribe(res => {           
             let data = res.json();
             if (data.data.length > 0) {                               
-                 this.employeeData = data.data || [];
+                 this.employeeData = data.data.filter(obj=>obj.supervisor_id==this._currentEmpId) || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
             else {
