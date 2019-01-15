@@ -16,7 +16,6 @@ import { DocumentsComponent } from './documents/documents.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
-import { MyLearningComponent } from './learning/my-learning.component';
 
 
 
@@ -27,7 +26,6 @@ const routes: Routes = [{
         { path: 'profile-edit', component: ProfileEditComponent },
         { path: 'profile-view', component: ProfileViewComponent },
         { path: 'documents', component: DocumentsComponent },
-        { path: 'learning', component: MyLearningComponent },
         { path: 'change-password', component: ChangePasswordComponent },
         { path: 'workflows', loadChildren: ".\/workflows\/my-workflows.module#MyWorkFlowsModule" },
         { path: 'leaves', loadChildren: ".\/leaves\/leave.module#LeaveModule" },

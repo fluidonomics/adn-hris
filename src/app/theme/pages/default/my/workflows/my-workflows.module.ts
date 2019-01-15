@@ -13,7 +13,6 @@ import { MyWorkFlowsRoutingModule } from './my-workflows.routing.model';
 import { MyService } from "../my.service"
 import { BaseModule } from '../../../../../base/base.module';
 
-import { MyLearningComponent } from './learning/learning.component';
 import { MyPapComponent } from './pap/pap.component';
 import { MyPipComponent } from './pip/pip.component';
 import { MyKraComponent } from './kra/kra.component';
@@ -33,7 +32,6 @@ import { MyMtrComponent } from './mid-term-review/mtr.component';
         BaseModule,
         MyWorkFlowsRoutingModule,
     ], declarations: [
-        MyLearningComponent,
         MyPapComponent,
         MyPipComponent,
         MyKraComponent,

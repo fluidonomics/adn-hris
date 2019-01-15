@@ -23,7 +23,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 
 import { MyService } from "./my.service"
 import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
-import { MyLearningComponent } from './learning/my-learning.component';
+import { MyLearningComponent } from './learning/learning.component';
 
 @NgModule({
     imports: [
