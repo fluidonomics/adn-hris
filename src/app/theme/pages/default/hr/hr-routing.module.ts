@@ -22,6 +22,8 @@ import { PostComponent } from './leaves/post/post.component';
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
 
+import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
+
 const routes: Routes = [{
     path: '', component: HrComponent,
     children: [
@@ -34,6 +36,7 @@ const routes: Routes = [{
         { path: 'employee/edit', component: EditEmployeeComponent },
         { path: 'workflows/initiate', component: HrInitiateComponent },
         { path: 'workflows/learning', component: HrLearningComponent },
+        { path: 'workflows/learn/batch', component: LearningBatchComponent },
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },
