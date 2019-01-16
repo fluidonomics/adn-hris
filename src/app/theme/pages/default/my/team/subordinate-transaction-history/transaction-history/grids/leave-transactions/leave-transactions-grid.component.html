@@ -1,0 +1,108 @@
+<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+    <table class="m-datatable__table">
+        <thead class="m-datatable__head">
+            <tr class="m-datatable__row">
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>Employee Name</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>ID</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>Leave Type</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort text-center" width="10%">
+                    <span>Quota Days</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                    <span>Reason</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>Approved By</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>Approved On</span>
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    <span>Status</span>
+                </th>
+                <!-- <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                    <span>Action</span>
+                </th> -->
+            </tr>
+        </thead>
+        <tbody class="m-datatable__body leaveBody">
+            <tr class="m-datatable__row" *ngFor="let leave of leavesTransactions | paginate: { id: 'leavesTransactions', itemsPerPage: 6, currentPage: leaveTransactionsFilter.page };let even=even;">
+                <td class="m-datatable__cell" width="10%">
+                    <span>{{leave.employeeDetails?.fullName}}</span>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <span>{{leave.employeeDetails?.userName}}</span>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <span>{{leave.leaveTypeName}}</span>
+                </td>
+                <td class="m-datatable__cell text-center" width="10%">
+                    <span>{{leave.leavedetails?.days}}</span>
+                </td>
+                <td class="m-datatable__cell" width="20%">
+                    <span>{{leave.leavedetails?.reason}}</span>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <span>{{leave.leavedetails?.supervisorDetails?.fullName}}</span>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <span>{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <span class="m-badge  m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
+                </td>
+                <!-- <td class="m-datatable__cell" width="5%">
+                    <span>
+                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve/Reject Leave"
+                                (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, false)">
+                                <i class="la la-info"></i>
+                            </a>
+                        </span>
+                </td> -->
+            </tr>
+            <span *ngIf="leavesTransactions?.length==0" class="m-datatable--error">No records found</span>
+        </tbody>
+    </table>
+    <pagination-template *ngIf="leavesTransactions.length > 0" #p="paginationApi" [id]="'leavesTransactions'" (pageChange)="leaveTransactionsFilter.page = $event"
+        class="paginationtemplate">
+        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+            <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                <li>
+                    <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                        (click)="p.setCurrent(1)">
+                            <i class="la la-angle-double-left"></i>
+                        </span>
+                </li>
+                <li>
+                    <span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                        (click)="p.previous()">
+                            <i class="la la-angle-left"></i>
+                        </span>
+                </li>
+                <li *ngFor="let page of p.pages">
+                    <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                            {{ page.label }}
+                        </span>
+                </li>
+                <li>
+                    <span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                        (click)="p.isLastPage()?'null':p.next()">
+                            <i class="la la-angle-right"></i>
+                        </span>
+                </li>
+                <li>
+                    <span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                        (click)="p.setCurrent(p.pages.length + 1)">
+                            <i class="la la-angle-double-right"></i>
+                        </span>
+                </li>
+            </ul>
+        </div>
+    </pagination-template>
+</div>

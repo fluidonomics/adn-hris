@@ -11,7 +11,7 @@ import { MyTeamService } from '../../my-team.service';
     encapsulation: ViewEncapsulation.None,
 })
 
-export class employeeSearchComponent implements OnInit {
+export class EmployeeSearchComponent implements OnInit {
 
     employeeData: any = [];
     employeeFilterData: any = [];
@@ -36,10 +36,12 @@ export class employeeSearchComponent implements OnInit {
     currentDate = new Date();
     isCheckAll: any;
 
-    constructor(private _hrService: MyTeamService,
+    constructor(
+        private _hrService: MyTeamService,
         private router: Router,
         private utilityService: UtilityService,
-        public _authService: AuthService) { }
+        public _authService: AuthService
+    ) { }
 
     ngOnInit() {
 
@@ -51,31 +53,31 @@ export class employeeSearchComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
 
     }
-    initDropdown() {       
+    initDropdown() {
         this.getAllEmployee();
     }
 
-    
+
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
-        this._hrService.getAllEmployee().subscribe(res => {           
+        this._hrService.getAllEmployee().subscribe(res => {
             let data = res.json();
-            if (data.data.length > 0) {                               
-                 this.employeeData = data.data.filter(obj=>obj.supervisor_id==this._currentEmpId) || [];
+            if (data.data.length > 0) {
+                this.employeeData = data.data.filter(obj => obj.supervisor_id == this._currentEmpId) || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
             else {
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
-            }           
+            }
         }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
 
-    }   
-    showDetail(employee:any,event:any){
-        this.router.navigateByUrl("/my/team/subordinate/transaction-hisroty/" + employee._id);
-    }     
+    }
+    showDetail(employee: any, event: any) {
+        this.router.navigateByUrl("/my/team/subordinate/transaction-history/" + employee._id);
+    }
 
 }
