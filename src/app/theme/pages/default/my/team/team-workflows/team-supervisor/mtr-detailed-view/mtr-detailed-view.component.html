@@ -56,74 +56,74 @@
                                     <h4>{{user?.userName}}</h4>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>
+                            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                <table class="m-datatable__table">
+                                    <thead class="m-datatable__head">
+                                        <tr class="m-datatable__row">
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                                 #
                                             </th>
-                                            <th>
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
                                                 KRA
                                             </th>
-                                            <th style="width: 170px;">
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
                                                 KRA Category
                                             </th>
-                                            <th>
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                                 Weightage
                                             </th>
-                                            <th>
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 Employee Remarks
                                             </th>
-                                            <th>
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 Status
                                             </th>
-                                            <th>
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                             </th>
-                                            <th class="text-center" style="width: 70px;">
+                                            <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                                 Action
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{
+                                    <tbody class="m-datatable__body">
+                                        <tr class="m-datatable__row" *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{
                                              'newKRA':mtrInfoData.mtr_details[i].status == 'Submitted' && !mtrInfoData.mtr_details[i].kraDetailId,
                                              'dropped':mtrInfoData.mtr_details[i].status == 'Dropped' || mtrInfoData.mtr_details[i].progressStatus == 'Dropped',
                                              'approved':mtrInfoData.mtr_details[i].status == 'Approved',
                                              'sendBack':mtrInfoData.mtr_details[i].status == 'SendBack'
                                             }">
-                                            <td scope="row">
+                                            <td scope="row" class="m-datatable__cell" width="5%">
                                                 {{i+1}}
                                             </td>
-                                            <td>
-                                                <textarea name="mtrOne" id="mtrOne" [(ngModel)]="mtrInfo.mtr_kra" #mtr="ngModel"
+                                            <td class="m-datatable__cell" width="40%">
+                                                <textarea name="mtrOne" [(ngModel)]="mtrInfo.mtr_kra" #mtr="ngModel"
                                                     class="form-control m-input m-input--air" disabled></textarea>
                                             </td>
-                                            <td>
+                                            <td class="m-datatable__cell" width="40%">
                                                 <ng-select class="m-input m-input--air" name="mtrCategory" id="kraCategory"
                                                     [items]="kraCategoryData" bindLabel="kraCategoryName" bindValue="_id"
                                                     placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id"
                                                     [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
                                             </td>
-                                            <td>
+                                            <td class="m-datatable__cell" width="5%">
                                                 <ng-select class="m-input m-input--air" name="mtrWeightage" id="mtrWeightage"
                                                     [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
                                                     [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'"
                                                     [(ngModel)]="mtrInfo.weightage_id" [clearable]="false"
                                                     #mtrWeightage="ngModel" disabled></ng-select>
                                             </td>
-                                            <td>
+                                            <td class="m-datatable__cell" width="10%">
                                                 <textarea name="employeeComment" [(ngModel)]="mtrInfo.employeeComment"
                                                     #employeeComment="ngModel" class="form-control m-input m-input--air"
                                                     disabled></textarea>
                                             </td>
-                                            <td>
+                                            <td class="m-datatable__cell" width="10%">
                                                 <span>{{mtrInfo.progressStatus}}</span>
                                             </td>
-                                            <td class="gridColorStatus">
+                                            <td class="gridColorStatus m-datatable__cell"width="5%">
                                                 <i *ngIf="mtrInfo.kraDetailId" class="fa fa-circle" [ngClass]="mtrInfo.colorStatus"></i>
                                             </td>
-                                            <td class="text-center" style="width: 70px;">
+                                            <td class="m-datatable__cell" width="5%">
                                                 <span>
                                                     <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                                         title="Mid Term Review Detail" (click)="showMtrDetail(i, $event)">
