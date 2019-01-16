@@ -221,6 +221,7 @@
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
+			
 			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1"
 			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
 			 data-menu-submenu-toggle="hover">
@@ -266,6 +267,15 @@
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
 						Leaves
+					</span>
+				</a>
+			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
+				<a routerLink="/my/team/subordinate/employee/list" class="m-menu__link m-menu__toggle">
+					<i class="m-menu__link-icon fa fa-bed"></i>
+					<span class="m-menu__link-text">
+						Subordinate Transaction History
 					</span>
 				</a>
 			</li>

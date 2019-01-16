@@ -1,0 +1,108 @@
+<div class="m-content" id="initiate-loader">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Transaction History
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group row align-items-center">
+                                    <div class="col-md-3">
+                                        <div class="m-input-icon m-input-icon--left">
+                                            <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                <span>
+                                                    <i class="la la-search"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-6 employeeDetail">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                            </div>
+                                            <div class="col-md-9 detail">
+                                                <span>Employee One</span>
+                                                <span>1010004</span>
+                                                <span>Designation</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                                    <div class="m-accordion__item m-accordion__item--success">
+                                        <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
+                                            aria-expanded="false">
+                                            <span class="m-accordion__item-icon">
+                                                        <i class="fa flaticon-user-ok"></i>
+                                                    </span>
+                                            <span class="m-accordion__item-title">Leave Transactions</span>
+                                            <span class="m-accordion__item-mode"></span>
+                                        </div>
+                                        <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body" role="tabpanel" aria-labelledby="m_accordion_5_item_1_head"
+                                            data-parent="#m_accordion_5">
+                                            <div class="m-accordion__item-content">
+                                                <leave-transactions-grid [leavesTransactions]="leaves"></leave-transactions-grid>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_6" role="tablist">
+                                    <div class="m-accordion__item m-accordion__item--success">
+                                        <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_6_item_1_head" data-toggle="collapse" href="#m_accordion_6_item_1_body"
+                                            aria-expanded="false">
+                                            <span class="m-accordion__item-icon">
+                                                            <i class="fa flaticon-user-ok"></i>
+                                                        </span>
+                                            <span class="m-accordion__item-title">Mid Term Reviews</span>
+                                            <span class="m-accordion__item-mode"></span>
+                                        </div>
+                                        <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body" role="tabpanel" aria-labelledby="m_accordion_6_item_1_head"
+                                            data-parent="#m_accordion_5">
+                                            <div class="m-accordion__item-content">
+                                                <mtr-grid [mtrDetails]="mtrDetails" [user]="user"></mtr-grid>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_7" role="tablist">
+                                    <div class="m-accordion__item m-accordion__item--success">
+                                        <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_7_item_1_head" data-toggle="collapse" href="#m_accordion_7_item_1_body"
+                                            aria-expanded="false">
+                                            <span class="m-accordion__item-icon">
+                                                            <i class="fa flaticon-user-ok"></i>
+                                                        </span>
+                                            <span class="m-accordion__item-title">KRA</span>
+                                            <span class="m-accordion__item-mode"></span>
+                                        </div>
+                                        <div class="m-accordion__item-body collapse show" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head"
+                                            data-parent="#m_accordion_5">
+                                            <div class="m-accordion__item-content">
+                                                <kra-grid [kraDetails]="kraDetails" [user]="user"></kra-grid>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
