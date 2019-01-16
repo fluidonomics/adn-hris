@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import { MyTeamService } from '../../my-team.service';
 import { ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../../leaves/leave.service';
+import { MtrService } from '../../../../services/mtr.service';
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper--mtrinitiate',
@@ -22,13 +23,16 @@ export class TransactionHistoryComponent implements OnInit {
     user: any = {};
     fiscalYear: any = {};
     leaves = [];
+    mtrDetails = [];
+
 
     constructor(
         private utilityService: UtilityService,
         public _authService: AuthService,
         private _route: ActivatedRoute,
         private leaveService: LeaveService,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private mtrService: MtrService
     ) {
 
     }
@@ -51,7 +55,19 @@ export class TransactionHistoryComponent implements OnInit {
             this.fiscalYear = fyears.find(f => f.isYearActive);
             this.leaveService.getLeaveDetailsByFilter(null, null, null, this.param_emp_id).subscribe(resLeaveDetails => {
                 this.leaves = resLeaveDetails.json().data || [];
-            })
+            });
+
+            this.mtrService.getEmployeeMtrWorkFlowInfo(this.param_emp_id).subscribe(resMtr => {
+                let mtrs = resMtr.json().result.message || [];
+                if (mtrs && mtrs.length > 0) {
+                    this.mtrService.getMtrDetails(mtrs[0].mtr_master_id).subscribe(res => {
+                        let data = res.json().result.message;
+                        if (data.length > 0) {
+                            this.mtrDetails = data[0].mtr_details;
+                        }
+                    });
+                }
+            });
         })
     }
 }
