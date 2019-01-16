@@ -152,18 +152,13 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Supervisor Remarks</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.supervisorComment" [disabled]="mtrData?.supervisor_id != _authService.atCurrentUserData._id || mtrData.status == 'Approved' || mtrData.status == 'SendBack' || mtrData.status == 'Dropped'"></textarea>
+                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.supervisorComment" disabled ></textarea>
                     </div>
                 </div>
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="m-form__actions">
-                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.status != 'Dropped'"
-                                    class="btn btn-success" (click)="saveMtr(mtrData,'Approved')">Approve</button>
-                                <button *ngIf="mtrData?.supervisor_id == _authService.atCurrentUserData._id && mtrData.status != 'Approved' && mtrData.status != 'SendBack' && mtrData.status != 'Dropped'"
-                                    class="btn btn-danger" (click)="saveMtr(mtrData,'SendBack')" type="button">Send
-                                        Back</button>
+                            <div class="m-form__actions">                               
                                 <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>
                         </div>

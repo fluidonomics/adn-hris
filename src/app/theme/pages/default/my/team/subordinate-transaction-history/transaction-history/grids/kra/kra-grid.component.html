@@ -1,0 +1,142 @@
+<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+    <table class="m-datatable__table">
+        <thead class="m-datatable__head">
+            <tr class="m-datatable__row">
+                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                    #
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+                    KRA
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+                    KRA Category
+                </th>
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                    Weightage
+                </th>                          
+                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class="m-datatable__body">
+            <tr class="m-datatable__row" *ngFor="let kraInfo of kraDetails;let i=index" [ngClass]="{
+                     'newKRA':kraDetails[i].status == 'Submitted' && !kraDetails[i].kraDetailId,
+                     'dropped':kraDetails[i].status == 'Dropped' || kraDetails[i].progressStatus == 'Dropped',
+                     'approved':kraDetails[i].status == 'Approved',
+                     'sendBack':kraDetails[i].status == 'SendBack'
+                    }">
+                <td scope="row" class="m-datatable__cell" width="5%">
+                    {{i+1}}
+                </td>
+                <td class="m-datatable__cell" width="40%">
+                    <textarea name="mtrOne" [(ngModel)]="kraInfo.kra" #mtr="ngModel" class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td class="m-datatable__cell" width="40%">
+                    <ng-select class="m-input m-input--air" name="mtrCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
+                        bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id" [clearable]="false"
+                        #kraCategory="ngModel" disabled></ng-select>
+                </td>
+                <td class="m-datatable__cell" width="10%">
+                    <ng-select class="m-input m-input--air" name="mtrWeightage" id="mtrWeightage" [items]="weightageData" bindLabel="kraWeightageName"
+                        bindValue="_id" [placeholder]="kraInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="kraInfo.weightage_id"
+                        [clearable]="false" #mtrWeightage="ngModel" disabled></ng-select>
+                </td>                               
+                <td class="m-datatable__cell" width="5%">
+                    <span>
+                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                title="Mid Term Review Detail" (click)="showMtrDetail(i, $event)">
+                                <i class="la la-info"></i>
+                            </a>
+                        </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<ng-template #kraDetailModal>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Key Responsibility Area
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-widget6 ">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span>KRA No. {{kraData.no}}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <span class="block"> {{user?.fullName}} ({{user?.userName}})</span>
+                                <span class="block"> {{user?.designationDetails?.designationName}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row details">
+                    <div class="col-md-6 form-group flex">
+                        <span class="key">Kra Category</span>
+                        <span class="value">{{kraData?.category?.kraCategoryName}}</span>
+                    </div>
+                    <div class="col-md-6 form-group flex">
+                        <span class="key">Weightage</span>
+                        <span class="value">{{kraData?.weightage?.kraWeightageName}}</span>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <span class="key">Key Responsibility Area (K.R.A)</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.kra}}" disabled="true"></textarea>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <span class="key">Unit Of Success</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.unitOfSuccess}}"
+                            disabled="true"></textarea>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <span class="key">Measure Of Success</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.measureOfSuccess}}"
+                            disabled="true"></textarea>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <span class="key">Remarks</span>
+                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.sendBackComment" disabled></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-form__actions">                                
+                                <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

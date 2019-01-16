@@ -8,6 +8,7 @@ import { MyTeamService } from '../../my-team.service';
 import { ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../../leaves/leave.service';
 import { MtrService } from '../../../../services/mtr.service';
+import { KraService } from '../../../workflows/kra/kra.service';
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper--mtrinitiate',
@@ -24,6 +25,7 @@ export class TransactionHistoryComponent implements OnInit {
     fiscalYear: any = {};
     leaves = [];
     mtrDetails = [];
+    kraDetails = [];
 
 
     constructor(
@@ -32,9 +34,17 @@ export class TransactionHistoryComponent implements OnInit {
         private _route: ActivatedRoute,
         private leaveService: LeaveService,
         private commonService: CommonService,
-        private mtrService: MtrService
+        private mtrService: MtrService,
+        private kraService:KraService
     ) {
 
+    }
+    getEmployee() {
+        this.commonService.getEmployee(this.param_emp_id).subscribe(res => {
+            if (res.ok) {
+                this.user = res.json() || {};
+            }
+        })
     }
 
     ngOnInit() {
@@ -50,6 +60,7 @@ export class TransactionHistoryComponent implements OnInit {
     }
 
     initData() {
+        this.getEmployee();
         this.commonService.getFinancialYear().subscribe(resFYear => {
             let fyears = resFYear.json() || [];
             this.fiscalYear = fyears.find(f => f.isYearActive);
@@ -58,7 +69,7 @@ export class TransactionHistoryComponent implements OnInit {
             });
 
             this.mtrService.getEmployeeMtrWorkFlowInfo(this.param_emp_id).subscribe(resMtr => {
-                let mtrs = resMtr.json().result.message || [];
+                let mtrs = resMtr.json().result.message || [];                
                 if (mtrs && mtrs.length > 0) {
                     this.mtrService.getMtrDetails(mtrs[0].mtr_master_id).subscribe(res => {
                         let data = res.json().result.message;
@@ -68,6 +79,18 @@ export class TransactionHistoryComponent implements OnInit {
                     });
                 }
             });
+            this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra=>{                
+                let kras = resKra.json() || [];                
+                if (kras && kras.length > 0) {
+                    this.kraService.getKraInfo(kras[0]._id).subscribe(res => {                      
+                        let data = res.json().data;
+                        if (data.length > 0) {
+                            this.kraDetails = data;
+                            console.log(this.kraDetails);
+                        }
+                    });
+                }
+            })
         })
     }
 }

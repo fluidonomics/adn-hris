@@ -32,6 +32,7 @@ import { TransactionHistoryComponent } from './subordinate-transaction-history/t
 import { TransactionHistoryLeavesComponent } from './subordinate-transaction-history/transaction-history/grids/leave-transactions/leave-transactions-grid.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TransactionHistoryMtrComponent } from './subordinate-transaction-history/transaction-history/grids/mtr/mtr-grid.component';
+import { TransactionHistoryKRAComponent } from './subordinate-transaction-history/transaction-history/grids/kra/kra-grid.component';
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import { TransactionHistoryMtrComponent } from './subordinate-transaction-histor
         EmployeeSearchComponent,
         TransactionHistoryComponent,
         TransactionHistoryLeavesComponent,
-        TransactionHistoryMtrComponent
+        TransactionHistoryMtrComponent,
+        TransactionHistoryKRAComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
