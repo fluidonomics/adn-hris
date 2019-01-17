@@ -217,7 +217,7 @@ export class TransferResponsibilityComponent implements OnInit {
             this.modalRef.hide();
         }
         let titletxt = "Supervisor Transfer";
-        let bodytxt = "Supervisor Transfer will transfer subordinate to the new Supervisor All the pending approvals till date will be done by previous Supervisor only."
+        let bodytxt = "Supervisor Transfer will transfer subordinate to the new Supervisor."
         if (this.request.change_type != "tranfser") {
             titletxt = "Supervisor Corection";
             bodytxt = "Supervisor correction will change Approval authority from previous transactions(Leaves,KRA) as well Preffered for New Employees only."
