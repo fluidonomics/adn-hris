@@ -111,7 +111,7 @@
                                 <span class="block"> {{user?.designationDetails?.designationName}}</span>
                             </div>
                             <div class="col-md-3">
-                                <img class="img" *ngIf="user.profileImage; else noImage" src="{{imageBase+user.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
+                                <img class="img" *ngIf="user.profileImage;" src="{{imageBase+user.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
                             </div>
                         </div>
                     </div>
