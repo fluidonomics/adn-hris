@@ -3,6 +3,7 @@ import { UtilityService } from "../../../../../../../../../base/_services/utilit
 import { BsModalService, BsModalRef } from "ngx-bootstrap";
 import { CommonService } from "../../../../../../../../../base/_services/common.service";
 import { AuthService } from "../../../../../../../../../base/_services/authService.service";
+import { environment } from "../../../../../../../../../../environments/environment";
 
 @Component({
     selector: 'mtr-grid',
@@ -13,7 +14,7 @@ import { AuthService } from "../../../../../../../../../base/_services/authServi
 export class TransactionHistoryMtrComponent implements OnInit {
 
     @Input('mtrDetails') mtrDetails = [];
-    @Input('user') user :any;   
+    @Input('user') user: any;
     @ViewChild('mtrDetailModal') mtrDetailModal: TemplateRef<any>;
 
     modalRef: BsModalRef;
@@ -21,13 +22,15 @@ export class TransactionHistoryMtrComponent implements OnInit {
     mtrInfoData: any = [];
     kraCategoryData: any[];
     weightageData: any = [];
+    imageBase = "";
 
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
-        private _authService:AuthService
+        private _authService: AuthService
 
     ) {
+        this.imageBase = environment.content_api_base.imgBase;
 
     }
 
@@ -50,8 +53,8 @@ export class TransactionHistoryMtrComponent implements OnInit {
         });
     }
 
-    showMtrDetail(index, event) {       
-        this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));       
+    showMtrDetail(index, event) {
+        this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = this.mtrDetails[index] || {};
         this.mtrData.no = index + 1;
         this.mtrData.weightage = this.weightageData.find(f => f._id == this.mtrData.weightage_id);

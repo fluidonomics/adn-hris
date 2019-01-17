@@ -19,25 +19,18 @@
                             <div class="col-xl-12">
                                 <div class="form-group m-form__group row align-items-center">
                                     <div class="col-md-3">
-                                        <div class="m-input-icon m-input-icon--left">
-                                            <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-                                            <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                <span>
-                                                    <i class="la la-search"></i>
-                                                </span>
-                                            </span>
-                                        </div>
+
                                     </div>
                                     <div class="col-md-3"></div>
                                     <div class="col-md-6 employeeDetail">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                                <img class="img" *ngIf="user.profileImage; else noImage" src="{{imageBase+user.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
                                             </div>
                                             <div class="col-md-9 detail">
-                                                <span>Employee One</span>
-                                                <span>1010004</span>
-                                                <span>Designation</span>
+                                                <span>{{user?.fullName}}</span>
+                                                <span>{{user?.userName}}</span>
+                                                <span>{{user?.designationDetails?.designationName}}</span>
                                             </div>
                                         </div>
                                     </div>

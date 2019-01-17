@@ -27,6 +27,7 @@ export class TransactionHistoryComponent implements OnInit {
     mtrDetails = [];
     kraDetails = [];
     search = "";
+    imageBase = "";
 
     constructor(
         private utilityService: UtilityService,
@@ -37,7 +38,7 @@ export class TransactionHistoryComponent implements OnInit {
         private mtrService: MtrService,
         private kraService: KraService
     ) {
-
+        this.imageBase = environment.content_api_base.imgBase;
     }
     getEmployee() {
         this.commonService.getEmployee(this.param_emp_id).subscribe(res => {
@@ -81,6 +82,7 @@ export class TransactionHistoryComponent implements OnInit {
             });
             this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra => {
                 let kras = resKra.json() || [];
+                kras = kras.filter(k => k.status == 'Approved');
                 if (kras && kras.length > 0) {
                     this.kraService.getKraInfo(kras[0]._id).subscribe(res => {
                         let data = res.json().data;
