@@ -21,7 +21,7 @@ import { UtilityService } from "../../../../../base/_services/utilityService.ser
 })
 export class MyLearningComponent {
 
-    @ViewChild('mtrDetailModal') kraDetailModal: TemplateRef<any>;
+    @ViewChild('mylearningDetailModal') mylearningDetailModal: TemplateRef<any>;
 
     supervisorData: any = [];
     weightageData: any = [];
@@ -286,7 +286,7 @@ export class MyLearningComponent {
     }
 
     showMTRDetails(index: number) {
-        this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.modalRef = this.modalService.show(this.mylearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.mtrData = JSON.parse(JSON.stringify(this.mtrInfoData[index]));
         this.mtrData.no = index + 1;
         if (this.mtrData.kra_details && this.mtrData.kra_details._id) {
