@@ -104,7 +104,7 @@ export class TransactionHistoryComponent implements OnInit {
         })
     }
 
-    onFilterDateChange($event) {
+    onFilterDateChange() {
         debugger;
         let fromDate = moment(this.filterDate[0]);
         let toDate = moment(this.filterDate[1]);
