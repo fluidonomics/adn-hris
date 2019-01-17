@@ -111,7 +111,7 @@
                                 <span class="block"> {{user?.designationDetails?.designationName}}</span>
                             </div>
                             <div class="col-md-3">
-                                <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                <img class="img" *ngIf="user.profileImage;" src="{{imageBase+user.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
                             </div>
                         </div>
                     </div>
@@ -152,13 +152,13 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Supervisor Remarks</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.supervisorComment" disabled ></textarea>
+                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="mtrData.supervisorComment" disabled></textarea>
                     </div>
                 </div>
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="m-form__actions">                               
+                            <div class="m-form__actions">
                                 <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>
                         </div>

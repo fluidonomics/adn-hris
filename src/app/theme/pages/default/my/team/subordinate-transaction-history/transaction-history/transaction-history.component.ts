@@ -26,7 +26,8 @@ export class TransactionHistoryComponent implements OnInit {
     leaves = [];
     mtrDetails = [];
     kraDetails = [];
-
+    search = "";
+    imageBase = "";
 
     constructor(
         private utilityService: UtilityService,
@@ -35,9 +36,9 @@ export class TransactionHistoryComponent implements OnInit {
         private leaveService: LeaveService,
         private commonService: CommonService,
         private mtrService: MtrService,
-        private kraService:KraService
+        private kraService: KraService
     ) {
-
+        this.imageBase = environment.content_api_base.imgBase;
     }
     getEmployee() {
         this.commonService.getEmployee(this.param_emp_id).subscribe(res => {
@@ -69,7 +70,7 @@ export class TransactionHistoryComponent implements OnInit {
             });
 
             this.mtrService.getEmployeeMtrWorkFlowInfo(this.param_emp_id).subscribe(resMtr => {
-                let mtrs = resMtr.json().result.message || [];                
+                let mtrs = resMtr.json().result.message || [];
                 if (mtrs && mtrs.length > 0) {
                     this.mtrService.getMtrDetails(mtrs[0].mtr_master_id).subscribe(res => {
                         let data = res.json().result.message;
@@ -79,10 +80,11 @@ export class TransactionHistoryComponent implements OnInit {
                     });
                 }
             });
-            this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra=>{                
-                let kras = resKra.json() || [];                
+            this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra => {
+                let kras = resKra.json() || [];
+                kras = kras.filter(k => k.status == 'Approved');
                 if (kras && kras.length > 0) {
-                    this.kraService.getKraInfo(kras[0]._id).subscribe(res => {                      
+                    this.kraService.getKraInfo(kras[0]._id).subscribe(res => {
                         let data = res.json().data;
                         if (data.length > 0) {
                             this.kraDetails = data;

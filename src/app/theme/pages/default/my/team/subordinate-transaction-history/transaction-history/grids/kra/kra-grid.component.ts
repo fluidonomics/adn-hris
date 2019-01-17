@@ -2,6 +2,7 @@ import { ViewEncapsulation, Component, OnInit, Input, TemplateRef, ViewChild } f
 import { UtilityService } from "../../../../../../../../../base/_services/utilityService.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap";
 import { CommonService } from "../../../../../../../../../base/_services/common.service";
+import { environment } from "../../../../../../../../../../environments/environment";
 
 @Component({
     selector: 'kra-grid',
@@ -12,22 +13,24 @@ import { CommonService } from "../../../../../../../../../base/_services/common.
 export class TransactionHistoryKRAComponent implements OnInit {
 
     @Input('kraDetails') kraDetails = [];
-    @Input('user') user :any;    
+    @Input('user') user: any;
     @ViewChild('kraDetailModal') kraDetailModal: TemplateRef<any>;
 
     modalRef: BsModalRef;
-    kraData: any = {};    
+    kraData: any = {};
     kraCategoryData: any[];
     weightageData: any = [];
+    imageBase = "";
 
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
 
     ) {
+        this.imageBase = environment.content_api_base.imgBase;
 
     }
-    
+
 
     ngOnInit() {
         this.loadKraCategoryData();
