@@ -5,22 +5,20 @@
                 <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                     #
                 </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+                <th class="m-datatable__cell m-datatable__cell--sort" width="35%">
                     KRA
                 </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="40%">
+                <th class="m-datatable__cell m-datatable__cell--sort" width="30%">
                     KRA Category
                 </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                     Weightage
                 </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                <!-- <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                     Employee Remarks
-                </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                </th> -->
+                <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                     Status
-                </th>
-                <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                 </th>
                 <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                     Action
@@ -37,28 +35,26 @@
                 <td scope="row" class="m-datatable__cell" width="5%">
                     {{i+1}}
                 </td>
-                <td class="m-datatable__cell" width="40%">
+                <td class="m-datatable__cell" width="35%">
                     <textarea name="mtrOne" [(ngModel)]="mtrInfo.mtr_kra" #mtr="ngModel" class="form-control m-input m-input--air" disabled></textarea>
                 </td>
-                <td class="m-datatable__cell" width="40%">
+                <td class="m-datatable__cell" width="30%">
                     <ng-select class="m-input m-input--air" name="mtrCategory" id="kraCategory" [items]="kraCategoryData" bindLabel="kraCategoryName"
                         bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id" [clearable]="false"
                         #kraCategory="ngModel" disabled></ng-select>
                 </td>
-                <td class="m-datatable__cell" width="5%">
+                <td class="m-datatable__cell" width="10%">
                     <ng-select class="m-input m-input--air" name="mtrWeightage" id="mtrWeightage" [items]="weightageData" bindLabel="kraWeightageName"
                         bindValue="_id" [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="mtrInfo.weightage_id"
                         [clearable]="false" #mtrWeightage="ngModel" disabled></ng-select>
                 </td>
-                <td class="m-datatable__cell" width="10%">
+                <!-- <td class="m-datatable__cell" width="10%">
                     <textarea name="employeeComment" [(ngModel)]="mtrInfo.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
                         disabled></textarea>
-                </td>
-                <td class="m-datatable__cell" width="10%">
-                    <span>{{mtrInfo.progressStatus}}</span>
-                </td>
-                <td class="gridColorStatus m-datatable__cell" width="5%">
+                </td> -->
+                <td class="gridColorStatus m-datatable__cell" width="15%">
                     <i *ngIf="mtrInfo.kraDetailId" class="fa fa-circle" [ngClass]="mtrInfo.colorStatus"></i>
+                    <span>{{mtrInfo.progressStatus}}</span>
                 </td>
                 <td class="m-datatable__cell" width="5%">
                     <span>

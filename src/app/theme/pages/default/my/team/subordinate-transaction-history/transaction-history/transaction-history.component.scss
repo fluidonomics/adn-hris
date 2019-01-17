@@ -1,4 +1,6 @@
 @import "grids/leave-transactions/leave-transactions-grid.component.scss";
+@import "../../../../../../../../assets/colors.scss";
+
 
 .employeeDetail{
 
@@ -13,4 +15,41 @@
             display: block;
         }
     }
+}
+
+.gridColorStatus {
+    span{
+        display: inline !important;
+    }
+
+    i {
+        padding: 0px 10px;
+
+        &.Green {
+            color: $status-green;
+        }
+
+        &.Amber {
+            color: $status-amber;
+        }
+
+        &.Yellow {
+            color: $status-yellow;
+        }
+
+        &.Dropped {
+            color: $status-drop;
+        }
+    }
+}
+
+.filters{
+    .dateFilter{
+        width: 30%;
+        margin-left: 2rem;
+    }
+}
+
+.img{
+    width: 100%;
 }

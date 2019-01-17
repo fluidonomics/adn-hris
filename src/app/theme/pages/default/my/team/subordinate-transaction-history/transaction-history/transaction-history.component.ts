@@ -3,12 +3,13 @@ import { CommonService } from '../../../../../../../base/_services/common.servic
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { UtilityService } from "../../../../../../../base/_services/utilityService.service";
 import { environment } from '../../../../../../../../environments/environment'
-import swal from 'sweetalert2';
 import { MyTeamService } from '../../my-team.service';
 import { ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../../leaves/leave.service';
 import { MtrService } from '../../../../services/mtr.service';
 import { KraService } from '../../../workflows/kra/kra.service';
+import swal from 'sweetalert2';
+declare var moment;
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper--mtrinitiate',
@@ -28,6 +29,10 @@ export class TransactionHistoryComponent implements OnInit {
     kraDetails = [];
     search = "";
     imageBase = "";
+    filterDate;
+    filteredLeaves = [];
+    filteredMtrDetails = [];
+    filteredKraDetails = [];
 
     constructor(
         private utilityService: UtilityService,
@@ -67,6 +72,7 @@ export class TransactionHistoryComponent implements OnInit {
             this.fiscalYear = fyears.find(f => f.isYearActive);
             this.leaveService.getLeaveDetailsByFilter(null, null, null, this.param_emp_id).subscribe(resLeaveDetails => {
                 this.leaves = resLeaveDetails.json().data || [];
+                this.filteredLeaves = resLeaveDetails.json().data || [];
             });
 
             this.mtrService.getEmployeeMtrWorkFlowInfo(this.param_emp_id).subscribe(resMtr => {
@@ -76,6 +82,7 @@ export class TransactionHistoryComponent implements OnInit {
                         let data = res.json().result.message;
                         if (data.length > 0) {
                             this.mtrDetails = data[0].mtr_details;
+                            this.filteredMtrDetails = data[0].mtr_details;
                         }
                     });
                 }
@@ -88,11 +95,31 @@ export class TransactionHistoryComponent implements OnInit {
                         let data = res.json().data;
                         if (data.length > 0) {
                             this.kraDetails = data;
+                            this.filteredKraDetails = data;
                             console.log(this.kraDetails);
                         }
                     });
                 }
             })
         })
+    }
+
+    onFilterDateChange($event) {
+        debugger;
+        let fromDate = moment(this.filterDate[0]);
+        let toDate = moment(this.filterDate[1]);
+
+        this.filteredLeaves = this.leaves.filter(leave => {
+            return moment(leave.leavedetails.fromDate).isBetween(fromDate, toDate);
+        });
+
+        this.filteredKraDetails = this.kraDetails.filter(kra => {
+            return moment(kra.createdAt).isBetween(fromDate, toDate);
+        });
+
+        this.filteredMtrDetails = this.mtrDetails.filter(mtr => {
+            return moment(mtr.createdAt).isBetween(fromDate, toDate);
+        });
+
     }
 }
