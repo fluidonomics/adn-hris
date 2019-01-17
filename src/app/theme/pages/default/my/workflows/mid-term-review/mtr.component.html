@@ -151,7 +151,8 @@
 								</span>
 							</li>
 							<li *ngFor="let page of p.pages">
-								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+								 [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
 									{{ page.label }}
 								</span>
 							</li>
@@ -162,8 +163,8 @@
 								</span>
 							</li>
 							<li>
-								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-								 (click)="p.setCurrent(p.pages.length + 1)">
+								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+								 [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
 									<i class="la la-angle-double-right"></i>
 								</span>
 							</li>
@@ -171,8 +172,8 @@
 					</div>
 				</pagination-template>
 				<div class="pager-display-size" *ngIf="(mtrWorkFlowData | orderBy: key : reverse | filter:search)?.length!=0">
-					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50"
-					 tabindex="1">
+					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px"
+					 data-selected="50" tabindex="1">
 						<option value=10>10</option>
 						<option value=20>20</option>
 						<option value=30>30</option>
@@ -255,9 +256,9 @@
 												<!-- <th>
 													Employee Remarks
 												</th> -->
-												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+												<!-- <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Supervisor Remarks
-												</th>
+												</th> -->
 												<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 													Action
 												</th>
@@ -270,31 +271,31 @@
 													{{i+1}}
 												</td>
 												<td class="m-datatable__cell" width="40%">
-													<ng-select class="m-input m-input--air customError" name="mtrCategory{{i}}" id="mtrCategory" [items]="mtrCategoryData" bindLabel="kraCategoryName"
-													 bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id" [clearable]="false" #mtrCategory="ngModel"
-													 required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="mtrCategory{{i}}" id="mtrCategory" [items]="mtrCategoryData"
+													 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrInfo.category_id"
+													 [clearable]="false" #mtrCategory="ngModel" required disabled></ng-select>
 												</td>
 												<td class="m-datatable__cell" width="10%">
-													<ng-select class="m-input m-input--air customError" name="mtrWeightage{{i}}" id="mtrWeightage" [items]="weightageData" bindLabel="kraWeightageName"
-													 bindValue="_id" [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="mtrInfo.weightage_id"
-													 [clearable]="false" #mtrWeightage="ngModel" required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="mtrWeightage{{i}}" id="mtrWeightage" [items]="weightageData"
+													 bindLabel="kraWeightageName" bindValue="_id" [placeholder]="mtrInfo.progressStatus =='Dropped'? 'Dropped': 'Weightage'"
+													 [(ngModel)]="mtrInfo.weightage_id" [clearable]="false" #mtrWeightage="ngModel" required disabled></ng-select>
 												</td>
 												<td class="m-datatable__cell" width="10%">
 													<span>{{mtrInfo.status}}</span>
 												</td>
 												<td class="m-datatable__cell" width="10%">
-													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
-													 bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.mtr_master_supervisor_id" [clearable]="false"
-													 #supervisorOne="ngModel" required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrInfo.mtr_master_supervisor_id"
+													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
 												<!-- <td>
 													<textarea name="employeeComment{{i}}" id="employeeComment" #employeeComment="ngModel" [(ngModel)]="mtrInfo.employeeComment"
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td> -->
-												<td class="m-datatable__cell" width="10%">
+												<!-- <td class="m-datatable__cell" width="10%">
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="mtrInfo.supervisorComment"
 													 class="form-control m-input m-input--air" disabled></textarea>
-												</td>
+												</td> -->
 												<td class="m-datatable__cell" width="10%">
 													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													 title="Edit" (click)="showMTRDetails(i)">
@@ -308,8 +309,8 @@
 											</tr>
 											<tr>
 												<td colspan="9">
-													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right" [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && isChangable ? null :'disabled'"
-													 (click)="addKraHtml()">
+													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
+													 [attr.disabled]="mtrInfoData[mtrInfoData.length-1]?._id && isChangable ? null :'disabled'" (click)="addKraHtml()">
 														<i class="la la-plus "></i>
 													</button>
 												</td>
@@ -464,9 +465,9 @@
 							KRA Category
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData" bindLabel="kraCategoryName"
-							 bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrData.category_id" [clearable]="false" #mtrCategory="ngModel"
-							 [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></ng-select>
+							<ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData"
+							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="mtrData.category_id"
+							 [clearable]="false" #mtrCategory="ngModel" [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtrCategory.invalid">
 								This field is required.
 							</div>
@@ -477,9 +478,10 @@
 							Mid Term Review Weightage
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air" name="mtrWeightagedata" id="mtrWeightagedata" [items]="weightageData" bindLabel="kraWeightageName"
-							 bindValue="_id" [placeholder]="mtrData.progressStatus =='Dropped'? 'Dropped': 'Weightage'" [(ngModel)]="mtrData.weightage_id"
-							 [clearable]="false" #mtrWeightage="ngModel" [disabled]="isDisabled && !isSendBack" [required]="mtrData.progressStatus != 'Dropped'"></ng-select>
+							<ng-select class="m-input m-input--air" name="mtrWeightagedata" id="mtrWeightagedata" [items]="weightageData"
+							 bindLabel="kraWeightageName" bindValue="_id" [placeholder]="mtrData.progressStatus =='Dropped'? 'Dropped': 'Weightage'"
+							 [(ngModel)]="mtrData.weightage_id" [clearable]="false" #mtrWeightage="ngModel" [disabled]="isDisabled && !isSendBack"
+							 [required]="mtrData.progressStatus != 'Dropped'"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="mtrData.progressStatus != 'Dropped' && MTRDataForm.submitted && !mtrWeightage.valid">
 								This field is required.
 							</div>
@@ -488,9 +490,9 @@
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
-							 bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.mtr_master_supervisor_id" [clearable]="false"
-							 #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
+							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.mtr_master_supervisor_id"
+							 [clearable]="false" #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !supervisorOne.valid">
 								This field is required.
 							</div>
@@ -505,24 +507,24 @@
 						</div>
 						<div class="col-md-6 details">
 							<span>Unit of Success</span>
-							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="mtrData.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air"
-							 [disabled]="isDisabled" required></textarea>
+							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="mtrData.unitOfSuccess" #unitOfSuccess="ngModel"
+							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !unitOfSuccess.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
-							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess" #measureOfSuccess="ngModel"
-							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess"
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details" *ngIf="mtrData.mtr_master_kraDetailId">
 							<span>Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses" bindLabel="label"
-							 bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" (change)="onStatusChange($event)"
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
+							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" (change)="onStatusChange($event)"
 							 [clearable]="false" #progressStatus="ngModel" [disabled]="isDisabled" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
 								This field is required.
@@ -530,9 +532,10 @@
 						</div>
 						<div class="col-md-6 details" *ngIf="mtrData.mtr_master_kraDetailId">
 							<span>Color Status</span>
-							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label" bindValue="id"
-							 placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled || mtrData.progressStatus=='Dropped'"
-							 (change)="onColorStatusChange($event)" required>
+							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="colorStatuses" bindLabel="label"
+							 bindValue="id" placeholder="Select Color Status" [(ngModel)]="mtrData.colorStatus" [clearable]="false"
+							 #colorStatus="ngModel" [disabled]="isDisabled || mtrData.progressStatus=='Dropped'" (change)="onColorStatusChange($event)"
+							 required>
 								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
 									<span>{{item.label}}</span>
 									<div class="{{item.id}}"></div>
@@ -544,16 +547,16 @@
 						</div>
 						<div class="col-md-12 details">
 							<span>Employee Remarks</span>
-							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
-							 [disabled]="isDisabled" required></textarea>
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel"
+							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-12 details" *ngIf="mtrData.supervisorComment">
 							<span>Supervisor Remarks</span>
-							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="mtrData.supervisorComment" #supervisorComment="ngModel"
-							 class="form-control m-input m-input--air" disabled></textarea>
+							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="mtrData.supervisorComment"
+							 #supervisorComment="ngModel" class="form-control m-input m-input--air" disabled></textarea>
 						</div>
 					</div>
 					<div class="form-actions details">
