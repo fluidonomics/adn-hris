@@ -23,6 +23,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 
 import { MyService } from "./my.service"
 import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
+import { MyLearningComponent } from './learning/learning.component';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { EmployeeGuard } from '../../../../base/_guard/employee.guard';
         ProfileEditComponent,
         ProfileViewComponent,
         DocumentsComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        MyLearningComponent
     ],
     providers: [MyService,EmployeeGuard]
 })

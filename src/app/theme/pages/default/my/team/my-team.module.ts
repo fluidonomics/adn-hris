@@ -17,6 +17,7 @@ import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.co
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
 import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
+import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
@@ -27,6 +28,8 @@ import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-appr
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
 import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import { LearningApprovalComponent } from './team-workflows/team-supervisor/learning-approval/learning-approval.component';
+import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 
 @NgModule({
     imports: [
@@ -51,7 +54,10 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
         AllEmployeeReviewer,
         MtrApprovalsComponent,
         MtrViewComponent,
-        MtrDetailedViewComponent
+        MtrDetailedViewComponent,
+        LearningApprovalComponent,
+        LearningDetailedViewComponent,
+        LearningReview,
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
