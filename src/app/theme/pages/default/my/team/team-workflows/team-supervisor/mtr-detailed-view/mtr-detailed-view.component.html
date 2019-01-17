@@ -72,9 +72,9 @@
                                             <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                                 Weightage
                                             </th>
-                                            <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                            <!-- <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 Employee Remarks
-                                            </th>
+                                            </th> -->
                                             <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                 Status
                                             </th>
@@ -86,7 +86,8 @@
                                         </tr>
                                     </thead>
                                     <tbody class="m-datatable__body">
-                                        <tr class="m-datatable__row" *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index" [ngClass]="{
+                                        <tr class="m-datatable__row" *ngFor="let mtrInfo of mtrInfoData.mtr_details;let i=index"
+                                            [ngClass]="{
                                              'newKRA':mtrInfoData.mtr_details[i].status == 'Submitted' && !mtrInfoData.mtr_details[i].kraDetailId,
                                              'dropped':mtrInfoData.mtr_details[i].status == 'Dropped' || mtrInfoData.mtr_details[i].progressStatus == 'Dropped',
                                              'approved':mtrInfoData.mtr_details[i].status == 'Approved',
@@ -112,15 +113,15 @@
                                                     [(ngModel)]="mtrInfo.weightage_id" [clearable]="false"
                                                     #mtrWeightage="ngModel" disabled></ng-select>
                                             </td>
-                                            <td class="m-datatable__cell" width="10%">
+                                            <!-- <td class="m-datatable__cell" width="10%">
                                                 <textarea name="employeeComment" [(ngModel)]="mtrInfo.employeeComment"
                                                     #employeeComment="ngModel" class="form-control m-input m-input--air"
                                                     disabled></textarea>
-                                            </td>
+                                            </td> -->
                                             <td class="m-datatable__cell" width="10%">
                                                 <span>{{mtrInfo.progressStatus}}</span>
                                             </td>
-                                            <td class="gridColorStatus m-datatable__cell"width="5%">
+                                            <td class="gridColorStatus m-datatable__cell" width="5%">
                                                 <i *ngIf="mtrInfo.kraDetailId" class="fa fa-circle" [ngClass]="mtrInfo.colorStatus"></i>
                                             </td>
                                             <td class="m-datatable__cell" width="5%">
