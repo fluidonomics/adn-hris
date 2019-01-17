@@ -14,11 +14,13 @@ import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/reveiwer/employee/list', component: AllEmployeeReviewer,canActivate: [SupervisorGuard] },
     { path: 'workflows/kra-review/:id/:emp_id', component: KraReview },
+    { path: 'workflows/learning-review/:id/:emp_id', component: LearningReview },
     { path: 'workflows/mtr-review/:id/:emp_id', component: MtrReview },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent,canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent,canActivate: [SupervisorGuard] },
