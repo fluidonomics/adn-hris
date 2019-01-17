@@ -26,7 +26,7 @@ export class TransactionHistoryComponent implements OnInit {
     leaves = [];
     mtrDetails = [];
     kraDetails = [];
-
+    search = "";
 
     constructor(
         private utilityService: UtilityService,
@@ -35,7 +35,7 @@ export class TransactionHistoryComponent implements OnInit {
         private leaveService: LeaveService,
         private commonService: CommonService,
         private mtrService: MtrService,
-        private kraService:KraService
+        private kraService: KraService
     ) {
 
     }
@@ -69,7 +69,7 @@ export class TransactionHistoryComponent implements OnInit {
             });
 
             this.mtrService.getEmployeeMtrWorkFlowInfo(this.param_emp_id).subscribe(resMtr => {
-                let mtrs = resMtr.json().result.message || [];                
+                let mtrs = resMtr.json().result.message || [];
                 if (mtrs && mtrs.length > 0) {
                     this.mtrService.getMtrDetails(mtrs[0].mtr_master_id).subscribe(res => {
                         let data = res.json().result.message;
@@ -79,10 +79,10 @@ export class TransactionHistoryComponent implements OnInit {
                     });
                 }
             });
-            this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra=>{                
-                let kras = resKra.json() || [];                
+            this.kraService.getEmployeeKraWorkFlowInfo(this.param_emp_id).subscribe(resKra => {
+                let kras = resKra.json() || [];
                 if (kras && kras.length > 0) {
-                    this.kraService.getKraInfo(kras[0]._id).subscribe(res => {                      
+                    this.kraService.getKraInfo(kras[0]._id).subscribe(res => {
                         let data = res.json().data;
                         if (data.length > 0) {
                             this.kraDetails = data;

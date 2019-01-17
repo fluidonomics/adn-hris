@@ -80,4 +80,8 @@ export class EmployeeSearchComponent implements OnInit {
         this.router.navigateByUrl("/my/team/subordinate/transaction-history/" + employee._id);
     }
 
+    sort(key) {
+
+    }
+
 }
