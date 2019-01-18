@@ -5,6 +5,7 @@ import { UserData } from '../../../../../../base/_interface/auth.model';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { Router } from '@angular/router';
 import { LeaveService } from '../leave.service';
+import { CommonService } from '../../../../../../base/_services/common.service';
 
 
 @Component({
@@ -24,13 +25,30 @@ export class TrackLeaveComponent implements OnInit {
         private authService: AuthService,
         private leaveService: LeaveService,
         private utilityService: UtilityService,
-        private router: Router
+        private router: Router,
+        private commonService: CommonService,
     ) {
+    }
+    
+    getfiscalYearId(){
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;                                    
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     ngOnInit(): void {
         this.authService.validateToken().subscribe(res => {
             this.employee = this.authService.currentUserData;
+            this.getfiscalYearId();
             this.loadLeaveTransactions();
         });
     }

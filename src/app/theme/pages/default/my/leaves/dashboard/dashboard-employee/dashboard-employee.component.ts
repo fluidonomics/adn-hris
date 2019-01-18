@@ -89,21 +89,20 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getFinancialYearDetails() {
-        this.fiscalYearId = "2";
-        this.loadDashboard();
-        // this.commonService.getFinancialYear().subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.financialYearList = res.json() || [];
-        //             this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-        //             this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-        //             this.loadDashboard();
-        //         }
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
+        //this.fiscalYearId = "2";
+        //this.loadDashboard();
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    let financialYearList = res.json() || [];
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.loadDashboard();
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     loadDashboard() {

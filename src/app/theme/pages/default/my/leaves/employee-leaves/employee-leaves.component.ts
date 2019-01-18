@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { LeaveService } from '../leave.service';
+import { CommonService } from '../../../../../../base/_services/common.service';
 
 const now = new Date();
 
@@ -28,15 +29,31 @@ export class EmployeeLeavesComponent implements OnInit {
 
     constructor(
         private leaveService: LeaveService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private commonService:CommonService
     ) {
 
     }
 
     ngOnInit(): void {
+        this.getfiscalYearId();
         this.getLeaveTypes();
         this.getEmployeeList();
         this.currentSession = 2017;
+    }
+    getfiscalYearId(){
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;                                    
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     getLeaveTypes() {

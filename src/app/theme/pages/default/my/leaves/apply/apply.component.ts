@@ -66,7 +66,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
-            this.InitValues();
+            this.getfiscalYearId();           
             this.getEmployeeDetails();
             // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
@@ -87,10 +87,25 @@ export class ApplyComponent implements OnInit, OnDestroy {
             isValid: true,
             msg: ''
         }
-        this.fiscalYearId = 2;
+        //this.fiscalYearId = 2;
         this.clearAttachment();
         this.getEmployeeLeaves();
         this.getFinancialYear();
+    }
+    getfiscalYearId(){
+        this._commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;  
+                    this.InitValues();                  
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     getLeaveTypes() {

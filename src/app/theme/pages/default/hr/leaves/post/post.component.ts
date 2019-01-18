@@ -74,6 +74,7 @@ export class PostComponent implements OnInit {
             // this.InitValues();
             // this.getEmployeeDetails();
             this.loadAllEmployee();
+            this.getfiscalYearId();
             // this.getAllEmailListOfEmployee();
             this.getEmployeeProbationDetails();
             this.fleaveapplication.valueChanges.subscribe(val => {
@@ -120,11 +121,24 @@ export class PostComponent implements OnInit {
         this.fromDateValidation = {
             isValid: true,
             msg: ''
-        }
-        this.fiscalYearId = 2;
+        }        
         this.clearAttachment();
         this.getEmployeeLeaves();
         this.getFinancialYear();
+    }
+    getfiscalYearId(){
+        this._commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;                                   
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     getLeaveTypes() {

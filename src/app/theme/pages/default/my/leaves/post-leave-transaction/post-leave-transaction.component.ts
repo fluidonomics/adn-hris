@@ -36,6 +36,7 @@ export class PostLeaveTransactionComponent implements OnInit {
     }
     ngOnInit(): void {
         this.InitValues();
+        this.getfiscalYearId();
         this.getEmployeeList();
         this.getLeaveTypes();
     }
@@ -46,6 +47,20 @@ export class PostLeaveTransactionComponent implements OnInit {
             res => {
                 this.currentEmpId = this.authService.currentUserData._id;
             });
+    }
+    getfiscalYearId(){
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;                                    
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     getEmployeeList() {

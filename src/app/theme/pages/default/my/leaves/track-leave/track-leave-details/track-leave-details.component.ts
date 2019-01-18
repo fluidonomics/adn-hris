@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../../base/_services/authService.ser
 import { UtilityService } from '../../../../../../../base/_services/utilityService.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LeaveService } from '../../leave.service';
+import { CommonService } from '../../../../../../../base/_services/common.service';
 
 
 @Component({
@@ -30,9 +31,25 @@ export class TrackLeaveDetailsComponent implements OnInit {
         private leaveService: LeaveService,
         private utilityService: UtilityService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private commonService:CommonService
     ) {
 
+    }
+
+    getfiscalYearId(){
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    let financialYearList = res.json() || [];                    
+                    this.fiscalYearId = financialYearList.filter(f => f.isYearActive === true)[0]._id;                                    
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     ngOnInit(): void {
@@ -40,11 +57,13 @@ export class TrackLeaveDetailsComponent implements OnInit {
             this.leaveId = param.id;
             this.authService.validateToken().subscribe(res => {
                 this.employee = this.authService.currentUserData;
+                this.getfiscalYearId();
                 this.loadLeaveDetails();
                 this.getWorkflowHistory();
             });
         })
     }
+    
 
     loadLeaveDetails() {
         this.leaveService.getEmployeeLeaveDetails(this.employee._id, this.fiscalYearId).subscribe(data => {
