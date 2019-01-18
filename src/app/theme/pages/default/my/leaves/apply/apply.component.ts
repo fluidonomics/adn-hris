@@ -42,7 +42,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number = 1;
+    fiscalYearId: number = 2;
     leaveBalance: any = [];
     employeeDetails: any = {};
     primarySupervisor: any = {};
@@ -87,7 +87,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
             isValid: true,
             msg: ''
         }
-        this.fiscalYearId = 1;
+        this.fiscalYearId = 2;
         this.clearAttachment();
         this.getEmployeeLeaves();
         this.getFinancialYear();

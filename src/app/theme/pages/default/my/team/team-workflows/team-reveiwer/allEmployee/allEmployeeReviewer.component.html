@@ -35,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody class="m-datatable__body">
-                                <tr class="m-datatable__row" style="cursor:pointer;" (click)="goToKRAView(emp.kra._id,emp.emp_id)"
+                                <tr class="m-datatable__row" style="cursor:pointer;" (click)="goToKRAView(emp._id,emp.emp_id)"
                                     *ngFor="let emp of employees | paginate: { itemsPerPage: 6, currentPage: employeesFilter.page }; let even=even;">
                                     <td class="m-datatable__cell" width="15%">
                                         <a align="center">
@@ -52,13 +52,13 @@
                                         <span>{{emp.userName}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.fullName}}</span>
+                                        <span>{{emp.emp_name}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.kra.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                        <span>{{emp.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.kra.status}}</span>
+                                        <span>{{emp.status}}</span>
                                     </td>
                                 </tr>
                                 <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>

@@ -38,6 +38,11 @@ export class MyTeamService {
         let url = "user/getAllEmployee";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getKraForApproval(supervisorId) {
+        let url = "kra/getKraForApproval?supervisorId="+supervisorId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    
 
     getKraWorkFlowInfo() {
         let url = "kra/getKraWorkFlowInfo";

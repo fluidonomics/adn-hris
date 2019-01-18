@@ -20,11 +20,24 @@ export class HrService {
         let url = "user/getAllEmployee";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getEmployeeDetails(empId: number) {
+        let url = "user/getEmployeeDetails?emp_id=" + empId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getAllEmployeeForMTR() {
+        let url = "midterm/getEmpDetailsForMidTermInitiate";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     loadDivision() {
         let url = "master/getAllDivision";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    updateSupervisortransferInfo(data: any){
+        let url="user/updateSupervisortransferInfo";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+    
 
 
 
@@ -32,8 +45,10 @@ export class HrService {
         let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
-
-
+    saveBulkMtr(data: any) {
+        let url = "midterm/initiateMidTermProcess";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }    
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

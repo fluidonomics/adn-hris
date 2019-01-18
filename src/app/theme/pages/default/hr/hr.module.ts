@@ -25,6 +25,7 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
@@ -34,6 +35,9 @@ import { LeaveService } from '../my/leaves/leave.service';
 import { PostComponent } from './leaves/post/post.component';
 import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
+import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
+import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+
 
 @NgModule({
     imports: [
@@ -63,10 +67,14 @@ import { HttpClientModule } from "../../../../../../node_modules/@angular/common
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
-        PostComponent
+        PostComponent,
+        TransferResponsibilityComponent,
+        PostComponent,
+        MtrBatchInitComponent,
+        MTRBatchComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard,LeaveService]
+    providers: [HrService, HrGuard, LeaveService]
 })
 export class HrModule {
 }

@@ -14,10 +14,13 @@ import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
+import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrGuard } from '../../../../base/_guard/hr.guard'
 import { PostComponent } from './leaves/post/post.component';
+import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
+import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -33,8 +36,12 @@ const routes: Routes = [{
         { path: 'workflows/learning', component: HrLearningComponent },
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
+        { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },
+        { path: 'workflows/mtr/batch', component: MTRBatchComponent },
+        
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
+        { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]

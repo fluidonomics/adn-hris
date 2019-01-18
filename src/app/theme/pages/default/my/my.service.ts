@@ -20,6 +20,10 @@ export class MyService {
         let url = "user/getBankInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getMTRByReviewer(emp_id:number) : Observable<Response>{
+        let url = "midterm/getMtrByReviewer?reviewerId=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     getSalaryInfo(emp_id?: number): Observable<Response> {
         let url = "user/getSalaryInfo?emp_id=" + emp_id;

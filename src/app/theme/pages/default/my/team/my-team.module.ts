@@ -16,11 +16,23 @@ import { MyTeamKraComponent } from './team-workflows/team-supervisor/kra-view/kr
 import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.component';
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
+import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
 import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { ModalModule } from 'ngx-bootstrap';
+import { KraService } from '../workflows/kra/kra.service';
+import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
+import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
+import { MtrService } from '../../services/mtr.service';
+import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
+import { EmployeeSearchComponent } from './subordinate-transaction-history/employee-search/employee-search.component'
+import { TransactionHistoryComponent } from './subordinate-transaction-history/transaction-history/transaction-history.component';
+import { TransactionHistoryLeavesComponent } from './subordinate-transaction-history/transaction-history/grids/leave-transactions/leave-transactions-grid.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TransactionHistoryMtrComponent } from './subordinate-transaction-history/transaction-history/grids/mtr/mtr-grid.component';
+import { TransactionHistoryKRAComponent } from './subordinate-transaction-history/transaction-history/grids/kra/kra-grid.component';
 
 @NgModule({
     imports: [
@@ -35,15 +47,25 @@ import { ModalModule } from 'ngx-bootstrap';
         BsDatepickerModule.forRoot(),
         BaseModule,
         ModalModule.forRoot(),
+        HttpClientModule
     ], declarations: [
         MyTeamReviewerComponent,
         MyTeamSupervisorComponent,
         MyTeamKraComponent,
         KraReview,
+        MtrReview,
         AllEmployeeComponent,
-        AllEmployeeReviewer
+        AllEmployeeReviewer,
+        MtrApprovalsComponent,
+        MtrViewComponent,
+        MtrDetailedViewComponent,
+        EmployeeSearchComponent,
+        TransactionHistoryComponent,
+        TransactionHistoryLeavesComponent,
+        TransactionHistoryMtrComponent,
+        TransactionHistoryKRAComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
 export class MyTeamModule {
 }

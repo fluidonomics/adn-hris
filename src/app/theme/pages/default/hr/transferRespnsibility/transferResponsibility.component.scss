@@ -1,0 +1,32 @@
+.adn-form__group {
+    padding: 10px 0px 10px 0px;
+}
+
+.m-form.m-form--fit .m-form__content, .m-form.m-form--fit .m-form__heading, .m-form.m-form--fit .m-form__group {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.m-form.m-form--label-align-right .m-form__group > label {
+    text-align: left;
+}
+
+.mtrDetailsPortlet {
+    .pendingKra {
+        margin-bottom: 20px;
+    }
+
+    .pendingLeave {
+        margin-bottom: 20px;
+    }
+
+    .msg {
+        margin: 10px 0px;
+
+        span {
+            font-size: 20px;
+            color: brown;
+            font-weight: 500;
+        }
+    }
+}

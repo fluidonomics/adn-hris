@@ -1,0 +1,139 @@
+<div class="m-content" id="initiate-loader">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Transaction History
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group row align-items-center">
+                                    <div class="col-md-6 leaveBalances">
+                                        <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                            <table class="m-datatable__table">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row">
+                                                        <td width="60%">Leave Type</td>
+                                                        <td width="40%">Balance</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="m-datatable__body">
+                                                    <tr class="m-datatable__row" *ngFor="let bal of leaveBalance">
+                                                        <td width="60%">{{bal.leaveType}}</td>
+                                                        <td width="40%">{{bal.leaveBalance}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 employeeDetail">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img class="img" *ngIf="user.profileImage;" src="{{imageBase+user.profileImage}}"
+                                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';">
+                                            </div>
+                                            <div class="col-md-9 detail">
+                                                <span>{{user?.fullName}}</span>
+                                                <span>{{user?.userName}}</span>
+                                                <span>{{user?.designationDetails?.designationName}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="col-xl-12">
+                                    <!-- Leave Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <input class="form-control dateFilter" #drp="bsDaterangepicker"
+                                            bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="filterDateLeave"
+                                            (ngModelChange)="onLeaveFilterChange()" placeholder="Select Month"
+                                            placement="right" readonly>
+                                    </div>
+                                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5"
+                                        role="tablist">
+                                        <div class="m-accordion__item m-accordion__item--success">
+                                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head"
+                                                data-toggle="collapse" href="#m_accordion_5_item_1_body" aria-expanded="false">
+                                                <span class="m-accordion__item-icon">
+                                                    <i class="fa flaticon-user-ok"></i>
+                                                </span>
+                                                <span class="m-accordion__item-title">Leave Transactions</span>
+                                                <span class="m-accordion__item-mode"></span>
+                                            </div>
+                                            <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body"
+                                                role="tabpanel" aria-labelledby="m_accordion_5_item_1_head" data-parent="#m_accordion_5">
+                                                <div class="m-accordion__item-content">
+                                                    <leave-transactions-grid [leavesTransactions]="filteredLeaves"></leave-transactions-grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Mid Term Review Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <ng-select class="m-input m-input--air dateFilter" name="mtrFilter" id="mtrFilter"
+                                            [items]="years" placeholder="Select Year" [(ngModel)]="filterDateMtr"
+                                            (ngModelChange)="onMtrFilterChange()" [clearable]="true" #mtrFilter="ngModel"></ng-select>
+                                    </div>
+                                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_6"
+                                        role="tablist">
+                                        <div class="m-accordion__item m-accordion__item--success">
+                                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_6_item_1_head"
+                                                data-toggle="collapse" href="#m_accordion_6_item_1_body" aria-expanded="false">
+                                                <span class="m-accordion__item-icon">
+                                                    <i class="fa flaticon-user-ok"></i>
+                                                </span>
+                                                <span class="m-accordion__item-title">Mid Term Reviews</span>
+                                                <span class="m-accordion__item-mode"></span>
+                                            </div>
+                                            <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body"
+                                                role="tabpanel" aria-labelledby="m_accordion_6_item_1_head" data-parent="#m_accordion_5">
+                                                <div class="m-accordion__item-content">
+                                                    <mtr-grid [mtrDetails]="filteredMtrDetails" [user]="user"></mtr-grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- KRA Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <ng-select class="m-input m-input--air dateFilter" name="kraFilter" id="kraFilter"
+                                            [items]="years" placeholder="Select Year" [(ngModel)]="filterDateKra"
+                                            (ngModelChange)="onKraFilterChange()" [clearable]="true" #kraFilter="ngModel"></ng-select>
+                                    </div>
+                                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_7"
+                                        role="tablist">
+                                        <div class="m-accordion__item m-accordion__item--success">
+                                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_7_item_1_head"
+                                                data-toggle="collapse" href="#m_accordion_7_item_1_body" aria-expanded="false">
+                                                <span class="m-accordion__item-icon">
+                                                    <i class="fa flaticon-user-ok"></i>
+                                                </span>
+                                                <span class="m-accordion__item-title">KRA</span>
+                                                <span class="m-accordion__item-mode"></span>
+                                            </div>
+                                            <div class="m-accordion__item-body collapse show" id="m_accordion_7_item_1_body"
+                                                role="tabpanel" aria-labelledby="m_accordion_7_item_1_head" data-parent="#m_accordion_5">
+                                                <div class="m-accordion__item-content">
+                                                    <kra-grid [kraDetails]="filteredKraDetails" [user]="user"></kra-grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
