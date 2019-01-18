@@ -53,3 +53,22 @@
 .img{
     width: 100%;
 }
+
+.leaveBalances{
+    padding-left: 3rem;
+    margin-bottom: 1rem;
+
+    .balance{
+        margin-bottom: 3px;
+        font-size: 16px;
+    }
+
+    table{
+        border: 1px solid lightgray;
+
+        td{
+            border: 1px solid lightgray;
+            padding: 3px;
+        }
+    }
+}

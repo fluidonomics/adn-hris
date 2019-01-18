@@ -29,10 +29,16 @@ export class TransactionHistoryComponent implements OnInit {
     kraDetails = [];
     search = "";
     imageBase = "";
-    filterDate;
+    filterDateLeave;
+    filterDateMtr;
+    filterDateKra;
+
     filteredLeaves = [];
     filteredMtrDetails = [];
     filteredKraDetails = [];
+
+    years = ['2018', '2019', '2020', '2021', '2022', '2023'];
+    leaveBalance: any = [];
 
     constructor(
         private utilityService: UtilityService,
@@ -70,6 +76,8 @@ export class TransactionHistoryComponent implements OnInit {
         this.commonService.getFinancialYear().subscribe(resFYear => {
             let fyears = resFYear.json() || [];
             this.fiscalYear = fyears.find(f => f.isYearActive);
+
+            this.getLeaveBalance();
             this.leaveService.getLeaveDetailsByFilter(null, null, null, this.param_emp_id).subscribe(resLeaveDetails => {
                 this.leaves = resLeaveDetails.json().data || [];
                 this.filteredLeaves = resLeaveDetails.json().data || [];
@@ -104,22 +112,44 @@ export class TransactionHistoryComponent implements OnInit {
         })
     }
 
-    onFilterDateChange() {
-        debugger;
-        let fromDate = moment(this.filterDate[0]);
-        let toDate = moment(this.filterDate[1]);
+    getLeaveBalance() {
+        this.leaveService.getEmployeeLeaveBalance(this.param_emp_id, this.fiscalYear._id).subscribe(res => {
+            if (res.ok) {
+                this.leaveBalance = res.json() || [];
+                this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
+            }
+        })
+    }
+
+    onLeaveFilterChange() {
+        let fromDate = moment(this.filterDateLeave[0]);
+        let toDate = moment(this.filterDateLeave[1]);
 
         this.filteredLeaves = this.leaves.filter(leave => {
             return moment(leave.leavedetails.fromDate).isBetween(fromDate, toDate);
         });
+    }
 
-        this.filteredKraDetails = this.kraDetails.filter(kra => {
-            return moment(kra.createdAt).isBetween(fromDate, toDate);
-        });
-
+    onMtrFilterChange() {
         this.filteredMtrDetails = this.mtrDetails.filter(mtr => {
-            return moment(mtr.createdAt).isBetween(fromDate, toDate);
+            if (this.filterDateMtr) {
+                return moment(mtr.createdAt).year() == this.filterDateMtr;
+            }
+            else {
+                return true;
+            }
         });
 
+    }
+
+    onKraFilterChange() {
+        this.filteredKraDetails = this.kraDetails.filter(kra => {
+            if (this.filterDateKra) {
+                return moment(kra.createdAt).year() == this.filterDateKra;
+            }
+            else {
+                return true;
+            }
+        });
     }
 }

@@ -18,10 +18,24 @@
                         <div class="row align-items-center">
                             <div class="col-xl-12">
                                 <div class="form-group m-form__group row align-items-center">
-                                    <div class="col-md-3">
-
+                                    <div class="col-md-6 leaveBalances">
+                                        <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                            <table class="m-datatable__table">
+                                                <thead class="m-datatable__head">
+                                                    <tr class="m-datatable__row">
+                                                        <td width="60%">Leave Type</td>
+                                                        <td width="40%">Balance</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="m-datatable__body">
+                                                    <tr class="m-datatable__row" *ngFor="let bal of leaveBalance">
+                                                        <td width="60%">{{bal.leaveType}}</td>
+                                                        <td width="40%">{{bal.leaveBalance}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3"></div>
                                     <div class="col-md-6 employeeDetail">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -38,13 +52,14 @@
                                 </div>
                             </div>
                             <div class="col-xl-12">
-                                <div class="form-group m-form__group row align-items-center filters">
-                                    <input class="form-control dateFilter" #drp="bsDaterangepicker" bsDaterangepicker
-                                        [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="filterDate"
-                                        (ngModelChange)="onFilterDateChange()" placeholder="Select Month" placement="right"
-                                        readonly>
-                                </div>
                                 <div class="col-xl-12">
+                                    <!-- Leave Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <input class="form-control dateFilter" #drp="bsDaterangepicker"
+                                            bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="filterDateLeave"
+                                            (ngModelChange)="onLeaveFilterChange()" placeholder="Select Month"
+                                            placement="right" readonly>
+                                    </div>
                                     <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5"
                                         role="tablist">
                                         <div class="m-accordion__item m-accordion__item--success">
@@ -64,6 +79,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Mid Term Review Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <ng-select class="m-input m-input--air dateFilter" name="mtrFilter" id="mtrFilter"
+                                            [items]="years" placeholder="Select Year" [(ngModel)]="filterDateMtr"
+                                            (ngModelChange)="onMtrFilterChange()" [clearable]="true" #mtrFilter="ngModel"></ng-select>
+                                    </div>
                                     <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_6"
                                         role="tablist">
                                         <div class="m-accordion__item m-accordion__item--success">
@@ -82,6 +103,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <!-- KRA Accordion -->
+                                    <div class="form-group m-form__group row align-items-center filters">
+                                        <ng-select class="m-input m-input--air dateFilter" name="kraFilter" id="kraFilter"
+                                            [items]="years" placeholder="Select Year" [(ngModel)]="filterDateKra"
+                                            (ngModelChange)="onKraFilterChange()" [clearable]="true" #kraFilter="ngModel"></ng-select>
                                     </div>
                                     <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_7"
                                         role="tablist">
