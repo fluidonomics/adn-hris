@@ -291,7 +291,7 @@ export class CommonService {
 
     checkPersonalEmail(_element) {
         if (_element.value.toUpperCase() != "HRIS@ADNSL.NET") {
-            if (_element.value.search("adnsl.net") != -1) {
+            if (_element.value.search("adnsl.net") != -1 || _element.value.search("adngateway.net") != -1) {
                 _element.control.setErrors({ "pattern": true });
                 return false;
             } else {
