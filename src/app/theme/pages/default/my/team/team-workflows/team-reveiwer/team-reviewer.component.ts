@@ -71,14 +71,14 @@ export class MyTeamReviewerComponent implements OnInit {
                     if (moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return 1;
                     else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
                     else return 0;
-                });
+                });               
                 this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
 
             }
         })
     }
 
-    goToKraReview(kra) {
+    goToKraReview(kra) {       
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
     goToMtrReview(employee) {
