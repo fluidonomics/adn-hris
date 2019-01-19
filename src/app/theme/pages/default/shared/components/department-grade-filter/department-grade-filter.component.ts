@@ -24,7 +24,10 @@ export class DepartmentGradeFilterComponent implements OnInit {
 
     deparmentData: any = [];
     gradeData: any = [];
-    filterBy: any = {};
+    filterBy: any = {
+        departments:[],
+        grades:[]
+    };
 
     loadDepartment() {
         this._commonService.getDepartment().subscribe(res => {

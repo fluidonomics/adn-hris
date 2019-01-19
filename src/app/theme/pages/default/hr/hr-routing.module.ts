@@ -23,6 +23,7 @@ import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiat
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
 import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
 import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
+import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/feedback-initiate.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -42,6 +43,7 @@ const routes: Routes = [{
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
         { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
         { path: 'workflows/pap/batch', component: PapBatchViewComponent },
+        { path: 'workflows/pap/feedback-init', component: FeedbackInitiateComponent },
 
         
         { path: 'directory', component: DirectoryComponent },
