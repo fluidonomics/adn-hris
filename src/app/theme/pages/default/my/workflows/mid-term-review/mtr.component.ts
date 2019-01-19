@@ -56,7 +56,7 @@ export class MyMtrComponent {
     progressStatuses = [];
     colorStatuses = [];
 
-    constructor( @Inject(PLATFORM_ID) private platformId: Object,
+    constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
@@ -77,6 +77,7 @@ export class MyMtrComponent {
     }
 
     ngOnInit() {
+        //debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -154,11 +155,11 @@ export class MyMtrComponent {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-            data => {
-                this.weightageData = data.json();
-            },
-            error => {
-            });
+                data => {
+                    this.weightageData = data.json();
+                },
+                error => {
+                });
     }
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
@@ -353,26 +354,26 @@ export class MyMtrComponent {
     deleteKra(data: any, index: number) {
         this._mtrService.deleteKra(data)
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
-                    //delete this.kraInfoData[index];
-                    if (this.mtrInfoData.length == 0) {
-                        this.addKraHtml();
+                res => {
+                    if (res.ok) {
+                        this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
+                        //delete this.kraInfoData[index];
+                        if (this.mtrInfoData.length == 0) {
+                            this.addKraHtml();
+                        }
+                        swal({
+                            title: 'Deleted',
+                            text: "KRA has been deleted successfully.",
+                            type: 'warning',
+                            showCancelButton: false,
+                            confirmButtonColor: '#D33',
+                            confirmButtonText: 'OK'
+                        });
+                        this.loadMTRInfo();
                     }
-                    swal({
-                        title: 'Deleted',
-                        text: "KRA has been deleted successfully.",
-                        type: 'warning',
-                        showCancelButton: false,
-                        confirmButtonColor: '#D33',
-                        confirmButtonText: 'OK'
-                    });
-                    this.loadMTRInfo();
-                }
-            },
-            error => {
-            });
+                },
+                error => {
+                });
     }
 
     isWeightage() {

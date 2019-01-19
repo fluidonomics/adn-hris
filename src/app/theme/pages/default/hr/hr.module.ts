@@ -38,6 +38,7 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { LearningService } from '../services/learning.service';
 
 
 @NgModule({
@@ -76,7 +77,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         MTRBatchComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard, LeaveService]
+    providers: [HrService, HrGuard, LeaveService, LearningService]
 })
 export class HrModule {
 }
