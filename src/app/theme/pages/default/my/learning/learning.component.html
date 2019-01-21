@@ -101,7 +101,8 @@
 						</tr>
 					</thead>
 					<tbody class="m-datatable__body">
-						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let learnData of LearningAgendaData">
+						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" 
+						*ngFor="let learnData of LearningAgendaData">
 							<!-- <td class="m-datatable__cell" width="3%" >
 																																													<span class="m-widget4__icon">
 																																																	<i class="fa fa-circle m--font-success"></i>
@@ -111,7 +112,7 @@
 								<span>{{learnData.learning_batch_name}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
-								<span>{{learnData.createdDate | date:"dd-MMM-yyyy hh:mm"}}</span>
+								<span>{{learnData.createdAt | date:"dd-MMM-yyyy hh:mm"}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
 								<span>{{learnData.createdby}}</span>
@@ -272,9 +273,9 @@
 													<span>{{learningInfo.status}}</span>
 												</td>
 												<td>
-													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor_id" [items]="SupervisorData"
-													 bindLabel="supervisor" bindValue="supervisor" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisor"
-													 [clearable]="false" #Supervisor="ngModel" required></ng-select>
+													 <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
+													 bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisor_id" [clearable]="false"
+													 #supervisor="ngModel" required></ng-select>
 												</td>
 
 												<td>
@@ -432,7 +433,7 @@
 		</div>
 
 		<div class="m-portlet__body">
-			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningAgendas(LearningDataForm)" id="LearningDataForm"
+			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningAgendas(LearningDataForm,learningData._id)" id="LearningDataForm"
 			 #LearningDataForm="ngForm">
 				<div class="m-widget6 ">
 					<div class="row">
@@ -447,33 +448,32 @@
 						</div>
 						<div class="col-md-4">
 							<!-- <ng-select class="m-input m-input--air customError" name="DevArea{{i}}" id="developmentArea" [items]="DevAreaData"
-							 bindLabel="DevAreaName" bindValue="_id" placeholder="Select Development Area" [(ngModel)]="learningInfo.developmentArea"
+							 bindLabel="developmentArea" bindValue="_id" placeholder="Select" [(ngModel)]="learningInfo.developmentArea"
 							 [clearable]="false" #DevArea="ngModel" required></ng-select> -->
 
-							 <textarea name="developmentArea" id="developmentArea" [(ngModel)]="learningData.developmentArea"
-							 #developmentArea="ngModel" class="form-control m-input m-input--air"  required></textarea>
+							 <ng-select class="m-input m-input--air customError" name="developmentArea{{i}}" id="developmentArea" [items]="DevAreaData" placeholder="Select Supervisor" bindLabel="developmentArea" bindValue="_id" [(ngModel)]="learningData.developmentArea" [clearable]="false"
+							#devarea="ngModel" required></ng-select>
 
-							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtrCategory.invalid">
+
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && devarea.invalid">
 								This field is required.
 							</div>
+
 						</div>
 						<div class="col-md-2">
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<!-- <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor_id" [items]="SupervisorData"
-							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisor"
-							 [clearable]="false" #Supervisor="ngModel" required></ng-select> -->
-
-							 <textarea name="supervisor" id="supervisor" [(ngModel)]="learningData.supervisor"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air"  required></textarea>
+							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
+							bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisor_id" [clearable]="false"
+							#supervisor="ngModel" required></ng-select>
 
 						</div>
 						<div class="col-md-12 details">
 							<span>Development Plan</span>
 							<textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learningData.developmentPlan"
 							 #developmentPlan="ngModel" class="form-control m-input m-input--air"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtr_kra.invalid">
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && developmentPlan.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -523,7 +523,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm" (click)=loadLearningDetailsInfo() >Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

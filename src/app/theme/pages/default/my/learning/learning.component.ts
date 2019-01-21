@@ -28,7 +28,10 @@ export class MyLearningComponent {
 
     isLearningAvaliable: boolean = false;
 
-    LearningAgendaData: any = {};
+    LearningAgendaData: any = [];
+    learningData: any = {};
+    learningInfoData: any = [];
+    learningDetails: any = [];
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -36,25 +39,21 @@ export class MyLearningComponent {
     search: any;
     itemPerPage: number = 10;
 
-    DevAreaData = [
-        'Functional Development',
-        'Individual Development'
+    DevAreaData = [ 
+        'Individual Development',
+        'Functional Development'
     ];
 
-    SupervisorData = [
-        'Supervisor 1',
-        'Supervisor 2'
-    ];
+    supervisorData: any = [];
 
     isDisabled: boolean = false;
     isChangable: boolean = false;
     isSendBack: boolean = false;
     employee: any = {};
 
-    learningInfoData: any = [];
+    
 
     modalRef: BsModalRef;
-    learningData: any = {};
     currentEmployee: any = {};
     progressStatuses = [];
     colorStatuses = [];
@@ -87,22 +86,23 @@ export class MyLearningComponent {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
+                        //debugger;
                         this.param_id = params['id'];
                         this.loadData();
                     }
                     else {
+                        //debugger;
                         this.param_id = null;
-                        this.loadLearningAgendaDetails();
+                        this.loadLearningDetailsInfo();
                     }
                 });
             });
     }
 
 
-    saveLearningAgendas(form) {
-        console.log(this.learningData.supportRequired);
+    saveLearningAgendas(form,id: number) {
+        //console.log(this.learningData.supportRequired);
 
-        debugger;
         if (form.valid) {
             this.learningInfoData[this.learningData.no - 1] = JSON.parse(JSON.stringify(this.learningData));
             this.saveLearningDetails(this.learningData.no - 1);
@@ -141,7 +141,6 @@ export class MyLearningComponent {
         else {
             this._learningService.saveLearning(request).subscribe(res => {
                 this.utilityService.hideLoader('.m-content');
-                debugger;
                 if (res.ok) {
                     //this.mtrInfoData[index] = res.json();
                     let data = res.json();
@@ -155,9 +154,8 @@ export class MyLearningComponent {
                         confirmButtonText: 'OK'
                     });
                 }
-                this.loadLearningInfo();
+                this.loadLearningAgendaInfo();
             }, error => {
-                debugger;
                 this.utilityService.hideLoader('.m-content');
                 this.modalRef.hide();
             });
@@ -168,11 +166,13 @@ export class MyLearningComponent {
 
 
     loadData() {
-        this.loadLearningInfo();
-        //this.loadEmployeeDetails();
+        this.loadLearningAgendaInfo();
+        this.loadSupervisorData();
+        this.loadLearningDetailsInfo();
+        //this.loadLearningDetails();
     }
 
-    loadLearningInfo() {
+    loadLearningAgendaInfo() {
         this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
@@ -181,16 +181,35 @@ export class MyLearningComponent {
         });;
     }
 
-    loadLearningAgendaDetails() {
-        this.utilityService.showLoader('.m-datatable');
-        this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
-            this.utilityService.hideLoader('.m-datatable');
+    loadLearningDetailsInfo() {
+        debugger;
+        this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
-            this.LearningAgendaData = data.result.message;
+
+            this.learningInfoData = data.result.message;
+
+            // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
-            this.utilityService.hideLoader('.m-datatable');
+        });;
+    }
+
+    loadSupervisorData() {
+        this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
         });
     }
+
+    // loadLearningDetails() {
+    //     this.utilityService.showLoader('.m-datatable');
+    //     this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
+    //         this.utilityService.hideLoader('.m-datatable');
+    //         let data = res.json();
+    //         this.LearningAgendaData = data.result.message;
+    //     }, error => {
+    //         this.utilityService.hideLoader('.m-datatable');
+    //     });
+    // }
 
     addLearningHtml() {
         let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
@@ -201,12 +220,12 @@ export class MyLearningComponent {
                 _id: null,
                 master_id: this.param_id,
                 supervisor_id: "",
-                status: "",
+                status: "initiated",
                 measureOfSuccess: "",
                 isDeleted: false,
                 createdBy: "",
-                updatedBy: "",
-                progressStatus: "",
+                updatedBy: this._currentEmpId,
+                progressStatus: "Open",
                 developmentArea: "",
                 developmentPlan: "",
                 timelines: "",
@@ -303,23 +322,23 @@ export class MyLearningComponent {
 
 
 
-        if (this.learningData.progressStatus == "Dropped") {
-            this.isDisabled = true;
-        } else {
-            if (this.learningData.status) {
-                this.isDisabled = this.learningData.status == "SendBack" || this.learningData.status == "Pending" || this.learningData.status == "New" ? false : true;
-            }
-            else {
-                this.isDisabled = false;
-            }
-        }
+        // if (this.learningData.progressStatus == "Dropped") {
+        //     this.isDisabled = true;
+        // } else {
+        //     if (this.learningData.status) {
+        //         this.isDisabled = this.learningData.status == "SendBack" || this.learningData.status == "Pending" || this.learningData.status == "New" ? false : true;
+        //     }
+        //     else {
+        //         this.isDisabled = false;
+        //     }
+        // }
 
-        if (this.learningData.mtr_master_status == "SendBack" && this.learningData.status != "Dropped") {
-            this.isSendBack = true;
-        }
-        else {
-            this.isSendBack = false;
-        }
+        // if (this.learningData.mtr_master_status == "SendBack" && this.learningData.status != "Dropped") {
+        //     this.isSendBack = true;
+        // }
+        // else {
+        //     this.isSendBack = false;
+        // }
 
 
     }
