@@ -45,6 +45,10 @@ export class PapService {
         let url = "pap/papSubmitToReviewer";
         return this.authService.post(url, data).catch(this.handleError);
     }
+    papInitiateFeedback(data:any):Observable<Response>{        
+        let url = "pap/initiateFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
 
 
 

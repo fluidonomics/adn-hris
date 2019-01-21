@@ -28,7 +28,7 @@
                                                 [clearable]="false"></ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" *ngIf="showGradeFilter">
                                         <div class="m-form__group form-group">
                                             <label for="form_control_1">Grade</label>
                                             <ng-select class="m-input m-input--air" name="grade" [items]="gradeData"

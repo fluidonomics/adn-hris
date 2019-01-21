@@ -179,11 +179,8 @@
 							<li class="nav-item m-tabs__item" *ngIf="isChangable">
 								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitPapWorkFlow(fmtrInfo.form.dirty)">Submit</button>
 							</li>
-							<li class="nav-item m-tabs__item">
-								<!-- <a class="nav-link m-tabs__link" (click)="window.print();">
-																								<i class="la la-print"></i>
-																								Print
-																								</a> -->
+							<li class="nav-item m-tabs__item"  *ngIf="raiseGreivance">								
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary">Raise Greivance</button>							
 							</li>
 						</ul>
 					</div>

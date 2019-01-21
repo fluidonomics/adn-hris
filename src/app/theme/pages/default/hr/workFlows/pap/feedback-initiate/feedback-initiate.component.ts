@@ -56,8 +56,7 @@ export class FeedbackInitiateComponent implements OnInit {
     }
     
 
-    onFilterSelected(filterBy) {
-        debugger;
+    onFilterSelected(filterBy) {        
         this.filterBy = {};
         Object.assign(this.filterBy, filterBy);
         this.filterEmployee();
@@ -86,57 +85,31 @@ export class FeedbackInitiateComponent implements OnInit {
         let selectedIds=selectedData.map(item=>{
             return item._id
         })
-        this.papService.papSubmit(selectedIds).subscribe(res=>{
-
-        });       
-    } 
-
-   
-
-    initiateBatch(form) {
-        if (form.valid) {
-            let data: any = {
-                batchName: this.batchData.batchName,
-                batchEndDate: this.batchData.batchEndDate
-            };
-            data.emp_id_array = this.selectedEmployees.map(item => {
-                return {
-                    emp_id: item.emp_id,
-                    mtr_master_id: item.mtr_master_id,
-                    supervisor_id: item.supervisor_id,
-                    officeEmail: item.emp_emailId,
-
-                }
-            });
-
-            if (data.emp_id_array.length > 0) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.value) {
-                        data.createdBy = this._currentEmpId;
-                        this.utilityService.showLoader('#initiate-loader');
-                        this.papService.initiatePapProcess(data).subscribe(res => {
-                            if (res.ok) {
-                                this.utilityService.hideLoader('#initiate-loader');
-                                swal("Success", "Batch Initiated Successfully", "success");
-                                form.resetForm();
-                            }                           
-                        }, error => {
-                            this.utilityService.hideLoader('#initiate-loader');
-                        });
-                    }
-                })
-            }
-            else {
-                swal('Oops!', 'No employee selected', 'warning')
-            }
+        if(selectedIds.length!=0){
+        let request={
+            "updatedBy": this._currentEmpId,
+            "empIds" : selectedIds
         }
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this.papService.papInitiateFeedback(request).subscribe(res=>{              
+                    if(res.ok){
+                        swal("Success", "Feedback Initiated Successfully", "success");
+                    }
+            });                   
+            }
+        })
+    }else{
+        swal('Oops!', 'No employee selected', 'warning')
     }
+           
+    }   
 }

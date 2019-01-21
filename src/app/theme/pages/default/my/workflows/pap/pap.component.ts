@@ -31,6 +31,7 @@ export class MyPapComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
+    raiseGreivance=false;
 
     progressStatuses = [
         {
@@ -143,6 +144,8 @@ export class MyPapComponent {
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
                     this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                    debugger;
+                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
@@ -175,8 +178,7 @@ export class MyPapComponent {
                 "emp_ratingScaleId": this.papData.emp_ratingScaleId
             }
             console.log(request);
-            this.papService.papUpdate(request).subscribe(res => {
-                debugger;
+            this.papService.papUpdate(request).subscribe(res => {                
                 if (res.ok) {
                     this.papGridInput = {};
                     let gridInput = {

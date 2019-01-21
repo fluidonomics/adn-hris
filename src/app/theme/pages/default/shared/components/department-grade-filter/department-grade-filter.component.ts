@@ -19,6 +19,9 @@ export class DepartmentGradeFilterComponent implements OnInit {
     @Input()
     filterHeading: string = "Initiate PAP";
 
+    @Input()
+    showGradeFilter: boolean = true;
+
     @Output()
     onSearch = new EventEmitter();
 
