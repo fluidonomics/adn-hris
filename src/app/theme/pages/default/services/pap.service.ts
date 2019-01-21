@@ -16,6 +16,10 @@ export class PapService {
         let url = "pap/getEmployeesForPapInitiate";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getEmployeesForFeedbackInit(){
+        let url = "pap/getEmployeesForFeedbackInit";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     initiatePapProcess(data) {
         let url = "pap/initiatePapProcess";

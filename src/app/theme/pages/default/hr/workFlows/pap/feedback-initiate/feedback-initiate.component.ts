@@ -47,11 +47,8 @@ export class FeedbackInitiateComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
     }
     getAllEmployee(){
-        this.hrService.getAllEmployee().subscribe(res=>{            
-            if(res.ok){
-                let data=res.json();
-                this.employees=data.data;               
-            }
+        this.papService.getEmployeesForFeedbackInit().subscribe(res=>{                                               
+            this.employees=res;
         })
     }
     
