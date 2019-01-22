@@ -12,17 +12,17 @@ import { LearningService } from '../../../../services/learning.service';
 
 
 @Component({
-   selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-   templateUrl: "./batch.component.html",
-   encapsulation: ViewEncapsulation.None,
-   styleUrls: ['./batch.component.css'],
-   providers: [BatchService, LearningService]
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    templateUrl: "./batch.component.html",
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./batch.component.css'],
+    providers: [BatchService, LearningService]
 })
 
 export class LearningBatchComponent implements OnInit {
 
-   batchData: any = [];
-    activeRowNumber:number=-1;
+    batchData: any = [];
+    activeRowNumber: number = -1;
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -30,33 +30,33 @@ export class LearningBatchComponent implements OnInit {
     search: any;
     itemPerPage: number = 10;
 
-     editBatch: any = {};
+    editBatch: any = {};
     modalRef: BsModalRef;
     currentDate: Date = new Date();
 
-    batchTypes:any=[
-        {_id:"KRA" ,batchTypeName:"KRA",disabled: true },
-        {_id:"Learning" ,batchTypeName:"Learning"},
-        {_id:"PIP" ,batchTypeName:"PIP",disabled: true},
-     ]
+    batchTypes: any = [
+        { _id: "KRA", batchTypeName: "KRA", disabled: true },
+        { _id: "Learning", batchTypeName: "Learning" },
+        { _id: "PIP", batchTypeName: "PIP", disabled: true },
+    ]
 
-    statusTypes:any=[
-        {_id:"Active" ,name:"Active", },
-        {_id:"Terminated" ,name:"Terminated"},
-     ]
+    statusTypes: any = [
+        { _id: "Active", name: "Active", },
+        { _id: "Terminated", name: "Terminated" },
+    ]
 
-     _currentEmpId:number;
+    _currentEmpId: number;
 
-     loadBatchFilter: any = {
-      //date:  this.loadBatch(),
-      status: 'All',
-      page: 1
-  };
-      batchdatafilter: any = {       
-      status: 'All',
-      page: 1
-  };
-   
+    loadBatchFilter: any = {
+        //date:  this.loadBatch(),
+        status: 'All',
+        page: 1
+    };
+    batchdatafilter: any = {
+        status: 'All',
+        page: 1
+    };
+
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
@@ -77,28 +77,30 @@ export class LearningBatchComponent implements OnInit {
     }
 
     initData() {
-        //this.loadBatch();
+        this.loadBatch();
     }
-    // loadBatch() {
-    //     debugger;
-    //     this.utilityService.showLoader('#batch-loader');
-    //     this._learningService.getLearningBatches(this._currentEmpId)
-    //         .subscribe(
-    //             res => {
-    //                 this.utilityService.hideLoader('#batch-loader');
-    //                 this.batchData = res.json().result.message;
-    //                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
-    //             },
-    //             error => {
-    //                 this.utilityService.hideLoader('#batch-loader');
-    //             });
-    // }
 
 
-    // saveLearningWorkFlow(batch_id, learningWorkFlowIndex, status) {
+    loadBatch() {
+        debugger;
+        this.utilityService.showLoader('#batch-loader');
+        this._learningService.getLearningBatches(this._currentEmpId)
+            .subscribe(
+                res => {
+                    this.utilityService.hideLoader('#batch-loader');
+                    this.batchData = res.json().result.message;
+                    this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+                },
+                error => {
+                    this.utilityService.hideLoader('#batch-loader');
+                });
+    }
+
+
+    saveLearning(batch_id, learningIndex, status) {
     //     swal({
     //         title: 'Are you sure?',
-    //         text: "Terminate workflow? It can't be undone!",
+    //         text: "Terminate learning Agenda? It can't be undone!",
     //         type: 'warning',
     //         showCancelButton: true,
     //         confirmButtonColor: '#d33',
@@ -106,17 +108,17 @@ export class LearningBatchComponent implements OnInit {
     //         confirmButtonText: 'Terminate'
     //     }).then((result) => {
     //         if (result.value) {
-    //             this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[learningWorkFlowIndex].status = status;
-    //             this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[learningWorkFlowIndex])
+    //             this.batchData[this.batchData.findIndex(x => x._id == batch_id)].batchData[learningIndex].status = status;
+    //             this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[learningIndex])
     //                 .subscribe(
     //                     res => {
-    //                         swal('Success', 'Employee Workflow Terminated Successfully', 'success')
+    //                         swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
     //                     },
     //                     error => {
     //                     });
     //         }
     //     })
-    // }
+    }
 
     openEditModal(template: TemplateRef<any>, batch, index) {
         this.modalRef = this.modalService.show(template);
@@ -127,12 +129,14 @@ export class LearningBatchComponent implements OnInit {
     }
 
     saveBatch() {
+        debugger;
         let data = {
             "batchId": this.editBatch._id,
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
         this._learningService.updateBatch(data).subscribe(res => {
+            debugger;
             this.activeRowNumber = -1;
             //this.loadBatch();
             this.modalRef.hide();

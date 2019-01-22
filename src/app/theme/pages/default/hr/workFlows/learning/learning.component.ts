@@ -25,7 +25,7 @@ export class HrLearningComponent {
     gradeData: any = [];
 
     batchData: any = {
-        "emp_id": []
+
     };
 
 

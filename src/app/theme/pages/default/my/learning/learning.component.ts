@@ -39,7 +39,7 @@ export class MyLearningComponent {
     search: any;
     itemPerPage: number = 10;
 
-    DevAreaData = [ 
+    DevAreaData = [
         'Individual Development',
         'Functional Development'
     ];
@@ -51,7 +51,7 @@ export class MyLearningComponent {
     isSendBack: boolean = false;
     employee: any = {};
 
-    
+
 
     modalRef: BsModalRef;
     currentEmployee: any = {};
@@ -93,14 +93,14 @@ export class MyLearningComponent {
                     else {
                         //debugger;
                         this.param_id = null;
-                        this.loadLearningDetailsInfo();
+                        this.loadLearningAgendaInfo();
                     }
                 });
             });
     }
 
 
-    saveLearningAgendas(form,id: number) {
+    saveLearningAgendas(form, id: number) {
         //console.log(this.learningData.supportRequired);
 
         if (form.valid) {
@@ -169,7 +169,7 @@ export class MyLearningComponent {
         this.loadLearningAgendaInfo();
         this.loadSupervisorData();
         this.loadLearningDetailsInfo();
-        //this.loadLearningDetails();
+        this.loadEmployeeDetails();
     }
 
     loadLearningAgendaInfo() {
@@ -182,7 +182,6 @@ export class MyLearningComponent {
     }
 
     loadLearningDetailsInfo() {
-        debugger;
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
 
@@ -200,22 +199,16 @@ export class MyLearningComponent {
         });
     }
 
-    // loadLearningDetails() {
-    //     this.utilityService.showLoader('.m-datatable');
-    //     this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
-    //         this.utilityService.hideLoader('.m-datatable');
-    //         let data = res.json();
-    //         this.LearningAgendaData = data.result.message;
-    //     }, error => {
-    //         this.utilityService.hideLoader('.m-datatable');
-    //     });
-    // }
+    loadEmployeeDetails() {
+        this._commonService.getEmployee(this._currentEmpId).subscribe(res => {
+            this.currentEmployee = res.json() || {};
+        });
+    }
 
     addLearningHtml() {
         let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
         if (learnA && learnA.length < 3) {
             let data = {
-                //  _id: null, kra: "", category_id: "", weightage_id: "", unitOfSuccess: "", measureOfSuccess: "", supervisor_id: "", sendBackComment: "", kraWorkflow_id: this.param_id 
 
                 _id: null,
                 master_id: this.param_id,
@@ -248,17 +241,46 @@ export class MyLearningComponent {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    submitLearningAgenda(isFormDirty) {
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                let data = {
+                    masterId: this.param_id,
+                    empId: this._currentEmpId,
+                    supervisor_id: this.currentEmployee.supervisorDetails._id,
+                    emp_name: this.currentEmployee.fullName,
+                    supervisor_name: this.currentEmployee.supervisorDetails.fullName,
+                    action_link: window.location.origin + '/my/team/workflows/supervisor'
+                }
+                this.utilityService.showLoader('.m-content');
+                this._learningService.submitLearningAgendas(data).subscribe(res => {
+                    this.utilityService.hideLoader('.m-content');
+                    if (res.ok) {
+                        swal({
+                            title: 'Submitted Successfully!',
+                            text: "Learning Agendas have been submitted for Supervisor Approval.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                        this.loadLearningDetailsInfo();
+                    }
+                }, error => {
+                    this.loadLearningDetailsInfo();
+                    this.utilityService.hideLoader('.m-content');
+                });
+            }
+        });
+    }
 
 
 
@@ -289,22 +311,6 @@ export class MyLearningComponent {
             });
         }
     }
-
-
-
-
-
-
-
-    // loadEmployeeDetails() {
-    //     this._commonService.getEmployee(this._currentEmpId).subscribe(res => {
-    //         this.currentEmployee = res.json() || {};
-    //     });
-    // }
-
-
-
-
 
 
 
@@ -343,174 +349,6 @@ export class MyLearningComponent {
 
     }
 
-
-
-
-
-
-
-    // showDroppedKraConfirmation(request) {
-    //     let promise = new Promise((res, reject) => {
-    //         if (request.progressStatus == "Dropped") {
-    //             swal({
-    //                 title: 'Are you sure?',
-    //                 text: "You want to drop this KRA",
-    //                 type: 'warning',
-    //                 showCancelButton: true,
-    //                 confirmButtonColor: '#3085d6',
-    //                 cancelButtonColor: '#d33',
-    //                 confirmButtonText: 'Yes'
-    //             }).then((result) => {
-    //                 res(result.value);
-    //             });
-    //         } else {
-    //             res(true);
-    //         }
-    //     });
-    //     return promise;
-    // }
-
-
-    // deleteKraHtml(index: number) {
-    //     swal({
-    //         title: 'Are you sure?',
-    //         text: "Do you want to delete the KRA ?",
-    //         type: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#d33',
-    //         cancelButtonColor: '#9a9caf',
-    //         confirmButtonText: 'Yes'
-    //     }).then((result) => {
-    //         if (result.value) {
-    //             if (this.mtrInfoData[index]._id) {
-    //                 let request = {
-    //                     id: this.mtrInfoData[index]._id,
-    //                     updatedBy: this._currentEmpId
-    //                 }
-    //                 this.deleteKra(request, index);
-    //             }
-    //             else {
-    //                 this.mtrInfoData.splice(index, 1);
-    //                 if (this.mtrInfoData.length == 0) {
-    //                     this.addKraHtml();
-    //                 }
-    //             }
-    //         }
-    //     });
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // --------------------------FOR POP UP MESSAGES-------------------------------------
-
-
-
-
-
-
-
-    deleteKra(data: any, index: number) {
-        // this._learningService.deleteKra(data)
-        //     .subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.mtrInfoData = this.mtrInfoData.filter(x => x._id != data._id);
-        //             //delete this.kraInfoData[index];
-        //             if (this.mtrInfoData.length == 0) {
-        //                 this.addKraHtml();
-        //             }
-        //             swal({
-        //                 title: 'Deleted',
-        //                 text: "KRA has been deleted successfully.",
-        //                 type: 'warning',
-        //                 showCancelButton: false,
-        //                 confirmButtonColor: '#D33',
-        //                 confirmButtonText: 'OK'
-        //             });
-        //             this.loadMTRInfo();
-        //         }
-        //     },
-        //     error => {
-        //     });
-    }
-
-
-
-    isSendBackOrNewKraSaved(isFormDirty) {
-        // let isSendBackNotSaved = this.mtrInfoData.filter(x => x.supervisorStatus != 'SendBack').length == this.mtrInfoData.length ? true : false;
-        // let isAllKraSaved = this.mtrInfoData.filter(x => x._id == null || x._id == undefined).length == 0 ? true : false;
-        // if (!isSendBackNotSaved || !isAllKraSaved || isFormDirty) {
-        //     swal({
-        //         title: 'Oops!',
-        //         text: 'Please save unsaved KRAs before submitting',
-        //         type: 'warning',
-        //         showCancelButton: false,
-        //         confirmButtonColor: '#66BB6A',
-        //         confirmButtonText: 'OK'
-        //     });
-        //     return false;
-        // }
-        // else {
-        //     return true;
-        // }
-    }
-
-
-    submitKraWorkFlow(isFormDirty) {
-
-        // if (this.isSendBackOrNewKraSaved(isFormDirty)) {
-        //     if (this.isWeightage()) {
-        //         if (this.isEmployeeCommentsFilled()) {
-        //             let kraLength = this.employee.grade_id <= 2 ? 5 : 3;
-        //             swal({
-        //                 title: 'Do you want to Submit?',
-        //                 text: "For your grade ateast " + kraLength + " KRAs are required",
-        //                 type: 'warning',
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: '#d33',
-        //                 cancelButtonColor: '#9a9caf',
-        //                 confirmButtonText: 'Proceed Anyway',
-        //             }).then((result) => {
-        //                 if (result.value) {
-        //                     this.isCategoryUnique();
-        //                 }
-        //             });
-        //         }
-        //     }
-        // }
-    }
-
-
-    isRequiredWorkFlowLength() {
-        // return this.employee.grade_id <= 2 && this.mtrInfoData.length >= 5 ? true : (this.employee.grade_id > 2 && this.mtrInfoData.length >= 3 ? true : false)
-    }
-
-
-    // isEmployeeCommentsFilled() {
-    //     let mtrs = this.mtrInfoData.filter((mtr) => { return mtr.employeeComment == null || mtr.employeeComment == undefined || mtr.employeeComment == '' });
-    //     if (mtrs.length > 0) {
-    //         swal({
-    //             title: 'Oops!',
-    //             text: 'Please fill Employee Remarks before submitting',
-    //             type: 'warning',
-    //             showCancelButton: false,
-    //             confirmButtonColor: '#66BB6A',
-    //             confirmButtonText: 'OK'
-    //         });
-    //         return false;
-    //     }
-    //     return true;
-    // }
-
+ 
 }
 
