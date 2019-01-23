@@ -98,7 +98,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     grievanceEmployeeDetail(employee: any) {    
         console.log(employee);
-        this._router.navigate(['/hr/workflows/grievance/detail/100/'+employee._id])//('/user');
+        this._router.navigate(['/hr/workflows/grievance/detail/4/'+employee._id])//('/user');
     }
    
 }

@@ -76,17 +76,12 @@ export class GrievanceDetailComponent {
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
-            this._route.queryParams.subscribe(params => {
-                if (params['id']) {
-                    this.param_id = params['id'];
-                    this.papGridInput.empId = this._currentEmpId;
-                    this.papGridInput.param_id = this.param_id;
-                    this.loadData();
-                }
-                else {
-                    this.param_id = null;
-                    this.loadPapDetails();
-                }
+            this._route.params.subscribe(params => {                                             
+                this.param_id = params['id'];
+                this.papGridInput.empId = params['emp_id'];
+                this.papGridInput.param_id = this.param_id;
+                this.loadData();
+                                
             });
         });
     }
@@ -113,15 +108,15 @@ export class GrievanceDetailComponent {
             });
     }
 
-    loadSupervisorData() {
+    loadSupervisorData() {        
         this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
     }
 
-    loadData() {
-        this.loadPapDetails();
+    loadData() {        
+        this.loadpapInfoData();
         this.loadSupervisorData();
         this.loadWeightAgeData();
         this.loadPAPCategoryData();
@@ -137,24 +132,35 @@ export class GrievanceDetailComponent {
 
     loadPapDetails() {
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this.papGridInput.param_id).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
-                    debugger;
-                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;
-                    console.log(this.papWorkFlowData);
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
+                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                
                     resolve(this.papInfoData);
                 }
             });
         })
     }
+    loadpapInfoData(){              
+        this.papService.getPapDetailsSingleEmployee(this.papGridInput.empId).subscribe(res => {
+            let papDetails = res || [];
+            if (papDetails.length > 0) {
+                this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                    return v[0];
+                }).value();
+                this.papInfoData = this.papWorkFlowData[0].papdetails;
+                this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
+                this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                         
+            }
+        });
+    }
 
-    showPAPDetails(index) {
+    showPAPDetails(index) {        
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
