@@ -43,6 +43,8 @@ import { EmployeeBatchSelectionGridComponent } from '../shared/components/employ
 import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
 import {FeedbackInitiateComponent} from './workFlows/pap/feedback-initiate/feedback-initiate.component'
 import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
+import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
+import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
 
 
 @NgModule({
@@ -83,7 +85,9 @@ import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employe
         EmployeeBatchSelectionGridComponent,
         PapBatchViewComponent,
         FeedbackInitiateComponent,
-        GrievanceAllEmployeeComponent
+        GrievanceAllEmployeeComponent,
+        GrievanceDetailComponent,
+        PapDetailsGridComponent,
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService]

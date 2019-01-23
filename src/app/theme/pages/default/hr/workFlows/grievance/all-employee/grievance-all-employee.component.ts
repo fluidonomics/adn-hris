@@ -8,7 +8,9 @@ import { HrService } from "../../../hr.service";
 import { environment } from '../../../../../../../../environments/environment';
 import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 import { CommonService } from "../../../../../../../base/_services/common.service";
-import { ActivatedRoute } from "@angular/router";
+import {  Router  } from "@angular/router";
+
+import { EmployeeInfo } from "../../../../../../../base/_interface/user.model";
 
 
 @Component({
@@ -35,7 +37,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         private _hrService: HrService,
         private _commonService:CommonService,
         public _authService: AuthService,
-        private _route: ActivatedRoute,
+        private _router: Router,
         public utilityService: UtilityService,
     ) {
 
@@ -93,5 +95,10 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 
+
+    grievanceEmployeeDetail(employee: any) {    
+        console.log(employee);
+        this._router.navigate(['/hr/workflows/grievance/detail/100/'+employee._id])//('/user');
+    }
    
 }

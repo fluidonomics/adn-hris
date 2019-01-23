@@ -25,6 +25,7 @@ import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-
 import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
 import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/feedback-initiate.component';
 import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
+import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -45,7 +46,8 @@ const routes: Routes = [{
         { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
         { path: 'workflows/pap/batch', component: PapBatchViewComponent },
         { path: 'workflows/pap/feedback-init', component: FeedbackInitiateComponent },
-        { path: 'workflows/greviance/all-employee', component: GrievanceAllEmployeeComponent },
+        { path: 'workflows/grievance/all-employee', component: GrievanceAllEmployeeComponent },
+        { path: 'workflows/grievance/detail/:id/:emp_id', component: GrievanceDetailComponent },
         
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
