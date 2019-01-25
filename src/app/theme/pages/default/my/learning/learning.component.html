@@ -101,8 +101,7 @@
 						</tr>
 					</thead>
 					<tbody class="m-datatable__body">
-						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" 
-						*ngFor="let learnData of LearningAgendaData">
+						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let learnData of LearningAgendaData">
 							<!-- <td class="m-datatable__cell" width="3%" >
 																																													<span class="m-widget4__icon">
 																																																	<i class="fa fa-circle m--font-success"></i>
@@ -127,8 +126,8 @@
 								</span>
 							</td>
 							<td class="m-datatable__cell" width="15%">
-								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
-									<i class="la" [ngClass]="learningData.status=='Initiated' || learningData.status=='SendBack' ? 'la-edit':'la-eye'"></i>
+								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" (click)="addLearningHtml()">
+									<i class="la" [ngClass]="learningData.status=='Initiated' || learningData.status=='SendBack' ? 'la-edit':'la-eye'" ></i>
 								</a>
 							</td>
 						</tr>
@@ -203,7 +202,7 @@
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
-								{{isChangable ?'My Learning Agenda' :'Submit Learning Agenda' }}
+								My Learning Agendas
 								<small>
 								</small>
 							</h3>
@@ -235,7 +234,7 @@
 												<th>
 													#
 												</th>
-												
+
 												<th>
 													Development Area
 												</th>
@@ -251,19 +250,24 @@
 												</th>
 
 												<th>
+													Progress Status
+												</th>
+
+												<th>
 													Action
 												</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let learningInfo of learningInfoData;let i=index" ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
+											<tr *ngFor="let learningInfo of learningInfoData;let i=index" 
+											[ngClass]="{'completed':learningInfo.status =='completed','sendBack':learningInfo.status=='SendBack','approved':learningInfo.status =='Approved'}"ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
 												</th>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="DevArea{{i}}" id="developmentArea" [items]="DevAreaData"
 													 bindLabel="DevAreaName" bindValue="developmentArea" placeholder="Select Development Area" [(ngModel)]="learningInfo.developmentArea"
-													 [clearable]="false" #DevArea="ngModel" required></ng-select>
+													 [clearable]="false" #DevArea="ngModel" required disabled></ng-select>
 												</td>
 												<td>
 													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
@@ -273,9 +277,15 @@
 													<span>{{learningInfo.status}}</span>
 												</td>
 												<td>
-													 <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData" bindLabel="fullName"
-													 bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisor_id" [clearable]="false"
-													 #supervisor="ngModel" required></ng-select>
+													<ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+													 bindLabel="fullName" bindValue="_id" placeholder="Supervisor" [(ngModel)]="learningInfo.supervisor_id"
+													 [clearable]="false" #supervisor="ngModel" required disabled></ng-select>
+												</td>
+
+												<td>
+													<ng-select class="m-input m-input--air customError" name="progressStatus{{i}}" id="progressStatus" 
+													 bindLabel="progressStatus" bindValue="_id" placeholder="Progress Status" [(ngModel)]="learningInfo.progressStatus"
+													 [clearable]="false" #progressStatus="ngModel" required disabled></ng-select>
 												</td>
 
 												<td>
@@ -289,7 +299,7 @@
 											<tr>
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
-													 (click)="addLearningHtml()">
+													 (click)="addLearningHtml()" >
 														<i class="la la-plus "></i>
 													</button>
 												</td>
@@ -433,26 +443,24 @@
 		</div>
 
 		<div class="m-portlet__body">
-			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningAgendas(LearningDataForm,learningData._id)" id="LearningDataForm"
-			 #LearningDataForm="ngForm">
+			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningAgendas(LearningDataForm,learningData._id)"
+			 id="LearningDataForm" #LearningDataForm="ngForm">
 				<div class="m-widget6 ">
 					<div class="row">
 						<div class="col-md-6">
-							<span>Learning Agenda</span>
+							<span>Learning Agenda No. {{learningData.no}}</span>
 						</div>
-
+						
 					</div>
 					<div class="row details">
 						<div class="col-md-2 ">
 							Development Area
 						</div>
 						<div class="col-md-4">
-							<!-- <ng-select class="m-input m-input--air customError" name="DevArea{{i}}" id="developmentArea" [items]="DevAreaData"
-							 bindLabel="developmentArea" bindValue="_id" placeholder="Select" [(ngModel)]="learningInfo.developmentArea"
-							 [clearable]="false" #DevArea="ngModel" required></ng-select> -->
 
-							 <ng-select class="m-input m-input--air customError" name="developmentArea{{i}}" id="developmentArea" [items]="DevAreaData" placeholder="Select Supervisor" bindLabel="developmentArea" bindValue="_id" [(ngModel)]="learningData.developmentArea" [clearable]="false"
-							#devarea="ngModel" required></ng-select>
+							<ng-select class="m-input m-input--air customError" name="developmentArea{{i}}" id="developmentArea" [items]="DevAreaData"
+							 placeholder="Select Supervisor" bindLabel="developmentArea" bindValue="_id" [(ngModel)]="learningData.developmentArea"
+							 [clearable]="false" #devarea="ngModel" required [disabled]="isDisabled"></ng-select>
 
 
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && devarea.invalid">
@@ -464,59 +472,70 @@
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
-							bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisor_id" [clearable]="false"
-							#supervisor="ngModel" required></ng-select>
+							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisor_id"
+							 [clearable]="false" #supervisor="ngModel" required [disabled]="isDisabled"></ng-select>
+							 <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisor.invalid">
+								This field is required.
+							</div>
 
 						</div>
 						<div class="col-md-12 details">
 							<span>Development Plan</span>
 							<textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learningData.developmentPlan"
-							 #developmentPlan="ngModel" class="form-control m-input m-input--air"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && developmentPlan.invalid">
+							 #developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !developmentPlan.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Timelines</span>
 							<textarea name="timelines" id="timelines" [(ngModel)]="learningData.timelines" #Timelines="ngModel" class="form-control m-input m-input--air"
-							  required></textarea>
-							<!-- <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !unitOfSuccess.valid">
+							 required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !Timelines.valid">
 								This field is required.
-							</div> -->
+							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="learningData.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-							<!-- <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid">
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
-							</div> -->
+							</div>
 						</div>
 						<div class="col-md-12 details">
 							<span>Support Required</span>
 							<textarea name="supportRequired" id="supportRequired" [(ngModel)]="learningData.supportRequired"
-							 #supportRequired="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-							<!-- <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
+							 #supportRequired="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supportRequired.invalid">
 								This field is required.
-							</div> -->
+							</div>
 						</div>
-						<div class="col-md-6 details" *ngIf="showStat">
-							<span>Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatus"
-							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="learningData.progressStatus" (change)="onStatusChange($event)"
-							 [clearable]="false" #progressStatus="ngModel" [disabled]="isDisabled" required></ng-select>
-							<!-- <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
+						<div class="col-md-6 details">
+							<span>Progress Status</span>
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" 
+							  placeholder="Select Status" [(ngModel)]="learningData.progressStatus"
+							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!showStat"></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && progressStatus.invalid">
 								This field is required.
-							</div> -->
+							</div>
 						</div>
-						<div class="col-md-6 details" *ngIf="showStat">
-							<span>Comments</span>
-							<textarea name="comments" id="comments" [(ngModel)]="learningData.measureOfSuccess" #comments="ngModel" class="form-control m-input m-input--air"
-							 [disabled]="isDisabled" required></textarea>
-							<!-- <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid" display="none">
+						<div class="col-md-6 details">
+							<span>Supervisor Approval Comments</span>
+							<textarea name="supcomments" id="supcomments" [(ngModel)]="learningData.supcomments" #supcomments="ngModel" class="form-control m-input m-input--air"
+							 [disabled]="!showStat" required ></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !supcomments.valid && showStat" display="none">
 								This field is required.
-							</div> -->
+							</div>
+						</div>
+						<div class="col-md-12 details">
+							<span>Completion Comments</span>
+							<textarea name="completionComments" id="completionComments" [(ngModel)]="learningData.completionComments"
+							 #completionComments="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && completionComments.invalid">
+								This field is required.
+							</div>
 						</div>
 					</div>
 					<div class="form-actions details">

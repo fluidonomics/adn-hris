@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 import { UtilityService } from "../../../../../base/_services/utilityService.service";
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.my-learning",
     templateUrl: "./learning.component.html",
     encapsulation: ViewEncapsulation.None,
     providers: [LearningService]
@@ -43,12 +43,17 @@ export class MyLearningComponent {
         'Individual Development',
         'Functional Development'
     ];
+    progressStatus = [
+        'Open',
+        'Completed'
+    ];
 
     supervisorData: any = [];
 
     isDisabled: boolean = false;
-    isChangable: boolean = false;
-    isSendBack: boolean = false;
+    isCompleted: boolean = false;
+    isVisible: boolean = true;
+    showStats : boolean = false;
     employee: any = {};
 
 
@@ -186,7 +191,6 @@ export class MyLearningComponent {
             let data = res.json();
 
             this.learningInfoData = data.result.message;
-
             // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
@@ -206,8 +210,8 @@ export class MyLearningComponent {
     }
 
     addLearningHtml() {
-        let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
-        if (learnA && learnA.length < 3) {
+        //let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
+        //if (learnA && learnA.length < 3) {
             let data = {
 
                 _id: null,
@@ -227,59 +231,75 @@ export class MyLearningComponent {
             };
 
             this.learningInfoData.push(data);
-        }
-        else {
-            swal({
-                title: 'Oops!',
-                text: "You can't add more than 3 Learning Agendas",
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#66BB6A',
-                confirmButtonText: 'OK'
-            });
-        }
+        //}
+        //else {
+        //     swal({
+        //         title: 'Oops!',
+        //         text: "You can't add more than 3 Learning Agendas",
+        //         type: 'warning',
+        //         showCancelButton: false,
+        //         confirmButtonColor: '#66BB6A',
+        //         confirmButtonText: 'OK'
+        //     });
+        // }
     }
 
 
     submitLearningAgenda(isFormDirty) {
-        swal({
-            title: 'Are you sure?',
-            text: "",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-        }).then((result) => {
-            if (result.value) {
-                let data = {
-                    masterId: this.param_id,
-                    empId: this._currentEmpId,
-                    supervisor_id: this.currentEmployee.supervisorDetails._id,
-                    emp_name: this.currentEmployee.fullName,
-                    supervisor_name: this.currentEmployee.supervisorDetails.fullName,
-                    action_link: window.location.origin + '/my/team/workflows/supervisor'
-                }
-                this.utilityService.showLoader('.m-content');
-                this._learningService.submitLearningAgendas(data).subscribe(res => {
-                    this.utilityService.hideLoader('.m-content');
-                    if (res.ok) {
-                        swal({
-                            title: 'Submitted Successfully!',
-                            text: "Learning Agendas have been submitted for Supervisor Approval.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
-                        });
-                        this.loadLearningDetailsInfo();
+        if (this.learningData.no > 0) {
+
+            swal({
+                title: 'Are you sure?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    let data = {
+                        masterId: this.param_id,
+                        empId: this._currentEmpId,
+                        supervisor_id: this.currentEmployee.supervisorDetails._id,
+                        emp_name: this.currentEmployee.fullName,
+                        supervisor_name: this.currentEmployee.supervisorDetails.fullName,
+                        action_link: window.location.origin + '/my/team/workflows/supervisor'
                     }
-                }, error => {
-                    this.loadLearningDetailsInfo();
-                    this.utilityService.hideLoader('.m-content');
-                });
-            }
-        });
+                    this.utilityService.showLoader('.m-content');
+                    this._learningService.submitLearningAgendas(data).subscribe(res => {
+                        this.utilityService.hideLoader('.m-content');
+                        if (res.ok) {
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text: "Learning Agendas have been submitted for Supervisor Approval.",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            this.loadLearningDetailsInfo();
+                        }
+                    }, error => {
+                        this.loadLearningDetailsInfo();
+                        this.utilityService.hideLoader('.m-content');
+                    });
+                }
+            });
+            
+        } else {
+
+            swal({
+                title: 'Error! ',
+                text: "No Agendas Added!",
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+            
+        }
+        
     }
 
 
@@ -328,7 +348,7 @@ export class MyLearningComponent {
 
 
 
-        // if (this.learningData.progressStatus == "Dropped") {
+        // if (this.learningData.progressStatus == "Open") {
         //     this.isDisabled = true;
         // } else {
         //     if (this.learningData.status) {
@@ -339,12 +359,24 @@ export class MyLearningComponent {
         //     }
         // }
 
-        // if (this.learningData.mtr_master_status == "SendBack" && this.learningData.status != "Dropped") {
-        //     this.isSendBack = true;
-        // }
-        // else {
-        //     this.isSendBack = false;
-        // }
+        if (this.learningData.status == "SendBack" || this.learningData.status == "initiated" ) {
+            this.isDisabled = false;
+        }
+        else {
+            this.isDisabled = true;
+        }
+
+        if(this.learningData.progressStatus == "Completed" || this.learningData.progressStatus == "completed") {
+            this.isCompleted = true;
+        }
+
+        if(this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
+            this.showStat = true;
+        }
+        else {
+            this.showStat = false;
+        }
+
 
 
     }

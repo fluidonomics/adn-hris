@@ -25,7 +25,7 @@ export class HrLearningComponent {
     gradeData: any = [];
 
     batchData: any = {
-
+        "emp_id" : []
     };
 
 
@@ -164,7 +164,9 @@ export class HrLearningComponent {
         this.batchData.emp_id_array = this.employeeData.filter(function (employee, index, array) {
             return employee.checked;
         }).map(item => {
-            return item._id
+            return {
+                emp_id : item._id
+            }
         });
 
         if (this.batchData.emp_id_array.length > 0) {
