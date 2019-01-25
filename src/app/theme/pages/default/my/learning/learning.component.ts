@@ -187,6 +187,7 @@ export class MyLearningComponent {
     }
 
     loadLearningDetailsInfo() {
+        debugger;
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
 
@@ -197,6 +198,7 @@ export class MyLearningComponent {
     }
 
     loadSupervisorData() {
+        debugger;
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {

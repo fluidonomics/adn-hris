@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 import { LearningService } from '../../../../../services/learning.service';
 
 @Component({
-    selector: 'learning-approval',
-    templateUrl: 'learning-approval.component.html',
+    selector: 'learning-view',
+    templateUrl: 'learning-view.component.html',
     providers: [LearningService]
 })
 
-export class LearningApprovalComponent implements OnInit {
+export class LearningViewComponent implements OnInit {
 
     _currentEmpId: number;
     learningData: any = [];
@@ -33,7 +33,7 @@ export class LearningApprovalComponent implements OnInit {
         this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
-            this.loadLearningBySupervisor(this._currentEmpId,"Submitted");
+            this.loadLearningBySupervisor(this._currentEmpId,"Approved");
         });
     }
 
