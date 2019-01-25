@@ -70,6 +70,8 @@ export class LearningService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getLearningBySupervisor(supervisorId: number): Observable<Response> {
+        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId;
     submitLearningAgendas(data: any): Observable<Response> {
         let url = "learning/submitlearning";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);

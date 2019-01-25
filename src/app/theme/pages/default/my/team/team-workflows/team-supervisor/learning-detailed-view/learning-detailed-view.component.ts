@@ -28,6 +28,7 @@ export class LearningDetailedViewComponent {
     supervisorData: any = [];
 
     kraInfoData: any = [];
+    learningInfoData: any = [];
 
     isSubmitted: boolean = false;
 
@@ -35,13 +36,19 @@ export class LearningDetailedViewComponent {
     isKraAvaliable: boolean = false;
 
     param_emp_id: number;
+    param_master_id: number;
     param_id: number;
     kraWorkFlowData: any = [];
 
     status: any;
+    statusq: any;
     isDisabled: boolean = true;
+    isDis: boolean = true;
     user: any;
     showStat = false;
+
+    learningData: any;
+
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
     meta: Meta, title: Title,
@@ -68,6 +75,8 @@ export class LearningDetailedViewComponent {
                   if (params['id'] && params['emp_id']) {
                       this.param_id = params['id'];
                       this.param_emp_id = parseInt(params['emp_id']);
+                      this.param_master_id = parseInt(params['id']);
+                      console.log("path var : ", params['id']);
                       this.initData();
                   }
               });
@@ -77,43 +86,64 @@ export class LearningDetailedViewComponent {
   }
 
   initData() {
-      this.loadKraCategoryData();
-      this.loadWeightAgeData();
+      //console.log("route : ", this._route.url._value[])
+      this.loadLearningEmployee();
+    //   this.loadKraCategoryData();
+    //   this.loadWeightAgeData();
       this.loadSupervisorData();
-      this.loadKraInfo();
+    //   this.loadKraInfo();
       this.getEmployee();
   }
 
-  loadKraInfo() {
-      this._learningService.getKraInfo(this.param_id).subscribe(
-          res => {
-              this.kraInfoData = res.json().data;
-              this.isDisabled = res.json().status == 'Approved' ? true : false;
-              this.status = res.json().status;
-          },
-          error => {
-          });;
+  loadLearningEmployee() {
+
+    this._learningService.getLearningInfo(this.param_master_id).subscribe(
+        res => {
+            console.log("response : ", res.json().result.message);
+            this.learningInfoData = res.json().result.message;
+            this.isDis = res.json().status == 'Approved' ? true : false;
+            this.statusq = res.json().status;
+            console.log("learningInfoData : ", this.learningInfoData);
+        },
+        error => {
+
+
+        }
+    );
   }
 
-  loadKraCategoryData() {
-      this._commonService.getKraCategory()
-          .subscribe(
-              data => {
-                  this.kraCategoryData = data.json();
-              },
-              error => {
-              });
-  }
 
-  loadWeightAgeData() {
-      this._commonService.getKraWeightage()
-          .subscribe(
-              data => {
-                  this.weightageData = data.json();
-              },
-              error => {
-              });
-  }
+//   loadKraInfo() {
+//       this._learningService.getKraInfo(this.param_id).subscribe(
+//           res => {
+//               this.kraInfoData = res.json().data;
+//               this.isDisabled = res.json().status == 'Approved' ? true : false;
+//               this.status = res.json().status;
+//               console.log("kra info data : ", res.json());
+//           },
+//           error => {
+//           });;
+//   }
+
+//   loadKraCategoryData() {
+//       this._commonService.getKraCategory()
+//           .subscribe(
+//               data => {
+//                   this.kraCategoryData = data.json();
+//               },
+//               error => {
+//               });
+//   }
+
+//   loadWeightAgeData() {
+//       this._commonService.getKraWeightage()
+//           .subscribe(
+//               data => {
+//                   this.weightageData = data.json();
+//               },
+//               error => {
+//               });
+//   }
 
   loadSupervisorData() {
       this._commonService.getKraSupervisor(this.param_emp_id)
@@ -165,20 +195,20 @@ export class LearningDetailedViewComponent {
               confirmButtonText: confirmButtonText
           }).then((result) => {
               if (result.value) {
-                  this.saveKraDetails(index, status);
+                  this.saveLearningDetails(index, status);
               }
           });
       }
   }
 
-  saveKraDetails(index: number, status: string) {
-      this.kraInfoData[index].supervisorStatus = status;        
-      this._learningService.saveKra(this.kraInfoData[index]).subscribe(res => {
+  saveLearningDetails(index: number, status: string) {
+      this.learningInfoData[index].supervisorStatus = status;        
+      this._learningService.saveLearning(this.learningInfoData[index]).subscribe(res => {
           if (res.ok) {
               this.modalRef.hide();
-              if (status == 'SendBack' || this.kraInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.kraInfoData.length) {
+              if (status == 'SendBack' || this.learningInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.learningInfoData.length) {
                   let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
-                  this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
+                  //this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
               }
           }
       },
@@ -186,23 +216,26 @@ export class LearningDetailedViewComponent {
           });
   }
 
-  saveKraWorkFlow(data) {
-      this._learningService.saveKraWorkFlow(data)
-          .subscribe(
-              res => {
-              },
-              error => {
-              });
-  }
+//   saveKraWorkFlow(data) {
+//       this._learningService.saveKraWorkFlow(data)
+//           .subscribe(
+//               res => {
+//               },
+//               error => {
+//               });
+//   }
 
   modalRef: BsModalRef;
   kraData: any = {};
   showKraDetail(index, event) {
+      debugger;
+      console.log("index and event : ", index, event);
       this.modalRef = this.modalService.show(this.learningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
-      this.kraData = this.kraInfoData[index];
+      this.kraData = this.learningInfoData[index];
       this.kraData.no = index + 1;
       this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
       this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+      console.log("kradata no : ", this.kraData.no);
   }
 
 

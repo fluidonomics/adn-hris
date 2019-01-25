@@ -16,6 +16,18 @@ export class LearningDetailedViewService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getLearningInfo(master_id: number): Observable<Response> {
+
+        let url = "learning/lerningdetails?master_id=" + master_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    saveLearning(data: any): Observable<Response> {
+        let url = "learning/learningapproval"
+        
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
     getKraInfo(kraWorkflow_id?: number): Observable<Response> {
         let url = "kra/getKraInfo?kraWorkflow_id=" + kraWorkflow_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);

@@ -5,121 +5,49 @@ import { MyTeamService } from '../../../my-team.service';
 import { environment } from "../../../../../../../../../environments/environment";
 import { UtilityService } from '../../../../../../../../base/_services/utilityService.service';
 import { Router } from '@angular/router';
+import { LearningService } from '../../../../../services/learning.service';
 
 @Component({
     selector: 'learning-approval',
-    templateUrl: 'learning-approval.component.html'
+    templateUrl: 'learning-approval.component.html',
+    providers: [LearningService]
 })
 
 export class LearningApprovalComponent implements OnInit {
 
-   employeeSearch: any;
-   kraSearch: any;
-   kraSearchView: any;
-   employeeData: any = [];
-   _currentEmpId: number;
-   kraData: any = [];
-   kraDataView: any = [];
-   imageBase: any;
-   kraReverse: boolean = true;
-   employeeReverse: boolean = true;
+    _currentEmpId: number;
+    learningData: any = [];
+    learningSearch: any;
+    learningReverse: boolean = true;
+    imageBase: any;
 
     constructor(
-      private _myteamService: MyTeamService,
-      public _authService: AuthService,
-      private _utilityService: UtilityService,
-      private router: Router
+        private _myteamService: MyTeamService,
+        public _authService: AuthService,
+        private _utilityService: UtilityService,
+        private router: Router,
+        private _learningService: LearningService
     ) { }
 
     ngOnInit() {
-      this._authService.validateToken().subscribe(
-         res => {
-             this._currentEmpId = this._authService.currentUserData._id;
-             this.loadAllEmployee();
-         });
-     this.imageBase = environment.content_api_base.apiBase;
+        this.imageBase = environment.content_api_base.apiBase;
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.loadLearningBySupervisor(this._currentEmpId);
+        });
     }
 
-    loadAllEmployee() {
-      this._utilityService.showLoader("#employeeApproval");
-      this._utilityService.showLoader("#kraApproval");
-      this._myteamService.getAllEmployee()
-          .subscribe(
-              res => {
-                  let data = res.json().data || [];
-                  data = data.filter(obj => obj.supervisor_id == this._currentEmpId);
-                  if (data.length > 0) {
-                      let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved");
-                      this.employeeData = profileData || [];
-                      this._utilityService.hideLoader("#employeeApproval");
-                      this._myteamService.getKraForApproval(this._currentEmpId).subscribe(
-                          resApproval => {
-                              this.loadKraData(resApproval.json().data);
-                          },
-                          error => {
+    loadLearningBySupervisor(sup_Id: number) {
 
-                          }
-                      )
-                      //this.loadKraData(res.json().data);
+        this._learningService.getLearningBySupervisor(sup_Id).subscribe(res => {
+            this.learningData = res.json().result.message || [];
+        }, error => {
+            console.log(error);
+        });
+    } 
 
-                      //    for (var i = 0; i < data.length; i++) { 
-                      //             if(data[i].kraWorkflow)
-                      //             {
-                      //               let objkraSubmitted= data[i].kraWorkflow.filter(obj=>obj.status=="Submitted");
-                      //               if(objkraSubmitted.length >0)
-                      //               {
-                      //                 for (var j = 0; j < objkraSubmitted.length; j++)
-                      //                 {
-                      //                     objkraSubmitted[j].fullName= data[i].fullName;
-                      //                     objkraSubmitted[j].profileImage= data[i].profileImage;
-                      //                     this.kraData.push(objkraSubmitted[j]);
-                      //                 }
-                      //               }
-                      //               //data[i].kraWorkflow=kraWorkFlowData;
-                      //             //   else
-                      //             //   data[i].kraWorkflow=null;
-                      //             }
-                      //     }
-
-                      // let kraData = data.filter(obj =>  obj.kraWorkflow && obj.kraWorkflow.filter(d=>d.kraWorkflow=='Submitted'));
-
-                  }
-                  else {
-                      this.employeeData = [];
-                      this._utilityService.hideLoader("#employeeApproval");
-                      this._utilityService.hideLoader("#kraApproval");
-                  }
-              },
-              error => {
-                  this._utilityService.hideLoader("#employeeApproval");
-                  this._utilityService.hideLoader("#kraApproval");
-              });
-  }
-
-
-  loadKraData(data: any) {
-      let __this = this;
-      //data = data.filter(obj => obj.supervisor_id == this._currentEmpId || obj.secondarySupervisor_id == this._currentEmpId);
-      data.forEach(function (element) {
-          if (element) {
-              if (element.status == "Submitted") {
-                  element.fullName = element.emp_name;
-                  __this.kraData.push(element);
-              }
-              else if (element.status == "Approved") {
-                  element.fullName = element.emp_name;
-                  __this.kraDataView.push(element);
-              }
-          }
-      });
-      this._utilityService.hideLoader("#kraApproval");
-  }
-
-  ngAfterViewInit() {
-  }
-
-
-  gotoLearningData(kra) {
-   this.router.navigateByUrl("/my/team/workflows/learning-detailed-view/" + kra._id + "/" + kra.emp_id);
-}
+    gotoLearningData(Learning) {
+        console.log("learn : ", Learning);
+        this.router.navigateByUrl("/my/team/workflows/learning-detailed-view/" + Learning.learning_master_details._id + "/" + Learning.emp_details._id);
+    }
 }

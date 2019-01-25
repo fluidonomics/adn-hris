@@ -55,24 +55,24 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr *ngFor="let kraInfo of kraInfoData;let i=index">
+                                          <tr *ngFor="let kraInfo of learningInfoData;let i=index">
                                               <th scope="row">
                                                   {{i+1}}
                                               </th>
                                               <td>
-                                                   <ng-select class="m-input m-input--air customError" name="kraCategory" id="kraCategory"
-                                                   [items]="kraCategoryData" bindLabel="kraCategoryName" bindValue="_id"
-                                                   placeholder="Select Development Area" [(ngModel)]="kraInfo.category_id"
-                                                   [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
+                                                <ng-select class="m-input m-input--air customError" name="kraCategory" id="kraCategory"
+                                                [items]="kraCategoryData" bindLabel="kraCategoryName" bindValue="_id"
+                                                placeholder="Select Development Area" [(ngModel)]="kraInfo.category_id"
+                                                [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
                                               </td>
                                               <td>
-                                                   <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel"
+                                                   <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.timelines" #timelines="ngModel"
                                                    class="form-control m-input m-input--air" disabled></textarea>
                                                   
                                                       
                                               </td>
                                               <td>
-                                                   <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel"
+                                                   <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.status" #status="ngModel"
                                                       class="form-control m-input m-input--air" disabled></textarea>
                                               </td>
                                               <td class="text-center"  style="width: 70px;">
@@ -90,7 +90,7 @@
                               <br>
                               <!-- </form> -->
                           </div><br><br>
-                          <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
+                          <!-- <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
                               *ngIf="isKraAvaliable">
                               <div class="tab-content">
                                   <div class="m-widget3">
@@ -202,154 +202,154 @@
               </div>
           </div>
       </div>
-  </div>
+  </div> -->
   
   <ng-template #learningDetailModal>
-      <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
-            <div class="m-portlet__head">
-               <div class="m-portlet__head-caption">
-                  <div class="m-portlet__head-title">
-                     <h3 class="m-portlet__head-text">
-                        Learning Agenda Approval
-                     </h3>
-                  </div>
-               </div>
-               <div class="m-portlet__head-tools">
-                  <ul class="m-portlet__nav">
-                     <li class="m-portlet__nav-item">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                           <div class="btn-group" role="group">
-                              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                 <span aria-hidden="true">&times;</span>
-                              </button>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+          <div class="m-portlet__head">
+             <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                   <h3 class="m-portlet__head-text">
+                      Learning Agenda Approval
+                   </h3>
+                </div>
+             </div>
+             <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                   <li class="m-portlet__nav-item">
+                      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                         <div class="btn-group" role="group">
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                               <span aria-hidden="true">&times;</span>
+                            </button>
+                         </div>
+                      </div>
+                   </li>
+                </ul>
+             </div>
+          </div>
+        
+            <div class="m-portlet__body">
+                <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningDetails(MTRDataForm,kraData._id)" id="MTRDataForm"
+                 #MTRDataForm="ngForm">
+                   <div class="m-widget6 ">
+                      <div class="row">
+                         <div class="col-md-6">
+                            <span>Learning Agenda #{{kraData.no}}</span>
+                         </div>
+                         <div class="col-md-6">
+                               <div class="row">
+                                   <div class="col-md-9">
+                                       <span class="block"> {{user?.fullName}} ({{user?.userName}})</span>
+                                       <span class="block"> {{user?.designationDetails?.designationName}}</span>
+                                   </div>
+                                   <div class="col-md-3">
+                                       <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                   </div>
+                               </div>
                            </div>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-          
-              <div class="m-portlet__body">
-                  <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(MTRDataForm,mtrData._id)" id="MTRDataForm"
-                   #MTRDataForm="ngForm">
-                     <div class="m-widget6 ">
-                        <div class="row">
-                           <div class="col-md-6">
-                              <span>Learning Agenda #{{mtrData.no}}</span>
-                           </div>
-                           <div class="col-md-6">
-                                 <div class="row">
-                                     <div class="col-md-9">
-                                         <span class="block"> {{user?.fullName}} ({{user?.userName}})</span>
-                                         <span class="block"> {{user?.designationDetails?.designationName}}</span>
-                                     </div>
-                                     <div class="col-md-3">
-                                         <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="row details">
-                              <div class="col-md-2 ">
-                                    Development Area
-                              </div>
-                                 <div class="col-md-4">
-                                    <ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData" bindLabel="kraCategoryName"
-                                     bindValue="_id" placeholder="Select Development Area" [(ngModel)]="mtrData.category_id" [clearable]="false" #mtrCategory="ngModel"
-                                      [required]="!mtrData.mtr_master_kraDetailId"></ng-select>
-                                    <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtrCategory.invalid">
-                                       This field is required.
-                                    </div>
-                                 </div>
-                           <div class="col-md-2">
-                              Supervisor
-                           </div>
-                           <div class="col-md-4">
-                              <ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
-                               bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.mtr_master_supervisor_id" [clearable]="false"
-                               #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !supervisorOne.valid">
-                                 This field is required.
-                              </div>
-                           </div>
-                           <div class="col-md-12 details">
-                              <span>Development Plan</span>
-                              <textarea name="mtr_kra" id="mtr_kra" [(ngModel)]="mtrData.mtr_kra" #mtr_kra="ngModel" class="form-control m-input m-input--air"
-                               [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></textarea>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtr_kra.invalid">
-                                 This field is required.
-                              </div>
-                           </div>
-                           <div class="col-md-6 details">
-                              <span>Timelines</span>
-                              <textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="mtrData.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air"
-                               [disabled]="isDisabled" required></textarea>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !unitOfSuccess.valid">
-                                 This field is required.
-                              </div>
-                           </div>
-                           <div class="col-md-6 details">
-                              <span>Measure of Success</span>
-                              <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess" #measureOfSuccess="ngModel"
-                               class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid">
-                                 This field is required.
-                              </div>
-                           </div>
-                           <div class="col-md-12 details">
-                              <span>Support Required</span>
-                              <textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
-                               [disabled]="isDisabled" required></textarea>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
-                                 This field is required.
-                              </div>
-                           </div>
-                           <div class="col-md-6 details" >
-                                 <span>Learning Status</span>
-                                 <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses" bindLabel="label"
-                                  bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" (change)="onStatusChange($event)"
-                                  [clearable]="false" #progressStatus="ngModel"[disabled]="showStat" required></ng-select>
-                                 <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
-                                    This field is required.
-                                 </div>
-                           </div>
-                           <div class="col-md-6 details" >
-                                 <span>Learning Completion Comment</span>
-                                 <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess" #measureOfSuccess="ngModel"
-                                  class="form-control m-input m-input--air" [disabled]="showStat" required></textarea>
-                                 <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid" display="none">
-                                    This field is required.
-                                 </div>
-                              </div>
-                        </div>
-                        <div class="col-md-12 details">
-                              <span>Supervisor Comment</span>
-                              <textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
-                               [disabled]="isDisabled" required></textarea>
-                              <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
-                                 This field is required.
-                              </div>
-                        </div>
-                        <div class="form-actions">
-                              <div class="row">
-                                  <div class="col-md-12">
-                                      <div class="m-form__actions">
-                                          <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                              class="btn btn-success" (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
-                                          <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                              class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')" type="button">Send
-                                              Back</button>
-                                          <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
-                                      </div>
+                      </div>
+                      <div class="row details">
+                            <div class="col-md-2 ">
+                                  Development Area
+                            </div>
+                               <div class="col-md-4">
+                                  <ng-select class="m-input m-input--air" name="mtrCategoryData" id="mtrCategoryData" [items]="mtrCategoryData" bindLabel="kraCategoryName"
+                                   bindValue="_id" placeholder="Select Development Area" [(ngModel)]="mtrData.category_id" [clearable]="false" #mtrCategory="ngModel"
+                                    [required]="!mtrData.mtr_master_kraDetailId"></ng-select>
+                                  <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtrCategory.invalid">
+                                     This field is required.
                                   </div>
-                              </div>
-                          </div>
-                     </div>
-                  </form>
-               </div>
-   
-   </div>
-  </ng-template>
+                               </div>
+                         <div class="col-md-2">
+                            Supervisor
+                         </div>
+                         <div class="col-md-4">
+                            <ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData" bindLabel="fullName"
+                             bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="mtrData.mtr_master_supervisor_id" [clearable]="false"
+                             #supervisorOne="ngModel" [disabled]="isDisabled" required></ng-select>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !supervisorOne.valid">
+                               This field is required.
+                            </div>
+                         </div>
+                         <div class="col-md-12 details">
+                            <span>Development Plan</span>
+                            <textarea name="mtr_kra" id="mtr_kra" [(ngModel)]="mtrData.mtr_kra" #mtr_kra="ngModel" class="form-control m-input m-input--air"
+                             [disabled]="mtrData.mtr_master_kraDetailId" [required]="!mtrData.mtr_master_kraDetailId"></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && mtr_kra.invalid">
+                               This field is required.
+                            </div>
+                         </div>
+                         <div class="col-md-6 details">
+                            <span>Timelines</span>
+                            <textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="mtrData.unitOfSuccess" #unitOfSuccess="ngModel" class="form-control m-input m-input--air"
+                             [disabled]="isDisabled" required></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !unitOfSuccess.valid">
+                               This field is required.
+                            </div>
+                         </div>
+                         <div class="col-md-6 details">
+                            <span>Measure of Success</span>
+                            <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess" #measureOfSuccess="ngModel"
+                             class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid">
+                               This field is required.
+                            </div>
+                         </div>
+                         <div class="col-md-12 details">
+                            <span>Support Required</span>
+                            <textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
+                             [disabled]="isDisabled" required></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
+                               This field is required.
+                            </div>
+                         </div>
+                         <div class="col-md-6 details" >
+                               <span>Learning Status</span>
+                               <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses" bindLabel="label"
+                                bindValue="id" placeholder="Select Status" [(ngModel)]="mtrData.progressStatus" (change)="onStatusChange($event)"
+                                [clearable]="false" #progressStatus="ngModel"[disabled]="showStat" required></ng-select>
+                               <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && progressStatus.invalid">
+                                  This field is required.
+                               </div>
+                         </div>
+                         <div class="col-md-6 details" >
+                               <span>Learning Completion Comment</span>
+                               <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="mtrData.measureOfSuccess" #measureOfSuccess="ngModel"
+                                class="form-control m-input m-input--air" [disabled]="showStat" required></textarea>
+                               <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && !measureOfSuccess.valid" display="none">
+                                  This field is required.
+                               </div>
+                            </div>
+                      </div>
+                      <div class="col-md-12 details">
+                            <span>Supervisor Comment</span>
+                            <textarea name="employeeComment" id="employeeComment" [(ngModel)]="mtrData.employeeComment" #employeeComment="ngModel" class="form-control m-input m-input--air"
+                             [disabled]="isDisabled" required></textarea>
+                            <div class="form-control-feedback has-danger" *ngIf="MTRDataForm.submitted && employeeComment.invalid">
+                               This field is required.
+                            </div>
+                      </div>
+                      <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="m-form__actions">
+                                        <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                            class="btn btn-success" (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
+                                        <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                            class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')" type="button">Send
+                                            Back</button>
+                                        <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                </form>
+             </div>
+ 
+ </div>
+</ng-template>
 
 
 
