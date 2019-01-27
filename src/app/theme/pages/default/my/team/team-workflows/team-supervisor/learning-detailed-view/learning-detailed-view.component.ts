@@ -42,7 +42,7 @@ export class LearningDetailedViewComponent {
 
     status: any;
     statusq: any;
-    isDisabled: boolean = true;
+    isDisabled: boolean = false;
     isDis: boolean = true;
     user: any;
     showStat = false;
@@ -161,7 +161,6 @@ export class LearningDetailedViewComponent {
                 if (result.value) {
                     let isApproved: boolean = false;
                     if (Remarks == "Approved") {
-                        debugger;
                         isApproved = true;
                     }
                     let request = {
@@ -175,9 +174,8 @@ export class LearningDetailedViewComponent {
                         supervisorComment: learningData.supervisorComment,
                         progressStatus: learningData.progressStatus
                     }
-                    //this.utilityService.showLoader('.mtrDetailsPortlet');
-                    this._learningService.saveLearning(request).subscribe(res => {
-                        // this.utilityService.hideLoader('.mtrDetailsPortlet');
+                    debugger;
+                    this._learningService.approveLearning(request).subscribe(res => {
                         if (res.ok) {
                             this.loadLearningEmployee();
                             this.modalRef.hide();
@@ -197,21 +195,21 @@ export class LearningDetailedViewComponent {
 
     }
 
-    saveLearningDetails(index: number, status: string) {
-        this.learningInfoData[index].status = status;
-        debugger;
-        this._learningService.saveLearning(this.learningInfoData[index]).subscribe(res => {
-            if (res.ok) {
-                this.modalRef.hide();
-                if (status == 'SendBack' || this.learningInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.learningInfoData.length) {
-                    let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
-                    //this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
-                }
-            }
-        },
-            error => {
-            });
-    }
+    // saveLearningDetails(index: number, status: string) {
+    //     this.learningInfoData[index].status = status;
+    //     debugger;
+    //     this._learningService.approveLearning(this.learningInfoData[index]).subscribe(res => {
+    //         if (res.ok) {
+    //             this.modalRef.hide();
+    //             if (status == 'SendBack' || this.learningInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.learningInfoData.length) {
+    //                 let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
+    //                 //this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
+    //             }
+    //         }
+    //     },
+    //         error => {
+    //         });
+    // }
 
     modalRef: BsModalRef;
     learnData: any = {};
@@ -223,6 +221,12 @@ export class LearningDetailedViewComponent {
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
         console.log("learningdata no : ", this.learnData);
+        if(this.learnData.status=="Approved" || this.learnData.status=="SendBack") {
+            this.isDisabled = true;
+        }
+        else {
+            this.isDisabled = false;
+        }
     }
 
 

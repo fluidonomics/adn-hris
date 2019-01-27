@@ -311,7 +311,7 @@
                          </div>
                          <div class="col-md-6 details" >
                                <span>Learning Completion Comment</span>
-                               <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="learnData.measureOfSuccess" #measureOfSuccess="ngModel"
+                               <textarea name="employeeComment" id="employeeComment" [(ngModel)]="learnData.employeeComment" #employeeComment="ngModel"
                                 class="form-control m-input m-input--air" disabled required></textarea>
                                <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !measureOfSuccess.valid" display="none">
                                   This field is required.
@@ -320,8 +320,8 @@
                       </div>
                       <div class="col-md-12 details">
                             <span>Supervisor Comment</span>
-                            <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #supervisorComment="ngModel" class="form-control m-input m-input--air"
-                              required></textarea>
+                            <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
+                              required [disabled]="isDisabled"></textarea>
                             <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisorComment.invalid">
                                This field is required.
                             </div>
@@ -330,10 +330,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button *ngIf="learnData.supervisorId == _authService.atCurrentUserData._id "
-                                            class="btn btn-success" (click)="preSaveLearningDetails(learnData,'Approved')">Approve</button>
-                                        <button *ngIf="learnData.supervisorId == _authService.atCurrentUserData._id "
-                                            class="btn btn-danger" (click)="preSaveLearningDetails(learnData,'SendBack')" type="button">Send
+                                        <button 
+                                            class="btn btn-success" (click)="preSaveLearningDetails(learnData,'Approved')" *ngIf="!isDisabled">Approve</button>
+                                        <button 
+                                            class="btn btn-danger" (click)="preSaveLearningDetails(learnData,'SendBack')" type="button" *ngIf="!isDisabled"> Send
                                             Back</button>
                                         <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                                     </div>

@@ -17,7 +17,7 @@ export class LearningDetailedViewService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    saveLearning(data: any): Observable<Response> {
+    approveLearning(data: any): Observable<Response> {
         let url = "learning/learningapproval"
         
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);

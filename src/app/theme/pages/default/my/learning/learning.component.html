@@ -516,26 +516,23 @@
 						</div>
 						<div class="col-md-6 details">
 							<span>Progress Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status"
-							 [(ngModel)]="learningData.progressStatus" [clearable]="false" #progressStatus="ngModel" required [disabled]="!showStat"></ng-select>
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status" [items] = "progressStatusData" bindLabel="progressStatus" bindValue="_id"
+							 [(ngModel)]="learningData.progressStatus" [clearable]="false" #progressStatus="ngModel" required [disabled]="isCompleted"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Supervisor Approval Comments</span>
-							<textarea name="supcomments" id="supcomments" [(ngModel)]="learningData.supcomments" #supcomments="ngModel"
-							 class="form-control m-input m-input--air" [disabled]="!showStat" required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !supcomments.valid && showStat"
-							 display="none">
-								This field is required.
-							</div>
+							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learningData.supervisorComment" #supervisorComment="ngModel"
+							 class="form-control m-input m-input--air" disabled required></textarea>
+							
 						</div>
 						<div class="col-md-12 details">
 							<span>Completion Comments</span>
-							<textarea name="completionComments" id="completionComments" [(ngModel)]="learningData.completionComments"
-							 #completionComments="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && completionComments.invalid">
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="learningData.employeeComment"
+							 #employeeComment="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && employeeComment.invalid && progressStatus=='Completed'">
 								This field is required.
 							</div>
 						</div>
@@ -544,7 +541,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="!isCompleted && !isDisabled">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

@@ -43,7 +43,7 @@ export class MyLearningComponent {
         'Individual Development',
         'Functional Development'
     ];
-    progressStatus = [
+    progressStatusData = [
         'Open',
         'Completed'
     ];
@@ -181,24 +181,24 @@ export class MyLearningComponent {
         this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
+            console.log("agenda info: "+ this.learningInfoData);
             // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
     }
 
     loadLearningDetailsInfo() {
-        debugger;
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
 
             this.learningInfoData = data.result.message;
+            console.log("details info: "+ this.learningInfoData);
             // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
     }
 
     loadSupervisorData() {
-        debugger;
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
@@ -229,21 +229,13 @@ export class MyLearningComponent {
                 developmentPlan: "",
                 timelines: "",
                 supportRequired: "",
+                employeeComment:"",
+                supervisorComment:""
 
             };
 
             this.learningInfoData.push(data);
-        //}
-        //else {
-        //     swal({
-        //         title: 'Oops!',
-        //         text: "You can't add more than 3 Learning Agendas",
-        //         type: 'warning',
-        //         showCancelButton: false,
-        //         confirmButtonColor: '#66BB6A',
-        //         confirmButtonText: 'OK'
-        //     });
-        // }
+        
     }
 
 
@@ -346,6 +338,7 @@ export class MyLearningComponent {
         this.modalRef = this.modalService.show(this.mylearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.learningData = JSON.parse(JSON.stringify(this.learningInfoData[index]));
         this.learningData.no = index + 1;
+        console.log("Index: "+index);
 
 
 
@@ -361,15 +354,18 @@ export class MyLearningComponent {
         //     }
         // }
 
+        
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated" ) {
             this.isDisabled = false;
         }
         else {
             this.isDisabled = true;
         }
-
         if(this.learningData.progressStatus == "Completed" || this.learningData.progressStatus == "completed") {
             this.isCompleted = true;
+        }
+        else {
+            this.isCompleted = false;
         }
 
         if(this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
