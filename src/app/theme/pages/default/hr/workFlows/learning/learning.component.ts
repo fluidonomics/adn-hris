@@ -160,7 +160,7 @@ export class HrLearningComponent {
     }
 
     initBatch(form) {
-        debugger;
+        //debugger;
         this.batchData.emp_id_array = this.employeeData.filter(function (employee, index, array) {
             return employee.checked;
         }).map(item => {
@@ -169,25 +169,38 @@ export class HrLearningComponent {
             }
         });
 
-        if (this.batchData.emp_id_array.length > 0) {
-            this.batchData.createdBy = this._currentEmpId;
-
-            this.utilityService.showLoader('#initiate-loader');
-            this.learningService.initBatch(this.batchData)
-                .subscribe(res => {
-                    if (res.ok) {
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (this.batchData.emp_id_array.length > 0) {
+                this.batchData.createdBy = this._currentEmpId;
+    
+                this.utilityService.showLoader('#initiate-loader');
+                this.learningService.initBatch(this.batchData)
+                    .subscribe(res => {
+                        if (res.ok) {
+                            this.utilityService.hideLoader('#initiate-loader');
+                            swal("Success", "Batch Initiated Successfully", "success");
+                            form.resetForm();
+                            this.clearForm();
+                        }
+                    }, error => {
                         this.utilityService.hideLoader('#initiate-loader');
-                        swal("Success", "Batch Initiated Successfully", "success");
-                        form.resetForm();
-                        this.clearForm();
-                    }
-                }, error => {
-                    this.utilityService.hideLoader('#initiate-loader');
-                });
-        }
-        else {
-            swal('Oops!', 'No employee selected', 'warning')
-        }
+                    });
+            }
+            else {
+                swal('Oops!', 'No employee selected', 'warning')
+            }
+        });
+
+
+        
     }
 
     // getColumnName(column) {

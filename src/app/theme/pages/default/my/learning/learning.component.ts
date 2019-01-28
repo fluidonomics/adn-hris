@@ -47,13 +47,17 @@ export class MyLearningComponent {
         'Open',
         'Completed'
     ];
+    suparr = [];
+
+    showSub:boolean = true;
 
     supervisorData: any = [];
 
     isDisabled: boolean = false;
     isCompleted: boolean = false;
     isVisible: boolean = true;
-    showStats : boolean = false;
+    showStats: boolean = false;
+    isApproved: boolean = false;
     employee: any = {};
 
 
@@ -90,8 +94,8 @@ export class MyLearningComponent {
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
+                    //debugger;
                     if (params['id']) {
-                        //debugger;
                         this.param_id = params['id'];
                         this.loadData();
                     }
@@ -129,8 +133,10 @@ export class MyLearningComponent {
             developmentPlan: this.learningInfoData[index].developmentPlan,
             timelines: this.learningInfoData[index].timelines,
             supportRequired: this.learningInfoData[index].supportRequired,
+            employeeComment: this.learningInfoData[index].employeeComment
 
         }
+        //debugger;
         let isError: boolean = false;
 
         if (isError) {
@@ -181,26 +187,79 @@ export class MyLearningComponent {
         this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
-            console.log("agenda info: "+ this.learningInfoData);
-            // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
+            console.log("agenda info: " + this.learningInfoData);
+            
         }, error => {
         });;
+
+        
     }
 
     loadLearningDetailsInfo() {
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
-
+            //debugger;
             this.learningInfoData = data.result.message;
-            console.log("details info: "+ this.learningInfoData);
+            console.log("details info: " + this.learningInfoData);
+            
+            if(this.learningInfoData.length > 0){
+                this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
+            } 
+            else {
+                this.learningInfoData = [
+                    {
+            
+                        _id: null,
+                        master_id: this.param_id,
+                        supervisorId: "",
+                        status: "initiated",
+                        measureOfSuccess: "",
+                        isDeleted: false,
+                        createdBy: "",
+                        updatedBy: this._currentEmpId,
+                        progressStatus: "Open",
+                        developmentArea: "",
+                        developmentPlan: "",
+                        timelines: "",
+                        supportRequired: "",
+                        employeeComment: "",
+                        supervisorComment: ""
+            
+                    }
+                ];
+            }
+           
             // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
+
+        // for(let i=0;i<this.LearningAgendaData.length;i++) {
+        //     if(this.LearningAgendaData[i]._id == this.param_id) {
+        //         if(this.LearningAgendaData[i].status == "Approved" || this.LearningAgendaData[i].status == "Submitted") {
+        //             this.showSub = false;
+        //             break;
+        //             debugger;
+        //         } 
+        //         else {
+        //             this.showSub = true;
+        //             break;
+        //             debugger;
+        //         }
+        //     }
+        // }
     }
 
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
+        
             this.supervisorData = data.json();
+
+            // for(let i=0;i<this.supervisorData.length;i++) {
+            //     this.suparr.push(this.supervisorData[i].fullName);
+
+            // }
+            
+           //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
     }
@@ -214,34 +273,34 @@ export class MyLearningComponent {
     addLearningHtml() {
         //let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
         //if (learnA && learnA.length < 3) {
-            let data = {
+        let data = {
 
-                _id: null,
-                master_id: this.param_id,
-                supervisor_id: "",
-                status: "initiated",
-                measureOfSuccess: "",
-                isDeleted: false,
-                createdBy: "",
-                updatedBy: this._currentEmpId,
-                progressStatus: "Open",
-                developmentArea: "",
-                developmentPlan: "",
-                timelines: "",
-                supportRequired: "",
-                employeeComment:"",
-                supervisorComment:""
+            _id: null,
+            master_id: this.param_id,
+            supervisor_id: "",
+            status: "initiated",
+            measureOfSuccess: "",
+            isDeleted: false,
+            createdBy: "",
+            updatedBy: this._currentEmpId,
+            progressStatus: "Open",
+            developmentArea: "",
+            developmentPlan: "",
+            timelines: "",
+            supportRequired: "",
+            employeeComment: "",
+            supervisorComment: ""
 
-            };
+        };
 
-            this.learningInfoData.push(data);
-        
+        this.learningInfoData.push(data);
+
     }
 
 
     submitLearningAgenda(isFormDirty) {
-        if (this.learningData.no > 0) {
-
+        if (this.learningInfoData.length > 0) {
+            //debugger;
             swal({
                 title: 'Are you sure?',
                 text: "",
@@ -260,6 +319,7 @@ export class MyLearningComponent {
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
                         action_link: window.location.origin + '/my/team/workflows/supervisor'
                     }
+                    //debugger;
                     this.utilityService.showLoader('.m-content');
                     this._learningService.submitLearningAgendas(data).subscribe(res => {
                         this.utilityService.hideLoader('.m-content');
@@ -272,6 +332,7 @@ export class MyLearningComponent {
                                 confirmButtonColor: '#66BB6A',
                                 confirmButtonText: 'OK'
                             });
+                           // debugger;
                             this.loadLearningDetailsInfo();
                         }
                     }, error => {
@@ -280,9 +341,9 @@ export class MyLearningComponent {
                     });
                 }
             });
-            
-        } else {
 
+        } else {
+            //debugger;
             swal({
                 title: 'Error! ',
                 text: "No Agendas Added!",
@@ -291,9 +352,9 @@ export class MyLearningComponent {
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK'
             });
-            
+
         }
-        
+
     }
 
 
@@ -338,47 +399,48 @@ export class MyLearningComponent {
         this.modalRef = this.modalService.show(this.mylearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.learningData = JSON.parse(JSON.stringify(this.learningInfoData[index]));
         this.learningData.no = index + 1;
-        console.log("Index: "+index);
-
-
-
-
-        // if (this.learningData.progressStatus == "Open") {
-        //     this.isDisabled = true;
-        // } else {
-        //     if (this.learningData.status) {
-        //         this.isDisabled = this.learningData.status == "SendBack" || this.learningData.status == "Pending" || this.learningData.status == "New" ? false : true;
-        //     }
-        //     else {
-        //         this.isDisabled = false;
-        //     }
-        // }
+        console.log("Index: " + index);
 
         
-        if (this.learningData.status == "SendBack" || this.learningData.status == "initiated" ) {
+
+
+        if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;
         }
         else {
             this.isDisabled = true;
         }
-        if(this.learningData.progressStatus == "Completed" || this.learningData.progressStatus == "completed") {
+        if (this.learningData.progressStatus == "Completed") {
             this.isCompleted = true;
         }
         else {
             this.isCompleted = false;
         }
 
-        if(this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
+        if (this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
             this.showStat = true;
         }
         else {
             this.showStat = false;
         }
 
+        if (this.learningData.status == "Approved") {
+            this.isApproved = true;
+        }
+        else {
+            this.isApproved = false;
+        }
+
+        if (this.learningData.master_status == "Approved" || this.learningData.master_status == "Submitted") {
+            this.showSub = false;
+        }
+        else {
+            this.showSub = true;
+        }
 
 
     }
 
- 
+
 }
 

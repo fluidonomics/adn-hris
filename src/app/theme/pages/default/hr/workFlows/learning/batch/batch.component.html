@@ -68,12 +68,12 @@
                                                <i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                </span>
                                        </th>
-                                       <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
+                                       <!-- <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
                                                <span>
                                                BATCH STATUS
                                                <i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                                </span>
-                                        </th>
+                                        </th> -->
                                        <th class="m-datatable__cell m-datatable__cell--sort" width="15%" >
                                            <span>
                                            ACTION
@@ -106,9 +106,9 @@
                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                            </td>
-                                           <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                           <!-- <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Submitted'}">{{batch.status}}</span></span>
-                                           </td>
+                                           </td> -->
                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                <span *ngIf="batch.status!='Terminated'">
                                                        <a (click)="openEditModal(templateEdit,batch)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
