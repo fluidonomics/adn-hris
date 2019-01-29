@@ -313,7 +313,7 @@
                             <span>Supervisor Comment</span>
                             <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
                               required [disabled]="isDisabled"></textarea>
-                            <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisorComment.invalid">
+                            <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !superviserComment.valid">
                                This field is required.
                             </div>
                       </div>
