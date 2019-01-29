@@ -1,4 +1,4 @@
-@import "../../../../../../../assets/colors.scss";
+@import "../../../../../../assets/colors.scss";
 
 .my-learning {
     .sendBack {
@@ -12,11 +12,6 @@
     }
 
     .dropped {
-        background-color: $status-dropped !important;
-        border: 0px !important;
-    }
-
-    .dropped:hover {
         background-color: $status-dropped !important;
         border: 0px !important;
     }

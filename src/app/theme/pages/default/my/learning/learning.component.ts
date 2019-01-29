@@ -94,13 +94,11 @@ export class MyLearningComponent {
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
-                    //debugger;
                     if (params['id']) {
                         this.param_id = params['id'];
                         this.loadData();
                     }
                     else {
-                        //debugger;
                         this.param_id = null;
                         this.loadLearningAgendaInfo();
                     }
@@ -122,7 +120,7 @@ export class MyLearningComponent {
 
             _id: this.learningInfoData[index]._id,
             master_id: this.param_id,
-            supervisor_id: this.learningInfoData[index].supervisor_id,
+            supervisorId: this.learningInfoData[index].supervisorId,
             status: this.learningInfoData[index].status,
             measureOfSuccess: this.learningInfoData[index].measureOfSuccess,
             isDeleted: false,
@@ -136,7 +134,6 @@ export class MyLearningComponent {
             employeeComment: this.learningInfoData[index].employeeComment
 
         }
-        //debugger;
         let isError: boolean = false;
 
         if (isError) {
@@ -165,7 +162,8 @@ export class MyLearningComponent {
                         confirmButtonText: 'OK'
                     });
                 }
-                this.loadLearningAgendaInfo();
+                this.loadData();
+                //this.loadSupervisorData();
             }, error => {
                 this.utilityService.hideLoader('.m-content');
                 this.modalRef.hide();
@@ -198,10 +196,8 @@ export class MyLearningComponent {
     loadLearningDetailsInfo() {
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
-            //debugger;
             this.learningInfoData = data.result.message;
             console.log("details info: " + this.learningInfoData);
-            
             if(this.learningInfoData.length > 0){
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
             } 
@@ -229,35 +225,16 @@ export class MyLearningComponent {
                 ];
             }
            
-            // this.isChangable = this.learningInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
         }, error => {
         });;
 
-        // for(let i=0;i<this.LearningAgendaData.length;i++) {
-        //     if(this.LearningAgendaData[i]._id == this.param_id) {
-        //         if(this.LearningAgendaData[i].status == "Approved" || this.LearningAgendaData[i].status == "Submitted") {
-        //             this.showSub = false;
-        //             break;
-        //             debugger;
-        //         } 
-        //         else {
-        //             this.showSub = true;
-        //             break;
-        //             debugger;
-        //         }
-        //     }
-        // }
+        
     }
 
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
         
             this.supervisorData = data.json();
-
-            // for(let i=0;i<this.supervisorData.length;i++) {
-            //     this.suparr.push(this.supervisorData[i].fullName);
-
-            // }
             
            //this.suparr.push(this.supervisorData.fullName);
         }, error => {
@@ -277,7 +254,7 @@ export class MyLearningComponent {
 
             _id: null,
             master_id: this.param_id,
-            supervisor_id: "",
+            supervisorId: "",
             status: "initiated",
             measureOfSuccess: "",
             isDeleted: false,
@@ -300,7 +277,6 @@ export class MyLearningComponent {
 
     submitLearningAgenda(isFormDirty) {
         if (this.learningInfoData.length > 0) {
-            //debugger;
             swal({
                 title: 'Are you sure?',
                 text: "",
@@ -314,12 +290,11 @@ export class MyLearningComponent {
                     let data = {
                         masterId: this.param_id,
                         empId: this._currentEmpId,
-                        supervisor_id: this.currentEmployee.supervisorDetails._id,
+                        supervisorId: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
                         action_link: window.location.origin + '/my/team/workflows/supervisor'
                     }
-                    //debugger;
                     this.utilityService.showLoader('.m-content');
                     this._learningService.submitLearningAgendas(data).subscribe(res => {
                         this.utilityService.hideLoader('.m-content');
@@ -332,7 +307,6 @@ export class MyLearningComponent {
                                 confirmButtonColor: '#66BB6A',
                                 confirmButtonText: 'OK'
                             });
-                           // debugger;
                             this.loadLearningDetailsInfo();
                         }
                     }, error => {
@@ -343,7 +317,6 @@ export class MyLearningComponent {
             });
 
         } else {
-            //debugger;
             swal({
                 title: 'Error! ',
                 text: "No Agendas Added!",
@@ -359,33 +332,33 @@ export class MyLearningComponent {
 
 
 
-    onStatusChange(event) {
-        if (event.id == "Dropped") {
-            this.learningData.colorStatus = "Dropped"
-        } else {
-            this.learningData.colorStatus = null;
-        }
-    }
-    onColorStatusChange(event) {
-        if (event.id == "Dropped") {
-            swal({
-                title: 'Are you sure?',
-                text: "Selecting Dropped will automatically select the progress status as Dropped. Do you wish to continue",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes',
-                width: "45rem"
-            }).then((result) => {
-                if (result.value) {
-                    this.learningData.progressStatus = "Dropped"
-                } else {
-                    this.learningData.colorStatus = null;
-                }
-            });
-        }
-    }
+    // onStatusChange(event) {
+    //     if (event.id == "Dropped") {
+    //         this.learningData.colorStatus = "Dropped"
+    //     } else {
+    //         this.learningData.colorStatus = null;
+    //     }
+    // }
+    // onColorStatusChange(event) {
+    //     if (event.id == "Dropped") {
+    //         swal({
+    //             title: 'Are you sure?',
+    //             text: "Selecting Dropped will automatically select the progress status as Dropped. Do you wish to continue",
+    //             type: 'warning',
+    //             showCancelButton: true,
+    //             confirmButtonColor: '#3085d6',
+    //             cancelButtonColor: '#d33',
+    //             confirmButtonText: 'Yes',
+    //             width: "45rem"
+    //         }).then((result) => {
+    //             if (result.value) {
+    //                 this.learningData.progressStatus = "Dropped"
+    //             } else {
+    //                 this.learningData.colorStatus = null;
+    //             }
+    //         });
+    //     }
+    // }
 
 
 

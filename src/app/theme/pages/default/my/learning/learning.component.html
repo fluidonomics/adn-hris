@@ -114,7 +114,7 @@
 								<span>{{learnData.createdAt | date:"dd-MMM-yyyy hh:mm"}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
-								<span>{{learnData.createdby}}</span>
+								<span>{{learnData.createdByName}}</span>
 							</td>
 							<td class="m-datatable__cell" width="20%">
 								<span>{{learnData.batchEndDate | date:"dd-MMM-yyyy hh:mm"}}</span>
@@ -211,7 +211,8 @@
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
 							<li class="nav-item m-tabs__item">
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitLearningAgenda(flearningInfo.form.dirty)" *ngIf="showSub">Submit</button>
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitLearningAgenda(flearningInfo.form.dirty)"
+								 *ngIf="showSub">Submit</button>
 							</li>
 							<li class="nav-item m-tabs__item">
 								<!-- <a class="nav-link m-tabs__link" (click)="window.print();">
@@ -259,7 +260,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let learningInfo of learningInfoData;let i=index" [ngClass]="{'completed':learningInfo.status =='completed','sendBack':learningInfo.status=='SendBack','approved':learningInfo.status =='Approved'}"
+											<tr *ngFor="let learningInfo of learningInfoData;let i=index" [ngClass]="{'dropped':learningInfoData[i].progressStatus =='Completed','sendBack':learningInfoData[i].status=='SendBack','approved':learningInfoData[i].status =='Approved'}"
 											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
@@ -278,8 +279,8 @@
 												</td>
 												<td>
 													<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="supervisorData"
-													 bindLabel="supervisor_name" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisor_id"
-													 [clearable]="false" #supervisor="ngModel" required disabled></ng-select>
+													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisorId"
+													 [clearable]="false" #supervisor="ngModel" required disabled ></ng-select>
 												</td>
 
 												<td>
@@ -300,7 +301,7 @@
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
 													 (click)="addLearningHtml()" *ngIf="showSub">
-														<i class="la la-plus" ></i>
+														<i class="la la-plus"></i>
 													</button>
 												</td>
 											</tr>
@@ -472,8 +473,8 @@
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="supervisordata" id="supervisordata" [items]="supervisorData"
-							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisor_id"
+							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="supervisorData"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisorId"
 							 [clearable]="false" #supervisor="ngModel" required [disabled]="isDisabled"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisor.invalid">
 								This field is required.
@@ -516,17 +517,18 @@
 						</div>
 						<div class="col-md-6 details">
 							<span>Progress Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status" [items] = "progressStatusData" bindLabel="progressStatus" bindValue="_id"
-							 [(ngModel)]="learningData.progressStatus" [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved"></ng-select>
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status"
+							 [items]="progressStatusData" bindLabel="progressStatus" bindValue="_id" [(ngModel)]="learningData.progressStatus"
+							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Supervisor Approval Comments</span>
-							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learningData.supervisorComment" #supervisorComment="ngModel"
-							 class="form-control m-input m-input--air" disabled required></textarea>
-							
+							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learningData.supervisorComment"
+							 #supervisorComment="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
+
 						</div>
 						<div class="col-md-12 details">
 							<span>Completion Comments</span>
@@ -541,7 +543,8 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="isApproved || !isDisabled" (click)="modalRef.hide()">Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="isApproved || !isDisabled"
+									 (click)="modalRef.hide()">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>
