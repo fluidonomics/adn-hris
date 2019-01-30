@@ -29,6 +29,10 @@ export class PapService {
         let url = "pap/initiatePapProcess";
         return this.authService.post(url, data).catch(this.handleError);
     }
+    raiseGreivance(data) {
+        let url = "pap/initiateGrievance";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
     getPAPBatches(emp_id?: number): Observable<Response> {
         let url = "pap/getPapBatches?currentUserId=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);

@@ -152,6 +152,27 @@ export class MyPapComponent {
             });
         })
     }
+    raiseGreivanceClicked(){
+        let request={
+            updatedBy:this._currentEmpId,
+            empId: this._currentEmpId,
+            papMasterId:this.papWorkFlowData[0]._id
+        }
+        this.papService.raiseGreivance(request).subscribe((res=>{
+            debugger;
+            console.log(res);
+            if(res.ok){
+                swal({
+                    title: 'Success',
+                    text: "Greivance has been raised",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }))
+    }
 
     showPAPDetails(index) {
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
