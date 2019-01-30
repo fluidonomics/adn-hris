@@ -83,16 +83,16 @@
                         <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
                             
                             <td class="m-datatable__cell" width="5%">
-                                <span>{{employee.userName}}</span>
+                                <span>{{employee.employeedetails.userName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="20%">
-                                <span>{{employee.fullName}}</span>
+                                <span>{{employee.employeedetails.fullName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
-                                <span>{{employee.officeEmail}}</span>
+                                <span>{{employee.employeeofficedetails.officeEmail}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
-                                <span>{{employee.designation}}</span>
+                                <span>{{employee.employeedetails.designation_id}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.supervisor}}</span>

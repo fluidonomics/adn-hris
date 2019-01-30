@@ -34,7 +34,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
  
 
     constructor(private _script: ScriptLoaderService,
-        private _hrService: HrService,
+        private _papService: PapService,
         private _commonService:CommonService,
         public _authService: AuthService,
         private _router: Router,
@@ -58,20 +58,13 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     loadAllEmployee() {
         this.utilityService.showLoader('#allEmployee-loader');
-        this._hrService.getAllEmployee()
+        this._papService.getEmployeesForGrievance()
             .subscribe(
-            res => {
-                let data = res.json().data || [];
-                if (data.length > 0) {
-                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                    this.employeesData = data || [];
-                    this.utilityService.hideLoader('#allEmployee-loader');
-                }
-                else
-                {
-                    this.employeesData = data.json().data || [];
-                    this.utilityService.hideLoader('#allEmployee-loader');
-                }
+            res => {                
+                let data = res.json().result.message || [];                
+                //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                this.employeesData = data || [];
+                this.utilityService.hideLoader('#allEmployee-loader');               
             },
             error => {
                 this.utilityService.hideLoader('#allEmployee-loader');
@@ -98,7 +91,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     grievanceEmployeeDetail(employee: any) {    
         console.log(employee);
-        this._router.navigate(['/hr/workflows/grievance/detail/4/'+employee._id])//('/user');
+        this._router.navigate(['/hr/workflows/grievance/detail/4/'+employee.employeedetails._id])//('/user');
     }
    
 }
