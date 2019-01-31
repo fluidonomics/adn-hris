@@ -31,7 +31,7 @@ export class MyPapComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGreivance=false;
+    raiseGreivance = false;
 
     progressStatuses = [
         {
@@ -145,23 +145,27 @@ export class MyPapComponent {
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
                     this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
                     debugger;
-                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;
+                    this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
+                    debugger;
+                    if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
+                        this.raiseGreivance = false
+                    }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
             });
         })
     }
-    raiseGreivanceClicked(){
-        let request={
-            updatedBy:this._currentEmpId,
+    raiseGreivanceClicked() {
+        let request = {
+            updatedBy: this._currentEmpId,
             empId: this._currentEmpId,
-            papMasterId:this.papWorkFlowData[0]._id
+            papMasterId: this.papWorkFlowData[0]._id
         }
-        this.papService.raiseGreivance(request).subscribe((res=>{
+        this.papService.raiseGreivance(request).subscribe((res => {
             debugger;
             console.log(res);
-            if(res.ok){
+            if (res.ok) {
                 swal({
                     title: 'Success',
                     text: "Greivance has been raised",
@@ -199,7 +203,7 @@ export class MyPapComponent {
                 "emp_ratingScaleId": this.papData.emp_ratingScaleId
             }
             console.log(request);
-            this.papService.papUpdate(request).subscribe(res => {                
+            this.papService.papUpdate(request).subscribe(res => {
                 if (res.ok) {
                     this.papGridInput = {};
                     let gridInput = {
