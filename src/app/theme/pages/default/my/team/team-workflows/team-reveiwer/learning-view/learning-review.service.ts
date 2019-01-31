@@ -21,6 +21,11 @@ export class LearningReviewService {
         let url = "learning/learningbyreviewer?reviewerId=" + reviewerId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+
+    getEmployeeLearningDetails(master_id?: number): Observable<Response> {
+        let url = "learning/lerningdetails?master_id=" + master_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     
     private extractData(res: Response) {
         return res || {};

@@ -61,17 +61,17 @@
                                             </th>
                                             <td>
                                               <ng-select class="m-input m-input--air customError" name="developmentArea" id="developmentArea"
-                                              placeholder="Select Development Area" [(ngModel)]="learningInfo.learning_details.developmentArea"
+                                              placeholder="Select Development Area" [(ngModel)]="learningInfo.developmentArea"
                                               [clearable]="false" #developmentArea="ngModel" disabled></ng-select>
                                             </td>
                                             <td>
-                                                 <textarea name="timelines" id="timelines" [(ngModel)]="learningInfo.learning_details.timelines" #timelines="ngModel"
+                                                 <textarea name="timelines" id="timelines" [(ngModel)]="learningInfo.timelines" #timelines="ngModel"
                                                  class="form-control m-input m-input--air" disabled></textarea>
                                                 
                                                     
                                             </td>
                                             <td>
-                                                 <textarea name="status" id="status" [(ngModel)]="learningInfo.learning_details.status" #status="ngModel"
+                                                 <textarea name="status" id="status" [(ngModel)]="learningInfo.status" #status="ngModel"
                                                     class="form-control m-input m-input--air" disabled></textarea>
                                             </td>
                                             <td class="text-center"  style="width: 70px;">
@@ -204,7 +204,7 @@
 </div> -->
 
 <ng-template #learningDetailModal>
-  <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+  <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height learningDetailsPortlet">
         <div class="m-portlet__head">
            <div class="m-portlet__head-caption">
               <div class="m-portlet__head-title">
@@ -243,7 +243,7 @@
                                      <span class="block"> {{user?.designationDetails?.designationName}}</span>
                                  </div>
                                  <div class="col-md-3">
-                                     <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                     <img class="img" [src]="user.profileImage ? user.profileImage : './assets/app/media/img/custom/users/user6.jpg'" height="70px">
                                  </div>
                              </div>
                          </div>
@@ -253,7 +253,7 @@
                                 Development Area
                           </div>
                              <div class="col-md-4">
-                                <ng-select class="m-input m-input--air" name="developmentArea" id="developmentArea" placeholder="Select Development Area" [(ngModel)]="learnData.learning_details.developmentArea" [clearable]="false" #developmentArea="ngModel" disabled
+                                <ng-select class="m-input m-input--air" name="developmentArea" id="developmentArea" placeholder="Select Development Area" [(ngModel)]="learnData.developmentArea" [clearable]="false" #developmentArea="ngModel" disabled
                                   ></ng-select>
                                 <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !developmentArea.valid">
                                    This field is required.
@@ -274,7 +274,7 @@
                        <!-- </div> -->
                        <div class="col-md-12 details">
                           <span>Development Plan</span>
-                          <textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learnData.learning_details.developmentPlan" #developmentPlan="ngModel" class="form-control m-input m-input--air"
+                          <textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learnData.developmentPlan" #developmentPlan="ngModel" class="form-control m-input m-input--air"
                            disabled ></textarea>
                           <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !developmentPlan.valid">
                              This field is required.
@@ -282,7 +282,7 @@
                        </div>
                        <div class="col-md-6 details">
                           <span>Timelines</span>
-                          <textarea name="timelines" id="timelines" [(ngModel)]="learnData.learning_details.timelines" #timelines="ngModel" class="form-control m-input m-input--air"
+                          <textarea name="timelines" id="timelines" [(ngModel)]="learnData.timelines" #timelines="ngModel" class="form-control m-input m-input--air"
                           disabled required></textarea>
                           <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !timelines.valid">
                              This field is required.
@@ -290,7 +290,7 @@
                        </div>
                        <div class="col-md-6 details">
                           <span>Measure of Success</span>
-                          <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="learnData.learning_details.measureOfSuccess" #measureOfSuccess="ngModel"
+                          <textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="learnData.measureOfSuccess" #measureOfSuccess="ngModel"
                            class="form-control m-input m-input--air" disabled required></textarea>
                           <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !measureOfSuccess.valid">
                              This field is required.
@@ -298,7 +298,7 @@
                        </div>
                        <div class="col-md-12 details">
                           <span>Support Required</span>
-                          <textarea name="supportRequired" id="supportRequired" [(ngModel)]="learnData.learning_details.supportRequired" #supportRequired="ngModel" class="form-control m-input m-input--air"
+                          <textarea name="supportRequired" id="supportRequired" [(ngModel)]="learnData.supportRequired" #supportRequired="ngModel" class="form-control m-input m-input--air"
                           disabled required></textarea>
                           <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supportRequired.invalid">
                              This field is required.
@@ -306,7 +306,7 @@
                        </div>
                        <div class="col-md-6 details" >
                              <span>Progress Status</span>
-                             <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status" [(ngModel)]="learnData.learning_details.progressStatus" 
+                             <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status" [(ngModel)]="learnData.progressStatus" 
                               [clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
                              <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !progressStatus.valid">
                                 This field is required.
@@ -314,7 +314,7 @@
                        </div>
                        <div class="col-md-6 details" >
                              <span>Learning Completion Comment</span>
-                             <textarea name="employeeComment" id="employeeComment" [(ngModel)]="learnData.learning_details.employeeComment" #employeeComment="ngModel"
+                             <textarea name="employeeComment" id="employeeComment" [(ngModel)]="learnData.employeeComment" #employeeComment="ngModel"
                               class="form-control m-input m-input--air" disabled required></textarea>
                              <!-- <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !measureOfSuccess.valid" display="none">
                                 This field is required.
@@ -323,7 +323,7 @@
                     </div>
                     <div class="col-md-12 details">
                           <span>Supervisor Comment</span>
-                          <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.learning_details.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
+                          <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
                             required disabled></textarea>
                           <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisorComment.invalid">
                              This field is required.

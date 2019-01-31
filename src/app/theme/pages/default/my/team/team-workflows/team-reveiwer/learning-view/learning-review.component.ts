@@ -102,7 +102,7 @@ export class LearningReview {
 
     loadLearningEmployee() {
 
-        this._learningService.getLearningByReviewer(this._currentEmpId).subscribe(
+        this._learningService.getEmployeeLearningDetails(this.param_master_id).subscribe(
             res => {
                 //console.log("response : ", res.json().result.message);
                 this.learningInfoData = res.json().result.message;
