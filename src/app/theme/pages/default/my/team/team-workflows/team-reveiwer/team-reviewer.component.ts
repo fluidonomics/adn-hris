@@ -7,11 +7,13 @@ import { MyService } from "../../../my.service";
 import { environment } from "../../../../../../../../environments/environment";
 import { tree } from 'd3';
 import { KraService } from '../../../workflows/kra/kra.service';
+import { LearningService } from '../../../../services/learning.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
     encapsulation: ViewEncapsulation.None,
+    providers:[LearningService]
 })
 export class MyTeamReviewerComponent implements OnInit {
 
@@ -21,7 +23,8 @@ export class MyTeamReviewerComponent implements OnInit {
         private route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
-        private kraService: KraService
+        private kraService: KraService,
+        private learningService: LearningService
     ) {
     }
     employees: any = [];
@@ -41,6 +44,9 @@ export class MyTeamReviewerComponent implements OnInit {
         status: 'All',
         page: 1
     };
+    learningData: any = [];
+    learningSearch: any;
+    learningReverse: boolean = true;
 
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
@@ -48,6 +54,7 @@ export class MyTeamReviewerComponent implements OnInit {
     ngOnInit() {
         this.getallemployees();
         this.loadMTRInfo();
+        this.getEmployeesLearning();
         this.imageBase = environment.content_api_base.apiBase;
     }
     loadMTRInfo() {
@@ -78,11 +85,24 @@ export class MyTeamReviewerComponent implements OnInit {
         })
     }
 
+    getEmployeesLearning() {
+        this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.learningData = res.json().result.message || [];
+            //debugger;
+            this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
+        }, error => {
+            console.log(error);
+        });
+    } 
+
     goToKraReview(kra) {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
     goToMtrReview(employee) {
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + employee.mtr_master_details._id + '/' + employee.emp_details._id);
+    }
+    goToLearningReview(learning) {
+        this.router.navigateByUrl('my/team/workflows/learning-review/' + learning.learning_master_details._id + "/" + learning.emp_details._id);
     }
 }
 

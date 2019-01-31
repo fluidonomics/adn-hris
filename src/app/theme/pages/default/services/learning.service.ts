@@ -90,6 +90,11 @@ export class LearningService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getLearningByReviewer(reviewerId: number): Observable<Response> {
+        let url = "learning/learningbyreviewer?reviewerId=" + reviewerId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
     }

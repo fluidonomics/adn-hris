@@ -72,6 +72,7 @@ export class LearningReview {
     }
 
     ngOnInit() {
+        //debugger;
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
@@ -101,13 +102,13 @@ export class LearningReview {
 
     loadLearningEmployee() {
 
-        this._learningService.getLearningByReviewer(this.param_id).subscribe(
+        this._learningService.getLearningByReviewer(this._currentEmpId).subscribe(
             res => {
-                console.log("response : ", res.json().result.message);
+                //console.log("response : ", res.json().result.message);
                 this.learningInfoData = res.json().result.message;
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
-                console.log("learningbySup : ", this.learningInfoData);
+                console.log("learning info data : ", this.learningInfoData);
             },
             error => {
 
