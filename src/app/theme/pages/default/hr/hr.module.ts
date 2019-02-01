@@ -21,6 +21,7 @@ import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.compone
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
 import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
@@ -37,6 +38,7 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { LearningService } from '../services/learning.service';
 
 
 @NgModule({
@@ -62,6 +64,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         AllEmployeeComponent,
         AddEmployeeComponent,
         HrLearningComponent,
+        LearningBatchComponent,
         HrBatchComponent,
         HrPipComponent,
         DirectoryComponent,
@@ -74,7 +77,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         MTRBatchComponent
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard, LeaveService]
+    providers: [HrService, HrGuard, LeaveService, LearningService]
 })
 export class HrModule {
 }

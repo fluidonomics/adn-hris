@@ -1,0 +1,70 @@
+<div class="m-portlet m-portlet--full-height">
+   <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Learning Agenda View
+            </h3>
+         </div>
+      </div>
+      <div class="m-portlet__head-tools">
+         <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
+          role="tablist">
+            <li class="nav-item m-tabs__item" *ngIf="learningData.length > 0">
+               <div class="m-input-icon m-input-icon--left">
+                  <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="learningSearch">
+                  <span class="m-input-icon__icon m-input-icon__icon--left">
+                     <span>
+                        <i class="la la-search"></i>
+                     </span>
+                  </span>
+               </div>
+            </li>
+         </ul>
+      </div>
+   </div>
+   <div class="m-portlet__body" id="learningView">
+      <div class="no-records" *ngIf="learningData.length==0 || (learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch)?.length==0">
+         <span class="align--center">No records found</span>
+      </div>
+
+      <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+         <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
+            <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+
+               <div class="m-widget4  workflow--hover ">
+
+
+
+                  <div class="m-widget4__item m-padding--10" *ngFor="let learn of learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch;let i=index"
+                   (click)="gotoLearningData(learn)">
+                     <div class="m-widget4__img m-widget4__img--logo">
+                        <a align="center">
+                           <img *ngIf="learn?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                            class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                           <ng-template #noImage>
+                              <img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+                           </ng-template>
+                        </a>
+                     </div>
+                     <div class="m-widget4__info">
+                        <span class="m-widget4__title">
+                           {{learn.emp_details.fullName}}
+                        </span>
+                        <br>
+                        <span class="m-widget4__sub">
+                           {{learn.learning_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+                        </span>
+                     </div>
+                     <span class="m-widget4__ext">
+                        <span class="m-widget4__number m--font-brand">
+                        </span>
+                     </span>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

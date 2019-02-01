@@ -17,6 +17,7 @@ import { KraReview } from './team-workflows/team-reveiwer/kra-view/kra-review.co
 import { AllEmployeeComponent } from './team-workflows/team-supervisor/allEmployee/allEmployee.component';
 import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/allEmployeeReviewer.component';
 import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
+import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
 
 
 import { ReviewerGuard } from '../../../../../base/_guard/reviewer.guard';
@@ -33,6 +34,9 @@ import { TransactionHistoryLeavesComponent } from './subordinate-transaction-his
 import { HttpClientModule } from '@angular/common/http';
 import { TransactionHistoryMtrComponent } from './subordinate-transaction-history/transaction-history/grids/mtr/mtr-grid.component';
 import { TransactionHistoryKRAComponent } from './subordinate-transaction-history/transaction-history/grids/kra/kra-grid.component';
+import { LearningApprovalComponent } from './team-workflows/team-supervisor/learning-approval/learning-approval.component';
+import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
+import { LearningViewComponent } from './team-workflows/team-supervisor/learning-view/learning-view.component';
 
 @NgModule({
     imports: [
@@ -63,7 +67,11 @@ import { TransactionHistoryKRAComponent } from './subordinate-transaction-histor
         TransactionHistoryComponent,
         TransactionHistoryLeavesComponent,
         TransactionHistoryMtrComponent,
-        TransactionHistoryKRAComponent
+        TransactionHistoryKRAComponent,
+        LearningApprovalComponent,
+        LearningDetailedViewComponent,
+        LearningReview,
+        LearningViewComponent,
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })
