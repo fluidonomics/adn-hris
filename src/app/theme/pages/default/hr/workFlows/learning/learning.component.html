@@ -76,14 +76,14 @@
                     </div>
                 </div>
             </div>
-            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeFilterData | orderBy: key : reverse | filter:search)?.length==0 }">
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
 
                             <th class="m-datatable__cell" width="5%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-                                    <input type="checkbox" (change)="onSelectAll($event)" [(ngModel)]="isCheckAll"
+                                    <input type="checkbox" [(ngModel)]="isCheckAll"
                                         [disabled]="p.pages.length==0">
                                     <span></span>
                                 </label>
