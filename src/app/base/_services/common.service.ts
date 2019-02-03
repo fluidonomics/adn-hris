@@ -350,6 +350,10 @@ export class CommonService {
         let url = "common/getEmployeeDocument?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getPapRatingScale() {
+        let url = "master/getPapRatingScale";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     getBatchInfo(): Observable<Response> {
         let url = "batch/getBatchInfo";

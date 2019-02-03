@@ -1,0 +1,213 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Approve PAP
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
+                            role="tablist">
+                            <li class="nav-item m-tabs__item" *ngIf="isChangable">
+                                <button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitPapWorkFlow()">Submit</button>
+                                <!-- <a class="nav-link m-tabs__link" (click)="window.print();" role="tab" >
+                             <i class="la la-print"></i>
+                             Print
+                             </a> -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+                        <div class="m-section__content">
+                            <!-- <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group m-form__group row align-items-center instructions">
+                                        <div class="col-md-8">
+                                            <h4>Instructions</h4>
+                                        </div>
+                                        <div class="col-md-8 points">
+                                            <span>1. Please review MTR details filled by subordinate </span>
+                                            <span>2. Supervisor Remark is required against each KRA </span>
+                                            <span>3. Weightage of dropped KRA changed to 0 </span>
+                                            <span>4. Approval is required for newly added KRA`s </span>
+                                            <span>5. Submit MTR after adding Remarks` </span>
+                                            <span>6. Colour status values are given below </span>
+                                        </div>
+                                        <div class="col-md-8 flags">
+                                            <span><i class="fa fa-square green"></i>KRA progress is going good </span>
+                                            <span><i class="fa fa-square amber"></i>Need Help to Complete KRA </span>
+                                            <span><i class="fa fa-square red"></i>Not able to complete KRA </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>{{user?.fullName}}</h3>
+                                    <h4>{{user?.userName}}</h4>
+                                </div>
+                            </div>
+                            <pap-details-grid [empId]="papEmployeeId" [papMasterId]="papMasterId" [papChanges]="papChanges"
+                                (showDetails)="showPAPDetails($event)"></pap-details-grid>
+                            <br>
+                            <!-- </form> -->
+                        </div><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #papDetailModal>
+    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Key Responsibility Area
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-widget6 ">
+                <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(PAPDataForm,papData._id)"
+                    id="PAPDataForm" #PAPDataForm="ngForm">
+                    <div class="m-widget6 ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>PAP No. {{papData.no}}</span>
+                            </div>
+                            <div class="col-md-2 ">
+                                KRA Category
+                            </div>
+                            <div class="col-md-4">
+                                <ng-select class="m-input m-input--air" name="papCategory" id="papCategory" [items]="papCategoryData"
+                                    bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category"
+                                    [(ngModel)]="papData.midtermdetails.category_id" [clearable]="false" #papCategory="ngModel"
+                                    disabled required></ng-select>
+
+                            </div>
+                        </div>
+                        <div class="row details">
+                            <div class="col-md-2">
+                                PAP Weightage
+                            </div>
+                            <div class="col-md-4">
+                                <ng-select class="m-input m-input--air" name="papWeightage" id="papWeightage" [items]="weightageData"
+                                    bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
+                                    [clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
+
+                            </div>
+                            <div class="col-md-2">
+                                Supervisor
+                            </div>
+                            <div class="col-md-4">
+                                <ng-select class="m-input m-input--air " name="supervisorOne" id="supervisorOne"
+                                    [items]="supervisorData" bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor"
+                                    [(ngModel)]="papData.midtermdetails.supervisor_id" [clearable]="false"
+                                    #supervisorOne="ngModel" disabled required></ng-select>
+
+                            </div>
+                            <div class="col-md-12 details">
+                                <span>KRA</span>
+                                <textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra"
+                                    #pap_kra="ngModel" class="form-control m-input m-input--air" disabled [required]="!papData.pap_master_kraDetailId"></textarea>
+
+                            </div>
+                            <div class="col-md-6 details">
+                                <span>Unit of Success</span>
+                                <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
+                                    #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled
+                                    required></textarea>
+
+                            </div>
+                            <div class="col-md-6 details">
+                                <span>Measure of Success</span>
+                                <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="papData.midtermdetails.measureOfSuccess"
+                                    #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled
+                                    required></textarea>
+
+                            </div>
+                            <div class="col-md-6 details">
+                                <span>Status</span>
+                                <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus"
+                                    [items]="progressStatuses" bindLabel="label" bindValue="id" placeholder="Select Status"
+                                    [(ngModel)]="papData.midtermdetails.progressStatus" [clearable]="false"
+                                    #progressStatus="ngModel" disabled required></ng-select>
+
+                            </div>
+                            <div class="col-md-6 details">
+                                <span>Employee Rating Scale</span>
+                                <ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
+                                    bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
+                                    [clearable]="false" #colorStatus="ngModel" disabled required>
+                                </ng-select>
+
+                            </div>
+                            <div class="col-md-12 details">
+                                <span>Employee Remarks</span>
+                                <textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.empRemark"
+                                    #employeeComment="ngModel" class="form-control m-input m-input--air" disabled
+                                    required></textarea>
+                            </div>
+                            <div class="col-md-6 details">
+                                <span>Supervisor Rating Scale</span>
+                                <ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
+                                    [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id" placeholder="Select Rating"
+                                    [(ngModel)]="papData.sup_ratingScaleId" [clearable]="false" #colorStatus="ngModel"
+                                    [disabled]="isDisabled" required>
+                                </ng-select>
+                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supRatingScaleId?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12 details">
+                                <span>Supervisor Remarks</span>
+                                <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark" #supComment="ngModel"
+                                    class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supComment?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions details">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="m-form__actions">
+                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+                                        <button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

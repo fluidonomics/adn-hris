@@ -38,6 +38,14 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
+import { DepartmentGradeFilterComponent } from '../shared/components/department-grade-filter/department-grade-filter.component';
+import { EmployeeBatchSelectionGridComponent } from '../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component';
+import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
+import {FeedbackInitiateComponent} from './workFlows/pap/feedback-initiate/feedback-initiate.component'
+import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
+import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
+import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
 import { LearningService } from '../services/learning.service';
 
 
@@ -74,7 +82,15 @@ import { LearningService } from '../services/learning.service';
         TransferResponsibilityComponent,
         PostComponent,
         MtrBatchInitComponent,
-        MTRBatchComponent
+        MTRBatchComponent,
+        PapBatchInitComponent,
+        DepartmentGradeFilterComponent,
+        EmployeeBatchSelectionGridComponent,
+        PapBatchViewComponent,
+        FeedbackInitiateComponent,
+        GrievanceAllEmployeeComponent,
+        GrievanceDetailComponent,
+        PapDetailsGridComponent,
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService, LearningService]

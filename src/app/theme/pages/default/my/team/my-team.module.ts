@@ -26,6 +26,8 @@ import { ModalModule } from 'ngx-bootstrap';
 import { KraService } from '../workflows/kra/kra.service';
 import { MtrApprovalsComponent } from './team-workflows/team-supervisor/mtr-approvals/mtr-approvals.component';
 import { MtrViewComponent } from './team-workflows/team-supervisor/mtr-view/mtr-view.component';
+import { PapApprovalsComponent } from './team-workflows/team-supervisor/portlets/pap-approvals/pap-approvals.component';
+import { PapViewComponent } from './team-workflows/team-supervisor/portlets/pap-view/pap-view.component';
 import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
 import { EmployeeSearchComponent } from './subordinate-transaction-history/employee-search/employee-search.component'
@@ -37,6 +39,10 @@ import { TransactionHistoryKRAComponent } from './subordinate-transaction-histor
 import { LearningApprovalComponent } from './team-workflows/team-supervisor/learning-approval/learning-approval.component';
 import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 import { LearningViewComponent } from './team-workflows/team-supervisor/learning-view/learning-view.component';
+import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-detailed-view/pap-detailed-view.component';
+import { PapService } from '../../services/pap.service';
+import { PapDetailsGridComponent } from '../../shared/components/pap-details-grid/pap-details-grid.component';
+import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
 
 @NgModule({
     imports: [
@@ -72,8 +78,13 @@ import { LearningViewComponent } from './team-workflows/team-supervisor/learning
         LearningDetailedViewComponent,
         LearningReview,
         LearningViewComponent,
+        PapApprovalsComponent,
+        PapViewComponent,
+        PapDetailedViewComponent,
+        PapDetailsGridComponent,
+        PapReviewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]
 })
 export class MyTeamModule {
 }

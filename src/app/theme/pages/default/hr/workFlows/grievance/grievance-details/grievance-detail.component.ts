@@ -1,21 +1,22 @@
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../../../base/_services/authService.service';
-import { CommonService } from '../../../../../../base/_services/common.service';
-import { PapService } from '../../../services/pap.service';
+
 import * as _ from 'lodash';
 import swal from 'sweetalert2';
 import { ignoreElements } from 'rxjs/operator/ignoreElements';
 import { Subject } from 'rxjs';
+import { AuthService } from '../../../../../../../base/_services/authService.service';
+import { CommonService } from '../../../../../../../base/_services/common.service';
+import { PapService } from '../../../../services/pap.service';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
-    templateUrl: "./pap.component.html",
+    templateUrl: "./grievance-detail.component.html",
     encapsulation: ViewEncapsulation.None,
     providers: [PapService]
 })
-export class MyPapComponent {
+export class GrievanceDetailComponent {
 
     @ViewChild('papDetailModal') papDetailModal: TemplateRef<any>;
 
@@ -31,7 +32,7 @@ export class MyPapComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGreivance = false;
+    raiseGreivance=false;
 
     progressStatuses = [
         {
@@ -75,17 +76,12 @@ export class MyPapComponent {
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
-            this._route.queryParams.subscribe(params => {
-                if (params['id']) {
-                    this.param_id = params['id'];
-                    this.papGridInput.empId = this._currentEmpId;
-                    this.papGridInput.param_id = this.param_id;
-                    this.loadData();
-                }
-                else {
-                    this.param_id = null;
-                    this.loadPapDetails();
-                }
+            this._route.params.subscribe(params => {                                             
+                this.param_id = params['id'];
+                this.papGridInput.empId = params['emp_id'];
+                this.papGridInput.param_id = this.param_id;
+                this.loadData();
+                                
             });
         });
     }
@@ -112,15 +108,15 @@ export class MyPapComponent {
             });
     }
 
-    loadSupervisorData() {
+    loadSupervisorData() {        
         this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
     }
 
-    loadData() {
-        this.loadPapDetails();
+    loadData() {        
+        this.loadpapInfoData();
         this.loadSupervisorData();
         this.loadWeightAgeData();
         this.loadPAPCategoryData();
@@ -136,49 +132,35 @@ export class MyPapComponent {
 
     loadPapDetails() {
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this.papGridInput.param_id).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
-                    debugger;
-                    this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
-                    debugger;
-                    if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
-                        this.raiseGreivance = false
-                    }
-                    console.log(this.papWorkFlowData);
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
+                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                
                     resolve(this.papInfoData);
                 }
             });
         })
     }
-    raiseGreivanceClicked() {
-        let request = {
-            updatedBy: this._currentEmpId,
-            empId: this._currentEmpId,
-            papMasterId: this.papWorkFlowData[0]._id
-        }
-        this.papService.raiseGreivance(request).subscribe((res => {
-            debugger;
-            console.log(res);
-            if (res.ok) {
-                swal({
-                    title: 'Success',
-                    text: "Greivance has been raised",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+    loadpapInfoData(){              
+        this.papService.getPapDetailsSingleEmployee(this.papGridInput.empId).subscribe(res => {
+            let papDetails = res || [];
+            if (papDetails.length > 0) {
+                this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                    return v[0];
+                }).value();
+                this.papInfoData = this.papWorkFlowData[0].papdetails;
+                this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
+                this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                         
             }
-        }))
+        });
     }
 
-    showPAPDetails(index) {
+    showPAPDetails(index) {        
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
@@ -203,7 +185,7 @@ export class MyPapComponent {
                 "emp_ratingScaleId": this.papData.emp_ratingScaleId
             }
             console.log(request);
-            this.papService.papUpdate(request).subscribe(res => {
+            this.papService.papUpdate(request).subscribe(res => {                
                 if (res.ok) {
                     this.papGridInput = {};
                     let gridInput = {

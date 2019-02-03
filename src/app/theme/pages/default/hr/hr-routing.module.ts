@@ -21,6 +21,11 @@ import { HrGuard } from '../../../../base/_guard/hr.guard'
 import { PostComponent } from './leaves/post/post.component';
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
+import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
+import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/feedback-initiate.component';
+import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
+import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
 
 import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
 
@@ -39,8 +44,14 @@ const routes: Routes = [{
         { path: 'workflows/learn/batch', component: LearningBatchComponent },
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
-        { path: 'workflows/mtr/batch/init', component: MtrBatchInitComponent },
-        { path: 'workflows/mtr/batch', component: MTRBatchComponent },        
+        { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
+        { path: 'workflows/mtr/batch', component: MTRBatchComponent },
+        { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
+        { path: 'workflows/pap/batch', component: PapBatchViewComponent },
+        { path: 'workflows/pap/feedback-init', component: FeedbackInitiateComponent },
+        { path: 'workflows/grievance/all-employee', component: GrievanceAllEmployeeComponent },
+        { path: 'workflows/grievance/detail/:id/:emp_id', component: GrievanceDetailComponent },
+        
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
         { path: 'transferresponsiblity', component: TransferResponsibilityComponent },

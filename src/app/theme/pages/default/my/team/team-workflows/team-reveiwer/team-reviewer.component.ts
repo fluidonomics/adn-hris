@@ -8,12 +8,13 @@ import { environment } from "../../../../../../../../environments/environment";
 import { tree } from 'd3';
 import { KraService } from '../../../workflows/kra/kra.service';
 import { LearningService } from '../../../../services/learning.service';
+import { PapService } from '../../../../services/pap.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers:[LearningService]
+    providers: [LearningService, PapService]
 })
 export class MyTeamReviewerComponent implements OnInit {
 
@@ -24,7 +25,8 @@ export class MyTeamReviewerComponent implements OnInit {
         private myService: MyService,
         private router: Router,
         private kraService: KraService,
-        private learningService: LearningService
+        private learningService: LearningService,
+        private papService: PapService
     ) {
     }
     employees: any = [];
@@ -48,6 +50,11 @@ export class MyTeamReviewerComponent implements OnInit {
     learningSearch: any;
     learningReverse: boolean = true;
 
+    papEmployeeReverse: boolean = true;
+    papEmployeeSearch: any;
+    papData: any = [];
+    papViewData: any = [];
+
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
     }
@@ -55,8 +62,10 @@ export class MyTeamReviewerComponent implements OnInit {
         this.getallemployees();
         this.loadMTRInfo();
         this.getEmployeesLearning();
+        this.getPapByReviewer();
         this.imageBase = environment.content_api_base.apiBase;
     }
+
     loadMTRInfo() {
         this.myService.getMTRByReviewer(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
@@ -93,7 +102,42 @@ export class MyTeamReviewerComponent implements OnInit {
         }, error => {
             console.log(error);
         });
-    } 
+    }
+
+    getPapByReviewer() {
+        this.utilityService.showLoader("#papApprovalList");
+        this.papService.getPapByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.utilityService.hideLoader("#papApprovalList");
+            let papData = res;
+            if (papData.length > 0) {
+                this.papData = papData.filter(p => {
+                    let submittedCount = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
+                    }
+                    return submittedCount == p.kra_details.length;
+                })
+                this.papData = this.papData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+
+                this.papViewData = papData.filter(p => {
+                    let count = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        count = p.kra_details.filter(pDetails => pDetails.status == "Approved").length;
+                    }
+                    return count == p.kra_details.length;
+                })
+                this.papViewData = this.papViewData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+            }
+        });
+    }
 
     goToKraReview(kra) {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
@@ -103,6 +147,11 @@ export class MyTeamReviewerComponent implements OnInit {
     }
     goToLearningReview(learning) {
         this.router.navigateByUrl('my/team/workflows/learning-review/' + learning.learning_master_details._id + "/" + learning.emp_details._id);
+    }
+
+    goToPapReview(pap) {
+        debugger;
+        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
     }
 }
 
