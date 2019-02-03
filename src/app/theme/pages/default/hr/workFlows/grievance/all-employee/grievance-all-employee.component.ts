@@ -29,7 +29,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     search: any;
     _currentEmpId: number;
     itemPerPage: number = 10;
-
+    param_emp_id;
     
  
 

@@ -31,6 +31,9 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
     isCheckAll: any;
     checkedEmployees: any = []
 
+    key: string;
+    p2 = 1;
+
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -104,5 +107,9 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
             this.checkedEmployees.splice(this.checkedEmployees.indexOf(employee), 1)
         }
         this.employeeChecked.emit(this.checkedEmployees);
+    }
+
+    sort(key) {
+
     }
 }

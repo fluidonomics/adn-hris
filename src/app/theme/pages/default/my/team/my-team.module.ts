@@ -31,8 +31,8 @@ import { MtrService } from '../../services/mtr.service';
 import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.component';
 import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-detailed-view/pap-detailed-view.component';
 import { PapService } from '../../services/pap.service';
-import { PapDetailsGridComponent } from '../../shared/components/pap-details-grid/pap-details-grid.component';
 import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
     imports: [
@@ -47,6 +47,7 @@ import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pa
         BsDatepickerModule.forRoot(),
         BaseModule,
         ModalModule.forRoot(),
+        SharedModule
     ], declarations: [
         MyTeamReviewerComponent,
         MyTeamSupervisorComponent,
@@ -61,7 +62,6 @@ import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pa
         PapApprovalsComponent,
         PapViewComponent,
         PapDetailedViewComponent,
-        PapDetailsGridComponent,
         PapReviewComponent
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]

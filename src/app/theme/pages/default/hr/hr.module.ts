@@ -41,10 +41,10 @@ import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-
 import { DepartmentGradeFilterComponent } from '../shared/components/department-grade-filter/department-grade-filter.component';
 import { EmployeeBatchSelectionGridComponent } from '../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component';
 import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
-import {FeedbackInitiateComponent} from './workFlows/pap/feedback-initiate/feedback-initiate.component'
+import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/feedback-initiate.component'
 import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
 import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
-import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -61,7 +61,8 @@ import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/p
         NgUploaderModule,
         HttpClientModule,
         BsDatepickerModule.forRoot(),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        SharedModule
     ], declarations: [
         HrComponent,
         DashboardComponent,
@@ -87,7 +88,6 @@ import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/p
         FeedbackInitiateComponent,
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
-        PapDetailsGridComponent,
         //DocumentsViewComponent
     ],
     providers: [HrService, HrGuard, LeaveService]
