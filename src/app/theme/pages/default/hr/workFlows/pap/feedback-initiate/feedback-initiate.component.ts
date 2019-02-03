@@ -23,42 +23,47 @@ export class FeedbackInitiateComponent implements OnInit {
     };
     employees = [];
     selectedEmployees = [];
-    employeeFilterData=[];
+    employeeFilterData = [];
     itemPerPage: number = 20;
     search: any;
     reverse: any;
     currentDate = new Date();
     _currentEmpId: number;
     imageBase: any;
+    key = "";
+    p2 = 1;
+    isCheckAll;
+    employeeData;
+
 
     constructor(
         private papService: PapService,
         private utilityService: UtilityService,
         public _authService: AuthService,
-        private hrService:HrService
+        private hrService: HrService
     ) {
     }
 
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
-            this._currentEmpId = this._authService.currentUserData._id; 
-            this.getAllEmployee();           
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.getAllEmployee();
         });
         this.imageBase = environment.content_api_base.imgBase;
     }
-    getAllEmployee(){
-        this.papService.getEmployeesForFeedbackInit().subscribe(res=>{                                               
-            this.employees=res;
+    getAllEmployee() {
+        this.papService.getEmployeesForFeedbackInit().subscribe(res => {
+            this.employees = res;
         })
     }
-    
 
-    onFilterSelected(filterBy) {        
+
+    onFilterSelected(filterBy) {
         this.filterBy = {};
         Object.assign(this.filterBy, filterBy);
         this.filterEmployee();
-        
-    } 
+
+    }
     filterEmployee() {
         if (this.filterBy && (this.filterBy.grades || this.filterBy.departments)) {
             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
@@ -76,37 +81,41 @@ export class FeedbackInitiateComponent implements OnInit {
         else {
             this.employeeFilterData = this.employees;
         }
-    }  
-    initFeedback(){
-        let selectedData=this.employeeFilterData.filter(obj=> obj.checked==true);
-        let selectedIds=selectedData.map(item=>{
+    }
+    initFeedback() {
+        let selectedData = this.employeeFilterData.filter(obj => obj.checked == true);
+        let selectedIds = selectedData.map(item => {
             return item._id
         })
-        if(selectedIds.length!=0){
-        let request={
-            "updatedBy": this._currentEmpId,
-            "empIds" : selectedIds
-        }
-        swal({
-            title: 'Are you sure?',
-            text: "",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-        }).then((result) => {
-            if (result.value) {
-                this.papService.papInitiateFeedback(request).subscribe(res=>{              
-                    if(res.ok){
-                        swal("Success", "Feedback Initiated Successfully", "success");
-                    }
-            });                   
+        if (selectedIds.length != 0) {
+            let request = {
+                "updatedBy": this._currentEmpId,
+                "empIds": selectedIds
             }
-        })
-    }else{
-        swal('Oops!', 'No employee selected', 'warning')
+            swal({
+                title: 'Are you sure?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.papService.papInitiateFeedback(request).subscribe(res => {
+                        if (res.ok) {
+                            swal("Success", "Feedback Initiated Successfully", "success");
+                        }
+                    });
+                }
+            })
+        } else {
+            swal('Oops!', 'No employee selected', 'warning')
+        }
+
     }
-           
-    }   
+
+    sort(key) {
+
+    }
 }

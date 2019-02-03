@@ -17,7 +17,7 @@ import { MyPapComponent } from './pap/pap.component';
 import { MyPipComponent } from './pip/pip.component';
 import { MyKraComponent } from './kra/kra.component';
 import { MyMtrComponent } from './mid-term-review/mtr.component';
-import { PapDetailsGridComponent } from '../../shared/components/pap-details-grid/pap-details-grid.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -32,12 +32,12 @@ import { PapDetailsGridComponent } from '../../shared/components/pap-details-gri
         BsDatepickerModule.forRoot(),
         BaseModule,
         MyWorkFlowsRoutingModule,
+        SharedModule
     ], declarations: [
         MyPapComponent,
         MyPipComponent,
         MyKraComponent,
         MyMtrComponent,
-        PapDetailsGridComponent
     ],
     providers: [MyService]
 })
