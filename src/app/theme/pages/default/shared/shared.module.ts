@@ -6,13 +6,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgUploaderModule } from 'ngx-uploader';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { CommonModule } from '@angular/common';
 
 
 
 @NgModule({
     imports: [
         FormsModule,
-        BrowserModule,
+        CommonModule,
         NgSelectModule,
         NgUploaderModule,
         NgxPaginationModule,
