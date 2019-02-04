@@ -64,6 +64,7 @@ export class HrLearningComponent {
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
+        //debugger;
     }
 
     initDropdown() {
@@ -115,12 +116,19 @@ export class HrLearningComponent {
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                 this.employeeData = data;
+                debugger;
                 this.utilityService.hideLoader('#initiate-loader');
             }
         }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
 
+    }
+
+    onSelectAll($event) {
+        this.employeeData.forEach(emp => {
+            emp.checked = $event.target.checked;
+        });
     }
 
     loadAllEmployee() {

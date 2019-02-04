@@ -31,6 +31,7 @@ import { MtrReview } from './team-workflows/team-reveiwer/mid-term/mtr-review.co
 import { LearningApprovalComponent } from './team-workflows/team-supervisor/learning-approval/learning-approval.component';
 import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 import { LearningViewComponent } from './team-workflows/team-supervisor/learning-view/learning-view.component';
+import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
 
 @NgModule({
     imports: [
@@ -60,6 +61,7 @@ import { LearningViewComponent } from './team-workflows/team-supervisor/learning
         LearningDetailedViewComponent,
         LearningReview,
         LearningViewComponent,
+        AllLearningReviewer
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService]
 })

@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { UtilityService } from "../../../../../../../../base/_services/utilityService.service";
 import { LearningDetailedViewService } from './learning-detailed-view.service';
+import { environment } from '../../../../../../../../../environments/environment'
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.learning-detailed-view",
@@ -50,6 +51,8 @@ export class LearningDetailedViewComponent {
     learningData: any;
     _currentEmpId: number;
 
+    imageBase:any;
+
     devArea: [
         'Individual Development',
         'Functional Development'
@@ -63,7 +66,8 @@ export class LearningDetailedViewComponent {
         public _authService: AuthService,
         private _commonService: CommonService,
         private _learningService: LearningDetailedViewService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private utilityService: UtilityService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -88,6 +92,7 @@ export class LearningDetailedViewComponent {
                     }
                 });
             });
+            this.imageBase = environment.content_api_base.imgBase;
 
 
     }
@@ -174,11 +179,13 @@ export class LearningDetailedViewComponent {
                         supervisorComment: learningData.supervisorComment,
                         progressStatus: learningData.progressStatus
                     }
-                    debugger;
+                    //debugger;
+                    this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._learningService.approveLearning(request).subscribe(res => {
                         if (res.ok) {
                             this.loadLearningEmployee();
                             this.modalRef.hide();
+                            this.utilityService.hideLoader('.mtrDetailsPortlet');
                         }
                     }, err => {
                         if (err.status == 300) {
@@ -187,7 +194,7 @@ export class LearningDetailedViewComponent {
                             this.loadLearningEmployee();
                             this.modalRef.hide();
                         }
-                        //this.utilityService.hideLoader('.mtrDetailsPortlet');
+                        this.utilityService.hideLoader('.m-content');
                     })
                 }
             });
@@ -221,7 +228,7 @@ export class LearningDetailedViewComponent {
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
         console.log("learningdata no : ", this.learnData);
-        if(this.learnData.status=="Approved" || this.learnData.status=="SendBack") {
+        if (this.learnData.status == "Approved" || this.learnData.status == "SendBack") {
             this.isDisabled = true;
         }
         else {

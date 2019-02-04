@@ -83,7 +83,7 @@
 
                             <th class="m-datatable__cell" width="5%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-                                    <input type="checkbox" [(ngModel)]="isCheckAll"
+                                    <input type="checkbox" (change)="onSelectAll($event)" [(ngModel)]="isCheckAll"
                                         [disabled]="p.pages.length==0">
                                     <span></span>
                                 </label>
@@ -124,7 +124,7 @@
                                 </label>
                             </td>
                             <td class="m-datatable__cell" width="5%">
-                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.emp_profileImage}}"
+                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}"
                                     onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
                                     alt="">
                                 <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>

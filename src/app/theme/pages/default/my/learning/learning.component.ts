@@ -161,6 +161,7 @@ export class MyLearningComponent {
                         confirmButtonColor: '#66BB6A',
                         confirmButtonText: 'OK'
                     });
+                    this.modalRef.hide();
                 }
                 this.loadData();
                 //this.loadSupervisorData();
@@ -185,8 +186,8 @@ export class MyLearningComponent {
         this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
-            console.log("agenda info: " + this.learningInfoData);
-            
+            console.log("agenda info: " + this.LearningAgendaData);
+            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
         }, error => {
         });;
 
@@ -199,7 +200,8 @@ export class MyLearningComponent {
             this.learningInfoData = data.result.message;
             console.log("details info: " + this.learningInfoData);
             if(this.learningInfoData.length > 0){
-                this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
+                this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
+                //debugger;
             } 
             else {
                 this.learningInfoData = [
@@ -332,13 +334,15 @@ export class MyLearningComponent {
 
 
 
-    // onStatusChange(event) {
-    //     if (event.id == "Dropped") {
-    //         this.learningData.colorStatus = "Dropped"
-    //     } else {
-    //         this.learningData.colorStatus = null;
-    //     }
-    // }
+    onStatusChange(event) {
+        //debugger;
+
+        if (event == "Completed") {
+            this.isCompleted = true;
+        } else {
+            this.isCompleted = false;
+        }
+    }
     // onColorStatusChange(event) {
     //     if (event.id == "Dropped") {
     //         swal({
@@ -404,13 +408,13 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        if (this.learningData.master_status == "Approved" || this.learningData.master_status == "Submitted") {
+        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted" || this.learningData.status == "initiated") {
             this.showSub = false;
         }
         else {
             this.showSub = true;
         }
-
+        //debugger;
 
     }
 

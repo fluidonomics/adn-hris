@@ -484,7 +484,7 @@
 						<div class="col-md-12 details">
 							<span>Development Plan</span>
 							<textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learningData.developmentPlan"
-							 #developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
+							 #developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !developmentPlan.valid">
 								This field is required.
 							</div>
@@ -519,7 +519,7 @@
 							<span>Progress Status</span>
 							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status"
 							 [items]="progressStatusData" bindLabel="progressStatus" bindValue="_id" [(ngModel)]="learningData.progressStatus"
-							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved"></ng-select>
+							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved" (change)="onStatusChange($event)"></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
@@ -533,8 +533,8 @@
 						<div class="col-md-12 details">
 							<span>Completion Comments</span>
 							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="learningData.employeeComment"
-							 #employeeComment="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && employeeComment.invalid && progressStatus=='Completed'">
+							 #employeeComment="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted" ></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !employeeComment.valid && isCompleted">
 								This field is required.
 							</div>
 						</div>
@@ -544,7 +544,7 @@
 							<div class="col-md-12">
 								<div class="m-form__actions">
 									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="isApproved || !isDisabled"
-									 (click)="modalRef.hide()">Save</button>
+									 >Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>
