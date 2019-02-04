@@ -58,6 +58,9 @@ export class MyTeamReviewerComponent implements OnInit {
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
     }
+    goToAllLearning() {
+        this.router.navigate(['/my/team/workflows/reveiwer/learning/list']);
+    }
     ngOnInit() {
         this.getallemployees();
         this.loadMTRInfo();

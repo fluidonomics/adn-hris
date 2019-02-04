@@ -9,6 +9,7 @@ import { AllEmployeeReviewer } from './team-workflows/team-reveiwer/allEmployee/
 import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-detailed-view/mtr-detailed-view.component';
 import { EmployeeSearchComponent } from './subordinate-transaction-history/employee-search/employee-search.component'
 import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
+import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
 
 
 
@@ -35,7 +36,8 @@ const routes: Routes = [
     { path: 'workflows/pap-review/:id/:emp_id', component: PapReviewComponent },
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
-    { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent }
+    { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
+    {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer }
 ]
 
 
