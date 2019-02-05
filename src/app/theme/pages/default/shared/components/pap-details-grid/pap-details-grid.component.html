@@ -62,9 +62,11 @@
                 </td>
 
                 <td>
-                    <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+                    <!-- <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
                         bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
-                        [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
+                        [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select> -->
+                    <input class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" placeholder="Supervisor"
+                        [(ngModel)]="papInfo.mtr_supervisorDetails.fullName" #supervisorOne="ngModel" disabled />
                 </td>
                 <td>
                     <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
