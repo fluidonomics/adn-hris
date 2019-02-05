@@ -179,8 +179,9 @@
 							<li class="nav-item m-tabs__item" *ngIf="isChangable">
 								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitPapWorkFlow(fmtrInfo.form.dirty)">Submit</button>
 							</li>
-							<li class="nav-item m-tabs__item"  *ngIf="raiseGreivance">								
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="raiseGreivanceClicked()">Raise Greivance</button>							
+							<li class="nav-item m-tabs__item" *ngIf="raiseGreivance">
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="raiseGreivanceClicked()">Raise
+									Greivance</button>
 							</li>
 						</ul>
 					</div>
@@ -260,12 +261,14 @@
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
+							<!-- <ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
 							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
 							 [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supervisorOne.invalid">
 								This field is required.
-							</div>
+							</div> -->
+							<input class="m-input m-input--air customError" name="supervisordata" id="supervisor" placeholder="Supervisor"
+							 [(ngModel)]="papData.mtr_supervisorDetails.fullName" #supervisorOne="ngModel" disabled />
 						</div>
 						<div class="col-md-12 details">
 							<span>KRA</span>
