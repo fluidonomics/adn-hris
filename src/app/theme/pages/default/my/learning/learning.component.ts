@@ -187,7 +187,8 @@ export class MyLearningComponent {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
             console.log("agenda info: " + this.LearningAgendaData);
-            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
+            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
+            //debugger;
         }, error => {
         });;
 
@@ -394,12 +395,12 @@ export class MyLearningComponent {
             this.isCompleted = false;
         }
 
-        if (this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
-            this.showStat = true;
-        }
-        else {
-            this.showStat = false;
-        }
+        // if (this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
+        //     this.showStat = true;
+        // }
+        // else {
+        //     this.showStat = false;
+        // }
 
         if (this.learningData.status == "Approved") {
             this.isApproved = true;
@@ -408,8 +409,9 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted" || this.learningData.status == "initiated") {
+        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted" ) {
             this.showSub = false;
+            //debugger;
         }
         else {
             this.showSub = true;

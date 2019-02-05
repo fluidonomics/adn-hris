@@ -182,10 +182,32 @@ export class LearningDetailedViewComponent {
                     //debugger;
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._learningService.approveLearning(request).subscribe(res => {
-                        if (res.ok) {
-                            this.loadLearningEmployee();
+                        if (res.ok && isApproved) {
                             this.modalRef.hide();
                             this.utilityService.hideLoader('.mtrDetailsPortlet');
+                            swal({
+                                title: 'Approved Successfully!',
+                                text: "Learning Agenda has been Approved",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            this.loadLearningEmployee();
+                            
+                        }
+                        else {
+                            this.modalRef.hide();
+                            this.utilityService.hideLoader('.mtrDetailsPortlet');
+                            swal({
+                                title: 'Sent Back Successfully!',
+                                text: "Learning Agenda has been Sent Back",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            this.loadLearningEmployee();
                         }
                     }, err => {
                         if (err.status == 300) {
