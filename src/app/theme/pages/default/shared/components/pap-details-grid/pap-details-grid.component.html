@@ -23,7 +23,7 @@
                 <th>
                     Supervisor
                 </th>
-                <th>
+                <!-- <th>
                     Employee Rating
                 </th>
                 <th>
@@ -37,7 +37,7 @@
                 </th>
                 <th>
                     Reviewer Remark
-                </th>
+                </th> -->
                 <th>
                     Action
                 </th>
@@ -68,7 +68,7 @@
                     <input class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" placeholder="Supervisor"
                         [(ngModel)]="papInfo.mtr_supervisorDetails.fullName" #supervisorOne="ngModel" disabled />
                 </td>
-                <td>
+                <!-- <td>
                     <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
                         bindLabel="displayName" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.emp_ratingScaleId"
                         [clearable]="false" #paprating="ngModel" required disabled></ng-select>
@@ -89,7 +89,7 @@
                 <td>
                     <textarea name="revRemark{{i}}" id="revRemark" #reviewerRemark="ngModel" [(ngModel)]="papInfo.reviewerRemark"
                         class="form-control m-input m-input--air" disabled></textarea>
-                </td>
+                </td> -->
                 <td>
                     <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                         title="Edit" (click)="showPAPDetails(i)">
