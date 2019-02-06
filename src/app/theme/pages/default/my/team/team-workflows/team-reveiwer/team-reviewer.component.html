@@ -200,11 +200,14 @@
 						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let pap of papData |slice:0:5| filter:papEmployeeSearch;let i=index"
-									 (click)="goToPapReview(pap)">
+
+
+
+									<div class="m-widget4__item m-padding--10" *ngFor="let learn of learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch;let i=index"
+									 (click)="goToLearningReview(learn)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+												<img *ngIf="learn?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
 												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
@@ -213,29 +216,31 @@
 										</div>
 										<div class="m-widget4__info">
 											<span class="m-widget4__title">
-												{{pap.fullName}}
+												{{learn.emp_details.fullName}}
 											</span>
 											<br>
 											<span class="m-widget4__sub">
-												{{pap.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+												{{learn.learning_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
 											</span>
 										</div>
-										<!-- <span class="m-widget4__ext">
-											<span class="m--font-brand">
-												{{employee.status}}
+										<span class="m-widget4__ext">
+											<span class="m-widget4__number m--font-brand">
 											</span>
-										</span> -->
+										</span>
 									</div>
 
 								</div>
+
+
+
 							</div>
 						</div>
 					</div>
-					<!-- <span class="footer pull-right">
-						<a (click)="goToAllEmployee()">
+					<span class="footer pull-right">
+						<a (click)="goToAllLearning()">
 							View All
 						</a>
-					</span> -->
+					</span>
 				</div>
 			</div>
 		</div>
@@ -274,16 +279,12 @@
 					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
 						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
 							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
-
 								<div class="m-widget4  workflow--hover ">
-
-
-
-									<div class="m-widget4__item m-padding--10" *ngFor="let learn of learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch;let i=index"
-									 (click)="goToLearningReview(learn)">
+									<div class="m-widget4__item m-padding--10" *ngFor="let pap of papData |slice:0:5| filter:papEmployeeSearch;let i=index"
+									 (click)="goToPapReview(pap)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="learn?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
 												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
@@ -292,29 +293,32 @@
 										</div>
 										<div class="m-widget4__info">
 											<span class="m-widget4__title">
-												{{learn.emp_details.fullName}}
+												{{pap.fullName}}
 											</span>
 											<br>
 											<span class="m-widget4__sub">
-												{{learn.learning_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+												{{pap.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
 											</span>
 										</div>
-										<span class="m-widget4__ext">
-											<span class="m-widget4__number m--font-brand">
+										<!-- <span class="m-widget4__ext">
+											<span class="m--font-brand">
+												{{employee.status}}
 											</span>
-										</span>
+										</span> -->
 									</div>
 
 								</div>
+
+
 							</div>
 						</div>
 
 					</div>
-					<span class="footer pull-right">
+					<!-- <span class="footer pull-right">
 						<a (click)="goToAllLearning()">
 							View All
 						</a>
-					</span>
+					</span> -->
 				</div>
 			</div>
 		</div>
