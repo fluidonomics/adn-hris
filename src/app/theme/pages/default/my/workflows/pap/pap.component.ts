@@ -139,14 +139,13 @@ export class MyPapComponent {
             this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
-                    this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                    debugger;
+                    this.papWorkFlowData = _.chain(papDetails).groupBy('_id').map(function (v, i) {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
                     this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
-                    debugger;
                     this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
-                    debugger;
                     if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
                         this.raiseGreivance = false
                     }

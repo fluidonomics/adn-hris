@@ -93,7 +93,7 @@
 								</span>
 							</td>
 							<td class="m-datatable__cell" width="15%">
-								<a routerLink="/my/workflows/pap" [queryParams]="{ id: papworkflow.mtr_master_id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+								<a routerLink="/my/workflows/pap" [queryParams]="{ id: papworkflow._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
 									<i class="la" [ngClass]="papworkflow.status=='Initiated' || papworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
 								</a>
 							</td>
