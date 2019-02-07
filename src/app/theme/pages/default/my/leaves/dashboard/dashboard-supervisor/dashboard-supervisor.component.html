@@ -231,21 +231,21 @@
                                                         <span>{{leave?.createdAt | date:'dd MMM yyy'}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.createdByName?.fullName}}</span>
+                                                        <span>{{leave.leavedetails?.createdByName?.fullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.updatedAt | date:'dd MMM yyy'}}</span>
+                                                        <span>{{leave.leavedetails?.updatedAt | date:'dd MMM yyy'}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.updatedByName?.fullName}}</span>
+                                                        <span>{{leave.leavedetails?.updatedByName?.fullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span class="m-badge m-badge--success m-badge--wide">{{leave?.status}}</span>
+                                                        <span class="m-badge m-badge--success m-badge--wide">{{leave.leavedetails?.status}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
                                                         <span>
                                                             <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve/Reject Leave"
-                                                                (click)="showLeaveDetail(leave._id, leaveDetailModal, true)">
+                                                                (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, true)">
                                                                 <i class="la la-info"></i>
                                                             </a>
                                                         </span>
@@ -522,27 +522,27 @@
                         <span class="key">Leave Type</span>
                         <span class="value">{{leaveDetails?.leave?.leaveTypes?.type}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">From Date</span>
                         <span class="value">{{leaveDetails?.leave?.fromDate | date: 'dd MMM yyy'}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">To Date</span>
                         <span class="value">{{leaveDetails?.leave?.toDate | date: 'dd MMM yyy'}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">Applied On</span>
                         <span class="value">{{leaveDetails?.leave?.createdAt | date: 'dd MMM yyy'}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">Status</span>
                         <span class="value">{{leaveDetails?.leave?.status}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">Days</span>
                         <span class="value">{{leaveDetails?.leave?.days}}</span>
                     </div>
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-6 form-group">
                         <span class="key">Leave Balance</span>
                         <span class="value">{{leaveDetails?.leave?.balance}}</span>
                     </div>
