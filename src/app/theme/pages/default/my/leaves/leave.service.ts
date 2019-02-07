@@ -67,8 +67,6 @@ export class LeaveService {
     }
 
     getLeaveDetailsByFilter(supervisorId: number, fromDate: number, toDate: number, empId?: number, leaveType?: number, status?: string) {
-        console.log(fromDate);
-        console.log(toDate);
         let url = "leave/getLeaveDetailsByFilter?supervisorId=" + supervisorId + "&fromDate=" + fromDate + "&toDate=" + toDate;
         if (empId) {
             url += "&empId=" + empId;

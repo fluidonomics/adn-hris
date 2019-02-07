@@ -144,11 +144,11 @@
                                     (ngModelChange)="getTeamLeavesForApproval()" placeholder="Select Month" placement="left"
                                     readonly>
                             </li>
-                            <!-- <li class="nav-item m-tabs__item">
+                            <li class="nav-item m-tabs__item">
                                 <ng-select class="m-input m-input--air" name="employee" placeholder="Select Leave Type" bindValue="_id" bindLabel="type"
                                     [items]="leaveTypeList" [(ngModel)]="leaveApprovalFilter.leaveTypeId" (ngModelChange)="getTeamLeavesForApproval()"
                                     [clearable]="true"></ng-select>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -175,9 +175,9 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort">
                                                         <span>ID</span>
                                                     </th>
-                                                    <!-- <th class="m-datatable__cell m-datatable__cell--sort">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort">
                                                         <span>Leave Type</span>
-                                                    </th> -->
+                                                    </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort">
                                                         <span>From</span>
                                                     </th>
@@ -215,20 +215,20 @@
                                                     <td class="m-datatable__cell">
                                                         <span>{{leave.employeeDetails?.userName}}</span>
                                                     </td>
-                                                    <!-- <td class="m-datatable__cell">
-                                                        <span>{{leave.leaveTypeName}}</span>
-                                                    </td> -->
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.fromDate | date:'dd MMM yyy'}}</span>
+                                                        <span>{{leave.leaveTypeName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.toDate | date:'dd MMM yyy'}}</span>
+                                                        <span>{{leave.leavedetails?.fromDate | date:'dd MMM yyy'}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{leave.leavedetails?.toDate | date:'dd MMM yyy'}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell text-center">
-                                                        <span>{{leave?.days}}</span>
+                                                        <span>{{leave.leavedetails?.days}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
-                                                        <span>{{leave?.createdAt | date:'dd MMM yyy'}}</span>
+                                                        <span>{{leave.leavedetails?.createdAt | date:'dd MMM yyy'}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell">
                                                         <span>{{leave.leavedetails?.createdByName?.fullName}}</span>

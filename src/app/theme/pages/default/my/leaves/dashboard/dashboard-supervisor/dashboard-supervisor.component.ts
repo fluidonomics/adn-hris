@@ -210,8 +210,6 @@ export class DashboardSupervisorComponent implements OnInit {
             this.leaveApprovalFilter.employeeId, this.leaveApprovalFilter.leaveTypeId, LeaveStatus.PendingCancellation)
         forkJoin(appliedLeavesSubs, withdrawnLeavesSubs, cancelLeavesSubs)
             .subscribe(results => {
-                debugger;
-                console.log(results);
                 if (results[0].ok) {
                     let leaves = results[0].json().data || [];
                     if (leaves.length > 0) {
@@ -231,16 +229,15 @@ export class DashboardSupervisorComponent implements OnInit {
                     }
                 }
             });
-            
     }
 
     getTeamLeavesTransactions() {
-        // this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date[0], this.leaveTransactionsFilter.date[1],
-        //     this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
-        //         if (res.ok) {
-        //             this.leavesTransactions = res.json().data || [];
-        //         }
-        //     })
+        this.leaveService.getLeaveDetailsByFilter(this.currentUser._id, this.leaveTransactionsFilter.date[0], this.leaveTransactionsFilter.date[1],
+            this.leaveTransactionsFilter.employeeId, this.leaveTransactionsFilter.leaveTypeId, this.leaveTransactionsFilter.status).subscribe(res => {
+                if (res.ok) {
+                    this.leavesTransactions = res.json().data || [];
+                }
+            })
     }
 
     leaveDetailsForm: any = {};
@@ -351,7 +348,6 @@ export class DashboardSupervisorComponent implements OnInit {
         this.leaveDetails = {};
 
         this.leaveService.getLeaveDetailsById(leaveId).subscribe(res => {
-            debugger;
             if (res.ok) {
                 let body = res.json();
                 if (body.data[0]) {
@@ -414,7 +410,6 @@ export class DashboardSupervisorComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.leaveList = res.json() || [];
-                    debugger;
                     if (this.leaveList && this.leaveList.length > 0) {
                         this.leaveList = this.leaveList.map(leave => {
                             leave.days = this.utilityService.subtractDates(leave.fromDate, leave.toDate);
