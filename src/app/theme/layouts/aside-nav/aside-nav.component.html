@@ -442,6 +442,19 @@
 					</span>
 				</a>
 			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+			 aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				<a routerLink="/my/workflows/pip" class="m-menu__link">
+					<i class="m-menu__link-icon fa fa-file"></i>
+					<span class="m-menu__link-title">
+						<span class="m-menu__link-wrap">
+							<span class="m-menu__link-text">
+								PIP
+							</span>
+						</span>
+					</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
