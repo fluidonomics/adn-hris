@@ -21,10 +21,11 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
-						 role="tablist">
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="employees.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="employeeSearch">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="employeeSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -36,22 +37,31 @@
 					</div>
 				</div>
 				<div class="m-portlet__body" id="employeeList">
-					<div class="no-records" *ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : employeeReverse | filter:employeeSearch)?.length==0">
+					<div class="no-records"
+						*ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : employeeReverse | filter:employeeSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
 
-					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let employee of employees |slice:0:5| filter:employeeSearch;let i=index"
-									 (click)="goToKraReview(employee)">
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let employee of employees |slice:0:5| filter:employeeSearch;let i=index"
+										(click)="goToKraReview(employee)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<img *ngIf="employee?.profileImage; else noImage"
+													src="{{imageBase+employee?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
-													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
 											</a>
 										</div>
@@ -95,10 +105,11 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
-						 role="tablist">
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="employees.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="mTRemployeeSearch">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="mTRemployeeSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -110,22 +121,31 @@
 					</div>
 				</div>
 				<div class="m-portlet__body" id="employeeList">
-					<div class="no-records" *ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : mTRemployeeReverse | filter:mTRemployeeSearch)?.length==0">
+					<div class="no-records"
+						*ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : mTRemployeeReverse | filter:mTRemployeeSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
 
-					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let employee of mtrEmployees |slice:0:5| filter:mTRemployeeSearch;let i=index"
-									 (click)="goToMtrReview(employee)">
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let employee of mtrEmployees |slice:0:5| filter:mTRemployeeSearch;let i=index"
+										(click)="goToMtrReview(employee)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<img *ngIf="employee?.profileImage; else noImage"
+													src="{{imageBase+employee?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
-													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
 											</a>
 										</div>
@@ -169,10 +189,11 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
-						 role="tablist">
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="learningData.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="learningSearch">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="learningSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -193,24 +214,33 @@
 					</div>
 		
 				</div> -->
-					<div class="no-records" *ngIf="learningData.length==0 || (learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch)?.length==0">
+					<div class="no-records"
+						*ngIf="learningData.length==0 || (learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
-					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
 								<div class="m-widget4  workflow--hover ">
 
 
 
-									<div class="m-widget4__item m-padding--10" *ngFor="let learn of learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch;let i=index"
-									 (click)="goToLearningReview(learn)">
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let learn of learningData | orderBy: 'updatedAt' : learningReverse | filter:learningSearch;let i=index"
+										(click)="goToLearningReview(learn)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="learn?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<img *ngIf="learn?.profileImage; else noImage"
+													src="{{imageBase+learn?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
-													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
 											</a>
 										</div>
@@ -256,10 +286,11 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
-						 role="tablist">
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="papData.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="papEmployeeSearch">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="papEmployeeSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -271,23 +302,31 @@
 					</div>
 				</div>
 				<div class="m-portlet__body" id="papApprovalList">
-					<div class="no-records" *ngIf="papData.length==0 || (papData | orderBy: 'updatedAt' : papEmployeeReverse | filter:papEmployeeSearch)?.length==0">
+					<div class="no-records"
+						*ngIf="papData.length==0 || (papData | orderBy: 'updatedAt' : papEmployeeReverse | filter:papEmployeeSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
 
 
-					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let pap of papData |slice:0:5| filter:papEmployeeSearch;let i=index"
-									 (click)="goToPapReview(pap)">
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let pap of papData |slice:0:5| filter:papEmployeeSearch;let i=index"
+										(click)="goToPapReview(pap)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
-													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
 											</a>
 										</div>
@@ -334,10 +373,11 @@
 					</div>
 					<div class="m-portlet__head-tools">
 						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
-						 role="tablist">
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="papViewData.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="papEmployeeSearch">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="papEmployeeSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -353,18 +393,25 @@
 						<span class="align--center">No records found</span>
 					</div>
 
-					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
 								<div class="m-widget4  workflow--hover ">
-									<div class="m-widget4__item m-padding--10" *ngFor="let pap of papViewData |slice:0:5| filter:papEmployeeSearch;let i=index"
-									 (click)="goToPapReview(pap)">
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let pap of papViewData |slice:0:5| filter:papEmployeeSearch;let i=index"
+										(click)="goToPapReview(pap)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-												 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<img *ngIf="pap?.profileImage; else noImage" src="{{imageBase+pap?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 												<ng-template #noImage>
-													<img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
 												</ng-template>
 											</a>
 										</div>
@@ -390,6 +437,99 @@
 					</div>
 					<!-- <span class="footer pull-right">
 						<a (click)="goToAllEmployee()">
+							View All
+						</a>
+					</span> -->
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-4">
+			<div class="m-portlet m-portlet--full-height">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								Review PIP Agenda
+							</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools">
+						<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
+							role="tablist">
+							<li class="nav-item m-tabs__item" *ngIf="pipData.length > 0">
+								<div class="m-input-icon m-input-icon--left">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="pipSearch">
+									<span class="m-input-icon__icon m-input-icon__icon--left">
+										<span>
+											<i class="la la-search"></i>
+										</span>
+									</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body" id="pipApproval">
+					<!-- <div class="row">
+						<div class="col-md-9 col-xs-8">
+			
+						</div>
+						<div class="col-md-3 col-xs-4 pull-right">
+							<button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+						</div>
+			
+					</div> -->
+					<div class="no-records"
+						*ngIf="pipData.length==0 || (pipData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch)?.length==0">
+						<span class="align--center">No records found</span>
+					</div>
+					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+						data-scrollable="true"
+						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+							style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+								dir="ltr">
+								<div class="m-widget4  workflow--hover ">
+
+
+
+									<div class="m-widget4__item m-padding--10"
+										*ngFor="let pip of pipData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch;let i=index"
+										(click)="goToPipReview(pip)">
+										<div class="m-widget4__img m-widget4__img--logo">
+											<a align="center">
+												<img *ngIf="pip?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}"
+													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+												<ng-template #noImage>
+													<img src="./assets/app/media/img/custom/users/user6.jpg"
+														class="directory_image m--img-rounded m--marginless m--img-centered">
+												</ng-template>
+											</a>
+										</div>
+										<div class="m-widget4__info">
+											<span class="m-widget4__title">
+												{{pip.emp_details.fullName}}
+											</span>
+											<br>
+											<span class="m-widget4__sub">
+												{{pip.pip_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+											</span>
+										</div>
+										<span class="m-widget4__ext">
+											<span class="m-widget4__number m--font-brand">
+											</span>
+										</span>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <span class="footer pull-right">
+						<a (click)="goToAllLearning()">
 							View All
 						</a>
 					</span> -->

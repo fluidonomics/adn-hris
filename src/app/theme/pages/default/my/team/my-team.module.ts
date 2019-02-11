@@ -52,6 +52,7 @@ import { PipApprovalComponent } from './team-workflows/team-supervisor/pip-appro
 import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
 import { PipViewComponent } from './team-workflows/team-supervisor/pip-view/pip-view.component';
 import { PipService } from '../../services/pip.service';
+import { PipReview } from './team-workflows/team-reveiwer/pip-review/pip-review.component';
 
 
 
@@ -97,7 +98,8 @@ import { PipService } from '../../services/pip.service';
         AllLearningReviewer,
         PipApprovalComponent,
         PipViewComponent,
-        PipDetailedViewComponent
+        PipDetailedViewComponent,
+        PipReview
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService,PipService]
 })

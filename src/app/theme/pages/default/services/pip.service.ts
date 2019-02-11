@@ -85,6 +85,11 @@ export class PipService {
       return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
    }
 
+   getPipByReviewer(reviewerId: number): Observable<Response> {
+      let url = "pip/pipbyreviewer?reviewerId=" + reviewerId;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+  }
+
 
    private extractData(res: Response) {
       return res || {};

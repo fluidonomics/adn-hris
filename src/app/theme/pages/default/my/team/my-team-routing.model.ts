@@ -21,6 +21,8 @@ import { PapDetailedViewComponent } from './team-workflows/team-supervisor/pap-d
 import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
 import { TransactionHistoryComponent } from './subordinate-transaction-history/transaction-history/transaction-history.component';
 import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
+import { PipReview } from './team-workflows/team-reveiwer/pip-review/pip-review.component';
+
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent, canActivate: [SupervisorGuard] },
@@ -28,6 +30,7 @@ const routes: Routes = [
     { path: 'workflows/kra-review/:id/:emp_id', component: KraReview },
     { path: 'workflows/learning-review/:id/:emp_id', component: LearningReview },
     { path: 'workflows/mtr-review/:id/:emp_id', component: MtrReview },
+    { path: 'workflows/pip-review/:id/:emp_id', component: PipReview },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent, canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent, canActivate: [SupervisorGuard] },
     //{ path: 'workflows/:reveiwer/allEmployee', component: AllEmployeeComponent,canActivate: [ReviewerGuard] },

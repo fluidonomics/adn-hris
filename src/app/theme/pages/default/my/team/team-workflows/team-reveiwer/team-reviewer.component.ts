@@ -9,12 +9,13 @@ import { tree } from 'd3';
 import { KraService } from '../../../workflows/kra/kra.service';
 import { LearningService } from '../../../../services/learning.service';
 import { PapService } from '../../../../services/pap.service';
+import { PipService } from '../../../../services/pip.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [LearningService, PapService]
+    providers: [LearningService, PapService, PipService]
 })
 export class MyTeamReviewerComponent implements OnInit {
 
@@ -26,7 +27,8 @@ export class MyTeamReviewerComponent implements OnInit {
         private router: Router,
         private kraService: KraService,
         private learningService: LearningService,
-        private papService: PapService
+        private papService: PapService,
+        private pipService: PipService
     ) {
     }
     employees: any = [];
@@ -50,6 +52,11 @@ export class MyTeamReviewerComponent implements OnInit {
     learningSearch: any;
     learningReverse: boolean = true;
 
+    pipData: any = [];
+    pipSearch: any;
+    pipReverse: boolean = true;
+
+
     papEmployeeReverse: boolean = true;
     papEmployeeSearch: any;
     papData: any = [];
@@ -66,6 +73,7 @@ export class MyTeamReviewerComponent implements OnInit {
         this.loadMTRInfo();
         this.getEmployeesLearning();
         this.getPapByReviewer();
+        this.getPipByReviewer();
         this.imageBase = environment.content_api_base.apiBase;
     }
 
@@ -100,6 +108,16 @@ export class MyTeamReviewerComponent implements OnInit {
     getEmployeesLearning() {
         this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.learningData = res.json().result.message || [];
+            //debugger;
+            // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    getPipByReviewer() {
+        this.pipService.getPipByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.pipData = res.json().result.message || [];
             //debugger;
             // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
         }, error => {
@@ -155,6 +173,10 @@ export class MyTeamReviewerComponent implements OnInit {
     goToPapReview(pap) {
         debugger;
         this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
+    }
+
+    goToPipReview(pip) {
+        this.router.navigateByUrl('my/team/workflows/pip-review/' + pip.pip_master_details._id + "/" + pip.emp_details._id);
     }
 }
 
