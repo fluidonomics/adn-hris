@@ -10,6 +10,7 @@ import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-d
 import { EmployeeSearchComponent } from './subordinate-transaction-history/employee-search/employee-search.component'
 import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
+import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
 
 
 
@@ -37,7 +38,9 @@ const routes: Routes = [
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
     { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
-    {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer }
+    {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
+    { path: 'workflows/pip-detailed-view/:id/:emp_id', component: PipDetailedViewComponent },
+
 ]
 
 

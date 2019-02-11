@@ -44,6 +44,16 @@ import { PapService } from '../../services/pap.service';
 import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
+// import { PipApprovalComponent } from './team-workflows/team-supervisor/pip-approval/pip-approval.component';
+// import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
+// import { PipViewComponent } from './team-workflows/team-supervisor/pip-view/pip-view.component';
+
+import { PipApprovalComponent } from './team-workflows/team-supervisor/pip-approval/pip-approval.component';
+import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
+import { PipViewComponent } from './team-workflows/team-supervisor/pip-view/pip-view.component';
+import { PipService } from '../../services/pip.service';
+
+
 
 @NgModule({
     imports: [
@@ -84,9 +94,12 @@ import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/
         PapViewComponent,
         PapDetailedViewComponent,
         PapReviewComponent,
-        AllLearningReviewer
+        AllLearningReviewer,
+        PipApprovalComponent,
+        PipViewComponent,
+        PipDetailedViewComponent
     ],
-    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]
+    providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService,PipService]
 })
 export class MyTeamModule {
 }

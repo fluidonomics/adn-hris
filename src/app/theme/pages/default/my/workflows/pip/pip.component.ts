@@ -169,7 +169,7 @@ export class MyPipComponent {
                     this.pipInfoData[index] = data.result.message
                     swal({
                         title: 'Success',
-                        text: "Learning Process has been saved",
+                        text: "PIP Process has been saved",
                         type: 'success',
                         showCancelButton: false,
                         confirmButtonColor: '#66BB6A',
@@ -201,8 +201,8 @@ export class MyPipComponent {
             let data = res.json();
             this.PipAgendaData = data.result.message;
             //console.log("agenda info: " + this.PipAgendaData);
-            this.showSub = this.PipAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
-            //debugger;
+            this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
+           // debugger;
         }, error => {
         });;
 
@@ -215,8 +215,8 @@ export class MyPipComponent {
             this.pipInfoData = data.result.message;
             console.log("details info: " + this.pipInfoData);
             if(this.pipInfoData.length > 0){
-                this.showSub = this.pipInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
-                //debugger;
+                this.showSub = this.pipInfoData.filter(pip => pip.status != "Submitted" && pip.status != "Approved").length > 0;
+               // debugger;
             } 
             else {
                 this.pipInfoData = [
@@ -275,7 +275,7 @@ export class MyPipComponent {
         });
     }
 
-    addLearningHtml() {
+    addPipHtml() {
         //let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
         //if (learnA && learnA.length < 3) {
         let data = {
@@ -327,7 +327,7 @@ export class MyPipComponent {
             }).then((result) => {
                 if (result.value) {
                     let data = {
-                        masterId: this.param_id,
+                        master_id: this.param_id,
                         empId: this._currentEmpId,
                         supervisor_id: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
@@ -340,7 +340,7 @@ export class MyPipComponent {
                         if (res.ok) {
                             swal({
                                 title: 'Submitted Successfully!',
-                                text: "Learning Agendas have been submitted for Supervisor Approval.",
+                                text: "PIP Agendas have been submitted for Supervisor Approval.",
                                 type: 'success',
                                 showCancelButton: false,
                                 confirmButtonColor: '#66BB6A',
@@ -454,7 +454,7 @@ export class MyPipComponent {
         else {
             this.showSub = true;
         }
-        debugger;
+        //debugger;
 
     }
 

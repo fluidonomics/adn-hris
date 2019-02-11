@@ -25,6 +25,7 @@ import { LearningBatchComponent } from './workFlows/learning/batch/batch.compone
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
+import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
@@ -47,6 +48,7 @@ import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employe
 import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
 import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
 import { LearningService } from '../services/learning.service';
+import { PipService } from '../services/pip.service';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -77,6 +79,7 @@ import { SharedModule } from '../shared/shared.module';
         LearningBatchComponent,
         HrBatchComponent,
         HrPipComponent,
+        PipBatchComponent,
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
@@ -93,8 +96,9 @@ import { SharedModule } from '../shared/shared.module';
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
         //DocumentsViewComponent
+        
     ],
-    providers: [HrService, HrGuard, LeaveService, LearningService]
+    providers: [HrService, HrGuard, LeaveService, LearningService, PipService]
 })
 export class HrModule {
 }

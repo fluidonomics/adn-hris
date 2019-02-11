@@ -58,12 +58,32 @@ export class PipService {
    getPipDetails(master_id?: number): Observable<Response> {
       let url = "pip/getpipdetails?master_id=" + master_id;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
-  }
+   }
 
-  getPipInfo(emp_id?: number): Observable<Response> {
-   let url = "pip/getpipmaster?emp_id=" + emp_id;
-   return this.authService.get(url).map(this.extractData).catch(this.handleError);
-}
+   getPipInfo(emp_id?: number): Observable<Response> {
+      let url = "pip/getpipmaster?emp_id=" + emp_id;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+   }
+
+   getPipBySupervisor(supervisor_id: number,status: string): Observable<Response> {
+      let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+   }
+
+   updateBatch(data) {
+      let url = "pip/updatebatch";
+      return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+   }
+
+   getPipBatches(empId?: number): Observable<Response> {
+      let url = "pip/getpipbatch?empId=" + empId;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+   }
+
+   initBatch(data) {
+      let url = "pip/initiatepip";
+      return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+   }
 
 
    private extractData(res: Response) {

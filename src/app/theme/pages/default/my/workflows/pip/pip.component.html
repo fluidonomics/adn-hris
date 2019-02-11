@@ -245,7 +245,7 @@
 												</th> -->
 
 												<th>
-													Progress Status
+													Status
 												</th>
 
 												<th>
@@ -254,17 +254,17 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let pipInfo of pipInfoData;let i=index" [ngClass]="{'dropped':pipInfoData[i].progressStatus =='Completed','sendBack':pipInfoData[i].status=='SendBack','approved':pipInfoData[i].status =='Approved'}"
+											<tr *ngFor="let pipInfo of pipInfoData;let i=index" [ngClass]="{'dropped':pipInfoData[i].status =='Completed','sendBack':pipInfoData[i].status=='SendBack','approved':pipInfoData[i].status =='Approved'}"
 											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
 												</th>
 												<td>
-													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="pipInfo.timelines"
+													<textarea name="areaofImprovement{{i}}" id="areaofImprovement" #areaofImprovement="ngModel" [(ngModel)]="pipInfo.areaofImprovement"
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td>
-													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="pipInfo.timelines"
+													<textarea name="actionPlan{{i}}" id="actionPlan" #actionPlan="ngModel" [(ngModel)]="pipInfo.actionPlan"
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td>
@@ -277,9 +277,8 @@
 												</td> -->
 
 												<td>
-													<ng-select class="m-input m-input--air customError" name="progressStatus{{i}}" id="progressStatus"
-													 placeholder="Progress Status" [(ngModel)]="pipInfo.progressStatus" [clearable]="false"
-													 #progressStatus="ngModel" required disabled></ng-select>
+														<textarea name="status{{i}}" id="status" #status="ngModel" [(ngModel)]="pipInfo.status"
+														class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 
 												<td>
@@ -293,7 +292,7 @@
 											<tr>
 												<td colspan="9">
 													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
-													 (click)="addLearningHtml()" *ngIf="showSub">
+													 (click)="addPipHtml()" *ngIf="showSub">
 														<i class="la la-plus"></i>
 													</button>
 												</td>
@@ -452,7 +451,7 @@
 						</div>
 						<div class="col-md-10">
 
-							<textarea name="areaofImprovement" id="areaofImprovement" [(ngModel)]="pipData.areaofImprovement" #Timelines="ngModel" class="form-control m-input m-input--air"
+							<textarea name="areaofImprovement" id="areaofImprovement" [(ngModel)]="pipData.areaofImprovement" #areaofImprovement="ngModel" class="form-control m-input m-input--air"
 							 required [disabled]="isDisabled"></textarea>
 
 							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !areaofImprovement.valid">
@@ -497,16 +496,15 @@
 							</div>
 						</div>
 						<div class="col-md-6 details">
-							<span>Progress Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status"
-							 [items]="progressStatusData" bindLabel="progressStatus" bindValue="_id" [(ngModel)]="pipData.progressStatus"
-							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved" (change)="onStatusChange($event)"></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && progressStatus.invalid">
+							<span>Status</span>
+							<textarea name="status" id="status" [(ngModel)]="pipData.status" #actionPlan="ngModel" class="form-control m-input m-input--air"
+								 required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && status.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
-							<span>Comments</span>
+							<span>Employee Initial Comments</span>
 							<textarea name="timelines" id="timelines" [(ngModel)]="pipData.timelines" #Timelines="ngModel" class="form-control m-input m-input--air"
 							 required [disabled]="isDisabled"></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !Timelines.valid">
@@ -522,6 +520,22 @@
 								This field is required.
 							</div>
 						</div>
+						<div class="col-md-2 details">
+								<span>Supervisor Approval Comments</span>
+							</div>
+							<div class="col-md-10 details">
+
+								<textarea name="actionPlan" id="actionPlan"
+									[(ngModel)]="pipData.actionPlan" #actionPlan="ngModel"
+									class="form-control m-input m-input--air" required
+									[disabled]="isDisabled"></textarea>
+
+								<div class="form-control-feedback has-danger"
+									*ngIf="PipDataForm.submitted && !actionPlan.valid">
+									This field is required.
+								</div>
+
+							</div>
 						<!-- <div class="col-md-12" *ngIf="true"> -->
 							<div class="col-md-12 heading" *ngIf="true">
 								<span><b>Month 1</b></span>
@@ -529,7 +543,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #1</span>
 								<textarea name="empComment_month1" id="empComment_month1" [(ngModel)]="pipData.empComment_month1" #empComment_month1="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month1.valid">
 									This field is required.
 								</div>
@@ -537,7 +551,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #1</span>
 								<textarea name="supComment_month1" id="supComment_month1" [(ngModel)]="pipData.supComment_month1"
-								 #supComment_month1="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month1="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month1.valid">
 									This field is required.
@@ -552,7 +566,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #2</span>
 								<textarea name="empComment_month2" id="empComment_month2" [(ngModel)]="pipData.empComment_month2" #empComment_month2="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month2.valid">
 									This field is required.
 								</div>
@@ -560,7 +574,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #2</span>
 								<textarea name="supComment_month2" id="supComment_month2" [(ngModel)]="pipData.supComment_month2"
-								 #supComment_month2="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month2="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month2.valid">
 									This field is required.
@@ -576,7 +590,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #3</span>
 								<textarea name="empComment_month3" id="empComment_month3" [(ngModel)]="pipData.empComment_month3" #empComment_month3="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month3.valid">
 									This field is required.
 								</div>
@@ -584,7 +598,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #3</span>
 								<textarea name="supComment_month3" id="supComment_month3" [(ngModel)]="pipData.supComment_month3"
-								 #supComment_month3="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month3="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month3.valid">
 									This field is required.
@@ -600,7 +614,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #4</span>
 								<textarea name="empComment_month4" id="empComment_month4" [(ngModel)]="pipData.empComment_month4" #empComment_month4="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month4.valid">
 									This field is required.
 								</div>
@@ -608,7 +622,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #4</span>
 								<textarea name="supComment_month4" id="supComment_month4" [(ngModel)]="pipData.supComment_month4"
-								 #supComment_month1="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month4="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month4.valid">
 									This field is required.
@@ -624,7 +638,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #5</span>
 								<textarea name="empComment_month5" id="empComment_month5" [(ngModel)]="pipData.empComment_month5" #empComment_month5="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month5.valid">
 									This field is required.
 								</div>
@@ -632,7 +646,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #5</span>
 								<textarea name="supComment_month5" id="supComment_month5" [(ngModel)]="pipData.supComment_month5"
-								 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month5="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month5.valid">
 									This field is required.
@@ -648,7 +662,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Employee Comments #6</span>
 								<textarea name="empComment_month6" id="empComment_month6" [(ngModel)]="pipData.empComment_month6" #empComment_month6="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
+								  [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month6.valid">
 									This field is required.
 								</div>
@@ -656,7 +670,7 @@
 							<div class="col-md-6 month" *ngIf="true">
 								<span>Supervisor Comments #6</span>
 								<textarea name="supComment_month6" id="supComment_month6" [(ngModel)]="pipData.supComment_month6"
-								 #supComment_month6="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
+								 #supComment_month6="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" 
 								 [disabled]="isDisabled"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !supComment_month6.valid">
 									This field is required.
