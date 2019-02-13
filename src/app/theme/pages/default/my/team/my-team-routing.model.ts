@@ -11,6 +11,7 @@ import { EmployeeSearchComponent } from './subordinate-transaction-history/emplo
 import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
 import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
+import { AllPipReviewer } from './team-workflows/team-reveiwer/allPip/allPipReviewer.component';
 
 
 
@@ -42,6 +43,7 @@ const routes: Routes = [
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
     { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
     {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
+    {  path: 'workflows/:supervisor/pip/list', component: AllPipReviewer },
     { path: 'workflows/pip-detailed-view/:id/:emp_id', component: PipDetailedViewComponent },
 
 ]

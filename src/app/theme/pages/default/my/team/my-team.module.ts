@@ -44,9 +44,8 @@ import { PapService } from '../../services/pap.service';
 import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pap-review.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
-// import { PipApprovalComponent } from './team-workflows/team-supervisor/pip-approval/pip-approval.component';
-// import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
-// import { PipViewComponent } from './team-workflows/team-supervisor/pip-view/pip-view.component';
+
+import { AllPipReviewer } from './team-workflows/team-reveiwer/allPip/allPipReviewer.component';
 
 import { PipApprovalComponent } from './team-workflows/team-supervisor/pip-approval/pip-approval.component';
 import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
@@ -99,7 +98,9 @@ import { PipReview } from './team-workflows/team-reveiwer/pip-review/pip-review.
         PipApprovalComponent,
         PipViewComponent,
         PipDetailedViewComponent,
-        PipReview
+        PipReview,
+        AllPipReviewer
+
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService,PipService]
 })

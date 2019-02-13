@@ -446,7 +446,7 @@
 		<div class="col-xl-4">
 			<div class="m-portlet m-portlet--full-height">
 				<div class="m-portlet__head">
-					<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-caption" (click)="goToAllPip()" style="cursor:pointer;">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
 								Review PIP Agenda
@@ -471,15 +471,6 @@
 					</div>
 				</div>
 				<div class="m-portlet__body" id="pipApproval">
-					<!-- <div class="row">
-						<div class="col-md-9 col-xs-8">
-			
-						</div>
-						<div class="col-md-3 col-xs-4 pull-right">
-							<button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
-						</div>
-			
-					</div> -->
 					<div class="no-records"
 						*ngIf="pipData.length==0 || (pipData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch)?.length==0">
 						<span class="align--center">No records found</span>
@@ -528,11 +519,11 @@
 							</div>
 						</div>
 					</div>
-					<!-- <span class="footer pull-right">
-						<a (click)="goToAllLearning()">
+					<span class="footer pull-right">
+						<a (click)="goToAllPip()">
 							View All
 						</a>
-					</span> -->
+					</span>
 				</div>
 			</div>
 		</div>

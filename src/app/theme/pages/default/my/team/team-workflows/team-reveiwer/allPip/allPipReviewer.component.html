@@ -1,0 +1,113 @@
+<div class="m-content">
+   <div class="row">
+      <div class="col-xl-12" *ngIf="true">
+         <div class="m-portlet m-portlet--full-height">
+            <div class="m-portlet__head">
+               <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                     <h3 class="m-portlet__head-text">
+                        Review PIP
+                     </h3>
+                  </div>
+               </div>
+
+            </div>
+            <div class="m-portlet__body">
+               <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                  <table class="m-datatable__table">
+                     <thead class="m-datatable__head">
+                        <tr class="m-datatable__row">
+                           <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                              <span>Profile picture</span>
+                           </th>
+                           <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                              <span>UserName</span>
+                           </th>
+                           <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                              <span>Full Name</span>
+                           </th>
+                           <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                              <span>Last Updated on</span>
+                           </th>
+                           <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                              <span>Status</span>
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody class="m-datatable__body">
+                        <tr class="m-datatable__row" style="cursor:pointer;" (click)="goToPipReview(emp)"
+                           *ngFor="let emp of pipData | paginate: { itemsPerPage: 6, currentPage: employeesFilter.page }; let even=even;">
+                           <td class="m-datatable__cell" width="15%">
+                              <a align="center">
+                                 <img *ngIf="emp?.profileImage; else noImage" src="{{imageBase+emp?.profileImage}}"
+                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                 <ng-template #noImage>
+                                    <img src="./assets/app/media/img/custom/users/user6.jpg"
+                                       class="directory_image m--img-rounded m--marginless m--img-centered">
+                                 </ng-template>
+                              </a>
+                           </td>
+                           <td class="m-datatable__cell" width="15%">
+                              <span>{{emp.emp_details.userName}}</span>
+                           </td>
+                           <td class="m-datatable__cell" width="15%">
+                              <span>{{emp.emp_details.fullName}}</span>
+                           </td>
+                           <td class="m-datatable__cell" width="15%">
+                              <span>{{emp.pip_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                           </td>
+                           <td class="m-datatable__cell" width="15%">
+                              <span>{{emp.pip_master_details.status}}</span>
+                           </td>
+                        </tr>
+                        <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>
+                     </tbody>
+                  </table>
+                  <pagination-template #p="paginationApi" (pageChange)="employeesFilter.page = $event"
+                     class="paginationtemplate">
+                     <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                        <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                           <li>
+                              <span class="m-datatable__pager-link m-datatable__pager-link--first"
+                                 [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+                                 <i class="la la-angle-double-left"></i>
+                              </span>
+                           </li>
+                           <li>
+                              <span class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                 [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
+                                 <i class="la la-angle-left"></i>
+                              </span>
+                           </li>
+                           <li *ngFor="let page of p.pages">
+                              <span (click)="p.setCurrent(page.value)"
+                                 class="m-datatable__pager-link m-datatable__pager-link-number "
+                                 [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                 {{ page.label }}
+                              </span>
+                           </li>
+                           <li>
+                              <span class="m-datatable__pager-link m-datatable__pager-link--next"
+                                 [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                 (click)="p.isLastPage()?'null':p.next()">
+                                 <i class="la la-angle-right"></i>
+                              </span>
+                           </li>
+                           <li>
+                              <span class="m-datatable__pager-link m-datatable__pager-link--last"
+                                 [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                 (click)="p.setCurrent(p.pages.length + 1)">
+                                 <i class="la la-angle-double-right"></i>
+                              </span>
+                           </li>
+                        </ul>
+                     </div>
+                  </pagination-template>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+</div>
