@@ -135,13 +135,13 @@
                                                         <tr>
                                                         </thead>
                                                         <tbody class="m-datatable__body"> 
-                                                            <ng-container *ngFor="let learnRow of batch?.learning_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
+                                                            <ng-container *ngFor="let learnRow of batch?.pip_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                                 <tr class="m-datatable__row">
                                                                         <td class="m-datatable__cell" width="62%" >
                                                                                 <span>{{learnRow.emp_details.fullName}}</span>
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="15%" >
-                                                                             <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':learnRow.status=='Initiated','m-badge--brand':learnRow.status=='Submitted','m-badge--danger':learnRow.status=='SendBack','m-badge--success':learnRow.status=='Approved','m-badge--secondary':learnRow.status=='Terminated'}">{{learnRow.pip_master[0].status}}</span></span>
+                                                                             <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':learnRow.status=='Initiated','m-badge--brand':learnRow.status=='Submitted','m-badge--danger':learnRow.status=='SendBack','m-badge--success':learnRow.status=='Approved','m-badge--secondary':learnRow.status=='Terminated'}">{{learnRow.status}}</span></span>
                                                                         </td>
                                                                         <td class="m-datatable__cell" width="10%">
                                                                             <span >
