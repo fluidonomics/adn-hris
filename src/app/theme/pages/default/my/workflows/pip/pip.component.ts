@@ -14,7 +14,7 @@ import { UtilityService } from "../../../../../../base/_services/utilityService.
 import { PipService } from "../../../services/pip.service"
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.my-pip",
     templateUrl: "./pip.component.html",
     encapsulation: ViewEncapsulation.None,
     providers: [PipService]
@@ -39,9 +39,15 @@ export class MyPipComponent {
     search: any;
     itemPerPage: number = 10;
 
-    DevAreaData = [
-        'Individual Development',
-        'Functional Development'
+    timelinesData = [
+        {
+            '_id': 3,
+            'timeline' : "3 Months"
+        },
+        {
+            '_id': 6,
+            'timeline' : "6 Months"
+        }
     ];
     progressStatusData = [
         'Open',
@@ -132,6 +138,8 @@ export class MyPipComponent {
             timelines: this.pipInfoData[index].timelines,
             finalReview: this.pipInfoData[index].finalReview,
             finalRating: this.pipInfoData[index].finalRating,
+            employeeInitialComment: this.pipInfoData[index].employeeInitialComment,
+            superviserInitialComment: this.pipInfoData[index].superviserInitialComment,
             empComment_month1: this.pipInfoData[index].empComment_month1,
             empComment_month2: this.pipInfoData[index].empComment_month2,
             empComment_month3: this.pipInfoData[index].empComment_month3,
@@ -247,7 +255,9 @@ export class MyPipComponent {
             supComment_month3: "",
             supComment_month4: "",
             supComment_month5: "",
-            supComment_month6: ""
+            supComment_month6: "",
+            employeeInitialComment: "",
+            superviserInitialComment: ""
             
                     }
                 ];
@@ -263,7 +273,7 @@ export class MyPipComponent {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
         
             this.supervisorData = data.json();
-            
+            //debugger;
            //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
@@ -305,7 +315,9 @@ export class MyPipComponent {
             supComment_month3: "",
             supComment_month4: "",
             supComment_month5: "",
-            supComment_month6: ""
+            supComment_month6: "",
+            employeeInitialComment: "",
+            superviserInitialComment: ""
 
         };
 

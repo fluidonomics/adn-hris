@@ -268,7 +268,7 @@
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td>
-													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="pipInfo.timelines"
+													<textarea name="measureOfSuccess{{i}}" id="measureOfSuccess" #measureOfSuccess="ngModel" [(ngModel)]="pipInfo.measureOfSuccess"
 													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<!-- <td>
@@ -496,18 +496,20 @@
 							</div>
 						</div>
 						<div class="col-md-6 details">
-							<span>Status</span>
-							<textarea name="status" id="status" [(ngModel)]="pipData.status" #actionPlan="ngModel" class="form-control m-input m-input--air"
-								 required [disabled]="isDisabled"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && status.invalid">
+							<span>Timelines</span>
+							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="timelinesData"
+							 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="pipData.timelines"
+							 [clearable]="false" #supervisor="ngModel" required [disabled]="isDisabled"></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && supervisor.invalid">
 								This field is required.
 							</div>
 						</div>
+						
 						<div class="col-md-6 details">
 							<span>Employee Initial Comments</span>
-							<textarea name="timelines" id="timelines" [(ngModel)]="pipData.timelines" #Timelines="ngModel" class="form-control m-input m-input--air"
+							<textarea name="employeeInitialComment" id="employeeInitialComment" [(ngModel)]="pipData.employeeInitialComment" #employeeInitialComment="ngModel" class="form-control m-input m-input--air"
 							 required [disabled]="isDisabled"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !Timelines.valid">
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !employeeInitialComment.valid">
 								This field is required.
 							</div>
 						</div>
@@ -520,22 +522,23 @@
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-2 details">
-								<span>Supervisor Approval Comments</span>
+						<div class="col-md-6 details">
+							<span>Status</span>
+							<textarea name="status" id="status" [(ngModel)]="pipData.status" #status="ngModel" class="form-control m-input m-input--air"
+								 required disabled></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && status.invalid">
+								This field is required.
 							</div>
-							<div class="col-md-10 details">
-
-								<textarea name="actionPlan" id="actionPlan"
-									[(ngModel)]="pipData.actionPlan" #actionPlan="ngModel"
-									class="form-control m-input m-input--air" required
-									[disabled]="isDisabled"></textarea>
-
-								<div class="form-control-feedback has-danger"
-									*ngIf="PipDataForm.submitted && !actionPlan.valid">
-									This field is required.
-								</div>
-
+						</div>
+						<div class="col-md-6 details">
+							<span>Supervisor Approval Comments</span>
+							<textarea name="superviserInitialComment" id="superviserInitialComment" [(ngModel)]="pipData.superviserInitialComment"
+							 #superviserInitialComment="ngModel" class="form-control m-input m-input--air" disabled
+							 disabled ></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !measureOfSuccess.valid">
+								This field is required.
 							</div>
+						</div>
 						<!-- <div class="col-md-12" *ngIf="true"> -->
 							<div class="col-md-12 heading" *ngIf="true">
 								<span><b>Month 1</b></span>

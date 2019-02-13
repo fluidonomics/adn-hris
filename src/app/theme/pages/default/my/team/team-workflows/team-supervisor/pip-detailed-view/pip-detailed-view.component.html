@@ -338,8 +338,8 @@
 												</div>
 												<div class="col-md-6 details">
 													<span>Employee Initial Comments</span>
-													<textarea name="timelines" id="timelines"
-														[(ngModel)]="pipData.timelines" #Timelines="ngModel"
+													<textarea name="employeeInitialComment" id="employeeInitialComment"
+														[(ngModel)]="pipData.employeeInitialComment" #employeeInitialComment="ngModel"
 														class="form-control m-input m-input--air" required
 														[disabled]="isDisabled"></textarea>
 													<div class="form-control-feedback has-danger"
@@ -366,9 +366,9 @@
 												</div>
 												<div class="col-md-10 details">
 
-													<textarea name="supervisorComment" id="supervisorComment"
-														[(ngModel)]="pipData.supervisorComment"
-														#supervisorComment="ngModel"
+													<textarea name="superviserInitialComment" id="superviserInitialComment"
+														[(ngModel)]="pipData.superviserInitialComment"
+														#superviserInitialComment="ngModel"
 														class="form-control m-input m-input--air" required
 														[disabled]="isDisabled"></textarea>
 
