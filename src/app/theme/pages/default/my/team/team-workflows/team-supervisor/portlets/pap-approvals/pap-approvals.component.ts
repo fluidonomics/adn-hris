@@ -32,7 +32,6 @@ export class PapApprovalsComponent {
 
     loadPapBySupervisor(currentEmpId) {
         this.papService.getPapBySupervisor(currentEmpId).subscribe(res => {
-            debugger;
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
