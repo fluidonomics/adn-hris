@@ -81,6 +81,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     getallemployees() {
+        debugger;
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
