@@ -497,10 +497,10 @@
 						</div>
 						<div class="col-md-6 details">
 							<span>Timelines</span>
-							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="timelinesData"
-							 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="pipData.timelines"
-							 [clearable]="false" #supervisor="ngModel" required [disabled]="isDisabled"></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && supervisor.invalid">
+							<ng-select class="m-input m-input--air customError" name="timelines{{i}}" id="timelines" [items]="timelinesData"
+							 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="PipAgendaData[agenda_arraynum].timelines"
+							 [clearable]="false" #timelines="ngModel" required disabled></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && timelines.invalid">
 								This field is required.
 							</div>
 						</div>

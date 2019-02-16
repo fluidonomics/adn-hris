@@ -44,12 +44,12 @@ export class PipApprovalComponent implements OnInit {
         }, error => {
             console.log(error);
         });
-        debugger;
+        //debugger;
     } 
 
     gotoPipData(pip) {
         console.log("pip : ", pip);
-        debugger;
+        //debugger;
         this.router.navigateByUrl("/my/team/workflows/pip-detailed-view/" + pip.pip_master_details._id + "/" + pip.emp_details._id);
         
     }

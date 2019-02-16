@@ -54,6 +54,19 @@ export class PipDetailedViewComponent {
 
     imageBase:any;
 
+    agenda_arraynum: number;
+
+    timelinesData = [
+        {
+            '_id': 3,
+            'timeline' : "3 Months"
+        },
+        {
+            '_id': 6,
+            'timeline' : "6 Months"
+        }
+    ];
+
     devArea: [
         'Individual Development',
         'Functional Development'
@@ -81,7 +94,6 @@ export class PipDetailedViewComponent {
 
     ngOnInit() {
         this._currentEmpId = this._authService.currentUserData._id;
-        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._route.params.subscribe(params => {
@@ -145,7 +157,7 @@ export class PipDetailedViewComponent {
     }
 
     preSaveLearningDetails(pipData: any, Remarks: String) {
-        if (!pipData.supervisorComment) {
+        if (!pipData.superviserInitialComment) {
             swal({
                 title: 'Please fill remarks!',
                 type: 'warning',
@@ -178,7 +190,7 @@ export class PipDetailedViewComponent {
                         supervisor_name: this.user.supervisorDetails.fullName,
                         action_link: window.location.origin + '/my/pip',
                         isApproved: isApproved,
-                        supervisorComment: pipData.supervisorComment,
+                        superviserInitialComment: pipData.superviserInitialComment,
                     }
                     //debugger;
                     this.utilityService.showLoader('.mtrDetailsPortlet');
@@ -233,6 +245,12 @@ export class PipDetailedViewComponent {
         this.modalRef = this.modalService.show(this.pipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = this.pipInfoData[index];
         this.pipData.no = index + 1;
+
+        for(let x=0;x<this.PipAgendaData.length;x++) {
+            if(this.PipAgendaData[x]._id == this.param_id) {
+                this.agenda_arraynum = x;
+            }
+        }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
         console.log("learningdata no : ", this.pipData);

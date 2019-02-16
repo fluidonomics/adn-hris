@@ -12,6 +12,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 import * as _ from 'lodash';
 import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { PipService } from "../../../services/pip.service"
+import { PARAMETERS } from "@angular/core/src/util/decorators";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.my-pip",
@@ -27,7 +28,7 @@ export class MyPipComponent {
     _currentEmpId: number;
 
     isLearningAvaliable: boolean = false;
-
+    agenda_arraynum: number;
     PipAgendaData: any = [];
     pipData: any = {};
     pipInfoData: any = [];
@@ -210,7 +211,7 @@ export class MyPipComponent {
             this.PipAgendaData = data.result.message;
             //console.log("agenda info: " + this.PipAgendaData);
             this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
-           // debugger;
+           //debugger;
         }, error => {
         });;
 
@@ -426,8 +427,13 @@ export class MyPipComponent {
         this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
         this.pipData.no = index + 1;
         console.log("Index: " + index);
-
         
+        
+        for(let x=0;x<this.PipAgendaData.length;x++) {
+            if(this.PipAgendaData[x]._id == this.param_id) {
+                this.agenda_arraynum = x;
+            }
+        }
 
 
         if (this.pipData.status == "SendBack" || this.pipData.status == "Initiated") {

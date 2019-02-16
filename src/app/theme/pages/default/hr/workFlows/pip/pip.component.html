@@ -216,7 +216,7 @@
                 <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiatemtr.valid && initBatch(finitiatemtr)"
                     #finitiatemtr="ngForm" novalidate="novalidate">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="batchName">Batch Name
                             </label>
                             <span class="required" aria-required="true"> * </span>
@@ -238,7 +238,18 @@
                                 This field is required.
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="timeline">Timelines
+                            </label>
+                            <span class="required" aria-required="true"> * </span>
+                            <ng-select class="m-input m-input--air customError" name="timelines{{i}}" id="timelines" [items]="timelinesData"
+							 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="batchData.timelines"
+							 [clearable]="false" #timelines="ngModel" required [disabled]="isDisabled"></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="finitiatemtr.submitted && timelines.invalid">
+								This field is required.
+							</div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="m-form__actions">
                                 <button class="btn btn-success submitForm" type="submit">Initiate</button>
                             </div>

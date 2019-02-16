@@ -49,6 +49,17 @@ export class HrPipComponent {
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
 
+    timelinesData = [
+        {
+            '_id': 3,
+            'timeline' : "3 Months"
+        },
+        {
+            '_id': 6,
+            'timeline' : "6 Months"
+        }
+    ];
+
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -61,7 +72,6 @@ export class HrPipComponent {
 
     ngOnInit() {
 
-        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -120,7 +130,6 @@ export class HrPipComponent {
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                 this.employeeData = data;
-                debugger;
                 this.utilityService.hideLoader('#initiate-loader');
             }
         }, error => {

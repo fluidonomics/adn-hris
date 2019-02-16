@@ -51,6 +51,17 @@ export class PipReview {
       'Functional Development'
    ]
 
+   timelinesData = [
+      {
+          '_id': 3,
+          'timeline' : "3 Months"
+      },
+      {
+          '_id': 6,
+          'timeline' : "6 Months"
+      }
+  ];
+
 
    constructor(@Inject(PLATFORM_ID) private platformId: Object,
       meta: Meta, title: Title,
