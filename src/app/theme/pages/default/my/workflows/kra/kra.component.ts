@@ -55,6 +55,8 @@ export class MyKraComponent {
 
     modalRef: BsModalRef;
     kraData: any = {};
+    kraWorkflowStatus: string = '';
+
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -124,6 +126,7 @@ export class MyKraComponent {
             res => {
                 this.kraInfoData = res.json().data;
                 let status = res.json().status;
+                this.kraWorkflowStatus = status;
                 this.isChangable = status == "Initiated" || status == "SendBack" ? false : true;
                 this.isDisabled = status == "Initiated" || status == "SendBack" ? false : true;
                 if (this.kraInfoData.length == 0) {
@@ -226,7 +229,7 @@ export class MyKraComponent {
         this.modalRef = this.modalService.show(this.kraDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.kraData = JSON.parse(JSON.stringify(this.kraInfoData[index]));
         this.kraData.no = index + 1;
-        if (this.kraData.supervisorStatus == null || this.kraData.supervisorStatus == undefined || this.kraData.supervisorStatus == "Initiated" || this.kraData.supervisorStatus == "SendBack") {
+        if ((this.kraWorkflowStatus != 'Submitted') && (this.kraData.supervisorStatus == null || this.kraData.supervisorStatus == undefined || this.kraData.supervisorStatus == "Initiated" || this.kraData.supervisorStatus == "SendBack")) {
             this.isDisabled = false;
         } else {
             this.isDisabled = true;

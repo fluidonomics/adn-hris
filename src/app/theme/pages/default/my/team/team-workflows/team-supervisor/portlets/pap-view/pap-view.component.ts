@@ -33,7 +33,6 @@ export class PapViewComponent implements OnInit {
 
     loadPapBySupervisor(currentEmpId) {
         this.papService.getPapBySupervisor(currentEmpId).subscribe(res => {
-            debugger;
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {

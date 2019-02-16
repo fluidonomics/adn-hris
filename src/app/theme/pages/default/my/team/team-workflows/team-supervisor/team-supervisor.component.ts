@@ -115,10 +115,10 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                 }
                 else if (element.status == "Approved") {
                     element.fullName = element.emp_name;
-                    for (var i = 0; i < 3; i++) {
+                    // for (var i = 0; i < 3; i++) {
 
                         __this.kraDataView.push(element);
-                    }
+                    // }
                 }
             }
         });

@@ -8,6 +8,7 @@ import { CommonService } from "../../../../../../../../base/_services/common.ser
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { MyTeamService } from "../../../my-team.service";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
@@ -38,6 +39,7 @@ export class MyTeamKraComponent {
     status: any;
     isDisabled: boolean = true;
     user: any;
+    employees: any = [];
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -46,7 +48,8 @@ export class MyTeamKraComponent {
         public _authService: AuthService,
         private _commonService: CommonService,
         private _kraService: KraViewService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private myTeamService: MyTeamService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -78,6 +81,7 @@ export class MyTeamKraComponent {
         this.loadSupervisorData();
         this.loadKraInfo();
         this.getEmployee();
+        this.getAllEmployees();
     }
 
     loadKraInfo() {
@@ -112,13 +116,17 @@ export class MyTeamKraComponent {
     }
 
     loadSupervisorData() {
-        this._commonService.getKraSupervisor(this.param_emp_id)
-            .subscribe(
-                data => {
-                    this.supervisorData = data.json();
-                },
-                error => {
-                });
+        this._commonService.getKraSupervisor(this.param_emp_id).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
+        });
+    }
+
+    getAllEmployees() {
+        this.myTeamService.getAllEmployee().subscribe(data => {
+            this.employees = data.json().data || [];
+        }, error => {
+        });
     }
 
     getEmployee() {
@@ -133,7 +141,7 @@ export class MyTeamKraComponent {
         let swalOption = {}
         let index = this.kraData.no - 1;
         this.kraInfoData[index].sendBackComment = this.kraData.sendBackComment;
-        if (status == 'SendBack' && (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "")) {
+        if (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "") {
             swal({
                 title: 'Please specify the reason!',
                 type: 'warning',
@@ -168,7 +176,7 @@ export class MyTeamKraComponent {
     }
 
     saveKraDetails(index: number, status: string) {
-        this.kraInfoData[index].supervisorStatus = status;        
+        this.kraInfoData[index].supervisorStatus = status;
         this._kraService.saveKra(this.kraInfoData[index]).subscribe(res => {
             if (res.ok) {
                 this.modalRef.hide();
@@ -200,6 +208,4 @@ export class MyTeamKraComponent {
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
-
-
 }

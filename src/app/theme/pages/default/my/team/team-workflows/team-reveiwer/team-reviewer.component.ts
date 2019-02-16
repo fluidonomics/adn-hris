@@ -81,6 +81,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     getallemployees() {
+        debugger;
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
@@ -143,7 +144,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     goToKraReview(kra) {
-        this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
+        this.router.navigateByUrl('my/team/workflows/kra-review/' + kra.kra._id + '/' + kra.kra.emp_id);
     }
     goToMtrReview(employee) {
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + employee.mtr_master_details._id + '/' + employee.emp_details._id);
