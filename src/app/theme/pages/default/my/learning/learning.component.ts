@@ -49,7 +49,7 @@ export class MyLearningComponent {
     ];
     suparr = [];
 
-    showSub:boolean = true;
+    showSub: boolean = true;
 
     supervisorData: any = [];
 
@@ -58,6 +58,7 @@ export class MyLearningComponent {
     isVisible: boolean = true;
     showStats: boolean = false;
     isApproved: boolean = false;
+    showCom: boolean = true;
     employee: any = {};
 
 
@@ -131,7 +132,8 @@ export class MyLearningComponent {
             developmentPlan: this.learningInfoData[index].developmentPlan,
             timelines: this.learningInfoData[index].timelines,
             supportRequired: this.learningInfoData[index].supportRequired,
-            employeeComment: this.learningInfoData[index].employeeComment
+            employeeComment: this.learningInfoData[index].employeeComment,
+            completionDate: this.learningInfoData[index].completionDate
 
         }
         let isError: boolean = false;
@@ -139,7 +141,7 @@ export class MyLearningComponent {
         if (isError) {
             swal({
                 title: 'Oops!',
-                text: ' Dropped colour status need status as Dropped only',
+                text: ' There was some error!',
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',
@@ -187,12 +189,12 @@ export class MyLearningComponent {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
             console.log("agenda info: " + this.LearningAgendaData);
-            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" ).length > 0;
+            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved").length > 0;
             //debugger;
         }, error => {
         });;
 
-        
+
     }
 
     loadLearningDetailsInfo() {
@@ -200,14 +202,14 @@ export class MyLearningComponent {
             let data = res.json();
             this.learningInfoData = data.result.message;
             console.log("details info: " + this.learningInfoData);
-            if(this.learningInfoData.length > 0){
+            if (this.learningInfoData.length > 0) {
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
                 //debugger;
-            } 
+            }
             else {
                 this.learningInfoData = [
                     {
-            
+
                         _id: null,
                         master_id: this.param_id,
                         supervisorId: "",
@@ -222,24 +224,25 @@ export class MyLearningComponent {
                         timelines: "",
                         supportRequired: "",
                         employeeComment: "",
-                        supervisorComment: ""
-            
+                        supervisorComment: "",
+                        completionDate: ""
+
                     }
                 ];
             }
-           
+
         }, error => {
         });;
 
-        
+
     }
 
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
-        
+
             this.supervisorData = data.json();
-            
-           //this.suparr.push(this.supervisorData.fullName);
+
+            //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
     }
@@ -269,7 +272,8 @@ export class MyLearningComponent {
             timelines: "",
             supportRequired: "",
             employeeComment: "",
-            supervisorComment: ""
+            supervisorComment: "",
+            completionDate: ""
 
         };
 
@@ -336,34 +340,29 @@ export class MyLearningComponent {
 
 
     onStatusChange(event) {
-        //debugger;
 
         if (event == "Completed") {
-            this.isCompleted = true;
+
+            swal({
+                title: 'Are you sure you have Completed?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.isCompleted = true;
+                }
+            });
+    
         } else {
             this.isCompleted = false;
         }
+        //debugger;
+
     }
-    // onColorStatusChange(event) {
-    //     if (event.id == "Dropped") {
-    //         swal({
-    //             title: 'Are you sure?',
-    //             text: "Selecting Dropped will automatically select the progress status as Dropped. Do you wish to continue",
-    //             type: 'warning',
-    //             showCancelButton: true,
-    //             confirmButtonColor: '#3085d6',
-    //             cancelButtonColor: '#d33',
-    //             confirmButtonText: 'Yes',
-    //             width: "45rem"
-    //         }).then((result) => {
-    //             if (result.value) {
-    //                 this.learningData.progressStatus = "Dropped"
-    //             } else {
-    //                 this.learningData.colorStatus = null;
-    //             }
-    //         });
-    //     }
-    // }
 
 
 
@@ -379,8 +378,7 @@ export class MyLearningComponent {
         this.learningData.no = index + 1;
         console.log("Index: " + index);
 
-        
-
+        this.learningData.completionDate = new Date(this.learningData.completionDate);
 
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;
@@ -389,9 +387,11 @@ export class MyLearningComponent {
             this.isDisabled = true;
         }
         if (this.learningData.progressStatus == "Completed") {
+            this.showCom = false;
             this.isCompleted = true;
         }
         else {
+            this.showCom = true;
             this.isCompleted = false;
         }
 
@@ -409,7 +409,7 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted" ) {
+        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted") {
             this.showSub = false;
             //debugger;
         }

@@ -48,6 +48,6 @@ export class LearningApprovalComponent implements OnInit {
 
     gotoLearningData(Learning) {
         console.log("learn : ", Learning);
-        this.router.navigateByUrl("/my/team/workflows/learning-detailed-view/" + Learning.learning_master_details._id + "/" + Learning.emp_details._id);
+        this.router.navigateByUrl("/my/team/workflows/learning-detailed-view/" + "approval/" + Learning.learning_master_details._id + "/" + Learning.emp_details._id);
     }
 }

@@ -265,11 +265,8 @@
                                <div class="m-form__group form-group">
                                        <label for="batchName">Batch Name
                                            </label>
-                                           <span class="required" aria-required="true"> * </span>
-                                           <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel" placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required>
-                                           <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchName.valid">
-                                                   This field is required.
-                                           </div>
+                                           <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel" placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required [disabled]="true">
+                                           
                                </div>
                            </div>
                        </div>

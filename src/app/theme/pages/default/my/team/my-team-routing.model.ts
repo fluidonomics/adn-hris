@@ -36,7 +36,7 @@ const routes: Routes = [
     { path: 'workflows/pap-review/:id/:emp_id', component: PapReviewComponent },
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
-    { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
+    { path: 'workflows/learning-detailed-view/:from/:id/:emp_id', component: LearningDetailedViewComponent },
     {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer }
 ]
 
