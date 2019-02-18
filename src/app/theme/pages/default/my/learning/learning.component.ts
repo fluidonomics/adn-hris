@@ -163,6 +163,7 @@ export class MyLearningComponent {
                         confirmButtonColor: '#66BB6A',
                         confirmButtonText: 'OK'
                     });
+                    debugger;
                     this.modalRef.hide();
                 }
                 this.loadData();
@@ -188,9 +189,9 @@ export class MyLearningComponent {
         this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
-            console.log("agenda info: " + this.LearningAgendaData);
-            this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved").length > 0;
-            //debugger;
+            // console.log("agenda info: " + this.LearningAgendaData);
+            // this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved").length > 0;
+            // debugger;
         }, error => {
         });;
 
@@ -378,7 +379,6 @@ export class MyLearningComponent {
         this.learningData.no = index + 1;
         console.log("Index: " + index);
 
-        this.learningData.completionDate = new Date(this.learningData.completionDate);
 
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;
@@ -409,13 +409,13 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        if (this.learningData.status == "Approved" || this.learningData.status == "Submitted") {
-            this.showSub = false;
-            //debugger;
-        }
-        else {
-            this.showSub = true;
-        }
+        // if (this.learningData.status == "Approved" || this.learningData.status == "Submitted") {
+        //     this.showSub = false;
+        //     //debugger;
+        // }
+        // else {
+        //     this.showSub = true;
+        // }
         //debugger;
 
     }

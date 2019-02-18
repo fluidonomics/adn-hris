@@ -584,7 +584,7 @@
 						</div>
 						<div class="col-md-6 details" *ngIf="isCompleted">
 								<span>Completion Date</span>
-								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #completionDate="ngModel" placement="top" required [disabled]="!showCom">
+								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required [disabled]="!showCom">
 								<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !completionDate.valid">
 										  This field is required.
 								</div>
