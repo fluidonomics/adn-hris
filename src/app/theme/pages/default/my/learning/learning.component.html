@@ -45,7 +45,8 @@
 						<div class="form-group m-form__group row align-items-center">
 							<div class="col-md-4">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
+									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+										[(ngModel)]="search">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -57,7 +58,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (LearningAgendaData | orderBy: key : reverse | filter:search)?.length==0 }">
+			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+				[ngClass]="{'m-datatable--error': (LearningAgendaData | orderBy: key : reverse | filter:search)?.length==0 }">
 				<table class="m-datatable__table">
 					<thead class="m-datatable__head">
 						<tr class="m-datatable__row">
@@ -65,43 +67,50 @@
 							<th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
 								<span>
 									TITLE
-									<i class="la" *ngIf="key == 'batchName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'batchName'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
 								<span>
 									INITIATED ON
-									<i class="la" *ngIf="key == 'createdAt'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'createdAt'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
 								<span>
 									INITIATED BY
-									<i class="la" *ngIf="key == 'createdBy'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'createdBy'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
 								<span>
 									LAST DATE
-									<i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'batchEndDate'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="10%">
 								<span>
 									STATUS
-									<i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'status'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 								<span>
 									ACTIONS
-									<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'actions'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 						</tr>
 					</thead>
 					<tbody class="m-datatable__body">
-						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let learnData of LearningAgendaData">
+						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+							*ngFor="let learnData of LearningAgendaData">
 							<!-- <td class="m-datatable__cell" width="3%" >
 																																													<span class="m-widget4__icon">
 																																																	<i class="fa fa-circle m--font-success"></i>
@@ -122,12 +131,15 @@
 							<td class="m-datatable__cell" width="10%">
 
 								<span style="width: 100px;">
-									<span class="m-badge  m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':learnData.status=='Initiated','m-badge--brand':learnData.status=='Submitted','m-badge--danger':learnData.status=='SendBack','m-badge--success':learnData.status=='Approved','m-badge--secondary':learnData.status=='Terminated'}">{{learnData.status}}</span>
+									<span class="m-badge  m-badge--success m-badge--wide"
+										[ngClass]="{'m-badge--warning':learnData.status=='Initiated','m-badge--brand':learnData.status=='Submitted','m-badge--danger':learnData.status=='SendBack','m-badge--success':learnData.status=='Approved','m-badge--secondary':learnData.status=='Terminated'}">{{learnData.status}}</span>
 								</span>
 							</td>
 							<td class="m-datatable__cell" width="15%">
-								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
-									<i class="la" [ngClass]="learningData.status=='Initiated' || learningData.status=='SendBack' ? 'la-edit':'la-eye'"></i>
+								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id}"
+									class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+									<i class="la"
+										[ngClass]="learningData.status=='Initiated' || learningData.status=='SendBack' ? 'la-edit':'la-eye'"></i>
 								</a>
 							</td>
 						</tr>
@@ -139,41 +151,44 @@
 					<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
 						<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								 (click)="p.setCurrent(1)">
+								<span class="m-datatable__pager-link m-datatable__pager-link--first"
+									[class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
 									<i class="la la-angle-double-left"></i>
 								</span>
 							</li>
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								 (click)="p.previous()">
+								<span class="m-datatable__pager-link m-datatable__pager-link--prev"
+									[class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
 									<i class="la la-angle-left"></i>
 								</span>
 							</li>
 							<li *ngFor="let page of p.pages">
-								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
-								 [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+								<span (click)="p.setCurrent(page.value)"
+									class="m-datatable__pager-link m-datatable__pager-link-number "
+									[class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
 									{{ page.label }}
 								</span>
 							</li>
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-								 (click)="p.next()">
+								<span class="m-datatable__pager-link m-datatable__pager-link--next"
+									[class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
 									<i class="la la-angle-right"></i>
 								</span>
 							</li>
 							<li>
 								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
-								 [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+									[class.m-datatable__pager-link--disabled]="p.isLastPage()"
+									(click)="p.setCurrent(p.pages.length + 1)">
 									<i class="la la-angle-double-right"></i>
 								</span>
 							</li>
 						</ul>
 					</div>
 				</pagination-template>
-				<div class="pager-display-size" *ngIf="(LearningAgendaData | orderBy: key : reverse | filter:search)?.length!=0">
-					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px"
-					 data-selected="50" tabindex="1">
+				<div class="pager-display-size"
+					*ngIf="(LearningAgendaData | orderBy: key : reverse | filter:search)?.length!=0">
+					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size"
+						data-width="70px" data-selected="50" tabindex="1">
 						<option value=10>10</option>
 						<option value=20>20</option>
 						<option value=30>30</option>
@@ -209,10 +224,11 @@
 						</div>
 					</div>
 					<div class="m-portlet__head-tools">
-						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
+							role="tablist">
 							<li class="nav-item m-tabs__item">
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitLearningAgenda(flearningInfo.form.dirty)"
-								 *ngIf="showSub">Submit</button>
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary"
+									(click)="submitLearningAgenda(flearningInfo.form.dirty)" *ngIf="showSub">Submit</button>
 							</li>
 							<li class="nav-item m-tabs__item">
 								<!-- <a class="nav-link m-tabs__link" (click)="window.print();">
@@ -260,38 +276,46 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr *ngFor="let learningInfo of learningInfoData;let i=index" [ngClass]="{'dropped':learningInfoData[i].progressStatus =='Completed','sendBack':learningInfoData[i].status=='SendBack','approved':learningInfoData[i].status =='Approved'}"
-											 ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
+											<tr *ngFor="let learningInfo of learningInfoData;let i=index"
+												[ngClass]="{'dropped':learningInfoData[i].progressStatus =='Completed','sendBack':learningInfoData[i].status=='SendBack','approved':learningInfoData[i].status =='Approved'}"
+												ngModelGroup="controlRow{{i}}" #controlRow="ngModelGroup">
 												<th scope="row">
 													{{i+1}}
 												</th>
 												<td>
-													<ng-select class="m-input m-input--air customError" name="DevArea{{i}}" id="developmentArea" [items]="DevAreaData"
-													 bindLabel="DevAreaName" bindValue="developmentArea" placeholder="Select Development Area" [(ngModel)]="learningInfo.developmentArea"
-													 [clearable]="false" #DevArea="ngModel" required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="DevArea{{i}}"
+														id="developmentArea" [items]="DevAreaData" bindLabel="DevAreaName"
+														bindValue="developmentArea" placeholder="Select Development Area"
+														[(ngModel)]="learningInfo.developmentArea" [clearable]="false"
+														#DevArea="ngModel" required disabled></ng-select>
 												</td>
 												<td>
-													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
-													 class="form-control m-input m-input--air" disabled></textarea>
+													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel"
+														[(ngModel)]="learningInfo.timelines" class="form-control m-input m-input--air"
+														disabled></textarea>
 												</td>
 												<td>
 													<span>{{learningInfo.status}}</span>
 												</td>
 												<td>
-													<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="supervisorData"
-													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningInfo.supervisorId"
-													 [clearable]="false" #supervisor="ngModel" required disabled ></ng-select>
+													<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}"
+														id="supervisordata" [items]="supervisorData" bindLabel="fullName"
+														bindValue="_id" placeholder="Select Supervisor"
+														[(ngModel)]="learningInfo.supervisorId" [clearable]="false"
+														#supervisor="ngModel" required disabled></ng-select>
 												</td>
 
 												<td>
-													<ng-select class="m-input m-input--air customError" name="progressStatus{{i}}" id="progressStatus"
-													 placeholder="Progress Status" [(ngModel)]="learningInfo.progressStatus" [clearable]="false"
-													 #progressStatus="ngModel" required disabled></ng-select>
+													<ng-select class="m-input m-input--air customError" name="progressStatus{{i}}"
+														id="progressStatus" placeholder="Progress Status"
+														[(ngModel)]="learningInfo.progressStatus" [clearable]="false"
+														#progressStatus="ngModel" required disabled></ng-select>
 												</td>
 
 												<td>
-													<button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-													 title="Edit" (click)="showLearningDetails(i)">
+													<button type="button"
+														class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+														title="Edit" (click)="showLearningDetails(i)">
 														<i class="la la-info"></i>
 													</button>
 
@@ -299,8 +323,9 @@
 											</tr>
 											<tr>
 												<td colspan="9">
-													<button class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
-													 (click)="addLearningHtml()" *ngIf="showSub">
+													<button
+														class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right"
+														(click)="addLearningHtml()" *ngIf="showSub">
 														<i class="la la-plus"></i>
 													</button>
 												</td>
@@ -310,7 +335,9 @@
 								</div>
 							</form>
 						</div>
-						<div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered" *ngIf="isMtrAvaliable">
+						<div
+							class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
+							*ngIf="isMtrAvaliable">
 							<div class="tab-content">
 								<div class="m-widget3">
 									<div class="m-widget3__item">
@@ -419,7 +446,8 @@
 	</div>
 </div>
 <ng-template #mylearningDetailModal>
-	<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+	<div
+		class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
 		<div class="m-portlet__head">
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
@@ -444,8 +472,9 @@
 		</div>
 
 		<div class="m-portlet__body">
-			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveLearningAgendas(LearningDataForm,learningData._id)"
-			 id="LearningDataForm" #LearningDataForm="ngForm">
+			<form class="m-form m-form--fit m-form--label-align-right"
+				(ngSubmit)="saveLearningAgendas(LearningDataForm,learningData._id)" id="LearningDataForm"
+				#LearningDataForm="ngForm">
 				<div class="m-widget6 ">
 					<div class="row">
 						<div class="col-md-6">
@@ -459,12 +488,14 @@
 						</div>
 						<div class="col-md-4">
 
-							<ng-select class="m-input m-input--air customError" name="developmentArea{{i}}" id="developmentArea" [items]="DevAreaData"
-							 placeholder="Select Supervisor" bindLabel="developmentArea" bindValue="_id" [(ngModel)]="learningData.developmentArea"
-							 [clearable]="false" #devarea="ngModel" required [disabled]="isDisabled"></ng-select>
+							<ng-select class="m-input m-input--air customError" name="developmentArea{{i}}"
+								id="developmentArea" [items]="DevAreaData" placeholder="Select Supervisor"
+								bindLabel="developmentArea" bindValue="_id" [(ngModel)]="learningData.developmentArea"
+								[clearable]="false" #devarea="ngModel" required [disabled]="isDisabled"></ng-select>
 
 
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && devarea.invalid">
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && devarea.invalid">
 								This field is required.
 							</div>
 
@@ -473,10 +504,12 @@
 							Supervisor
 						</div>
 						<div class="col-md-4">
-							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata" [items]="supervisorData"
-							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="learningData.supervisorId"
-							 [clearable]="false" #supervisor="ngModel" required [disabled]="isDisabled"></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supervisor.invalid">
+							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata"
+								[items]="supervisorData" bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor"
+								[(ngModel)]="learningData.supervisorId" [clearable]="false" #supervisor="ngModel" required
+								[disabled]="isDisabled"></ng-select>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && supervisor.invalid">
 								This field is required.
 							</div>
 
@@ -484,67 +517,85 @@
 						<div class="col-md-12 details">
 							<span>Development Plan</span>
 							<textarea name="developmentPlan" id="developmentPlan" [(ngModel)]="learningData.developmentPlan"
-							 #developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !developmentPlan.valid">
+								#developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
+								required></textarea>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && !developmentPlan.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Timelines</span>
-							<textarea name="timelines" id="timelines" [(ngModel)]="learningData.timelines" #Timelines="ngModel" class="form-control m-input m-input--air"
-							 required [disabled]="isDisabled"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !Timelines.valid">
+							<textarea name="timelines" id="timelines" [(ngModel)]="learningData.timelines" #Timelines="ngModel"
+								class="form-control m-input m-input--air" required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && !Timelines.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="learningData.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
-							 [disabled]="isDisabled"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !measureOfSuccess.valid">
+								#measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
+								required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-12 details">
 							<span>Support Required</span>
 							<textarea name="supportRequired" id="supportRequired" [(ngModel)]="learningData.supportRequired"
-							 #supportRequired="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required
-							 [disabled]="isDisabled"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && supportRequired.invalid">
+								#supportRequired="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
+								required [disabled]="isDisabled"></textarea>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && supportRequired.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Progress Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" placeholder="Select Status"
-							 [items]="progressStatusData" bindLabel="progressStatus" bindValue="_id" [(ngModel)]="learningData.progressStatus"
-							 [clearable]="false" #progressStatus="ngModel" required [disabled]="!isApproved" (change)="onStatusChange($event)"></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && progressStatus.invalid">
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus"
+								placeholder="Select Status" [items]="progressStatusData" bindLabel="progressStatus"
+								bindValue="_id" [(ngModel)]="learningData.progressStatus" [clearable]="false"
+								#progressStatus="ngModel" required [disabled]="!isApproved || !showCom"
+								(change)="onStatusChange($event)"></ng-select>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && progressStatus.invalid">
 								This field is required.
 							</div>
 						</div>
 						<div class="col-md-6 details">
 							<span>Supervisor Approval Comments</span>
-							<textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learningData.supervisorComment"
-							 #supervisorComment="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
+							<textarea name="supervisorComment" id="supervisorComment"
+								[(ngModel)]="learningData.supervisorComment" #supervisorComment="ngModel"
+								class="form-control m-input m-input--air" disabled required></textarea>
 
 						</div>
-						<div class="col-md-12 details">
+						<div class="col-md-6 details" *ngIf="isCompleted">
 							<span>Completion Comments</span>
 							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="learningData.employeeComment"
-							 #employeeComment="ngModel" class="form-control m-input m-input--air" [disabled]="!isCompleted" ></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !employeeComment.valid && isCompleted">
+								#employeeComment="ngModel" class="form-control m-input m-input--air"
+								[disabled]="!showCom"></textarea>
+							<div class="form-control-feedback has-danger"
+								*ngIf="LearningDataForm.submitted && !employeeComment.valid && isCompleted">
 								This field is required.
 							</div>
+						</div>
+						<div class="col-md-6 details" *ngIf="isCompleted">
+								<span>Completion Date</span>
+								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required [disabled]="!showCom">
+								<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !completionDate.valid">
+										  This field is required.
+								</div>
 						</div>
 					</div>
 					<div class="form-actions details">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="isApproved || !isDisabled"
-									 >Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm"
+										*ngIf="!isDisabled">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>
