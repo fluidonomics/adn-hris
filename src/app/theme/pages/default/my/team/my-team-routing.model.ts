@@ -44,7 +44,7 @@ const routes: Routes = [
     { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
     {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
     {  path: 'workflows/:supervisor/pip/list', component: AllPipReviewer },
-    { path: 'workflows/pip-detailed-view/:id/:emp_id', component: PipDetailedViewComponent },
+    { path: 'workflows/pip-detailed-view/:from/:id/:emp_id', component: PipDetailedViewComponent },
 
 ]
 

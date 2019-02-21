@@ -306,8 +306,8 @@
 													<span>Timelines</span>
 													<ng-select class="m-input m-input--air customError" name="timelines{{i}}" id="timelines" [items]="timelinesData"
 													 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="pipData.master_timelines"
-													 [clearable]="false" #timelines="ngModel" required></ng-select>
-													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && timelines.invalid">
+													 [clearable]="false" #timelines="ngModel" required  (change)= "onStatusChange($event)" [disabled]="istsix"></ng-select>
+													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && timelines.invalid" >
 														This field is required.
 													</div>
 												</div>

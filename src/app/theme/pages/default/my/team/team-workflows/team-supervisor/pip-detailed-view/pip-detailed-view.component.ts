@@ -24,30 +24,32 @@ export class PipDetailedViewComponent {
     @ViewChild('pipDetailModal') pipDetailModal: TemplateRef<any>;
 
     window: any = window;
-    kraCategoryData: any[];
-    weightageData: any = [];
+    //kraCategoryData: any[];
+    //weightageData: any = [];
     supervisorData: any = [];
 
-    kraInfoData: any = [];
+    //kraInfoData: any = [];
     PipAgendaData: any = [];
     pipInfoData: any = [];
 
-    isSubmitted: boolean = false;
+    //isSubmitted: boolean = false;
 
 
-    isKraAvaliable: boolean = false;
+   // isKraAvaliable: boolean = false;
+    istsix: boolean = false;
 
     param_emp_id: number;
     param_master_id: number;
     param_id: number;
-    kraWorkFlowData: any = [];
+    param_from:string;
+    //kraWorkFlowData: any = [];
 
-    status: any;
+    //status: any;
     statusq: any;
     isDisabled: boolean = false;
     isDis: boolean = true;
     user: any;
-    showStat = false;
+    //showStat = false;
 
     learningData: any;
     _currentEmpId: number;
@@ -67,10 +69,7 @@ export class PipDetailedViewComponent {
         }
     ];
 
-    devArea: [
-        'Individual Development',
-        'Functional Development'
-    ]
+    
 
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -101,6 +100,7 @@ export class PipDetailedViewComponent {
                         this.param_id = params['id'];
                         this.param_emp_id = parseInt(params['emp_id']);
                         this.param_master_id = parseInt(params['id']);
+                        this.param_from = params['from'];
                         console.log("path var : ", params['id']);
                         this.initData();
                     }
@@ -127,9 +127,15 @@ export class PipDetailedViewComponent {
             res => {
                 console.log("response : ", res.json().result.message);
                 this.pipInfoData = res.json().result.message;
+                if (this.param_from == "approval") {
+                    this.pipInfoData = this.pipInfoData.filter(learn => learn.status == "Submitted");
+                    if (this.pipInfoData.length == 0) {
+                        this._router.navigateByUrl("/my/team/workflows/supervisor");
+                    }
+                    //debugger;
+                }
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
-                console.log("learningInfoData : ", this.pipInfoData);
             },
             error => {
 
@@ -237,6 +243,24 @@ export class PipDetailedViewComponent {
 
     }
 
+    onStatusChange(event) {
+        //debugger;
+
+        if (event.timeline == "6 Months") {
+
+            swal({
+                title: "You won't be able to change it back once you save this",
+                text: "",
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        } else {
+           
+        }
+    }
+
 
     modalRef: BsModalRef;
     pipData: any = {};
@@ -260,6 +284,14 @@ export class PipDetailedViewComponent {
         else {
             this.isDisabled = false;
         }
+
+        if(this.pipData.master_timelines==6) {
+            this.istsix = true;
+        }
+        else {
+            this.istsix = false;
+        }
+        debugger;
     }
 
 
