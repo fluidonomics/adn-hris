@@ -66,6 +66,16 @@ export class MyPipComponent {
     showStats: boolean = false;
     isApproved: boolean = false;
     employee: any = {};
+    dateDifference:number;
+    isCommentOfMonth1Enable: boolean = false;
+    isCommentOfMonth2Enable: boolean = false;
+    isCommentOfMonth3Enable: boolean = false;
+    isCommentOfMonth4Enable: boolean = false;
+    isCommentOfMonth5Enable: boolean = false;
+    isCommentOfMonth6Enable: boolean = false;
+
+
+
 
 
 
