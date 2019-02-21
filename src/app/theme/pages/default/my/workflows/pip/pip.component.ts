@@ -39,13 +39,6 @@ export class MyPipComponent {
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
-    dateDifference: number;
-    isCommentOfMonth1Enable: boolean = false;
-    isCommentOfMonth2Enable: boolean = false;
-    isCommentOfMonth3Enable: boolean = false;
-    isCommentOfMonth4Enable: boolean = false;
-    isCommentOfMonth5Enable: boolean = false;
-    isCommentOfMonth6Enable: boolean = false;
 
     timelinesData = [
         {
@@ -123,6 +116,7 @@ export class MyPipComponent {
 
     savePipAgendas(form, id: number) {
         //console.log(this.learningData.supportRequired);
+
         if (form.valid) {
             this.pipInfoData[this.pipData.no - 1] = JSON.parse(JSON.stringify(this.pipData));
             this.savePipDetails(this.pipData.no - 1);
@@ -215,7 +209,9 @@ export class MyPipComponent {
         this._pipService.getPipInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
+            //console.log("agenda info: " + this.PipAgendaData);
             this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
+           //debugger;
         }, error => {
         });;
 
@@ -229,6 +225,7 @@ export class MyPipComponent {
             console.log("details info: " + this.pipInfoData);
             if(this.pipInfoData.length > 0){
                 this.showSub = this.pipInfoData.filter(pip => pip.status != "Submitted" && pip.status != "Approved").length > 0;
+               // debugger;
             } 
             else {
                 this.pipInfoData = [
@@ -277,6 +274,7 @@ export class MyPipComponent {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
         
             this.supervisorData = data.json();
+            //debugger;
            //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
@@ -387,6 +385,7 @@ export class MyPipComponent {
 
 
     onStatusChange(event) {
+        //debugger;
 
         if (event == "Completed") {
             this.isCompleted = true;
@@ -469,10 +468,12 @@ export class MyPipComponent {
 
         if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
             this.showSub = false;
+            //debugger;
         }
         else {
             this.showSub = true;
         }
+        debugger;
 
     }
 
