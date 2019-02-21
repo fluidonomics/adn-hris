@@ -82,7 +82,7 @@ export class LearningBatchComponent implements OnInit {
 
 
     loadBatch() {
-        debugger;
+        //debugger;
         this.utilityService.showLoader('#batch-loader');
         this._learningService.getLearningBatches(this._currentEmpId)
             .subscribe(
@@ -129,14 +129,14 @@ export class LearningBatchComponent implements OnInit {
     }
 
     saveBatch() {
-        debugger;
+        //debugger;
         let data = {
             "batchId": this.editBatch._id,
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
         this._learningService.updateBatch(data).subscribe(res => {
-            debugger;
+            //debugger;
             this.activeRowNumber = -1;
             //this.loadBatch();
             this.modalRef.hide();
