@@ -81,7 +81,6 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     getallemployees() {
-        debugger;
         this.utilityService.showLoader("#employeeList");
         this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
@@ -92,7 +91,7 @@ export class MyTeamReviewerComponent implements OnInit {
                     else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
                     else return 0;
                 });
-                this.employees = this.employees.filter(a => a.kra.status == 'Submitted' || a.kra.status == 'Approved')
+                this.employees = this.employees.filter(a => a.kra.status == 'Approved')
 
             }
         })
