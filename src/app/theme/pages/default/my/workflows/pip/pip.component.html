@@ -546,7 +546,7 @@
 							<div class="col-md-6 month" *ngIf="pipData.empComment_month1 || isCommentOfMonth1Enable">
 								<span>Employee Comments #1</span>
 								<textarea name="empComment_month1" id="empComment_month1" [(ngModel)]="pipData.empComment_month1" #empComment_month1="ngModel" class="form-control m-input m-input--air"
-								[disabled]="isDisabled && isCommentOfMonth1Enable"></textarea>
+								[disabled]="isDisabled && !isCommentOfMonth1Enable"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month1.valid">
 											This field is required.
 								</div>
@@ -569,7 +569,7 @@
 								<div class="col-md-6 month" *ngIf="pipData.empComment_month2 || isCommentOfMonth2Enable">
 									<span>Employee Comments #2</span>
 									<textarea name="empComment_month2" id="empComment_month2" [(ngModel)]="pipData.empComment_month2" #empComment_month2="ngModel" class="form-control m-input m-input--air"
-										[disabled]="isDisabled && isCommentOfMonth2Enable"></textarea>
+										[disabled]="isDisabled && !isCommentOfMonth2Enable"></textarea>
 									<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month2.valid">
 										This field is required.
 									</div>
@@ -617,7 +617,7 @@
 							<div class="col-md-6 month" *ngIf="pipData.empComment_month4 || isCommentOfMonth4Enable">
 								<span>Employee Comments #4</span>
 								<textarea name="empComment_month4" id="empComment_month4" [(ngModel)]="pipData.empComment_month4" #empComment_month4="ngModel" class="form-control m-input m-input--air"
-									[disabled]="isDisabled && isCommentOfMonth4Enable"></textarea>
+									[disabled]="isDisabled && !isCommentOfMonth4Enable"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month4.valid">
 									This field is required.
 								</div>
@@ -642,7 +642,7 @@
 							<div class="col-md-6 month" *ngIf="pipData.empComment_month5 || isCommentOfMonth5Enable">
 								<span>Employee Comments #5</span>
 								<textarea name="empComment_month5" id="empComment_month5" [(ngModel)]="pipData.empComment_month5" #empComment_month5="ngModel" class="form-control m-input m-input--air"
-									[disabled]="isDisabled && isCommentOfMonth5Enable"></textarea>
+									[disabled]="isDisabled && !isCommentOfMonth5Enable"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month5.valid">
 									This field is required.
 								</div>
@@ -667,7 +667,7 @@
 							<div class="col-md-6 month" *ngIf="pipData.empComment_month6 || isCommentOfMonth6Enable">
 								<span>Employee Comments #6</span>
 								<textarea name="empComment_month6" id="empComment_month6" [(ngModel)]="pipData.empComment_month6" #empComment_month6="ngModel" class="form-control m-input m-input--air"
-									[disabled]="isDisabled && isCommentOfMonth6Enable"></textarea>
+									[disabled]="isDisabled && !isCommentOfMonth6Enable"></textarea>
 								<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !empComment_month6.valid">
 									This field is required.
 								</div>

@@ -427,7 +427,7 @@ export class MyPipComponent {
         this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
         this.pipData.no = index + 1;
-        console.log("Index: " + index);
+        
         this.monthlyCommentValidation();
         
         
@@ -489,7 +489,7 @@ export class MyPipComponent {
             this.isCommentOfMonth4Enable = true;
         } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference <= 7) {
+        } else if(this.pipData.dateDifference > 6) {
             this.isCommentOfMonth6Enable = true;
         }
     }

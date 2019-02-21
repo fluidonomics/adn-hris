@@ -49,6 +49,14 @@ export class PipDetailedViewComponent {
     user: any;
     showStat = false;
 
+    dateDifference: number;
+    isCommentOfMonth1Enable: boolean = false;
+    isCommentOfMonth2Enable: boolean = false;
+    isCommentOfMonth3Enable: boolean = false;
+    isCommentOfMonth4Enable: boolean = false;
+    isCommentOfMonth5Enable: boolean = false;
+    isCommentOfMonth6Enable: boolean = false;
+
     learningData: any;
     _currentEmpId: number;
 
@@ -246,6 +254,8 @@ export class PipDetailedViewComponent {
         this.pipData = this.pipInfoData[index];
         this.pipData.no = index + 1;
 
+        this.monthlyCommentValidation();
+
         for(let x=0;x<this.PipAgendaData.length;x++) {
             if(this.PipAgendaData[x]._id == this.param_id) {
                 this.agenda_arraynum = x;
@@ -261,6 +271,25 @@ export class PipDetailedViewComponent {
             this.isDisabled = false;
         }
     }
+
+    monthlyCommentValidation() {
+
+        if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+
+            this.isCommentOfMonth1Enable = true;
+        } else if(this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+            this.isCommentOfMonth2Enable = true;
+        } else if(this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+            this.isCommentOfMonth3Enable = true;
+        } else if(this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+            this.isCommentOfMonth4Enable = true;
+        } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+            this.isCommentOfMonth5Enable = true;
+        } else if(this.pipData.dateDifference > 6) {
+            this.isCommentOfMonth6Enable = true;
+        }
+    }
+
 
 
 }
