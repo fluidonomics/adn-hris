@@ -8,6 +8,7 @@ import { CommonService } from "../../../../../../../../base/_services/common.ser
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { environment } from '../../../../../../../../../environments/environment'
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.learning-view",
@@ -51,6 +52,8 @@ export class LearningReview {
         'Individual Development',
         'Functional Development'
     ]
+    imageBase: any;
+
 
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -86,7 +89,7 @@ export class LearningReview {
                     }
                 });
             });
-
+            this.imageBase = environment.content_api_base.imgBase;
 
     }
 

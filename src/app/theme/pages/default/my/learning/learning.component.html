@@ -584,10 +584,8 @@
 						</div>
 						<div class="col-md-6 details" *ngIf="isCompleted">
 								<span>Completion Date</span>
-								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required [disabled]="!showCom">
-								<div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !completionDate.valid">
-										  This field is required.
-								</div>
+								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required disabled>
+								
 						</div>
 					</div>
 					<div class="form-actions details">
@@ -595,7 +593,7 @@
 							<div class="col-md-12">
 								<div class="m-form__actions">
 									<button class="btn btn-success submitForm" type="submit" id="submitForm"
-										*ngIf="!isDisabled">Save</button>
+										*ngIf="!isDisabled || (changedtoComp && isCompleted)">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>
