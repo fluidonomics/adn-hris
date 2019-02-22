@@ -58,6 +58,8 @@ export class MyLearningComponent {
     isVisible: boolean = true;
     showStats: boolean = false;
     isApproved: boolean = false;
+    changedtoComp: boolean = false;
+    //comDate: boolean = false;
     showCom: boolean = true;
     employee: any = {};
 
@@ -117,6 +119,8 @@ export class MyLearningComponent {
         }
     }
     saveLearningDetails(index: number) {
+        let now = new Date();
+
         let request = {
 
             _id: this.learningInfoData[index]._id,
@@ -133,7 +137,7 @@ export class MyLearningComponent {
             timelines: this.learningInfoData[index].timelines,
             supportRequired: this.learningInfoData[index].supportRequired,
             employeeComment: this.learningInfoData[index].employeeComment,
-            completionDate: this.learningInfoData[index].completionDate
+            completionDate: this.isCompleted?now:""
 
         }
         let isError: boolean = false;
@@ -345,7 +349,7 @@ export class MyLearningComponent {
         if (event == "Completed") {
 
             swal({
-                title: 'Are you sure you have Completed?',
+                title: 'Are you sure you have completed this Learning Agenda?',
                 text: "",
                 type: 'warning',
                 showCancelButton: true,
@@ -354,12 +358,21 @@ export class MyLearningComponent {
                 confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.value) {
+                    //debugger;
                     this.isCompleted = true;
+                    this.changedtoComp = true;
+                    
+                }
+                else {
+                    this.isCompleted = false;
+                    this.modalRef.hide();
                 }
             });
     
         } else {
+            //debugger;
             this.isCompleted = false;
+            
         }
         //debugger;
 
@@ -379,7 +392,7 @@ export class MyLearningComponent {
         this.learningData.no = index + 1;
         console.log("Index: " + index);
 
-
+        this.changedtoComp = false;
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;
         }
@@ -395,13 +408,6 @@ export class MyLearningComponent {
             this.isCompleted = false;
         }
 
-        // if (this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
-        //     this.showStat = true;
-        // }
-        // else {
-        //     this.showStat = false;
-        // }
-
         if (this.learningData.status == "Approved") {
             this.isApproved = true;
         }
@@ -409,14 +415,13 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        // if (this.learningData.status == "Approved" || this.learningData.status == "Submitted") {
-        //     this.showSub = false;
-        //     //debugger;
+        // if(this.isCompleted && this.learningData.completionDate != "") {
+        //     this.comDate = true;
         // }
         // else {
-        //     this.showSub = true;
+        //     this.comDate = false;
         // }
-        //debugger;
+        debugger;
 
     }
 

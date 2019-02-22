@@ -40,7 +40,7 @@
                    (click)="gotoLearningData(learn)">
                      <div class="m-widget4__img m-widget4__img--logo">
                         <a align="center">
-                           <img *ngIf="learn?.profileImage; else noImage" src="{{imageBase+learn?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                           <img *ngIf="learn?.emp_details.profileImage; else noImage" src="{{imageBase+learn?.emp_details.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                             class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                            <ng-template #noImage>
                               <img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">

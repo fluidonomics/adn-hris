@@ -30,7 +30,7 @@ export class LearningDetailedViewComponent {
 
     kraInfoData: any = [];
     learningInfoData: any = [];
-   // learningInfoDataArr: any = [];
+    // learningInfoDataArr: any = [];
 
     isSubmitted: boolean = false;
 
@@ -47,6 +47,7 @@ export class LearningDetailedViewComponent {
     statusq: any;
     isDisabled: boolean = false;
     isDis: boolean = true;
+    isSup: boolean = true;
     user: any;
     showStat = false;
 
@@ -98,7 +99,7 @@ export class LearningDetailedViewComponent {
                 });
             });
         this.imageBase = environment.content_api_base.imgBase;
-
+            //debugger;
 
     }
 
@@ -270,6 +271,13 @@ export class LearningDetailedViewComponent {
         }
         else {
             this.isDisabled = false;
+        }
+
+        if (this.learnData.supervisorId == this._currentEmpId) {
+            this.isSup = true;
+        }
+        else {
+            this.isSup = false;
         }
     }
 
