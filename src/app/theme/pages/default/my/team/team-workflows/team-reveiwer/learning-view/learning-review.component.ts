@@ -89,26 +89,32 @@ export class LearningReview {
                     }
                 });
             });
-            this.imageBase = environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
 
     }
 
     initData() {
         //console.log("route : ", this._route.url._value[])
-        this.loadLearningEmployee();
-        //   this.loadKraCategoryData();
-        //   this.loadWeightAgeData();
         this.loadSupervisorData();
-        //   this.loadKraInfo();
+        this.loadLearningEmployee();
         this.getEmployee();
     }
 
     loadLearningEmployee() {
+        // debugger;
 
         this._learningService.getEmployeeLearningDetails(this.param_master_id).subscribe(
             res => {
                 //console.log("response : ", res.json().result.message);
                 this.learningInfoData = res.json().result.message;
+                for (let lr of this.learningInfoData) {
+                    var found = this.supervisorData.some(function (el) {
+                        return el._id === lr.supervisorId;
+                    });
+                    if (!found) {
+                        this.supervisorData.push({ _id: lr.supervisorId, fullName: lr.supervisor_name });
+                    }
+                }
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
                 console.log("learning info data : ", this.learningInfoData);
@@ -117,6 +123,7 @@ export class LearningReview {
 
 
             }
+
         );
     }
 
@@ -138,7 +145,7 @@ export class LearningReview {
         })
     }
 
-    
+
 
     modalRef: BsModalRef;
     learnData: any = {};
@@ -150,7 +157,7 @@ export class LearningReview {
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
         console.log("learningdata no : ", this.learnData);
-        if(this.learnData.status=="Approved" || this.learnData.status=="SendBack") {
+        if (this.learnData.status == "Approved" || this.learnData.status == "SendBack") {
             this.isDisabled = true;
         }
         else {
