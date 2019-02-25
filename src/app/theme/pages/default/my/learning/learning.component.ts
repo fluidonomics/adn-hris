@@ -137,7 +137,7 @@ export class MyLearningComponent {
             timelines: this.learningInfoData[index].timelines,
             supportRequired: this.learningInfoData[index].supportRequired,
             employeeComment: this.learningInfoData[index].employeeComment,
-            completionDate: this.isCompleted?now:""
+            completionDate: this.isCompleted ? now : ""
 
         }
         let isError: boolean = false;
@@ -183,8 +183,8 @@ export class MyLearningComponent {
 
 
     loadData() {
-        this.loadLearningAgendaInfo();
         this.loadSupervisorData();
+        this.loadLearningAgendaInfo();
         this.loadLearningDetailsInfo();
         this.loadEmployeeDetails();
     }
@@ -202,6 +202,24 @@ export class MyLearningComponent {
 
     }
 
+    loadprevsupervisor() {
+        for (let lr of this.learningInfoData) {
+
+            if (lr.supervisorId != "") {
+
+                var found = this.supervisorData.some(function (el) {
+                    return el._id === lr.supervisorId;
+                });
+                if (!found) {
+                    this.supervisorData.push({ _id: lr.supervisorId, fullName: lr.supervisor_name, canSelect: false });
+                 //   debugger;
+                }
+
+            }
+
+        }
+    }
+
     loadLearningDetailsInfo() {
         this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
             let data = res.json();
@@ -209,7 +227,7 @@ export class MyLearningComponent {
             console.log("details info: " + this.learningInfoData);
             if (this.learningInfoData.length > 0) {
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
-                //debugger;
+                this.loadprevsupervisor();
             }
             else {
                 this.learningInfoData = [
@@ -246,7 +264,9 @@ export class MyLearningComponent {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
 
             this.supervisorData = data.json();
-
+            for (let sr of this.supervisorData) {
+                sr.canSelect = true;
+            }
             //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
@@ -361,18 +381,18 @@ export class MyLearningComponent {
                     //debugger;
                     this.isCompleted = true;
                     this.changedtoComp = true;
-                    
+
                 }
                 else {
                     this.isCompleted = false;
                     this.modalRef.hide();
                 }
             });
-    
+
         } else {
             //debugger;
             this.isCompleted = false;
-            
+
         }
         //debugger;
 
@@ -391,6 +411,7 @@ export class MyLearningComponent {
         this.learningData = JSON.parse(JSON.stringify(this.learningInfoData[index]));
         this.learningData.no = index + 1;
         console.log("Index: " + index);
+
 
         this.changedtoComp = false;
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
@@ -415,12 +436,14 @@ export class MyLearningComponent {
             this.isApproved = false;
         }
 
-        // if(this.isCompleted && this.learningData.completionDate != "") {
-        //     this.comDate = true;
-        // }
-        // else {
-        //     this.comDate = false;
-        // }
+
+        if (this.learningData.status == "SendBack") {
+            this.supervisorData = this.supervisorData.filter(spr => spr.canSelect == true);
+        }
+        else {
+            this.loadprevsupervisor();
+        }
+
         debugger;
 
     }

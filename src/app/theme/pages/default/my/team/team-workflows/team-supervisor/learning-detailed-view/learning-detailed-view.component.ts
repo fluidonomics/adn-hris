@@ -105,11 +105,8 @@ export class LearningDetailedViewComponent {
 
     initData() {
         //console.log("route : ", this._route.url._value[])
-        this.loadLearningEmployee();
-        //   this.loadKraCategoryData();
-        //   this.loadWeightAgeData();
         this.loadSupervisorData();
-        //   this.loadKraInfo();
+        this.loadLearningEmployee();
         this.getEmployee();
     }
 
@@ -119,6 +116,13 @@ export class LearningDetailedViewComponent {
             res => {
                 console.log("response : ", res.json().result.message);
                 this.learningInfoData = res.json().result.message;
+
+                for (let lr of this.learningInfoData) {
+                    var found = this.supervisorData.some(function (el) {
+                        return el._id === lr.supervisorId;
+                    });
+                    if (!found) { this.supervisorData.push({ _id: lr.supervisorId, fullName: lr.supervisor_name }); }
+                }
 
                 if (this.param_from == "approval") {
                     this.learningInfoData = this.learningInfoData.filter(learn => learn.status == "Submitted");
