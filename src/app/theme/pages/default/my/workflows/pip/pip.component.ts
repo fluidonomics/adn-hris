@@ -73,6 +73,7 @@ export class MyPipComponent {
     isCommentOfMonth4Enable: boolean = false;
     isCommentOfMonth5Enable: boolean = false;
     isCommentOfMonth6Enable: boolean = false;
+    saveEnabled: boolean = false;
 
 
 
@@ -500,10 +501,21 @@ export class MyPipComponent {
             this.isCommentOfMonth4Enable = true;
         } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6) {
+        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
             this.isCommentOfMonth6Enable = true;
         }
     }
 
+
+    isSaveEnabled() {
+
+        if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
+
+                this.saveEnabled = true;
+            }
+            
+    }
+    
 }
 

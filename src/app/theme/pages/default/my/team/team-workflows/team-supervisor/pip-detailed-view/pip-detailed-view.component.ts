@@ -58,6 +58,7 @@ export class PipDetailedViewComponent {
     isCommentOfMonth4Enable: boolean = false;
     isCommentOfMonth5Enable: boolean = false;
     isCommentOfMonth6Enable: boolean = false;
+    saveEnabled: boolean = false;
 
     learningData: any;
     _currentEmpId: number;
@@ -251,6 +252,55 @@ export class PipDetailedViewComponent {
 
     }
 
+    saveLearningDetails(pipData: any, Remarks: String) {
+
+        let request = {
+            //pipMasterId: this.param_master_id,
+            pipDetailId: pipData._id,
+            empId: this.user._id,
+            supervisorId: this._currentEmpId,
+            updatedBy: this._currentEmpId,
+            //supervisor_name: this.user.supervisorDetails.fullName,
+            //action_link: window.location.origin + '/my/pip',
+            //superviserInitialComment: pipData.superviserInitialComment,
+            supComment_month1: pipData.supComment_month1,
+            supComment_month2: pipData.supComment_month2,
+            supComment_month3: pipData.supComment_month3,
+            supComment_month4: pipData.supComment_month4,
+            supComment_month5: pipData.supComment_month5,
+            supComment_month6: pipData.supComment_month6,
+            timelines: pipData.timelines
+
+        }
+
+
+        this._pipService.savePip(request).subscribe(res => {
+            if (res.ok) {
+                this.modalRef.hide();
+                this.utilityService.hideLoader('.mtrDetailsPortlet');
+                swal({
+                    title: 'Saved Successfully!',
+                    text: "PIP Agenda has been Saved",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+                this.loadPipEmployee();
+                
+            }
+        }, err => {
+            if (err.status == 300) {
+                let error = err.json() || {};
+                swal("Error", error.title, "error");
+                this.loadPipEmployee();
+                this.modalRef.hide();
+            }
+            this.utilityService.hideLoader('.m-content');
+        })
+
+    }
+
     onStatusChange(event) {
         //debugger;
 
@@ -279,6 +329,7 @@ export class PipDetailedViewComponent {
         this.pipData.no = index + 1;
 
         this.monthlyCommentValidation();
+        this.isSaveEnabled();
 
         for(let x=0;x<this.PipAgendaData.length;x++) {
             if(this.PipAgendaData[x]._id == this.param_id) {
@@ -301,7 +352,6 @@ export class PipDetailedViewComponent {
         else {
             this.istsix = false;
         }
-        debugger;
     }
 
     monthlyCommentValidation() {
@@ -317,9 +367,19 @@ export class PipDetailedViewComponent {
             this.isCommentOfMonth4Enable = true;
         } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6) {
+        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
             this.isCommentOfMonth6Enable = true;
         }
+    }
+
+    isSaveEnabled() {
+
+        if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
+
+                this.saveEnabled = true;
+            }
+            
     }
 
 

@@ -689,7 +689,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="!isApproved || !isDisabled">Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="!isApproved || !isDisabled || !saveEnabled">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

@@ -307,7 +307,7 @@
 													<ng-select class="m-input m-input--air customError" name="timelines{{i}}" id="timelines" [items]="timelinesData"
 													 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="pipData.master_timelines"
 													 [clearable]="false" #timelines="ngModel" required  (change)= "onStatusChange($event)" [disabled]="istsix"></ng-select>
-													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && timelines.invalid" >
+													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && timelines.invalid && pipData.timelines != 6" >
 														This field is required.
 													</div>
 												</div>
@@ -335,7 +335,7 @@
 													<span>Supervisor Approval Comments</span>
 													<textarea name="superviserInitialComment" id="superviserInitialComment" [(ngModel)]="pipData.superviserInitialComment"
 													 #superviserInitialComment="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"></textarea>
-													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && !measureOfSuccess.valid">
+													<div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && superviserInitialComment.valid">
 														This field is required.
 													</div>
 												</div>
@@ -519,6 +519,9 @@
 																(click)="preSaveLearningDetails(pipData,'SendBack')"
 																type="button" *ngIf="!isDisabled"> Send
 																Back</button>
+															<button class="btn btn-success"
+																(click)="saveLearningDetails(pipData,'Approved')"
+																*ngIf="saveEnabled">Save</button>
 															<button class="btn btn-secondary"
 																(click)="modalRef.hide()">Back</button>
 														</div>
