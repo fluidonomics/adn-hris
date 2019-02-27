@@ -488,6 +488,10 @@ export class MyPipComponent {
 
     }
 
+    showCompletionDetails() {
+        this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+    }
+
     monthlyCommentValidation() {
 
         if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {

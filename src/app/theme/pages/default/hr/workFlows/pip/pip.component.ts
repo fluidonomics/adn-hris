@@ -130,6 +130,7 @@ export class HrPipComponent {
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                 this.employeeData = data;
+                this.showdetail();
                 this.utilityService.hideLoader('#initiate-loader');
             }
         }, error => {
@@ -142,6 +143,7 @@ export class HrPipComponent {
         this.employeeData.forEach(emp => {
             emp.checked = $event.target.checked;
         });
+        this.showdetail();
     }
 
     loadAllEmployee() {
@@ -163,10 +165,12 @@ export class HrPipComponent {
                             data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                             // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                             this.employeeData = data || [];
+                            this.showdetail();
                             this.utilityService.hideLoader('#initiate-loader');
                         }
                         else {
                             this.employeeData = data.json().data || [];
+                            this.showdetail();
                             this.utilityService.hideLoader('#initiate-loader');
                         }
 
@@ -251,6 +255,31 @@ export class HrPipComponent {
             emp_id: []
         };
         this.getAllEmployee();
+    }
+
+    showdetail() {
+
+        let i,j;
+
+        for(i=0;i<this.employeeData.length;i++) {
+            for(j=0;j<this.deparmentData.length;j++) {
+                if(this.employeeData[i].department_id == this.deparmentData[j]._id){
+                    this.employeeData[i].departmentName = this.deparmentData[j].departmentName;
+                    //debugger
+                }
+            }
+        }
+        //debugger;
+
+        for(i=0;i<this.employeeData.length;i++) {
+            for(j=0;j<this.gradeData.length;j++) {
+                if(this.employeeData[i].grade_id == this.gradeData[j]._id){
+                    this.employeeData[i].gradeName = this.gradeData[j].gradeName;
+                    //debugger
+                }
+            }
+        }
+        //debugger;
     }
 
 }

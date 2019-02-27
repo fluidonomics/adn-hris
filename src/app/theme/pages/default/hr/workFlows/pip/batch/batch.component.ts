@@ -34,12 +34,6 @@ export class PipBatchComponent implements OnInit {
     modalRef: BsModalRef;
     currentDate: Date = new Date();
 
-    batchTypes: any = [
-        { _id: "KRA", batchTypeName: "KRA", disabled: true },
-        { _id: "Learning", batchTypeName: "Learning" },
-        { _id: "PIP", batchTypeName: "PIP", disabled: true },
-    ]
-
     statusTypes: any = [
         { _id: "Active", name: "Active", },
         { _id: "Terminated", name: "Terminated" },
@@ -69,6 +63,7 @@ export class PipBatchComponent implements OnInit {
     }
 
     ngOnInit() {
+        // debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -82,7 +77,7 @@ export class PipBatchComponent implements OnInit {
 
 
     loadBatch() {
-        debugger;
+        // debugger;
         this.utilityService.showLoader('#batch-loader');
         this._pipService.getPipBatches(this._currentEmpId)
             .subscribe(
@@ -96,30 +91,6 @@ export class PipBatchComponent implements OnInit {
                 });
     }
 
-
-    saveLearning(batch_id, learningIndex, status) {
-    //     swal({
-    //         title: 'Are you sure?',
-    //         text: "Terminate learning Agenda? It can't be undone!",
-    //         type: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#d33',
-    //         cancelButtonColor: '#9a9caf',
-    //         confirmButtonText: 'Terminate'
-    //     }).then((result) => {
-    //         if (result.value) {
-    //             this.batchData[this.batchData.findIndex(x => x._id == batch_id)].batchData[learningIndex].status = status;
-    //             this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[learningIndex])
-    //                 .subscribe(
-    //                     res => {
-    //                         swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
-    //                     },
-    //                     error => {
-    //                     });
-    //         }
-    //     })
-    }
-
     openEditModal(template: TemplateRef<any>, batch, index) {
         this.modalRef = this.modalService.show(template);
         this.editBatch = Object.assign({}, batch);
@@ -129,14 +100,14 @@ export class PipBatchComponent implements OnInit {
     }
 
     saveBatch() {
-        debugger;
+        //debugger;
         let data = {
             "batchId": this.editBatch._id,
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
         this._pipService.updateBatch(data).subscribe(res => {
-            debugger;
+            //debugger;
             this.activeRowNumber = -1;
             //this.loadBatch();
             this.modalRef.hide();

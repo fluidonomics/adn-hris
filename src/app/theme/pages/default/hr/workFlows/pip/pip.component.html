@@ -95,16 +95,28 @@
                                     <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                            <!-- <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
                                 <span>
                                     EMAIL
                                     <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
-                            </th>
-                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                            </th> -->
+                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="22%">
                                 <span>
                                     DESIGNATION
                                     <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('department')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                <span>
+                                    DEPARTMENT
+                                    <i class="la" *ngIf="key == 'department'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('grade')" class="m-datatable__cell m-datatable__cell--sort" width="12%">
+                                <span>
+                                    GRADE
+                                    <i class="la" *ngIf="key == 'grade'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
                             <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
@@ -132,11 +144,22 @@
                             <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.fullName}} [{{employee.userName}}]</span>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <!-- <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.officeEmail}}</span>
-                            </td>
-                            <td class="m-datatable__cell" width="20%">
+                            </td> -->
+                            <td class="m-datatable__cell" width="22%">
                                 <span>{{employee.designation}}</span>
+                            </td>
+                            <!-- <td class="m-datatable__cell" width="20%" *ngFor="let dept of deparmentData">
+                                <div *ngIf="employee.department_id == dept._id">
+                                    <span>{{dept.departmentName}}</span>
+                                </div>
+                            </td> -->
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.departmentName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="12%">
+                                <span>{{employee.gradeName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="25%">
                                 <span>{{employee.supervisor}}</span>
