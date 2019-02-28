@@ -520,7 +520,7 @@
 								#developmentPlan="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
 								required></textarea>
 							<div class="form-control-feedback has-danger"
-								*ngIf="LearningDataForm.submitted && !developmentPlan.valid">
+								*ngIf="LearningDataForm.submitted && developmentPlan.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -529,7 +529,7 @@
 							<textarea name="timelines" id="timelines" [(ngModel)]="learningData.timelines" #Timelines="ngModel"
 								class="form-control m-input m-input--air" required [disabled]="isDisabled"></textarea>
 							<div class="form-control-feedback has-danger"
-								*ngIf="LearningDataForm.submitted && !Timelines.valid">
+								*ngIf="LearningDataForm.submitted && Timelines.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -539,7 +539,7 @@
 								#measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
 								required [disabled]="isDisabled"></textarea>
 							<div class="form-control-feedback has-danger"
-								*ngIf="LearningDataForm.submitted && !measureOfSuccess.valid">
+								*ngIf="LearningDataForm.submitted && measureOfSuccess.invalid">
 								This field is required.
 							</div>
 						</div>
@@ -574,11 +574,10 @@
 						</div>
 						<div class="col-md-6 details" *ngIf="isCompleted">
 							<span>Completion Comments</span>
-							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="learningData.employeeComment"
-								#employeeComment="ngModel" class="form-control m-input m-input--air"
-								[disabled]="!showCom"></textarea>
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="learningData.employeeComment" #employeeComment="ngModel"
+								class="form-control m-input m-input--air" required [disabled]="!showCom"></textarea>
 							<div class="form-control-feedback has-danger"
-								*ngIf="LearningDataForm.submitted && !employeeComment.valid && isCompleted">
+								*ngIf="LearningDataForm.submitted && employeeComment.invalid">
 								This field is required.
 							</div>
 						</div>
