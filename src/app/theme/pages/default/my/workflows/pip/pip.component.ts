@@ -23,6 +23,7 @@ import { PARAMETERS } from "@angular/core/src/util/decorators";
 export class MyPipComponent {
 
     @ViewChild('myPipDetailModal') myPipDetailModal: TemplateRef<any>;
+    @ViewChild('myPipCompletionModal') myPipCompletionModal: TemplateRef<any>;    
 
     param_id: number;
     _currentEmpId: number;
@@ -488,8 +489,10 @@ export class MyPipComponent {
 
     }
 
-    showCompletionDetails() {
-        this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+    showCompletionDetails(index) {
+        this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
+        this.pipData.no = index + 1;
     }
 
     monthlyCommentValidation() {

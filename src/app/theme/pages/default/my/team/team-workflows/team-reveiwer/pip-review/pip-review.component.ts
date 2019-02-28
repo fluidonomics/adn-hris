@@ -18,6 +18,8 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 export class PipReview {
 
    @ViewChild('pipDetailModal') pipDetailModal: TemplateRef<any>;
+   @ViewChild('pipCompletionModal') pipCompletionModal: TemplateRef<any>;
+
 
    window: any = window;
    kraCategoryData: any[];
@@ -26,6 +28,7 @@ export class PipReview {
 
    kraInfoData: any = [];
    pipInfoData: any = [];
+   pipMasterData: any = [];
 
    isSubmitted: boolean = false;
 
@@ -101,13 +104,10 @@ export class PipReview {
    }
 
    initData() {
-      //console.log("route : ", this._route.url._value[])
       this.loadPipEmployee();
-      //   this.loadKraCategoryData();
-      //   this.loadWeightAgeData();
       this.loadSupervisorData();
-      //   this.loadKraInfo();
       this.getEmployee();
+      this.loadMasterData();
    }
 
    loadPipEmployee() {
@@ -145,6 +145,19 @@ export class PipReview {
       })
    }
 
+   loadMasterData() {
+      this._pipService.getPipByReviewer(this._currentEmpId).subscribe(
+         res => {
+            //debugger;
+            this.pipMasterData = res.json().result.message;
+            this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_master_id);
+         },
+         error => {
+            console.log(error);
+         }
+      );
+   }
+
 
 
    modalRef: BsModalRef;
@@ -164,6 +177,13 @@ export class PipReview {
          this.isDisabled = false;
       }
    }
+
+   showCompletionDetails() {
+      this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
+      this.pipData = this.pipMasterData[0];
+      this.pipData.no = 1;
+      debugger;
+  }
 
 
 }

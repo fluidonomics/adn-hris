@@ -105,6 +105,15 @@
 
                                  </td>
                               </tr>
+                              <tr>
+											<td colspan="6">
+												<button
+													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
+													(click)="showCompletionDetails()">
+													<i class="la la-bar-chart"></i>
+												</button>
+											</td>
+										</tr>
 
                            </tbody>
                         </table>
@@ -546,5 +555,106 @@
                            </form>
                         </div>
 
+                     </div>
+                  </ng-template>
+                  <ng-template #pipCompletionModal>
+                     <div
+                        class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+                        <div class="m-portlet__head">
+                           <div class="m-portlet__head-caption">
+                              <div class="m-portlet__head-title">
+                                 <h3 class="m-portlet__head-text">
+                                    PIP Agenda
+                                 </h3>
+                              </div>
+                           </div>
+                           <div class="m-portlet__head-tools">
+                              <ul class="m-portlet__nav">
+                                 <li class="m-portlet__nav-item">
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                       <div class="btn-group" role="group">
+                                          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                             <span aria-hidden="true">&times;</span>
+                                          </button>
+                                       </div>
+                                    </div>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                  
+                        <div class="m-portlet__body">
+                           <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="savePipAgendas(PipDataForm,pipData._id)"
+                              id="PipDataForm" #PipDataForm="ngForm">
+                              <div class="m-widget6 ">
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <span><b>PIP Agenda Completion Information</b></span>
+                                    </div>
+                  
+                                 </div>
+                                 <div class="row details">
+                                    <div class="col-md-2">
+                                       <span>Employee Comments</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                       <textarea name="areaofImprovement" id="areaofImprovement" [(ngModel)]="pipData.pip_master_details.emp_final_com"
+                                          #areaofImprovement="ngModel" class="form-control m-input m-input--air" required
+                                          disabled></textarea>
+                                    </div>
+                  
+                                    <div class="col-md-2 details">
+                                       <span>Supervisor Comments</span>
+                                    </div>
+                                    <div class="col-md-10 details">
+                                       <textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.pip_master_details.sup_final_com"
+                                          #actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+                                    </div>
+                                    <div class="col-md-2 details">
+                                       <span>Reviewer Comments</span>
+                                    </div>
+                                    <div class="col-md-10 details">
+                                       <textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.pip_master_details.rev_final_com"
+                                          #actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+                                    </div>
+                                    <div class="col-md-2 details">
+                                       <span>HR Comments</span>
+                                    </div>
+                                    <div class="col-md-10 details">
+                                       <textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.pip_master_details.hr_final_com"
+                                          #actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+                                    </div>
+                  
+                                    <div class="col-md-6 details">
+                                       <span>Final Rating</span>
+                                       <ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata"
+                                          [items]="supervisorData" bindLabel="final_status" bindValue="_id" placeholder="Final Rating"
+                                          [(ngModel)]="pipData.pip_master_details.final_status" [clearable]="false" #supervisor="ngModel" required disabled>
+                                       </ng-select>
+                                    </div>
+                  
+                                    <div class="col-md-6 details">
+                                       <span>Final Recommendation</span>
+                                       <ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}" id="final_recommendation"
+                                          [items]="supervisorData" bindLabel="final_recommendation" bindValue="_id" placeholder="Final Recommendation"
+                                          [(ngModel)]="pipData.pip_master_details.final_recommendation" [clearable]="false" #final_recommendation="ngModel" disabled>
+                                       </ng-select>
+                                    </div>
+                  
+                                 </div>
+                                 <div class="form-actions details">
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                          <div class="m-form__actions">
+                                             <!-- <button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="!isApproved || !isDisabled || !saveEnabled">Save</button> -->
+                                             <button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                  
                      </div>
                   </ng-template>

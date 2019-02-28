@@ -22,6 +22,7 @@ import { environment } from '../../../../../../../../../environments/environment
 export class PipDetailedViewComponent {
 
     @ViewChild('pipDetailModal') pipDetailModal: TemplateRef<any>;
+    @ViewChild('pipCompletionModal') pipCompletionModal: TemplateRef<any>;
 
     window: any = window;
     //kraCategoryData: any[];
@@ -31,17 +32,18 @@ export class PipDetailedViewComponent {
     //kraInfoData: any = [];
     PipAgendaData: any = [];
     pipInfoData: any = [];
+    pipMasterData: any = [];
 
     //isSubmitted: boolean = false;
 
 
-   // isKraAvaliable: boolean = false;
+    // isKraAvaliable: boolean = false;
     istsix: boolean = false;
 
     param_emp_id: number;
     param_master_id: number;
     param_id: number;
-    param_from:string;
+    param_from: string;
     //kraWorkFlowData: any = [];
 
     //status: any;
@@ -63,7 +65,7 @@ export class PipDetailedViewComponent {
     learningData: any;
     _currentEmpId: number;
 
-    imageBase:any;
+    imageBase: any;
 
     agenda_arraynum: number;
 
@@ -89,7 +91,7 @@ export class PipDetailedViewComponent {
         }
     ]
 
-    
+
 
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -126,7 +128,7 @@ export class PipDetailedViewComponent {
                     }
                 });
             });
-            this.imageBase = environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
 
 
     }
@@ -139,6 +141,19 @@ export class PipDetailedViewComponent {
         this.loadSupervisorData();
         //   this.loadKraInfo();
         this.getEmployee();
+        this.loadPipBySupervisor(this._currentEmpId, "Approved");
+    }
+
+
+    loadPipBySupervisor(sup_Id: number, status: string) {
+        //debugger;
+        this._pipService.getPipBySupervisor(sup_Id, status).subscribe(res => {
+            this.pipMasterData = res.json().result.message || [];
+            //console.log("hello");
+            this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_id);
+        }, error => {
+            console.log(error);
+        });
     }
 
     loadPipEmployee() {
@@ -233,7 +248,7 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             this.loadPipEmployee();
-                            
+
                         }
                         else {
                             this.modalRef.hide();
@@ -301,7 +316,7 @@ export class PipDetailedViewComponent {
                     confirmButtonText: 'OK'
                 });
                 this.loadPipEmployee();
-                
+
             }
         }, err => {
             if (err.status == 300) {
@@ -345,8 +360,8 @@ export class PipDetailedViewComponent {
         this.monthlyCommentValidation();
         this.isSaveEnabled();
 
-        for(let x=0;x<this.PipAgendaData.length;x++) {
-            if(this.PipAgendaData[x]._id == this.param_id) {
+        for (let x = 0; x < this.PipAgendaData.length; x++) {
+            if (this.PipAgendaData[x]._id == this.param_id) {
                 this.agenda_arraynum = x;
             }
         }
@@ -360,7 +375,7 @@ export class PipDetailedViewComponent {
             this.isDisabled = false;
         }
 
-        if(this.pipData.master_timelines==6) {
+        if (this.pipData.master_timelines == 6) {
             this.istsix = true;
         }
         else {
@@ -368,32 +383,38 @@ export class PipDetailedViewComponent {
         }
     }
 
+    showCompletionDetails() {
+        this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.pipData = this.pipMasterData[0];
+        this.pipData.no = 1;
+    }
+
     monthlyCommentValidation() {
 
-        if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+        if (this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if(this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+        } else if (this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
             this.isCommentOfMonth2Enable = true;
-        } else if(this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+        } else if (this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
             this.isCommentOfMonth3Enable = true;
-        } else if(this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+        } else if (this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
             this.isCommentOfMonth4Enable = true;
-        } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+        } else if (this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
+        } else if (this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
             this.isCommentOfMonth6Enable = true;
         }
     }
 
     isSaveEnabled() {
 
-        if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+        if (this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable ||
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
 
-                this.saveEnabled = true;
-            }
-            
+            this.saveEnabled = true;
+        }
+
     }
 
 
