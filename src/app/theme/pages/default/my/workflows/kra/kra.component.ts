@@ -11,6 +11,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 import { forEach } from "@angular/router/src/utils/collection";
 import { NgSelectComponent } from '@ng-select/ng-select'
 
+declare var moment;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -95,12 +96,15 @@ export class MyKraComponent {
     }
 
     loadKraWorkFlowDetails() {
-        this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId).subscribe(
-            res => {
-                this.kraWorkFlowData = res.json();
-            },
-            error => {
-            });;
+        this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId).subscribe(res => {
+            this.kraWorkFlowData = res.json();
+            this.kraWorkFlowData = this.kraWorkFlowData.sort((a, b) => {
+                if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                else return 0;
+            });
+        }, error => {
+        });;
     }
 
     initData() {

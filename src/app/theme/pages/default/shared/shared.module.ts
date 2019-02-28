@@ -7,6 +7,7 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
+import { SharedService } from './shared.service';
 
 
 
@@ -25,6 +26,8 @@ import { CommonModule } from '@angular/common';
     declarations: [
         PapDetailsGridComponent
     ],
-    providers: [],
+    providers: [
+        SharedService
+    ],
 })
 export class SharedModule { }
