@@ -133,8 +133,10 @@ export class HrLearningComponent {
         });
         this.showdetail();
     }
+    
 
     loadAllEmployee() {
+        debugger;
         if (this.filterBy.grades || this.filterBy.departments) {
             this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
@@ -166,9 +168,6 @@ export class HrLearningComponent {
                     error => {
                         this.utilityService.hideLoader('#initiate-loader');
                     });
-        }
-        else {
-            this.employeeData = [];
         }
     }
 
