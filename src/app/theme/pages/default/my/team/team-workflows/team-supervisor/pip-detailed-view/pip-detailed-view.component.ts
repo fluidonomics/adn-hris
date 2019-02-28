@@ -67,16 +67,27 @@ export class PipDetailedViewComponent {
 
     agenda_arraynum: number;
 
-    timelinesData = [
+    // timelinesData = [
+    //     {
+    //         '_id': 3,
+    //         'timeline' : "3 Months"
+    //     },
+    //     {
+    //         '_id': 6,
+    //         'timeline' : "6 Months"
+    //     }
+    // ];
+
+    supervisorPerformanceRating = [
         {
-            '_id': 3,
-            'timeline' : "3 Months"
+            '_id': 1,
+            'supervisorRating': "Met Expectation"
         },
         {
-            '_id': 6,
-            'timeline' : "6 Months"
+            '_id': 2,
+            'supervisorRating': "Not Met Expectation"
         }
-    ];
+    ]
 
     
 
@@ -269,7 +280,10 @@ export class PipDetailedViewComponent {
             supComment_month4: pipData.supComment_month4,
             supComment_month5: pipData.supComment_month5,
             supComment_month6: pipData.supComment_month6,
-            timelines: pipData.timelines
+            //timelines: pipData.timelines
+            supervisorPerformanceRating: pipData.supervisorPerformanceRating,
+            superviserFinalReview: pipData.superviserFinalReview
+
 
         }
 
@@ -301,23 +315,23 @@ export class PipDetailedViewComponent {
 
     }
 
-    onStatusChange(event) {
-        //debugger;
+    // onStatusChange(event) {
+    //     //debugger;
 
-        if (event.timeline == "6 Months") {
+    //     if (event.timeline == "6 Months") {
 
-            swal({
-                title: "You won't be able to change it back once you save this",
-                text: "",
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#66BB6A',
-                confirmButtonText: 'OK'
-            });
-        } else {
+    //         swal({
+    //             title: "You won't be able to change it back once you save this",
+    //             text: "",
+    //             type: 'warning',
+    //             showCancelButton: false,
+    //             confirmButtonColor: '#66BB6A',
+    //             confirmButtonText: 'OK'
+    //         });
+    //     } else {
            
-        }
-    }
+    //     }
+    // }
 
 
     modalRef: BsModalRef;
