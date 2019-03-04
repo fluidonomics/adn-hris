@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { PapDetailsGridComponent } from './components/pap-details-grid/pap-details-grid.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -21,10 +20,8 @@ import { SharedService } from './shared.service';
         BsDatepickerModule.forRoot(),
     ],
     exports: [
-        PapDetailsGridComponent
     ],
     declarations: [
-        PapDetailsGridComponent
     ],
     providers: [
         SharedService
