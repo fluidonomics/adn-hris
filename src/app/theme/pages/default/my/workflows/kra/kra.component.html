@@ -260,7 +260,7 @@
 						</div>
 					</div>
 					<div class="m-portlet__head-tools">
-						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">							
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="!isChangable">
 								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitKraWorkFlow(fkraInfo.form.dirty)">Submit</button>
 							</li>
@@ -303,7 +303,7 @@
 												<th>
 													Supervisor
 												</th>
-												<th >
+												<th>
 													Supervisor Remarks
 												</th>
 												<th>
@@ -333,9 +333,9 @@
 													 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="kraInfo.supervisor_id"
 													 [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select>
 												</td>
-												<td >
+												<td>
 													<textarea name="sendBackComment{{i}}" id="sendBackComment" #sendBackComment="ngModel" [(ngModel)]="kraInfo.sendBackComment"
-													 class="form-control m-input m-input--air" disabled *ngIf="kraInfo.supervisorStatus!='Approved'"></textarea>
+													 class="form-control m-input m-input--air" disabled></textarea>
 												</td>
 												<td>
 													<!-- (isDisabled || kraInfo.supervisorStatus=='Approved') &&  -->
@@ -562,13 +562,16 @@
 						<div class="col-md-6 details">
 							<span>Measure of Success</span>
 							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="kraData.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled"
-							 required></textarea>
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
 							<div class="form-control-feedback has-danger" *ngIf="KRADataForm.submitted && !measureOfSuccess.valid">
 								This field is required.
 							</div>
 						</div>
-
+						<div class="col-md-12 details" *ngIf="kraData.sendBackComment">
+							<span>Supervisor Remarks</span>
+							<textarea name="supervisorRemarks" id="supervisorRemarks" [(ngModel)]="kraData.sendBackComment"
+							 #supervisorRemarks="ngModel" class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+						</div>
 					</div>
 					<div class="form-actions details">
 						<div class="row">
