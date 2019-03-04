@@ -8,6 +8,8 @@ import { CommonService } from "../../../../../../../../base/_services/common.ser
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { MyTeamService } from "../../../my-team.service";
+import { environment } from "../../../../../../../../../environments/environment";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.kra-view",
@@ -38,6 +40,8 @@ export class MyTeamKraComponent {
     status: any;
     isDisabled: boolean = true;
     user: any;
+    employees: any = [];
+    imageBase: string;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -54,6 +58,7 @@ export class MyTeamKraComponent {
             { name: 'keywords', content: 'Add new employee' },
             { name: 'description', content: 'Add new employee.' }
         ]);
+        this.imageBase = environment.content_api_base.imgBase;
 
     }
 
@@ -168,27 +173,37 @@ export class MyTeamKraComponent {
     }
 
     saveKraDetails(index: number, status: string) {
-        this.kraInfoData[index].supervisorStatus = status;        
+        let text = "Kra has been approved successfully";
+        if (status == 'SendBack') {
+            text = "Kra has been sent back.";
+        }
+        this.kraInfoData[index].supervisorStatus = status;
         this._kraService.saveKra(this.kraInfoData[index]).subscribe(res => {
             if (res.ok) {
                 this.modalRef.hide();
+                swal({
+                    title: 'Success',
+                    text: text,
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
                 if (status == 'SendBack' || this.kraInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.kraInfoData.length) {
                     let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
                     this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
                 }
             }
-        },
-            error => {
-            });
+        }, error => {
+            console.log(error);
+        });
     }
 
     saveKraWorkFlow(data) {
-        this._kraService.saveKraWorkFlow(data)
-            .subscribe(
-                res => {
-                },
-                error => {
-                });
+        this._kraService.saveKraWorkFlow(data).subscribe(res => {
+        }, error => {
+            console.log(error);
+        });
     }
 
     modalRef: BsModalRef;

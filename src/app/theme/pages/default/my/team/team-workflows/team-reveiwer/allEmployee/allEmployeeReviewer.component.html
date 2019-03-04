@@ -52,13 +52,13 @@
                                         <span>{{emp.userName}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.emp_name}}</span>
+                                        <span>{{emp.fullName}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                        <span>{{emp.kra.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="15%">
-                                        <span>{{emp.status}}</span>
+                                        <span>{{emp.kra.status}}</span>
                                     </td>
                                 </tr>
                                 <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>

@@ -130,28 +130,47 @@ export class HrBatchComponent implements OnInit {
         }
     }
 
-    saveBatch()
-    {
-        this._batchService.saveBatch(this.editBatch)
-        .subscribe(
-         res => {   
-            this.activeRowNumber=-1;
-            this.loadBatch();
-            this.modalRef.hide();
-            if(this.editBatch.status=='Terminated')
-            {
-                swal('Success','Batch Terminated Successfully','success')
+    saveBatch() {
+        this.checkIfTerminatingBatch().then(res => {
+            if (res) {
+                this._batchService.saveBatch(this.editBatch).subscribe(res => {
+                    this.activeRowNumber = -1;
+                    this.loadBatch();
+                    this.modalRef.hide();
+                    if (this.editBatch.status == 'Terminated') {
+                        swal('Success', 'Batch Terminated Successfully', 'success')
+                    }
+                    else {
+                        swal('Success', 'Batch Saved Successfully', 'success')
+                    }
+                }, error => {
+                });
             }
-            else
-            {
-              swal('Success','Batch Saved Successfully','success')
-            }
-         },
-         error => {
-         }); 
+        })
+
     }
 
-    
+    checkIfTerminatingBatch() {
+        return new Promise((resolve, reject) => {
+            if (this.editBatch.status == 'Terminated') {
+                swal({
+                    title: 'Are you sure?',
+                    text: "Terminate Batch? It can't be undone!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#9a9caf',
+                    confirmButtonText: 'Terminate'
+                }).then((result) => {
+                    resolve(result.value);
+                });
+            } else {
+                resolve(true);
+            }
+        });
+    }
+
+
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;

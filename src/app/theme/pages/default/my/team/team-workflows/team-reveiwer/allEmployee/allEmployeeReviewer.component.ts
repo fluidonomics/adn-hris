@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { MyService } from "../../../../my.service";
 import { KraService } from '../../../../workflows/kra/kra.service';
 
+declare var moment;
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--allEmployee",
@@ -41,12 +42,15 @@ export class AllEmployeeReviewer implements OnInit {
     }
 
     getKraForReviewer() {
-        this.kraService.getKraForReviewer(this.authService.currentUserData._id).subscribe(res => {
+        this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
                 this.employees = res.json() || [];
-                this.employees = this.employees.data.sort((a, b) => b._id - a._id);
-                this.employees = this.employees.filter(a => a.status == 'Submitted' || a.status == 'Approved')
-                console.log(this.employees);
+                this.employees = this.employees.data.sort((a, b) => {
+                    if (moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return 1;
+                    else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
+                    else return 0;
+                });
+                this.employees = this.employees.filter(a => a.kra.status == 'Approved')
             }
         })
 
