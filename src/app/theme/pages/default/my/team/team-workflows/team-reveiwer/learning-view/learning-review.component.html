@@ -49,6 +49,9 @@
                                             <th style="width: 170px;">
                                                 Status
                                             </th>
+                                            <th style="width: 170px;">
+                                                Progress Status
+                                            </th>
                                             <th class="text-center" *ngIf="!isDisabled" style="width: 70px;">
                                                 Action
                                             </th>
@@ -76,6 +79,11 @@
                                             <td>
                                                 <textarea name="status" id="status" [(ngModel)]="learningInfo.status"
                                                     #status="ngModel" class="form-control m-input m-input--air"
+                                                    disabled></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea name="progressstatus" id="progressstatus" [(ngModel)]="learningInfo.progressStatus"
+                                                    #progressstatus="ngModel" class="form-control m-input m-input--air"
                                                     disabled></textarea>
                                             </td>
                                             <td class="text-center" style="width: 70px;">
