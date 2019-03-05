@@ -26,6 +26,7 @@ import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
+import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
@@ -49,6 +50,7 @@ import { GrievanceDetailComponent } from './workFlows/grievance/grievance-detail
 import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
 import { LearningService } from '../services/learning.service';
 import { PipService } from '../services/pip.service';
+import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -80,6 +82,8 @@ import { SharedModule } from '../shared/shared.module';
         HrBatchComponent,
         HrPipComponent,
         PipBatchComponent,
+        PipViewComponent,
+        PipDetailView,
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,

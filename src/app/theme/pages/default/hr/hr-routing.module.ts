@@ -27,7 +27,9 @@ import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/fee
 import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
 import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
 
-import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
+import { LearningBatchComponent } from './workFlows/learning/batch/batch.component';
+import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
+import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 
 const routes: Routes = [{
@@ -46,6 +48,8 @@ const routes: Routes = [{
         { path: 'workflows/batch', component: HrBatchComponent },
         { path: 'workflows/pip', component: HrPipComponent },
         { path: 'workflows/pip/batch', component: PipBatchComponent },
+        { path: 'workflows/view', component: PipViewComponent },
+        { path: 'workflows/view/detailview/:id/:emp_id', component: PipDetailView },
         { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
         { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
