@@ -243,7 +243,7 @@
                                        <span class="block"> {{user?.designationDetails?.designationName}}</span>
                                    </div>
                                    <div class="col-md-3">
-                                       <img class="img" src="{{imageBase+employee?.profileImage}}">
+                                       <img class="img" src="{{imageBase+learnData?.profileImage}}">
                                    </div>
                                </div>
                            </div>
@@ -259,6 +259,16 @@
                                      This field is required.
                                   </div> -->
                                </div>
+                               <div class="col-md-2">
+                                Supervisor
+                            </div>
+                            <div class="col-md-4">
+                                <ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata"
+                                    [items]="supervisorData" bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor"
+                                    [(ngModel)]="learnData.supervisorId" [clearable]="false" #supervisor="ngModel" required
+                                    disabled></ng-select>
+    
+                            </div>
                         
                          <div class="col-md-12 details">
                             <span>Development Plan</span>
@@ -308,23 +318,28 @@
                                   This field is required.
                                </div> -->
                             </div>
-                      </div>
-                      <div class="col-md-12 details">
-                            <span>Supervisor Comment</span>
-                            <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
-                              required [disabled]="isDisabled"></textarea>
-                            <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !superviserComment.valid">
-                               This field is required.
+                            <div class="col-md-6 details">
+                                    <span>Supervisor Comment</span>
+                                    <textarea name="supervisorComment" id="supervisorComment" [(ngModel)]="learnData.supervisorComment" #superviserComment="ngModel" class="form-control m-input m-input--air"
+                                      required [disabled]="isDisabled || !isSup"></textarea>
+                                    <div class="form-control-feedback has-danger" *ngIf="LearningDataForm.submitted && !superviserComment.valid">
+                                       This field is required.
+                                    </div>
+                              </div>
+                              <div class="col-md-6 details">
+                                    <span>Completion Date</span>
+                                    <input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Completion Date" [(ngModel)]="learnData.completionDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" #completionDate="ngModel" placement="top" required disabled>
                             </div>
                       </div>
+                      
                       <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
                                         <button 
-                                            class="btn btn-success" (click)="preSaveLearningDetails(learnData,'Approved')" *ngIf="!isDisabled">Approve</button>
+                                            class="btn btn-success" (click)="preSaveLearningDetails(learnData,'Approved')" *ngIf="!isDisabled && isSup">Approve</button>
                                         <button 
-                                            class="btn btn-danger" (click)="preSaveLearningDetails(learnData,'SendBack')" type="button" *ngIf="!isDisabled"> Send
+                                            class="btn btn-danger" (click)="preSaveLearningDetails(learnData,'SendBack')" type="button" *ngIf="!isDisabled && isSup"> Send
                                             Back</button>
                                         <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                                     </div>

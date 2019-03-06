@@ -30,6 +30,7 @@ export class LearningDetailedViewComponent {
 
     kraInfoData: any = [];
     learningInfoData: any = [];
+    // learningInfoDataArr: any = [];
 
     isSubmitted: boolean = false;
 
@@ -38,6 +39,7 @@ export class LearningDetailedViewComponent {
 
     param_emp_id: number;
     param_master_id: number;
+    param_from: string;
     param_id: number;
     kraWorkFlowData: any = [];
 
@@ -45,13 +47,14 @@ export class LearningDetailedViewComponent {
     statusq: any;
     isDisabled: boolean = false;
     isDis: boolean = true;
+    isSup: boolean = true;
     user: any;
     showStat = false;
 
     learningData: any;
     _currentEmpId: number;
 
-    imageBase:any;
+    imageBase: any;
 
     devArea: [
         'Individual Development',
@@ -67,7 +70,8 @@ export class LearningDetailedViewComponent {
         private _commonService: CommonService,
         private _learningService: LearningDetailedViewService,
         private modalService: BsModalService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private router: Router
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -87,23 +91,22 @@ export class LearningDetailedViewComponent {
                         this.param_id = params['id'];
                         this.param_emp_id = parseInt(params['emp_id']);
                         this.param_master_id = parseInt(params['id']);
+                        this.param_from = params['from'];
                         console.log("path var : ", params['id']);
+                        //debugger;
                         this.initData();
                     }
                 });
             });
-            this.imageBase = environment.content_api_base.imgBase;
-
+        this.imageBase = environment.content_api_base.imgBase;
+            //debugger;
 
     }
 
     initData() {
         //console.log("route : ", this._route.url._value[])
-        this.loadLearningEmployee();
-        //   this.loadKraCategoryData();
-        //   this.loadWeightAgeData();
         this.loadSupervisorData();
-        //   this.loadKraInfo();
+        this.loadLearningEmployee();
         this.getEmployee();
     }
 
@@ -113,6 +116,23 @@ export class LearningDetailedViewComponent {
             res => {
                 console.log("response : ", res.json().result.message);
                 this.learningInfoData = res.json().result.message;
+
+                for (let lr of this.learningInfoData) {
+                    var found = this.supervisorData.some(function (el) {
+                        return el._id === lr.supervisorId;
+                    });
+                    if (!found) { this.supervisorData.push({ _id: lr.supervisorId, fullName: lr.supervisor_name }); }
+                }
+
+                if (this.param_from == "approval") {
+                    this.learningInfoData = this.learningInfoData.filter(learn => learn.status == "Submitted");
+                    if (this.learningInfoData.length == 0) {
+                        this.router.navigateByUrl("/my/team/workflows/supervisor");
+                    }
+                    //debugger;
+                }
+
+
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
                 console.log("learningInfoData : ", this.learningInfoData);
@@ -194,7 +214,7 @@ export class LearningDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             this.loadLearningEmployee();
-                            
+
                         }
                         else {
                             this.modalRef.hide();
@@ -255,6 +275,13 @@ export class LearningDetailedViewComponent {
         }
         else {
             this.isDisabled = false;
+        }
+
+        if (this.learnData.supervisorId == this._currentEmpId) {
+            this.isSup = true;
+        }
+        else {
+            this.isSup = false;
         }
     }
 
