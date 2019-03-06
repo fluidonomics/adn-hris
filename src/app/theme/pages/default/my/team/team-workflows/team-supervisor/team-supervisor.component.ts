@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.team-supervisor",
     templateUrl: "./team-supervisor.component.html",
     encapsulation: ViewEncapsulation.None,
 })
@@ -115,7 +115,10 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                 }
                 else if (element.status == "Approved") {
                     element.fullName = element.emp_name;
-                    __this.kraDataView.push(element);
+                    // for (var i = 0; i < 3; i++) {
+
+                        __this.kraDataView.push(element);
+                    // }
                 }
             }
         });

@@ -89,7 +89,7 @@
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
-									Initiate
+									Initiate KRA
 								</span>
 							</a>
 						</li>
@@ -100,12 +100,12 @@
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
-									Batch
+									KRA Batch
 								</span>
 							</a>
 						</li>
 						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/mtr/batch/init" class="m-menu__link">
+							<a routerLink="/hr/workflows/mtr/batch-init" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-reply">
 									<span></span>
 								</i>
@@ -124,6 +124,69 @@
 								</span>
 							</a>
 						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+						 aria-haspopup="true">
+							<a routerLink="/hr/workflows/learning" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-reply">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									Initiate Learning
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+						 aria-haspopup="true">
+							<a routerLink="/hr/workflows/learn/batch" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									Learning Batch
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pap/batch-init" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-reply">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PAP	Initiate
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pap/batch" class="m-menu__link">								
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PAP Batch
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pap/feedback-init" class="m-menu__link">									
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									Initiate feedback
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/grievance/all-employee" class="m-menu__link">									
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									Grievance
+								</span>
+							</a>
+						</li>
+						
 					</ul>
 				</div>
 			</li>
@@ -318,6 +381,16 @@
 								</span>
 							</a>
 						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/my/workflows/pap" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PAP
+								</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</li>
@@ -351,6 +424,19 @@
 						<span class="m-menu__link-wrap">
 							<span class="m-menu__link-text">
 								Documents
+							</span>
+						</span>
+					</span>
+				</a>
+			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+			 aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				<a routerLink="/my/learning" class="m-menu__link">
+					<i class="m-menu__link-icon fa fa-file"></i>
+					<span class="m-menu__link-title">
+						<span class="m-menu__link-wrap">
+							<span class="m-menu__link-text">
+								Learning
 							</span>
 						</span>
 					</span>

@@ -1,191 +1,283 @@
-import { FormBuilder } from "@angular/forms";
-import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Meta, Title } from "@angular/platform-browser";
-import { MyService } from "../../my.service"
-import { CommonService } from "../../../../../../base/_services/common.service";
-import { AuthService } from "../../../../../../base/_services/authService.service";
+import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../../../base/_services/authService.service';
+import { CommonService } from '../../../../../../base/_services/common.service';
+import { PapService } from '../../../services/pap.service';
+import * as _ from 'lodash';
 import swal from 'sweetalert2';
+import { ignoreElements } from 'rxjs/operator/ignoreElements';
+import { Subject } from 'rxjs';
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
     templateUrl: "./pap.component.html",
     encapsulation: ViewEncapsulation.None,
+    providers: [PapService]
 })
-export class MyPapComponent implements OnInit {
+export class MyPapComponent {
 
-    kraCategoryData: any[];
-    weightageData: any = [];
+    @ViewChild('papDetailModal') papDetailModal: TemplateRef<any>;
+
+    papWorkFlowData: any = [];
+    isPapAvaliable: boolean = false;
+    isChangable: boolean = true;
+
     supervisorData: any = [];
-    kraInfos: any = [
+    weightageData: any = [];
+    papCategoryData: any = [];
+    papRatingScaleData: any = [];
+
+    papData: any = {};
+    papGridInput: any = {};
+    isDisabled: boolean = true;
+    raiseGreivance = false;
+
+    progressStatuses = [
+        {
+            id: "InProgress",
+            label: "In progress"
+        },
+        {
+            id: "Completed",
+            label: "Completed"
+        },
+        {
+            id: "Dropped",
+            label: "Dropped"
+        }
     ];
 
-    isSubmitted: boolean = false;
+
+    modalRef: BsModalRef;
+    param_id: number;
     _currentEmpId: number;
-    kraArrLength: number = 7
 
-    isKraAvaliable: boolean = false;
-    isDisabled: boolean = false;
+    key: string = ''; //set default
+    reverse: boolean = false;
+    p2: number = 1;
+    search: any;
+    itemPerPage: number = 10;
 
-    ngOnInit() {
-        this.kraCategoryData = [
-            {
-                "id": "Strategic Initiative",
-                "text": "Strategic Initiative"
-            },
-            {
-                "id": "Functional/Customer Deliverables",
-                "text": "Functional/Customer Deliverables"
-            },
-            {
-                "id": "Financial Deliverables",
-                "text": "Financial Deliverables"
-            },
-            {
-                "id": "Internal Process Development/Optimization",
-                "text": "Internal Process Development/Optimization"
-            },
-            {
-                "id": "People Development",
-                "text": "People Development"
-            }
-        ]
-        this.weightageData = [
-            {
-                "id": 0,
-                "text": 0
-            },
-            {
-                "id": 10,
-                "text": 10
-            },
-            {
-                "id": 15,
-                "text": 15
-            },
-            {
-                "id": 20,
-                "text": 20
-            },
-            {
-                "id": 25,
-                "text": 25
-            },
-            {
-                "id": 30,
-                "text": 30
-            },
-            {
-                "id": 35,
-                "text": 35
-            }
-        ];
-        this.supervisorData = [
-            {
-                id: 1010006,
-                text: 'C1 Primary Supervisor1'
-            },
-            {
-                id: 1010007,
-                text: 'C1 Secondary Supervisor1'
-            },
-        ];
+    papMasterData = [];
+    papInfoData: any = [];
+    papChanges: Subject<any> = new Subject<any>();
 
-        this._authService.validateToken().subscribe(
-            res => {
-                this._currentEmpId = this._authService.currentUserData._id;
-                this.loadKra();
-            });
-
-
-
-        // for (let j = 0; j < 7; j++) {
-        //     let data={
-        //         kra:"Test Kra" + j,
-        //         category_id:"Internal Process Development/Optimization",
-        //         weightage_id:10,
-        //         unitOfSuccess:"Sud",
-        //         measureOfSuccess:"Sud",
-        //         supervisor_id:1010006,
-        //         kraWorkflow_id:1
-        //     };
-        //     this.kraInfos.push(data);
-        // }
-    }
-
-    constructor( @Inject(PLATFORM_ID) private platformId: Object,
-        meta: Meta, title: Title,
+    constructor(
         private _route: ActivatedRoute,
         private _router: Router,
         public _authService: AuthService,
         private _commonService: CommonService,
-        private _myService: MyService
-    ) {
-        title.setTitle('ADN HRIS | My Profile');
-        meta.addTags([
-            { name: 'author', content: '' },
-            { name: 'keywords', content: 'Add new employee' },
-            { name: 'description', content: 'Add new employee.' }
-        ]);
+        private papService: PapService,
+        private modalService: BsModalService,
+    ) { }
 
+    ngOnInit() {
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this._route.queryParams.subscribe(params => {
+                if (params['id']) {
+                    this.param_id = params['id'];
+                    this.papGridInput.empId = this._currentEmpId;
+                    this.papGridInput.param_id = this.param_id;
+                    this.loadData();
+                }
+                else {
+                    this.param_id = null;
+                    this.loadPapDetails();
+                }
+            });
+        });
     }
 
-    onKraSubmit(isSaveDraft?: boolean) {
-        // this._myService.saveKra(this.kraInfos)
-        //     .subscribe(
-        //     data => {
-        //         swal("Kra is submitted.", "", "success");
-        //     },
-        //     error => {
-        //     });
-
+    loadWeightAgeData() {
+        this._commonService.getKraWeightage()
+            .subscribe(
+                data => {
+                    this.weightageData = data.json();
+                },
+                error => {
+                });
     }
 
-    loadKra() {
-        // this._commonService.getKraDetailsData(this._currentEmpId)
-        //     .subscribe(
-        //     res => {
-        //         let resData = res.json().data;
-        //         if (resData.length > 0) {
-        //             this.isKraAvaliable = true;
-        //         }
-        //         else {
-        //             this.isKraAvaliable = false;
-        //         }
-
-
-
-        //         if (resData[0].kraDetails.length > 0) {
-        //             this.kraInfos = resData[0].kraDetails;
-        //             if (resData[0].status == "submitted" || resData[0].status == "approved") {
-        //                 this.isDisabled = true;
-        //             }
-        //         }
-
-        //         else {
-        //             if (resData[0].status == "initiated" && resData[0].kraDetails.length == 0) {
-        //                 this.addDummyRow(resData[0]._id);
-        //             }
-        //         }
-        //     },
-        //     error => {
-        //     });
+    loadRatingScaleData() {
+        this._commonService.getPapRatingScale().subscribe(
+            data => {
+                this.papRatingScaleData = data.json().result;
+                this.papRatingScaleData.forEach(element => {
+                    element.displayName = element.ratingScale + "-" + element.nomenclature
+                });
+                console.log(this.papRatingScaleData);
+            }, error => {
+            });
     }
 
-    addDummyRow(_id) {
-        for (let j = 0; j < 7; j++) {
-            let data = {
-                _id: "",
-                kra: "",
-                category_id: "",
-                weightage_id: "",
-                unitOfSuccess: "",
-                measureOfSuccess: "",
-                supervisor_id: "",
-                kraWorkflow_id: _id
-            };
-            this.kraInfos.push(data);
+    loadSupervisorData() {
+        this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
+        });
+    }
+
+    loadData() {
+        this.loadPapDetails();
+        this.loadSupervisorData();
+        this.loadWeightAgeData();
+        this.loadPAPCategoryData();
+        this.loadRatingScaleData();
+    }
+
+    loadPAPCategoryData() {
+        this._commonService.getKraCategory().subscribe(data => {
+            this.papCategoryData = data.json();
+        }, error => {
+        });
+    }
+
+    loadPapDetails() {
+        return new Promise((resolve, reject) => {
+            this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
+                let papDetails = res || [];
+                if (papDetails.length > 0) {
+                    debugger;
+                    this.papWorkFlowData = _.chain(papDetails).groupBy('_id').map(function (v, i) {
+                        return v[0];
+                    }).value();
+                    this.papInfoData = this.papWorkFlowData[0].papdetails;
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                    this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
+                    if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
+                        this.raiseGreivance = false
+                    }
+                    console.log(this.papWorkFlowData);
+                    resolve(this.papInfoData);
+                }
+            });
+        })
+    }
+    raiseGreivanceClicked() {
+        let request = {
+            updatedBy: this._currentEmpId,
+            empId: this._currentEmpId,
+            papMasterId: this.papWorkFlowData[0]._id
+        }
+        this.papService.raiseGreivance(request).subscribe((res => {
+            debugger;
+            console.log(res);
+            if (res.ok) {
+                swal({
+                    title: 'Success',
+                    text: "Greivance has been raised",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }))
+    }
+
+    showPAPDetails(index) {
+        this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
+        this.papData.no = index + 1;
+        console.log(this.papData);
+
+        if (this.papData.status == "Submitted") {
+            this.isDisabled = true;
+        } else if (this.papData.status == "Initiated" || this.papData.status == "Pending") {
+            this.isDisabled = false;
+        } else {
+            this.isDisabled = false;
         }
     }
+
+    saveKRADetails(form, id: number) {
+        if (form.valid) {
+            this.modalRef.hide();
+            let request = {
+                "papDetailsId": this.papData._id,
+                "updatedBy": this._currentEmpId,
+                "empRemark": this.papData.empRemark,
+                "emp_ratingScaleId": this.papData.emp_ratingScaleId
+            }
+            console.log(request);
+            this.papService.papUpdate(request).subscribe(res => {
+                if (res.ok) {
+                    this.papGridInput = {};
+                    let gridInput = {
+                        empId: this._currentEmpId,
+                        param_id: this.param_id
+                    }
+                    // this.papGridInput.empId=this._currentEmpId;
+                    // this.papGridInput.param_id=this.param_id;
+                    Object.assign(this.papGridInput, gridInput)
+
+                    this.loadPapDetails().then(res => {
+                        this.papChanges.next(res);
+                    });
+
+                    swal({
+                        title: 'Success',
+                        text: "PAP has been Saved.",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }, error => {
+
+            })
+        }
+    }
+    submitPapWorkFlow(isdirty) {
+        let dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.status != "Pending");
+        console.log(dataWithoutPendingStatus);
+        if (dataWithoutPendingStatus.length == 0) {
+            let request = {
+                pap_master_id: this.param_id,
+                updatedBy: this._currentEmpId
+            }
+            swal({
+                title: 'Are you sure?',
+                text: "You want to submit PAP to supervisor",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.papService.papSubmit(request).subscribe(res => {
+                        if (res.ok) {
+                            this.loadPapDetails()
+                            swal({
+                                title: 'Success',
+                                text: "PAP has been submited.",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    }, error => {
+
+                    })
+                }
+            });
+        }
+        else {
+            swal({
+                title: 'Oops!',
+                text: 'All PAP need to be saved before submitting',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+
 }

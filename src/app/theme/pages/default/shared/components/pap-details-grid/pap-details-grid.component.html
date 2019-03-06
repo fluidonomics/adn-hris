@@ -1,0 +1,106 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" #print_div>
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <!-- <th>
+                        PAP
+                    </th> -->
+                <th>
+                    KRA Category
+                </th>
+                <th>
+                    Weightage
+                </th>
+                <!-- <th>
+                        Unit of Success
+                    </th>
+                    <th>
+                        Measure of Success
+                    </th> -->
+                <th>
+                    Supervisor
+                </th>
+                <!-- <th>
+                    Employee Rating
+                </th>
+                <th>
+                    Employee Comment
+                </th>
+                <th>
+                    Supervisor Rating
+                </th>
+                <th>
+                    Supervisor Comment
+                </th>
+                <th>
+                    Reviewer Remark
+                </th> -->
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved'}">
+                <th scope="row">
+                    {{i+1}}
+                </th>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="papCategory{{i}}" id="papCategory"
+                        [items]="papCategoryData" bindLabel="kraCategoryName" bindValue="_id" placeholder="Select PAP Category"
+                        [(ngModel)]="papInfo.midtermdetails.category_id" [clearable]="false" #papCategory="ngModel"
+                        required disabled></ng-select>
+                </td>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="papWeightage{{i}}" id="papWeightage"
+                        [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage"
+                        [(ngModel)]="papInfo.midtermdetails.weightage_id" [clearable]="false" #mtrWeightage="ngModel"
+                        required disabled></ng-select>
+                </td>
+
+                <td>
+                    <!-- <ng-select class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" [items]="supervisorData"
+                        bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papInfo.midtermdetails.supervisor_id"
+                        [clearable]="false" #supervisorOne="ngModel" required disabled></ng-select> -->
+                    <input class="m-input m-input--air customError" name="supervisor{{i}}" id="supervisor" placeholder="Supervisor"
+                        [(ngModel)]="papInfo.mtr_supervisorDetails.fullName" #supervisorOne="ngModel" disabled />
+                </td>
+                <!-- <td>
+                    <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
+                        bindLabel="displayName" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.emp_ratingScaleId"
+                        [clearable]="false" #paprating="ngModel" required disabled></ng-select>
+                </td>
+                <td>
+                    <textarea name="empRemark{{i}}" id="empRemark" #empRemark="ngModel" [(ngModel)]="papInfo.empRemark"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td>
+                    <ng-select class="m-input m-input--air customError" name="paprating{{i}}" id="supervisor" [items]="papRatingScaleData"
+                        bindLabel="displayName" bindValue="_id" placeholder="Select rating" [(ngModel)]="papInfo.sup_ratingScaleId"
+                        [clearable]="false" #paprating="ngModel" required disabled></ng-select>
+                </td>
+                <td>
+                    <textarea name="supRemark{{i}}" id="supRemark" #supRemark="ngModel" [(ngModel)]="papInfo.supRemark"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td>
+                <td>
+                    <textarea name="revRemark{{i}}" id="revRemark" #reviewerRemark="ngModel" [(ngModel)]="papInfo.reviewerRemark"
+                        class="form-control m-input m-input--air" disabled></textarea>
+                </td> -->
+                <td>
+                    <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                        title="Edit" (click)="showPAPDetails(i)">
+                        <i class="la la-info"></i>
+                    </button>
+                    <!-- <button type="button" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                         title="Delete" *ngIf="mtrInfo.mtr_master_status!='Approved' && !isChangable" (click)="deleteKraHtml(i)">
+                            <i class="la la-remove"></i>
+                        </button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

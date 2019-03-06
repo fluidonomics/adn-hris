@@ -21,6 +21,7 @@ import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.compone
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
 import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
@@ -37,6 +38,16 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "../../../../../../node_modules/@angular/common/http";
 import { MtrBatchInitComponent } from './workFlows/mid-term-review/batch/initiate/mtr-batch-init.component';
 import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.component';
+import { PapBatchInitComponent } from './workFlows/pap/batch/initiate/pap-batch-init.component';
+import { DepartmentGradeFilterComponent } from '../shared/components/department-grade-filter/department-grade-filter.component';
+import { EmployeeBatchSelectionGridComponent } from '../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component';
+import { PapBatchViewComponent } from './workFlows/pap/batch/view/pap-batch-view.component';
+import { FeedbackInitiateComponent } from './workFlows/pap/feedback-initiate/feedback-initiate.component'
+import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employee/grievance-all-employee.component';
+import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
+import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
+import { LearningService } from '../services/learning.service';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -53,7 +64,8 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         NgUploaderModule,
         HttpClientModule,
         BsDatepickerModule.forRoot(),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        SharedModule
     ], declarations: [
         HrComponent,
         DashboardComponent,
@@ -62,6 +74,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         AllEmployeeComponent,
         AddEmployeeComponent,
         HrLearningComponent,
+        LearningBatchComponent,
         HrBatchComponent,
         HrPipComponent,
         DirectoryComponent,
@@ -71,10 +84,17 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         TransferResponsibilityComponent,
         PostComponent,
         MtrBatchInitComponent,
-        MTRBatchComponent
+        MTRBatchComponent,
+        PapBatchInitComponent,
+        DepartmentGradeFilterComponent,
+        EmployeeBatchSelectionGridComponent,
+        PapBatchViewComponent,
+        FeedbackInitiateComponent,
+        GrievanceAllEmployeeComponent,
+        GrievanceDetailComponent,
         //DocumentsViewComponent
     ],
-    providers: [HrService, HrGuard, LeaveService]
+    providers: [HrService, HrGuard, LeaveService, LearningService]
 })
 export class HrModule {
 }
