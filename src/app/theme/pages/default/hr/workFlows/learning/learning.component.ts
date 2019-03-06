@@ -34,6 +34,7 @@ export class HrLearningComponent {
     p2: number = 1;
 
     _currentEmpId: number;
+    currentEmpname: string;
     itemPerPage: number = 20;
 
     search: any;
@@ -61,6 +62,7 @@ export class HrLearningComponent {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.currentEmpname = this._authService.currentUserData.fullName;
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
@@ -133,8 +135,10 @@ export class HrLearningComponent {
         });
         this.showdetail();
     }
+    
 
     loadAllEmployee() {
+        debugger;
         if (this.filterBy.grades || this.filterBy.departments) {
             this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
@@ -167,9 +171,6 @@ export class HrLearningComponent {
                         this.utilityService.hideLoader('#initiate-loader');
                     });
         }
-        else {
-            this.employeeData = [];
-        }
     }
 
     initBatch(form) {
@@ -193,6 +194,7 @@ export class HrLearningComponent {
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
                 this.batchData.createdBy = this._currentEmpId;
+                this.batchData.createdByName = this.currentEmpname;
     
                 this.utilityService.showLoader('#initiate-loader');
                 this.learningService.initBatch(this.batchData)
