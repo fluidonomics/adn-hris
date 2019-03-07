@@ -837,46 +837,51 @@
 							<span>Employee Comments</span>
 						</div>
 						<div class="col-md-10">
-							<textarea name="areaofImprovement" id="areaofImprovement" [(ngModel)]="pipData.emp_final_com"
-								#areaofImprovement="ngModel" class="form-control m-input m-input--air" required
-								disabled></textarea>
+							<textarea name="empcom" id="empcom" [(ngModel)]="pipData.emp_final_com"
+								#empcom="ngModel" class="form-control m-input m-input--air" required></textarea>
 						</div>
 
 						<div class="col-md-2 details">
 							<span>Supervisor Comments</span>
 						</div>
 						<div class="col-md-10 details">
-							<textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.sup_final_com"
-								#actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+							<textarea name="sup_final_com" id="sup_final_com"
+								[(ngModel)]="pipData.sup_final_com" #supcom="ngModel"
+								class="form-control m-input m-input--air" required></textarea>
 						</div>
 						<div class="col-md-2 details">
 							<span>Reviewer Comments</span>
 						</div>
 						<div class="col-md-10 details">
-							<textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.rev_final_com"
-								#actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+							<textarea name="rev_final_com" id="rev_final_com"
+								[(ngModel)]="pipData.rev_final_com" #revcom="ngModel"
+								class="form-control m-input m-input--air" required></textarea>
 						</div>
 						<div class="col-md-2 details">
 							<span>HR Comments</span>
 						</div>
 						<div class="col-md-10 details">
-							<textarea name="actionPlan" id="actionPlan" [(ngModel)]="pipData.hr_final_com"
-								#actionPlan="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+							<textarea name="hr_final_com" id="hr_final_com"
+								[(ngModel)]="pipData.hr_final_com" #hrcom="ngModel"
+								class="form-control m-input m-input--air" required></textarea>
 						</div>
 
 						<div class="col-md-6 details">
 							<span>Final Rating</span>
 							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata"
 								[items]="supervisorData" bindLabel="final_status" bindValue="_id" placeholder="Final Rating"
-								[(ngModel)]="pipData.final_status" [clearable]="false" #supervisor="ngModel" required disabled>
+								[(ngModel)]="pipData.final_status" [clearable]="false" #supervisor="ngModel"
+								required>
 							</ng-select>
 						</div>
 
 						<div class="col-md-6 details">
 							<span>Final Recommendation</span>
-							<ng-select class="m-input m-input--air customError" name="final_recommendation" id="final_recommendation"
-								[items]="supervisorData" bindLabel="final_recommendation" bindValue="_id" placeholder="Final Recommendation"
-								[(ngModel)]="pipData.final_recommendation" [clearable]="false" #supervisor="ngModel" disabled>
+							<ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"
+								id="final_recommendation" [items]="supervisorData" bindLabel="final_recommendation"
+								bindValue="_id" placeholder="Final Recommendation"
+								[(ngModel)]="pipData.final_recommendation" [clearable]="false"
+								#final_recommendation="ngModel">
 							</ng-select>
 						</div>
 
@@ -885,7 +890,8 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<!-- <button class="btn btn-success submitForm" type="submit" id="submitForm" *ngIf="!isApproved || !isDisabled || !saveEnabled">Save</button> -->
+									<button class="btn btn-success submitForm" type="submit" id="submitForm"
+										(click)=saveComments(pipData)>Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

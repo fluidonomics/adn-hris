@@ -8,6 +8,7 @@ import { CommonService } from '../../../../../../../base/_services/common.servic
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { UtilityService } from "../../../../../../../base/_services/utilityService.service";
 
 @Component({
    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.pip-view",
@@ -73,7 +74,8 @@ export class PipDetailView {
       public _authService: AuthService,
       private _commonService: CommonService,
       private _pipService: PipReviewService,
-      private modalService: BsModalService
+      private modalService: BsModalService,
+      private utilityService: UtilityService
    ) {
       title.setTitle('ADN HRIS | My Profile');
       meta.addTags([
@@ -157,6 +159,70 @@ export class PipDetailView {
          }
       );
    }
+
+   saveComments(pipData: any) {
+      if (pipData.hr_final_com) {
+          swal({
+              title: 'Please fill remarks!',
+              type: 'warning',
+              showCancelButton: false,
+              confirmButtonColor: '#66BB6A',
+              confirmButtonText: 'OK'
+          });
+      }
+      else {
+
+          swal({
+              title: 'Are you sure?',
+              // text: text,
+              type: 'warning',
+              showCancelButton: true,
+              // confirmButtonColor: confirmButtonColor,
+              cancelButtonColor: '#9a9caf',
+              // confirmButtonText: confirmButtonText
+          }).then((result) => {
+              if (result.value) {
+                 
+                  let request = {
+                     masterId: pipData.pip_master_details._id,
+                     updatedAt: new Date(),
+                     updatedBy: this._currentEmpId,
+                     hrFinalCom: pipData.pip_master_details.hr_final_com,
+                     empFinalCom: pipData.pip_master_details.emp_final_com,
+                     revFinalCom: pipData.pip_master_details.rev_final_com,
+                     supFinalCom: pipData.pip_master_details.sup_final_com
+                  }
+                  debugger;
+                  this.utilityService.showLoader('.mtrDetailsPortlet');
+                  this._pipService.updateMaster(request).subscribe(res => {
+                      if (res.ok) {
+                          this.modalRef.hide();
+                          this.utilityService.hideLoader('.mtrDetailsPortlet');
+                          swal({
+                              title: 'Submitted Successfully!',
+                              text: "",
+                              type: 'success',
+                              showCancelButton: false,
+                              confirmButtonColor: '#66BB6A',
+                              confirmButtonText: 'OK'
+                          });
+                          //this.loadPipEmployee();
+
+                      }
+                  }, err => {
+                      if (err.status == 300) {
+                          let error = err.json() || {};
+                          swal("Error", error.title, "error");
+                          //this.loadPipEmployee();
+                          this.modalRef.hide();
+                      }
+                      this.utilityService.hideLoader('.m-content');
+                  })
+              }
+          });
+      }
+
+  }
 
 
 

@@ -65,7 +65,7 @@ export class PipService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipBySupervisor(supervisor_id: number,status: string): Observable<Response> {
+   getPipBySupervisor(supervisor_id: number, status: string): Observable<Response> {
       let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
@@ -88,7 +88,17 @@ export class PipService {
    getPipByReviewer(reviewerId: number): Observable<Response> {
       let url = "pip/pipbyreviewer?reviewerId=" + reviewerId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
-  }
+   }
+
+   getPipByHr(hrId: number): Observable<Response> {
+      let url = "pip/getpipbyhr?hrId=" + hrId;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+   }
+
+   updateMaster(data) {
+      let url = "pip/updatepipmaster";
+      return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+   }
 
 
    private extractData(res: Response) {

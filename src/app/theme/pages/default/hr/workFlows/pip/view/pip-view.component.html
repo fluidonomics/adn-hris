@@ -1,45 +1,75 @@
+<div class="m-subheader">
+   <div class="d-flex align-items-center">
+      <div class="mr-auto">
+         <h3 class="m-subheader__title">
+            HR PIP Dashboard
+         </h3>
+      </div>
+   </div>
+</div>
 <div class="m-content">
-      <div class="row">
-         <div class="col-xl-12" *ngIf="true">
-            <div class="m-portlet m-portlet--full-height">
-               <div class="m-portlet__head">
-                  <div class="m-portlet__head-caption">
-                     <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">
-                           Review PIP
-                        </h3>
-                     </div>
+   <div class="row">
+      <div class="col-xl-6">
+         <div class="m-portlet m-portlet--full-height">
+            <div class="m-portlet__head">
+               <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                     <h3 class="m-portlet__head-text">
+                        PIP Pending Comments
+                     </h3>
                   </div>
-   
                </div>
-               <div class="m-portlet__body">
-                  <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
-                     <table class="m-datatable__table">
-                        <thead class="m-datatable__head">
-                           <tr class="m-datatable__row">
-                              <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                 <span>Profile picture</span>
-                              </th>
-                              <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                 <span>UserName</span>
-                              </th>
-                              <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                 <span>Full Name</span>
-                              </th>
-                              <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                 <span>Last Updated on</span>
-                              </th>
-                              <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
-                                 <span>Status</span>
-                              </th>
-                           </tr>
-                        </thead>
-                        <tbody class="m-datatable__body">
-                           <tr class="m-datatable__row" style="cursor:pointer;" (click)="goToPipReview(emp)"
-                              *ngFor="let emp of pipData | paginate: { itemsPerPage: 6, currentPage: employeesFilter.page }; let even=even;">
-                              <td class="m-datatable__cell" width="15%">
+               <div class="m-portlet__head-tools">
+                  <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
+                     role="tablist">
+                     <li class="nav-item m-tabs__item" *ngIf="pipData.length > 0">
+                        <div class="m-input-icon m-input-icon--left">
+                           <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                              [(ngModel)]="pipSearch">
+                           <span class="m-input-icon__icon m-input-icon__icon--left">
+                              <span>
+                                 <i class="la la-search"></i>
+                              </span>
+                           </span>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="m-portlet__body" id="pipApproval">
+               <!-- <div class="row">
+                        <div class="col-md-9 col-xs-8">
+               
+                        </div>
+                        <div class="col-md-3 col-xs-4 pull-right">
+                           <button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+                        </div>
+               
+                     </div> -->
+               <div class="no-records"
+                  *ngIf="pipData.length==0 || (pipData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch)?.length==0">
+                  <span class="align--center">No records found</span>
+               </div>
+
+               <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+                  data-scrollable="true"
+                  style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+                  <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+                     style="max-height: none;">
+                     <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+                        dir="ltr">
+
+                        <div class="m-widget4  workflow--hover ">
+
+
+
+                           <div class="m-widget4__item m-padding--10"
+                              *ngFor="let pip of pipCommData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch;let i=index"
+                              (click)="goToPipDetailView(pip)">
+                              <div class="m-widget4__img m-widget4__img--logo">
                                  <a align="center">
-                                    <img *ngIf="emp?.profileImage; else noImage" src="{{imageBase+emp?.emp_details.profileImage}}"
+                                    <img *ngIf="pip?.profileImage; else noImage"
+                                       src="{{imageBase+pip.emp_details.profileImage}}"
                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                        class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                     <ng-template #noImage>
@@ -47,67 +77,119 @@
                                           class="directory_image m--img-rounded m--marginless m--img-centered">
                                     </ng-template>
                                  </a>
-                              </td>
-                              <td class="m-datatable__cell" width="15%">
-                                 <span>{{emp.emp_details.userName}}</span>
-                              </td>
-                              <td class="m-datatable__cell" width="15%">
-                                 <span>{{emp.emp_details.fullName}}</span>
-                              </td>
-                              <td class="m-datatable__cell" width="15%">
-                                 <span>{{emp.pip_master_details.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
-                              </td>
-                              <td class="m-datatable__cell" width="15%">
-                                 <span>{{emp.pip_master_details.status}}</span>
-                              </td>
-                           </tr>
-                           <span *ngIf="employees?.length==0" class="m-datatable--error">No records found</span>
-                        </tbody>
-                     </table>
-                     <pagination-template #p="paginationApi" (pageChange)="employeesFilter.page = $event"
-                        class="paginationtemplate">
-                        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                           <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                              <li>
-                                 <span class="m-datatable__pager-link m-datatable__pager-link--first"
-                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                                    <i class="la la-angle-double-left"></i>
+                              </div>
+                              <div class="m-widget4__info">
+                                 <span class="m-widget4__title">
+                                    {{pip.emp_details.fullName}}
                                  </span>
-                              </li>
-                              <li>
-                                 <span class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
-                                    <i class="la la-angle-left"></i>
+                                 <br>
+                                 <span class="m-widget4__sub">
+                                    {{pip.pip_master.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
                                  </span>
-                              </li>
-                              <li *ngFor="let page of p.pages">
-                                 <span (click)="p.setCurrent(page.value)"
-                                    class="m-datatable__pager-link m-datatable__pager-link-number "
-                                    [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                    {{ page.label }}
+                              </div>
+                              <span class="m-widget4__ext">
+                                 <span class="m-widget4__number m--font-brand">
                                  </span>
-                              </li>
-                              <li>
-                                 <span class="m-datatable__pager-link m-datatable__pager-link--next"
-                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                    (click)="p.isLastPage()?'null':p.next()">
-                                    <i class="la la-angle-right"></i>
-                                 </span>
-                              </li>
-                              <li>
-                                 <span class="m-datatable__pager-link m-datatable__pager-link--last"
-                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                    (click)="p.setCurrent(p.pages.length + 1)">
-                                    <i class="la la-angle-double-right"></i>
-                                 </span>
-                              </li>
-                           </ul>
+                              </span>
+                           </div>
+
                         </div>
-                     </pagination-template>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
-   
+      <div class="col-xl-6">
+         <div class="m-portlet m-portlet--full-height">
+            <div class="m-portlet__head">
+               <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                     <h3 class="m-portlet__head-text">
+                        PIP View
+                     </h3>
+                  </div>
+               </div>
+               <div class="m-portlet__head-tools">
+                  <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm"
+                     role="tablist">
+                     <li class="nav-item m-tabs__item" *ngIf="pipData.length > 0">
+                        <div class="m-input-icon m-input-icon--left">
+                           <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                              [(ngModel)]="pipSearch">
+                           <span class="m-input-icon__icon m-input-icon__icon--left">
+                              <span>
+                                 <i class="la la-search"></i>
+                              </span>
+                           </span>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="m-portlet__body" id="pipApproval">
+               <!-- <div class="row">
+                        <div class="col-md-9 col-xs-8">
+               
+                        </div>
+                        <div class="col-md-3 col-xs-4 pull-right">
+                           <button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+                        </div>
+               
+                     </div> -->
+               <div class="no-records"
+                  *ngIf="pipData.length==0 || (pipData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch)?.length==0">
+                  <span class="align--center">No records found</span>
+               </div>
+
+               <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
+                  data-scrollable="true"
+                  style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+                  <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+                     style="max-height: none;">
+                     <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+                        dir="ltr">
+
+                        <div class="m-widget4  workflow--hover ">
+
+
+
+                           <div class="m-widget4__item m-padding--10"
+                              *ngFor="let pip of pipViewData | orderBy: 'updatedAt' : pipReverse | filter:pipSearch;let i=index"
+                              (click)="goToPipDetailView(pip)">
+                              <div class="m-widget4__img m-widget4__img--logo">
+                                 <a align="center">
+                                    <img *ngIf="pip?.profileImage; else noImage"
+                                       src="{{imageBase+pip.emp_details.profileImage}}"
+                                       onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                       class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                    <ng-template #noImage>
+                                       <img src="./assets/app/media/img/custom/users/user6.jpg"
+                                          class="directory_image m--img-rounded m--marginless m--img-centered">
+                                    </ng-template>
+                                 </a>
+                              </div>
+                              <div class="m-widget4__info">
+                                 <span class="m-widget4__title">
+                                    {{pip.emp_details.fullName}}
+                                 </span>
+                                 <br>
+                                 <span class="m-widget4__sub">
+                                    {{pip.pip_master.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+                                 </span>
+                              </div>
+                              <span class="m-widget4__ext">
+                                 <span class="m-widget4__number m--font-brand">
+                                 </span>
+                              </span>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
+</div>

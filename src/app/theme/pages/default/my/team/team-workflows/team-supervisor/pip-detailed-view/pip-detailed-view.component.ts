@@ -302,6 +302,8 @@ export class PipDetailedViewComponent {
 
         }
 
+        
+
 
         this._pipService.savePip(request).subscribe(res => {
             if (res.ok) {
@@ -330,24 +332,69 @@ export class PipDetailedViewComponent {
 
     }
 
-    // onStatusChange(event) {
-    //     //debugger;
-
-    //     if (event.timeline == "6 Months") {
-
-    //         swal({
-    //             title: "You won't be able to change it back once you save this",
-    //             text: "",
-    //             type: 'warning',
-    //             showCancelButton: false,
-    //             confirmButtonColor: '#66BB6A',
-    //             confirmButtonText: 'OK'
-    //         });
-    //     } else {
-           
-    //     }
-    // }
-
+    saveComments(pipData: any) {
+        if (pipData.hr_final_com) {
+            swal({
+                title: 'Please fill remarks!',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+        else {
+  
+            swal({
+                title: 'Are you sure?',
+                // text: text,
+                type: 'warning',
+                showCancelButton: true,
+                // confirmButtonColor: confirmButtonColor,
+                cancelButtonColor: '#9a9caf',
+                // confirmButtonText: confirmButtonText
+            }).then((result) => {
+                if (result.value) {
+                   
+                    let request = {
+                       masterId: pipData.pip_master_details._id,
+                       updatedAt: new Date(),
+                       updatedBy: this._currentEmpId,
+                       hrFinalCom: pipData.pip_master_details.hr_final_com,
+                       empFinalCom: pipData.pip_master_details.emp_final_com,
+                       revFinalCom: pipData.pip_master_details.rev_final_com,
+                       supFinalCom: pipData.pip_master_details.sup_final_com
+                    }
+                    debugger;
+                    this.utilityService.showLoader('.mtrDetailsPortlet');
+                    this._pipService.updateMaster(request).subscribe(res => {
+                        if (res.ok) {
+                            this.modalRef.hide();
+                            this.utilityService.hideLoader('.mtrDetailsPortlet');
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text: "",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            //this.loadPipEmployee();
+  
+                        }
+                    }, err => {
+                        if (err.status == 300) {
+                            let error = err.json() || {};
+                            swal("Error", error.title, "error");
+                            //this.loadPipEmployee();
+                            this.modalRef.hide();
+                        }
+                        this.utilityService.hideLoader('.m-content');
+                    })
+                }
+            });
+        }
+  
+    }
 
     modalRef: BsModalRef;
     pipData: any = {};

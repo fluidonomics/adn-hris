@@ -395,6 +395,71 @@ export class MyPipComponent {
     }
 
 
+    saveComments(pipData: any) {
+        if (pipData.hr_final_com) {
+            swal({
+                title: 'Please fill remarks!',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#66BB6A',
+                confirmButtonText: 'OK'
+            });
+        }
+        else {
+  
+            swal({
+                title: 'Are you sure?',
+                // text: text,
+                type: 'warning',
+                showCancelButton: true,
+                // confirmButtonColor: confirmButtonColor,
+                cancelButtonColor: '#9a9caf',
+                // confirmButtonText: confirmButtonText
+            }).then((result) => {
+                if (result.value) {
+                   
+                    let request = {
+                       masterId: pipData._id,
+                       updatedAt: new Date(),
+                       updatedBy: this._currentEmpId,
+                       hrFinalCom: pipData.hr_final_com,
+                       empFinalCom: pipData.emp_final_com,
+                       revFinalCom: pipData.rev_final_com,
+                       supFinalCom: pipData.sup_final_com
+                    }
+                    debugger;
+                    this.utilityService.showLoader('.mtrDetailsPortlet');
+                    this._pipService.updateMaster(request).subscribe(res => {
+                        if (res.ok) {
+                            this.modalRef.hide();
+                            this.utilityService.hideLoader('.mtrDetailsPortlet');
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text: "",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            //this.loadPipEmployee();
+  
+                        }
+                    }, err => {
+                        if (err.status == 300) {
+                            let error = err.json() || {};
+                            swal("Error", error.title, "error");
+                            //this.loadPipEmployee();
+                            this.modalRef.hide();
+                        }
+                        this.utilityService.hideLoader('.m-content');
+                    })
+                }
+            });
+        }
+  
+    }
+
+
 
     onStatusChange(event) {
         //debugger;
@@ -490,9 +555,10 @@ export class MyPipComponent {
     }
 
     showCompletionDetails(index) {
+        debugger;
         this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
-        this.pipData.no = index + 1;
+        //this.pipData.no = index + 1;
     }
 
     monthlyCommentValidation() {

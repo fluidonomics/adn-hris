@@ -26,6 +26,8 @@ export class PipViewComponent implements OnInit {
 
    _currentEmpId: any;
    pipData: any = [];
+   pipCommData : any = [];
+   pipViewData: any =[];
    pipSearch: any;
    pipReverse: boolean = true;
 
@@ -52,16 +54,19 @@ export class PipViewComponent implements OnInit {
       // debugger;
    }
    getEmployeesPip() {
-      this.pipService.getPipByReviewer(this.authService.currentUserData._id).subscribe(res => {
+      this.pipService.getPipByHr(this.authService.currentUserData._id).subscribe(res => {
          this.pipData = res.json().result.message || [];
-         //debugger;
+         this.pipData = this.pipData.filter(pip => pip.pip_master.status=="Approved");
+         this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com == null);
+         this.pipViewData =  this.pipData.filter(pip => pip.pip_master.hr_final_com !="" && pip.pip_master.hr_final_com != null);
+         debugger;
       }, error => {
          console.log(error);
       });
    }
 
-   goToPipReview(pip) {
-      this.router.navigateByUrl('hr/workflows/view/detailview/' + pip.pip_master_details._id + "/" + pip.emp_details._id);
+   goToPipDetailView(pip) {
+      this.router.navigateByUrl('hr/workflows/view/detailview/' + pip.pip_master._id + "/" + pip.emp_details._id);
    }
 
 }

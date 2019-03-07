@@ -30,6 +30,11 @@ export class PipReviewService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
+   updateMaster(data) {
+      let url = "pip/updatepipmaster";
+      return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+   }
+
    private extractData(res: Response) {
       return res || {};
    }
