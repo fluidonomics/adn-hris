@@ -109,7 +109,10 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
         this.employeeChecked.emit(this.checkedEmployees);
     }
 
-    sort(key) {
-
+    selectAllEmployee($event) {
+        this.employeeFilterData.forEach(element => {
+            element.checked = $event.target.checked;
+            this.onChecked(element, $event.target);
+        });
     }
 }
