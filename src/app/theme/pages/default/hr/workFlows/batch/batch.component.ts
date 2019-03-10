@@ -98,8 +98,7 @@ export class HrBatchComponent implements OnInit {
         });  
     }
 
-    saveKraWorkFlow(batch_id,kraWorkFlowIndex,status)
-    {
+    saveKraWorkFlow(batch_id, kraRow, status) {
         swal({
             title: 'Are you sure?',
             text: "Terminate workflow? It can't be undone!",
@@ -110,15 +109,14 @@ export class HrBatchComponent implements OnInit {
             confirmButtonText: 'Terminate'
         }).then((result) => {
             if (result.value) {
-                this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex].status=status;
-                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex])
-                    .subscribe(
-                    res => {   
-                        swal('Success','Employee Workflow Terminated Successfully','success')
-                    },
-                    error => {
-                    }); 
-                        }
+                let batch = this.batchData.find(batch => batch._id == batch_id);
+                let kra = batch.kraWorkFlowData.find(k => k._id == kraRow._id);
+                kra.status = status;
+                this._batchService.saveKraWorkFlow(kra).subscribe(res => {
+                    swal('Success', 'Employee Workflow Terminated Successfully', 'success')
+                }, error => {
+                });
+            }
         })
     }
 
