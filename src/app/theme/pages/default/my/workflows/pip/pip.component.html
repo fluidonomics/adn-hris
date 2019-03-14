@@ -109,7 +109,7 @@
 					</thead>
 					<tbody class="m-datatable__body">
 						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-							*ngFor="let pip of PipAgendaData">
+							*ngFor="let pip of PipAgendaData; let i=index">
 							<td class="m-datatable__cell" width="20%">
 								<span>{{pip.pip_batch_name}}</span>
 							</td>
@@ -137,7 +137,7 @@
 								</a>
 								<button type="button"
 									class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-									title="Edit" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Approved'">
+									title="Post PIP Process" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Approved'">
 									<i class="la la-info"></i>
 								</button>
 							</td>
@@ -823,7 +823,7 @@
 		</div>
 
 		<div class="m-portlet__body">
-			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="savePipAgendas(PipDataForm,pipData._id)"
+			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveComments(pipData)"
 				id="PipDataForm" #PipDataForm="ngForm">
 				<div class="m-widget6 ">
 					<div class="row">
@@ -847,7 +847,7 @@
 						<div class="col-md-10 details">
 							<textarea name="sup_final_com" id="sup_final_com"
 								[(ngModel)]="pipData.sup_final_com" #supcom="ngModel"
-								class="form-control m-input m-input--air" required></textarea>
+								class="form-control m-input m-input--air" required disabled></textarea>
 						</div>
 						<div class="col-md-2 details">
 							<span>Reviewer Comments</span>
@@ -855,7 +855,7 @@
 						<div class="col-md-10 details">
 							<textarea name="rev_final_com" id="rev_final_com"
 								[(ngModel)]="pipData.rev_final_com" #revcom="ngModel"
-								class="form-control m-input m-input--air" required></textarea>
+								class="form-control m-input m-input--air" required disabled></textarea>
 						</div>
 						<div class="col-md-2 details">
 							<span>HR Comments</span>
@@ -863,22 +863,13 @@
 						<div class="col-md-10 details">
 							<textarea name="hr_final_com" id="hr_final_com"
 								[(ngModel)]="pipData.hr_final_com" #hrcom="ngModel"
-								class="form-control m-input m-input--air" required></textarea>
-						</div>
-
-						<div class="col-md-6 details">
-							<span>Final Rating</span>
-							<ng-select class="m-input m-input--air customError" name="supervisordata{{i}}" id="supervisordata"
-								[items]="supervisorData" bindLabel="final_status" bindValue="_id" placeholder="Final Rating"
-								[(ngModel)]="pipData.final_status" [clearable]="false" #supervisor="ngModel"
-								required>
-							</ng-select>
+								class="form-control m-input m-input--air" required disabled></textarea>
 						</div>
 
 						<div class="col-md-6 details">
 							<span>Final Recommendation</span>
 							<ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"
-								id="final_recommendation" [items]="supervisorData" bindLabel="final_recommendation"
+								id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
 								bindValue="_id" placeholder="Final Recommendation"
 								[(ngModel)]="pipData.final_recommendation" [clearable]="false"
 								#final_recommendation="ngModel">
@@ -890,8 +881,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm"
-										(click)=saveComments(pipData)>Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

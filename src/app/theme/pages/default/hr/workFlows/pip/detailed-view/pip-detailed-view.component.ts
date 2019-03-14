@@ -53,7 +53,7 @@ export class PipDetailView {
    devArea: [
       'Individual Development',
       'Functional Development'
-   ]
+   ];
 
    timelinesData = [
       {
@@ -65,6 +65,21 @@ export class PipDetailView {
           'timeline' : "6 Months"
       }
   ];
+
+  finalRecommendation = [
+   {
+       '_id':1,
+       'final_recommendation': "Continue in current role"
+   },
+   {
+       '_id':2,
+       'final_recommendation': "Internal Movement"
+   },
+   {
+       '_id':3,
+       'final_recommendation': "Remedial action"
+   }
+];
 
 
    constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -87,7 +102,7 @@ export class PipDetailView {
    }
 
    ngOnInit() {
-      //debugger;
+
       this._currentEmpId = this._authService.currentUserData._id;
       this._authService.validateToken().subscribe(
          res => {
@@ -96,7 +111,6 @@ export class PipDetailView {
                   this.param_id = params['id'];
                   this.param_emp_id = parseInt(params['emp_id']);
                   this.param_master_id = parseInt(params['id']);
-                  console.log("path var : ", params['id']);
                   this.initData();
                }
             });
@@ -116,11 +130,9 @@ export class PipDetailView {
 
       this._pipService.getPipDetails(this.param_master_id).subscribe(
          res => {
-            //console.log("response : ", res.json().result.message);
             this.pipInfoData = res.json().result.message;
             this.isDis = res.json().status == 'Approved' ? true : false;
             this.statusq = res.json().status;
-            console.log("pip info data : ", this.pipInfoData);
          },
          error => {
 
@@ -150,18 +162,17 @@ export class PipDetailView {
    loadMasterData() {
       this._pipService.getPipByReviewer(this._currentEmpId).subscribe(
          res => {
-            //debugger;
+
             this.pipMasterData = res.json().result.message;
             this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_master_id);
          },
          error => {
-            console.log(error);
-         }
+            swal("Error", error.title, "error");         }
       );
    }
 
    saveComments(pipData: any) {
-      if (pipData.hr_final_com) {
+      if (!pipData.hr_final_com) {
           swal({
               title: 'Please fill remarks!',
               type: 'warning',
@@ -184,15 +195,16 @@ export class PipDetailView {
               if (result.value) {
                  
                   let request = {
-                     masterId: pipData.pip_master_details._id,
+                     masterId: this.param_master_id,
                      updatedAt: new Date(),
                      updatedBy: this._currentEmpId,
-                     hrFinalCom: pipData.pip_master_details.hr_final_com,
-                     empFinalCom: pipData.pip_master_details.emp_final_com,
-                     revFinalCom: pipData.pip_master_details.rev_final_com,
-                     supFinalCom: pipData.pip_master_details.sup_final_com
+                     hrFinalCom: pipData.hr_final_com,
+                     empFinalCom: pipData.emp_final_com,
+                     revFinalCom: pipData.rev_final_com,
+                     supFinalCom: pipData.sup_final_com,
+                     finalRecommendation: pipData.final_recommendation
                   }
-                  debugger;
+                  
                   this.utilityService.showLoader('.mtrDetailsPortlet');
                   this._pipService.updateMaster(request).subscribe(res => {
                       if (res.ok) {
@@ -206,7 +218,7 @@ export class PipDetailView {
                               confirmButtonColor: '#66BB6A',
                               confirmButtonText: 'OK'
                           });
-                          //this.loadPipEmployee();
+                          this.loadPipEmployee();
 
                       }
                   }, err => {
@@ -229,13 +241,11 @@ export class PipDetailView {
    modalRef: BsModalRef;
    pipData: any = {};
    showPipDetails(index, event) {
-      console.log("index and event : ", index, event);
       this.modalRef = this.modalService.show(this.pipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = this.pipInfoData[index];
       this.pipData.no = index + 1;
       // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
       // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-      console.log("pip no : ", this.pipData);
       if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
          this.isDisabled = true;
       }
@@ -245,11 +255,11 @@ export class PipDetailView {
    }
 
    showCompletionDetails() {
+
+      let a = this.pipInfoData;
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
-      this.pipData = this.pipMasterData[0];
-      this.pipData.no = 1;
-      debugger;
-  }
+      this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[0]));
+   }
 
 
 }

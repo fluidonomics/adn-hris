@@ -34,6 +34,7 @@ export class MyPipComponent {
     pipData: any = {};
     pipInfoData: any = [];
     pipDetails: any = [];
+    currentIndex: number;
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -54,6 +55,20 @@ export class MyPipComponent {
     progressStatusData = [
         'Open',
         'Completed'
+    ];
+    finalRecommendation = [
+        {
+            '_id':1,
+            'final_recommendation': "Continue in current role"
+        },
+        {
+            '_id':2,
+            'final_recommendation': "Internal Movement"
+        },
+        {
+            '_id':3,
+            'final_recommendation': "Remedial action"
+        }
     ];
     suparr = [];
 
@@ -127,7 +142,6 @@ export class MyPipComponent {
 
 
     savePipAgendas(form, id: number) {
-        //console.log(this.learningData.supportRequired);
 
         if (form.valid) {
             this.pipInfoData[this.pipData.no - 1] = JSON.parse(JSON.stringify(this.pipData));
@@ -221,10 +235,9 @@ export class MyPipComponent {
         this._pipService.getPipInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
-            //console.log("agenda info: " + this.PipAgendaData);
             this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
-           //debugger;
         }, error => {
+            swal("Error", error.title, "error");
         });;
 
         
@@ -234,10 +247,8 @@ export class MyPipComponent {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
             this.pipInfoData = data.result.message;
-            console.log("details info: " + this.pipInfoData);
             if(this.pipInfoData.length > 0){
                 this.showSub = this.pipInfoData.filter(pip => pip.status != "Submitted" && pip.status != "Approved").length > 0;
-               // debugger;
             } 
             else {
                 this.pipInfoData = [
@@ -286,8 +297,6 @@ export class MyPipComponent {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
         
             this.supervisorData = data.json();
-            //debugger;
-           //this.suparr.push(this.supervisorData.fullName);
         }, error => {
         });
     }
@@ -396,6 +405,7 @@ export class MyPipComponent {
 
 
     saveComments(pipData: any) {
+
         if (pipData.hr_final_com) {
             swal({
                 title: 'Please fill remarks!',
@@ -419,7 +429,7 @@ export class MyPipComponent {
                 if (result.value) {
                    
                     let request = {
-                       masterId: pipData._id,
+                       masterId: this.PipAgendaData[this.currentIndex]._id,
                        updatedAt: new Date(),
                        updatedBy: this._currentEmpId,
                        hrFinalCom: pipData.hr_final_com,
@@ -427,7 +437,7 @@ export class MyPipComponent {
                        revFinalCom: pipData.rev_final_com,
                        supFinalCom: pipData.sup_final_com
                     }
-                    debugger;
+
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.updateMaster(request).subscribe(res => {
                         if (res.ok) {
@@ -462,7 +472,6 @@ export class MyPipComponent {
 
 
     onStatusChange(event) {
-        //debugger;
 
         if (event == "Completed") {
             this.isCompleted = true;
@@ -500,6 +509,7 @@ export class MyPipComponent {
 
 
     showPipDetails(index: number) {
+
         this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
         this.pipData.no = index + 1;
@@ -545,20 +555,19 @@ export class MyPipComponent {
 
         if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
             this.showSub = false;
-            //debugger;
         }
         else {
             this.showSub = true;
         }
-        debugger;
 
     }
 
-    showCompletionDetails(index) {
-        debugger;
+    showCompletionDetails(index: number) {
+
+        this.currentIndex = index;
         this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
-        this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
-        //this.pipData.no = index + 1;
+        this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
+        this.pipData.no = index + 1;
     }
 
     monthlyCommentValidation() {

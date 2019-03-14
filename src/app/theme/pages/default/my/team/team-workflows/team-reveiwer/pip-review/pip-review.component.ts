@@ -87,7 +87,7 @@ export class PipReview {
    }
 
    ngOnInit() {
-      //debugger;
+
       this._currentEmpId = this._authService.currentUserData._id;
       this._authService.validateToken().subscribe(
          res => {
@@ -96,7 +96,6 @@ export class PipReview {
                   this.param_id = params['id'];
                   this.param_emp_id = parseInt(params['emp_id']);
                   this.param_master_id = parseInt(params['id']);
-                  console.log("path var : ", params['id']);
                   this.initData();
                }
             });
@@ -116,11 +115,10 @@ export class PipReview {
 
       this._pipService.getPipDetails(this.param_master_id).subscribe(
          res => {
-            //console.log("response : ", res.json().result.message);
+
             this.pipInfoData = res.json().result.message;
             this.isDis = res.json().status == 'Approved' ? true : false;
             this.statusq = res.json().status;
-            console.log("pip info data : ", this.pipInfoData);
          },
          error => {
 
@@ -150,12 +148,12 @@ export class PipReview {
    loadMasterData() {
       this._pipService.getPipByReviewer(this._currentEmpId).subscribe(
          res => {
-            //debugger;
+
             this.pipMasterData = res.json().result.message;
             this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_master_id);
          },
          error => {
-            console.log(error);
+            swal("Error", error.title, "error");
          }
       );
    }
@@ -192,7 +190,7 @@ export class PipReview {
                      revFinalCom: pipData.pip_master_details.rev_final_com,
                      supFinalCom: pipData.pip_master_details.sup_final_com
                   }
-                  debugger;
+
                   this.utilityService.showLoader('.mtrDetailsPortlet');
                   this._pipService.updateMaster(request).subscribe(res => {
                       if (res.ok) {
@@ -229,13 +227,12 @@ export class PipReview {
    modalRef: BsModalRef;
    pipData: any = {};
    showPipDetails(index, event) {
-      console.log("index and event : ", index, event);
+
       this.modalRef = this.modalService.show(this.pipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = this.pipInfoData[index];
       this.pipData.no = index + 1;
       // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
       // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-      console.log("pip no : ", this.pipData);
       if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
          this.isDisabled = true;
       }
@@ -248,7 +245,6 @@ export class PipReview {
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = this.pipMasterData[0];
       this.pipData.no = 1;
-      debugger;
   }
 
 

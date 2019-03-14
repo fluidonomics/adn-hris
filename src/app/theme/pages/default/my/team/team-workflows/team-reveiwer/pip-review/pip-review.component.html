@@ -585,9 +585,8 @@
                         </div>
 
                         <div class="m-portlet__body">
-                           <form class="m-form m-form--fit m-form--label-align-right"
-                              (ngSubmit)="savePipAgendas(PipDataForm,pipData._id)" id="PipDataForm"
-                              #PipDataForm="ngForm">
+                           <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveComments(pipData)"
+				                  id="PipDataForm" #PipDataForm="ngForm">
                               <div class="m-widget6 ">
                                  <div class="row">
                                     <div class="col-md-6">
@@ -602,7 +601,7 @@
                                     <div class="col-md-10">
                                        <textarea name="empcom" id="empcom"
                                           [(ngModel)]="pipData.pip_master_details.emp_final_com" #empcom="ngModel"
-                                          class="form-control m-input m-input--air" required></textarea>
+                                          class="form-control m-input m-input--air" required disabled></textarea>
                                     </div>
 
                                     <div class="col-md-2 details">
@@ -611,7 +610,7 @@
                                     <div class="col-md-10 details">
                                        <textarea name="sup_final_com" id="sup_final_com"
                                           [(ngModel)]="pipData.pip_master_details.sup_final_com" #supcom="ngModel"
-                                          class="form-control m-input m-input--air" required></textarea>
+                                          class="form-control m-input m-input--air" required disabled></textarea>
                                     </div>
                                     <div class="col-md-2 details">
                                        <span>Reviewer Comments</span>
@@ -627,7 +626,7 @@
                                     <div class="col-md-10 details">
                                        <textarea name="hr_final_com" id="hr_final_com"
                                           [(ngModel)]="pipData.pip_master_details.hr_final_com" #hrcom="ngModel"
-                                          class="form-control m-input m-input--air" required></textarea>
+                                          class="form-control m-input m-input--air" required disabled></textarea>
                                     </div>
 
                                     <div class="col-md-6 details">
@@ -647,7 +646,7 @@
                                           [items]="supervisorData" bindLabel="final_recommendation" bindValue="_id"
                                           placeholder="Final Recommendation"
                                           [(ngModel)]="pipData.pip_master_details.final_recommendation"
-                                          [clearable]="false" #final_recommendation="ngModel">
+                                          [clearable]="false" #final_recommendation="ngModel" disabled>
                                        </ng-select>
                                     </div>
 
@@ -656,10 +655,8 @@
                                     <div class="row">
                                        <div class="col-md-12">
                                           <div class="m-form__actions">
-                                             <button class="btn btn-success submitForm" type="submit" id="submitForm"
-                                                (click)=saveComments(pipData)>Save</button>
-                                             <button class="btn btn-secondary" type="button"
-                                                (click)="modalRef.hide()">Close</button>
+                                             <button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+                                             <button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
                                           </div>
                                        </div>
                                     </div>

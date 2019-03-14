@@ -89,7 +89,23 @@ export class PipDetailedViewComponent {
             '_id': 2,
             'supervisorRating': "Not Met Expectation"
         }
-    ]
+    ];
+
+    
+    finalRecommendation = [
+        {
+            '_id':1,
+            'final_recommendation': "Continue in current role"
+        },
+        {
+            '_id':2,
+            'final_recommendation': "Internal Movement"
+        },
+        {
+            '_id':3,
+            'final_recommendation': "Remedial action"
+        }
+    ];
 
 
 
@@ -123,7 +139,6 @@ export class PipDetailedViewComponent {
                         this.param_emp_id = parseInt(params['emp_id']);
                         this.param_master_id = parseInt(params['id']);
                         this.param_from = params['from'];
-                        console.log("path var : ", params['id']);
                         this.initData();
                     }
                 });
@@ -134,7 +149,7 @@ export class PipDetailedViewComponent {
     }
 
     initData() {
-        //console.log("route : ", this._route.url._value[])
+
         this.loadPipEmployee();
         //   this.loadKraCategoryData();
         //   this.loadWeightAgeData();
@@ -146,13 +161,12 @@ export class PipDetailedViewComponent {
 
 
     loadPipBySupervisor(sup_Id: number, status: string) {
-        //debugger;
+
         this._pipService.getPipBySupervisor(sup_Id, status).subscribe(res => {
             this.pipMasterData = res.json().result.message || [];
-            //console.log("hello");
             this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_id);
         }, error => {
-            console.log(error);
+            swal("Error", error.title, "error");
         });
     }
 
@@ -160,7 +174,7 @@ export class PipDetailedViewComponent {
 
         this._pipService.getPipDetails(this.param_master_id).subscribe(
             res => {
-                console.log("response : ", res.json().result.message);
+
                 this.pipInfoData = res.json().result.message;
                 if (this.param_from == "approval") {
                     this.pipInfoData = this.pipInfoData.filter(learn => learn.status == "Submitted");
@@ -364,7 +378,7 @@ export class PipDetailedViewComponent {
                        revFinalCom: pipData.pip_master_details.rev_final_com,
                        supFinalCom: pipData.pip_master_details.sup_final_com
                     }
-                    debugger;
+                    
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.updateMaster(request).subscribe(res => {
                         if (res.ok) {
@@ -399,7 +413,7 @@ export class PipDetailedViewComponent {
     modalRef: BsModalRef;
     pipData: any = {};
     showPipDetails(index, event) {
-        console.log("index and event : ", index, event);
+
         this.modalRef = this.modalService.show(this.pipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = this.pipInfoData[index];
         this.pipData.no = index + 1;
@@ -414,7 +428,6 @@ export class PipDetailedViewComponent {
         }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-        console.log("learningdata no : ", this.pipData);
         if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
             this.isDisabled = true;
         }
