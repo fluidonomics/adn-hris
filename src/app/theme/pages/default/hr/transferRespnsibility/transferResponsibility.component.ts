@@ -52,6 +52,7 @@ export class TransferResponsibilityComponent implements OnInit {
     employeeOpenLearningRequest: any[] = [];
     oldPrimarySupervisor: any;
     oldSecondarySupervisor: any;
+    weightageData: any = [];
 
     constructor(
         private _commonService: CommonService,
@@ -75,6 +76,7 @@ export class TransferResponsibilityComponent implements OnInit {
     //Filled Init Dropdown 
     initDropdown() {
         this.loadAllEmployee();
+        this.loadWeightAgeData();
     }
     loadAllEmployee() {
         this._hrService.getAllEmployee().subscribe(res => {
@@ -91,6 +93,13 @@ export class TransferResponsibilityComponent implements OnInit {
         }, error => {
         });
     }
+    loadWeightAgeData() {
+        this._commonService.getKraWeightage().subscribe(data => {
+            this.weightageData = data.json() || [];
+        }, error => {
+        });
+    }
+
     employeeSelected(selectedEmpId) {
         this.employeeOpenLeaveRequest = [];
         this.employeeOpenKraRequest = [];
@@ -137,8 +146,6 @@ export class TransferResponsibilityComponent implements OnInit {
 
                 this.oldPrimarySupervisor = details.supervisorDetails.primarySupervisorEmp_id;
                 this.oldSecondarySupervisor = details.supervisorDetails.secondarySupervisorEmp_id;
-                debugger;
-
             }
         }, error => {
             console.log(error);
@@ -204,7 +211,6 @@ export class TransferResponsibilityComponent implements OnInit {
                                 this.transferForm.resetForm();
                                 this.reset();
                             });
-                            debugger;
                         } else {
                             swal({
                                 title: '',
@@ -298,13 +304,13 @@ export class TransferResponsibilityComponent implements OnInit {
                     let kraData = res[1].json().data || [];
                     let mtrData = res[2].json().result.message || [];
                     let learningData = res[3].json().result.message || [];
-                    // debugger;
 
                     this.employeeOpenLeaveRequest = leaveData.filter(leave => {
                         return leave.leaveStatus != "Approved" && leave.leaveStatus != "Cancelled" && leave.leaveStatus != "Withdrawn" && leave.leaveStatus != "Rejected";
                     });
 
                     this.employeeOpenKraRequest = kraData.filter(kra => {
+                        kra.weightage = this.weightageData.find(w => w._id == kra.weightage_id);
                         return kra.supervisorStatus != "Approved";
                     });
 
@@ -325,7 +331,6 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].mtr_master_details.updatedAt
                             }
                         }).value();
-                        //debugger;
                     this.employeeOpenLearningRequest = _.chain(learningData)
                         .groupBy("_id").map(function (v, i) {
                             return {
@@ -335,13 +340,11 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].updatedAt
                             }
                         }).value();
-                        //debugger;
                     if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0 || this.employeeOpenMtrRequest.length > 0 || this.employeeOpenLearningRequest.length > 0) {
                         this.request.leaveIds = this.employeeOpenLeaveRequest.map(leave => leave._id);
                         this.request.kraIds = this.employeeOpenKraRequest.map(kra => kra._id);
                         this.request.mtrIds = mtrData.map(mtr => mtr._id);
                         this.request.learningIds = learningData.map(learning => learning._id);
-                        // debugger;
                         this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
                         resolve(data);
                     } else {

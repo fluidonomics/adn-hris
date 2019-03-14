@@ -99,8 +99,8 @@ export class MyKraComponent {
         this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId).subscribe(res => {
             this.kraWorkFlowData = res.json();
             this.kraWorkFlowData = this.kraWorkFlowData.sort((a, b) => {
-                if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
-                else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                if (moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
                 else return 0;
             });
         }, error => {
