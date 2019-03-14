@@ -138,24 +138,24 @@ export class MyKraComponent {
 
                 }
                 else {
-                    this.supervisorData = [];
-                    let subervisors = [];
+                    // this.supervisorData = [];
+                    // let subervisors = [];
                     for (let index = 0; index < this.kraInfoData.length; index++) {
                         if (this.kraInfoData[index].supervisor_id) {
 
-                            this._commonService.getEmployee(this.kraInfoData[index].supervisor_id).subscribe(
-                                res => {
-                                    let supervisorinfo = subervisors.filter(x => x._id == this.kraInfoData[index].supervisor_id);
-                                    if (supervisorinfo.length == 0) {
-                                        let supervisorInfoData = res.json() || {};
-                                        subervisors.push(supervisorInfoData);
-                                    }
-                                    if (index == this.kraInfoData.length - 1) {
-                                        this.supervisorData = subervisors;
-                                    }
-                                }, error => {
+                            // this._commonService.getEmployee(this.kraInfoData[index].supervisor_id).subscribe(
+                            //     res => {
+                            //         let supervisorinfo = subervisors.filter(x => x._id == this.kraInfoData[index].supervisor_id);
+                            //         if (supervisorinfo.length == 0) {
+                            //             let supervisorInfoData = res.json() || {};
+                            //             subervisors.push(supervisorInfoData);
+                            //         }
+                            //         if (index == this.kraInfoData.length - 1) {
+                            //             this.supervisorData = subervisors;
+                            //         }
+                            //     }, error => {
 
-                                })
+                            //     })
 
 
                         }
@@ -200,6 +200,7 @@ export class MyKraComponent {
         this._commonService.getKraSupervisor(this._currentEmpId)
             .subscribe(
                 data => {
+                    debugger;
                     this.supervisorData = data.json();
                 },
                 error => {
