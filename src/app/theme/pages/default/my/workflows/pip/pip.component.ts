@@ -545,8 +545,7 @@ export class MyPipComponent {
         // else {
         //     this.showStat = false;
         // }
-
-        if (this.pipData.status == "Approved") {
+        if (this.pipData.status == "Approved" || this.pipData.status == "Initiated") {
             this.isApproved = true;
         }
         else {
