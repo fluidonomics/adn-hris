@@ -173,7 +173,7 @@ export class HrLearningComponent {
         }
     }
 
-    initBatch(form) {
+    initBatch(form: any) {
         //debugger;
         this.batchData.emp_id_array = this.employeeData.filter(function (employee, index, array) {
             return employee.checked;
@@ -193,7 +193,9 @@ export class HrLearningComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
-                this.batchData.createdBy = this._currentEmpId;
+                if (result.value) {
+
+                    this.batchData.createdBy = this._currentEmpId;
                 this.batchData.createdByName = this.currentEmpname;
     
                 this.utilityService.showLoader('#initiate-loader');
@@ -208,6 +210,8 @@ export class HrLearningComponent {
                     }, error => {
                         this.utilityService.hideLoader('#initiate-loader');
                     });
+                }
+                
             }
             else {
                 swal('Oops!', 'No employee selected', 'warning')
