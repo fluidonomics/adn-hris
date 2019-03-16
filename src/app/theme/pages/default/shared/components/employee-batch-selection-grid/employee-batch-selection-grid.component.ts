@@ -115,4 +115,8 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
             this.onChecked(element, $event.target);
         });
     }
+
+    sort(key) {
+
+    }
 }
