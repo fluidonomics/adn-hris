@@ -146,7 +146,7 @@
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
-                                                    <th class="m-datatable__cell" width="50%">
+                                                    <th class="m-datatable__cell" width="40%">
                                                         EMPLOYEE NAME
                                                     </th>
                                                     <th class="m-datatable__cell" width="20%">
@@ -158,10 +158,10 @@
                                                     <th class="m-datatable__cell" width="15%">
                                                         STATUS
                                                     </th>
-                                                    
-                                                    <!-- <th class="m-datatable__cell" width="10%">
-                                                                   ACTION
-                                                               </th> -->
+
+                                                    <th class="m-datatable__cell" width="10%">
+                                                        ACTION
+                                                    </th>
 
                                                 <tr>
                                             </thead>
@@ -169,7 +169,7 @@
                                                 <ng-container
                                                     *ngFor="let learnRow of batch?.learning_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                     <tr class="m-datatable__row">
-                                                        <td class="m-datatable__cell" width="50%">
+                                                        <td class="m-datatable__cell" width="40%">
                                                             <span>{{learnRow.emp_details.fullName}}</span>
                                                         </td>
                                                         <td class="m-datatable__cell" width="20%">
@@ -183,14 +183,17 @@
                                                                     class="m-badge m-badge--success m-badge--wide"
                                                                     [ngClass]="{'m-badge--warning':learnRow.status=='Initiated','m-badge--brand':learnRow.status=='Submitted','m-badge--danger':learnRow.status=='SendBack','m-badge--success':learnRow.status=='Approved','m-badge--secondary':learnRow.status=='Terminated'}">{{learnRow.status}}</span></span>
                                                         </td>
-                                                        
-                                                        <!-- <td class="m-datatable__cell" width="10%">
-                                                                           <span >
-                                                                               <a (click)="saveLearning(batch._id,j,'Terminated')" *ngIf="learnRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
-                                                                                   <i class="la la-remove"></i>
-                                                                               </a>
-                                                                           </span>
-                                                                       </td> -->
+
+                                                        <td class="m-datatable__cell" width="10%">
+                                                            <span>
+                                                                <a (click)="terminatelearning(batch._id,j,'Terminated')"
+                                                                    *ngIf="learnRow.status!='Terminated'"
+                                                                    class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                    title="Terminate">
+                                                                    <i class="la la-remove"></i>
+                                                                </a>
+                                                            </span>
+                                                        </td>
                                                     </tr>
                                                     <span *ngIf="batch?.batchData?.length==0"
                                                         class="m-datatable--error">No records found</span>

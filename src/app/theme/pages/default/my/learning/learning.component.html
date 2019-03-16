@@ -110,7 +110,7 @@
 					</thead>
 					<tbody class="m-datatable__body">
 						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-							*ngFor="let learnData of LearningAgendaData">
+							*ngFor="let learnData of LearningAgendaData | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 							<!-- <td class="m-datatable__cell" width="3%" >
 																																													<span class="m-widget4__icon">
 																																																	<i class="fa fa-circle m--font-success"></i>
@@ -583,8 +583,12 @@
 						</div>
 						<div class="col-md-6 details" *ngIf="isCompleted">
 								<span>Completion Date</span>
-								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date" [(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required disabled>
-								
+								<input name="completionDate" class="form-control m-input m-input--air" #completionDate="ngModel" placeholder="Enter Completion Date"
+									[(ngModel)]="learningData.completionDate" bsDatepicker [readonly]="true" [maxDate]="maxDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD'}" #completionDate="ngModel" placement="top" required>
+								<div class="form-control-feedback has-danger"
+									*ngIf="LearningDataForm.submitted && completionDate.invalid">
+									This field is required.
+								</div>
 						</div>
 					</div>
 					<div class="form-actions details">

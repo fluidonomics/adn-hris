@@ -62,6 +62,7 @@ export class MyLearningComponent {
     //comDate: boolean = false;
     showCom: boolean = true;
     employee: any = {};
+    maxDate: Date;
 
 
 
@@ -89,6 +90,8 @@ export class MyLearningComponent {
         ]);
         this.progressStatuses = this._learningService.progressStatuses;
         this.colorStatuses = this._learningService.colorStatuses;
+        this.maxDate = new Date();
+        this.maxDate.setDate(this.maxDate.getDate() + 0);
 
     }
 
@@ -137,7 +140,8 @@ export class MyLearningComponent {
             timelines: this.learningInfoData[index].timelines,
             supportRequired: this.learningInfoData[index].supportRequired,
             employeeComment: this.learningInfoData[index].employeeComment,
-            completionDate: this.isCompleted ? now : ""
+            //completionDate: this.isCompleted ? now : ""
+            completionDate: this.learningInfoData[index].completionDate
 
         }
         let isError: boolean = false;
@@ -363,7 +367,6 @@ export class MyLearningComponent {
     }
 
 
-
     onStatusChange(event) {
 
         if (event == "Completed") {
@@ -443,8 +446,6 @@ export class MyLearningComponent {
         else {
             this.loadprevsupervisor();
         }
-
-        debugger;
 
     }
 
