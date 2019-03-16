@@ -85,14 +85,19 @@ export class LearningService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getLearningBySupervisor(supervisorId: number,status :string): Observable<Response> {
-        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId + '&status=' + status ;
+    getLearningBySupervisor(supervisorId: number, status: string): Observable<Response> {
+        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId + '&status=' + status;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     getLearningByReviewer(reviewerId: number): Observable<Response> {
         let url = "learning/learningbyreviewer?reviewerId=" + reviewerId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    updateLearningMaster(data) {
+        let url = "learning/updatelearningmaster";
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {
@@ -108,5 +113,5 @@ export class LearningService {
         return Observable.throw(err);
     }
 
-    
+
 }

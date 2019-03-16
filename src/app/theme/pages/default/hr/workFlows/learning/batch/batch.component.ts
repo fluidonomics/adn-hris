@@ -22,6 +22,7 @@ import { LearningService } from '../../../../services/learning.service';
 export class LearningBatchComponent implements OnInit {
 
     batchData: any = [];
+    termData: any = [];
     activeRowNumber: number = -1;
 
     key: string = ''; //set default
@@ -97,27 +98,35 @@ export class LearningBatchComponent implements OnInit {
     }
 
 
-    saveLearning(batch_id, learningIndex, status) {
-    //     swal({
-    //         title: 'Are you sure?',
-    //         text: "Terminate learning Agenda? It can't be undone!",
-    //         type: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#d33',
-    //         cancelButtonColor: '#9a9caf',
-    //         confirmButtonText: 'Terminate'
-    //     }).then((result) => {
-    //         if (result.value) {
-    //             this.batchData[this.batchData.findIndex(x => x._id == batch_id)].batchData[learningIndex].status = status;
-    //             this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[learningIndex])
-    //                 .subscribe(
-    //                     res => {
-    //                         swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
-    //                     },
-    //                     error => {
-    //                     });
-    //         }
-    //     })
+    terminatelearning(batch_id, learningIndex, status) {
+        debugger;
+        swal({
+            title: 'Are you sure?',
+            text: "Terminate Learning Agenda? It cannot be undone later on!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Terminate'
+        }).then((result) => {
+            if (result.value) {
+                this.termData = this.batchData.filter(x => x._id == batch_id);
+                var master_id = this.termData[0].learning_master[learningIndex]._id;
+                let data = {
+                    masterId: master_id,
+                    updatedBy: this._currentEmpId,
+                    status: status
+                }
+                debugger;
+                this._learningService.updateLearningMaster(data)
+                    .subscribe(
+                        res => {
+                            swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
+                        },
+                        error => {
+                        });
+            }
+        })
     }
 
     openEditModal(template: TemplateRef<any>, batch, index) {
