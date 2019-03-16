@@ -265,9 +265,9 @@
                             <label for="timeline">Timelines
                             </label>
                             <span class="required" aria-required="true"> * </span>
-                            <ng-select class="m-input m-input--air customError" name="timelines{{i}}" id="timelines" [items]="timelinesData"
+                            <ng-select class="m-input m-input--air customError" name="timelines" id="timelines" [items]="timelinesData"
 							 bindLabel="timeline" bindValue="_id" placeholder="Select Timeline" [(ngModel)]="batchData.timelines"
-							 [clearable]="false" #timelines="ngModel" required [disabled]="isDisabled"></ng-select>
+							 [clearable]="false" #timelines="ngModel" required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="finitiatemtr.submitted && timelines.invalid">
 								This field is required.
 							</div>
