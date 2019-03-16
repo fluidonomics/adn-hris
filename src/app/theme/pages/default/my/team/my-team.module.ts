@@ -99,9 +99,9 @@ import { PipReview } from './team-workflows/team-reveiwer/pip-review/pip-review.
         PipViewComponent,
         PipDetailedViewComponent,
         PipReview,
-        AllPipReviewer
+        AllPipReviewer,
 
-        AllLearningSupervisor
+        AllLearningSupervisor,
         AllLearningReviewer,
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService,PipService]
