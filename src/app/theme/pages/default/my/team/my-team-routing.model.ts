@@ -10,6 +10,8 @@ import { MtrDetailedViewComponent } from './team-workflows/team-supervisor/mtr-d
 import { EmployeeSearchComponent } from './subordinate-transaction-history/employee-search/employee-search.component'
 import { LearningDetailedViewComponent } from './team-workflows/team-supervisor/learning-detailed-view/learning-detailed-view.component';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
+import { PipDetailedViewComponent } from './team-workflows/team-supervisor/pip-detailed-view/pip-detailed-view.component';
+import { AllPipReviewer } from './team-workflows/team-reveiwer/allPip/allPipReviewer.component';
 
 
 
@@ -21,6 +23,8 @@ import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pa
 import { TransactionHistoryComponent } from './subordinate-transaction-history/transaction-history/transaction-history.component';
 import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 import { AllLearningSupervisor } from './team-workflows/team-supervisor/allLearning/allLearningSupervisor.component';
+import { PipReview } from './team-workflows/team-reveiwer/pip-review/pip-review.component';
+
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent, canActivate: [SupervisorGuard] },
@@ -28,6 +32,7 @@ const routes: Routes = [
     { path: 'workflows/kra-review/:id/:emp_id', component: KraReview },
     { path: 'workflows/learning-review/:id/:emp_id', component: LearningReview },
     { path: 'workflows/mtr-review/:id/:emp_id', component: MtrReview },
+    { path: 'workflows/pip-review/:id/:emp_id', component: PipReview },
     { path: 'workflows/supervisor', component: MyTeamSupervisorComponent, canActivate: [SupervisorGuard] },
     { path: 'workflows/:supervisor/employee/list', component: AllEmployeeComponent, canActivate: [SupervisorGuard] },
     //{ path: 'workflows/:reveiwer/allEmployee', component: AllEmployeeComponent,canActivate: [ReviewerGuard] },
@@ -37,11 +42,11 @@ const routes: Routes = [
     { path: 'workflows/pap-review/:id/:emp_id', component: PapReviewComponent },
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
-    { path: 'workflows/learning-detailed-view/:from/:id/:emp_id', component: LearningDetailedViewComponent },
-    { path: 'workflows/:reviewer/learning/list', component: AllLearningReviewer },
+    { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
+    {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
+    {  path: 'workflows/:supervisor/pip/list', component: AllPipReviewer },
+    { path: 'workflows/pip-detailed-view/:from/:id/:emp_id', component: PipDetailedViewComponent },
     { path: 'workflows/:supervisor/:from/learning/list', component: AllLearningSupervisor }
-
-    
 ]
 
 

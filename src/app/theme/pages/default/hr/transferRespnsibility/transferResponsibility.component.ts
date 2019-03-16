@@ -14,6 +14,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { NgForm } from '@angular/forms';
 import { MtrService } from '../../services/mtr.service';
 import { LearningService } from '../../services/learning.service';
+import { PipService } from '../../services/pip.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -50,6 +51,7 @@ export class TransferResponsibilityComponent implements OnInit {
     employeeOpenKraRequest: any[] = [];
     employeeOpenMtrRequest: any[] = [];
     employeeOpenLearningRequest: any[] = [];
+    employeeOpenPipgRequest: any[] = [];
     oldPrimarySupervisor: any;
     oldSecondarySupervisor: any;
 
@@ -62,7 +64,8 @@ export class TransferResponsibilityComponent implements OnInit {
         private leaveService: LeaveService,
         private kraService: KraService,
         private mtrService: MtrService,
-        private learningService: LearningService
+        private learningService: LearningService,
+        private pipservice: PipService
     ) {
 
     }
@@ -137,7 +140,7 @@ export class TransferResponsibilityComponent implements OnInit {
 
                 this.oldPrimarySupervisor = details.supervisorDetails.primarySupervisorEmp_id;
                 this.oldSecondarySupervisor = details.supervisorDetails.secondarySupervisorEmp_id;
-                debugger;
+                //debugger;
 
             }
         }, error => {
@@ -204,7 +207,7 @@ export class TransferResponsibilityComponent implements OnInit {
                                 this.transferForm.resetForm();
                                 this.reset();
                             });
-                            debugger;
+                            //debugger;
                         } else {
                             swal({
                                 title: '',
@@ -292,13 +295,15 @@ export class TransferResponsibilityComponent implements OnInit {
                     this.leaveService.getLeaveDetailsByEmployeeId(this.request.emp_id),
                     this.kraService.getKraByEmployeeId(this.request.emp_id),
                     this.mtrService.getEmployeeMtrWorkFlowInfo(this.request.emp_id),
-                    this.learningService.getEmployeeLearningInfo(this.request.emp_id)
+                    this.learningService.getEmployeeLearningInfo(this.request.emp_id),
+                    this.pipservice.getPipInfo(this.request.emp_id)
                 ).subscribe(res => {
                     let leaveData = res[0].json().data || [];
                     let kraData = res[1].json().data || [];
                     let mtrData = res[2].json().result.message || [];
                     let learningData = res[3].json().result.message || [];
-                    // debugger;
+                    let pipData = res[4].json().result.message || [];
+                     debugger;
 
                     this.employeeOpenLeaveRequest = leaveData.filter(leave => {
                         return leave.leaveStatus != "Approved" && leave.leaveStatus != "Cancelled" && leave.leaveStatus != "Withdrawn" && leave.leaveStatus != "Rejected";
@@ -316,6 +321,10 @@ export class TransferResponsibilityComponent implements OnInit {
                         return learn.status != "Approved";
                     });
 
+                    pipData = pipData.filter(pip => {
+                        return pip.status != "Approved";
+                    });
+
                     this.employeeOpenMtrRequest = _.chain(mtrData)
                         .groupBy("mtr_master_id").map(function (v, i) {
                             return {
@@ -325,7 +334,7 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].mtr_master_details.updatedAt
                             }
                         }).value();
-                        //debugger;
+                    debugger;
                     this.employeeOpenLearningRequest = _.chain(learningData)
                         .groupBy("_id").map(function (v, i) {
                             return {
@@ -335,12 +344,23 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].updatedAt
                             }
                         }).value();
-                        //debugger;
+
+                    this.employeeOpenPipgRequest = _.chain(pipData)
+                        .groupBy("_id").map(function (v, i) {
+                            return {
+                                //learningDetailCount: v.length,
+                                status: v[0].status,
+                                createdAt: v[0].createdAt,
+                                updatedAt: v[0].updatedAt
+                            }
+                        }).value();
+                    debugger;
                     if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0 || this.employeeOpenMtrRequest.length > 0 || this.employeeOpenLearningRequest.length > 0) {
                         this.request.leaveIds = this.employeeOpenLeaveRequest.map(leave => leave._id);
                         this.request.kraIds = this.employeeOpenKraRequest.map(kra => kra._id);
                         this.request.mtrIds = mtrData.map(mtr => mtr._id);
                         this.request.learningIds = learningData.map(learning => learning._id);
+                        this.request.pipIds = pipData.map(pip => pip._id);
                         // debugger;
                         this.modalRef = this.modalService.show(this.mtrDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
                         resolve(data);
