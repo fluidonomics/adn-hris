@@ -54,7 +54,8 @@ export class FeedbackInitiateComponent implements OnInit {
     getAllEmployee() {
         this.papService.getEmployeesForFeedbackInit().subscribe(res => {
             this.employees = res;
-        })
+            this.employeeFilterData = [];
+        });
     }
 
 
@@ -83,9 +84,10 @@ export class FeedbackInitiateComponent implements OnInit {
         }
     }
     initFeedback() {
+        debugger;
         let selectedData = this.employeeFilterData.filter(obj => obj.checked == true);
         let selectedIds = selectedData.map(item => {
-            return item._id
+            return item.emp_id
         })
         if (selectedIds.length != 0) {
             let request = {
@@ -105,6 +107,7 @@ export class FeedbackInitiateComponent implements OnInit {
                     this.papService.papInitiateFeedback(request).subscribe(res => {
                         if (res.ok) {
                             swal("Success", "Feedback Initiated Successfully", "success");
+                            this.getAllEmployee();
                         }
                     });
                 }

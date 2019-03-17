@@ -105,7 +105,6 @@ export class PapDetailedViewComponent implements OnInit {
         this.loadRatingScaleData();
     }
     loadPapDetails() {
-        debugger;
         return new Promise((resolve, reject) => {
             this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
                 let papDetails = res || [];
@@ -114,7 +113,11 @@ export class PapDetailedViewComponent implements OnInit {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Pending Reviewer").length == this.papInfoData.length ? false : true;
+                    if (this.papInfoData.filter(obj => obj.status == "Submitted").length > 0 || this.papInfoData.filter(obj => obj.status == "SendBack").length > 0) {
+                        this.isChangable = true;
+                    } else {
+                        this.isChangable = false;
+                    }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
@@ -159,7 +162,13 @@ export class PapDetailedViewComponent implements OnInit {
         this.papData.no = index + 1;
 
         console.log(this.papData);
-        this.isDisabled = this.papData.status == "Pending Reviewer" ? true : false;
+        if (this.papData.status == "Submitted" || this.papData.status == "SendBack") {
+            this.isDisabled = false;
+        }
+        else if (this.papData.status == "Pending Reviewer") {
+            this.isDisabled = true;
+        }
+
     }
     saveKRADetails(form, id: number) {
         this.modalRef.hide();
