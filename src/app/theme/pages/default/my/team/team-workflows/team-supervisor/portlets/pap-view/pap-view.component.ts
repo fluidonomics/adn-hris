@@ -32,6 +32,7 @@ export class PapViewComponent implements OnInit {
 
 
     loadPapBySupervisor(currentEmpId) {
+        debugger;
         this.papService.getPapBySupervisor(currentEmpId).subscribe(res => {
             let papData = res || [];
             if (papData.length > 0) {
@@ -39,10 +40,10 @@ export class PapViewComponent implements OnInit {
                     let count = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
                         count = p.kra_details.filter(pDetails => {
-                            return pDetails.status != "Pending Reviewer";
+                            return pDetails.status == "Pending Reviewer" || pDetails.status == "Approved";
                         }).length;
                     }
-                    return count == 0;
+                    return count == p.kra_details.length;
                 })
             }
         });

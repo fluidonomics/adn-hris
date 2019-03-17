@@ -1,4 +1,5 @@
-<department-grade-filter (onSearch)="onFilterSelected($event)"  [showGradeFilter]="false" [filterHeading]="'Initiate Feedback'"></department-grade-filter>
+<department-grade-filter (onSearch)="onFilterSelected($event)" [showGradeFilter]="false"
+    [filterHeading]="'Initiate Feedback'"></department-grade-filter>
 <div class="m-content" id="initiate-loader">
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__body">
@@ -8,8 +9,8 @@
                         <div class="form-group m-form__group row align-items-center">
                             <div class="col-md-3">
                                 <div class="m-input-icon m-input-icon--left">
-                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
-                                        [(ngModel)]="search">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                        placeholder="Search..." [(ngModel)]="search">
                                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                         <span>
                                             <i class="la la-search"></i>
@@ -25,7 +26,8 @@
                     </div>
                 </div>
             </div>
-            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeFilterData | orderBy: key : reverse | filter:search)?.length==0 }">
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                [ngClass]="{'m-datatable--error': (employeeFilterData | orderBy: key : reverse | filter:search)?.length==0 }">
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
@@ -37,62 +39,73 @@
                                 </label>
                             </th>
                             <th class="m-datatable__cell" width="5%"></th>
-                            <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                            <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
                                 <span>
                                     NAME
-                                    <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    <i class="la" *ngIf="key == 'fullName'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
                                 <span>
                                     EMAIL
-                                    <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    <i class="la" *ngIf="key == 'officeEmail'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
                                 <span>
                                     DESIGNATION
-                                    <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    <i class="la" *ngIf="key == 'designation'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                            <!-- <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
                                 <span>
                                     SUPERVISOR
                                     <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                     <tbody class="m-datatable__body">
-                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeFilterData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+                            *ngFor="let employee of employeeFilterData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
                             <td class="m-datatable__cell" width="5%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-                                    <input type="checkbox" [(ngModel)]="employee.checked"
-                                        #employeeCheckBox>
+                                    <input type="checkbox" [(ngModel)]="employee.checked" #employeeCheckBox>
                                     <span></span>
                                 </label>
                             </td>
                             <td class="m-datatable__cell" width="5%">
-                                <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}"
-                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
-                                    alt="">
-                                <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
+                                <img *ngIf="employee?.profileImage; else noImage"
+                                    src="{{imageBase+employee?.profileImage}}"
+                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"
+                                        class="directory_image m--img-rounded m--marginless m--img-centered">
+                                </ng-template>
                             </td>
                             <td class="m-datatable__cell" width="20%">
-                                <span>{{employee.fullName}} [{{employee.userName}}]</span>
+                                <span>{{employee.employeedetails.fullName}}
+                                    [{{employee.employeedetails.userName}}]</span>
                             </td>
                             <td class="m-datatable__cell" width="20%">
-                                <span>{{employee.officeEmail}}</span>
+                                <span>{{employee.employeeofficedetails.officeEmail}}</span>
                             </td>
                             <td class="m-datatable__cell" width="20%">
-                                <span>{{employee.designation}}</span>
+                                <span>{{employee.designations.designationName}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="25%">
+                            <!-- <td class="m-datatable__cell" width="25%">
                                 <span>{{employee.supervisor}}</span>
-                            </td>
+                            </td> -->
                         </tr>
 
-                        <span *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
+                        <span *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0"
+                            class="m-datatable--error">No
                             records found</span>
                     </tbody>
                 </table>
@@ -101,7 +114,8 @@
                         <ul class="m-datatable__pager-nav" *ngIf="p.pages.length != 0">
                             <li>
                                 <a class="m-datatable__pager-link m-datatable__pager-link--first"
-                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                    (click)="p.setCurrent(1)">
                                     <i class="la la-angle-double-left"></i>
                                 </a>
                             </li>
@@ -112,7 +126,8 @@
                                 </a>
                             </li>
                             <li *ngFor="let page of p.pages">
-                                <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+                                <a (click)="p.setCurrent(page.value)"
+                                    class="m-datatable__pager-link m-datatable__pager-link-number "
                                     [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
                                     {{ page.label }}
                                 </a>
@@ -125,7 +140,8 @@
                             </li>
                             <li>
                                 <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
-                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                    (click)="p.setCurrent(p.pages.length + 1)">
                                     <i class="la la-angle-double-right"></i>
                                 </a>
                             </li>
@@ -134,7 +150,8 @@
                 </pagination-template>
             </div>
             <div class="pager-display-size" *ngIf="p.pages?.length!=0">
-                <select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
+                <select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px"
+                    data-selected="50">
                     <option value=10>10</option>
                     <option value=20>20</option>
                     <option value=30>30</option>
@@ -149,12 +166,12 @@
                     filter:search)?.length}} </span>
             </div>
             <div class="row m--margin-top-20 m--margin-bottom-30">
-                    <div class="col-md-4">
-                            <div class="m-form__actions">
-                                <button class="btn btn-success submitForm" (click)="initFeedback()">Initiate</button>
-                            </div>
-                    </div>                        
-                </div>            
+                <div class="col-md-4">
+                    <div class="m-form__actions">
+                        <button class="btn btn-success submitForm" (click)="initFeedback()">Initiate</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

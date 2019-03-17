@@ -21,7 +21,7 @@ export class MyPapComponent {
 
     papWorkFlowData: any = [];
     isPapAvaliable: boolean = false;
-    isChangable: boolean = true;
+    isChangable: boolean = false;
 
     supervisorData: any = [];
     weightageData: any = [];
@@ -144,7 +144,11 @@ export class MyPapComponent {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                    if (this.papInfoData.filter(obj => obj.status == "Pending").length == this.papInfoData.length) {
+                        this.isChangable = true;
+                    } else {
+                        this.isChangable = false;
+                    }
                     this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
                     if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
                         this.raiseGreivance = false
@@ -186,8 +190,6 @@ export class MyPapComponent {
         if (this.papData.status == "Submitted") {
             this.isDisabled = true;
         } else if (this.papData.status == "Initiated" || this.papData.status == "Pending") {
-            this.isDisabled = false;
-        } else {
             this.isDisabled = false;
         }
     }

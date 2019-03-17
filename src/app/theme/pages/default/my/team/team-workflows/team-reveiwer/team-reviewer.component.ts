@@ -139,7 +139,7 @@ export class MyTeamReviewerComponent implements OnInit {
                     if (p.kra_details && p.kra_details.length > 0) {
                         submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
                     }
-                    return submittedCount == p.kra_details.length;
+                    return submittedCount > 0;
                 })
                 this.papData = this.papData.sort((a, b) => {
                     if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
