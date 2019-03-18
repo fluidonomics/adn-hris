@@ -30,6 +30,7 @@ export class LearningBatchComponent implements OnInit {
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
+    masterItemPerPage: number = 6;
 
     editBatch: any = {};
     modalRef: BsModalRef;
@@ -98,8 +99,9 @@ export class LearningBatchComponent implements OnInit {
     }
 
 
-    terminatelearning(batch_id, learningIndex, status) {
-        debugger;
+    terminatelearning(batch_id, learningIndex, page, status) {
+        
+        let index = (this.masterItemPerPage * page) - (this.masterItemPerPage - learningIndex);
         swal({
             title: 'Are you sure?',
             text: "Terminate Learning Agenda? It cannot be undone later on!",
@@ -111,13 +113,12 @@ export class LearningBatchComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.termData = this.batchData.filter(x => x._id == batch_id);
-                var master_id = this.termData[0].learning_master[learningIndex]._id;
+                var master_id = this.termData[0].learning_master[index]._id;
                 let data = {
                     masterId: master_id,
                     updatedBy: this._currentEmpId,
                     status: status
                 }
-                debugger;
                 this._learningService.updateLearningMaster(data)
                     .subscribe(
                         res => {
