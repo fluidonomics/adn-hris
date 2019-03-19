@@ -167,7 +167,7 @@
                                             </thead>
                                             <tbody class="m-datatable__body">
                                                 <ng-container
-                                                    *ngFor="let learnRow of batch?.learning_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
+                                                    *ngFor="let learnRow of batch?.learning_master | paginate: { itemsPerPage: masterItemPerPage, currentPage: batchdatafilter.page };let j=index">
                                                     <tr class="m-datatable__row">
                                                         <td class="m-datatable__cell" width="40%">
                                                             <span>{{learnRow.emp_details.fullName}}</span>
@@ -186,7 +186,7 @@
 
                                                         <td class="m-datatable__cell" width="10%">
                                                             <span>
-                                                                <a (click)="terminatelearning(batch._id,j,'Terminated')"
+                                                                <a (click)="terminatelearning(batch._id, j, batchdatafilter.page, 'Terminated')"
                                                                     *ngIf="learnRow.status!='Terminated'"
                                                                     class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                                                                     title="Terminate">
