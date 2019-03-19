@@ -211,7 +211,7 @@ export class HrPipComponent {
                     .subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#initiate-loader');
-                            swal("Success", "Batch Initiated Successfully", "success");
+                            swal("Success", "PIP Batch Initiated Successfully", "success");
                             form.resetForm();
                             this.clearForm();
                         }

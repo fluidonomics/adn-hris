@@ -654,7 +654,7 @@
 													<textarea name="sup_final_com" id="sup_final_com"
 														[(ngModel)]="pipData.pip_master_details.sup_final_com"
 														#supcom="ngModel" class="form-control m-input m-input--air"
-														required></textarea>
+														required disabled="pipData.pip_master_details.emp_final_com"></textarea>
 												</div>
 												<div class="col-md-2 details">
 													<span>Reviewer Comments</span>
@@ -681,7 +681,7 @@
 														id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
 														bindValue="_id" placeholder="Final Recommendation"
 														[(ngModel)]="pipData.final_recommendation" [clearable]="false"
-														#final_recommendation="ngModel">
+														#final_recommendation="ngModel" disabled>
 													</ng-select>
 												</div>
 
