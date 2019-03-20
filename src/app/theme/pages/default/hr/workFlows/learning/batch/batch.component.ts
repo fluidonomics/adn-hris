@@ -84,7 +84,7 @@ export class LearningBatchComponent implements OnInit {
 
 
     loadBatch() {
-        //debugger;
+
         this.utilityService.showLoader('#batch-loader');
         this._learningService.getLearningBatches(this._currentEmpId)
             .subscribe(
@@ -122,6 +122,7 @@ export class LearningBatchComponent implements OnInit {
                 this._learningService.updateLearningMaster(data)
                     .subscribe(
                         res => {
+                            this.batchData[this.batchData.findIndex(x => x._id==batch_id)].learning_master[index].status=status;
                             swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
                         },
                         error => {
