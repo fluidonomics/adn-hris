@@ -68,11 +68,12 @@ export class FeedbackInitiateComponent implements OnInit {
     filterEmployee() {
         if (this.filterBy && (this.filterBy.grades || this.filterBy.departments)) {
             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.emp_department_id) && obj.emp_grade_id < 13);
+                // this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.employeeofficedetails.department_id) && obj.emp_grade_id < 13);
+                this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.employeeofficedetails.department_id));
                 //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
             }
             if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                this.employeeFilterData = this.employees.filter(obj => this.filterBy.grades.includes(obj.emp_grade_id));
+                this.employeeFilterData = this.employees.filter(obj => this.filterBy.grades.includes(obj.employeedetails.grade_id));
                 //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
             }
             if (this.filterBy.grades.length == 0 && this.filterBy.departments.length == 0) {
