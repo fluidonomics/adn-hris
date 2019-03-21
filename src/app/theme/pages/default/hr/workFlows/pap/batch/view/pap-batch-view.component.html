@@ -181,7 +181,7 @@
                                                 <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
+                                                <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated','m-badge--warning':batch.status=='Initiated'}">{{batch.status}}</span></span>
                                             </td>
                                             <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
                                                 <span *ngIf="batch.status!='Terminated'">

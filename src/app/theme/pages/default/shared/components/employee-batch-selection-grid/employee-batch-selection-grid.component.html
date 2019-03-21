@@ -39,23 +39,23 @@
                             </th>
                             <th class="m-datatable__cell" width="5%"></th>
                             <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="25%">
                                 <span>
                                     NAME
                                     <i class="la" *ngIf="key == 'fullName'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                            <!-- <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
                                 width="20%">
                                 <span>
                                     EMAIL
                                     <i class="la" *ngIf="key == 'officeEmail'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
-                            </th>
+                            </th> -->
                             <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="15%">
                                 <span>
                                     DESIGNATION
                                     <i class="la" *ngIf="key == 'designation'"
@@ -67,6 +67,22 @@
                                 <span>
                                     SUPERVISOR
                                     <i class="la" *ngIf="key == 'supervisor'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('department')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
+                                <span>
+                                    DEPARTMENT
+                                    <i class="la" *ngIf="key == 'department'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('grade')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="5%">
+                                <span>
+                                    GRADE
+                                    <i class="la" *ngIf="key == 'grade'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
@@ -91,17 +107,23 @@
                                         class="directory_image m--img-rounded m--marginless m--img-centered">
                                 </ng-template>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <td class="m-datatable__cell" width="25%">
                                 <span>{{employee.fullName}} [{{employee.userName}}]</span>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <!-- <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.emp_emailId}}</span>
-                            </td>
-                            <td class="m-datatable__cell" width="20%">
+                            </td> -->
+                            <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.designationName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="25%">
                                 <span>{{employee.supervisorName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.department.departmentName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="5%">
+                                <span>{{employee.grade.gradeName}}</span>
                             </td>
                         </tr>
 

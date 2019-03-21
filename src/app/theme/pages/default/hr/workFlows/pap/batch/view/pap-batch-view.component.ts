@@ -9,7 +9,7 @@ import { MtrService } from "../../../../../services/mtr.service";
 import { PapService } from "../../../../../services/pap.service";
 
 import swal from 'sweetalert2';
-
+declare var moment;
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper.papBatchView',
     templateUrl: 'pap-batch-view.component.html',
@@ -82,6 +82,11 @@ export class PapBatchViewComponent implements OnInit {
                 this.utilityService.hideLoader('#batch-loader');
                 this.batchData=res;
                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+                this.batchData = this.batchData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else return 0;
+                });
             },
             error => {
                 this.utilityService.hideLoader('#batch-loader');
