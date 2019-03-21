@@ -54,7 +54,7 @@ export class FeedbackInitiateComponent implements OnInit {
     getAllEmployee() {
         this.papService.getEmployeesForFeedbackInit().subscribe(res => {
             this.employees = res;
-            this.employeeFilterData = [];
+            this.employeeFilterData = res;
         });
     }
 

@@ -84,6 +84,7 @@ export class PapBatchInitComponent implements OnInit {
                         debugger;
                         data.createdBy = this._currentEmpId;
                         data.batchEndDate = this.batchData.batchEndDate;
+                        data.action_link = window.location.origin + '/my/workflows/pap';
                         this.utilityService.showLoader('#initiate-loader');
                         this.papService.initiatePapProcess(data).subscribe(res => {
                             if (res) {
