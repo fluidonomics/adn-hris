@@ -165,81 +165,61 @@
 
                                                 <tr>
                                             </thead>
-                                            <tbody class="m-datatable__body">
-                                                <ng-container
-                                                    *ngFor="let learnRow of batch?.learning_master | paginate: { itemsPerPage: masterItemPerPage, currentPage: batchdatafilter.page };let j=index">
+                                            <tbody class="m-datatable__body"> 
+                                                <ng-container *ngFor="let learnRow of batch?.learning_master | paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                     <tr class="m-datatable__row">
-                                                        <td class="m-datatable__cell" width="40%">
-                                                            <span>{{learnRow.emp_details.fullName}}</span>
-                                                        </td>
-                                                        <td class="m-datatable__cell" width="20%">
-                                                            <span>{{learnRow.emp_dept_details.departmentName}}</span>
-                                                        </td>
-                                                        <td class="m-datatable__cell align-items-center" width="15%">
-                                                            <span>{{learnRow.emp_grade_details.gradeName}}</span>
-                                                        </td>
-                                                        <td class="m-datatable__cell" width="15%">
-                                                            <span style="width: 100px;"><span
-                                                                    class="m-badge m-badge--success m-badge--wide"
-                                                                    [ngClass]="{'m-badge--warning':learnRow.status=='Initiated','m-badge--brand':learnRow.status=='Submitted','m-badge--danger':learnRow.status=='SendBack','m-badge--success':learnRow.status=='Approved','m-badge--secondary':learnRow.status=='Terminated'}">{{learnRow.status}}</span></span>
-                                                        </td>
-
-                                                        <td class="m-datatable__cell" width="10%">
-                                                            <span>
-                                                                <a (click)="terminatelearning(batch._id, j, batchdatafilter.page, 'Terminated')"
-                                                                    *ngIf="learnRow.status!='Terminated'"
-                                                                    class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-                                                                    title="Terminate">
-                                                                    <i class="la la-remove"></i>
-                                                                </a>
-                                                            </span>
-                                                        </td>
+                                                            <td class="m-datatable__cell" width="40%" >
+                                                                    <span>{{learnRow.emp_details.fullName}}</span>
+                                                            </td>
+                                                            <td class="m-datatable__cell" width="20%">
+                                                                <span>{{learnRow.emp_dept_details.departmentName}}</span>
+                                                            </td>
+                                                            <td class="m-datatable__cell align-items-center" width="15%">
+                                                                <span>{{learnRow.emp_grade_details.gradeName}}</span>
+                                                            </td>
+                                                            <td class="m-datatable__cell" width="15%" >
+                                                                 <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':learnRow.status=='Initiated','m-badge--brand':learnRow.status=='Submitted','m-badge--danger':learnRow.status=='SendBack','m-badge--success':learnRow.status=='Approved','m-badge--secondary':learnRow.status=='Terminated'}">{{learnRow.status}}</span></span>
+                                                            </td>
+                                                            <td class="m-datatable__cell" width="10%">
+                                                                <span *ngIf="batch.status!='Terminated'">
+                                                                    <a (click)="terminatelearning(batch._id, j, batchdatafilter.page, 'Terminated')" *ngIf="learnRow.status!='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Terminate">
+                                                                        <i class="la la-remove"></i>
+                                                                    </a>
+                                                                    <!-- <a (click)="saveKraWorkFlow(i,j,'Initiated')" *ngIf="kraRow.status=='Terminated'" class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill" title="Initiated">
+                                                                      <i class="la la-edit"></i>
+                                                                    </a> -->
+                                                                </span>
+                                                            </td>
                                                     </tr>
-                                                    <span *ngIf="batch?.batchData?.length==0"
-                                                        class="m-datatable--error">No records found</span>
+                                                    <span *ngIf="batch?.batchData?.length==0" class="m-datatable--error">No records found</span>
                                                 </ng-container>
                                             </tbody>
                                         </table>
-                                        <pagination-template #pdata="paginationApi"
-                                            (pageChange)="batchdatafilter.page = $event" class="paginationtemplate">
+                                        <pagination-template #pdata="paginationApi" (pageChange)="batchdatafilter.page = $event" class="paginationtemplate" >
                                             <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
                                                 <ul class="m-datatable__pager-nav" *ngIf="pdata.pages.length > 0">
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--first"
-                                                            [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()"
-                                                            (click)="pdata.setCurrent(1)">
+                                                        <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.setCurrent(1)" >
                                                             <i class="la la-angle-double-left"></i>
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                                            [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()"
-                                                            (click)="pdata.previous()">
+                                                        <span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.previous()" >
                                                             <i class="la la-angle-left"></i>
                                                         </span>
                                                     </li>
                                                     <li *ngFor="let page of pdata.pages">
-                                                        <span (click)="pdata.setCurrent(page.value)"
-                                                            class="m-datatable__pager-link m-datatable__pager-link-number "
-                                                            [class.m-datatable__pager-link--active]="pdata.getCurrent() === page.value">
+                                                        <span (click)="pdata.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="pdata.getCurrent() === page.value">
                                                             {{ page.label }}
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--next"
-                                                            [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"
-                                                            (click)="pdata.next()">
+                                                        <span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()" (click)="pdata.next()">
                                                             <i class="la la-angle-right"></i>
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span title="Last"
-                                                            class="m-datatable__pager-link m-datatable__pager-link--last"
-                                                            [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"
-                                                            (click)="pdata.setCurrent(pdata.pages.length + 1)">
+                                                        <span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"  (click)="pdata.setCurrent(pdata.pages.length + 1)">
                                                             <i class="la la-angle-double-right"></i>
                                                         </span>
                                                     </li>
