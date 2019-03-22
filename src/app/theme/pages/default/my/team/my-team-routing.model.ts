@@ -43,8 +43,9 @@ const routes: Routes = [
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
     { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
-    {  path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
-    {  path: 'workflows/:supervisor/pip/list', component: AllPipReviewer },
+    { path: 'workflows/learning-detailed-view/:from/:id/:emp_id', component: LearningDetailedViewComponent },
+    { path: 'workflows/:supervisor/learning/list', component: AllLearningReviewer },
+    { path: 'workflows/:supervisor/pip/list', component: AllPipReviewer },
     { path: 'workflows/pip-detailed-view/:from/:id/:emp_id', component: PipDetailedViewComponent },
     { path: 'workflows/:supervisor/:from/learning/list', component: AllLearningSupervisor }
 ]
