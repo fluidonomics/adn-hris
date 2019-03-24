@@ -139,7 +139,6 @@ export class MyPapComponent {
             this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
-                    debugger;
                     this.papWorkFlowData = _.chain(papDetails).groupBy('_id').map(function (v, i) {
                         return v[0];
                     }).value();
@@ -166,7 +165,6 @@ export class MyPapComponent {
             papMasterId: this.papWorkFlowData[0]._id
         }
         this.papService.raiseGreivance(request).subscribe((res => {
-            debugger;
             console.log(res);
             if (res.ok) {
                 swal({

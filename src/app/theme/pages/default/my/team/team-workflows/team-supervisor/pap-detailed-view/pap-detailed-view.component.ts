@@ -180,7 +180,6 @@ export class PapDetailedViewComponent implements OnInit {
         }
         console.log(request);
         this.papService.papUpdateSupervisor(request).subscribe(res => {
-            debugger;
             if (res.ok) {
                 // this.papGridInput = {};
                 // let gridInput = {
