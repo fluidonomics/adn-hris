@@ -85,7 +85,6 @@ export class FeedbackInitiateComponent implements OnInit {
         }
     }
     initFeedback() {
-        debugger;
         let selectedData = this.employeeFilterData.filter(obj => obj.checked == true);
         let selectedIds = selectedData.map(item => {
             return item.emp_id

@@ -218,6 +218,9 @@
                                                                    TimeLine
                                                                 </th> -->
                                                     <th class="m-datatable__cell" width="15%">
+                                                        OVERALL RATING
+                                                    </th>
+                                                    <th class="m-datatable__cell" width="15%">
                                                         STATUS
                                                     </th>
 
@@ -233,6 +236,11 @@
                                                         <!-- <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.timeline_id}}</span>
                                                                         </td> -->
+                                                        <td class="m-datatable__cell overallRating" width="15%">
+                                                            <span *ngIf="kraRow.status == 'Approved'">
+                                                                {{kraRow?.overallRating}}
+                                                            </span>
+                                                        </td>
                                                         <td class="m-datatable__cell" width="15%">
                                                             <span style="width: 100px;"><span
                                                                     class="m-badge m-badge--success m-badge--wide"

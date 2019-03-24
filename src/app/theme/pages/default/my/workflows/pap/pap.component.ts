@@ -31,7 +31,7 @@ export class MyPapComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGreivance = false;
+    showGreivanceActions = false;
 
     progressStatuses = [
         {
@@ -148,9 +148,11 @@ export class MyPapComponent {
                     } else {
                         this.isChangable = false;
                     }
-                    this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
-                    if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
-                        this.raiseGreivance = false
+                    if (this.papWorkFlowData[0].status == 'Approved' && this.papWorkFlowData[0].isRatingCommunicated == true) {
+                        this.showGreivanceActions = true;
+                    }
+                    if (this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated') {
+                        this.showGreivanceActions = false;
                     }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
@@ -158,18 +160,20 @@ export class MyPapComponent {
             });
         })
     }
-    raiseGreivanceClicked() {
+    raiseGreivance(flag) {
         let request = {
             updatedBy: this._currentEmpId,
             empId: this._currentEmpId,
-            papMasterId: this.papWorkFlowData[0]._id
+            papMasterId: this.papWorkFlowData[0]._id,
+            raiseGreivance: flag
         }
         this.papService.raiseGreivance(request).subscribe((res => {
             console.log(res);
             if (res.ok) {
+                this.loadPapDetails();
                 swal({
                     title: 'Success',
-                    text: "Greivance has been raised",
+                    text: flag ? "Greivance has been raised" : "Saved",
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonColor: '#66BB6A',

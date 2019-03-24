@@ -84,7 +84,7 @@ export class PapDetailsGridComponent implements OnInit {
     }
 
     loadPapDetails() {
-        this.papService.getPapDetailsSingleEmployee(this.empId).subscribe(res => {            
+        this.papService.getPapDetailsSingleEmployee(this.empId).subscribe(res => {
             let papDetails = res || [];
             if (papDetails.length > 0) {
                 let papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {

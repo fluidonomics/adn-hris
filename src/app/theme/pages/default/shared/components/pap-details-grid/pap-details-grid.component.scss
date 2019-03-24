@@ -24,3 +24,13 @@ input:disabled {
     background-color: $status-approved !important;
     border: 0px !important;
 }
+
+.pending {
+    background-color: $status-newKra !important;
+    border: 0px !important;
+}
+
+.pending :hover {
+    background-color: $status-newKra !important;
+    border: 0px !important;
+}

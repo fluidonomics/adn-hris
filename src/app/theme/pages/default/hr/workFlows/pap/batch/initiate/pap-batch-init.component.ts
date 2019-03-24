@@ -81,7 +81,6 @@ export class PapBatchInitComponent implements OnInit {
                     confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.value) {
-                        debugger;
                         data.createdBy = this._currentEmpId;
                         data.batchEndDate = this.batchData.batchEndDate;
                         data.action_link = window.location.origin + '/my/workflows/pap';
