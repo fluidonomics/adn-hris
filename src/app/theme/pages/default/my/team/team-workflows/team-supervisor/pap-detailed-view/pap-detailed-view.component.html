@@ -23,6 +23,8 @@
                              Print
                              </a> -->
                             </li>
+                            <li class="nav-item m-tabs__item">
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -62,6 +64,12 @@
                             <br>
                             <!-- </form> -->
                         </div><br><br>
+                        <div class="row overallRatingBlock"
+                            *ngIf="papWorkFlowData[0] && papWorkFlowData[0].reviewerStatus == 'Approved'">
+                            <div class="col-md-8">
+                                <span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +194,7 @@
                                     [(ngModel)]="papData.reviewerRemark" #reviewerComment="ngModel"
                                     class="form-control m-input m-input--air" disabled required></textarea>
                             </div>
-                            <div class="col-md-12 details" *ngIf="papData.reviewerRemark">
+                            <div class="col-md-6 details" *ngIf="papData.reviewerRemark">
                                 <span>Reviewer Status</span>
                                 <textarea name="reviewerStatus" id="reviewerStatus" [(ngModel)]="papData.status"
                                     #reviewerStatus="ngModel" class="form-control m-input m-input--air" disabled

@@ -17,7 +17,7 @@ declare var moment;
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./kra.component.html",
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./kra.component.css'],
+    styleUrls: ['./kra.component.scss'],
     providers: [KraService],
 })
 export class MyKraComponent {

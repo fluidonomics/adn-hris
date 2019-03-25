@@ -48,7 +48,6 @@ export class PapApprovalsComponent {
     }
 
     gotopapData(pap) {
-        debugger;
         this.router.navigateByUrl("/my/team/workflows/pap-detailed-view/" + pap.papmasters._id + "/" + pap._id);
     }
 }

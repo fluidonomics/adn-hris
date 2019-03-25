@@ -1,26 +1,38 @@
-input:disabled {
-    background-color: #ededed !important;
-    border: 0px;
-    height: 37px;
-    padding-left: 5px;
+.papDetailsGrid {
+    input:disabled {
+        background-color: #ededed !important;
+        border: 0px;
+        height: 37px;
+        padding-left: 5px;
+    }
+
+    .sendBack {
+        background-color: $status-sendBack !important;
+        border: 0px !important;
+    }
+
+    .sendBack:hover {
+        background-color: $status-sendBack !important;
+        border: 0px !important;
+    }
+
+    .approved {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
+
+    .approved :hover {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
 }
 
-.sendBack {
-    background-color: $status-sendBack !important;
+.pending {
+    background-color: $status-newKra !important;
     border: 0px !important;
 }
 
-.sendBack:hover {
-    background-color: $status-sendBack !important;
-    border: 0px !important;
-}
-
-.approved {
-    background-color: $status-approved !important;
-    border: 0px !important;
-}
-
-.approved :hover {
-    background-color: $status-approved !important;
+.pending :hover {
+    background-color: $status-newKra !important;
     border: 0px !important;
 }

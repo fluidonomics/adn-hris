@@ -49,11 +49,17 @@
                                     <h4>{{user?.userName}}</h4>
                                 </div>
                             </div>
-                            <pap-details-grid [empId]="papEmployeeId" [papMasterId]="papMasterId" [papChanges]="papChanges"
-                                (showDetails)="showPAPDetails($event)"></pap-details-grid>
+                            <pap-details-grid [empId]="papEmployeeId" [papMasterId]="papMasterId"
+                                [papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
                             <br>
                             <!-- </form> -->
                         </div><br><br>
+                        <div class="row overallRatingBlock"
+                            *ngIf="papWorkFlowData[0] && papWorkFlowData[0].reviewerStatus == 'Approved'">
+                            <div class="col-md-8">
+                                <span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +68,8 @@
 </div>
 
 <ng-template #papDetailModal>
-    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+    <div
+        class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
@@ -76,7 +83,8 @@
                     <li class="m-portlet__nav-item">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <div class="btn-group" role="group">
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -87,8 +95,7 @@
         </div>
         <div class="m-portlet__body">
             <div class="m-widget6 ">
-                <form class="m-form m-form--fit m-form--label-align-right"
-                    id="PAPDataForm" #PAPDataForm="ngForm">
+                <form class="m-form m-form--fit m-form--label-align-right" id="PAPDataForm" #PAPDataForm="ngForm">
                     <div class="m-widget6 ">
                         <div class="row">
                             <div class="col-md-6">
@@ -98,10 +105,10 @@
                                 KRA Category
                             </div>
                             <div class="col-md-4">
-                                <ng-select class="m-input m-input--air" name="papCategory" id="papCategory" [items]="papCategoryData"
-                                    bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category"
-                                    [(ngModel)]="papData.midtermdetails.category_id" [clearable]="false" #papCategory="ngModel"
-                                    disabled required></ng-select>
+                                <ng-select class="m-input m-input--air" name="papCategory" id="papCategory"
+                                    [items]="papCategoryData" bindLabel="kraCategoryName" bindValue="_id"
+                                    placeholder="Select KRA Category" [(ngModel)]="papData.midtermdetails.category_id"
+                                    [clearable]="false" #papCategory="ngModel" disabled required></ng-select>
 
                             </div>
                         </div>
@@ -110,8 +117,9 @@
                                 PAP Weightage
                             </div>
                             <div class="col-md-4">
-                                <ng-select class="m-input m-input--air" name="papWeightage" id="papWeightage" [items]="weightageData"
-                                    bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
+                                <ng-select class="m-input m-input--air" name="papWeightage" id="papWeightage"
+                                    [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
+                                    placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
                                     [clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
 
                             </div>
@@ -120,43 +128,45 @@
                             </div>
                             <div class="col-md-4">
                                 <ng-select class="m-input m-input--air " name="supervisorOne" id="supervisorOne"
-                                    [items]="supervisorData" bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor"
-                                    [(ngModel)]="papData.midtermdetails.supervisor_id" [clearable]="false"
-                                    #supervisorOne="ngModel" disabled required></ng-select>
+                                    [items]="supervisorData" bindLabel="fullName" bindValue="_id"
+                                    placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
+                                    [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 
                             </div>
                             <div class="col-md-12 details">
                                 <span>KRA</span>
                                 <textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra"
-                                    #pap_kra="ngModel" class="form-control m-input m-input--air" disabled [required]="!papData.pap_master_kraDetailId"></textarea>
+                                    #pap_kra="ngModel" class="form-control m-input m-input--air" disabled
+                                    [required]="!papData.pap_master_kraDetailId"></textarea>
 
                             </div>
                             <div class="col-md-6 details">
                                 <span>Unit of Success</span>
-                                <textarea name="unitOfSuccess" id="unitOfSuccess" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
-                                    #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled
-                                    required></textarea>
+                                <textarea name="unitOfSuccess" id="unitOfSuccess"
+                                    [(ngModel)]="papData.midtermdetails.unitOfSuccess" #unitOfSuccess="ngModel"
+                                    class="form-control m-input m-input--air" disabled required></textarea>
 
                             </div>
                             <div class="col-md-6 details">
                                 <span>Measure of Success</span>
-                                <textarea name="measureOfSuccess" id="measureOfSuccess" [(ngModel)]="papData.midtermdetails.measureOfSuccess"
-                                    #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled
-                                    required></textarea>
+                                <textarea name="measureOfSuccess" id="measureOfSuccess"
+                                    [(ngModel)]="papData.midtermdetails.measureOfSuccess" #measureOfSuccess="ngModel"
+                                    class="form-control m-input m-input--air" disabled required></textarea>
 
                             </div>
                             <div class="col-md-6 details">
                                 <span>Status</span>
                                 <ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus"
-                                    [items]="progressStatuses" bindLabel="label" bindValue="id" placeholder="Select Status"
-                                    [(ngModel)]="papData.midtermdetails.progressStatus" [clearable]="false"
-                                    #progressStatus="ngModel" disabled required></ng-select>
+                                    [items]="progressStatuses" bindLabel="label" bindValue="id"
+                                    placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus"
+                                    [clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
 
                             </div>
                             <div class="col-md-6 details">
                                 <span>Employee Rating Scale</span>
-                                <ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
-                                    bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
+                                <ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus"
+                                    [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id"
+                                    placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
                                     [clearable]="false" #colorStatus="ngModel" disabled required>
                                 </ng-select>
 
@@ -170,27 +180,32 @@
                             <div class="col-md-6 details">
                                 <span>supervisor Rating Scale</span>
                                 <ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
-                                    [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id" placeholder="Select Rating"
-                                    [(ngModel)]="papData.sup_ratingScaleId" [clearable]="false" #colorStatus="ngModel"
-                                    disabled required>
+                                    [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id"
+                                    placeholder="Select Rating" [(ngModel)]="papData.sup_ratingScaleId"
+                                    [clearable]="false" #colorStatus="ngModel" disabled required>
                                 </ng-select>
-                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supRatingScaleId?.invalid">
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && supRatingScaleId?.invalid">
                                     This field is required.
                                 </div>
                             </div>
                             <div class="col-md-12 details">
                                 <span>supervisor Remarks</span>
-                                <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark" #supComment="ngModel"
-                                    class="form-control m-input m-input--air" disabled required></textarea>
-                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supComment?.invalid">
+                                <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark"
+                                    #supComment="ngModel" class="form-control m-input m-input--air" disabled
+                                    required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && supComment?.invalid">
                                     This field is required.
                                 </div>
                             </div>
                             <div class="col-md-12 details">
                                 <span>Reviewer Remarks</span>
-                                <textarea name="reviewerRemark" id="reviewerRemark" [(ngModel)]="papData.reviewerRemark" #reviewerRemark="ngModel"
-                                    class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-                                <div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && reviewerRemark?.invalid">
+                                <textarea name="reviewerRemark" id="reviewerRemark" [(ngModel)]="papData.reviewerRemark"
+                                    #reviewerRemark="ngModel" class="form-control m-input m-input--air"
+                                    [disabled]="isDisabled" required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && reviewerRemark?.invalid">
                                     This field is required.
                                 </div>
                             </div>
@@ -199,9 +214,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm" (click)="saveKRADetails(PAPDataForm,papData._id,true)"  id="submitForm">Approved</button>
-                                        <button *ngIf="!isDisabled" class="btn btn-danger" type="button" (click)="saveKRADetails(PAPDataForm,papData._id,false)">Send Back</button>
-                                        <button *ngIf="isDisabled" class="btn btn-secondary" type="button" (click)="modalRef.hide()">close</button>
+                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm"
+                                            (click)="saveKRADetails(PAPDataForm,papData._id,true)"
+                                            id="submitForm">Approved</button>
+                                        <button *ngIf="!isDisabled" class="btn btn-danger" type="button"
+                                            (click)="saveKRADetails(PAPDataForm,papData._id,false)">Send Back</button>
+                                        <button *ngIf="isDisabled" class="btn btn-secondary" type="button"
+                                            (click)="modalRef.hide()">close</button>
                                     </div>
                                 </div>
                             </div>

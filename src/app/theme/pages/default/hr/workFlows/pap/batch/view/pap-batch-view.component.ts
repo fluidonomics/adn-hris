@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit,TemplateRef } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, TemplateRef } from "@angular/core";
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { CommonService } from '../../../../../../../../base/_services/common.service';
@@ -9,29 +9,30 @@ import { MtrService } from "../../../../../services/mtr.service";
 import { PapService } from "../../../../../services/pap.service";
 
 import swal from 'sweetalert2';
-
+declare var moment;
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper.papBatchView',
     templateUrl: 'pap-batch-view.component.html',
+    styleUrls: ['pap-batch-view.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers:[BatchService,PapService]
+    providers: [BatchService, PapService]
 })
 
 export class PapBatchViewComponent implements OnInit {
 
 
-    batchTypes:any=[
-        {_id:"KRA" ,batchTypeName:"KRA", },
-        {_id:"Learning" ,batchTypeName:"Learning",disabled: true},
-        {_id:"PIP" ,batchTypeName:"PIP",disabled: true},
-     ]
+    batchTypes: any = [
+        { _id: "KRA", batchTypeName: "KRA", },
+        { _id: "Learning", batchTypeName: "Learning", disabled: true },
+        { _id: "PIP", batchTypeName: "PIP", disabled: true },
+    ]
 
-    statusTypes:any=[
-        {_id:"Active" ,name:"Active", },
-        {_id:"Terminated" ,name:"Terminated"},
-     ]
+    statusTypes: any = [
+        { _id: "Active", name: "Active", },
+        { _id: "Terminated", name: "Terminated" },
+    ]
     batchData: any = [];
-    activeRowNumber:number=-1;
+    activeRowNumber: number = -1;
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -42,22 +43,22 @@ export class PapBatchViewComponent implements OnInit {
     editBatch: any = {};
     modalRef: BsModalRef;
     currentDate: Date = new Date();
-    _currentEmpId:number;
+    _currentEmpId: number;
 
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
         private _batchService: BatchService,
         public utilityService: UtilityService,
-        public _authService: AuthService,       
+        public _authService: AuthService,
         public _papService: PapService) {
     }
     loadBatchFilter: any = {
-        date:  this.loadBatch(),
+        date: this.loadBatch(),
         status: 'All',
         page: 1
     };
-    batchdatafilter: any = {       
+    batchdatafilter: any = {
         status: 'All',
         page: 1
     };
@@ -72,35 +73,36 @@ export class PapBatchViewComponent implements OnInit {
     initData() {
         this.loadBatch();
     }
-    loadBatch()
-    {
-        this.utilityService.showLoader('#batch-loader');        
+    loadBatch() {
+        this.utilityService.showLoader('#batch-loader');
         this._papService.getPAPBatches(this._currentEmpId)
             .subscribe(
-            res => { 
-                debugger;             
-                this.utilityService.hideLoader('#batch-loader');
-                this.batchData=res;
-                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
-            },
-            error => {
-                this.utilityService.hideLoader('#batch-loader');
-            });
+                res => {
+                    this.utilityService.hideLoader('#batch-loader');
+                    this.batchData = res;
+                    this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+                    this.batchData = this.batchData.sort((a, b) => {
+                        if (moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                        else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                        else return 0;
+                    });
+                },
+                error => {
+                    this.utilityService.hideLoader('#batch-loader');
+                });
     }
-    loadkraWorkFlowDetails(batch_id:number)
-    {       
-    //    this._commonService.getKraWorkFlowInfoByBatch(batch_id)
-    //    .subscribe(
-    //     res => {
-    //         this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData = res.json().data;
-    //     },
-    //     error => {
-    //     });       
+    loadkraWorkFlowDetails(batch_id: number) {
+        //    this._commonService.getKraWorkFlowInfoByBatch(batch_id)
+        //    .subscribe(
+        //     res => {
+        //         this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData = res.json().data;
+        //     },
+        //     error => {
+        //     });       
 
     }
 
-    saveKraWorkFlow(batch_id,kraWorkFlowIndex,status)
-    {
+    saveKraWorkFlow(batch_id, kraWorkFlowIndex, status) {
         swal({
             title: 'Are you sure?',
             text: "Terminate workflow? It can't be undone!",
@@ -111,19 +113,19 @@ export class PapBatchViewComponent implements OnInit {
             confirmButtonText: 'Terminate'
         }).then((result) => {
             if (result.value) {
-                this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex].status=status;
-                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id==batch_id)].kraWorkFlowData[kraWorkFlowIndex])
+                this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex].status = status;
+                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex])
                     .subscribe(
-                    res => {   
-                        swal('Success','Employee Workflow Terminated Successfully','success')
-                    },
-                    error => {
-                    }); 
-                        }
+                        res => {
+                            swal('Success', 'Employee Workflow Terminated Successfully', 'success')
+                        },
+                        error => {
+                        });
+            }
         })
     }
 
-    openEditModal(template: TemplateRef<any>, batch,index) {
+    openEditModal(template: TemplateRef<any>, batch, index) {
         this.modalRef = this.modalService.show(template);
         this.editBatch = Object.assign({}, batch);
         if (this.editBatch && this.editBatch.batchEndDate) {
@@ -131,28 +133,25 @@ export class PapBatchViewComponent implements OnInit {
         }
     }
 
-    saveBatch()
-    {
+    saveBatch() {
         this._batchService.saveBatch(this.editBatch)
-        .subscribe(
-         res => {   
-            this.activeRowNumber=-1;
-            this.loadBatch();
-            this.modalRef.hide();
-            if(this.editBatch.status=='Terminated')
-            {
-                swal('Success','Batch Terminated Successfully','success')
-            }
-            else
-            {
-              swal('Success','Batch Saved Successfully','success')
-            }
-         },
-         error => {
-         }); 
+            .subscribe(
+                res => {
+                    this.activeRowNumber = -1;
+                    this.loadBatch();
+                    this.modalRef.hide();
+                    if (this.editBatch.status == 'Terminated') {
+                        swal('Success', 'Batch Terminated Successfully', 'success')
+                    }
+                    else {
+                        swal('Success', 'Batch Saved Successfully', 'success')
+                    }
+                },
+                error => {
+                });
     }
 
-    
+
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;

@@ -153,7 +153,6 @@ export class PapReviewComponent implements OnInit {
         });
     }
     showPAPDetails(index) {
-        debugger;
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;

@@ -1,35 +1,36 @@
 <div class="m-content">
     <div class="m-portlet m-portlet--tabs m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm">
-                <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    <i class="fa fa-list"></i> 
-                                      Batch 
-                                    <small>
-                                    </small>
-                                </h3>
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        <i class="fa fa-list"></i>
+                        Batch
+                        <small>
+                        </small>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                        placeholder="Search..." [(ngModel)]="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                </div>
-			<div class="m-portlet__body">
-				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-				    <div class="row align-items-center">
-								<div class="col-xl-8 order-2 order-xl-1">
-									<div class="form-group m-form__group row align-items-center">
-										<div class="col-md-4">
-											<div class="m-input-icon m-input-icon--left">
-												<input type="text" class="form-control m-input m-input--solid" placeholder="Search..." [(ngModel)]="search">
-												<span class="m-input-icon__icon m-input-icon__icon--left">
-													<span>
-														<i class="la la-search"></i>
-													</span>
-												</span>
-											</div>
-										</div>
-									</div>
-                                </div>
-                                <!-- <div class="col-xl-4 order-2 order-xl-1">
+                    </div>
+                    <!-- <div class="col-xl-4 order-2 order-xl-1">
                                     <div class="pull-right m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"  [class.m-dropdown--open]="mouseOvered" (mouseout)="mouseOvered=false" (mouseover)="mouseOvered=true">
                                             <span class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
                                                     <i class="la la-plus m--hide"></i>
@@ -104,258 +105,321 @@
                                             </div>
                                     </div>
                                 </div> -->
-				    </div>
-				</div>
-				<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"  [ngClass]="{'m-datatable--error': (batchData | orderBy: key : reverse | filter:search)?.length==0 }">
-                    <table class="m-datatable__table">
-                            <thead class="m-datatable__head">
-							    <tr class="m-datatable__row">
-										<th class="m-datatable__cell" width="10%"></th>
-										<th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-												<span>
-                                                TITLE
-												<i class="la" *ngIf="key == 'batchName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-												</span>
-										</th>
-										<th (click)="sort('batchType')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-											<span>
-											  TYPE
-											<i class="la" *ngIf="key == 'batchType'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-                                        </th>
-                                        <!-- <th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-                                                <span>
-                                                INITIATED BY
-                                                <i class="la" *ngIf="key == 'createdBy'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                </span>
-                                        </th> -->
-                                         
-										<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-											<span>
-                                            INITIATED ON
-											<i class="la" *ngIf="key == 'createdAt'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-											</span>
-                                        </th>
-                                        <th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-                                                <span>
-                                                LAST DATE
-                                                <i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                </span>
-                                        </th>
-                                        <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-                                                <span>
-                                                BATCH STATUS
-                                                <i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
-                                                </span>
-                                         </th>
-                                        <th class="m-datatable__cell m-datatable__cell--sort" width="15%" >
-                                            <span>
-                                            ACTION
-                                            </span>
-                                       </th>
-								</tr>
-							</thead>
-							<tbody class="m-datatable__body" id="batch-loader">
-                                <ng-container *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: loadBatchFilter.page };let i=index ;let even=even;" >
-                                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" >
-                                           <td class="m-datatable__cell" width="10%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <a class="btn btn-outline-success m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air " [ngClass]="batch._id==activeRowNumber? 'active':''">
-                                                        <i class="td-icon-color la" (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(batch._id)" [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
-                                                    </a>
-                                            </td>
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span>{{batch.batchName}}</span>
-                                            </td>
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span>{{batch.batchType}}</span>
-                                            </td>
-                                            <!-- <td class="m-datatable__cell" width="15%" >
-                                                <span>{{batch.createdBy}}</span>
-                                            </td> -->
-                                           
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span>{{batch.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
-                                            </td>
-                                            
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
-                                            </td>
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span style="width: 100px;"><span class="m-badge m-badge--wide" [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated'}">{{batch.status}}</span></span>
-                                            </td>
-                                            <td class="m-datatable__cell" width="15%" [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
-                                                <span *ngIf="batch.status!='Terminated'">
-                                                        <a (click)="openEditModal(templateEdit,batch)" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
-                                                            <i class="la la-edit"></i>
-                                                        </a>
-                                                </span>
-                                            </td>
-                                    </tr>
-                                    <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
-                                            <td colspan="5" style="padding:10px 30px 35px 30px; background:#e3e4f7">
-                                                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-                                                    <table class="m-datatable__table" >
-                                                        <thead class="m-datatable__head">
-                                                        <tr class="m-datatable__row">
-                                                                <th class="m-datatable__cell" width="62%">
-                                                                    EMPLOYEE NAME
-                                                                </th>
-                                                                <!-- <th class="m-datatable__cell" width="40%">
+                </div>
+            </div>
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                [ngClass]="{'m-datatable--error': (batchData | orderBy: key : reverse | filter:search)?.length==0 }">
+                <table class="m-datatable__table">
+                    <thead class="m-datatable__head">
+                        <tr class="m-datatable__row">
+                            <th class="m-datatable__cell" width="10%"></th>
+                            <th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="15%">
+                                <span>
+                                    TITLE
+                                    <i class="la" *ngIf="key == 'batchName'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="15%">
+                                <span>
+                                    INITIATED ON
+                                    <i class="la" *ngIf="key == 'createdAt'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('updatedAt')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="15%">
+                                <span>
+                                    UPDATED ON
+                                    <i class="la" *ngIf="key == 'updatedAt'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="15%">
+                                <span>
+                                    LAST DATE
+                                    <i class="la" *ngIf="key == 'batchEndDate'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    BATCH STATUS
+                                    <i class="la" *ngIf="key == 'status'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    ACTION
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="m-datatable__body" id="batch-loader">
+                        <ng-container
+                            *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: loadBatchFilter.page };let i=index ;let even=even;">
+                            <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}">
+                                <td class="m-datatable__cell" width="10%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <a class="btn btn-outline-success m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air "
+                                        [ngClass]="batch._id==activeRowNumber? 'active':''">
+                                        <i class="td-icon-color la"
+                                            (click)="activeRowNumber==batch._id ? activeRowNumber=null:activeRowNumber=batch._id;loadkraWorkFlowDetails(batch._id)"
+                                            [ngClass]="batch._id==activeRowNumber? 'la-angle-down':'la-angle-up'"></i>
+                                    </a>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span>{{batch.batchName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span>{{batch.createdAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span>{{batch.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span>{{batch.batchEndDate | date:"dd-MMM-yyyy hh:mm aa"}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span style="width: 100px;"><span class="m-badge m-badge--wide"
+                                            [ngClass]="{'m-badge--brand':batch.status=='Active','m-badge--secondary':batch.status=='Terminated','m-badge--warning':batch.status=='Initiated'}">{{batch.status}}</span></span>
+                                </td>
+                                <td class="m-datatable__cell" width="15%"
+                                    [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
+                                    <span *ngIf="batch.status!='Terminated'">
+                                        <a (click)="openEditModal(templateEdit,batch)"
+                                            class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                            title="Edit">
+                                            <i class="la la-edit"></i>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="m-datatable__row" *ngIf="activeRowNumber==batch._id">
+                                <td colspan="5" style="padding:10px 30px 35px 30px; background:#e3e4f7">
+                                    <div
+                                        class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+                                        <table class="m-datatable__table">
+                                            <thead class="m-datatable__head">
+                                                <tr class="m-datatable__row">
+                                                    <th class="m-datatable__cell" width="62%">
+                                                        EMPLOYEE NAME
+                                                    </th>
+                                                    <!-- <th class="m-datatable__cell" width="40%">
                                                                    TimeLine
                                                                 </th> -->
-                                                                <th class="m-datatable__cell" width="15%">
-                                                                    STATUS
-                                                                </th>
-                                                               
-                                                        <tr>
-                                                        </thead>
-                                                        <tbody class="m-datatable__body"> 
-                                                            <ng-container *ngFor="let kraRow of batch?.pap_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
-                                                                <tr class="m-datatable__row">
-                                                                        <td class="m-datatable__cell" width="62%" >
-                                                                                <span>{{kraRow.emp_details?.fullName}}</span>
-                                                                        </td>
-                                                                        <!-- <td class="m-datatable__cell" width="40%" >
+                                                    <th class="m-datatable__cell" width="15%">
+                                                        OVERALL RATING
+                                                    </th>
+                                                    <th class="m-datatable__cell" width="15%">
+                                                        STATUS
+                                                    </th>
+
+                                                <tr>
+                                            </thead>
+                                            <tbody class="m-datatable__body">
+                                                <ng-container
+                                                    *ngFor="let kraRow of batch?.pap_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
+                                                    <tr class="m-datatable__row">
+                                                        <td class="m-datatable__cell" width="62%">
+                                                            <span>{{kraRow.emp_details?.fullName}}</span>
+                                                        </td>
+                                                        <!-- <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.timeline_id}}</span>
                                                                         </td> -->
-                                                                        <td class="m-datatable__cell" width="15%" >
-                                                                             <span style="width: 100px;"><span class="m-badge m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
-                                                                        </td>
-                                                                       
-                                                                </tr>
-                                                                <span *ngIf="batch?.batchData?.length==0" class="m-datatable--error">No records found</span>
-                                                            </ng-container>
-                                                        </tbody>
-                                                    </table>
-                                                    <pagination-template #pdata="paginationApi" (pageChange)="batchdatafilter.page = $event" class="paginationtemplate" >
-                                                        <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                                                            <ul class="m-datatable__pager-nav" *ngIf="pdata.pages.length > 0">
-                                                                <li>
-                                                                    <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.setCurrent(1)" >
-                                                                        <i class="la la-angle-double-left"></i>
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    <span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()" (click)="pdata.previous()" >
-                                                                        <i class="la la-angle-left"></i>
-                                                                    </span>
-                                                                </li>
-                                                                <li *ngFor="let page of pdata.pages">
-                                                                    <span (click)="pdata.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="pdata.getCurrent() === page.value">
-                                                                        {{ page.label }}
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    <span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()" (click)="pdata.next()">
-                                                                        <i class="la la-angle-right"></i>
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    <span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"  (click)="pdata.setCurrent(pdata.pages.length + 1)">
-                                                                        <i class="la la-angle-double-right"></i>
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </pagination-template>
-                                                </div>
-                                            </td>
-                                    </tr>
-                                </ng-container>
-                                <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No records found</span>
-                            </tbody>
-					</table>
-					<pagination-template #p="paginationApi" (pageChange)="loadBatchFilter.page = $event" class="paginationtemplate" >
-						<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-							<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-								<li>
-									<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)" >
-										<i class="la la-angle-double-left"></i>
-                                    </span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()" >
-										<i class="la la-angle-left"></i>
-									</span>
-								</li>
-								<li *ngFor="let page of p.pages">
-									<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-										{{ page.label }}
-									</span>
-								</li>
-								<li>
-									<span  class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
-										<i class="la la-angle-right"></i>
-									</span>
-								</li>
-								<li>
-									<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"  (click)="p.setCurrent(p.pages.length + 1)">
-										<i class="la la-angle-double-right"></i>
-									</span>
-								</li>
-							</ul>
-						</div>
-					</pagination-template>
-					<div class="pager-display-size" *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length!=0">
-						<select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size" data-width="70px" data-selected="50" tabindex="1">
-								<option value=10>10</option>
-								<option value=20>20</option>
-								<option value=30>30</option>
-								<option value=50>50</option>
-								<option value=100>100</option>
-                        </select>
-                        <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (batchData | orderBy: key : reverse | filter:search)?.length ? (batchData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }} of {{(batchData | orderBy: key : reverse | filter:search)?.length}} </span>
-					</div>
-				</div>  
-			</div>
+                                                        <td class="m-datatable__cell overallRating" width="15%">
+                                                            <span *ngIf="kraRow.status == 'Approved'">
+                                                                {{kraRow?.overallRating}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="m-datatable__cell" width="15%">
+                                                            <span style="width: 100px;"><span
+                                                                    class="m-badge m-badge--success m-badge--wide"
+                                                                    [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
+                                                        </td>
+
+                                                    </tr>
+                                                    <span *ngIf="batch?.batchData?.length==0"
+                                                        class="m-datatable--error">No records found</span>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                        <pagination-template #pdata="paginationApi"
+                                            (pageChange)="batchdatafilter.page = $event" class="paginationtemplate">
+                                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                                <ul class="m-datatable__pager-nav" *ngIf="pdata.pages.length > 0">
+                                                    <li>
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--first"
+                                                            [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()"
+                                                            (click)="pdata.setCurrent(1)">
+                                                            <i class="la la-angle-double-left"></i>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                                            [class.m-datatable__pager-link--disabled]="pdata.isFirstPage()"
+                                                            (click)="pdata.previous()">
+                                                            <i class="la la-angle-left"></i>
+                                                        </span>
+                                                    </li>
+                                                    <li *ngFor="let page of pdata.pages">
+                                                        <span (click)="pdata.setCurrent(page.value)"
+                                                            class="m-datatable__pager-link m-datatable__pager-link-number "
+                                                            [class.m-datatable__pager-link--active]="pdata.getCurrent() === page.value">
+                                                            {{ page.label }}
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--next"
+                                                            [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"
+                                                            (click)="pdata.next()">
+                                                            <i class="la la-angle-right"></i>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <span title="Last"
+                                                            class="m-datatable__pager-link m-datatable__pager-link--last"
+                                                            [class.m-datatable__pager-link--disabled]="pdata.isLastPage()"
+                                                            (click)="pdata.setCurrent(pdata.pages.length + 1)">
+                                                            <i class="la la-angle-double-right"></i>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </pagination-template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0"
+                            class="m-datatable--error">No records found</span>
+                    </tbody>
+                </table>
+                <pagination-template #p="paginationApi" (pageChange)="loadBatchFilter.page = $event"
+                    class="paginationtemplate">
+                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                        <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--first"
+                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                    (click)="p.setCurrent(1)">
+                                    <i class="la la-angle-double-left"></i>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
+                                    <i class="la la-angle-left"></i>
+                                </span>
+                            </li>
+                            <li *ngFor="let page of p.pages">
+                                <span (click)="p.setCurrent(page.value)"
+                                    class="m-datatable__pager-link m-datatable__pager-link-number "
+                                    [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                    {{ page.label }}
+                                </span>
+                            </li>
+                            <li>
+                                <span class="m-datatable__pager-link m-datatable__pager-link--next"
+                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+                                    <i class="la la-angle-right"></i>
+                                </span>
+                            </li>
+                            <li>
+                                <span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                    (click)="p.setCurrent(p.pages.length + 1)">
+                                    <i class="la la-angle-double-right"></i>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </pagination-template>
+                <div class="pager-display-size" *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length!=0">
+                    <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size"
+                        title="Select page size" data-width="70px" data-selected="50" tabindex="1">
+                        <option value=10>10</option>
+                        <option value=20>20</option>
+                        <option value=30>30</option>
+                        <option value=50>50</option>
+                        <option value=100>100</option>
+                    </select>
+                    <span class="pager-display-title"> Displaying
+                        {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} -
+                        {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (batchData | orderBy: key : reverse | filter:search)?.length ? (batchData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }}
+                        of {{(batchData | orderBy: key : reverse | filter:search)?.length}} </span>
+                </div>
+            </div>
+        </div>
     </div>
     <ng-template #templateEdit>
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Edit Batch</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="m-form m-form--fit m-form--label-align-right" id="editBatch" #feditBatch="ngForm" (submit)="feditBatch.valid && saveBatch(feditBatch)">
-                    <div class="form-body">                        
-                        <div class="row">
-                            <div class="col-md-12 adn-form__group">
-                                <div class="m-form__group form-group">
-                                        <label for="batchName">Batch Name
-                                            </label>
-                                            <span class="required" aria-required="true"> * </span>
-                                            <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel" placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required disabled="disabled">
-                                            <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchName.valid">
-                                                    This field is required.
-                                            </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 adn-form__group">
-                                <div class="m-form__group form-group">
-                                    <label for="batchEndDate">Batch End Date
-                                        </label>
-                                        <span class="required" aria-required="true"> * </span>
-                                        <input name="batchEndDate" class="form-control m-input m-input--air" #batchEndDate="ngModel" placeholder="Enter Batch End Date" [(ngModel)]="editBatch.batchEndDate" bsDatepicker [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" #batchEndDate="ngModel" placement="top" required>
-                                        <div class="form-control-feedback has-danger" *ngIf="feditBatch.submitted && !batchEndDate.valid">
-                                                This field is required.
-                                        </div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="m-form__actions">
-                                    <button class="btn btn-success submitForm" type="submit">Submit</button>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Edit Batch</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="m-form m-form--fit m-form--label-align-right" id="editBatch" #feditBatch="ngForm"
+                (submit)="feditBatch.valid && saveBatch(feditBatch)">
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12 adn-form__group">
+                            <div class="m-form__group form-group">
+                                <label for="batchName">Batch Name
+                                </label>
+                                <span class="required" aria-required="true"> * </span>
+                                <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel"
+                                    placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required
+                                    disabled="disabled">
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="feditBatch.submitted && !batchName.valid">
+                                    This field is required.
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="row">
+                        <div class="col-md-12 adn-form__group">
+                            <div class="m-form__group form-group">
+                                <label for="batchEndDate">Batch End Date
+                                </label>
+                                <span class="required" aria-required="true"> * </span>
+                                <input name="batchEndDate" class="form-control m-input m-input--air"
+                                    #batchEndDate="ngModel" placeholder="Enter Batch End Date"
+                                    [(ngModel)]="editBatch.batchEndDate" bsDatepicker [readonly]="true"
+                                    [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                    #batchEndDate="ngModel" placement="top" required>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="feditBatch.submitted && !batchEndDate.valid">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-form__actions">
+                                <button class="btn btn-success submitForm" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </ng-template>
 </div>
