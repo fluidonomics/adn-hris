@@ -32,7 +32,7 @@ export class GrievanceDetailComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGreivance=false;
+    raiseGrievance=false;
 
     progressStatuses = [
         {
@@ -140,7 +140,7 @@ export class GrievanceDetailComponent {
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
                     this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
-                    this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                
+                    this.raiseGrievance =  this.papWorkFlowData[0].isRatingCommunicated;                                
                     resolve(this.papInfoData);
                 }
             });
@@ -155,7 +155,7 @@ export class GrievanceDetailComponent {
                 }).value();
                 this.papInfoData = this.papWorkFlowData[0].papdetails;
                 this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
-                this.raiseGreivance =  this.papWorkFlowData[0].isRatingCommunicated;                                         
+                this.raiseGrievance =  this.papWorkFlowData[0].isRatingCommunicated;                                         
             }
         });
     }
