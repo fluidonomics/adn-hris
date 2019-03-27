@@ -171,37 +171,39 @@ export class PapDetailedViewComponent implements OnInit {
 
     }
     saveKRADetails(form, id: number) {
-        this.modalRef.hide();
-        let request = {
-            "papDetailsId": this.papData._id,
-            "updatedBy": this._currentEmpId,
-            "supRemark": this.papData.supRemark,
-            "sup_ratingScaleId": this.papData.sup_ratingScaleId
-        }
-        console.log(request);
-        this.papService.papUpdateSupervisor(request).subscribe(res => {
-            if (res.ok) {
-                // this.papGridInput = {};
-                // let gridInput = {
-                //     empId: this._currentEmpId,
-                //     param_id: this.param_id
-                // }
-                // Object.assign(this.papGridInput, gridInput)
-                this.loadPapDetails().then(res => {
-                    this.papChanges.next(res);
-                });
-                swal({
-                    title: 'Success',
-                    text: "PAP has been Saved.",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+        if (form.valid) {
+            this.modalRef.hide();
+            let request = {
+                "papDetailsId": this.papData._id,
+                "updatedBy": this._currentEmpId,
+                "supRemark": this.papData.supRemark,
+                "sup_ratingScaleId": this.papData.sup_ratingScaleId
             }
-        }, error => {
+            console.log(request);
+            this.papService.papUpdateSupervisor(request).subscribe(res => {
+                if (res.ok) {
+                    // this.papGridInput = {};
+                    // let gridInput = {
+                    //     empId: this._currentEmpId,
+                    //     param_id: this.param_id
+                    // }
+                    // Object.assign(this.papGridInput, gridInput)
+                    this.loadPapDetails().then(res => {
+                        this.papChanges.next(res);
+                    });
+                    swal({
+                        title: 'Success',
+                        text: "PAP has been Saved.",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }, error => {
 
-        })
+            })
+        }
     }
     submitPapWorkFlow() {
         let dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.sup_ratingScaleId == null || obj.supRemark == null);

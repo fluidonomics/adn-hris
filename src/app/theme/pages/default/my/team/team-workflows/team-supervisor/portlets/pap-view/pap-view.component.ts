@@ -36,13 +36,7 @@ export class PapViewComponent implements OnInit {
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
-                    let count = 0;
-                    if (p.kra_details && p.kra_details.length > 0) {
-                        count = p.kra_details.filter(pDetails => {
-                            return pDetails.status == "Pending Reviewer" || pDetails.status == "Approved";
-                        }).length;
-                    }
-                    return count == p.kra_details.length;
+                    return p.papmasters.reviewerStatus == 'Approved' && (p.papmasters.grievanceStatus == 'Satisfied' || p.papmasters.grievanceStatus == null)
                 })
             }
         });
