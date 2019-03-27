@@ -35,7 +35,7 @@ export class PapApprovalsComponent {
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
-                    return p.papmasters.reviewerStatus == null || p.papmasters.reviewerStatus == 'SendBack' || p.papmasters.grievanceStatus == 'Initiated'
+                    return p.papmasters.reviewerStatus != 'Approved' && p.papmasters.reviewerStatus != 'Pending';
                 })
             }
         });

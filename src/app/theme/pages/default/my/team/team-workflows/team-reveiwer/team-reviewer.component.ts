@@ -115,7 +115,7 @@ export class MyTeamReviewerComponent implements OnInit {
                 this.papData = papData.filter(p => {
                     let submittedCount = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
-                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
+                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer" || pDetails.grievanceStatus == "Pending Reviewer").length;
                     }
                     return submittedCount > 0;
                 })
@@ -124,11 +124,10 @@ export class MyTeamReviewerComponent implements OnInit {
                     else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
                     else return 0;
                 });
-
                 this.papViewData = papData.filter(p => {
                     let count = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
-                        count = p.kra_details.filter(pDetails => pDetails.status == "Approved").length;
+                        count = p.kra_details.filter(pDetails => (pDetails.status == "Approved" && pDetails.grievanceStatus == null) || (pDetails.status == "Approved" && pDetails.grievanceStatus == 'Approved')).length;
                     }
                     return count == p.kra_details.length;
                 })

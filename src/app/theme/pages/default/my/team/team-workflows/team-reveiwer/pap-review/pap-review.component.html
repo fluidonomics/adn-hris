@@ -178,7 +178,7 @@
                                     required></textarea>
                             </div>
                             <div class="col-md-6 details">
-                                <span>supervisor Rating Scale</span>
+                                <span>Supervisor Rating Scale</span>
                                 <ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
                                     [items]="papRatingScaleData" bindLabel="displayName" bindValue="_id"
                                     placeholder="Select Rating" [(ngModel)]="papData.sup_ratingScaleId"
@@ -190,7 +190,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 details">
-                                <span>supervisor Remarks</span>
+                                <span>Supervisor Remarks</span>
                                 <textarea name="supComment" id="supComment" [(ngModel)]="papData.supRemark"
                                     #supComment="ngModel" class="form-control m-input m-input--air" disabled
                                     required></textarea>
@@ -209,18 +209,46 @@
                                     This field is required.
                                 </div>
                             </div>
+                            <div class="col-md-6 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Grievance Rating Scale</span>
+                                <ng-select class="m-input m-input--air" name="grievance_ratingScaleId"
+                                    id="grievance_ratingScaleId" [items]="papRatingScaleData" bindLabel="displayName"
+                                    bindValue="_id" placeholder="Select Rating"
+                                    [(ngModel)]="papData.grievance_ratingScaleId" [clearable]="false"
+                                    #colorStatus="ngModel" disabled>
+                                </ng-select>
+                            </div>
+                            <div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Supervisor Grievance Remarks</span>
+                                <textarea name="grievanceSupRemark" id="grievanceSupRemark"
+                                    [(ngModel)]="papData.grievanceSupRemark" #grievanceSupRemark="ngModel"
+                                    class="form-control m-input m-input--air" disabled></textarea>
+                            </div>
+                            <div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Reviewer Grievance Remarks</span>
+                                <textarea name="grievanceRevRemark" id="grievanceRevRemark"
+                                    [(ngModel)]="papData.grievanceRevRemark" #grievanceRevRemark="ngModel"
+                                    class="form-control m-input m-input--air"
+                                    [disabled]="papData.grievanceStatus != 'Pending Reviewer'" required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && grievanceRevRemark?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-actions details">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm"
+                                        <button *ngIf="!isDisabled || papData.grievanceStatus == 'Pending Reviewer'"
+                                            class="btn btn-success submitForm"
                                             (click)="saveKRADetails(PAPDataForm,papData._id,true)"
                                             id="submitForm">Approved</button>
-                                        <button *ngIf="!isDisabled" class="btn btn-danger" type="button"
+                                        <button *ngIf="!isDisabled || papData.grievanceStatus == 'Pending Reviewer'"
+                                            class="btn btn-danger" type="button"
                                             (click)="saveKRADetails(PAPDataForm,papData._id,false)">Send Back</button>
                                         <button *ngIf="isDisabled" class="btn btn-secondary" type="button"
-                                            (click)="modalRef.hide()">close</button>
+                                            (click)="modalRef.hide()">Close</button>
                                     </div>
                                 </div>
                             </div>
