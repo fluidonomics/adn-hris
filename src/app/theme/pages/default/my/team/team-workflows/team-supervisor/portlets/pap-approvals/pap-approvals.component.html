@@ -59,7 +59,8 @@
                                 </span>
                             </div>
                             <span class="m-widget4__ext">
-                                <span class="m-widget4__number" *ngIf="pap.papmasters.reviewerStatus" [ngClass]="{'sendBack':pap.papmasters.reviewerStatus=='SendBack','approved':pap.papmasters.reviewerStatus =='Approved'}">
+                                <span class="m-widget4__number" *ngIf="pap.papmasters.reviewerStatus"
+                                    [ngClass]="{'sendBack':pap.papmasters.reviewerStatus=='SendBack','approved':pap.papmasters.reviewerStatus =='Approved'}">
                                     {{pap.papmasters.reviewerStatus}}
                                 </span>
                             </span>

@@ -222,12 +222,41 @@
                                     This field is required.
                                 </div>
                             </div>
+                            <div class="col-md-6 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Grievance Rating Scale</span>
+                                <ng-select class="m-input m-input--air" name="grievance_ratingScaleId"
+                                    id="grievance_ratingScaleId" [items]="papRatingScaleData" bindLabel="displayName"
+                                    bindValue="_id" placeholder="Select Rating"
+                                    [(ngModel)]="papData.grievance_ratingScaleId" [clearable]="false"
+                                    #colorStatus="ngModel"
+                                    [disabled]="papData.grievanceStatus == null || papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
+                                    required>
+                                </ng-select>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && grievance_ratingScaleId?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Supervisor Grievance Remarks</span>
+                                <textarea name="grievanceSupRemark" id="grievanceSupRemark"
+                                    [(ngModel)]="papData.grievanceSupRemark" #grievanceSupRemark="ngModel"
+                                    class="form-control m-input m-input--air"
+                                    [disabled]="papData.grievanceStatus == null || papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
+                                    required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && grievanceSupRemark?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-actions details">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="m-form__actions">
-                                        <button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit"
+                                        <button
+                                            *ngIf="!isDisabled || (papWorkFlowData[0].grievanceStatus == 'Initiated' && papData.grievanceStatus != 'Approved' && papData.grievanceStatus != 'Pending Reviewer')"
+                                            class="btn btn-success submitForm" type="submit"
                                             id="submitForm">Save</button>
                                         <button class="btn btn-secondary" type="button"
                                             (click)="modalRef.hide()">Close</button>
