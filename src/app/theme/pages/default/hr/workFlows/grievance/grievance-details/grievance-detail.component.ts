@@ -32,7 +32,7 @@ export class GrievanceDetailComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGrievance=false;
+    raiseGrievance = false;
 
     progressStatuses = [
         {
@@ -76,12 +76,12 @@ export class GrievanceDetailComponent {
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
-            this._route.params.subscribe(params => {                                             
+            this._route.params.subscribe(params => {
                 this.param_id = params['id'];
                 this.papGridInput.empId = params['emp_id'];
                 this.papGridInput.param_id = this.param_id;
                 this.loadData();
-                                
+
             });
         });
     }
@@ -108,14 +108,14 @@ export class GrievanceDetailComponent {
             });
     }
 
-    loadSupervisorData() {        
+    loadSupervisorData() {
         this._commonService.getKraSupervisor(this.papGridInput.empId).subscribe(data => {
             this.supervisorData = data.json();
         }, error => {
         });
     }
 
-    loadData() {        
+    loadData() {
         this.loadpapInfoData();
         this.loadSupervisorData();
         this.loadWeightAgeData();
@@ -139,14 +139,14 @@ export class GrievanceDetailComponent {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
-                    this.raiseGrievance =  this.papWorkFlowData[0].isRatingCommunicated;                                
+                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                    this.raiseGrievance = this.papWorkFlowData[0].isRatingCommunicated;
                     resolve(this.papInfoData);
                 }
             });
         })
     }
-    loadpapInfoData(){              
+    loadpapInfoData() {
         this.papService.getPapDetailsSingleEmployee(this.papGridInput.empId).subscribe(res => {
             let papDetails = res || [];
             if (papDetails.length > 0) {
@@ -154,13 +154,13 @@ export class GrievanceDetailComponent {
                     return v[0];
                 }).value();
                 this.papInfoData = this.papWorkFlowData[0].papdetails;
-                this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;                    
-                this.raiseGrievance =  this.papWorkFlowData[0].isRatingCommunicated;                                         
+                this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
+                this.raiseGrievance = this.papWorkFlowData[0].isRatingCommunicated;
             }
         });
     }
 
-    showPAPDetails(index) {        
+    showPAPDetails(index) {
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
@@ -174,93 +174,4 @@ export class GrievanceDetailComponent {
             this.isDisabled = false;
         }
     }
-
-    saveKRADetails(form, id: number) {
-        if (form.valid) {
-            this.modalRef.hide();
-            let request = {
-                "papDetailsId": this.papData._id,
-                "updatedBy": this._currentEmpId,
-                "empRemark": this.papData.empRemark,
-                "emp_ratingScaleId": this.papData.emp_ratingScaleId
-            }
-            console.log(request);
-            this.papService.papUpdate(request).subscribe(res => {                
-                if (res.ok) {
-                    this.papGridInput = {};
-                    let gridInput = {
-                        empId: this._currentEmpId,
-                        param_id: this.param_id
-                    }
-                    // this.papGridInput.empId=this._currentEmpId;
-                    // this.papGridInput.param_id=this.param_id;
-                    Object.assign(this.papGridInput, gridInput)
-
-                    this.loadPapDetails().then(res => {
-                        this.papChanges.next(res);
-                    });
-
-                    swal({
-                        title: 'Success',
-                        text: "PAP has been Saved.",
-                        type: 'success',
-                        showCancelButton: false,
-                        confirmButtonColor: '#66BB6A',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            }, error => {
-
-            })
-        }
-    }
-    submitPapWorkFlow(isdirty) {
-        let dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.status != "Pending");
-        console.log(dataWithoutPendingStatus);
-        if (dataWithoutPendingStatus.length == 0) {
-            let request = {
-                pap_master_id: this.param_id,
-                updatedBy: this._currentEmpId
-            }
-            swal({
-                title: 'Are you sure?',
-                text: "You want to submit PAP to supervisor",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    this.papService.papSubmit(request).subscribe(res => {
-                        if (res.ok) {
-                            this.loadPapDetails()
-                            swal({
-                                title: 'Success',
-                                text: "PAP has been submited.",
-                                type: 'success',
-                                showCancelButton: false,
-                                confirmButtonColor: '#66BB6A',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    }, error => {
-
-                    })
-                }
-            });
-        }
-        else {
-            swal({
-                title: 'Oops!',
-                text: 'All PAP need to be saved before submitting',
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#66BB6A',
-                confirmButtonText: 'OK'
-            });
-        }
-    }
-
-
 }
