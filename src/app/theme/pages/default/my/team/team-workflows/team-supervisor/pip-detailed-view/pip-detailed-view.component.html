@@ -368,12 +368,12 @@
 														class="form-control m-input m-input--air"
 														[disabled]="isDisabled"></textarea>
 													<div class="form-control-feedback has-danger"
-														*ngIf="PipDataForm.submitted && superviserInitialComment.valid">
+														*ngIf="PipDataForm.submitted && superviserInitialComment.invalid">
 														This field is required.
 													</div>
 												</div>
 
-												<div class="col-md-6 details">
+												<div class="col-md-6 details" *ngIf="pipData.empComment_month6 || pipData.supComment_month6 || isCommentOfMonth6Enable">
 													<span>Final Performance rating</span>
 													<ng-select class="m-input m-input--air customError"
 														name="supervisorPerformanceRating{{i}}" id="supervisorrating"
@@ -387,7 +387,7 @@
 													</ng-select>
 
 												</div>
-												<div class="col-md-6 details">
+												<div class="col-md-6 details" *ngIf="pipData.empComment_month6 || pipData.supComment_month6 || isCommentOfMonth6Enable">
 													<span>Final Review</span>
 													<textarea name="superviserFinalReview" id="superviserFinalReview"
 														[(ngModel)]="pipData.superviserFinalReview"
@@ -395,7 +395,7 @@
 														class="form-control m-input m-input--air"
 														[disabled]="isDisabled && !(pipData.dateDifference >= pipData.master_timelines)"></textarea>
 													<div class="form-control-feedback has-danger"
-														*ngIf="superviserFinalReview.valid">
+														*ngIf="PipDataForm.submitted && superviserFinalReview.valid">
 														This field is required.
 													</div>
 												</div>
@@ -654,7 +654,7 @@
 													<textarea name="sup_final_com" id="sup_final_com"
 														[(ngModel)]="pipData.pip_master_details.sup_final_com"
 														#supcom="ngModel" class="form-control m-input m-input--air"
-														required></textarea>
+														required disabled="pipData.pip_master_details.emp_final_com"></textarea>
 												</div>
 												<div class="col-md-2 details">
 													<span>Reviewer Comments</span>
@@ -681,7 +681,7 @@
 														id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
 														bindValue="_id" placeholder="Final Recommendation"
 														[(ngModel)]="pipData.final_recommendation" [clearable]="false"
-														#final_recommendation="ngModel">
+														#final_recommendation="ngModel" disabled>
 													</ng-select>
 												</div>
 
