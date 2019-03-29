@@ -36,6 +36,7 @@ export class HrPipComponent {
     p2: number = 1;
 
     _currentEmpId: number;
+    currentEmpname: string;
     itemPerPage: number = 20;
 
     search: any;
@@ -75,6 +76,7 @@ export class HrPipComponent {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.currentEmpname = this._authService.currentUserData.fullName;
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
@@ -129,6 +131,7 @@ export class HrPipComponent {
             let data = res.json().data || [];
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                debugger;
                 this.employeeData = data;
                 this.showdetail();
                 this.utilityService.hideLoader('#initiate-loader');
@@ -205,6 +208,7 @@ export class HrPipComponent {
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
                 this.batchData.createdBy = this._currentEmpId;
+                this.batchData.createdByName = this.currentEmpname;
     
                 this.utilityService.showLoader('#initiate-loader');
                 this._pipService.initBatch(this.batchData)
