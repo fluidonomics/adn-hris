@@ -63,6 +63,10 @@
                                     [ngClass]="{'sendBack':pap.papmasters.reviewerStatus=='SendBack','approved':pap.papmasters.reviewerStatus =='Approved'}">
                                     {{pap.papmasters.reviewerStatus}}
                                 </span>
+                                <span class="m-widget4__number sendBack"
+                                    *ngIf="!pap.papmasters.reviewerStatus && pap.papmasters.grievanceStatus == 'Initiated'">
+                                    Grievance Raised
+                                </span>
                             </span>
                         </div>
                     </div>
