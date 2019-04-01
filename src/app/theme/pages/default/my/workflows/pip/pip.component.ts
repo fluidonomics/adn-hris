@@ -81,6 +81,7 @@ export class MyPipComponent {
     isVisible: boolean = true;
     showStats: boolean = false;
     isApproved: boolean = false;
+    isInitiated: boolean = false;
     employee: any = {};
     dateDifference:number;
     isCommentOfMonth1Enable: boolean = false;
@@ -435,7 +436,8 @@ export class MyPipComponent {
                        hrFinalCom: pipData.hr_final_com,
                        empFinalCom: pipData.emp_final_com,
                        revFinalCom: pipData.rev_final_com,
-                       supFinalCom: pipData.sup_final_com
+                       supFinalCom: pipData.sup_final_com,
+                       finalRecommendation: pipData.final_recommendation
                     }
 
                     this.utilityService.showLoader('.mtrDetailsPortlet');
@@ -545,7 +547,14 @@ export class MyPipComponent {
         // else {
         //     this.showStat = false;
         // }
-        if (this.pipData.status == "Approved" || this.pipData.status == "Initiated") {
+        if (this.pipData.status === "Initiated" || this.pipData.status === "SendBack") {
+            this.isInitiated = true;
+        }
+        else {
+            this.isInitiated = false;
+        }
+        
+        if (this.pipData.status == "Approved") {
             this.isApproved = true;
         }
         else {
@@ -571,18 +580,19 @@ export class MyPipComponent {
 
     monthlyCommentValidation() {
 
-        if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+        if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2 && !this.pipData.empComment_month1) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if(this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+        } else if(this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3 && !this.pipData.empComment_month2) {
             this.isCommentOfMonth2Enable = true;
-        } else if(this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+        } else if(this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4 && !this.pipData.empComment_month3) {
             this.isCommentOfMonth3Enable = true;
-        } else if(this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+        } else if(this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5 && !this.pipData.empComment_month4) {
             this.isCommentOfMonth4Enable = true;
-        } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+        } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6 && !this.pipData.empComment_month5) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
+        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
+            // debugger;
             this.isCommentOfMonth6Enable = true;
         }
     }
@@ -593,7 +603,9 @@ export class MyPipComponent {
         if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
 
-                this.saveEnabled = true;
+                // debugger;
+                // this.saveEnabled = true;
+                return true;
             }
             
     }
