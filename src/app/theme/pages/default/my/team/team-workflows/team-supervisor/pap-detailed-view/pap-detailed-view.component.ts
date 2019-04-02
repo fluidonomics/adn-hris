@@ -221,7 +221,8 @@ export class PapDetailedViewComponent implements OnInit {
             let request = {
                 papMasterId: this.papMasterId,
                 updatedBy: this._currentEmpId,
-                grievanceStatus: this.papWorkFlowData[0].grievanceStatus
+                grievanceStatus: this.papWorkFlowData[0].grievanceStatus,
+                action_link: window.location.origin + '/my/team/workflows/pap-detailed-view/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId
             }
             swal({
                 title: 'Are you sure?',

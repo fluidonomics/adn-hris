@@ -252,7 +252,8 @@ export class MyPapComponent {
         if (dataWithoutPendingStatus.length == 0) {
             let request = {
                 pap_master_id: this.param_id,
-                updatedBy: this._currentEmpId
+                updatedBy: this._currentEmpId,
+                action_link: window.location.origin + '/my/team/workflows/pap-detailed-view/' + this.papWorkFlowData[0]._id + '/' + this.papGridInput.empId
             }
             swal({
                 title: 'Are you sure?',
