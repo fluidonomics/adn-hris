@@ -167,20 +167,31 @@ export class MyPapComponent {
             papMasterId: this.papWorkFlowData[0]._id,
             raiseGreivance: flag
         }
-        this.papService.raiseGreivance(request).subscribe((res => {
-            console.log(res);
-            if (res.ok) {
-                this.loadPapDetails();
-                swal({
-                    title: 'Success',
-                    text: flag ? "Greivance has been raised" : "Saved",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this.papService.raiseGreivance(request).subscribe((res => {
+                    console.log(res);
+                    if (res.ok) {
+                        this.loadPapDetails();
+                        swal({
+                            title: 'Success',
+                            text: flag ? "Greivance has been raised" : "Saved",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                }))
             }
-        }))
+        });
     }
 
     showPAPDetails(index) {

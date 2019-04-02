@@ -229,7 +229,7 @@
                                     bindValue="_id" placeholder="Select Rating"
                                     [(ngModel)]="papData.grievance_ratingScaleId" [clearable]="false"
                                     #colorStatus="ngModel"
-                                    [disabled]="papData.grievanceStatus == null || papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
+                                    [disabled]="papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
                                     required>
                                 </ng-select>
                                 <div class="form-control-feedback has-danger"
@@ -242,7 +242,7 @@
                                 <textarea name="grievanceSupRemark" id="grievanceSupRemark"
                                     [(ngModel)]="papData.grievanceSupRemark" #grievanceSupRemark="ngModel"
                                     class="form-control m-input m-input--air"
-                                    [disabled]="papData.grievanceStatus == null || papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
+                                    [disabled]="papData.grievanceStatus == 'Pending Reviewer' || papData.grievanceStatus == 'Approved'"
                                     required></textarea>
                                 <div class="form-control-feedback has-danger"
                                     *ngIf="PAPDataForm.submitted && grievanceSupRemark?.invalid">
