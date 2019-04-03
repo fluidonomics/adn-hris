@@ -292,10 +292,10 @@ export class PipDetailedViewComponent {
 
     }
 
-    saveLearningDetails(pipData: any, Remarks: String) {
+    saveLearningDetails(pipData: any, Remarks: String, form) {
 
         let request = {
-            //pipMasterId: this.param_master_id,
+            pipMasterId: this.param_master_id,
             pipDetailId: pipData._id,
             empId: this.user._id,
             supervisorId: this._currentEmpId,
@@ -318,31 +318,33 @@ export class PipDetailedViewComponent {
 
         
 
+        if(form.valid) {
 
-        this._pipService.savePip(request).subscribe(res => {
-            if (res.ok) {
-                this.modalRef.hide();
-                this.utilityService.hideLoader('.mtrDetailsPortlet');
-                swal({
-                    title: 'Saved Successfully!',
-                    text: "PIP Agenda has been Saved",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
-                this.loadPipEmployee();
-
-            }
-        }, err => {
-            if (err.status == 300) {
-                let error = err.json() || {};
-                swal("Error", error.title, "error");
-                this.loadPipEmployee();
-                this.modalRef.hide();
-            }
-            this.utilityService.hideLoader('.m-content');
-        })
+            this._pipService.savePip(request).subscribe(res => {
+                if (res.ok) {
+                    this.modalRef.hide();
+                    this.utilityService.hideLoader('.mtrDetailsPortlet');
+                    swal({
+                        title: 'Saved Successfully!',
+                        text: "PIP Agenda has been Saved",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                    this.loadPipEmployee();
+    
+                }
+            }, err => {
+                if (err.status == 300) {
+                    let error = err.json() || {};
+                    swal("Error", error.title, "error");
+                    this.loadPipEmployee();
+                    this.modalRef.hide();
+                }
+                this.utilityService.hideLoader('.m-content');
+            })
+        }
 
     }
 
@@ -428,7 +430,7 @@ export class PipDetailedViewComponent {
         }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
+        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed") {
             this.isDisabled = true;
         }
         else {
@@ -451,18 +453,18 @@ export class PipDetailedViewComponent {
 
     monthlyCommentValidation() {
 
-        if (this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+        if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.supComment_month1) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if (this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+        } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.supComment_month2) {
             this.isCommentOfMonth2Enable = true;
-        } else if (this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+        } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.supComment_month3) {
             this.isCommentOfMonth3Enable = true;
-        } else if (this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+        } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.supComment_month4) {
             this.isCommentOfMonth4Enable = true;
-        } else if (this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+        } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.supComment_month5) {
             this.isCommentOfMonth5Enable = true;
-        } else if (this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
+        } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.supComment_month6) {
             this.isCommentOfMonth6Enable = true;
         }
     }
@@ -473,8 +475,23 @@ export class PipDetailedViewComponent {
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
 
             this.saveEnabled = true;
+        } else {
+            this.saveEnabled = false;
         }
 
+    }
+
+    isFinalreviewEnabled() {
+
+        if((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
+            this.pipData.empComment_month3 && this.isCommentOfMonth3Enable) || this.pipData.supComment_month3) {
+                return true;
+        } else if((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
+            this.pipData.empComment_month6 && this.isCommentOfMonth6Enable) || this.pipData.supComment_month6) {
+                return true;
+        } else {
+            return false;
+        }
     }
 
 
