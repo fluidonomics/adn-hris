@@ -222,7 +222,7 @@ export class PapDetailedViewComponent implements OnInit {
                 papMasterId: this.papMasterId,
                 updatedBy: this._currentEmpId,
                 grievanceStatus: this.papWorkFlowData[0].grievanceStatus,
-                action_link: window.location.origin + '/my/team/workflows/pap-detailed-view/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId
+                action_link: window.location.origin + '/my/team/workflows/pap-review/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId
             }
             swal({
                 title: 'Are you sure?',
