@@ -48,7 +48,6 @@ export class PipViewComponent implements OnInit {
 
     gotoPipData(pip) {
         console.log("pip : ", pip);
-        debugger;
         this.router.navigateByUrl("/my/team/workflows/pip-detailed-view/" + "view/" + pip.pip_master_details._id + "/" + pip.emp_details._id);
         
     }

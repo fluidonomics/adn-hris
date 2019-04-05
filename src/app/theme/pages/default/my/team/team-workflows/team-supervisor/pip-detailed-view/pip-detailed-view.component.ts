@@ -453,19 +453,37 @@ export class PipDetailedViewComponent {
 
     monthlyCommentValidation() {
 
-        if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.supComment_month1) {
+        if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2
+            && this.pipData.empComment_month1 && !this.pipData.supComment_month1) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.supComment_month2) {
-            this.isCommentOfMonth2Enable = true;
-        } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.supComment_month3) {
-            this.isCommentOfMonth3Enable = true;
-        } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.supComment_month4) {
-            this.isCommentOfMonth4Enable = true;
-        } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.supComment_month5) {
-            this.isCommentOfMonth5Enable = true;
-        } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.supComment_month6) {
-            this.isCommentOfMonth6Enable = true;
+        } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3
+            && this.pipData.empComment_month2 && !this.pipData.supComment_month2) {
+
+                this.isCommentOfMonth2Enable = true;
+        } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4
+            && this.pipData.empComment_month3 && !this.pipData.supComment_month3) {
+
+                this.isCommentOfMonth3Enable = true;
+        } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5
+            && this.pipData.empComment_month4 && !this.pipData.supComment_month4) {
+
+                this.isCommentOfMonth4Enable = true;
+        } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6
+            && this.pipData.empComment_month5 && !this.pipData.supComment_month5) {
+
+                this.isCommentOfMonth5Enable = true;
+        } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7
+            && this.pipData.empComment_month6 && !this.pipData.supComment_month6) {
+
+                this.isCommentOfMonth6Enable = true;
+        } else {
+            this.isCommentOfMonth1Enable = false;
+            this.isCommentOfMonth2Enable = false;
+            this.isCommentOfMonth3Enable = false;
+            this.isCommentOfMonth4Enable = false;
+            this.isCommentOfMonth5Enable = false;
+            this.isCommentOfMonth6Enable = false;
         }
     }
 

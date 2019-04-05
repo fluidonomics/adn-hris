@@ -72,7 +72,7 @@ export class MyPipComponent {
     ];
     suparr = [];
 
-    showSub:boolean = true;
+    showSub:boolean = false;
 
     supervisorData: any = [];
 
@@ -236,7 +236,7 @@ export class MyPipComponent {
         this._pipService.getPipInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
-            this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
+            //this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" && pip.status != "Completed" ).length > 0;
         }, error => {
             swal("Error", error.title, "error");
         });;
@@ -249,7 +249,7 @@ export class MyPipComponent {
             let data = res.json();
             this.pipInfoData = data.result.message;
             if(this.pipInfoData.length > 0){
-                this.showSub = this.pipInfoData.filter(pip => pip.status != "Submitted" && pip.status != "Approved").length > 0;
+                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
             } 
             else {
                 this.pipInfoData = [
@@ -560,13 +560,13 @@ export class MyPipComponent {
         else {
             this.isApproved = false;
         }
-
-        if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
-            this.showSub = false;
-        }
-        else {
-            this.showSub = true;
-        }
+        // debugger;
+        // if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
+        //     this.showSub = false;
+        // }
+        // else {
+        //     this.showSub = true;
+        // }
 
     }
 
