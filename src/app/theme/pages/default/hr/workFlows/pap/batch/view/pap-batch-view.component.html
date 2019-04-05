@@ -384,10 +384,6 @@
                                 <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel"
                                     placeholder="Enter Batch Name" [(ngModel)]="editBatch.batchName" required
                                     disabled="disabled">
-                                <div class="form-control-feedback has-danger"
-                                    *ngIf="feditBatch.submitted && !batchName.valid">
-                                    This field is required.
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -79,6 +79,11 @@ export class PapService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    updateBatch(data:any):Observable<Response>{        
+        let url = "pap/updateBatch";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let data = res.json() || {};
         if (data.result && data.result.message) {
