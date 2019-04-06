@@ -366,7 +366,7 @@
 														[(ngModel)]="pipData.superviserInitialComment"
 														#superviserInitialComment="ngModel"
 														class="form-control m-input m-input--air"
-														[disabled]="isDisabled"></textarea>
+														[disabled]="isDisabled || !isSup"></textarea>
 													<div class="form-control-feedback has-danger"
 														*ngIf="PipDataForm.submitted && superviserInitialComment.invalid">
 														This field is required.
@@ -583,10 +583,10 @@
 														<div class="m-form__actions">
 															<button class="btn btn-success"
 																(click)="preSaveLearningDetails(pipData,'Approved')"
-																*ngIf="!isDisabled">Approve</button>
+																*ngIf="!isDisabled && isSup">Approve</button>
 															<button class="btn btn-danger"
 																(click)="preSaveLearningDetails(pipData,'SendBack')"
-																type="button" *ngIf="!isDisabled"> Send
+																type="button" *ngIf="!isDisabled && isSup"> Send
 																Back</button>
 															<button class="btn btn-success" (click)="saveLearningDetails(pipData,'Approved', PipDataForm)"
 																*ngIf="saveEnabled && pipData.status == 'Approved'">Save</button>

@@ -49,6 +49,7 @@ export class PipDetailedViewComponent {
     //status: any;
     statusq: any;
     isDisabled: boolean = false;
+    isSup: boolean = true;
     isDis: boolean = true;
     user: any;
     //showStat = false;
@@ -91,18 +92,18 @@ export class PipDetailedViewComponent {
         }
     ];
 
-    
+
     finalRecommendation = [
         {
-            '_id':1,
+            '_id': 1,
             'final_recommendation': "Continue in current role"
         },
         {
-            '_id':2,
+            '_id': 2,
             'final_recommendation': "Internal Movement"
         },
         {
-            '_id':3,
+            '_id': 3,
             'final_recommendation': "Remedial action"
         }
     ];
@@ -316,9 +317,9 @@ export class PipDetailedViewComponent {
 
         }
 
-        
 
-        if(form.valid) {
+
+        if (form.valid) {
 
             this._pipService.savePip(request).subscribe(res => {
                 if (res.ok) {
@@ -333,7 +334,7 @@ export class PipDetailedViewComponent {
                         confirmButtonText: 'OK'
                     });
                     this.loadPipEmployee();
-    
+
                 }
             }, err => {
                 if (err.status == 300) {
@@ -359,7 +360,7 @@ export class PipDetailedViewComponent {
             });
         }
         else {
-  
+
             swal({
                 title: 'Are you sure?',
                 // text: text,
@@ -370,17 +371,17 @@ export class PipDetailedViewComponent {
                 // confirmButtonText: confirmButtonText
             }).then((result) => {
                 if (result.value) {
-                   
+
                     let request = {
-                       masterId: pipData.pip_master_details._id,
-                       updatedAt: new Date(),
-                       updatedBy: this._currentEmpId,
-                       hrFinalCom: pipData.pip_master_details.hr_final_com,
-                       empFinalCom: pipData.pip_master_details.emp_final_com,
-                       revFinalCom: pipData.pip_master_details.rev_final_com,
-                       supFinalCom: pipData.pip_master_details.sup_final_com
+                        masterId: pipData.pip_master_details._id,
+                        updatedAt: new Date(),
+                        updatedBy: this._currentEmpId,
+                        hrFinalCom: pipData.pip_master_details.hr_final_com,
+                        empFinalCom: pipData.pip_master_details.emp_final_com,
+                        revFinalCom: pipData.pip_master_details.rev_final_com,
+                        supFinalCom: pipData.pip_master_details.sup_final_com
                     }
-                    
+
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.updateMaster(request).subscribe(res => {
                         if (res.ok) {
@@ -395,7 +396,7 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             //this.loadPipEmployee();
-  
+
                         }
                     }, err => {
                         if (err.status == 300) {
@@ -409,7 +410,7 @@ export class PipDetailedViewComponent {
                 }
             });
         }
-  
+
     }
 
     modalRef: BsModalRef;
@@ -437,6 +438,17 @@ export class PipDetailedViewComponent {
             this.isDisabled = false;
         }
 
+
+        if (this.pipData.supervisor_id == this._currentEmpId) {
+            this.isSup = true;
+            //debugger;
+        }
+        else {
+            this.isSup = false;
+            //debugger;
+        }
+
+
         if (this.pipData.master_timelines == 6) {
             this.istsix = true;
         }
@@ -460,23 +472,23 @@ export class PipDetailedViewComponent {
         } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3
             && this.pipData.empComment_month2 && !this.pipData.supComment_month2) {
 
-                this.isCommentOfMonth2Enable = true;
+            this.isCommentOfMonth2Enable = true;
         } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4
             && this.pipData.empComment_month3 && !this.pipData.supComment_month3) {
 
-                this.isCommentOfMonth3Enable = true;
+            this.isCommentOfMonth3Enable = true;
         } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5
             && this.pipData.empComment_month4 && !this.pipData.supComment_month4) {
 
-                this.isCommentOfMonth4Enable = true;
+            this.isCommentOfMonth4Enable = true;
         } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6
             && this.pipData.empComment_month5 && !this.pipData.supComment_month5) {
 
-                this.isCommentOfMonth5Enable = true;
+            this.isCommentOfMonth5Enable = true;
         } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7
             && this.pipData.empComment_month6 && !this.pipData.supComment_month6) {
 
-                this.isCommentOfMonth6Enable = true;
+            this.isCommentOfMonth6Enable = true;
         } else {
             this.isCommentOfMonth1Enable = false;
             this.isCommentOfMonth2Enable = false;
@@ -501,12 +513,12 @@ export class PipDetailedViewComponent {
 
     isFinalreviewEnabled() {
 
-        if((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
+        if ((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
             this.pipData.empComment_month3 && this.isCommentOfMonth3Enable) || this.pipData.supComment_month3) {
-                return true;
-        } else if((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
+            return true;
+        } else if ((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
             this.pipData.empComment_month6 && this.isCommentOfMonth6Enable) || this.pipData.supComment_month6) {
-                return true;
+            return true;
         } else {
             return false;
         }
