@@ -249,6 +249,16 @@
                                     This field is required.
                                 </div>
                             </div>
+                            <div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Reviewer Grievance Remarks</span>
+                                <textarea name="grievanceRevRemark" id="grievanceRevRemark"
+                                    [(ngModel)]="papData.grievanceRevRemark" #grievanceRevRemark="ngModel"
+                                    class="form-control m-input m-input--air" disabled required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && grievanceRevRemark?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
                         </div>
                         <div class="form-actions details">
                             <div class="row">

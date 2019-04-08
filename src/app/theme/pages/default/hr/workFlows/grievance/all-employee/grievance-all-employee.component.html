@@ -113,8 +113,12 @@
                             </td>
                             <td class="m-datatable__cell" width="15%">
                                 <!-- <span>{{employee.reviewerStatus}}</span> -->
-                                <span style="width: 100px;"><span class="m-badge m-badge--wide"
-                                        [ngClass]="{'m-badge--success':employee.reviewerStatus=='Approved','m-badge--secondary':employee.reviewerStatus=='SendBack','m-badge--warning':employee.reviewerStatus=='Pending'}">{{employee.reviewerStatus}}</span></span>
+                                <span style="width: 100px;">
+                                    <span *ngIf="employee.reviewerStatus" class="m-badge m-badge--wide"
+                                        [ngClass]="{'m-badge--success':employee.reviewerStatus=='Approved','m-badge--secondary':employee.reviewerStatus=='SendBack','m-badge--warning':employee.reviewerStatus=='Pending'}">{{employee.reviewerStatus}}</span>
+                                    <span *ngIf="!employee.reviewerStatus"
+                                        class="m-badge m-badge--wide m-badge--brand">{{employee.grievanceStatus}}</span>
+                                </span>
                             </td>
                             <td class="m-datatable__cell" width="10%">
                                 <span>{{employee.overallRating}}</span>
