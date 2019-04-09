@@ -53,6 +53,8 @@ export class PipDetailedViewComponent {
     isDis: boolean = true;
     user: any;
     //showStat = false;
+    masterStatus: string;
+    finalReviewEnable: boolean = false;
 
     dateDifference: number;
     isCommentOfMonth1Enable: boolean = false;
@@ -184,6 +186,7 @@ export class PipDetailedViewComponent {
                     }
                     //debugger;
                 }
+                this.masterStatus = this.pipInfoData[0].master_status;
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
             },
@@ -423,6 +426,7 @@ export class PipDetailedViewComponent {
 
         this.monthlyCommentValidation();
         this.isSaveEnabled();
+        this.isFinalreviewEnabled();
 
         for (let x = 0; x < this.PipAgendaData.length; x++) {
             if (this.PipAgendaData[x]._id == this.param_id) {
@@ -438,7 +442,7 @@ export class PipDetailedViewComponent {
             this.isDisabled = false;
         }
 
-
+        debugger;
         if (this.pipData.supervisor_id == this._currentEmpId) {
             this.isSup = true;
             //debugger;
@@ -513,15 +517,16 @@ export class PipDetailedViewComponent {
 
     isFinalreviewEnabled() {
 
-        if ((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
-            this.pipData.empComment_month3 && this.isCommentOfMonth3Enable) || this.pipData.supComment_month3) {
-            return true;
-        } else if ((this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
-            this.pipData.empComment_month6 && this.isCommentOfMonth6Enable) || this.pipData.supComment_month6) {
-            return true;
+        if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
+            this.pipData.empComment_month3 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
+            this.finalReviewEnable = true;
+        } else if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
+            this.pipData.empComment_month6 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
+                this.finalReviewEnable = true;
         } else {
-            return false;
+            this.finalReviewEnable = false;
         }
+
     }
 
 

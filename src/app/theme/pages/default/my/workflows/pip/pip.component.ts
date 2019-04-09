@@ -35,6 +35,7 @@ export class MyPipComponent {
     pipInfoData: any = [];
     pipDetails: any = [];
     currentIndex: number;
+    saveEnable: boolean = false;
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -164,24 +165,13 @@ export class MyPipComponent {
             areaofImprovement: this.pipInfoData[index].areaofImprovement,
             actionPlan: this.pipInfoData[index].actionPlan,
             timelines: this.pipInfoData[index].timelines,
-            finalReview: this.pipInfoData[index].finalReview,
-            finalRating: this.pipInfoData[index].finalRating,
             employeeInitialComment: this.pipInfoData[index].employeeInitialComment,
-            superviserInitialComment: this.pipInfoData[index].superviserInitialComment,
             empComment_month1: this.pipInfoData[index].empComment_month1,
             empComment_month2: this.pipInfoData[index].empComment_month2,
             empComment_month3: this.pipInfoData[index].empComment_month3,
             empComment_month4: this.pipInfoData[index].empComment_month4,
             empComment_month5: this.pipInfoData[index].empComment_month5,
-            empComment_month6: this.pipInfoData[index].empComment_month6,
-            supComment_month1: this.pipInfoData[index].supComment_month1,
-            supComment_month2: this.pipInfoData[index].supComment_month2,
-            supComment_month3: this.pipInfoData[index].supComment_month3,
-            supComment_month4: this.pipInfoData[index].supComment_month4,
-            supComment_month5: this.pipInfoData[index].supComment_month5,
-            supComment_month6: this.pipInfoData[index].supComment_month6
-
-
+            empComment_month6: this.pipInfoData[index].empComment_month6
 
         }
         let isError: boolean = false;
@@ -517,6 +507,7 @@ export class MyPipComponent {
         this.pipData.no = index + 1;
         
         this.monthlyCommentValidation();
+        this.isSaveEnabled();
         
         
         for(let x=0;x<this.PipAgendaData.length;x++) {
@@ -594,6 +585,13 @@ export class MyPipComponent {
         } else if(this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
             // debugger;
             this.isCommentOfMonth6Enable = true;
+        } else {
+            this.isCommentOfMonth1Enable = false;
+            this.isCommentOfMonth2Enable = false;
+            this.isCommentOfMonth3Enable = false;
+            this.isCommentOfMonth4Enable = false;
+            this.isCommentOfMonth5Enable = false;
+            this.isCommentOfMonth6Enable = false;
         }
     }
 
@@ -605,8 +603,11 @@ export class MyPipComponent {
 
                 // debugger;
                 // this.saveEnabled = true;
-                return true;
-            }
+            this.saveEnable = true;
+        } else {
+
+            this.saveEnable = false;
+        }
             
     }
     
