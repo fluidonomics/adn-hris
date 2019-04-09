@@ -134,7 +134,8 @@ export class PapBatchViewComponent implements OnInit {
     }
 
     saveBatch() {
-        this._batchService.saveBatch(this.editBatch)
+        this.editBatch.updatedBy = this._currentEmpId;
+        this._papService.updateBatch(this.editBatch)
             .subscribe(
                 res => {
                     this.activeRowNumber = -1;

@@ -101,7 +101,7 @@
 						<div class="col-md-4">
 							<ng-select class="m-input m-input--air " name="supervisorOne" id="supervisorOne"
 								[items]="supervisorData" bindLabel="fullName" bindValue="_id"
-								placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
+								placeholder="Select Supervisor" [(ngModel)]="papData.pap_supervisorDetails._id"
 								[clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 
 						</div>
@@ -166,7 +166,7 @@
 							<ng-select class="m-input m-input--air" name="supRatingScaleId" id="supRatingScaleId"
 								[items]="papRatingScaleData" bindLabel="displayName" bindValue="_id"
 								placeholder="Select Rating" [(ngModel)]="papData.sup_ratingScaleId" [clearable]="false"
-								#colorStatus="ngModel" [disabled]="isDisabled" required>
+								#colorStatus="ngModel" disabled required>
 							</ng-select>
 							<div class="form-control-feedback has-danger"
 								*ngIf="PAPDataForm.submitted && supRatingScaleId?.invalid">
@@ -192,6 +192,12 @@
 							<span>Supervisor Grievance Remarks</span>
 							<textarea name="grievanceSupRemark" id="grievanceSupRemark"
 								[(ngModel)]="papData.grievanceSupRemark" #grievanceSupRemark="ngModel"
+								class="form-control m-input m-input--air" disabled required></textarea>
+						</div>
+						<div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+							<span>Reviewer Grievance Remarks</span>
+							<textarea name="grievanceRevRemark" id="grievanceRevRemark"
+								[(ngModel)]="papData.grievanceRevRemark" #grievanceRevRemark="ngModel"
 								class="form-control m-input m-input--air" disabled required></textarea>
 						</div>
 					</div>

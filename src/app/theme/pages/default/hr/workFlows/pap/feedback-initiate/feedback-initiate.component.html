@@ -31,16 +31,15 @@
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
-
                             <th class="m-datatable__cell" width="5%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
                                     <input type="checkbox" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0">
                                     <span></span>
                                 </label>
                             </th>
-                            <th class="m-datatable__cell" width="5%"></th>
+                            <th class="m-datatable__cell" width="10%"></th>
                             <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="25%">
                                 <span>
                                     NAME
                                     <i class="la" *ngIf="key == 'fullName'"
@@ -63,12 +62,14 @@
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <!-- <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                            <th (click)="sort('overallRating')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
                                 <span>
-                                    SUPERVISOR
-                                    <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    OVERALL RATING
+                                    <i class="la" *ngIf="key == 'overallRating'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
-                            </th> -->
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="m-datatable__body">
@@ -80,7 +81,7 @@
                                     <span></span>
                                 </label>
                             </td>
-                            <td class="m-datatable__cell" width="5%">
+                            <td class="m-datatable__cell" width="10%">
                                 <img *ngIf="employee?.profileImage; else noImage"
                                     src="{{imageBase+employee?.profileImage}}"
                                     onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
@@ -89,7 +90,7 @@
                                         class="directory_image m--img-rounded m--marginless m--img-centered">
                                 </ng-template>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <td class="m-datatable__cell" width="25%">
                                 <span>{{employee.employeedetails.fullName}}
                                     [{{employee.employeedetails.userName}}]</span>
                             </td>
@@ -99,9 +100,9 @@
                             <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.designations.designationName}}</span>
                             </td>
-                            <!-- <td class="m-datatable__cell" width="25%">
-                                <span>{{employee.supervisor}}</span>
-                            </td> -->
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.overallRating}}</span>
+                            </td>
                         </tr>
 
                         <span *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0"

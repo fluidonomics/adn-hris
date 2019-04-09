@@ -140,7 +140,7 @@
                             <div class="col-md-4">
                                 <ng-select class="m-input m-input--air " name="supervisorOne" id="supervisorOne"
                                     [items]="supervisorData" bindLabel="fullName" bindValue="_id"
-                                    placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
+                                    placeholder="Select Supervisor" [(ngModel)]="papData.pap_supervisorDetails._id"
                                     [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 
                             </div>
@@ -246,6 +246,16 @@
                                     required></textarea>
                                 <div class="form-control-feedback has-danger"
                                     *ngIf="PAPDataForm.submitted && grievanceSupRemark?.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                            <div class="col-md-12 details" *ngIf="papWorkFlowData[0].grievanceStatus == 'Initiated'">
+                                <span>Reviewer Grievance Remarks</span>
+                                <textarea name="grievanceRevRemark" id="grievanceRevRemark"
+                                    [(ngModel)]="papData.grievanceRevRemark" #grievanceRevRemark="ngModel"
+                                    class="form-control m-input m-input--air" disabled required></textarea>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="PAPDataForm.submitted && grievanceRevRemark?.invalid">
                                     This field is required.
                                 </div>
                             </div>
