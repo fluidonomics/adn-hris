@@ -1,0 +1,279 @@
+@import "../../../../../../../../assets/colors";
+
+app-my-leaves-dashboard-supervisor {
+    width: 100%;
+
+    & > .m-content {
+        padding-bottom: 0px !important;
+    }
+
+    .leave-balance-card {
+        &.annual-leave {
+            background-color: $color-annual-leave;
+        }
+
+        &.sick-leave {
+            background-color: $color-sick-leave;
+        }
+
+        h3, div, span {
+            color: white !important;
+        }
+    }
+
+    .nav.nav-pills.nav-pills--brand .nav-link {
+        &.active {
+            background: whitesmoke;
+            color: black;
+        }
+
+        i {
+            color: #198F4A !important;
+        }
+    }
+
+    .leaveBalance {
+        .m-widget4__info {
+            span {
+                &.title {
+                    color: #000;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .holiday {
+        .m-portlet__body {
+            .m-widget4 {
+                .m-widget4__item {
+                    width: 100%;
+
+                    .m-widget4__info {
+                        width: 60%;
+
+                        span {
+                            display: block;
+
+                            &.date {
+                                color: #000;
+                                padding: 0px 23px;
+                                margin-top: 5px;
+                                font-size: 1rem;
+                                font-weight: 600;
+                            }
+                        }
+
+                        .m-badge {
+                            display: inline-block;
+
+                            &.day {
+                                width: 50%;
+                            }
+
+                            &.type {
+                                width: 20%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .transaction {
+        .m-widget4__item {
+            width: 100%;
+
+            .m-widget4__info {
+                width: 35%;
+
+                span {
+                    color: #000;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+
+            .m-widget4__desc {
+                width: 100%;
+
+                span {
+                    display: block;
+                }
+            }
+
+            .m-widget4__ext {
+                width: 30%;
+            }
+        }
+    }
+
+    .hr-leave-dashboard {
+        margin-bottom: 6rem;
+        padding-top: 0px !important;
+
+        .m-accordion__item {
+            border-radius: 0;
+
+            .m-accordion__item-head.acc_custom.collapsed, .m-accordion__item-head.acc_custom {
+                background-color: #87CF96 !important;
+                color: #000 !important;
+
+                .m-accordion__item-title {
+                    font-size: 12px !important;
+
+                    .imageDiv {
+                        padding-right: 10px;
+
+                        .emp-list-image {
+                            width: 35px;
+                            border-radius: 2rem;
+                        }
+                    }
+
+                    .emp-list-name, .emp-list-empid {
+                        font-size: 12px;
+                    }
+
+                    .emp-list-leavedate {
+                        font-size: 11px;
+                    }
+                }
+            }
+
+            .m-accordion__item-body {
+                .m-accordion__item-content {
+                    text-align: center;
+                    background-color: white;
+
+                    .table.tableform {
+                        margin-top: 20px;
+                        border: 1px solid #c0c0c0 !important;
+
+                        td {
+                            text-align: left;
+                            border: 1px solid #c0c0c0 !important;
+
+                            span.label {
+                                color: blue;
+                                padding-left: 50px;
+                                display: inline-block;
+                                text-align: right;
+                                margin-right: 10px;
+                            }
+                        }
+
+                        td.leave_reason_col span.label {
+                            width: 10%;
+                        }
+                    }
+
+                    .m-form {
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+
+    .nav {
+        li {
+            cursor: pointer;
+        }
+    }
+
+    .teamOnLeavePortlet {
+        .m-portlet__body {
+            padding: 0;
+        }
+
+        // .teamOnLeaveGrid {
+        //     .m_datatable {
+        //         // th, td {
+        //         //     width: 33.33%;
+        //         // }
+           
+        //     }
+        // }
+    }
+
+    .recentTransactionPortlet, .teamLeavesPortlet {
+        .m-portlet__head-tools {
+            ul.nav {
+                li {
+                    padding: 0.1rem;
+
+                    .btn :not(.btn-success) {
+                        height: 36px;
+                        color: #aaa;
+
+                        // &.btn-success {
+                        //     color: #aaa;
+                        // }
+                   
+                    }
+                }
+
+                .ng-dropdown-panel {
+                    left: 0px;
+                }
+            }
+        }
+    }
+
+    .recentTransactionPortlet {
+        .m-datatable__table {
+            th {
+                width: 8.33%;
+            }
+
+            td {
+                width: 8.33%;
+            }
+        }
+    }
+
+    .m-badge {
+        color: white !important;
+        font-size: 0.7rem;
+    }
+}
+
+modal-container {
+    .leaveDetailsPortlet {
+        .m-portlet__body {
+            .img {
+                width: 100% !important;
+            }
+
+            .name {
+                display: block;
+                font-size: 1.5rem;
+            }
+
+            .empId {
+                display: block;
+            }
+
+            .details {
+                padding-top: 2rem;
+
+                .value {
+                    margin-left: 1rem;
+                }
+
+                .link {
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.span-scroll {
+    overflow-y: auto !important;
+    height: 50px;
+}

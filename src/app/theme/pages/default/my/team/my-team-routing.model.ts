@@ -21,6 +21,7 @@ import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pa
 import { TransactionHistoryComponent } from './subordinate-transaction-history/transaction-history/transaction-history.component';
 import { LearningReview } from './team-workflows/team-reveiwer/learning-view/learning-review.component';
 import { AllLearningSupervisor } from './team-workflows/team-supervisor/allLearning/allLearningSupervisor.component';
+import { SupervisorKraDashboardComponent } from './team-supervisor-kradashboard/supervisor-kradashboard.component';
 
 const routes: Routes = [
     { path: 'workflows/reveiwer', component: MyTeamReviewerComponent, canActivate: [SupervisorGuard] },
@@ -39,7 +40,8 @@ const routes: Routes = [
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
     { path: 'workflows/learning-detailed-view/:from/:id/:emp_id', component: LearningDetailedViewComponent },
     { path: 'workflows/:reviewer/learning/list', component: AllLearningReviewer },
-    { path: 'workflows/:supervisor/:from/learning/list', component: AllLearningSupervisor }
+    { path: 'workflows/:supervisor/:from/learning/list', component: AllLearningSupervisor }, 
+    { path: 'supervisor/kradashboard', component: SupervisorKraDashboardComponent},
 
     
 ]

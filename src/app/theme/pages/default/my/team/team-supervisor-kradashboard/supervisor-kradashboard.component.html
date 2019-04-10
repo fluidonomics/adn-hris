@@ -1,0 +1,337 @@
+<div class="m-content">
+   <div class="row">
+    <div class="col-xl-6">
+        <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height teamOnLeavePortlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Team Statistics
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <ul class="m-portlet__nav">
+                        <li class="m-portlet__nav-item">
+                            <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="teamLeavesFilter.date"
+                                (ngModelChange)="getTeamLeaves()" placeholder="Select Month" placement="left" readonly>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-widget6 teamOnLeaveGrid">
+                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll m-datatable--error" id="m_datatable_latest_orders">
+                        <table class="m-datatable__table">
+                            <thead class="m-datatable__head">
+                                <!-- <tr class="m-datatable__row">
+                                    <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort" width="40%">
+                                        <span></span>
+                                    </th>
+                                    <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort" width="50%">
+                                        <span></span>
+                                </tr> -->
+                            </thead>
+                            <tbody class="m-datatable__body ps ps--active-x ps--active-y">
+                                <tr class="m-datatable__row" >
+                                    <td data-field="ShipName" class="m-datatable__cell" width="60%">
+                                        <span>Total Initiated</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell" width="40%">
+                                        <span>10</span>
+                                </tr>
+                                <tr data-row="0" class="m-datatable__row" >
+                                    <td data-field="ShipName" class="m-datatable__cell" width="60%">
+                                        <span>Submitted</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell" width="40%">
+                                        <span>10</span>
+                                </tr>
+                                <tr data-row="0" class="m-datatable__row" >
+                                    <td data-field="ShipName" class="m-datatable__cell" width="60%">
+                                        <span>Approved</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell" width="40%">
+                                        <span>10</span>
+                                </tr>
+                                <tr data-row="0" class="m-datatable__row" >
+                                    <td data-field="ShipName" class="m-datatable__cell" width="60%">
+                                        <span>Sent Back</span>
+                                    </td>
+                                    <td data-field="ShipDate" class="m-datatable__cell" width="40%">
+                                        <span>10</span>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <pagination-template *ngIf="teamLeaves.length > 0" #p="paginationApi" [id]="'teamLeaves'" (pageChange)="teamLeavesFilter.page = $event"
+                            class="paginationtemplate">
+                            <div class="m-datatable__pager m-datatable--paging-loaded clearfix" style="position: absolute; bottom: 30px; left: 0%; right: 0%;">
+                                <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                    <li>
+                                        <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                            (click)="p.setCurrent(1)">
+                                            <i class="la la-angle-double-left"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                            (click)="p.previous()">
+                                            <i class="la la-angle-left"></i>
+                                        </span>
+                                    </li>
+                                    <li *ngFor="let page of p.pages">
+                                        <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                            {{ page.label }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                            (click)="p.isLastPage()?'null':p.next()">
+                                            <i class="la la-angle-right"></i>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                            (click)="p.setCurrent(p.pages.length + 1)">
+                                            <i class="la la-angle-double-right"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </pagination-template>
+                    </div>
+                </div>
+                <div class="col-md-2 applyLeaveBtn text-center">
+                        <button class="btn btn-success" (click)="gotoApplyLeave()">
+                            Export in Excel</button>
+                    </div>
+            </div>
+            
+        </div>
+    </div>
+       <div class="col-xl-6">
+           <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height teamOnLeavePortlet">
+               <div class="m-portlet__head">
+                   <div class="m-portlet__head-caption">
+                       <div class="m-portlet__head-title">
+                           <h3 class="m-portlet__head-text">
+                               Pending Approvals
+                           </h3>
+                       </div>
+                   </div>
+                   <div class="m-portlet__head-tools">
+                       <ul class="m-portlet__nav">
+                           <li class="m-portlet__nav-item">
+                               <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="teamLeavesFilter.date"
+                                   (ngModelChange)="getTeamLeaves()" placeholder="Select Month" placement="left" readonly>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+               <div class="m-portlet__body" id="kraApproval">
+                <!-- <div class="row">
+                    <div class="col-md-9 col-xs-8">
+
+                    </div>
+                    <div class="col-md-3 col-xs-4 pull-right">
+                        <button routerLink="/my/team/workflows/supervisor/employee/list" class="btn btn-success" type="submit">View All</button>
+                    </div>
+
+                </div> -->
+                <div class="no-records" *ngIf="kraData.length==0 || (kraData | orderBy: 'updatedAt' : kraReverse | filter:kraSearch)?.length==0">
+                    <span class="align--center">No records found</span>
+                </div>
+
+                <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true" style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
+                    <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
+                        <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+
+                            <div class="m-widget4  workflow--hover ">
+
+
+
+                                <div class="m-widget4__item m-padding--10" *ngFor="let kra of kraData | orderBy: 'updatedAt' : kraReverse | filter:kraSearch;let i=index"
+                                 (click)="gotoKraView(kra)">
+                                    <div class="m-widget4__img m-widget4__img--logo">
+                                        <a align="center">
+                                            
+                                            <img *ngIf="kra?.profileImage; else noImage" src="{{imageBase+kra?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                             class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                            <ng-template #noImage>
+                                                <img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+                                            </ng-template>
+                                        </a>
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="m-widget4__info">
+                                        <span class="m-widget4__title">
+                                            {{kra.fullName}}
+                                        </span>
+                                        <!-- <br> -->
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <span class="m-widget4__sub">
+                                            {{kra.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
+                                        </span>
+                                    </div>
+                                    <span class="m-widget4__ext">
+                                        <span class="m-widget4__number m--font-brand">
+                                        </span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+       </div>
+   </div>
+   <div class="row">
+       <div class="col-xl-12">
+           <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm recentTransactionPortlet">
+               <div class="m-portlet__head">
+                   <div class="m-portlet__head-caption">
+                       <div class="m-portlet__head-title">
+                           <h3 class="m-portlet__head-text">
+                               Leave Approval
+                           </h3>
+                       </div>
+                   </div>
+                   <div class="m-portlet__head-tools">
+                       <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                           <li class="nav-item m-tabs__item">
+                               <ng-select class="m-input m-input--air" name="employee" placeholder="Type Employee Name" bindValue="employeeDetails._id"
+                                   bindLabel="employeeDetails.fullName" [items]="supervisorTeamEmployeeList" [(ngModel)]="leaveApprovalFilter.employeeId"
+                                   (ngModelChange)="getTeamLeavesForApproval()" [clearable]="true"></ng-select>
+                           </li>
+                           <li class="nav-item m-tabs__item">
+                               <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="leaveApprovalFilter.date"
+                                   (ngModelChange)="getTeamLeavesForApproval()" placeholder="Select Month" placement="left"
+                                   readonly>
+                           </li>
+                           <!-- <li class="nav-item m-tabs__item">
+                               <ng-select class="m-input m-input--air" name="employee" placeholder="Select Leave Type" bindValue="_id" bindLabel="type"
+                                   [items]="leaveTypeList" [(ngModel)]="leaveApprovalFilter.leaveTypeId" (ngModelChange)="getTeamLeavesForApproval()"
+                                   [clearable]="true"></ng-select>
+                           </li> -->
+                       </ul>
+                   </div>
+               </div>
+               <div class="m-portlet__body">
+                   <!--begin::Section-->
+                   <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                       <!--begin::Item-->
+                       <div class="m-accordion__item m-accordion__item--green">
+                           <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
+                               aria-expanded="true">
+                               <span class="m-accordion__item-title">
+                               </span>
+                               <span class="m-accordion__item-mode"></span>
+                           </div>
+                           <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
+                               <div class="m-accordion__item-content">
+                                   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                       <table class="m-datatable__table">
+                                           <thead class="m-datatable__head">
+                                               <tr class="m-datatable__row">
+                                                   <th class="m-datatable__cell m-datatable__cell--sort">
+                                                       <span>#</span>
+                                                   </th>
+                                                   <th class="m-datatable__cell m-datatable__cell--sort">
+                                                       <span>Employee Name</span>
+                                                   </th>
+                                                   <th class="m-datatable__cell m-datatable__cell--sort">
+                                                       <span>KRA Status</span>
+                                                   </th>
+                                                   <th class="m-datatable__cell m-datatable__cell--sort">
+                                                       <span>Submitted on</span>
+                                                   </th>
+                                                   <th class="m-datatable__cell m-datatable__cell--sort">
+                                                       <span>Action</span>
+                                                   </th>
+                                                   
+                                               </tr>
+                                           </thead>
+                                           <tbody class="m-datatable__body">
+                                               <tr class="m-datatable__row" *ngFor="let leave of leavesForApproval | paginate: { id: 'leavesForApproval', itemsPerPage: 6, currentPage: leaveApprovalFilter.page };let even=even;">
+                                                   <td class="m-datatable__cell">
+                                                       <span>{{leave.employeeDetails?.fullName}}</span>
+                                                   </td>
+                                                   <td class="m-datatable__cell">
+                                                       <span>{{leave.employeeDetails?.userName}}</span>
+                                                   </td>
+                                                   <td class="m-datatable__cell">
+                                                       <span>{{leave.leaveTypeName}}</span>
+                                                   </td>
+                                                   <td class="m-datatable__cell">
+                                                       <span>{{leave.leavedetails?.fromDate | date:'dd MMM yyy'}}</span>
+                                                   </td>
+                                                   <td class="m-datatable__cell">
+                                                       <span>{{leave.leavedetails?.toDate | date:'dd MMM yyy'}}</span>
+                                                   </td>
+                                                   
+                                                   <td class="m-datatable__cell">
+                                                       <span>
+                                                           <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Approve/Reject Leave"
+                                                               (click)="showLeaveDetail(leave.leavedetails._id, leaveDetailModal, true)">
+                                                               <i class="la la-info"></i>
+                                                           </a>
+                                                       </span>
+                                                   </td>
+                                               </tr>
+                                               <span *ngIf="leavesForApproval?.length==0" class="m-datatable--error">No records found</span>
+                                           </tbody>
+                                       </table>
+                                       <pagination-template *ngIf="leavesForApproval.length > 0" #p="paginationApi" [id]="'leavesForApproval'" (pageChange)="leaveApprovalFilter.page = $event"
+                                           class="paginationtemplate">
+                                           <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                                               <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                                   <li>
+                                                       <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                           (click)="p.setCurrent(1)">
+                                                           <i class="la la-angle-double-left"></i>
+                                                       </span>
+                                                   </li>
+                                                   <li>
+                                                       <span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                           (click)="p.previous()">
+                                                           <i class="la la-angle-left"></i>
+                                                       </span>
+                                                   </li>
+                                                   <li *ngFor="let page of p.pages">
+                                                       <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                                           {{ page.label }}
+                                                       </span>
+                                                   </li>
+                                                   <li>
+                                                       <span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                           (click)="p.isLastPage()?'null':p.next()">
+                                                           <i class="la la-angle-right"></i>
+                                                       </span>
+                                                   </li>
+                                                   <li>
+                                                       <span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                           (click)="p.setCurrent(p.pages.length + 1)">
+                                                           <i class="la la-angle-double-right"></i>
+                                                       </span>
+                                                   </li>
+                                               </ul>
+                                           </div>
+                                       </pagination-template>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!--end::Item-->
+                   </div>
+                   <!--end::Section-->
+               </div>
+           </div>
+       </div>
+   </div>
+
+   
+</div>
+

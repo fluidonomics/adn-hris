@@ -342,6 +342,15 @@
 					</span>
 				</a>
 			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
+				<a routerLink="/my/team/supervisor/kradashboard" class="m-menu__link m-menu__toggle">
+					<i class="m-menu__link-icon fa fa-bed"></i>
+					<span class="m-menu__link-text">
+						KRA Dashboard
+					</span>
+				</a>
+			</li>
 			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<h4 class="m-menu__section-text">
 					My
