@@ -644,10 +644,10 @@
 						<!-- </div> -->
 
 						<!-- <div *ngIf="true"> -->
-						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && master_timelines === 6">
+						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines === 6">
 							<span><b>Month 4</b></span>
 						</div>
-						<div class="col-md-6 month" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines === 6">
 							<span>Employee Comments #4</span>
 							<textarea name="empComment_month4" id="empComment_month4" [(ngModel)]="pipData.empComment_month4"
 								#empComment_month4="ngModel" class="form-control m-input m-input--air"
@@ -658,7 +658,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 month" *ngIf="pipData.supComment_month4 && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="pipData.supComment_month4 && pipData.master_timelines === 6">
 							<span>Supervisor Comments #4</span>
 							<textarea name="supComment_month4" id="supComment_month4" [(ngModel)]="pipData.supComment_month4"
 								#supComment_month4="ngModel" class="form-control m-input m-input--air" disabled
@@ -668,10 +668,10 @@
 						<!-- </div> -->
 
 						<!-- <div *ngIf="true"> -->
-						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && master_timelines === 6">
+						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines === 6">
 							<span><b>Month 5</b></span>
 						</div>
-						<div class="col-md-6 month" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines === 6">
 							<span>Employee Comments #5</span>
 							<textarea name="empComment_month5" id="empComment_month5" [(ngModel)]="pipData.empComment_month5"
 								#empComment_month5="ngModel" class="form-control m-input m-input--air"
@@ -682,7 +682,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 month" *ngIf="pipData.supComment_month5 && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="pipData.supComment_month5 && pipData.master_timelines === 6">
 							<span>Supervisor Comments #5</span>
 							<textarea name="supComment_month5" id="supComment_month5" [(ngModel)]="pipData.supComment_month5"
 								#supComment_month5="ngModel" class="form-control m-input m-input--air" disabled
@@ -692,10 +692,10 @@
 						<!-- </div> -->
 
 						<!-- <div *ngIf="true"> -->
-						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month6 || isCommentOfMonth6Enable) && master_timelines === 6">
+						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month6 || isCommentOfMonth6Enable) && pipData.master_timelines === 6">
 							<span><b>Month 6</b></span>
 						</div>
-						<div class="col-md-6 month" *ngIf="(pipData.empComment_month6 || isCommentOfMonth6Enable) && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="(pipData.empComment_month6 || isCommentOfMonth6Enable) && pipData.master_timelines === 6">
 							<span>Employee Comments #6</span>
 							<textarea name="empComment_month6" id="empComment_month6" [(ngModel)]="pipData.empComment_month6"
 								#empComment_month6="ngModel" class="form-control m-input m-input--air"
@@ -705,7 +705,7 @@
 								This field is required.
 							</div>
 						</div>
-						<div class="col-md-6 month" *ngIf="pipData.supComment_month6 && master_timelines === 6">
+						<div class="col-md-6 month" *ngIf="pipData.supComment_month6 && pipData.master_timelines === 6">
 							<span>Supervisor Comments #6</span>
 							<textarea name="supComment_month6" id="supComment_month6" [(ngModel)]="pipData.supComment_month6"
 								#supComment_month6="ngModel" class="form-control m-input m-input--air" disabled
@@ -854,7 +854,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="m-form__actions">
-									<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+									<button class="btn btn-success submitForm" type="submit" id="submitFormPostPip">Save</button>
 									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
 								</div>
 							</div>

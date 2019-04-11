@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -442,7 +443,6 @@ export class PipDetailedViewComponent {
             this.isDisabled = false;
         }
 
-        debugger;
         if (this.pipData.supervisor_id == this._currentEmpId) {
             this.isSup = true;
             //debugger;
@@ -465,6 +465,19 @@ export class PipDetailedViewComponent {
         this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = this.pipMasterData[0];
         this.pipData.no = 1;
+
+        if(this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com) {
+
+            $("#sup_final_com").attr('disabled', 'disabled');
+            $("#submitForm").remove();
+        }
+
+        if(!this.pipData.pip_master_details.emp_final_com) {
+
+            $("#sup_final_com").attr('disabled', 'disabled');
+            $("#submitForm").remove();
+        }
+
     }
 
     monthlyCommentValidation() {

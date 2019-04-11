@@ -444,6 +444,7 @@ export class MyPipComponent {
                                 confirmButtonText: 'OK'
                             });
                             //this.loadPipEmployee();
+                            this.loadPipAgendaInfo();
   
                         }
                     }, err => {
@@ -567,6 +568,12 @@ export class MyPipComponent {
         this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
         this.pipData.no = index + 1;
+
+        if(this.pipData.emp_final_com) {
+
+            $("#empcom").attr('disabled', 'disabled');
+            $("#submitFormPostPip").remove();
+        }
     }
 
     monthlyCommentValidation() {
@@ -598,8 +605,9 @@ export class MyPipComponent {
 
     isSaveEnabled() {
 
-        if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
-            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
+        
+        if((this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) && this.pipData.status != "Completed") {
 
                 // debugger;
                 // this.saveEnabled = true;
