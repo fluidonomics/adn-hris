@@ -21,6 +21,7 @@ import { AllEmployeeComponent } from './employee/allEmployee/allEmployee.compone
 import { EditEmployeeComponent } from './employee/editEmployee/editEmployee.component';
 import { AddEmployeeComponent } from './employee/addEmployee/addEmployee.component';
 import { HrLearningComponent } from './workFlows/learning/learning.component';
+import { LearningBatchComponent } from './workFlows/learning/batch/batch.component'
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
@@ -62,6 +63,7 @@ import { MTRBatchComponent } from './workFlows/mid-term-review/batch/batch.compo
         AllEmployeeComponent,
         AddEmployeeComponent,
         HrLearningComponent,
+        LearningBatchComponent,
         HrBatchComponent,
         HrPipComponent,
         DirectoryComponent,

@@ -1,0 +1,251 @@
+<div class="m-content" id="initiate-loader">
+   <div class="row">
+       <div class="col-md-12">
+           <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+               <div class="m-portlet__head">
+                   <div class="m-portlet__head-caption">
+                       <div class="m-portlet__head-title">
+                           <h3 class="m-portlet__head-text">
+                               Initiate Learning
+                               <small>
+                               </small>
+                           </h3>
+                       </div>
+                   </div>
+               </div>
+               <div class="m-portlet__body">
+                   <div class="m-section">
+
+                       <div class="m-section__content">
+                           <div class="form-body">
+                               <div class="row">
+                                   <div class="col-md-4">
+                                       <div class="m-form__group form-group">
+                                           <label for="form_control_1">Department</label>
+                                           <ng-select class="m-input m-input--air" name="department" [items]="deparmentData"
+                                               [multiple]="true" bindLabel="departmentName" bindValue="_id"
+                                               placeholder="Select Department" [(ngModel)]="filterBy.departments"
+                                               [clearable]="false"></ng-select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-4">
+                                       <div class="m-form__group form-group">
+                                           <label for="form_control_1">Grade</label>
+                                           <ng-select class="m-input m-input--air" name="grade" [items]="gradeData"
+                                               [multiple]="true" bindLabel="gradeName" bindValue="_id" placeholder="Select Grade"
+                                               [(ngModel)]="filterBy.grades"></ng-select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-4">
+                                       <div class="m--space-25"></div>
+                                       <div class="m-form__actions">
+                                           <button class="btn btn-success submitForm " type="submit" id="search"
+                                               (click)="loadAllEmployee()">Search</button>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="m-portlet m-portlet--mobile">
+       <div class="m-portlet__body">
+           <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+               <div class="row align-items-center">
+                   <div class="col-xl-12 order-2 order-xl-1">
+                       <div class="form-group m-form__group row align-items-center">
+                           <div class="col-md-3">
+                               <div class="m-input-icon m-input-icon--left">
+                                   <input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
+                                       [(ngModel)]="search">
+                                   <span class="m-input-icon__icon m-input-icon__icon--left">
+                                       <span>
+                                           <i class="la la-search"></i>
+                                       </span>
+                                   </span>
+                               </div>
+                           </div>
+                           <div class="col-md-3"></div>
+                           <div class="col-md-3"></div>
+                           <div class="col-md-3">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (employeeFilterData | orderBy: key : reverse | filter:search)?.length==0 }">
+               <table class="m-datatable__table">
+                   <thead class="m-datatable__head">
+                       <tr class="m-datatable__row">
+
+                           <th class="m-datatable__cell" width="5%">
+                               <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+                                   <input type="checkbox" (change)="onSelectAll($event)" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0">
+                                   <span></span>
+                               </label>
+                           </th>
+                           <th class="m-datatable__cell" width="5%"></th>
+                           <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                               <span>
+                                   NAME
+                                   <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                               </span>
+                           </th>
+                           <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                               <span>
+                                   EMAIL
+                                   <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                               </span>
+                           </th>
+                           <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                               <span>
+                                   DESIGNATION
+                                   <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                               </span>
+                           </th>
+                           <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+                               <span>
+                                   SUPERVISOR
+                                   <i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                               </span>
+                           </th>
+                       </tr>
+                   </thead>
+                   <tbody class="m-datatable__body">
+                       <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeeFilterData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                           <td class="m-datatable__cell" width="5%">
+                               <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+                                   <input type="checkbox" [(ngModel)]="employee.checked">
+                                   <span></span>
+                               </label>
+                           </td>
+                           <td class="m-datatable__cell" width="5%">
+                               <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.emp_profileImage}}"
+                                   onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
+                                   alt="">
+                               <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
+                           </td>
+                           <td class="m-datatable__cell" width="20%">
+                               <span>{{employee.emp_full_name}} [{{employee.emp_userName}}]</span>
+                           </td>
+                           <td class="m-datatable__cell" width="20%">
+                               <span>{{employee.emp_officeEmail}}</span>
+                           </td>
+                           <td class="m-datatable__cell" width="20%">
+                               <span>{{employee.emp_designation_name}}</span>
+                           </td>
+                           <td class="m-datatable__cell" width="25%">
+                               <span>{{employee.emp_supervisor_name}}</span>
+                           </td>
+                       </tr>
+
+                       <span *ngIf="(employeeData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
+                           records found</span>
+                       <!-- <tr class="m-datatable__row m-datatable__row--even">
+                           <td class="m-datatable__cell" colspan="5"  *ngIf="p.pages.length==0">
+                               No record found.
+                           </td>
+                         </tr> -->
+                   </tbody>
+               </table>
+               <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+                   <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                       <ul class="m-datatable__pager-nav" *ngIf="p.pages.length != 0">
+                           <li>
+                               <a class="m-datatable__pager-link m-datatable__pager-link--first"
+                                   [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+                                   <i class="la la-angle-double-left"></i>
+                               </a>
+                           </li>
+                           <li>
+                               <a class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                   [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
+                                   <i class="la la-angle-left"></i>
+                               </a>
+                           </li>
+                           <li *ngFor="let page of p.pages">
+                               <a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+                                   [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                   {{ page.label }}
+                               </a>
+                           </li>
+                           <li>
+                               <a class="m-datatable__pager-link m-datatable__pager-link--next"
+                                   [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+                                   <i class="la la-angle-right"></i>
+                               </a>
+                           </li>
+                           <li>
+                               <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+                                   [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+                                   <i class="la la-angle-double-right"></i>
+                               </a>
+                           </li>
+                       </ul>
+                   </div>
+               </pagination-template>
+           </div>
+           <div class="pager-display-size" *ngIf="p.pages?.length!=0">
+               <select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
+                   <option value=10>10</option>
+                   <option value=20>20</option>
+                   <option value=30>30</option>
+                   <option value=50>50</option>
+                   <option value=100>100</option>
+               </select>
+               <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ?
+                   this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) +
+                   this.itemPerPage - 1 > (employeeData | orderBy: key : reverse | filter:search)?.length ?
+                   (employeeData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1)
+                   + 1) + this.itemPerPage - 1 }} of {{(employeeData | orderBy: key : reverse |
+                   filter:search)?.length}} </span>
+           </div>
+
+       </div>
+   </div>
+
+
+
+   <div class="m-portlet m-portlet--mobile">
+       <div class="m-portlet__body">
+           <div class="form-actions">
+               <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="finitiatemtr.valid && saveBulkMTR(finitiatemtr)"
+                   #finitiatemtr="ngForm" novalidate="novalidate">
+                   <div class="row">
+                       <div class="col-md-4">
+                           <label for="batchName">Batch Name
+                           </label>
+                           <span class="required" aria-required="true"> * </span>
+                           <input name="batchName" class="form-control m-input m-input--air" #batchName="ngModel"
+                               placeholder="Enter Batch Name" [(ngModel)]="batchData.batchName" required>
+                           <div class="form-control-feedback has-danger" *ngIf="finitiatemtr.submitted && !batchName.valid">
+                               This field is required.
+                           </div>
+                       </div>
+                       <div class="col-md-4">
+                           <label for="batchEndDate">Batch End Date
+                           </label>
+                           <span class="required" aria-required="true"> * </span>
+                           <input name="batchEndDate" class="form-control m-input m-input--air" #batchEndDate="ngModel"
+                               placeholder="Enter Batch End Date" [(ngModel)]="batchData.batchEndDate" bsDatepicker
+                               [readonly]="true" [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                               #batchEndDate="ngModel" placement="top" required>
+                           <div class="form-control-feedback has-danger" *ngIf="finitiatemtr.submitted && !batchEndDate.valid">
+                               This field is required.
+                           </div>
+                       </div>
+                       <div class="col-md-4">
+                           <div class="m-form__actions">
+                               <button class="btn btn-success submitForm" type="submit">Initiate</button>
+                           </div>
+                       </div>
+                   </div>
+               </form>
+           </div>
+
+       </div>
+   </div>
+</div>
