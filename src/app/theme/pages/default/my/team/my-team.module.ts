@@ -66,7 +66,7 @@ import { LearningReview } from './team-workflows/team-reveiwer/learning-view/lea
         TransactionHistoryComponent,
         TransactionHistoryLeavesComponent,
         TransactionHistoryMtrComponent,
-        TransactionHistoryKRAComponent
+        TransactionHistoryKRAComponent,
         MtrDetailedViewComponent,
         LearningApprovalComponent,
         LearningDetailedViewComponent,
