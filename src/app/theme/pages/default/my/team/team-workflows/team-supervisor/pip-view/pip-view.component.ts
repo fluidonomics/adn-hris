@@ -38,7 +38,7 @@ export class PipViewComponent implements OnInit {
     }
 
     loadPipBySupervisor(sup_Id: number,status:string) {
-      //debugger;
+      
         this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
             this.pipData = res.json().result.message || [];
         }, error => {

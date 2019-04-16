@@ -397,7 +397,7 @@ export class MyPipComponent {
 
     saveComments(pipData: any) {
 
-        if (pipData.hr_final_com) {
+        if (pipData.emp_final_com === null || pipData.emp_final_com === "") {
             swal({
                 title: 'Please fill remarks!',
                 type: 'warning',
@@ -552,7 +552,6 @@ export class MyPipComponent {
         else {
             this.isApproved = false;
         }
-        // debugger;
         // if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
         //     this.showSub = false;
         // }
@@ -590,7 +589,6 @@ export class MyPipComponent {
         } else if(this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.empComment_month5) {
             this.isCommentOfMonth5Enable = true;
         } else if(this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
-            // debugger;
             this.isCommentOfMonth6Enable = true;
         } else {
             this.isCommentOfMonth1Enable = false;
@@ -609,7 +607,6 @@ export class MyPipComponent {
         if((this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) && this.pipData.status != "Completed") {
 
-                // debugger;
                 // this.saveEnabled = true;
             this.saveEnable = true;
         } else {

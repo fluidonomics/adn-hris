@@ -55,6 +55,7 @@ export class PipDetailedViewComponent {
     user: any;
     //showStat = false;
     masterStatus: string;
+    primarySupervisorId: number; 
     finalReviewEnable: boolean = false;
 
     dateDifference: number;
@@ -185,9 +186,10 @@ export class PipDetailedViewComponent {
                     if (this.pipInfoData.length == 0) {
                         this._router.navigateByUrl("/my/team/workflows/supervisor");
                     }
-                    //debugger;
+                    
                 }
                 this.masterStatus = this.pipInfoData[0].master_status;
+                this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
             },
@@ -252,7 +254,7 @@ export class PipDetailedViewComponent {
                         isApproved: isApproved,
                         superviserInitialComment: pipData.superviserInitialComment,
                     }
-                    //debugger;
+                    
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.approvePip(request).subscribe(res => {
                         if (res.ok && isApproved) {
@@ -445,11 +447,10 @@ export class PipDetailedViewComponent {
 
         if (this.pipData.supervisor_id == this._currentEmpId) {
             this.isSup = true;
-            //debugger;
+            
         }
         else {
             this.isSup = false;
-            //debugger;
         }
 
 

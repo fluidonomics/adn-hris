@@ -49,6 +49,7 @@ export class PipReview {
    showStat = false;
 
    _currentEmpId: number;
+   masterStatus: string;
 
    devArea: [
       'Individual Development',
@@ -117,6 +118,7 @@ export class PipReview {
          res => {
 
             this.pipInfoData = res.json().result.message;
+            this.masterStatus = this.pipInfoData[0].master_status;
             this.isDis = res.json().status == 'Approved' ? true : false;
             this.statusq = res.json().status;
          },
@@ -159,7 +161,8 @@ export class PipReview {
    }
 
    saveComments(pipData: any) {
-      if (pipData.hr_final_com) {
+      
+      if (!pipData.pip_master_details.rev_final_com) {
           swal({
               title: 'Please fill remarks!',
               type: 'warning',
@@ -245,6 +248,18 @@ export class PipReview {
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = this.pipMasterData[0];
       this.pipData.no = 1;
+
+      if(this.pipData.pip_master_details.sup_final_com && this.pipData.pip_master_details.rev_final_com) {
+
+         $("#rev_final_com").attr('disabled', 'disabled');
+         $("#submitForm").remove();
+     }
+
+     if(!this.pipData.pip_master_details.sup_final_com) {
+
+         $("#rev_final_com").attr('disabled', 'disabled');
+         $("#submitForm").remove();
+     }
   }
 
 

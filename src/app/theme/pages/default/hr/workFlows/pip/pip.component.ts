@@ -131,7 +131,6 @@ export class HrPipComponent {
             let data = res.json().data || [];
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                debugger;
                 this.employeeData = data;
                 this.showdetail();
                 this.utilityService.hideLoader('#initiate-loader');

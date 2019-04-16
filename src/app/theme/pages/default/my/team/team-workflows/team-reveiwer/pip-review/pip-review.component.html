@@ -105,7 +105,7 @@
 
                                  </td>
                               </tr>
-                              <tr *ngIf="pipInfoData[0].master_timelines == 'Completed'">
+                              <tr *ngIf="masterStatus === 'Completed'">
                                  <td colspan="6">
                                     <button
                                        class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
@@ -582,6 +582,10 @@
                                           [(ngModel)]="pipData.pip_master_details.rev_final_com" #revcom="ngModel"
                                           class="form-control m-input m-input--air" required></textarea>
                                     </div>
+                                    <div class="form-control-feedback has-danger"
+													*ngIf="PipDataForm.submitted && rev_final_com.invalid">
+													This field is required.
+												</div>
                                     <div class="col-md-2 details">
                                        <span>HR Comments</span>
                                     </div>
@@ -597,7 +601,7 @@
                                           id="supervisordata" [items]="supervisorData" bindLabel="final_status"
                                           bindValue="_id" placeholder="Final Rating"
                                           [(ngModel)]="pipData.pip_master_details.final_status" [clearable]="false"
-                                          #supervisor="ngModel" required>
+                                          #supervisor="ngModel" required disabled>
                                        </ng-select>
                                     </div>
 
