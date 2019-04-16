@@ -353,6 +353,22 @@ export class LeaveService {
         let url = "leave/getLeaveDetailsByFilter?empId=" + empId;
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+    addMaternityLeaveQuota(data: any) {
+        let url = "leave/grantMaternityLeave";
+        return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+    addSpecialLeaveQuota(data: any) {
+        let url = "leave/grantSpecialLeaveSingleEmp";
+        return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+    addSpecialLeaveBulkQuota(data: any) {
+        let url = "leave/grantSpecialLeaveBulk";
+        return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+    getAllEmployeeManagementType() {
+        let url = "leave/getEmployeeDetailsWithLeaveDetails";
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }
 
 export const LeaveStatus = {

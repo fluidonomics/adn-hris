@@ -43,6 +43,17 @@ export class CommonService {
         let url = "common/getFinincialYear";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getCurrentFinancialYear() {
+        let url = "common/getFinincialYear";
+        return this.authService.get(url).map(this.extractData).map(res => {
+            let data = (res as any).json() || [];
+            if (data && data.length > 0) {
+                let currentFinYear = data.find(f => f.isYearActive == true);
+                return currentFinYear;
+            }
+        }).catch(this.handleError);
+    }
+
     getHrSpoce(company_id?: number, emp_id?: number): Observable<Response> {
         let url = "common/getHr";
         if (company_id && emp_id) {
@@ -104,7 +115,6 @@ export class CommonService {
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-
     getVertical(department_id?: number): Observable<Response> {
         let url = "common/getVertical";
         if (department_id) {

@@ -29,6 +29,7 @@ import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
+import { HrLeaveComponent } from './leave/hr-leave.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
 
 import { HrService } from './hr.service';
