@@ -17,6 +17,7 @@ import { MyPapComponent } from './pap/pap.component';
 import { MyPipComponent } from './pip/pip.component';
 import { MyKraComponent } from './kra/kra.component';
 import { MyMtrComponent } from './mid-term-review/mtr.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -31,11 +32,12 @@ import { MyMtrComponent } from './mid-term-review/mtr.component';
         BsDatepickerModule.forRoot(),
         BaseModule,
         MyWorkFlowsRoutingModule,
+        SharedModule
     ], declarations: [
         MyPapComponent,
         MyPipComponent,
         MyKraComponent,
-        MyMtrComponent
+        MyMtrComponent,
     ],
     providers: [MyService]
 })

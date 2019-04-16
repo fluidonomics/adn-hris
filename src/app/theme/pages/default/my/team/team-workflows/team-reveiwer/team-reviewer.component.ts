@@ -7,11 +7,14 @@ import { MyService } from "../../../my.service";
 import { environment } from "../../../../../../../../environments/environment";
 import { tree } from 'd3';
 import { KraService } from '../../../workflows/kra/kra.service';
+import { LearningService } from '../../../../services/learning.service';
+import { PapService } from '../../../../services/pap.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
     encapsulation: ViewEncapsulation.None,
+    providers: [LearningService, PapService]
 })
 export class MyTeamReviewerComponent implements OnInit {
 
@@ -21,7 +24,9 @@ export class MyTeamReviewerComponent implements OnInit {
         private route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
-        private kraService: KraService
+        private kraService: KraService,
+        private learningService: LearningService,
+        private papService: PapService
     ) {
     }
     employees: any = [];
@@ -41,15 +46,29 @@ export class MyTeamReviewerComponent implements OnInit {
         status: 'All',
         page: 1
     };
+    learningData: any = [];
+    learningSearch: any;
+    learningReverse: boolean = true;
+
+    papEmployeeReverse: boolean = true;
+    papEmployeeSearch: any;
+    papData: any = [];
+    papViewData: any = [];
 
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
     }
+    goToAllLearning() {
+        this.router.navigate(['/my/team/workflows/reveiwer/learning/list']);
+    }
     ngOnInit() {
         this.getallemployees();
         this.loadMTRInfo();
+        this.getEmployeesLearning();
+        this.getPapByReviewer();
         this.imageBase = environment.content_api_base.apiBase;
     }
+
     loadMTRInfo() {
         this.myService.getMTRByReviewer(this.authService.currentUserData._id).subscribe(res => {
             if (res.ok) {
@@ -78,11 +97,64 @@ export class MyTeamReviewerComponent implements OnInit {
         })
     }
 
+    getEmployeesLearning() {
+        this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.learningData = res.json().result.message || [];
+            //debugger;
+            // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    getPapByReviewer() {
+        this.utilityService.showLoader("#papApprovalList");
+        this.papService.getPapByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.utilityService.hideLoader("#papApprovalList");
+            let papData = res;
+            if (papData.length > 0) {
+                this.papData = papData.filter(p => {
+                    let submittedCount = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
+                    }
+                    return submittedCount == p.kra_details.length;
+                })
+                this.papData = this.papData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+
+                this.papViewData = papData.filter(p => {
+                    let count = 0;
+                    if (p.kra_details && p.kra_details.length > 0) {
+                        count = p.kra_details.filter(pDetails => pDetails.status == "Approved").length;
+                    }
+                    return count == p.kra_details.length;
+                })
+                this.papViewData = this.papViewData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else return 0;
+                });
+            }
+        });
+    }
+
     goToKraReview(kra) {
         this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
     }
     goToMtrReview(employee) {
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + employee.mtr_master_details._id + '/' + employee.emp_details._id);
+    }
+    goToLearningReview(learning) {
+        this.router.navigateByUrl('my/team/workflows/learning-review/' + learning.learning_master_details._id + "/" + learning.emp_details._id);
+    }
+
+    goToPapReview(pap) {
+        debugger;
+        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
     }
 }
 

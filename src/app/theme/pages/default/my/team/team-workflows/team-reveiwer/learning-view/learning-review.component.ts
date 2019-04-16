@@ -8,6 +8,7 @@ import { CommonService } from "../../../../../../../../base/_services/common.ser
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from "ngx-bootstrap";
+import { environment } from '../../../../../../../../../environments/environment'
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.learning-view",
@@ -17,7 +18,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap";
 })
 export class LearningReview {
 
-    @ViewChild('LearningDetailModal') LearningDetailModal: TemplateRef<any>;
+    @ViewChild('learningDetailModal') learningDetailModal: TemplateRef<any>;
 
     window: any = window;
     kraCategoryData: any[];
@@ -25,6 +26,7 @@ export class LearningReview {
     supervisorData: any = [];
 
     kraInfoData: any = [];
+    learningInfoData: any = [];
 
     isSubmitted: boolean = false;
 
@@ -32,12 +34,27 @@ export class LearningReview {
     isKraAvaliable: boolean = false;
 
     param_emp_id: number;
+    param_master_id: number;
     param_id: number;
     kraWorkFlowData: any = [];
 
     status: any;
-    isDisabled: boolean = true;
+    statusq: any;
+    isDisabled: boolean = false;
+    isDis: boolean = true;
     user: any;
+    showStat = false;
+
+    learningData: any;
+    _currentEmpId: number;
+
+    devArea: [
+        'Individual Development',
+        'Functional Development'
+    ]
+    imageBase: any;
+
+
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -58,57 +75,56 @@ export class LearningReview {
     }
 
     ngOnInit() {
+        //debugger;
+        this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
                         this.param_emp_id = parseInt(params['emp_id']);
+                        this.param_master_id = parseInt(params['id']);
+                        console.log("path var : ", params['id']);
                         this.initData();
                     }
                 });
             });
-
+        this.imageBase = environment.content_api_base.imgBase;
 
     }
 
     initData() {
-        this.loadKraCategoryData();
-        this.loadWeightAgeData();
+        //console.log("route : ", this._route.url._value[])
         this.loadSupervisorData();
-        this.loadKraInfo();
+        this.loadLearningEmployee();
         this.getEmployee();
     }
 
-    loadKraInfo() {
-        this._learningService.getKraInfo(this.param_id).subscribe(
+    loadLearningEmployee() {
+        // debugger;
+
+        this._learningService.getEmployeeLearningDetails(this.param_master_id).subscribe(
             res => {
-                this.kraInfoData = res.json().data;
-                this.isDisabled = res.json().status == 'Approved' ? true : false;
-                this.status = res.json().status;
+                //console.log("response : ", res.json().result.message);
+                this.learningInfoData = res.json().result.message;
+                for (let lr of this.learningInfoData) {
+                    var found = this.supervisorData.some(function (el) {
+                        return el._id === lr.supervisorId;
+                    });
+                    if (!found) {
+                        this.supervisorData.push({ _id: lr.supervisorId, fullName: lr.supervisor_name });
+                    }
+                }
+                this.isDis = res.json().status == 'Approved' ? true : false;
+                this.statusq = res.json().status;
+                console.log("learning info data : ", this.learningInfoData);
             },
             error => {
-            });;
-    }
 
-    loadKraCategoryData() {
-        this._commonService.getKraCategory()
-            .subscribe(
-                data => {
-                    this.kraCategoryData = data.json();
-                },
-                error => {
-                });
-    }
 
-    loadWeightAgeData() {
-        this._commonService.getKraWeightage()
-            .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            }
+
+        );
     }
 
     loadSupervisorData() {
@@ -129,79 +145,24 @@ export class LearningReview {
         })
     }
 
-    preSaveKraDetails(kraId: number, status: string) {
-        let swalOption = {}
-        let index = this.kraData.no - 1;
-        this.kraInfoData[index].sendBackComment = this.kraData.sendBackComment;
-        if (status == 'SendBack' && (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "")) {
-            swal({
-                title: 'Please specify the reason!',
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#66BB6A',
-                confirmButtonText: 'OK'
-            });
-        }
-        else {
-            let text = "Do you want to approve kra ?";
-            let confirmButtonText = "Approve";
-            let confirmButtonColor = "#66BB6A";
-            if (status == 'SendBack') {
-                text = "Do you want to send back kra ?";
-                confirmButtonText = "Send Back";
-                confirmButtonColor = "#f22d4e";
-            }
-            swal({
-                title: 'Are you sure?',
-                text: text,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: confirmButtonColor,
-                cancelButtonColor: '#9a9caf',
-                confirmButtonText: confirmButtonText
-            }).then((result) => {
-                if (result.value) {
-                    this.saveKraDetails(index, status);
-                }
-            });
-        }
-    }
 
-    saveKraDetails(index: number, status: string) {
-        this.kraInfoData[index].supervisorStatus = status;
-        if (status == 'Approved') {
-            this.kraInfoData[index].sendBackComment = null;
-        }
-        this._learningService.saveKra(this.kraInfoData[index]).subscribe(res => {
-            if (res.ok) {
-                this.modalRef.hide();
-                if (status == 'SendBack' || this.kraInfoData.filter(x => x.supervisorStatus == 'Approved').length == this.kraInfoData.length) {
-                    let kraStatus = (status == 'SendBack' ? 'SendBack' : 'Approved');
-                    this.saveKraWorkFlow({ _id: this.param_id, status: kraStatus })
-                }
-            }
-        },
-            error => {
-            });
-    }
-
-    saveKraWorkFlow(data) {
-        this._learningService.saveKraWorkFlow(data)
-            .subscribe(
-                res => {
-                },
-                error => {
-                });
-    }
 
     modalRef: BsModalRef;
-    kraData: any = {};
-    showKraDetail(index, event) {
-        this.modalRef = this.modalService.show(this.LearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
-        this.kraData = this.kraInfoData[index];
-        this.kraData.no = index + 1;
-        this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
-        this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
+    learnData: any = {};
+    showLearningDetail(index, event) {
+        console.log("index and event : ", index, event);
+        this.modalRef = this.modalService.show(this.learningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
+        this.learnData = this.learningInfoData[index];
+        this.learnData.no = index + 1;
+        // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
+        // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
+        console.log("learningdata no : ", this.learnData);
+        if (this.learnData.status == "Approved" || this.learnData.status == "SendBack") {
+            this.isDisabled = true;
+        }
+        else {
+            this.isDisabled = false;
+        }
     }
 
 

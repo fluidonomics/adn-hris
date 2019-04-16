@@ -1,0 +1,193 @@
+<div class="m-content" *ngIf="param_id">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								{{isChangable ?'Submit PAP' :'My PAP' }}
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools">
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+							<li class="nav-item m-tabs__item" *ngIf="isChangable">
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitPapWorkFlow(fmtrInfo.form.dirty)">Submit</button>
+							</li>
+							<li class="nav-item m-tabs__item"  *ngIf="raiseGreivance">								
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary">Raise Greivance</button>							
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="m-section">
+						<div class="m-section__content">
+							<form #fmtrInfo="ngForm" novalidate="novalidate">
+								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id" [papChanges]="papChanges"
+								 (showDetails)="showPAPDetails($event)"></pap-details-grid>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #papDetailModal>
+	<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						PAP
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+						<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+							<div class="btn-group" role="group">
+								<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="m-portlet__body">
+			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(PAPDataForm,papData._id)" id="PAPDataForm"
+			 #PAPDataForm="ngForm">
+				<div class="m-widget6 ">
+					<div class="row">
+						<div class="col-md-6">
+							<span>PAP No. {{papData.no}}</span>
+						</div>
+						<div class="col-md-2 ">
+							KRA Category
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air" name="papCategoryData" id="papCategoryData" [items]="papCategoryData"
+							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="papData.midtermdetails.category_id"
+							 [clearable]="false" #papCategory="ngModel" disabled [required]="!papData.mtr_master_kraDetailId"></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && papCategory.invalid">
+								This field is required.
+							</div>
+						</div>
+					</div>
+					<div class="row details">
+						<div class="col-md-2">
+							PAP Weightage
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air" name="papWeightagedata" id="papWeightagedata" [items]="weightageData"
+							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
+							 [clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && papWeightage.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-2">
+							Supervisor
+						</div>
+						<div class="col-md-4">
+							<ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
+							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
+							 [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supervisorOne.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-12 details">
+							<span>KRA</span>
+							<textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra" #pap_kra="ngModel" class="form-control m-input m-input--air"
+							 disabled [required]="!papData.pap_master_kraDetailId"></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && pap_kra.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Unit of Success</span>
+							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
+							 #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && unitOfSuccess.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Measure of Success</span>
+							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="papData.midtermdetails.measureOfSuccess"
+							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && measureOfSuccess.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Status</span>
+							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
+							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus"
+							 [clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && progressStatus.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Rating Scale</span>
+							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
+							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
+							 [clearable]="false" #colorStatus="ngModel" disabled required>
+							</ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && colorStatus.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-12 details">
+							<span>Employee Remarks</span>
+							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.empRemark" #employeeComment="ngModel"
+							 class="form-control m-input m-input--air" disabled required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && employeeComment.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-6 details">
+							<span>Grivance Scale</span>
+							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
+							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.grivance_ratingScaleId"
+							 [clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled" required>
+							</ng-select>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && colorStatus.invalid">
+								This field is required.
+							</div>
+						</div>
+						<div class="col-md-12 details">
+							<span>Grivance Remarks</span>
+							<textarea name="employeeComment" id="grivanceComment" [(ngModel)]="papData.grivanceRemark" #employeeComment="ngModel"
+							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
+							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && employeeComment.invalid">
+								This field is required.
+							</div>
+						</div>
+					</div>
+					<div class="form-actions details">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="m-form__actions">
+									<button  class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</ng-template>

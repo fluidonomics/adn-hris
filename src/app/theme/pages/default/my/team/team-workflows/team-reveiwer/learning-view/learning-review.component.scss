@@ -1,7 +1,7 @@
-.kra-view {}
+.learning-view {}
 
 modal-container {
-    .kraDetailsPortlet {
+    .learningDetailsPortlet {
         .m-portlet__body {
             .flex {
                 display: flex;
@@ -12,7 +12,7 @@ modal-container {
             }
 
             .img {
-                width: 100% !important;
+                width: 50% !important;
             }
 
             .name {

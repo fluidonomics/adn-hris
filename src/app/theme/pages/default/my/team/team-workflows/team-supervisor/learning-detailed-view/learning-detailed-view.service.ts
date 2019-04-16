@@ -11,36 +11,23 @@ export class LearningDetailedViewService {
     constructor(private authService: AuthService) {
     }
 
-    getEmployeeKraWorkFlowInfo(emp_id?: number): Observable<Response> {
-        let url = "kra/getEmployeeKraWorkFlowInfo?emp_id=" + emp_id;
+    getLearningInfo(master_id: number): Observable<Response> {
+
+        let url = "learning/lerningdetails?master_id=" + master_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getKraInfo(kraWorkflow_id?: number): Observable<Response> {
-        let url = "kra/getKraInfo?kraWorkflow_id=" + kraWorkflow_id;
+    approveLearning(data: any): Observable<Response> {
+        let url = "learning/learningapproval"
+        
+        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+    }
+
+    getLearningBySupervisor(supervisorId: number,status? :string): Observable<Response> {
+        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    saveKra(data: any): Observable<Response> {
-        let url = "kra/addKraInfo"
-        if(data._id)
-        {
-            url="kra/updateKraInfo"
-        }
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-
-    
-    saveKraWorkFlow(data:any):Observable<Response> 
-    {
-        let url = "kra/addKraWorkFlowInfo"
-        if(data._id)
-        {
-            url = "kra/updateKraWorkFlowInfo"
-        }
-        return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
-    }
-    
     private extractData(res: Response) {
         return res || {};
     }
