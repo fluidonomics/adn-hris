@@ -17,11 +17,11 @@ import * as _ from 'lodash';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: "./hr-leave.component.html",
+    templateUrl: "./quotaProvider.component.html",
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./hr-leave.component.css'],
+    styleUrls: ['./quotaProvider.component.scss'],
 })
-export class HrLeaveComponent implements OnInit {
+export class QuotaProviderComponent implements OnInit {
 
     @ViewChild('leaveQuota') leaveQuota: NgForm;
 
@@ -127,12 +127,16 @@ export class HrLeaveComponent implements OnInit {
 
     leaveTypeSelect(data: any) {
         if (data.type === "Maternity Leave") {
-            this.employeesListToShow = this.getDistinctSelectedData(this.employees.filter(f => f.gender === "Female"));
+            this._hrService.getEmployeeForQuotaProvide({type:"maternity"}).subscribe(res => {
+                this.employeesListToShow = res.json() || [];
+            });
             this.isMaternity = true;
             this.isSpecial = false;
         } else {
             if (data.type === "Special Leave")
-                this.employeesListToShow = this.employeeEligibleForSpecialLeave;
+                this._hrService.getEmployeeForQuotaProvide({type:"special"}).subscribe(res => {
+                this.employeesListToShow = res.json() || [];
+            });
             else if (data.type === "Special Leave (unpaid)")
                 this.employeesListToShow = this.employeeEligibleForSpecialUnpaidLeave;
             this.isMaternity = false;

@@ -31,7 +31,7 @@ import { LearningBatchComponent } from './workFlows/learning/batch/batch.compone
 import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
-
+import { QuotaProviderComponent } from './leave/quotaProvider.component';
 const routes: Routes = [{
     path: '', component: HrComponent,
     children: [
@@ -61,6 +61,7 @@ const routes: Routes = [{
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
         { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
+        { path: 'quotaProvider', component: QuotaProviderComponent }
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]
