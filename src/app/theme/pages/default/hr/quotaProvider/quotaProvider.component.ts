@@ -127,14 +127,14 @@ export class QuotaProviderComponent implements OnInit {
 
     leaveTypeSelect(data: any) {
         if (data.type === "Maternity Leave") {
-            this._hrService.getEmployeeForQuotaProvide({type:"maternity"}).subscribe(res => {
+            this._leaveService.getEmployeeForQuotaProvide({type:"maternity"}).subscribe(res => {
                 this.employeesListToShow = res.json() || [];
             });
             this.isMaternity = true;
             this.isSpecial = false;
         } else {
             if (data.type === "Special Leave")
-                this._hrService.getEmployeeForQuotaProvide({type:"special"}).subscribe(res => {
+                this._leaveService.getEmployeeForQuotaProvide({type:"special"}).subscribe(res => {
                 this.employeesListToShow = res.json() || [];
             });
             else if (data.type === "Special Leave (unpaid)")
@@ -195,19 +195,31 @@ export class QuotaProviderComponent implements OnInit {
     // on submit
     provideLeave(form) {
         debugger;
+        let data = {
+            emp_id: this.request._id,
+            leave_type: this.request.leave_type,
+            balance: this.request.balance,
+            fiscalYearId: this.currentFiscalYear._id,
+            createdBy: this.currentUser._id,
+            createdAt: new Date()
+        };
         if (form.valid) {
             this.utilityService.showLoader('.m-portlet__body');
-            if (this.request.leave_type === 3) {
-                this.provideMaternityQuota(form);
-            }
-            else if (this.request.leave_type === 4 || this.request.leave_type === 5) {
-                this.provideSpecialLeave(form);
-            }
+            this._leaveService.provideLeaveQuota(data).subscribe(res => {
+                if(res.status == 200) {
+                    swal('Success','Quota Provided Successfully','success');
+                    this.utilityService.hideLoader('.m-portlet__body');
+                }
+                console.log(res);
+            },err => {
+                swal('Error','Some Error Occurred','error');
+            });
         }
 
     }
     provideMaternityQuota(form) {
         let currentEmpDetails = this.employees.filter(f => f._id == this.request._id);
+        debugger;
         let data = {
             fullName: currentEmpDetails[0].fullName,
             officeEmail: currentEmpDetails[0].officeEmail,

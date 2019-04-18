@@ -369,6 +369,14 @@ export class LeaveService {
         let url = "leave/getEmployeeDetailsWithLeaveDetails";
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
+    getEmployeeForQuotaProvide(data: any) {
+        let url = "leave/getEmployeeForQuotaProvide?type=" + data.type;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+    provideLeaveQuota(data: any) {
+        let url = "leave/provideLeaveQuota";
+        return this.authService.post(url,data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
 }
 
 export const LeaveStatus = {

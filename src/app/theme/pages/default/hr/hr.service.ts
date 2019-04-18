@@ -63,10 +63,6 @@ export class HrService {
         let url = "midterm/initiateMidTermProcess";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
-    getEmployeeForQuotaProvide(data: any) {
-        let url = "leave/getEmployeeForQuotaProvide?type=" + data.type;
-        return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    }
     // updateLeaveQuota(data: any) {
     //     let url = "leave/updateLeaveQuota";
     //     return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
