@@ -41,6 +41,10 @@ export class PipApprovalComponent implements OnInit {
       //debugger;
         this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
             this.pipData = res.json().result.message || [];
+            this.pipData = this.pipData.filter(pip => {
+                return pip.pip_master_details.status === "Submitted";
+            })
+
         }, error => {
             console.log(error);
         });

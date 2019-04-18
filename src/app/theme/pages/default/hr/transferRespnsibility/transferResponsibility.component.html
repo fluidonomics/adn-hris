@@ -322,7 +322,7 @@
 					</div>
 					<div class="col-md-12 pendingLeave">
 						<h3>Pending PIP</h3>
-						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenLeaveRequest?.length==0 }">
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenPipgRequest?.length==0 }">
 							<table class="m-datatable__table">
 								<thead class="m-datatable__head">
 									<tr class="m-datatable__row">
@@ -342,7 +342,7 @@
 									</tr>
 								</thead>
 								<tbody class="m-datatable__body">
-									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let pip of employeeOpenPipRequest;let even=even;">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let pip of employeeOpenPipgRequest;let even=even;">
 										<!-- <td class="m-datatable__cell" width="20%">
 											<span>{{learn?.learningDetailCount}}</span>
 										</td> -->
@@ -356,7 +356,7 @@
 											<span>{{pip?.status}}</span>
 										</td>
 									</tr>
-									<span *ngIf="employeeOpenLearningRequest?.length==0" class="m-datatable--error">No records found</span>
+									<span *ngIf="employeeOpenPipgRequest?.length==0" class="m-datatable--error">No records found</span>
 								</tbody>
 							</table>
 						</div>

@@ -140,7 +140,6 @@ export class TransferResponsibilityComponent implements OnInit {
 
                 this.oldPrimarySupervisor = details.supervisorDetails.primarySupervisorEmp_id;
                 this.oldSecondarySupervisor = details.supervisorDetails.secondarySupervisorEmp_id;
-                //debugger;
 
             }
         }, error => {
@@ -303,7 +302,6 @@ export class TransferResponsibilityComponent implements OnInit {
                     let mtrData = res[2].json().result.message || [];
                     let learningData = res[3].json().result.message || [];
                     let pipData = res[4].json().result.message || [];
-                     debugger;
 
                     this.employeeOpenLeaveRequest = leaveData.filter(leave => {
                         return leave.leaveStatus != "Approved" && leave.leaveStatus != "Cancelled" && leave.leaveStatus != "Withdrawn" && leave.leaveStatus != "Rejected";
@@ -322,7 +320,7 @@ export class TransferResponsibilityComponent implements OnInit {
                     });
 
                     pipData = pipData.filter(pip => {
-                        return pip.status != "Approved";
+                        return (pip.status != "Approved" && pip.status != "Completed");
                     });
 
                     this.employeeOpenMtrRequest = _.chain(mtrData)
@@ -334,7 +332,6 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].mtr_master_details.updatedAt
                             }
                         }).value();
-                    debugger;
                     this.employeeOpenLearningRequest = _.chain(learningData)
                         .groupBy("_id").map(function (v, i) {
                             return {
@@ -354,8 +351,7 @@ export class TransferResponsibilityComponent implements OnInit {
                                 updatedAt: v[0].updatedAt
                             }
                         }).value();
-                    debugger;
-                    if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0 || this.employeeOpenMtrRequest.length > 0 || this.employeeOpenLearningRequest.length > 0) {
+                    if (this.employeeOpenLeaveRequest.length > 0 || this.employeeOpenKraRequest.length > 0 || this.employeeOpenMtrRequest.length > 0 || this.employeeOpenLearningRequest.length > 0 || this.employeeOpenPipgRequest.length > 0) {
                         this.request.leaveIds = this.employeeOpenLeaveRequest.map(leave => leave._id);
                         this.request.kraIds = this.employeeOpenKraRequest.map(kra => kra._id);
                         this.request.mtrIds = mtrData.map(mtr => mtr._id);

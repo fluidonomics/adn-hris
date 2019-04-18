@@ -234,12 +234,31 @@ export class MyPipComponent {
         
     }
 
+    loadprevsupervisor() {
+        for (let pip of this.pipInfoData) {
+            debugger;
+            if (pip.supervisor_id != "") {
+
+                var found = this.supervisorData.some(function (el) {
+                    return el._id === pip.supervisor_id;
+                });
+                if (!found) {
+                    this.supervisorData.push({ _id: pip.supervisor_id, fullName: pip.supervisor_name, canSelect: false });
+                 //   debugger;
+                }
+
+            }
+
+        }
+    }
+
     loadPipDetailsInfo() {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
             this.pipInfoData = data.result.message;
             if(this.pipInfoData.length > 0){
                 this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
+                this.loadprevsupervisor();
             } 
             else {
                 this.pipInfoData = [
@@ -544,6 +563,7 @@ export class MyPipComponent {
         }
         else {
             this.isInitiated = false;
+            this.loadprevsupervisor();
         }
         
         if (this.pipData.status == "Approved") {

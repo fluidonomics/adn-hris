@@ -131,7 +131,6 @@ export class PipDetailView {
       this._pipService.getPipDetails(this.param_master_id).subscribe(
          res => {
             this.pipInfoData = res.json().result.message;
-            this.isDis = res.json().status == 'Approved' ? true : false;
             this.statusq = res.json().status;
          },
          error => {
@@ -172,7 +171,7 @@ export class PipDetailView {
    }
 
    saveComments(pipData: any) {
-      if (!pipData.hr_final_com) {
+      if (!pipData.hr_final_com || !pipData.final_recommendation) {
           swal({
               title: 'Please fill remarks!',
               type: 'warning',
@@ -246,12 +245,12 @@ export class PipDetailView {
       this.pipData.no = index + 1;
       // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
       // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-      if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
-         this.isDisabled = true;
-      }
-      else {
-         this.isDisabled = false;
-      }
+      // if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
+      //    this.isDisabled = true;
+      // }
+      // else {
+      //    this.isDisabled = false;
+      // }
    }
 
    showCompletionDetails() {
@@ -259,6 +258,21 @@ export class PipDetailView {
       let a = this.pipInfoData;
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[0]));
+
+      if(this.pipData.rev_final_com && this.pipData.hr_final_com) {
+
+         $("#hr_final_com").attr('disabled', 'disabled');
+         $("#submitForm").remove();
+         this.isDisabled = true;
+
+     }
+
+     if(!this.pipData.rev_final_com) {
+
+         $("#hr_final_com").attr('disabled', 'disabled');
+         $("#submitForm").remove();
+         this.isDisabled = true;
+     }
    }
 
 
