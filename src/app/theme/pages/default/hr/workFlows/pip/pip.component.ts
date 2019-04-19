@@ -206,21 +206,25 @@ export class HrPipComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
-                this.batchData.createdBy = this._currentEmpId;
-                this.batchData.createdByName = this.currentEmpname;
+                
+                if(result.value) {
+
+                    this.batchData.createdBy = this._currentEmpId;
+                    this.batchData.createdByName = this.currentEmpname;
     
-                this.utilityService.showLoader('#initiate-loader');
-                this._pipService.initBatch(this.batchData)
-                    .subscribe(res => {
-                        if (res.ok) {
+                    this.utilityService.showLoader('#initiate-loader');
+                    this._pipService.initBatch(this.batchData)
+                        .subscribe(res => {
+                            if (res.ok) {
+                                this.utilityService.hideLoader('#initiate-loader');
+                                swal("Success", "PIP Batch Initiated Successfully", "success");
+                                form.resetForm();
+                                this.clearForm();
+                            }
+                        }, error => {
                             this.utilityService.hideLoader('#initiate-loader');
-                            swal("Success", "PIP Batch Initiated Successfully", "success");
-                            form.resetForm();
-                            this.clearForm();
-                        }
-                    }, error => {
-                        this.utilityService.hideLoader('#initiate-loader');
-                    });
+                        });
+                }
             }
             else {
                 swal('Oops!', 'No employee selected', 'warning')

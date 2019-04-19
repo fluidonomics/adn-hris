@@ -99,18 +99,18 @@ export class PipDetailedViewComponent {
 
     finalRecommendation = [
         {
-            '_id': 1,
+            '_id':1,
             'final_recommendation': "Continue in current role"
         },
         {
-            '_id': 2,
+            '_id':2,
             'final_recommendation': "Internal Movement"
         },
         {
-            '_id': 3,
+            '_id':3,
             'final_recommendation': "Remedial action"
         }
-    ];
+     ];
 
 
 
