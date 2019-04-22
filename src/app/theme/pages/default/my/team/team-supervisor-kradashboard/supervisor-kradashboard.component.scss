@@ -1,6 +1,6 @@
 @import "../../../../../../../../assets/colors";
 
-app-my-leaves-dashboard-supervisor {
+app-team-kra-dashboard-supervisor {
     width: 100%;
 
     & > .m-content {
@@ -189,14 +189,14 @@ app-my-leaves-dashboard-supervisor {
             padding: 0;
         }
 
-        // .teamOnLeaveGrid {
-        //     .m_datatable {
-        //         // th, td {
-        //         //     width: 33.33%;
-        //         // }
+        .teamOnLeaveGrid {
+            .m_datatable {
+                // th, td {
+                //     width: 33.33%;
+                // }
            
-        //     }
-        // }
+            }
+        }
     }
 
     .recentTransactionPortlet, .teamLeavesPortlet {
