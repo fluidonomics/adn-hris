@@ -35,6 +35,7 @@ export class MyPipComponent {
     pipInfoData: any = [];
     pipDetails: any = [];
     currentIndex: number;
+    saveEnable: boolean = false;
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -72,7 +73,7 @@ export class MyPipComponent {
     ];
     suparr = [];
 
-    showSub:boolean = true;
+    showSub:boolean = false;
 
     supervisorData: any = [];
 
@@ -81,6 +82,7 @@ export class MyPipComponent {
     isVisible: boolean = true;
     showStats: boolean = false;
     isApproved: boolean = false;
+    isInitiated: boolean = false;
     employee: any = {};
     dateDifference:number;
     isCommentOfMonth1Enable: boolean = false;
@@ -163,24 +165,13 @@ export class MyPipComponent {
             areaofImprovement: this.pipInfoData[index].areaofImprovement,
             actionPlan: this.pipInfoData[index].actionPlan,
             timelines: this.pipInfoData[index].timelines,
-            finalReview: this.pipInfoData[index].finalReview,
-            finalRating: this.pipInfoData[index].finalRating,
             employeeInitialComment: this.pipInfoData[index].employeeInitialComment,
-            superviserInitialComment: this.pipInfoData[index].superviserInitialComment,
             empComment_month1: this.pipInfoData[index].empComment_month1,
             empComment_month2: this.pipInfoData[index].empComment_month2,
             empComment_month3: this.pipInfoData[index].empComment_month3,
             empComment_month4: this.pipInfoData[index].empComment_month4,
             empComment_month5: this.pipInfoData[index].empComment_month5,
-            empComment_month6: this.pipInfoData[index].empComment_month6,
-            supComment_month1: this.pipInfoData[index].supComment_month1,
-            supComment_month2: this.pipInfoData[index].supComment_month2,
-            supComment_month3: this.pipInfoData[index].supComment_month3,
-            supComment_month4: this.pipInfoData[index].supComment_month4,
-            supComment_month5: this.pipInfoData[index].supComment_month5,
-            supComment_month6: this.pipInfoData[index].supComment_month6
-
-
+            empComment_month6: this.pipInfoData[index].empComment_month6
 
         }
         let isError: boolean = false;
@@ -235,7 +226,7 @@ export class MyPipComponent {
         this._pipService.getPipInfo(this._currentEmpId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
-            this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" ).length > 0;
+            //this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" && pip.status != "Completed" ).length > 0;
         }, error => {
             swal("Error", error.title, "error");
         });;
@@ -243,12 +234,31 @@ export class MyPipComponent {
         
     }
 
+    loadprevsupervisor() {
+        for (let pip of this.pipInfoData) {
+            debugger;
+            if (pip.supervisor_id != "") {
+
+                var found = this.supervisorData.some(function (el) {
+                    return el._id === pip.supervisor_id;
+                });
+                if (!found) {
+                    this.supervisorData.push({ _id: pip.supervisor_id, fullName: pip.supervisor_name, canSelect: false });
+                 //   debugger;
+                }
+
+            }
+
+        }
+    }
+
     loadPipDetailsInfo() {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
             this.pipInfoData = data.result.message;
             if(this.pipInfoData.length > 0){
-                this.showSub = this.pipInfoData.filter(pip => pip.status != "Submitted" && pip.status != "Approved").length > 0;
+                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
+                this.loadprevsupervisor();
             } 
             else {
                 this.pipInfoData = [
@@ -406,7 +416,7 @@ export class MyPipComponent {
 
     saveComments(pipData: any) {
 
-        if (pipData.hr_final_com) {
+        if (pipData.emp_final_com === null || pipData.emp_final_com === "") {
             swal({
                 title: 'Please fill remarks!',
                 type: 'warning',
@@ -435,7 +445,8 @@ export class MyPipComponent {
                        hrFinalCom: pipData.hr_final_com,
                        empFinalCom: pipData.emp_final_com,
                        revFinalCom: pipData.rev_final_com,
-                       supFinalCom: pipData.sup_final_com
+                       supFinalCom: pipData.sup_final_com,
+                       finalRecommendation: pipData.final_recommendation
                     }
 
                     this.utilityService.showLoader('.mtrDetailsPortlet');
@@ -452,6 +463,7 @@ export class MyPipComponent {
                                 confirmButtonText: 'OK'
                             });
                             //this.loadPipEmployee();
+                            this.loadPipAgendaInfo();
   
                         }
                     }, err => {
@@ -515,6 +527,7 @@ export class MyPipComponent {
         this.pipData.no = index + 1;
         
         this.monthlyCommentValidation();
+        this.isSaveEnabled();
         
         
         for(let x=0;x<this.PipAgendaData.length;x++) {
@@ -545,19 +558,26 @@ export class MyPipComponent {
         // else {
         //     this.showStat = false;
         // }
-        if (this.pipData.status == "Approved" || this.pipData.status == "Initiated") {
+        if (this.pipData.status === "Initiated" || this.pipData.status === "SendBack") {
+            this.isInitiated = true;
+        }
+        else {
+            this.isInitiated = false;
+            this.loadprevsupervisor();
+        }
+        
+        if (this.pipData.status == "Approved") {
             this.isApproved = true;
         }
         else {
             this.isApproved = false;
         }
-
-        if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
-            this.showSub = false;
-        }
-        else {
-            this.showSub = true;
-        }
+        // if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
+        //     this.showSub = false;
+        // }
+        // else {
+        //     this.showSub = true;
+        // }
 
     }
 
@@ -567,34 +587,52 @@ export class MyPipComponent {
         this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
         this.pipData.no = index + 1;
+
+        if(this.pipData.emp_final_com) {
+
+            $("#empcom").attr('disabled', 'disabled');
+            $("#submitFormPostPip").remove();
+        }
     }
 
     monthlyCommentValidation() {
 
-        if(this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+        if(this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if(this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+        } else if(this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.empComment_month2) {
             this.isCommentOfMonth2Enable = true;
-        } else if(this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+        } else if(this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.empComment_month3) {
             this.isCommentOfMonth3Enable = true;
-        } else if(this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+        } else if(this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.empComment_month4) {
             this.isCommentOfMonth4Enable = true;
-        } else if(this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+        } else if(this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.empComment_month5) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
+        } else if(this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
             this.isCommentOfMonth6Enable = true;
+        } else {
+            this.isCommentOfMonth1Enable = false;
+            this.isCommentOfMonth2Enable = false;
+            this.isCommentOfMonth3Enable = false;
+            this.isCommentOfMonth4Enable = false;
+            this.isCommentOfMonth5Enable = false;
+            this.isCommentOfMonth6Enable = false;
         }
     }
 
 
     isSaveEnabled() {
 
-        if(this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
-            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
+        
+        if((this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+            this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) && this.pipData.status != "Completed") {
 
-                this.saveEnabled = true;
-            }
+                // this.saveEnabled = true;
+            this.saveEnable = true;
+        } else {
+
+            this.saveEnable = false;
+        }
             
     }
     

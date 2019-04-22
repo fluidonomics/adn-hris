@@ -119,6 +119,8 @@ export class PipBatchComponent implements OnInit {
             }
         }, error => {
         });
+
+        this.loadBatch();
     }
 
 

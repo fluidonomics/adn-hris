@@ -56,10 +56,9 @@ export class PipViewComponent implements OnInit {
    getEmployeesPip() {
       this.pipService.getPipByHr(this.authService.currentUserData._id).subscribe(res => {
          this.pipData = res.json().result.message || [];
-         this.pipData = this.pipData.filter(pip => pip.pip_master.status=="Approved");
-         this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com == null);
-         this.pipViewData =  this.pipData.filter(pip => pip.pip_master.hr_final_com !="" && pip.pip_master.hr_final_com != null);
-         debugger;
+         this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed");
+         this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com === null);
+         this.pipViewData =  this.pipData.filter(pip => pip.pip_master.hr_final_com !="" && pip.pip_master.hr_final_com !== null);
       }, error => {
          console.log(error);
       });

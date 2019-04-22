@@ -38,7 +38,7 @@ export class PipViewComponent implements OnInit {
     }
 
     loadPipBySupervisor(sup_Id: number,status:string) {
-      //debugger;
+      
         this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
             this.pipData = res.json().result.message || [];
         }, error => {
@@ -48,7 +48,6 @@ export class PipViewComponent implements OnInit {
 
     gotoPipData(pip) {
         console.log("pip : ", pip);
-        debugger;
         this.router.navigateByUrl("/my/team/workflows/pip-detailed-view/" + "view/" + pip.pip_master_details._id + "/" + pip.emp_details._id);
         
     }

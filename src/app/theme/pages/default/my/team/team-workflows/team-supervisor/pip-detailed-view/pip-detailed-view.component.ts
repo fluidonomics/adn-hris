@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit, PLATFORM_ID, ViewEncapsulation, Inject, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -49,9 +50,13 @@ export class PipDetailedViewComponent {
     //status: any;
     statusq: any;
     isDisabled: boolean = false;
+    isSup: boolean = true;
     isDis: boolean = true;
     user: any;
     //showStat = false;
+    masterStatus: string;
+    primarySupervisorId: number; 
+    finalReviewEnable: boolean = false;
 
     dateDifference: number;
     isCommentOfMonth1Enable: boolean = false;
@@ -91,7 +96,7 @@ export class PipDetailedViewComponent {
         }
     ];
 
-    
+
     finalRecommendation = [
         {
             '_id':1,
@@ -105,7 +110,7 @@ export class PipDetailedViewComponent {
             '_id':3,
             'final_recommendation': "Remedial action"
         }
-    ];
+     ];
 
 
 
@@ -181,8 +186,10 @@ export class PipDetailedViewComponent {
                     if (this.pipInfoData.length == 0) {
                         this._router.navigateByUrl("/my/team/workflows/supervisor");
                     }
-                    //debugger;
+                    
                 }
+                this.masterStatus = this.pipInfoData[0].master_status;
+                this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
                 this.isDis = res.json().status == 'Approved' ? true : false;
                 this.statusq = res.json().status;
             },
@@ -247,7 +254,7 @@ export class PipDetailedViewComponent {
                         isApproved: isApproved,
                         superviserInitialComment: pipData.superviserInitialComment,
                     }
-                    //debugger;
+                    
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.approvePip(request).subscribe(res => {
                         if (res.ok && isApproved) {
@@ -292,10 +299,10 @@ export class PipDetailedViewComponent {
 
     }
 
-    saveLearningDetails(pipData: any, Remarks: String) {
+    saveLearningDetails(pipData: any, Remarks: String, form) {
 
         let request = {
-            //pipMasterId: this.param_master_id,
+            pipMasterId: this.param_master_id,
             pipDetailId: pipData._id,
             empId: this.user._id,
             supervisorId: this._currentEmpId,
@@ -316,33 +323,35 @@ export class PipDetailedViewComponent {
 
         }
 
-        
 
 
-        this._pipService.savePip(request).subscribe(res => {
-            if (res.ok) {
-                this.modalRef.hide();
-                this.utilityService.hideLoader('.mtrDetailsPortlet');
-                swal({
-                    title: 'Saved Successfully!',
-                    text: "PIP Agenda has been Saved",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
-                this.loadPipEmployee();
+        if (form.valid) {
 
-            }
-        }, err => {
-            if (err.status == 300) {
-                let error = err.json() || {};
-                swal("Error", error.title, "error");
-                this.loadPipEmployee();
-                this.modalRef.hide();
-            }
-            this.utilityService.hideLoader('.m-content');
-        })
+            this._pipService.savePip(request).subscribe(res => {
+                if (res.ok) {
+                    this.modalRef.hide();
+                    this.utilityService.hideLoader('.mtrDetailsPortlet');
+                    swal({
+                        title: 'Saved Successfully!',
+                        text: "PIP Agenda has been Saved",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                    this.loadPipEmployee();
+
+                }
+            }, err => {
+                if (err.status == 300) {
+                    let error = err.json() || {};
+                    swal("Error", error.title, "error");
+                    this.loadPipEmployee();
+                    this.modalRef.hide();
+                }
+                this.utilityService.hideLoader('.m-content');
+            })
+        }
 
     }
 
@@ -357,7 +366,7 @@ export class PipDetailedViewComponent {
             });
         }
         else {
-  
+
             swal({
                 title: 'Are you sure?',
                 // text: text,
@@ -368,17 +377,17 @@ export class PipDetailedViewComponent {
                 // confirmButtonText: confirmButtonText
             }).then((result) => {
                 if (result.value) {
-                   
+
                     let request = {
-                       masterId: pipData.pip_master_details._id,
-                       updatedAt: new Date(),
-                       updatedBy: this._currentEmpId,
-                       hrFinalCom: pipData.pip_master_details.hr_final_com,
-                       empFinalCom: pipData.pip_master_details.emp_final_com,
-                       revFinalCom: pipData.pip_master_details.rev_final_com,
-                       supFinalCom: pipData.pip_master_details.sup_final_com
+                        masterId: pipData.pip_master_details._id,
+                        updatedAt: new Date(),
+                        updatedBy: this._currentEmpId,
+                        hrFinalCom: pipData.pip_master_details.hr_final_com,
+                        empFinalCom: pipData.pip_master_details.emp_final_com,
+                        revFinalCom: pipData.pip_master_details.rev_final_com,
+                        supFinalCom: pipData.pip_master_details.sup_final_com
                     }
-                    
+
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.updateMaster(request).subscribe(res => {
                         if (res.ok) {
@@ -393,7 +402,7 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             //this.loadPipEmployee();
-  
+
                         }
                     }, err => {
                         if (err.status == 300) {
@@ -407,7 +416,7 @@ export class PipDetailedViewComponent {
                 }
             });
         }
-  
+
     }
 
     modalRef: BsModalRef;
@@ -420,6 +429,7 @@ export class PipDetailedViewComponent {
 
         this.monthlyCommentValidation();
         this.isSaveEnabled();
+        this.isFinalreviewEnabled();
 
         for (let x = 0; x < this.PipAgendaData.length; x++) {
             if (this.PipAgendaData[x]._id == this.param_id) {
@@ -428,12 +438,21 @@ export class PipDetailedViewComponent {
         }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack") {
+        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed") {
             this.isDisabled = true;
         }
         else {
             this.isDisabled = false;
         }
+
+        if (this.pipData.supervisor_id == this._currentEmpId) {
+            this.isSup = true;
+            
+        }
+        else {
+            this.isSup = false;
+        }
+
 
         if (this.pipData.master_timelines == 6) {
             this.istsix = true;
@@ -447,23 +466,54 @@ export class PipDetailedViewComponent {
         this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = this.pipMasterData[0];
         this.pipData.no = 1;
+
+        if(this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com) {
+
+            $("#sup_final_com").attr('disabled', 'disabled');
+            $("#submitForm").remove();
+        }
+
+        if(!this.pipData.pip_master_details.emp_final_com) {
+
+            $("#sup_final_com").attr('disabled', 'disabled');
+            $("#submitForm").remove();
+        }
+
     }
 
     monthlyCommentValidation() {
 
-        if (this.pipData.dateDifference > 1 && this.pipData.dateDifference <= 2) {
+        if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2
+            && this.pipData.empComment_month1 && !this.pipData.supComment_month1) {
 
             this.isCommentOfMonth1Enable = true;
-        } else if (this.pipData.dateDifference > 2 && this.pipData.dateDifference <= 3) {
+        } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3
+            && this.pipData.empComment_month2 && !this.pipData.supComment_month2) {
+
             this.isCommentOfMonth2Enable = true;
-        } else if (this.pipData.dateDifference > 3 && this.pipData.dateDifference <= 4) {
+        } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4
+            && this.pipData.empComment_month3 && !this.pipData.supComment_month3) {
+
             this.isCommentOfMonth3Enable = true;
-        } else if (this.pipData.dateDifference > 4 && this.pipData.dateDifference <= 5) {
+        } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5
+            && this.pipData.empComment_month4 && !this.pipData.supComment_month4) {
+
             this.isCommentOfMonth4Enable = true;
-        } else if (this.pipData.dateDifference > 5 && this.pipData.dateDifference <= 6) {
+        } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6
+            && this.pipData.empComment_month5 && !this.pipData.supComment_month5) {
+
             this.isCommentOfMonth5Enable = true;
-        } else if (this.pipData.dateDifference > 6 && this.pipData.dateDifference < 7) {
+        } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7
+            && this.pipData.empComment_month6 && !this.pipData.supComment_month6) {
+
             this.isCommentOfMonth6Enable = true;
+        } else {
+            this.isCommentOfMonth1Enable = false;
+            this.isCommentOfMonth2Enable = false;
+            this.isCommentOfMonth3Enable = false;
+            this.isCommentOfMonth4Enable = false;
+            this.isCommentOfMonth5Enable = false;
+            this.isCommentOfMonth6Enable = false;
         }
     }
 
@@ -473,6 +523,22 @@ export class PipDetailedViewComponent {
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) {
 
             this.saveEnabled = true;
+        } else {
+            this.saveEnabled = false;
+        }
+
+    }
+
+    isFinalreviewEnabled() {
+
+        if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
+            this.pipData.empComment_month3 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
+            this.finalReviewEnable = true;
+        } else if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
+            this.pipData.empComment_month6 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
+                this.finalReviewEnable = true;
+        } else {
+            this.finalReviewEnable = false;
         }
 
     }
