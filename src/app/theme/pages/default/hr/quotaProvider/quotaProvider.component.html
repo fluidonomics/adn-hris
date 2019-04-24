@@ -70,7 +70,7 @@
 											</div>
 										</div>
 									</div> -->
-									<div class="row">
+									<div *ngIf="isMaternity" class="row">
 										<div class="col-md-6">
 											<label>Select Employee</label>
 											<ng-select class="m-input m-input--air" name="allemployee" id="allemployee"
@@ -133,17 +133,21 @@
 									</div> -->
 									<br />
 									<!-- employee grid -->
-									<div *ngIf="isSpecial && (displaySelection === 'All' || displaySelection ==='Department' )"
+									<div *ngIf="isSpecial"
 										class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
 										[ngClass]="{'m-datatable--error': (employeeGridData | orderBy: key : reverse | filter:search)?.length==0 }">
 										<table class="m-datatable__table">
 											<thead class="m-datatable__head">
 												<tr class="m-datatable__row">
-													<th class="m-datatable__cell" width="5%"></th>
+													<th class="m-datatable__cell" width="5%">
+														<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+															<input type="checkbox" name="checkAll" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0" (change)="selectAllEmployee($event)">
+															<span></span>
+														</label>
+													</th>
 													<th (click)="sort('userName')"
 														class="m-datatable__cell m-datatable__cell--sort" width="5%">
 														<span>
-
 															<i class="la" *ngIf="key == 'userName'"
 																[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 														</span>
@@ -177,24 +181,14 @@
 											<tbody class="m-datatable__body" id="allEmployee-loader">
 												<tr class="m-datatable__row"
 													[ngClass]="{'m-datatable__row--even':!even}"
-													*ngFor="let employee of employeeGridData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+													*ngFor="let employee of employeesListToShow | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 													<td class="m-datatable__cell" width="5%">
-
-														<i class="status--icon fa" [ngClass]="
-																	!employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
-																	(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'fa-circle m--font-success' :
-																	((employee.profileProcessDetails.supervisorStatus == 'SendBack') ? 'fa-adjust m--font-danger' :
-																	(employee.profileProcessDetails.hrStatus=='Submitted' ? 'fa-adjust m--font-success':
-																	(employee.profileProcessDetails.hrStatus=='SendBack'? 'fa-circle-o m--font-danger':
-																	(employee.profileProcessDetails.employeeStatus=='Submitted'? 'fa-circle-o m--font-success':
-																	'fa-circle-o m--font-warning')))))" [title]="!employee.isAccountActive ?'Inactive':
-																	(employee.profileProcessDetails.supervisorStatus=='Approved' ? 'Profile Complete' :
-																	(employee.profileProcessDetails.supervisorStatus == 'SendBack' ? 'Office Profile Sent Back' :
-																	(employee.profileProcessDetails.hrStatus=='Submitted' ? 'Office Profile Submitted':
-																	(employee.profileProcessDetails.hrStatus=='SendBack'? 'Personal Profile Sent Back':
-																	(employee.profileProcessDetails.employeeStatus=='Submitted'? 'Personal Profile Submitted':'Personal Profile Incomplete')))))">
-														</i>
-
+														<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+															<input type="checkbox" name="checked" [(ngModel)]="employee.checked">
+															<span></span>
+														</label>
+													</td>
+													<td class="m-datatable__cell" width="5%">
 														<img *ngIf="employee?.profileImage; else noImage"
 															src="{{imageBase+employee?.profileImage}}"
 															onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
@@ -212,10 +206,10 @@
 														<span>{{employee.fullName}}</span>
 													</td>
 													<td class="m-datatable__cell" width="15%">
-														<span>{{employee.officeEmail}}</span>
+														<span>{{employee.office.officeEmail}}</span>
 													</td>
 													<td class="m-datatable__cell" width="15%">
-														<span>{{employee.designation}}</span>
+														<span>{{employee.designation.designationName}}</span>
 													</td>
 												</tr>
 												<span

@@ -194,15 +194,26 @@ export class QuotaProviderComponent implements OnInit {
     }
     // on submit
     provideLeave(form) {
-        debugger;
-        let data = {
-            emp_id: this.request._id,
+        let data:any = {
             leave_type: this.request.leave_type,
             balance: this.request.balance,
             fiscalYearId: this.currentFiscalYear._id,
             createdBy: this.currentUser._id,
             createdAt: new Date()
         };
+        if(this.request.leave_type == 3) {
+            data.emp_id = this.request._id;
+
+        } else {
+            data.emp_id = this.employeesListToShow.filter(x => {
+                if(x.checked) {
+                    return true;
+                }
+            }).map(y => {
+                return y._id;
+            });
+            debugger;
+        }
         if (form.valid) {
             this.utilityService.showLoader('.m-portlet__body');
             this._leaveService.provideLeaveQuota(data).subscribe(res => {
@@ -219,7 +230,6 @@ export class QuotaProviderComponent implements OnInit {
     }
     provideMaternityQuota(form) {
         let currentEmpDetails = this.employees.filter(f => f._id == this.request._id);
-        debugger;
         let data = {
             fullName: currentEmpDetails[0].fullName,
             officeEmail: currentEmpDetails[0].officeEmail,
@@ -266,7 +276,6 @@ export class QuotaProviderComponent implements OnInit {
     }
 
     handleSuccess(res) {
-        debugger;
         this.utilityService.hideLoader('.m-portlet__body');
         if (res.ok) {
             swal("Leave quota provided", res.json().title, "success");
@@ -275,7 +284,6 @@ export class QuotaProviderComponent implements OnInit {
         }
     }
     handleError(err) {
-        debugger;
         this.utilityService.hideLoader('.m-portlet__body');
         console.log(err);
         if (err.error) {
@@ -297,5 +305,12 @@ export class QuotaProviderComponent implements OnInit {
         let start = Math.max(this.itemPerPage * (this.p2 - 1) + 1, 1);
         return Math.min(start + this.itemPerPage - 1, filterCount);
     }
+    selectAllEmployee($event) {
+        this.employeesListToShow.forEach(element => {
+            element.checked = $event.target.checked;
+            // this.onChecked(element, $event.target);
+        });
+    }
+
     // grid functions
 }
