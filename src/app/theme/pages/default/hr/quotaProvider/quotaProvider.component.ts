@@ -220,6 +220,7 @@ export class QuotaProviderComponent implements OnInit {
                 if(res.status == 200) {
                     swal('Success','Quota Provided Successfully','success');
                     this.utilityService.hideLoader('.m-portlet__body');
+                    this.clear();
                 }
                 console.log(res);
             },err => {
@@ -310,6 +311,10 @@ export class QuotaProviderComponent implements OnInit {
             element.checked = $event.target.checked;
             // this.onChecked(element, $event.target);
         });
+    }
+    onUploadOutput($event,name) {
+        debugger;
+        console.log($event,name);
     }
 
     // grid functions

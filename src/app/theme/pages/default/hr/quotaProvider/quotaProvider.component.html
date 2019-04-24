@@ -85,9 +85,10 @@
 										</div>
 										<div class="col-md-6" *ngIf="isMaternity">
 											<br />
-											<label>Attachements</label>
-											<button class="btn btn-secondary">Browse</button>
-											<input type="file" name="" id="">
+											<label class="btn btn-default browse">Attachements
+											<input type="file" accept="application/pdf" hidden="hidden" name="attachement" #documentsPdf ngFileSelect [options]="options"
+													 (uploadOutput)="onUploadOutput($event, document)" [uploadInput]="uploadInput" (click)="documentsPdf.click()">
+											</label>
 										</div>
 									</div>
 									<div class="row" *ngIf="displaySelection ==='Department' && isSpecial">
@@ -213,7 +214,7 @@
 													</td>
 												</tr>
 												<span
-													*ngIf="(employeeGridData | orderBy: key : reverse | filter:search)?.length==0"
+													*ngIf="(employeesListToShow | orderBy: key : reverse | filter:search)?.length==0"
 													class="m-datatable--error">No
 													records found</span>
 											</tbody>
