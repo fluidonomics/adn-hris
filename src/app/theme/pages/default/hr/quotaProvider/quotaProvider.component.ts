@@ -213,6 +213,10 @@ export class QuotaProviderComponent implements OnInit {
                 return y._id;
             });
             debugger;
+            if(data.emp_id == null || data.emp_id.length == 0) {
+                swal('Error','No Employees Selected','error')
+                return;
+            }
         }
         if (form.valid) {
             this.utilityService.showLoader('.m-portlet__body');
