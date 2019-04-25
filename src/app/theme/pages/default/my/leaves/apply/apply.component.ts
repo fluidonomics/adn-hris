@@ -121,21 +121,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
     getEmployeeDetails() {
         this.leaveService.getEmployeeDetails(this.currentUser._id)
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeDetails = res.json().data[0] || {};
-                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
-                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
-                            this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
-                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
-                                this.supervisorPresent = true;
-                            }
+            res => {
+                if (res.ok) {
+                    this.employeeDetails = res.json().data[0] || {};
+                    if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                        this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                        this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
+                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
+                            this.supervisorPresent = true;
                         }
                     }
-                },
-                error => {
-                    console.log(error);
-                });
+                }
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     getAllEmailListOfEmployee() {
@@ -197,15 +197,15 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     onChangeLeaveType() {
         if (this.leaveapplication.leaveType === 3) {
-            this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
-                if (res.ok) {
-                    let startDate = new Date(res.json().result[0].startDate);
-                    let endDate = new Date(res.json().result[0].endDate);
-                    this.leaveapplication.fromDate = startDate;
-                    this.leaveapplication.toDate = endDate;
-                    this.leaveapplication.days = Number(res.json().result[0].balance);
-                }
-            })
+            // this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
+            //     if (res.ok) {
+            //         let startDate = new Date(res.json().result[0].startDate);
+            //         let endDate = new Date(res.json().result[0].endDate);
+            //         this.leaveapplication.fromDate = startDate;
+            //         this.leaveapplication.toDate = endDate;
+            //         this.leaveapplication.days = Number(res.json().result[0].balance);
+            //     }
+            // })
         }
         else {
             this.leaveapplication.days = 0;
@@ -246,6 +246,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
+        debugger;
         if (data.days <= 0) {
             this.areDaysValid = false;
         } else {
@@ -279,6 +280,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
         if (form.valid && this.areDaysValid && this.isBalanceValid) {
             if (this.isAttachmentRequired && !this.isAttachmentAdded) {
+                swal("Attachement Required", "", "error");
                 return;
             }
             // let ccToMail = [];
@@ -441,12 +443,16 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.isSandwichValid = false;
         this.leaveapplication.days = 0;
         this.sandwichDates = [];
-        if (type === 'fromDate') {
-            this.leaveapplication.toDate = null;
-            // this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
-        }
-        else {
-            // this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
+        if (this.leaveapplication.leaveType == 3) {
+            if (type === 'fromDate') {
+                this.leaveapplication.toDate = moment(e).add(this.leaveapplication.balance - 1, 'days').toDate();
+            } else {
+                this.leaveapplication.fromDate = moment(e).add((this.leaveapplication.balance - 1) * -1, 'days').toDate();
+            }
+        } else {
+            if (type === 'fromDate') {
+                this.leaveapplication.toDate = null;
+            }
         }
         this.resetFromDateValidation();
     }
