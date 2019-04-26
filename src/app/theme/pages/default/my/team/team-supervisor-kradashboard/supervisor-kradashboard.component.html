@@ -144,10 +144,15 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <ng-select class="m-input m-input--air" name="employee" placeholder="Type Employee Name"
-                                    bindValue="employeeDetails._id" bindLabel="employeeDetails.fullName"
-                                    [items]="supervisorTeamEmployeeList" [(ngModel)]="leaveApprovalFilter.employeeId"
-                                    (ngModelChange)="getTeamLeavesForApproval()" [clearable]="true"></ng-select>
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                        placeholder="Search..." [(ngModel)]="kraSearch">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
                             </li>
                             <li class="m-portlet__nav-item">
                                 <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
@@ -242,11 +247,16 @@
                     <div class="m-portlet__head-tools">
                         <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
                             role="tablist">
-                            <li class="nav-item m-tabs__item">
-                                <ng-select class="m-input m-input--air" name="employee" placeholder="Type Employee Name"
-                                    bindValue="employeeDetails._id" bindLabel="employeeDetails.fullName"
-                                    [items]="supervisorTeamEmployeeList" [(ngModel)]="leaveApprovalFilter.employeeId"
-                                    (ngModelChange)="getTeamLeavesForApproval()" [clearable]="true"></ng-select>
+                            <li class="m-portlet__nav-item">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                        placeholder="Search..." [(ngModel)]="search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
@@ -299,9 +309,9 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody class="m-datatable__body">
+                                            <!-- <tbody class="m-datatable__body">
                                                 <tr class="m-datatable__row"
-                                                    *ngFor="let kra of kraDataView, let i=index ">
+                                                    *ngFor="let kra of kraDataView, let i=index">
                                                     <td class="m-datatable__cell">
                                                         <span>{{i+1}}</span>
                                                     </td>
@@ -312,10 +322,41 @@
                                                         <span>{{kra.status}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell m-datatable__cell--sort">
-                                                        <!-- <span>{{kra.updatedAt | date:'dd MMM yyy'}}</span> -->
+                                                        
                                                         <span>----</span>
                                                     </td>
-                                                   
+
+
+                                                    <td class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                (click)="gotoKraView(kra)">
+                                                                <i class="la la-info"></i>
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <span *ngIf="kraDataView.length==0" class="m-datatable--error">No
+                                                    records found</span>
+                                            </tbody> -->
+
+                                            <tbody class="m-datatable__body">
+                                                <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let kra of kraDataView | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;let i=index;">
+                                                    <td class="m-datatable__cell">
+                                                        <span>{{i+1}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>{{kra.emp_name}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell m-datatable__cell--sort">
+                                                        <span>{{kra.status}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell m-datatable__cell--sort">
+                                                        
+                                                        <span>----</span>
+                                                    </td>
+
 
                                                     <td class="m-datatable__cell m-datatable__cell--sort">
                                                         <span>
@@ -331,64 +372,78 @@
                                                     records found</span>
                                             </tbody>
                                         </table>
-                                        <!-- <pagination-template *ngIf="leavesForApproval.length > 0" #p="paginationApi"
-                                            [id]="'leavesForApproval'" (pageChange)="leaveApprovalFilter.page = $event"
-                                            class="paginationtemplate">
+                                        <pagination-template #p="paginationApi" (pageChange)="p2 = $event"
+                                            class="paginationtemplate" >
                                             <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                                                <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+                                                <ul class="m-datatable__pager-nav">
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--first"
+                                                        <a class="m-datatable__pager-link m-datatable__pager-link--first"
                                                             [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                             (click)="p.setCurrent(1)">
                                                             <i class="la la-angle-double-left"></i>
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                                        <a class="m-datatable__pager-link m-datatable__pager-link--prev"
                                                             [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                             (click)="p.previous()">
                                                             <i class="la la-angle-left"></i>
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                     <li *ngFor="let page of p.pages">
-                                                        <span (click)="p.setCurrent(page.value)"
+                                                        <a (click)="p.setCurrent(page.value)"
                                                             class="m-datatable__pager-link m-datatable__pager-link-number "
                                                             [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
                                                             {{ page.label }}
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <span
-                                                            class="m-datatable__pager-link m-datatable__pager-link--next"
+                                                        <a class="m-datatable__pager-link m-datatable__pager-link--next"
                                                             [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                                            (click)="p.isLastPage()?'null':p.next()">
+                                                            (click)="p.next()">
                                                             <i class="la la-angle-right"></i>
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <span
+                                                        <a title="Last"
                                                             class="m-datatable__pager-link m-datatable__pager-link--last"
                                                             [class.m-datatable__pager-link--disabled]="p.isLastPage()"
                                                             (click)="p.setCurrent(p.pages.length + 1)">
                                                             <i class="la la-angle-double-right"></i>
-                                                        </span>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </pagination-template> -->
+                                        </pagination-template>
                                     </div>
-                                </div>
+                                    <div class="pager-display-size" *ngIf="p.pages?.length!=0">
+                                        <select [(ngModel)]="itemPerPage" class="" title="Select page size"
+                                            data-width="70px" data-selected="50">
+                                            <option value=10>10</option>
+                                            <option value=20>20</option>
+                                            <option value=30>30</option>
+                                            <option value=50>50</option>
+                                            <option value=100>100</option>
+                                        </select>
+                                        <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ?
+                                            this.itemPerPage * (this.p2 - 1) + 1:1}} - {{(this.itemPerPage * (this.p2 - 1) + 1) +
+                                            this.itemPerPage - 1 > (employeeData | orderBy: key : reverse | filter:search)?.length ?
+                                            (employeeData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1)
+                                            + 1) + this.itemPerPage - 1 }} of {{(employeeData | orderBy: key : reverse |
+                                            filter:search)?.length}} </span>
+                                    </div>
+
+                                <!-- </div> -->
                             </div>
                         </div>
-                        <!--end::Item-->
                     </div>
-                    <!--end::Section-->
+                    <!--end::Item-->
                 </div>
+                <!--end::Section-->
             </div>
         </div>
     </div>
+</div>
 
 
 </div>
