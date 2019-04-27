@@ -52,7 +52,8 @@
 													bindValue="_id" bindLabel="type" [items]="leaveTypesDetails"
 													[(ngModel)]="leaveapplication.leaveType" id="leavetype"
 													#leavetype="ngModel" placeholder="Select Leave Type"
-													(ngModelChange)="onChangeLeaveType()" [clearable]="false" required>
+													(ngModelChange)="onChangeLeaveType($event,leaveapplication)"
+													[clearable]="false" required>
 												</ng-select>
 												<div class="form-control-feedback has-danger"
 													*ngIf="fleaveapplication.submitted && !leavetype.valid">
@@ -65,7 +66,8 @@
 												<label for="form_control_1">From Date</label>
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air"
-													name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
+													name="fromDate"
+													(ngModelChange)="calculateDays($event, 'fromDate', leaveapplication)"
 													placeholder="Select From Date"
 													[(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel"
 													bsDatepicker [readonly]="true"
@@ -86,7 +88,8 @@
 												<label for="form_control_1">To Date</label>
 												<span class="required" aria-required="true">* </span>
 												<input type="text" class="form-control m-input m-input--air"
-													name="toDate" (ngModelChange)="calculateDays($event, 'toDate')"
+													name="toDate"
+													(ngModelChange)="calculateDays($event, 'toDate', leaveapplication)"
 													placeholder="Select To Date" bsDatepicker [readonly]="true"
 													[bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="toDate"
 													[(ngModel)]="leaveapplication.toDate"
@@ -109,14 +112,18 @@
 												<span class="pl1r">{{leaveapplication.days}}</span>
 												<span class="pl1r">
 													<button class="btn btn-success" type="button"
-														(click)="processSandwich()">Calculate Days</button>
+														(click)="processSandwich(leaveapplication)">Calculate
+														Days</button>
 												</span>
 												<div class="form-control-feedback has-danger"
 													*ngIf="fleaveapplication.submitted && leavetype.valid">
-													<span *ngIf="!areDaysValid">Please Calculate Days</span>
+													<span *ngIf="!leaveapplication.areDaysValid">Please Calculate
+														Days</span>
 												</div>
-												<div class="form-control-feedback has-danger" *ngIf="!isSandwichValid">
-													<span *ngIf="!areDaysValid">{{daysValidationMsg}}</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="!leaveapplication.isSandwichValid">
+													<span
+														*ngIf="!leaveapplication.areDaysValid">{{daysValidationMsg}}</span>
 												</div>
 											</div>
 										</div>
@@ -126,11 +133,135 @@
 												<span class="pl1r">{{leaveapplication.balance}}</span>
 												<div class="form-control-feedback has-danger"
 													*ngIf="fleaveapplication.submitted && leavetype.valid">
-													<span *ngIf="!isBalanceValid">Not enough balance</span>
+													<span *ngIf="!leaveapplication.isBalanceValid">
+														Not enough balance
+													</span>
 												</div>
 											</div>
 										</div>
 									</div>
+									<!-- ----------------------------------------------------------------------------------------------------------- -->
+									<!-- Additional Leaves Start -->
+									<!-- ----------------------------------------------------------------------------------------------------------- -->
+									<div class="additionalLeaves"
+										*ngFor="let additionalLeave of additionalLeaves;let i = index;">
+										<div class="row">
+											<div class="col-md-6 adn-form__group">
+												<div class="m-form__group form-group">
+													<label for="form_control_1">Leave Type</label>
+													<span class="required" aria-required="true"> * </span>
+													<ng-select #ddLeaveType class="m-input m-input--air"
+														name="leaveType_{{i}}" bindValue="_id" bindLabel="type"
+														[items]="leaveTypesDetails"
+														[(ngModel)]="additionalLeave.leaveType"
+														#additionalleavetype_i="ngModel" placeholder="Select Leave Type"
+														(ngModelChange)="onChangeLeaveType($event, additionalLeave)"
+														[clearable]="false" required>
+													</ng-select>
+													<div class="form-control-feedback has-danger"
+														*ngIf="fleaveapplication.submitted && !additionalleavetype_i.valid">
+														This field is required.
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3 adn-form__group">
+												<div class="m-form__group form-group">
+													<label for="form_control_1">From Date</label>
+													<span class="required" aria-required="true">* </span>
+													<input type="text" class="form-control m-input m-input--air"
+														name="fromDate_{{i}}"
+														(ngModelChange)="calculateDays($event, 'fromDate', additionalLeave)"
+														placeholder="Select From Date"
+														[(ngModel)]="additionalLeave.fromDate" #fromDate_i="ngModel"
+														bsDatepicker [readonly]="true"
+														[bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+														[minDate]="leaveapplication.fYear?.startDate"
+														id="fromDate_{{i}}" required>
+													<div class="form-control-feedback has-danger"
+														*ngIf="fleaveapplication.submitted && additionalleavetype_i.valid">
+														<span
+															*ngIf="fleaveapplication.submitted && !fromDate_i.valid">This
+															field is required.</span>
+														<span
+															*ngIf="fleaveapplication.submitted && !fromDateValidation.isValid">{{fromDateValidation.msg}}
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3 adn-form__group">
+												<div class="m-form__group form-group">
+													<label for="form_control_1">To Date</label>
+													<span class="required" aria-required="true">* </span>
+													<input type="text" class="form-control m-input m-input--air"
+														name="toDate_{{i}}"
+														(ngModelChange)="calculateDays($event, 'toDate', additionalLeave)"
+														placeholder="Select To Date"
+														[(ngModel)]="additionalLeave.toDate" #toDate_i="ngModel"
+														bsDatepicker [readonly]="true"
+														[bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+														[minDate]="additionalLeave.fromDate"
+														[maxDate]="leaveapplication.fYear?.endDate" id="toDate_{{i}}"
+														required>
+													<div class="form-control-feedback has-danger"
+														*ngIf="!toDate_i.valid && additionalleavetype_i.valid">
+														<span
+															*ngIf="fleaveapplication.submitted && !toDate_i.valid">This
+															field is required.</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 adn-form__group">
+												<div class="m-form__group form-group">
+													<label for="form_control_1">Days</label>
+													<span class="pl1r">{{additionalLeave.days}}</span>
+													<span class="pl1r">
+														<button class="btn btn-success" type="button"
+															(click)="processSandwich(additionalLeave)">Calculate
+															Days</button>
+													</span>
+													<div class="form-control-feedback has-danger"
+														*ngIf="fleaveapplication.submitted && additionalleavetype_i.valid">
+														<span *ngIf="!additionalLeave.areDaysValid">
+															Please Calculate Days
+														</span>
+													</div>
+													<div class="form-control-feedback has-danger"
+														*ngIf="!additionalLeave.isSandwichValid">
+														<span
+															*ngIf="!additionalLeave.areDaysValid">{{daysValidationMsg}}</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6 adn-form__group">
+												<div class="m-form__group form-group">
+													<label for="form_control_1">Balance</label>
+													<span class="pl1r">{{additionalLeave.balance}}</span>
+													<div class="form-control-feedback has-danger"
+														*ngIf="fleaveapplication.submitted && additionalleavetype_i.valid">
+														<span *ngIf="!additionalLeave.isBalanceValid">
+															Not enough balance
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row"
+										*ngIf="leaveapplication.leaveType == 3 || leaveapplication.leaveType == 4">
+										<div class="col-md-6 adn-form__group">
+										</div>
+										<div class="col-md-6 adn-form__group">
+											<div class="m-form__group form-group">
+												<button class="btn btn-success submitForm pull-right" type="button"
+													(click)="addMore()">Add More</button>
+											</div>
+										</div>
+									</div>
+									<!-- ----------------------------------------------------------------------------------------------------------- -->
+									<!-- Additional Leaves End -->
+									<!-- ----------------------------------------------------------------------------------------------------------- -->
 									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="form-group m-form__group">
@@ -158,20 +289,6 @@
 										</div>
 									</div>
 									<div class="row">
-										<!-- <div class="col-md-6 adn-form__group">
-											<div class="m-form__group form-group">
-												<label for="form_control_1">Contact Detail</label>
-												<textarea name="contactDetail" id="contactDetail" class="form-control m-input m-input--air" rows="1" placeholder="Contact Details"
-												 [(ngModel)]="leaveapplication.contactDetail" name="contactDetail" #contactDetail="ngModel"></textarea>
-											</div>
-										</div>
-										<div class="col-md-6 adn-form__group">
-											<div class="m-form__group form-group">
-												<label for="form_control_1">CC To</label>
-												<ng-select class="m-input m-input--air" name="ccTo" [items]="emailDetails" [(ngModel)]="leaveapplication.ccTo" #ccTo="ngModel"
-												 placeholder="Select CC To" bindLabel="personalEmail" bindValue="personalEmail" multiple="true" [clearable]="false"></ng-select>
-											</div>
-										</div> -->
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group attachment">
 												<label for="form_control_1">Attachment (max. size 300kb)</label>

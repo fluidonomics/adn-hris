@@ -86,8 +86,10 @@
 										<div class="col-md-6" *ngIf="isMaternity">
 											<br />
 											<label class="btn btn-default browse">Attachements
-											<input type="file" accept="application/pdf" hidden="hidden" name="attachement" #documentsPdf ngFileSelect [options]="options"
-													 (uploadOutput)="onUploadOutput($event, document)" [uploadInput]="uploadInput" (click)="documentsPdf.click()">
+												<input type="file" accept="application/pdf" hidden="hidden"
+													name="attachement" #documentsPdf ngFileSelect [options]="options"
+													(uploadOutput)="onUploadOutput($event, document)"
+													[uploadInput]="uploadInput" (click)="documentsPdf.click()">
 											</label>
 										</div>
 									</div>
@@ -141,8 +143,11 @@
 											<thead class="m-datatable__head">
 												<tr class="m-datatable__row">
 													<th class="m-datatable__cell" width="5%">
-														<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-															<input type="checkbox" name="checkAll" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0" (change)="selectAllEmployee($event)">
+														<label
+															class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+															<input type="checkbox" name="checkAll"
+																[(ngModel)]="isCheckAll" [disabled]="p.pages.length==0"
+																(change)="selectAllEmployee($event)">
 															<span></span>
 														</label>
 													</th>
@@ -184,8 +189,10 @@
 													[ngClass]="{'m-datatable__row--even':!even}"
 													*ngFor="let employee of employeesListToShow | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 													<td class="m-datatable__cell" width="5%">
-														<label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
-															<input type="checkbox" name="checked" [(ngModel)]="employee.checked">
+														<label
+															class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+															<input type="checkbox" name="checked"
+																[(ngModel)]="employee.checked">
 															<span></span>
 														</label>
 													</td>
