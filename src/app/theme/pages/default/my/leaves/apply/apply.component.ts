@@ -296,6 +296,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 _postData.empName = this.currentUser.fullName;
                 let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
                 _postData.leaveTypeName = leaveType.type;
+                _postData.fiscalYearId = this.fiscalYearId;
                 _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
                 this.additionalLeaves.forEach(leave => {
                     leave.fromDate = moment(leave.fromDate).format('L');
