@@ -33,6 +33,16 @@ export class HrService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
+    getHrEmpRatio() {
+        let url = "dashboard/hrempratio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmpTypeRatio() {
+        let url = "dashboard/emptyperatio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
 
     private extractData(res: Response) {
         return res || {};
