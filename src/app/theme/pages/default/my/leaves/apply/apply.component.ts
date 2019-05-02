@@ -47,7 +47,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
     leavesList: any = [];
     holidayList: any = [];
     isSandwichValid: boolean = false;
-    daysValidationMsg: string;
     supervisorPresent: boolean = false;
 
     additionalLeaves: any = [];
@@ -230,98 +229,100 @@ export class ApplyComponent implements OnInit, OnDestroy {
     postEmployeeLeaveDetails(form, data: any) {
         debugger;
         this.validate().then((res) => {
-            if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
-                this.isAttachmentRequired = true;
-            } else {
-                this.isAttachmentRequired = false;
-            }
-            if (this.uploadEvent && this.uploadEvent.data) {
-                this.isAttachmentAdded = true;
-            } else {
-                this.isAttachmentAdded = false;
-            }
-
-            // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-            if (data.leaveType == 1 && data.days >= 3) {
-                var new_date = moment(new Date()).add(7, 'days');
-                if (data.fromDate < new_date._d) {
-                    this.fromDateValidation = {
-                        isValid: false,
-                        msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
-                    }
-                    return;
+            if (res == true) {
+                if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
+                    this.isAttachmentRequired = true;
                 } else {
-                    this.resetFromDateValidation();
+                    this.isAttachmentRequired = false;
                 }
-            }
-
-            if (form.valid) {
-                if (this.isAttachmentRequired && !this.isAttachmentAdded) {
-                    swal("Attachement Required", "", "error");
-                    return;
-                }
-                // let ccToMail = [];
-                // if (data.ccTo) {
-                //     data.ccTo.forEach(cc => {
-                //         let mail = this.emailDetails.find(email => {
-                //             return email._id == cc;
-                //         });
-                //         if (mail)
-                //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-                //     });
-                // }
-                let _postData: any = {};
-                if (this.primarySupervisor && this.primarySupervisor._id) {
-                    _postData.supervisor_id = this.primarySupervisor._id;
-                    this.supervisorPresent = true;
+                if (this.uploadEvent && this.uploadEvent.data) {
+                    this.isAttachmentAdded = true;
                 } else {
-                    this.supervisorPresent = false;
-                    return;
-                }
-                _postData.fromDate = moment(data.fromDate).format('L');
-                _postData.toDate = moment(data.toDate).format('L');
-                _postData.leave_type = data.leaveType;
-                _postData.reason = data.reason;
-                // _postData.contactDetails = data.contactDetail;
-                // _postData.ccTo = ccToMail;
-                _postData.emp_id = this.currentUser._id;
-                _postData.apply_by_id = this.currentUser._id;
-                _postData.updatedBy = this.currentUser._id;
-                _postData.session_id = '1';
-                _postData.status = 'Applied';
-                _postData.days = this.leaveapplication.days;
-
-                // Data for Email purpose
-                _postData.supervisorEmail = this.primarySupervisor.email;
-                _postData.empName = this.currentUser.fullName;
-                let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
-                _postData.leaveTypeName = leaveType.type;
-                _postData.fiscalYearId = this.fiscalYearId;
-                _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
-                this.additionalLeaves.forEach(leave => {
-                    leave.fromDate = moment(leave.fromDate).format('L');
-                    leave.toDate = moment(leave.toDate).format('L');
-                });
-                _postData.additionalLeaves = this.additionalLeaves;
-
-                let text = '';
-                if (this.inProbation) {
-                    text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+                    this.isAttachmentAdded = false;
                 }
 
-                swal({
-                    title: 'Are you sure?',
-                    text: text,
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.value) {
-                        this.postApply(_postData, form);
+                // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
+                if (data.leaveType == 1 && data.days >= 3) {
+                    var new_date = moment(new Date()).add(7, 'days');
+                    if (data.fromDate < new_date._d) {
+                        this.fromDateValidation = {
+                            isValid: false,
+                            msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
+                        }
+                        return;
+                    } else {
+                        this.resetFromDateValidation();
                     }
-                });
+                }
+
+                if (form.valid) {
+                    if (this.isAttachmentRequired && !this.isAttachmentAdded) {
+                        swal("Attachement Required", "", "error");
+                        return;
+                    }
+                    // let ccToMail = [];
+                    // if (data.ccTo) {
+                    //     data.ccTo.forEach(cc => {
+                    //         let mail = this.emailDetails.find(email => {
+                    //             return email._id == cc;
+                    //         });
+                    //         if (mail)
+                    //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+                    //     });
+                    // }
+                    let _postData: any = {};
+                    if (this.primarySupervisor && this.primarySupervisor._id) {
+                        _postData.supervisor_id = this.primarySupervisor._id;
+                        this.supervisorPresent = true;
+                    } else {
+                        this.supervisorPresent = false;
+                        return;
+                    }
+                    _postData.fromDate = moment(data.fromDate).format('L');
+                    _postData.toDate = moment(data.toDate).format('L');
+                    _postData.leave_type = data.leaveType;
+                    _postData.reason = data.reason;
+                    // _postData.contactDetails = data.contactDetail;
+                    // _postData.ccTo = ccToMail;
+                    _postData.emp_id = this.currentUser._id;
+                    _postData.apply_by_id = this.currentUser._id;
+                    _postData.updatedBy = this.currentUser._id;
+                    _postData.session_id = '1';
+                    _postData.status = 'Applied';
+                    _postData.days = this.leaveapplication.days;
+
+                    // Data for Email purpose
+                    _postData.supervisorEmail = this.primarySupervisor.email;
+                    _postData.empName = this.currentUser.fullName;
+                    let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
+                    _postData.leaveTypeName = leaveType.type;
+                    _postData.fiscalYearId = this.fiscalYearId;
+                    _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
+                    this.additionalLeaves.forEach(leave => {
+                        leave.fromDate = moment(leave.fromDate).format('L');
+                        leave.toDate = moment(leave.toDate).format('L');
+                    });
+                    _postData.additionalLeaves = this.additionalLeaves;
+
+                    let text = '';
+                    if (this.inProbation) {
+                        text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+                    }
+
+                    swal({
+                        title: 'Are you sure?',
+                        text: text,
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.postApply(_postData, form);
+                        }
+                    });
+                }
             }
         });
     }
@@ -330,7 +331,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         return new Promise((resolve, reject) => {
             if (this.leaveapplication.days <= 0) {
                 this.leaveapplication.areDaysValid = false;
-                reject();
+                resolve(false);
             } else {
                 this.leaveapplication.areDaysValid = true;
             }
@@ -347,16 +348,42 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.additionalLeaves.forEach(leave => {
                     if (leave.days <= 0) {
                         leave.areDaysValid = false;
-                        reject();
+                        resolve(false);
                     } else {
                         leave.areDaysValid = true;
                     }
 
                     if (this.leaveapplication.balance <= 0 || leave.balance < leave.days) {
                         leave.isBalanceValid = false;
-                        reject();
+                        resolve(false);
                     } else {
                         leave.isBalanceValid = true;
+                    }
+
+                    // Check if no two leaves of same leaveType exist
+                    if (this.leaveapplication.leaveType == leave.leaveType) {
+                        swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                        resolve(false);
+                    }
+                    let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == leave.leaveType).length;
+                    if (count > 1) {
+                        swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                        resolve(false);
+                    }
+
+                    //Check if maternity and special are not applied together
+                    if (this.leaveapplication.leaveType == 3) {
+                        let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 4).length;
+                        if (count > 0) {
+                            swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                            resolve(false);
+                        }
+                    } else if (this.leaveapplication.leaveType == 4) {
+                        let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 3).length;
+                        if (count > 0) {
+                            swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                            resolve(false);
+                        }
                     }
                 });
             }
@@ -501,7 +528,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
             if (isAlreadyAppleid.length > 0) {
                 leave.areDaysValid = false;
-                this.daysValidationMsg = "Leave Already applied for these dates";
+                leave.daysValidationMsg = "Leave Already applied for these dates";
                 return;
             } else {
                 leave.areDaysValid = true;
@@ -518,7 +545,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
             if (isBetweenHolidays.length > 0) {
                 leave.areDaysValid = false;
-                this.daysValidationMsg = "Cannot Apply leave on holidays";
+                leave.daysValidationMsg = "Cannot Apply leave on holidays";
                 return;
             } else {
                 leave.areDaysValid = true;

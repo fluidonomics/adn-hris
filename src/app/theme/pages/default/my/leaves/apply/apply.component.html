@@ -123,7 +123,7 @@
 												<div class="form-control-feedback has-danger"
 													*ngIf="!leaveapplication.isSandwichValid">
 													<span
-														*ngIf="!leaveapplication.areDaysValid">{{daysValidationMsg}}</span>
+														*ngIf="!leaveapplication.areDaysValid">{{leaveapplication.daysValidationMsg}}</span>
 												</div>
 											</div>
 										</div>
@@ -230,7 +230,7 @@
 													<div class="form-control-feedback has-danger"
 														*ngIf="!additionalLeave.isSandwichValid">
 														<span
-															*ngIf="!additionalLeave.areDaysValid">{{daysValidationMsg}}</span>
+															*ngIf="!additionalLeave.areDaysValid">{{additionalLeave.daysValidationMsg}}</span>
 													</div>
 												</div>
 											</div>
