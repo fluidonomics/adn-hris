@@ -45,6 +45,18 @@ export class HrService {
         let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+
+    getHrEmpRatio() {
+        let url = "dashboard/hrempratio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmpTypeRatio() {
+        let url = "dashboard/emptyperatio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+
     saveBulkMtr(data: any) {
         let url = "midterm/initiateMidTermProcess";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);

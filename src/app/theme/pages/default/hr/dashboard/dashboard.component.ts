@@ -24,7 +24,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     profileStatusPercentage:any={
 
     }
-   
+    //hrEmpdata: any[];
+    empCount: number;
+    hrCount: number;
+    supCount: number;
+    hrToEmpratio: number;
+    percentageOfSupervisor: number;
+    managementEmpCount: number;
+    managementEmpRatio: number;
+
+    leaveStatuses: any = [];
+
+    transactionFilter: any = {
+        status: 'HR-Emp Ratio'
+    };
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
     meta: Meta, title: Title,
@@ -59,6 +72,8 @@ ngAfterViewInit() {
 initData()
 {
     this.loadAllEmployee();
+    this.getLeaveStatuses();
+    this.getTransactions();
 }
 
 loadAllEmployee()
@@ -123,8 +138,35 @@ downloadProfileCsv() {
     
 }
 
-gotoPostLeave(){
-    this.router.navigate(["./hr/post/leave"]);
+getLeaveStatuses() {
+    this.leaveStatuses = ['HR-Emp Ratio', 'Supervisor Role %', 'Span Of Control'];
+}
+
+getTransactions() {
+    if (this.transactionFilter.status && (this.transactionFilter.status == "HR-Emp Ratio" || this.transactionFilter.status == "Supervisor Role %")) {
+        this._hrService.getHrEmpRatio().subscribe(res => {
+            if (res.ok) {
+                let hrEmpdata = res.json() || [];
+                this.empCount = hrEmpdata.result.message[0].emp_count;
+                this.supCount = hrEmpdata.result.message[0].sup_count;
+                this.hrCount = hrEmpdata.result.message[0].hr_count;
+                this.hrToEmpratio = (this.hrCount/this.empCount)*100;
+                this.hrToEmpratio = parseFloat(this.hrToEmpratio.toFixed(3));
+                this.percentageOfSupervisor = this.supCount/this.empCount;
+                this.percentageOfSupervisor = parseFloat(this.percentageOfSupervisor.toFixed(3));
+            }
+        })
+    } else if(this.transactionFilter.status && this.transactionFilter.status == "Span Of Control") {
+        this._hrService.getEmpTypeRatio().subscribe(res => {
+            if(res.ok) {
+
+                let data = res.json() || [];
+                this.empCount = data.result.message[0].emp_count;
+                this.managementEmpCount = data.result.message[0].mgmt_emp_count;
+                this.managementEmpRatio = parseFloat((this.empCount/this.managementEmpCount).toFixed(3));
+            }
+        })
+    }
 }
 
 }
