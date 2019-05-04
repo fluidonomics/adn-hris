@@ -32,11 +32,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     percentageOfSupervisor: number;
     managementEmpCount: number;
     managementEmpRatio: number;
+    approved_count: number;
+    init_count: number;
+    sendback_count: number;
+    submit_count: number;
+    terminate_count: number;
 
     leaveStatuses: any = [];
+    dashboardType: any = [];
 
     transactionFilter: any = {
         status: 'HR-Emp Ratio'
+    };
+    dashboardFilter: any = {
+        dashboard: 'KRA',
+        date: this._hrService.getCurrentMonthDates()
     };
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
@@ -74,6 +84,7 @@ initData()
     this.loadAllEmployee();
     this.getLeaveStatuses();
     this.getTransactions();
+    this.getDashboard();
 }
 
 loadAllEmployee()
@@ -114,7 +125,7 @@ calculatePercentage(status:any,filedName?:string)
 }
 
 downloadProfileCsv() {
-    let csvHeader=['Employee ID',"Name","Active","Personal Profile","Office Profile","Profile"];
+    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","Batch_name","KRA_Status"];
     let filedList=['userName',"fullName","isAccountActive","profileProcessDetails.employeeStatus","profileProcessDetails.hrStatus","profileProcessDetails.supervisorStatus"];
     let csv=[];
     let row = [];
@@ -142,6 +153,10 @@ getLeaveStatuses() {
     this.leaveStatuses = ['HR-Emp Ratio', 'Supervisor Role %', 'Span Of Control'];
 }
 
+getDashboardType() {
+    this.dashboardType = ['KRA', 'Leave'];
+}
+
 getTransactions() {
     if (this.transactionFilter.status && (this.transactionFilter.status == "HR-Emp Ratio" || this.transactionFilter.status == "Supervisor Role %")) {
         this._hrService.getHrEmpRatio().subscribe(res => {
@@ -167,6 +182,32 @@ getTransactions() {
             }
         })
     }
+}
+
+
+getDashboard() {
+    if (this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "KRA") {
+        this._hrService.getKraDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+            if (res.ok) {
+                let hrKradata = res.json() || [];
+                this.approved_count = hrKradata.result.message[0].approved_count;
+                this.init_count = hrKradata.result.message[0].init_count;
+                this.sendback_count = hrKradata.result.message[0].sendback_count;
+                this.submit_count = hrKradata.result.message[0].submit_count;
+                this.terminate_count = hrKradata.result.message[0].terminate_count;
+            }
+        })
+     } //else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Span Of Control") {
+    //     this._hrService.getEmpTypeRatio().subscribe(res => {
+    //         if(res.ok) {
+
+    //             let data = res.json() || [];
+    //             this.empCount = data.result.message[0].emp_count;
+    //             this.managementEmpCount = data.result.message[0].mgmt_emp_count;
+    //             this.managementEmpRatio = parseFloat((this.empCount/this.managementEmpCount).toFixed(3));
+    //         }
+    //     })
+    // }
 }
 
 }
