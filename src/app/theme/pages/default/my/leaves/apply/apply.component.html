@@ -52,7 +52,7 @@
 													bindValue="_id" bindLabel="type" [items]="leaveTypesDetails"
 													[(ngModel)]="leaveapplication.leaveType" id="leavetype"
 													#leavetype="ngModel" placeholder="Select Leave Type"
-													(ngModelChange)="onChangeLeaveType($event,leaveapplication)"
+													(ngModelChange)="onChangeLeaveType($event,leaveapplication,true)"
 													[clearable]="false" required>
 												</ng-select>
 												<div class="form-control-feedback has-danger"

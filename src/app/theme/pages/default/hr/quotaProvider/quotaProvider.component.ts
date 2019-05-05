@@ -127,16 +127,16 @@ export class QuotaProviderComponent implements OnInit {
 
     leaveTypeSelect(data: any) {
         if (data.type === "Maternity Leave") {
-            this._leaveService.getEmployeeForQuotaProvide({type:"maternity"}).subscribe(res => {
+            this._leaveService.getEmployeeForQuotaProvide({ type: "maternity" }).subscribe(res => {
                 this.employeesListToShow = res.json() || [];
             });
             this.isMaternity = true;
             this.isSpecial = false;
         } else {
             if (data.type === "Special Leave")
-                this._leaveService.getEmployeeForQuotaProvide({type:"special"}).subscribe(res => {
-                this.employeesListToShow = res.json() || [];
-            });
+                this._leaveService.getEmployeeForQuotaProvide({ type: "special" }).subscribe(res => {
+                    this.employeesListToShow = res.json() || [];
+                });
             else if (data.type === "Special Leave (unpaid)")
                 this.employeesListToShow = this.employeeEligibleForSpecialUnpaidLeave;
             this.isMaternity = false;
@@ -194,45 +194,56 @@ export class QuotaProviderComponent implements OnInit {
     }
     // on submit
     provideLeave(form) {
-        let data:any = {
+        let data: any = {
             leave_type: this.request.leave_type,
             balance: this.request.balance,
             fiscalYearId: this.currentFiscalYear._id,
             createdBy: this.currentUser._id,
             createdAt: new Date()
         };
-        if(this.request.leave_type == 3) {
+        if (this.request.leave_type == 3) {
             data.emp_id = this.request._id;
 
         } else {
             data.emp_id = this.employeesListToShow.filter(x => {
-                if(x.checked) {
+                if (x.checked) {
                     return true;
                 }
             }).map(y => {
                 return y._id;
             });
             debugger;
-            if(data.emp_id == null || data.emp_id.length == 0) {
-                swal('Error','No Employees Selected','error')
+            if (data.emp_id == null || data.emp_id.length == 0) {
+                swal('Error', 'No Employees Selected', 'error')
                 return;
             }
         }
         if (form.valid) {
-            this.utilityService.showLoader('.m-portlet__body');
-            this._leaveService.provideLeaveQuota(data).subscribe(res => {
-                if(res.status == 200) {
-                    swal('Success','Quota Provided Successfully','success');
-                    this.utilityService.hideLoader('.m-portlet__body');
-                    this.clear();
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.utilityService.showLoader('.m-portlet__body');
+                    this._leaveService.provideLeaveQuota(data).subscribe(res => {
+                        if (res.status == 200) {
+                            swal('Success', 'Quota Provided Successfully', 'success');
+                            this.utilityService.hideLoader('.m-portlet__body');
+                            this.clear();
+                        }
+                        console.log(res);
+                    }, err => {
+                        swal('Error', 'Some Error Occurred', 'error');
+                    });
                 }
-                console.log(res);
-            },err => {
-                swal('Error','Some Error Occurred','error');
             });
         }
-
     }
+
     provideMaternityQuota(form) {
         let currentEmpDetails = this.employees.filter(f => f._id == this.request._id);
         let data = {
@@ -316,9 +327,9 @@ export class QuotaProviderComponent implements OnInit {
             // this.onChecked(element, $event.target);
         });
     }
-    onUploadOutput($event,name) {
+    onUploadOutput($event, name) {
         debugger;
-        console.log($event,name);
+        console.log($event, name);
     }
 
     // grid functions

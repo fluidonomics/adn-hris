@@ -33,7 +33,8 @@
 
     <div class="row">
         <div class="col-xl-6">
-            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+            <div
+                class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -48,19 +49,22 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="overviewChartFilter.date"
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="overviewChartFilter.date"
                                     (ngModelChange)="getOverviewChartData()" placeholder="Select Month" readonly>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <app-my-leaves-chart-monthly-leave [chartData]="overviewChartData"></app-my-leaves-chart-monthly-leave>
+                    <app-my-leaves-chart-monthly-leave [chartData]="overviewChartData">
+                    </app-my-leaves-chart-monthly-leave>
                 </div>
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height">
+            <div
+                class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height">
                 <div class="m-portlet__head">
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
@@ -72,16 +76,20 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="holidayFilter.date"
-                                    (ngModelChange)="getHolidays()" placeholder="Select Month" placement="left" readonly>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="holidayFilter.date"
+                                    (ngModelChange)="getHolidays()" placeholder="Select Month" placement="left"
+                                    readonly>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="m-portlet__body">
                     <div class="m-widget6 holidayGrid">
-                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll m-datatable--error" id="m_datatable_latest_orders">
-                            <table class="m-datatable__table" style="display: block; min-height: 300px; max-height: 380px;">
+                        <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded m-datatable--scroll m-datatable--error"
+                            id="m_datatable_latest_orders">
+                            <table class="m-datatable__table"
+                                style="display: block; min-height: 300px; max-height: 380px;">
                                 <thead class="m-datatable__head">
                                     <tr class="m-datatable__row" style="left: 0px;">
                                         <th data-field="ShipName" class="m-datatable__cell m-datatable__cell--sort">
@@ -92,8 +100,10 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="m-datatable__body ps ps--active-x ps--active-y" style="max-height: 324.727px;">
-                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;" *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 6, currentPage: holidayFilter.page };let even=even;">
+                                <tbody class="m-datatable__body ps ps--active-x ps--active-y"
+                                    style="max-height: 324.727px;">
+                                    <tr data-row="0" class="m-datatable__row" style="left: 0px;"
+                                        *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 6, currentPage: holidayFilter.page };let even=even;">
                                         <td data-field="ShipName" class="m-datatable__cell">
                                             <span>{{holiday.occasion}}</span>
                                         </td>
@@ -101,37 +111,45 @@
                                             <span class="pull-right">{{holiday.date | date:'dd-MMM-yyy'}}</span>
                                         </td>
                                     </tr>
-                                    <span *ngIf="upcomingHolidays?.length==0" class="m-datatable--error">No records found</span>
+                                    <span *ngIf="upcomingHolidays?.length==0" class="m-datatable--error">No records
+                                        found</span>
                                 </tbody>
                             </table>
-                            <pagination-template *ngIf="upcomingHolidays.length > 0" #p="paginationApi" (pageChange)="holidayFilter.page = $event" class="paginationtemplate">
+                            <pagination-template *ngIf="upcomingHolidays.length > 0" #p="paginationApi"
+                                (pageChange)="holidayFilter.page = $event" class="paginationtemplate">
                                 <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
                                     <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
                                         <li>
-                                            <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                            <span class="m-datatable__pager-link m-datatable__pager-link--first"
+                                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                 (click)="p.setCurrent(1)">
                                                 <i class="la la-angle-double-left"></i>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                            <span class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                 (click)="p.previous()">
                                                 <i class="la la-angle-left"></i>
                                             </span>
                                         </li>
                                         <li *ngFor="let page of p.pages">
-                                            <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                            <span (click)="p.setCurrent(page.value)"
+                                                class="m-datatable__pager-link m-datatable__pager-link-number "
+                                                [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
                                                 {{ page.label }}
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                            <span class="m-datatable__pager-link m-datatable__pager-link--next"
+                                                [class.m-datatable__pager-link--disabled]="p.isLastPage()"
                                                 (click)="p.isLastPage()?'null':p.next()">
                                                 <i class="la la-angle-right"></i>
                                             </span>
                                         </li>
                                         <li>
-                                            <span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                            <span class="m-datatable__pager-link m-datatable__pager-link--last"
+                                                [class.m-datatable__pager-link--disabled]="p.isLastPage()"
                                                 (click)="p.setCurrent(p.pages.length + 1)">
                                                 <i class="la la-angle-double-right"></i>
                                             </span>
@@ -160,18 +178,22 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="transactionFilter.date"
-                                    (ngModelChange)="getTransactions()" placeholder="Select Month" placement="left" readonly>
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="transactionFilter.date"
+                                    (ngModelChange)="getTransactions()" placeholder="Select Month" placement="left"
+                                    readonly>
                             </li>
                             <li class="m-portlet__nav-item">
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <button id="btnGroupDrop1" type="button"
+                                            class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
                                             {{transactionFilter.status}}
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="#" *ngFor="let status of leaveStatuses" (click)="transactionFilter.status = status; getTransactions();">
+                                            <a class="dropdown-item" href="#" *ngFor="let status of leaveStatuses"
+                                                (click)="transactionFilter.status = status; getTransactions();">
                                                 {{status}}
                                             </a>
                                         </div>
@@ -183,18 +205,20 @@
                 </div>
                 <div class="m-portlet__body">
                     <!--begin::Section-->
-                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                    <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5"
+                        role="tablist">
                         <!--begin::Item-->
                         <div class="m-accordion__item m-accordion__item--green">
-                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head" data-toggle="collapse" href="#m_accordion_5_item_1_body"
-                                aria-expanded="true">
+                            <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_1_head"
+                                data-toggle="collapse" href="#m_accordion_5_item_1_body" aria-expanded="true">
                                 <span class="m-accordion__item-title">
                                 </span>
                                 <span class="m-accordion__item-mode"></span>
                             </div>
                             <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
                                 <div class="m-accordion__item-content">
-                                    <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
+                                    <div
+                                        class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded m-datatable--error">
                                         <table class="m-datatable__table">
                                             <thead class="m-datatable__head">
                                                 <tr class="m-datatable__row">
@@ -207,7 +231,8 @@
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>To</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort text-center" width="5%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort text-center"
+                                                        width="5%">
                                                         <span>Days</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
@@ -231,7 +256,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
-                                                <tr class="m-datatable__row" *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
+                                                <tr class="m-datatable__row"
+                                                    *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.leaveTypeName}}</span>
                                                     </td>
@@ -258,49 +284,64 @@
                                                     </td>
                                                     <td class="m-datatable__cell" width="15%">
                                                         <span>
-                                                            <span class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
+                                                            <span
+                                                                class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
                                                         </span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="5%">
-                                                        <span *ngIf="tran.status == 'Applied' || tran.status == 'Approved'">
-                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill" title="Withdraw"
+                                                        <span>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Withdraw"
                                                                 (click)="showLeaveDetail(tran._id, leaveDetailModal, $event)">
                                                                 <i class="la la-info"></i>
                                                             </a>
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                <span *ngIf="recentTransactions?.length==0" class="m-datatable--error">No records found</span>
+                                                <span *ngIf="recentTransactions?.length==0"
+                                                    class="m-datatable--error">No records found</span>
                                             </tbody>
                                         </table>
-                                        <pagination-template #p="paginationApi" (pageChange)="transactionFilter.page = $event" class="paginationtemplate">
+                                        <pagination-template #p="paginationApi"
+                                            (pageChange)="transactionFilter.page = $event" class="paginationtemplate">
                                             <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
                                                 <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
                                                     <li>
-                                                        <span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--first"
+                                                            [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                             (click)="p.setCurrent(1)">
                                                             <i class="la la-angle-double-left"></i>
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                                            [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
                                                             (click)="p.previous()">
                                                             <i class="la la-angle-left"></i>
                                                         </span>
                                                     </li>
                                                     <li *ngFor="let page of p.pages">
-                                                        <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number " [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+                                                        <span (click)="p.setCurrent(page.value)"
+                                                            class="m-datatable__pager-link m-datatable__pager-link-number "
+                                                            [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
                                                             {{ page.label }}
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--next"
+                                                            [class.m-datatable__pager-link--disabled]="p.isLastPage()"
                                                             (click)="p.isLastPage()?'null':p.next()">
                                                             <i class="la la-angle-right"></i>
                                                         </span>
                                                     </li>
                                                     <li>
-                                                        <span class="m-datatable__pager-link m-datatable__pager-link--last" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
+                                                        <span
+                                                            class="m-datatable__pager-link m-datatable__pager-link--last"
+                                                            [class.m-datatable__pager-link--disabled]="p.isLastPage()"
                                                             (click)="p.setCurrent(p.pages.length + 1)">
                                                             <i class="la la-angle-double-right"></i>
                                                         </span>
@@ -322,7 +363,8 @@
 </div>
 
 <ng-template #leaveDetailModal>
-    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height leaveDetailsPortlet">
+    <div
+        class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height leaveDetailsPortlet">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
@@ -336,7 +378,8 @@
                     <li class="m-portlet__nav-item">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <div class="btn-group" role="group">
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -397,30 +440,33 @@
                         <span class="key">Approval Authority Remarks</span>
                         <span class="value">{{leaveDetails?.leave?.supervisorReason}}</span>
                     </div>
-                    <div class="col-md-12 form-group" *ngIf="leaveDetails?.leave?.supervisorReason2 != null && leaveDetails?.leave?.supervisorReason2 != ''">
+                    <div class="col-md-12 form-group"
+                        *ngIf="leaveDetails?.leave?.supervisorReason2 != null && leaveDetails?.leave?.supervisorReason2 != ''">
                         <span class="key">Approval Authority Withdrawal Remarks</span>
                         <span class="value">{{leaveDetails?.leave?.supervisorReason2}}</span>
                     </div>
                     <div class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason</label>
-                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason}}"
-                                disabled="true"></textarea>
+                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3"
+                                value="{{leaveDetails?.leave?.reason}}" disabled="true"></textarea>
                         </div>
                     </div>
-                    <div class="col-md-12 adn-form__group" *ngIf="leaveDetails?.leave?.reason2 != null && leaveDetails?.leave?.reason2 != '' && leaveDetails?.leave?.status != 'Applied' && leaveDetails?.leave?.status != 'Approved'">
+                    <div class="col-md-12 adn-form__group"
+                        *ngIf="leaveDetails?.leave?.reason2 != null && leaveDetails?.leave?.reason2 != '' && leaveDetails?.leave?.status != 'Applied' && leaveDetails?.leave?.status != 'Approved'">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason For Withdrawal</label>
-                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3" value="{{leaveDetails?.leave?.reason2}}"
-                                disabled="true"></textarea>
+                            <textarea name="reason" id="reason" class="form-control m-input m-input--air" rows="3"
+                                value="{{leaveDetails?.leave?.reason2}}" disabled="true"></textarea>
                         </div>
                     </div>
-                    <div *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'" class="col-md-12 adn-form__group">
+                    <div *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'"
+                        class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
                             <label for="form_control_1">Reason For Withdrawal</label>
                             <span class="required" aria-required="true"> * </span>
-                            <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3" placeholder="Remarks" [(ngModel)]="leaveDetails.remarks"
-                                #remarks="ngModel"></textarea>
+                            <textarea name="reason" id="remarks" class="form-control m-input m-input--air" rows="3"
+                                placeholder="Remarks" [(ngModel)]="leaveDetails.remarks" #remarks="ngModel"></textarea>
                             <div class="form-control-feedback has-danger" *ngIf="leaveDetailsForm?.remarks?.error">
                                 This field is required.
                             </div>
@@ -431,10 +477,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'" class="btn btn-success"
-                                    (click)="cancelWithdrawLeave()">Withdraw Leave</button>
-                                <button *ngIf="leaveDetails?.leave?.status == 'Availed'" class="btn btn-success" (click)="cancelWithdrawLeave()">Cancel Leave</button>
-                                <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">Cancel</button>
+                                <button
+                                    *ngIf="leaveDetails?.leave?.status == 'Applied' || leaveDetails?.leave?.status == 'Approved'"
+                                    class="btn btn-success" (click)="cancelWithdrawLeave()">Withdraw Leave</button>
+                                <button *ngIf="leaveDetails?.leave?.status == 'Availed'" class="btn btn-success"
+                                    (click)="cancelWithdrawLeave()">Cancel Leave</button>
+                                <button class="btn btn-secondary" (click)="modalRef.hide()"
+                                    type="button">Cancel</button>
                             </div>
                         </div>
                     </div>
