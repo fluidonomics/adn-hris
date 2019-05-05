@@ -4,7 +4,9 @@ import { environment } from '../../../../../environments/environment'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { AuthService } from "../../../../base/_services/authService.service"
+import { AuthService } from "../../../../base/_services/authService.service";
+
+declare var moment;
 
 @Injectable()
 export class HrService {
@@ -59,6 +61,51 @@ export class HrService {
         let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
+
+    getHrEmpRatio() {
+        let url = "dashboard/hrempratio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getKraDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/kraempdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmpKraDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/empdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getCurrentMonthDates() {
+        let dateRange = [];
+        let startDate = new Date();
+        let cur_date = new Date();
+        cur_date.setFullYear(startDate.getFullYear() - 1);
+        // let y = moment(startDate).endOf('month');
+        // let endDate = y._d;
+        dateRange = [cur_date, new Date()];
+        return dateRange;
+    }
+
+    getEmpTypeRatio() {
+        let url = "dashboard/emptyperatio";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+
     saveBulkMtr(data: any) {
         let url = "midterm/initiateMidTermProcess";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);

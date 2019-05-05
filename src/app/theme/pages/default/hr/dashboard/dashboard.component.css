@@ -7,6 +7,16 @@
 	height: 5.1rem
 }
 
+.hrtoemprat {
+	padding-bottom: 10px;
+}
+.alignRight {
+	float: right;
+}
+
+.centerP {
+	text-align: center;
+}
 .m-portlet .m-portlet__head .m-portlet__head-caption {
 	display: table-cell;
 	vertical-align: middle;
