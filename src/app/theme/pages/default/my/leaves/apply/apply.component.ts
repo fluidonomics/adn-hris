@@ -199,7 +199,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         });
     }
 
-    onChangeLeaveType(e, leave) {
+    onChangeLeaveType(e, leave, isMain) {
         leave.days = 0;
         let empBal = this.leaveBalance.find(bal => {
             if (bal) {
@@ -209,6 +209,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
         leave.balance = empBal ? empBal.leaveBalance : 0;
         leave.fromDate = null;
         leave.toDate = null;
+        if (isMain) {
+            this.additionalLeaves = [];
+        }
     }
 
     onFilePick(event) {
@@ -230,7 +233,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         debugger;
         this.validate().then((res) => {
             if (res == true) {
-                if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
+                if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3 || data.leaveType == 4) {
                     this.isAttachmentRequired = true;
                 } else {
                     this.isAttachmentRequired = false;
@@ -492,7 +495,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         leave.isSandwichValid = false;
         leave.days = 0;
         this.sandwichDates = [];
-        if (leave.leaveType == 3) {
+        if (leave.leaveType == 3 || leave.leaveType == 4) {
             if (type === 'fromDate') {
                 leave.toDate = moment(e).add(leave.balance - 1, 'days').toDate();
             } else {
