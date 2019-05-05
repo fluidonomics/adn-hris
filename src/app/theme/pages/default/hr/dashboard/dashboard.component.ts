@@ -25,6 +25,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     }
     //hrEmpdata: any[];
+    empKradata:any={
+
+    }
     empCount: number;
     hrCount: number;
     supCount: number;
@@ -124,8 +127,34 @@ calculatePercentage(status:any,filedName?:string)
   return percentage
 }
 
+downloadKraCsv() {
+
+    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","KRA_Status","Created Date"];
+    let filedList=['empName',"supname","status","createdDate"];
+    let csv=[];
+    let row = [];
+    csv.push(csvHeader.join(","));
+     for (var i = 0; i < this.empKradata.result.message.length; i++) {
+        let row = [];
+         for (var index in filedList) {//array[i]
+            let head = filedList[index];
+            if(head.indexOf('.') > -1)
+            {
+              let columnArr= head.split('.')
+              row.push(this.empKradata.result.message[i][columnArr[0]][columnArr[1]])  
+            }
+            else{
+               row.push(this.empKradata.result.message[i][head]);
+            }
+         }
+         csv.push(row.join(","));
+     }
+     this.utilityService.saveAsCSV(csv.join("\n"),"KRA_Dashboard")
+    
+}
+
 downloadProfileCsv() {
-    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","Batch_name","KRA_Status"];
+    let csvHeader=['Employee ID',"Name","Active","Personal Profile","Office Profile","Profile"];
     let filedList=['userName',"fullName","isAccountActive","profileProcessDetails.employeeStatus","profileProcessDetails.hrStatus","profileProcessDetails.supervisorStatus"];
     let csv=[];
     let row = [];
@@ -195,6 +224,12 @@ getDashboard() {
                 this.sendback_count = hrKradata.result.message[0].sendback_count;
                 this.submit_count = hrKradata.result.message[0].submit_count;
                 this.terminate_count = hrKradata.result.message[0].terminate_count;
+            }
+        })
+
+        this._hrService.getEmpKraDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+            if (res.ok) {
+                this.empKradata = res.json() || [];
             }
         })
      } //else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Span Of Control") {

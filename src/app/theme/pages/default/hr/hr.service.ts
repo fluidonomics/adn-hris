@@ -64,13 +64,25 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getEmpKraDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/empdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getCurrentMonthDates() {
         let dateRange = [];
         let startDate = new Date();
-        startDate.setDate(1);
-        let y = moment(startDate).endOf('month');
-        let endDate = y._d;
-        dateRange = [startDate, endDate];
+        let cur_date = new Date();
+        cur_date.setFullYear(startDate.getFullYear() - 1);
+        // let y = moment(startDate).endOf('month');
+        // let endDate = y._d;
+        dateRange = [cur_date, new Date()];
         return dateRange;
     }
 

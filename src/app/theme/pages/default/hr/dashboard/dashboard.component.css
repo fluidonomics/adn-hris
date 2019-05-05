@@ -10,6 +10,9 @@
 .hrtoemprat {
 	padding-bottom: 10px;
 }
+.alignRight {
+	float: right;
+}
 
 .centerP {
 	text-align: center;
