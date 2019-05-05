@@ -45,6 +45,7 @@ import { PapReviewComponent } from './team-workflows/team-reveiwer/pap-review/pa
 import { SharedModule } from '../../shared/shared.module';
 import { AllLearningReviewer } from './team-workflows/team-reveiwer/allLearning/allLearningReviewer.component';
 import { AllLearningSupervisor } from './team-workflows/team-supervisor/allLearning/allLearningSupervisor.component';
+import { SupervisorLearningDashboardComponent } from './team-supervisor-learningdashboard/team-supervisor-learningdashboard.component';
 
 @NgModule({
     imports: [
@@ -86,7 +87,8 @@ import { AllLearningSupervisor } from './team-workflows/team-supervisor/allLearn
         PapDetailedViewComponent,
         PapReviewComponent,
         AllLearningReviewer,
-        AllLearningSupervisor
+        AllLearningSupervisor,
+        SupervisorLearningDashboardComponent,
     ],
     providers: [MyTeamService, ReviewerGuard, SupervisorGuard, KraService, MtrService, PapService]
 })
