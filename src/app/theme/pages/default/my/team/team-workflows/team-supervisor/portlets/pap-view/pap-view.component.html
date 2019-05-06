@@ -30,17 +30,22 @@
 
         <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100" data-scrollable="true"
             style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-            <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;">
-                <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;" dir="ltr">
+            <div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
+                style="max-height: none;">
+                <div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
+                    dir="ltr">
                     <div class="m-widget4  workflow--hover ">
-                        <div class="m-widget4__item m-padding--10" *ngFor="let papView of papData;let i=index" (click)="gotopapView(papView)">
+                        <div class="m-widget4__item m-padding--10" *ngFor="let papView of papData;let i=index"
+                            (click)="gotopapView(papView)">
                             <div class="m-widget4__img m-widget4__img--logo">
                                 <a align="center">
-                                    <img *ngIf="papView?.emp_details?.profileImage; else noImage" src="{{imageBase+papView?.emp_details?.profileImage}}"
-                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
-                                        alt="">
+                                    <img *ngIf="papView?.emp_details?.profileImage; else noImage"
+                                        src="{{imageBase+papView?.emp_details?.profileImage}}"
+                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                        class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                     <ng-template #noImage>
-                                        <img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered">
+                                        <img src="./assets/app/media/img/custom/users/user6.jpg"
+                                            class="directory_image m--img-rounded m--marginless m--img-centered">
                                     </ng-template>
                                 </a>
                             </div>
@@ -54,15 +59,23 @@
                                 </span>
                             </div>
                             <span class="m-widget4__ext">
-                                <span class="m-widget4__number m--font-brand">
+                                <span *ngIf="!papView.papmasters.isRatingCommunicated"
+                                    class="m-widget4__number m--font-brand">
+                                    Feedback Pending
+                                </span>
+                                <span *ngIf="papView.papmasters.isRatingCommunicated"
+                                    class="m-widget4__number m--font-success">
+                                    Feedback Released
                                 </span>
                             </span>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
+        <div *ngIf="papData?.length > 0 && showReleaseFeedback">
+            <button class="btn btn-success pull-right" (click)="releaseFeedback()">Release Feedback</button>
+        </div>
     </div>
 </div>

@@ -20,7 +20,7 @@ export class PapService {
         let url = "pap/getEmployeesForGrievance";
         return this.authService.get(url).catch(this.handleError);
     }
-    getEmployeesForFeedbackInit(){
+    getEmployeesForFeedbackInit() {
         let url = "pap/getEmployeesForFeedbackInit";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
@@ -57,7 +57,7 @@ export class PapService {
         let url = "pap/papSubmitToReviewer";
         return this.authService.post(url, data).catch(this.handleError);
     }
-    papInitiateFeedback(data:any):Observable<Response>{        
+    papInitiateFeedback(data: any): Observable<Response> {
         let url = "pap/initiateFeedback";
         return this.authService.post(url, data).catch(this.handleError);
     }
@@ -79,8 +79,13 @@ export class PapService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    updateBatch(data:any):Observable<Response>{        
+    updateBatch(data: any): Observable<Response> {
         let url = "pap/updateBatch";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    releaseFeedback(data: any) {
+        let url = "pap/releaseFeedback";
         return this.authService.post(url, data).catch(this.handleError);
     }
 
