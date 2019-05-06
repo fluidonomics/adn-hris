@@ -245,4 +245,8 @@ getDashboard() {
     // }
 }
 
+gotoPostLeave(){
+    this.router.navigate(["./hr/post/leave"]);
+}
+
 }
