@@ -86,6 +86,7 @@ initData()
 {
     this.loadAllEmployee();
     this.getLeaveStatuses();
+    this.getDashboardType();
     this.getTransactions();
     this.getDashboard();
 }
@@ -153,6 +154,33 @@ downloadKraCsv() {
     
 }
 
+
+downloadMtrCsv() {
+
+    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","MTR_Status","Created Date", "Updated Date", "Updated By"];
+    let filedList=['empName',"supname","status","createdDate","updatedDate", "updatedBy"];
+    let csv=[];
+    let row = [];
+    csv.push(csvHeader.join(","));
+     for (var i = 0; i < this.empKradata.result.message.length; i++) {
+        let row = [];
+         for (var index in filedList) {//array[i]
+            let head = filedList[index];
+            if(head.indexOf('.') > -1)
+            {
+              let columnArr= head.split('.')
+              row.push(this.empKradata.result.message[i][columnArr[0]][columnArr[1]])  
+            }
+            else{
+               row.push(this.empKradata.result.message[i][head]);
+            }
+         }
+         csv.push(row.join(","));
+     }
+     this.utilityService.saveAsCSV(csv.join("\n"),"MTR_Dashboard")
+    
+}
+
 downloadProfileCsv() {
     let csvHeader=['Employee ID',"Name","Active","Personal Profile","Office Profile","Profile"];
     let filedList=['userName',"fullName","isAccountActive","profileProcessDetails.employeeStatus","profileProcessDetails.hrStatus","profileProcessDetails.supervisorStatus"];
@@ -183,7 +211,7 @@ getLeaveStatuses() {
 }
 
 getDashboardType() {
-    this.dashboardType = ['KRA', 'Leave'];
+    this.dashboardType = ['KRA', 'MTR'];
 }
 
 getTransactions() {
@@ -232,7 +260,26 @@ getDashboard() {
                 this.empKradata = res.json() || [];
             }
         })
-     } //else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Span Of Control") {
+     } else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "MTR") {
+
+            this._hrService.getMtrDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+                if (res.ok) {
+                    let hrMtrdata = res.json() || [];
+                    this.approved_count = hrMtrdata.result.message[0].approved_count;
+                    this.init_count = hrMtrdata.result.message[0].init_count;
+                    this.sendback_count = hrMtrdata.result.message[0].sendback_count;
+                    this.submit_count = hrMtrdata.result.message[0].submit_count;
+                    this.terminate_count = hrMtrdata.result.message[0].terminate_count;
+                }
+            })
+    
+            this._hrService.getEmpMtrDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+                if (res.ok) {
+                    this.empKradata = res.json() || [];
+                }
+            })
+     }
+      //else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Span Of Control") {
     //     this._hrService.getEmpTypeRatio().subscribe(res => {
     //         if(res.ok) {
 

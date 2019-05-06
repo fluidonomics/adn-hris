@@ -64,8 +64,30 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getMtrDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/mtrdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getEmpKraDetails(fromDate?: number, toDate?: number) {
         let url = "dashboard/empdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmpMtrDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/mtrempdetails";
         if (fromDate) {
             url += "?fromDate=" + fromDate
         }
