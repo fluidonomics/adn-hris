@@ -89,6 +89,11 @@ export class PapService {
         return this.authService.post(url, data).catch(this.handleError);
     }
 
+    initGrievancePhase(data) {
+        let url = "pap/initGrievancePhase";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let data = res.json() || {};
         if (data.result && data.result.message) {
