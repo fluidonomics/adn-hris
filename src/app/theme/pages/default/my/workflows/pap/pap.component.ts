@@ -150,7 +150,6 @@ export class MyPapComponent {
                     } else {
                         this.isChangable = false;
                     }
-                    if (this.papWorkFlowData[0].status == 'Approved' && this.papWorkFlowData[0].isRatingCommunicated == true) {
                     if (moment(new Date()).isBefore(this.papWorkFlowData[0].grievanceRaiseEndDate) && !(this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated')) {
                         this.showGreivanceActions = true;
                     } else {
