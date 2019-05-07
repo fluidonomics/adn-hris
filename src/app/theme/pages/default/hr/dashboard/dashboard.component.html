@@ -265,14 +265,21 @@
 						</div>
 						<div class="hrtoemprat" *ngIf="dashboardFilter.dashboard=='MTR'">
 							
-							<p *ngIf="init_count"><font size="4">Total initiated KRA's : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
-							<p *ngIf="submit_count"><font size="4">Submitted KRA's : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
-							<p *ngIf="approved_count"><font size="4">Approved KRA's : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
-							<p *ngIf="sendback_count"><font size="4">Sentback KRA's : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
-							<p *ngIf="terminate_count"><font size="4">Terminated KRA's : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
-						
-						
-					</div>
+							<p *ngIf="init_count"><font size="4">Total initiated MTR : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
+							<p *ngIf="submit_count"><font size="4">Submitted MTR : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
+							<p *ngIf="approved_count"><font size="4">Approved MTR : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
+							<p *ngIf="sendback_count"><font size="4">Sentback MTR : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
+							<p *ngIf="terminate_count"><font size="4">Terminated MTR : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
+						</div>
+
+						<div class="hrtoemprat" *ngIf="dashboardFilter.dashboard=='Learning'">
+							
+							<p *ngIf="init_count"><font size="4">Total initiated Learning : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
+							<p *ngIf="submit_count"><font size="4">Submitted Learning : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
+							<p *ngIf="approved_count"><font size="4">Approved Learning : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
+							<p *ngIf="sendback_count"><font size="4">Sentback Learning : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
+							<p *ngIf="terminate_count"><font size="4">Terminated Learning : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
+						</div>
 						<!-- <div class="hrtoemprat" *ngIf="dashboardFilter.status=='Supervisor Role %'">
 								<p><font size="3">Total no of employee : {{empCount}}</font></p>
 								<p><font size="3">Total no of Supervisor : {{hrCount}}</font></p>
@@ -303,7 +310,12 @@
 							<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadMtrCsv();">
 								Download Status Report
 							</a>
-					</span>
+						</span>
+						<span class="alignRight" *ngIf="dashboardFilter.dashboard=='Learning'">
+							<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadMtrCsv();">
+								Download Status Report
+							</a>
+						</span>
 					</div>
 				</div>
 				
