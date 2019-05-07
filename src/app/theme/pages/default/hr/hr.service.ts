@@ -97,6 +97,28 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getLearningDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/learningstatus";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmpLearningDetails(fromDate?: number, toDate?: number) {
+        let url = "dashboard/learningempdetails";
+        if (fromDate) {
+            url += "?fromDate=" + fromDate
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getCurrentMonthDates() {
         let dateRange = [];
         let startDate = new Date();

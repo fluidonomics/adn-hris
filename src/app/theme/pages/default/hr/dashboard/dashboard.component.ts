@@ -130,8 +130,8 @@ calculatePercentage(status:any,filedName?:string)
 
 downloadKraCsv() {
 
-    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","KRA_Status","Created Date"];
-    let filedList=['empName',"supname","status","createdDate"];
+    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","Created Date", "Updated Date", "Updated By","KRA_Status"];
+    let filedList=['empName',"supname","createdDate","updatedDate", "updatedBy","status"];
     let csv=[];
     let row = [];
     csv.push(csvHeader.join(","));
@@ -157,8 +157,21 @@ downloadKraCsv() {
 
 downloadMtrCsv() {
 
-    let csvHeader=['Emp Name (id)',"Supervisor Name(id)","MTR_Status","Created Date", "Updated Date", "Updated By"];
-    let filedList=['empName',"supname","status","createdDate","updatedDate", "updatedBy"];
+    let csvHeader=[];
+    let filedList=[];
+    let dashboardName = "";
+    if(this.dashboardFilter.dashboard == "MTR") {
+
+        csvHeader=['Emp Name (id)',"Supervisor Name(id)","Created Date", "Updated Date", "Updated By","MTR_Status"];
+        filedList=['empName',"supname","createdDate","updatedDate", "updatedBy","status"];
+        dashboardName = "MTR_Dashboard";
+    } else if(this.dashboardFilter.dashboard == "Learning") {
+
+        csvHeader=['Emp Name (id)',"Supervisor Name(id)","Created Date", "Updated Date", "Updated By","Learning_Status"];
+        filedList=['empName',"supname","createdDate","updatedDate", "updatedBy","status"];
+        dashboardName = "Learning_Dashboard";
+    }
+    
     let csv=[];
     let row = [];
     csv.push(csvHeader.join(","));
@@ -177,7 +190,7 @@ downloadMtrCsv() {
          }
          csv.push(row.join(","));
      }
-     this.utilityService.saveAsCSV(csv.join("\n"),"MTR_Dashboard")
+     this.utilityService.saveAsCSV(csv.join("\n"), dashboardName)
     
 }
 
@@ -211,7 +224,7 @@ getLeaveStatuses() {
 }
 
 getDashboardType() {
-    this.dashboardType = ['KRA', 'MTR'];
+    this.dashboardType = ['KRA', 'MTR', 'Learning'];
 }
 
 getTransactions() {
@@ -278,7 +291,25 @@ getDashboard() {
                     this.empKradata = res.json() || [];
                 }
             })
-     }
+     } else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Learning") {
+
+        this._hrService.getLearningDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+            if (res.ok) {
+                let hrLearningdata = res.json() || [];
+                this.approved_count = hrLearningdata.result.message[0].approved_count;
+                this.init_count = hrLearningdata.result.message[0].init_count;
+                this.sendback_count = hrLearningdata.result.message[0].sendback_count;
+                this.submit_count = hrLearningdata.result.message[0].submit_count;
+                this.terminate_count = hrLearningdata.result.message[0].terminate_count;
+            }
+        })
+
+        this._hrService.getEmpLearningDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
+            if (res.ok) {
+                this.empKradata = res.json() || [];
+            }
+        })
+ } 
       //else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Span Of Control") {
     //     this._hrService.getEmpTypeRatio().subscribe(res => {
     //         if(res.ok) {
