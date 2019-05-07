@@ -30,7 +30,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     _currentEmpId: number;
     itemPerPage: number = 10;
     param_emp_id;
-
+    showGrievancePhase: boolean = false;
 
 
     constructor(private _script: ScriptLoaderService,
@@ -57,11 +57,15 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     }
 
     loadAllEmployee() {
+        this.showGrievancePhase = false;
         this.utilityService.showLoader('#allEmployee-loader');
         this._papService.getEmployeesForGrievance().subscribe(res => {
             let data = res.json().result.message || [];
             //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
             this.employeesData = data || [];
+            // this.employeesData.forEach(emp => {
+            //     debugger;
+            // });
             this.utilityService.hideLoader('#allEmployee-loader');
         }, error => {
             this.utilityService.hideLoader('#allEmployee-loader');
@@ -87,6 +91,28 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     grievanceEmployeeDetail(employee: any) {
         console.log(employee);
         this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
+    }
+
+    initGrievancePhase() {
+        let data = {
+            updatedBy: this._currentEmpId
+        };
+
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this._papService.initGrievancePhase(data).subscribe(res => {
+                    swal("Feedback Released", "", "success");
+                    this.loadAllEmployee();
+                });
+            }
+        });
     }
 
 }

@@ -9,6 +9,8 @@ import swal from 'sweetalert2';
 import { ignoreElements } from 'rxjs/operator/ignoreElements';
 import { Subject } from 'rxjs';
 
+declare var moment;
+
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
     templateUrl: "./pap.component.html",
@@ -93,11 +95,11 @@ export class MyPapComponent {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
 
     loadRatingScaleData() {
@@ -148,12 +150,17 @@ export class MyPapComponent {
                     } else {
                         this.isChangable = false;
                     }
-                    if (this.papWorkFlowData[0].status == 'Approved' && this.papWorkFlowData[0].isRatingCommunicated == true) {
+                    if (moment(new Date()).isBefore(this.papWorkFlowData[0].grievanceRaiseEndDate) && !(this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated')) {
                         this.showGreivanceActions = true;
-                    }
-                    if (this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated') {
+                    } else {
                         this.showGreivanceActions = false;
                     }
+                    // if (this.papWorkFlowData[0].status == 'Approved' && this.papWorkFlowData[0].isRatingCommunicated == true) {
+                    //     this.showGreivanceActions = true;
+                    // }
+                    // if (this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated') {
+                    //     this.showGreivanceActions = false;
+                    // }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }

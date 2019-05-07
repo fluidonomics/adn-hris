@@ -231,7 +231,10 @@
                                                     *ngFor="let kraRow of batch?.pap_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                     <tr class="m-datatable__row">
                                                         <td class="m-datatable__cell" width="62%">
-                                                            <span>{{kraRow.emp_details?.fullName}}</span>
+                                                            <span>
+                                                                {{kraRow.emp_details?.fullName}}
+                                                                ({{kraRow.emp_details?.userName}})
+                                                            </span>
                                                         </td>
                                                         <!-- <td class="m-datatable__cell" width="40%" >
                                                                                 <span>{{kraRow.timeline_id}}</span>
