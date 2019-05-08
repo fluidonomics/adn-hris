@@ -235,19 +235,19 @@
                                                         width="5%">
                                                         <span>Days</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                         <span>Reason</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
                                                         <span>Applied To</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Applied By</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Remarks</span>
                                                     </th>
-                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                                    <th class="m-datatable__cell m-datatable__cell--sort" width="10%">
                                                         <span>Status</span>
                                                     </th>
                                                     <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
@@ -270,19 +270,16 @@
                                                     <td class="m-datatable__cell text-center" width="5%">
                                                         <span *ngIf="tran.days">{{tran.days}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="20%">
+                                                    <td class="m-datatable__cell" width="15%">
                                                         <span class="span-scroll">{{tran.reason}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="10%">
+                                                    <td class="m-datatable__cell" width="15%">
                                                         <span>{{tran.applyToFullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
-                                                        <span>{{tran.createdByFullName}}</span>
-                                                    </td>
-                                                    <td class="m-datatable__cell" width="15%">
                                                         <span class="span-scroll">{{tran.supervisorReason}}</span>
                                                     </td>
-                                                    <td class="m-datatable__cell" width="15%">
+                                                    <td class="m-datatable__cell" width="10%">
                                                         <span>
                                                             <span
                                                                 class="m-badge m-badge--success m-badge--wide">{{tran.status}}</span>
