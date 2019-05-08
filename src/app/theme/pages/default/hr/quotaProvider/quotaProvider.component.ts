@@ -129,6 +129,11 @@ export class QuotaProviderComponent implements OnInit {
         if (data.type === "Maternity Leave") {
             this._leaveService.getEmployeeForQuotaProvide({ type: "maternity" }).subscribe(res => {
                 this.employeesListToShow = res.json() || [];
+                if (this.employeesListToShow && this.employeesListToShow.length > 0) {
+                    this.employeesListToShow.forEach(emp => {
+                        emp.displayName = emp.fullName + '(' + emp.userName + ')';
+                    });
+                }
             });
             this.isMaternity = true;
             this.isSpecial = false;
@@ -146,11 +151,20 @@ export class QuotaProviderComponent implements OnInit {
     }
     //show leave balance for single employee 
     onEmployeeSelect($event) {
-        var empData = this.employees.filter(f => f._id === $event._id);
-        this.annualLeaveBalance = _.find(empData, (e) => e.leave_type === 1) ? _.find(empData, (e) => e.leave_type === 1).remaining_balance : 0;
-        this.sickLeaveBalance = _.find(empData, (e) => e.leave_type === 2) ? _.find(empData, (e) => e.leave_type === 2).remaining_balance : 0;
-        this.maternityLeaveBalance = _.find(empData, (e) => e.leave_type === 3) ? _.find(empData, (e) => e.leave_type === 3).remaining_balance : 0;
-        this.specialLeaveBalance = _.find(empData, (e) => e.leave_type === 4) ? _.find(empData, (e) => e.leave_type === 4).remaining_balance : 0;
+        // var empData = this.employees.filter(f => f._id === $event._id);
+        // this.annualLeaveBalance = _.find(empData, (e) => e.leave_type === 1) ? _.find(empData, (e) => e.leave_type === 1).remaining_balance : 0;
+        // this.sickLeaveBalance = _.find(empData, (e) => e.leave_type === 2) ? _.find(empData, (e) => e.leave_type === 2).remaining_balance : 0;
+        // this.maternityLeaveBalance = _.find(empData, (e) => e.leave_type === 3) ? _.find(empData, (e) => e.leave_type === 3).remaining_balance : 0;
+        // this.specialLeaveBalance = _.find(empData, (e) => e.leave_type === 4) ? _.find(empData, (e) => e.leave_type === 4).remaining_balance : 0;
+        this._leaveService.getEmployeeLeaveBalance($event._id, this.currentFiscalYear._id).subscribe(res => {
+            let balances = res.json() || [];
+            if (balances && balances.length > 0) {
+                this.annualLeaveBalance = balances.find(b => b.leaveTypeId == 1).leaveBalance;
+                this.sickLeaveBalance = balances.find(b => b.leaveTypeId == 2).leaveBalance;
+                this.maternityLeaveBalance = balances.find(b => b.leaveTypeId == 3).leaveBalance;
+                this.specialLeaveBalance = balances.find(b => b.leaveTypeId == 4).leaveBalance;
+            }
+        });
     }
     onDepartmentSelect(data) {
         this.departmentId = data._id;
@@ -212,7 +226,6 @@ export class QuotaProviderComponent implements OnInit {
             }).map(y => {
                 return y._id;
             });
-            debugger;
             if (data.emp_id == null || data.emp_id.length == 0) {
                 swal('Error', 'No Employees Selected', 'error')
                 return;
@@ -328,7 +341,6 @@ export class QuotaProviderComponent implements OnInit {
         });
     }
     onUploadOutput($event, name) {
-        debugger;
         console.log($event, name);
     }
 

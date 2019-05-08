@@ -346,8 +346,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
             }
 
 
-
+            // Validations for maternity and special leaves, if it is accompanied by annual or sick leave
             if (this.leaveapplication.leaveType == 3 || this.leaveapplication.leaveType == 4 && this.additionalLeaves.length > 0) {
+                let dates = [this.leaveapplication];
                 this.additionalLeaves.forEach(leave => {
                     if (leave.days <= 0) {
                         leave.areDaysValid = false;
@@ -373,6 +374,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         swal('Error', 'Cannot add two leaves of same leave type', 'error');
                         resolve(false);
                     }
+                    // --------------------------------------------------------------------------------------------------------
 
                     //Check if maternity and special are not applied together
                     if (this.leaveapplication.leaveType == 3) {
@@ -388,10 +390,68 @@ export class ApplyComponent implements OnInit, OnDestroy {
                             resolve(false);
                         }
                     }
+                    // --------------------------------------------------------------------------------------------------------
+
+                    //Check if no two leaves overlap each other
+                    if (this.checkLeaveOverlap(this.leaveapplication, leave)) {
+                        swal('Error', 'Dates are overlapping', 'error');
+                        resolve(false);
+                    }
+
+                    dates.forEach(checkLeave => {
+                        if (checkLeave.leave_type != leave.leave_type) {
+                            if (this.checkLeaveOverlap(checkLeave, leave)) {
+                                swal('Error', 'Dates are overlapping', 'error');
+                                resolve(false);
+                            }
+                        }
+                    });
+                    // --------------------------------------------------------------------------------------------------------
+
+                    dates.push(leave);
                 });
+
+                // Check that there should be no gap between dates
+                for (let i = 0; i < dates.length - 1; i++) {
+                    for (let j = 0; j < dates.length - i - 1; j++) {
+                        const pivotLeave = dates[j];
+                        const leave = dates[j + 1];
+                        if (moment(leave.fromDate).isBefore(moment(pivotLeave.fromDate))) {
+                            this.swapLeaves(dates[j], dates[j + 1]);
+                        }
+                    }
+                }
+
+                for (let i = 0; i < dates.length - 1; i++) {
+                    const leave1 = dates[i];
+                    const leave2 = dates[i + 1];
+                    let diff = moment(leave2.fromDate).diff(moment(leave1.toDate), 'days');
+                    if (diff > 1) {
+                        swal('Gaps between dates are not allowed', moment(leave1.toDate).format("DD-MM-YYYY") + ' and ' + moment(leave2.fromDate).format("DD-MM-YYYY") + ' has a gap of ' + diff + ' days', 'error');
+                        resolve(false);
+                    }
+                }
+
+                // --------------------------------------------------------------------------------------------------------
             }
             resolve(true);
         });
+    }
+
+    swapLeaves(leave1, leave2) {
+        let a = JSON.parse(JSON.stringify(leave1));
+        leave1 = JSON.parse(JSON.stringify(leave2));
+        leave2 = JSON.parse(JSON.stringify(a));
+    }
+
+    checkLeaveOverlap(leave1, leave2) {
+        let isleave1FromDateBetween = moment(leave1.fromDate).isBetween(moment(leave2.fromDate), moment(leave2.toDate), null, '[]');
+        let isleave1ToDateBetween = moment(leave1.toDate).isBetween(moment(leave2.fromDate), moment(leave2.toDate), null, '[]');
+
+        let isleave2FromDateBetween = moment(leave2.fromDate).isBetween(moment(leave1.fromDate), moment(leave1.toDate), null, '[]');
+        let isleave2ToDateBetween = moment(leave2.toDate).isBetween(moment(leave1.fromDate), moment(leave1.toDate), null, '[]');
+
+        return isleave1FromDateBetween || isleave1ToDateBetween || isleave2FromDateBetween || isleave2ToDateBetween;
     }
 
     uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
@@ -516,7 +576,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.sandwichDates = [];
         if (leave.fromDate && leave.toDate) {
             let originalDays = moment(moment(leave.toDate).format('L')).diff(moment(leave.fromDate).format('L'), 'days') + 1;
-            let isAlreadyAppleid = this.leavesList.filter(f => {
+            let isAlreadyApplied = this.leavesList.filter(f => {
                 let lFromDate = moment(f.fromDate).format('L');
                 let lToDate = moment(f.toDate).format('L');
                 let fromDate = moment(leave.fromDate).format('L');
@@ -529,7 +589,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 return isBetween;
             });
 
-            if (isAlreadyAppleid.length > 0) {
+            if (isAlreadyApplied.length > 0) {
                 leave.areDaysValid = false;
                 leave.daysValidationMsg = "Leave Already applied for these dates";
                 return;
@@ -559,7 +619,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.addSandwichDates(i, 'L', 1)
                 i = moment(i).add(1, 'd')._d;
             }
-            this.sandwichDates
+            // this.sandwichDates
             let fromDate = this.getSandwichDate(leave.fromDate, -1);
             let toDate = this.getSandwichDate(leave.toDate, +1);
 
