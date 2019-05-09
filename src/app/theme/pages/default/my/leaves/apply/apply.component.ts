@@ -377,19 +377,19 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     // --------------------------------------------------------------------------------------------------------
 
                     //Check if maternity and special are not applied together
-                    if (this.leaveapplication.leaveType == 3) {
-                        let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 4).length;
-                        if (count > 0) {
-                            swal('Error', 'Cannot add two leaves of same leave type', 'error');
-                            resolve(false);
-                        }
-                    } else if (this.leaveapplication.leaveType == 4) {
-                        let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 3).length;
-                        if (count > 0) {
-                            swal('Error', 'Cannot add two leaves of same leave type', 'error');
-                            resolve(false);
-                        }
-                    }
+                    // if (this.leaveapplication.leaveType == 3) {
+                    //     let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 4).length;
+                    //     if (count > 0) {
+                    //         swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                    //         resolve(false);
+                    //     }
+                    // } else if (this.leaveapplication.leaveType == 4) {
+                    //     let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 3).length;
+                    //     if (count > 0) {
+                    //         swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                    //         resolve(false);
+                    //     }
+                    // }
                     // --------------------------------------------------------------------------------------------------------
 
                     //Check if no two leaves overlap each other
@@ -399,7 +399,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     }
 
                     dates.forEach(checkLeave => {
-                        if (checkLeave.leave_type != leave.leave_type) {
+                        if (checkLeave.leaveType != leave.leaveType) {
                             if (this.checkLeaveOverlap(checkLeave, leave)) {
                                 swal('Error', 'Dates are overlapping', 'error');
                                 resolve(false);
@@ -411,7 +411,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     dates.push(leave);
                 });
 
-                // Check that there should be no gap between dates
+                // Sorting the dates in ascending order to further apply validations
                 for (let i = 0; i < dates.length - 1; i++) {
                     for (let j = 0; j < dates.length - i - 1; j++) {
                         const pivotLeave = dates[j];
@@ -421,7 +421,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         }
                     }
                 }
+                // --------------------------------------------------------------------------------------------------------
 
+                // Check that there should be no gap between dates
                 for (let i = 0; i < dates.length - 1; i++) {
                     const leave1 = dates[i];
                     const leave2 = dates[i + 1];
@@ -431,8 +433,16 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         resolve(false);
                     }
                 }
-
                 // --------------------------------------------------------------------------------------------------------
+
+                // Check that fromDate and endate should not  be on weekends
+                if (moment(dates[0].fromDate).day() == 4 || moment(dates[dates.length - 1].toDate).day() == 4 ||
+                    moment(dates[0].fromDate).day() == 5 || moment(dates[dates.length - 1].toDate).day() == 5) {
+                    swal('Error', 'Start Date & End Date cannot be on weekends', 'error');
+                    resolve(false);
+                }
+                // --------------------------------------------------------------------------------------------------------
+
             }
             resolve(true);
         });
