@@ -145,7 +145,14 @@ downloadKraCsv() {
               row.push(this.empKradata.result.message[i][columnArr[0]][columnArr[1]])  
             }
             else{
-               row.push(this.empKradata.result.message[i][head]);
+                if(head == 'empName') {
+                    row.push(this.empKradata.result.message[i][head] + "(" + this.empKradata.result.message[i]["empId"] + ")");
+                } else if(head == 'supname') {
+                    row.push(this.empKradata.result.message[i][head] + "(" + this.empKradata.result.message[i]["supId"] + ")");
+                } else {
+                    row.push(this.empKradata.result.message[i][head]);
+                }
+               
             }
          }
          csv.push(row.join(","));
@@ -156,7 +163,8 @@ downloadKraCsv() {
 
 
 downloadMtrCsv() {
-
+    
+    
     let csvHeader=[];
     let filedList=[];
     let dashboardName = "";
@@ -185,12 +193,19 @@ downloadMtrCsv() {
               row.push(this.empKradata.result.message[i][columnArr[0]][columnArr[1]])  
             }
             else{
-               row.push(this.empKradata.result.message[i][head]);
+
+                if(head == 'empName' && this.empKradata.result.message[i][head]) {
+                    row.push(this.empKradata.result.message[i][head] + "(" + this.empKradata.result.message[i]["empId"] + ")");
+                } else if(head == 'supname' && this.empKradata.result.message[i][head]) {
+                    row.push(this.empKradata.result.message[i][head] + "(" + this.empKradata.result.message[i]["supId"] + ")");
+                } else {
+                    row.push(this.empKradata.result.message[i][head]);
+                }
             }
          }
          csv.push(row.join(","));
      }
-     this.utilityService.saveAsCSV(csv.join("\n"), dashboardName)
+     this.utilityService.saveAsCSV(csv.join("\n"), dashboardName);
     
 }
 
@@ -274,7 +289,6 @@ getDashboard() {
             }
         })
      } else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "MTR") {
-
             this._hrService.getMtrDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
                 if (res.ok) {
                     let hrMtrdata = res.json() || [];
@@ -293,6 +307,8 @@ getDashboard() {
             })
      } else if(this.dashboardFilter.dashboard && this.dashboardFilter.dashboard == "Learning") {
 
+        this.empKradata = {};
+        
         this._hrService.getLearningDetails(this.dashboardFilter.date[0], this.dashboardFilter.date[1]).subscribe(res => {
             if (res.ok) {
                 let hrLearningdata = res.json() || [];
