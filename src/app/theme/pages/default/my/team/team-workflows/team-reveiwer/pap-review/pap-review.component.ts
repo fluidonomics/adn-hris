@@ -172,7 +172,6 @@ export class PapReviewComponent implements OnInit {
                 "grievanceStatus": this.papWorkFlowData[0].grievanceStatus
             }
             this.papService.papUpdateReviewer(request).subscribe(res => {
-                debugger;
                 if (res.ok) {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);

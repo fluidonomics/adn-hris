@@ -31,8 +31,28 @@
                         </div>
                     </div>
                     <div class="col-xl-4 order-2 order-xl-2">
-                        <button class="btn btn-success pull-right" type="button" (click)="initGrievancePhase()">Initiate
-                            Grievance Phase</button>
+                        <form id="grievanceInitPhase" #fGrievanceInitPhase="ngForm"
+                            (ngSubmit)="initGrievancePhase(fGrievanceInitPhase)">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="grievanceEndDateName">Grievance End Date </label>
+                                    <span class="required" aria-required="true"> * </span>
+                                    <input name="grievanceEndDateName" class="form-control m-input m-input--air"
+                                        #grievanceEndDateModel="ngModel" placeholder="Enter Batch End Date"
+                                        [(ngModel)]="grievanceEndDate" bsDatepicker [readonly]="true"
+                                        [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                        #grievanceEndDateModel="ngModel" placement="top" required>
+                                    <div class="form-control-feedback has-danger"
+                                        *ngIf="fGrievanceInitPhase.submitted && grievanceEndDateModel.invalid">
+                                        This field is required.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-success pull-right" type="submit">Initiate Grievance
+                                        Phase</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@ export class PapViewComponent implements OnInit {
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
-                    if (p.papmasters.isRatingCommunicated == false) {
+                    if (p.papmasters.isRatingCommunicated == false && p.papmasters.isSentToSupervisor == true) {
                         this.showReleaseFeedback = true;
                     }
                     return p.papmasters.reviewerStatus == 'Approved' || p.papmasters.reviewerStatus == 'Pending';
