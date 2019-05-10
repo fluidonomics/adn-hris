@@ -213,7 +213,9 @@ export class QuotaProviderComponent implements OnInit {
             balance: this.request.balance,
             fiscalYearId: this.currentFiscalYear._id,
             createdBy: this.currentUser._id,
-            createdAt: new Date()
+            createdAt: new Date(),
+            action_link: window.location.origin + '/my/leaves/dashboard/employee'
+
         };
         if (this.request.leave_type == 3) {
             data.emp_id = this.request._id;

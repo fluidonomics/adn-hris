@@ -181,7 +181,7 @@ export class DashboardEmployeeComponent implements OnInit {
             if (res.ok) {
                 let body = res.json();
                 if (body.data[0]) {
-                    if(this.currentUser._id !== body.data[0].emp_id){
+                    if (this.currentUser._id !== body.data[0].emp_id) {
                         return;
                     }
 
@@ -197,7 +197,7 @@ export class DashboardEmployeeComponent implements OnInit {
                             }
                         })
                     }
-                    this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' })); 
+                    this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                 }
             }
         });
@@ -262,6 +262,9 @@ export class DashboardEmployeeComponent implements OnInit {
         });
     }
 
+    viewAttachement(leave) {
+        window.open(environment.content_api_base.imgBase + leave.attachment, '_blank');
+    }
 
     refresh() {
         this.isSpin = true;
