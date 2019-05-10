@@ -59,7 +59,7 @@ export class PapViewComponent implements OnInit {
                 return !pap.papmasters.isRatingCommunicated;
             }).map(pap => pap.papmasters.emp_id),
             updatedBy: this.authService.currentUserData._id,
-            action_link: window.location.origin + '/my/team/workflows/supervisor'
+            action_link: window.location.origin + '/my/workflows/pap'
         }
         swal({
             title: 'Are you sure?',
