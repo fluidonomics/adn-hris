@@ -436,8 +436,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 // --------------------------------------------------------------------------------------------------------
 
                 // Check that fromDate and endate should not  be on weekends
-                if (moment(dates[0].fromDate).day() == 4 || moment(dates[dates.length - 1].toDate).day() == 4 ||
-                    moment(dates[0].fromDate).day() == 5 || moment(dates[dates.length - 1].toDate).day() == 5) {
+                if (moment(dates[0].fromDate).day() == 5 || moment(dates[dates.length - 1].toDate).day() == 5 ||
+                    moment(dates[0].fromDate).day() == 6 || moment(dates[dates.length - 1].toDate).day() == 6) {
                     swal('Error', 'Start Date & End Date cannot be on weekends', 'error');
                     resolve(false);
                 }
