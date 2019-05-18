@@ -5,29 +5,36 @@ import { Helpers } from '../../../../helpers';
 import { DocumentService } from "../../../../base/_services/documentService.service";
 import { ScriptLoaderService } from '../../../../_services/script-loader.service';
 import * as FileSaver from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./dashboard.component.html",
+    styleUrls: ["./dashboard.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-
+    sanitizer: DomSanitizer;
     fileUrl: String = "adn-test-bucket/externalDocuemnt/PMS+Presentation+-+180918.pptx";
     fileName: String = "performance_management";
+    documentUrl: string = "https://view.officeapps.live.com/op/embed.aspx?src=https://s3.us-east-2.amazonaws.com/adn-presentation-docs/PMS+Presentation+-+180918.pptx";
 
+    documentUrlSanitized: any;
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _documentService: DocumentService,
         private _script: ScriptLoaderService,
+        sanitizer: DomSanitizer
     ) {
+        this.sanitizer = sanitizer;
         title.setTitle('ADN Dashbord | Dashboard');
         meta.addTags([
             { name: 'author', content: '' },
             { name: 'keywords', content: 'Dashboard' },
             { name: 'description', content: 'Dashboard.' }
         ]);
+        this.documentUrlSanitized = this.sanitizer.bypassSecurityTrustResourceUrl(this.documentUrl);
     }
 
     ngOnInit() {

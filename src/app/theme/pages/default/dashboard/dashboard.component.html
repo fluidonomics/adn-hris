@@ -92,31 +92,11 @@
 		</div>
 	</div> -->
 	<!-- new dashboard end -->
-	
-	<div class="col-xl-3" style="margin-top: 35px;">
-		<div class="m-widget4__item">
-			<div class="m-widget4__img m-widget4__img--icon">
-					<img alt="" src="./assets/app/media/img/misc/ADN_performancet.jpg">
-					<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-block" (click)="downloadPdf(fileUrl, fileName)" style="margin-top: 10px;">
-						Download Presentation
-					</a>
-			</div>
-			<!-- <div class="m-widget4__info">
-					<span class="m-widget4__text">
-						Employee Joining Report
-					</span>
-			</div> -->
-			<!-- <div class="m-widget4__ext documents--ext">
-					<div class="m-space--10"></div> -->
-					<!-- <button class="btn btn-secondary btn-block" (click)="downloadPdf(document.documentUrl,document.documentName)">
-							<i class="fa fa-download"></i>
-					</button> -->
-					<span class="alignRight" style="padding-top: 25px;">
-						
-					</span>
-			<!-- </div> -->
-		</div>
+
+	<div class="col-lg-12 ppt" style="margin-top: 35px;">
+		<iframe [src]='documentUrlSanitized' width='1366px' height='623px' frameborder='0'>This is an embedded <a
+				target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank'
+				href='http://office.com/webapps'>Office Online</a>.</iframe>
 	</div>
 </div>
 <!-- END: Subheader -->
-
