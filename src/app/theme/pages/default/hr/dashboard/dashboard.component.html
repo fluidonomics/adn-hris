@@ -317,6 +317,112 @@
 				</div>
 				
 			</div>
+
+			<!-- new code added start-->
+			<div class="col-xl-6">
+				<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">
+									Report Dashboards
+								</h3>
+							</div>
+						</div>
+						<div class="m-portlet__head-tools">
+							<ul class="m-portlet__nav">
+									<li class="m-portlet__nav-item">
+											<input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD MMM' }" [(ngModel)]="dashboardFilter.date"
+												(ngModelChange)="getDashboard()" placeholder="Select Month" placement="left" readonly>
+									</li>
+									<li class="m-portlet__nav-item">
+											<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+												<div class="btn-group" role="group">
+													<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+														aria-expanded="false">
+														{{dashboardFilter.dashboard}}
+													</button>
+													<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+														<a class="dropdown-item" href="#" *ngFor="let dashboard of dashboardType" (click)="dashboardFilter.dashboard = dashboard; getDashboard();">
+															{{dashboard}}
+														</a>
+													</div>
+												</div>
+											</div>
+									</li>
+									
+							</ul>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+						<div class="hrtoemprat" *ngIf="dashboardFilter.dashboard=='KRA'">
+							
+								<p *ngIf="init_count"><font size="4">Total initiated KRA's : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
+								<p *ngIf="submit_count"><font size="4">Submitted KRA's : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
+								<p *ngIf="approved_count"><font size="4">Approved KRA's : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
+								<p *ngIf="sendback_count"><font size="4">Sentback KRA's : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
+								<p *ngIf="terminate_count"><font size="4">Terminated KRA's : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
+							
+							
+						</div>
+						<div class="hrtoemprat" *ngIf="dashboardFilter.dashboard=='MTR'">
+							
+							<p *ngIf="init_count"><font size="4">Total initiated MTR : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
+							<p *ngIf="submit_count"><font size="4">Submitted MTR : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
+							<p *ngIf="approved_count"><font size="4">Approved MTR : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
+							<p *ngIf="sendback_count"><font size="4">Sentback MTR : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
+							<p *ngIf="terminate_count"><font size="4">Terminated MTR : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
+						</div>
+
+						<div class="hrtoemprat" *ngIf="dashboardFilter.dashboard=='Learning'">
+							
+							<p *ngIf="init_count"><font size="4">Total initiated Learning : <span style="font-size: 22px; color: #a9a1a1">{{init_count}}</span></font></p>
+							<p *ngIf="submit_count"><font size="4">Submitted Learning : <span style="font-size: 22px; color: #a9a1a1">{{submit_count}}</span></font></p>
+							<p *ngIf="approved_count"><font size="4">Approved Learning : <span style="font-size: 22px; color: #a9a1a1">{{approved_count}}</span></font></p>
+							<p *ngIf="sendback_count"><font size="4">Sentback Learning : <span style="font-size: 22px; color: #a9a1a1">{{sendback_count}}</span></font></p>
+							<p *ngIf="terminate_count"><font size="4">Terminated Learning : <span style="font-size: 22px; color: #a9a1a1">{{terminate_count}}</span></font></p>
+						</div>
+						<!-- <div class="hrtoemprat" *ngIf="dashboardFilter.status=='Supervisor Role %'">
+								<p><font size="3">Total no of employee : {{empCount}}</font></p>
+								<p><font size="3">Total no of Supervisor : {{hrCount}}</font></p>
+								<div>
+									<span class="centerP">
+										<p style="font-size: 80px; color: #a9a1a1 !important">{{percentageOfSupervisor}}</p>
+										<p><font size="5">Supervisor to employee ratio</font></p>
+									</span>
+								</div>
+						</div>
+						<div class="hrtoemprat" *ngIf="dashboardFilter.status=='Span Of Control'">
+								<p><font size="3">Total no of employee : {{empCount}}</font></p>
+								<p><font size="3">Employee with management role : {{managementEmpCount}}</font></p>
+								<div>
+									<span class="centerP">
+										<p style="font-size: 80px; color: #a9a1a1 !important">{{managementEmpRatio}}</p>
+										<p><font size="5">Span of control ratio</font></p>
+									</span>
+								</div>
+						</div> -->
+						<span class="alignRight" *ngIf="dashboardFilter.dashboard=='KRA'">
+								<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadKraCsv();">
+									Download Status Report
+								</a>
+						</span>
+
+						<span class="alignRight" *ngIf="dashboardFilter.dashboard=='MTR'">
+							<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadMtrCsv();">
+								Download Status Report
+							</a>
+						</span>
+						<span class="alignRight" *ngIf="dashboardFilter.dashboard=='Learning'">
+							<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadMtrCsv();">
+								Download Status Report
+							</a>
+						</span>
+					</div>
+				</div>
+				
+			</div>
+			<!-- new code added end -->
 			<!-- <div class="col-xl-4">
 				<div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
 					<div class="m-portlet__head">
