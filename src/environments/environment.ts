@@ -18,6 +18,7 @@ export const environment = {
     },
     content_api_base: {
         apiBase: "https://adn-test-bucket.s3.ap-south-1.amazonaws.com/",
+        pptBase: "https://s3.ap-south-1.amazonaws.com/",
         imgBase: "https://adn-test-bucket.s3.ap-south-1.amazonaws.com/",
         noImagePath: "image/0e02f48c.noimageavailable.jpg"
     },
