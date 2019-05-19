@@ -408,6 +408,23 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12 adn-form__group">
+                            <div class="m-form__group form-group">
+                                <label for="batchEndDate">Batch Status
+                                </label>
+                                <span class="required" aria-required="true"> * </span>
+                                <ng-select class="m-input m-input--air" name="batchstatus" [items]="statusTypes"
+                                    bindLabel="name" bindValue="_id" placeholder="Select Status"
+                                    [(ngModel)]="editBatch.status" #batchstatus="ngModel" [clearable]="false">
+                                </ng-select>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="feditBatch.submitted && !batchstatus.valid">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-actions">
                     <div class="row">
