@@ -126,7 +126,6 @@ export class PapBatchViewComponent implements OnInit {
     }
 
     openEditModal(template: TemplateRef<any>, batch, index) {
-        debugger;
         this.modalRef = this.modalService.show(template);
         this.editBatch = Object.assign({}, batch);
         if (this.editBatch && this.editBatch.batchEndDate) {
