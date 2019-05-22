@@ -1,14 +1,14 @@
 import { AmChart, AmChartsService } from "@amcharts/amcharts3-angular";
 import { ViewEncapsulation, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { ScriptLoaderService } from "../../../../../../../_services/script-loader.service";
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
 
 @Component({
-    selector: "app-my-leaves-chart-monthly-leave",
+    selector: "app-my-grades-chart-monthly",
     // templateUrl: "./monthly-leave-chart.component.html",
     template: `<div id="chartdiv"></div>`,
     encapsulation: ViewEncapsulation.None
 })
-export class MonthlyLeaveChartComponent implements OnChanges {
+export class MonthlyGradeChartComponent implements OnChanges {
 
     @Input() chartData: any = [];
     @Input() options: AmChartOptions = {};
@@ -30,6 +30,8 @@ export class MonthlyLeaveChartComponent implements OnChanges {
     ngAfterViewInit() {
         this.createChart();
         this.clearJsTag();
+        console.log("chart data : ", this.chartData);
+        
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -72,14 +74,14 @@ export class MonthlyLeaveChartComponent implements OnChanges {
                 "fillAlphas": 0.9,
                 "lineAlpha": 0.2,
                 "type": "column",
-                "valueField": "leaveCount"
+                "valueField": "count"
             }],
             "chartCursor": {
                 "categoryBalloonEnabled": false,
                 "cursorAlpha": 0,
                 "zoomable": false
             },
-            "categoryField": "leaveType",
+            "categoryField": "gradeName",
             "categoryAxis": {
                 "gridPosition": "start",
                 "labelRotation": 45

@@ -41,7 +41,10 @@ export class HrService {
     }
     
 
-
+    getEmployeeByGrade() {
+        let url="dashboard/empcountbygrade";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
 
     saveBulkKra(data: any) {
         let url = "kra/addBulkKra";

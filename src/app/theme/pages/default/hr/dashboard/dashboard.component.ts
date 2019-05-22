@@ -41,6 +41,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     submit_count: number;
     terminate_count: number;
 
+    leaveBalance: any = [];
+    overviewChartData: any = [];
+
     leaveStatuses: any = [];
     dashboardType: any = [];
 
@@ -89,6 +92,7 @@ initData()
     this.getDashboardType();
     this.getTransactions();
     this.getDashboard();
+    this.getOverviewChartData();
 }
 
 loadAllEmployee()
@@ -161,6 +165,33 @@ downloadKraCsv() {
     
 }
 
+getOverviewChartData() {
+
+        this._hrService.getEmployeeByGrade().subscribe(res => {
+            if (res.ok) {
+                var data = res.json() || [];
+                data = data.result.message;
+                console.log("data : ", data);
+                
+                data.sort((a, b) => a._id > b._id);
+                let chartData = [];
+                data.forEach((grade, i) => {
+                    //let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leave.leaveTypeId);
+                    // if (bal.allotedLeave > 0) {
+                        console.log("grade name : ", grade.gradeName[0]);
+                        console.log("grade count : ", grade.count);
+                        chartData.push({
+                            "gradeName": grade.gradeName[0],
+                            "count": grade.count
+                        })
+                    //}
+                });
+                this.overviewChartData = chartData;
+                console.log("OverView chart data : ", this.overviewChartData);
+                
+            }
+        })
+}
 
 downloadMtrCsv() {
     

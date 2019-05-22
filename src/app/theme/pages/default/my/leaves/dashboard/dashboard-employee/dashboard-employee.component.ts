@@ -161,6 +161,8 @@ export class DashboardEmployeeComponent implements OnInit {
                         }
                     });
                     this.overviewChartData = chartData;
+                    console.log("over chart data : ", this.overviewChartData);
+                    
                 }
             })
         }

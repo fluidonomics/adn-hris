@@ -30,6 +30,7 @@ import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
+import { AmChartsService, AmChartsModule } from '@amcharts/amcharts3-angular';
 
 import { HrService } from './hr.service';
 
@@ -52,6 +53,7 @@ import { LearningService } from '../services/learning.service';
 import { PipService } from '../services/pip.service';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { SharedModule } from '../shared/shared.module';
+import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
 
 
 @NgModule({
@@ -67,6 +69,7 @@ import { SharedModule } from '../shared/shared.module';
         BaseModule,
         NgUploaderModule,
         HttpClientModule,
+        AmChartsModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
         SharedModule
@@ -99,10 +102,11 @@ import { SharedModule } from '../shared/shared.module';
         FeedbackInitiateComponent,
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
+        MonthlyGradeChartComponent
         //DocumentsViewComponent
         
     ],
-    providers: [HrService, HrGuard, LeaveService, LearningService, PipService]
+    providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })
 export class HrModule {
 }
