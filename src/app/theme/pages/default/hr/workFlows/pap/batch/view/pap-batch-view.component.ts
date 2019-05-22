@@ -78,6 +78,7 @@ export class PapBatchViewComponent implements OnInit {
         this._papService.getPAPBatches(this._currentEmpId)
             .subscribe(
             res => {
+                debugger;
                 this.utilityService.hideLoader('#batch-loader');
                 this.batchData = res;
                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);

@@ -39,7 +39,7 @@ const routes: Routes = [
     { path: 'workflows/kra-view/:id/:emp_id', component: MyTeamKraComponent },
     { path: 'workflows/mtr-detailed-view/:id/:emp_id', component: MtrDetailedViewComponent },
     { path: 'workflows/pap-detailed-view/:id/:emp_id', component: PapDetailedViewComponent },
-    { path: 'workflows/pap-review/:id/:emp_id', component: PapReviewComponent },
+    { path: 'workflows/pap-review/:id/:emp_id/:isView', component: PapReviewComponent },
     { path: 'subordinate/employee/list', component: EmployeeSearchComponent },
     { path: 'subordinate/transaction-history/:emp_id', component: TransactionHistoryComponent },
     { path: 'workflows/learning-detailed-view/:id/:emp_id', component: LearningDetailedViewComponent },
