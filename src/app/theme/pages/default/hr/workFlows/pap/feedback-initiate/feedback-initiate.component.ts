@@ -118,6 +118,12 @@ export class FeedbackInitiateComponent implements OnInit {
 
     }
 
+    selectAllEmployee($event) {
+        this.employeeFilterData.forEach(element => {
+            element.checked = $event.target.checked;
+        });
+    }
+
     sort(key) {
 
     }

@@ -28,7 +28,7 @@ export class PapBatchViewComponent implements OnInit {
     ]
 
     statusTypes: any = [
-        { _id: "Active", name: "Active", },
+        { _id: "Initiated", name: "Active", },
         { _id: "Terminated", name: "Terminated" },
     ]
     batchData: any = [];
@@ -77,19 +77,20 @@ export class PapBatchViewComponent implements OnInit {
         this.utilityService.showLoader('#batch-loader');
         this._papService.getPAPBatches(this._currentEmpId)
             .subscribe(
-                res => {
-                    this.utilityService.hideLoader('#batch-loader');
-                    this.batchData = res;
-                    this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
-                    this.batchData = this.batchData.sort((a, b) => {
-                        if (moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
-                        else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
-                        else return 0;
-                    });
-                },
-                error => {
-                    this.utilityService.hideLoader('#batch-loader');
+            res => {
+                debugger;
+                this.utilityService.hideLoader('#batch-loader');
+                this.batchData = res;
+                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+                this.batchData = this.batchData.sort((a, b) => {
+                    if (moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
+                    else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
+                    else return 0;
                 });
+            },
+            error => {
+                this.utilityService.hideLoader('#batch-loader');
+            });
     }
     loadkraWorkFlowDetails(batch_id: number) {
         //    this._commonService.getKraWorkFlowInfoByBatch(batch_id)
@@ -116,11 +117,11 @@ export class PapBatchViewComponent implements OnInit {
                 this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex].status = status;
                 this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex])
                     .subscribe(
-                        res => {
-                            swal('Success', 'Employee Workflow Terminated Successfully', 'success')
-                        },
-                        error => {
-                        });
+                    res => {
+                        swal('Success', 'Employee Workflow Terminated Successfully', 'success')
+                    },
+                    error => {
+                    });
             }
         })
     }
@@ -134,22 +135,29 @@ export class PapBatchViewComponent implements OnInit {
     }
 
     saveBatch() {
-        this.editBatch.updatedBy = this._currentEmpId;
-        this._papService.updateBatch(this.editBatch)
-            .subscribe(
-                res => {
-                    this.activeRowNumber = -1;
-                    this.loadBatch();
-                    this.modalRef.hide();
-                    if (this.editBatch.status == 'Terminated') {
-                        swal('Success', 'Batch Terminated Successfully', 'success')
-                    }
-                    else {
-                        swal('Success', 'Batch Saved Successfully', 'success')
-                    }
-                },
-                error => {
-                });
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Update'
+        }).then((result) => {
+            this.editBatch.updatedBy = this._currentEmpId;
+            this._papService.updateBatch(this.editBatch).subscribe(res => {
+                this.activeRowNumber = -1;
+                this.loadBatch();
+                this.modalRef.hide();
+                if (this.editBatch.status == 'Terminated') {
+                    swal('Success', 'Batch Terminated Successfully', 'success')
+                }
+                else {
+                    swal('Success', 'Batch Saved Successfully', 'success')
+                }
+            }, error => {
+                console.error(error);
+            });
+        })
     }
 
 

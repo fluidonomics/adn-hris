@@ -432,11 +432,12 @@
 												{{pap.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
 											</span>
 										</div>
-										<!-- <span class="m-widget4__ext">
-											<span class="m--font-brand">
-												{{employee.status}}
+										<span class="m-widget4__ext">
+											<span class="m-widget4__number sendBack"
+												*ngIf="!pap.papmasters.reviewerStatus && pap.papmasters.grievanceStatus == 'Initiated'">
+												Grievance Raised
 											</span>
-										</span> -->
+										</span>
 									</div>
 
 								</div>
@@ -466,8 +467,8 @@
 							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="pipData.length > 0">
 								<div class="m-input-icon m-input-icon--left">
-									<input type="text" class="form-control m-input m-input--solid" placeholder="Search..."
-										[(ngModel)]="pipSearch">
+									<input type="text" class="form-control m-input m-input--solid"
+										placeholder="Search..." [(ngModel)]="pipSearch">
 									<span class="m-input-icon__icon m-input-icon__icon--left">
 										<span>
 											<i class="la la-search"></i>
@@ -486,10 +487,10 @@
 					<div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide" data-max-height="100"
 						data-scrollable="true"
 						style="max-height: 500px; min-height: 500px; overflow: visible; position: relative;">
-						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside" tabindex="0"
-							style="max-height: none;">
-							<div id="mCSB_5_container" class="mCSB_container" style="position: relative; top: 0px; left: 0px;"
-								dir="ltr">
+						<div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical mCSB_outside"
+							tabindex="0" style="max-height: none;">
+							<div id="mCSB_5_container" class="mCSB_container"
+								style="position: relative; top: 0px; left: 0px;" dir="ltr">
 								<div class="m-widget4  workflow--hover ">
 
 
@@ -499,9 +500,11 @@
 										(click)="goToPipReview(pip)">
 										<div class="m-widget4__img m-widget4__img--logo">
 											<a align="center">
-												<img *ngIf="pip?.emp_details.profileImage; else noImage" src="{{imageBase+pip?.emp_details.profileImage}}"
+												<img *ngIf="pip?.emp_details.profileImage; else noImage"
+													src="{{imageBase+pip?.emp_details.profileImage}}"
 													onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
-													class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+													class="directory_image m--img-rounded m--marginless m--img-centered"
+													alt="">
 												<ng-template #noImage>
 													<img src="./assets/app/media/img/custom/users/user6.jpg"
 														class="directory_image m--img-rounded m--marginless m--img-centered">

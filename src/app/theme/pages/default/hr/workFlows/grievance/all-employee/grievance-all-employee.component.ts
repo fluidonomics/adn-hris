@@ -33,6 +33,8 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     showGrievancePhase: boolean = false;
     grievanceEndDate;
     currentDate = new Date();
+    allPapData = [];
+    showGrievanceInitForm: boolean = false;
 
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
@@ -44,14 +46,11 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._authService.validateToken().subscribe(
-            res => {
-                this._currentEmpId = this._authService.currentUserData._id;
-                this.loadAllEmployee();
-
-            });
-
-
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.loadAllEmployee();
+            this.getAllPap();
+        });
     }
 
     ngAfterViewInit() {
@@ -70,6 +69,20 @@ export class GrievanceAllEmployeeComponent implements OnInit {
             this.utilityService.hideLoader('#allEmployee-loader');
         }, error => {
             this.utilityService.hideLoader('#allEmployee-loader');
+        });
+    }
+
+    getAllPap() {
+        this._papService.getAllPap().subscribe(res => {
+            this.allPapData = res || [];
+            let grievancePap = this.allPapData.filter(pap => {
+                if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.grievanceRaiseEndDate == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            this.showGrievanceInitForm = grievancePap.length > 0;
         });
     }
 
@@ -111,8 +124,9 @@ export class GrievanceAllEmployeeComponent implements OnInit {
             }).then((result) => {
                 if (result.value) {
                     this._papService.initGrievancePhase(data).subscribe(res => {
-                        swal("Feedback Released", "", "success");
+                        swal("Grievance Phase Initiated", "", "success");
                         this.loadAllEmployee();
+                        this.getAllPap();
                         form.resetForm();
                     });
                 }

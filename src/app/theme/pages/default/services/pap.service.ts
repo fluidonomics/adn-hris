@@ -94,6 +94,11 @@ export class PapService {
         return this.authService.post(url, data).catch(this.handleError);
     }
 
+    getAllPap() {
+        let url = "pap/getAllPap";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let data = res.json() || {};
         if (data.result && data.result.message) {
