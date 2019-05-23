@@ -31,7 +31,7 @@ export class MonthlyGradeChartComponent implements OnChanges {
         this.createChart();
         this.clearJsTag();
         console.log("chart data : ", this.chartData);
-        
+
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -54,7 +54,6 @@ export class MonthlyGradeChartComponent implements OnChanges {
     ]
 
     createChart() {
-
         console.log("chart data : ", this.chartData);
         let chartOptions = {
             "type": "serial",
