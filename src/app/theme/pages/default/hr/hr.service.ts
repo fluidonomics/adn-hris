@@ -100,6 +100,12 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getEmpByGrade() {
+
+        let url = "dashboard/empgradeinfo";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     getLearningDetails(fromDate?: number, toDate?: number) {
         let url = "dashboard/learningstatus";
         if (fromDate) {

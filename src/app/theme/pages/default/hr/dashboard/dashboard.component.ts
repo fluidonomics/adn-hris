@@ -28,6 +28,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     empKradata:any={
 
     }
+    empGradeData:any={
+
+    }
     empCount: number;
     hrCount: number;
     supCount: number;
@@ -171,23 +174,19 @@ getOverviewChartData() {
             if (res.ok) {
                 var data = res.json() || [];
                 data = data.result.message;
-                console.log("data : ", data);
                 
                 data.sort((a, b) => a._id > b._id);
                 let chartData = [];
                 data.forEach((grade, i) => {
                     //let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leave.leaveTypeId);
-                    // if (bal.allotedLeave > 0) {
-                        console.log("grade name : ", grade.gradeName[0]);
-                        console.log("grade count : ", grade.count);
+                    if (grade.gradeName[0] && grade.count) {
                         chartData.push({
                             "gradeName": grade.gradeName[0],
                             "count": grade.count
                         })
-                    //}
+                    }
                 });
                 this.overviewChartData = chartData;
-                console.log("OverView chart data : ", this.overviewChartData);
                 
             }
         })
@@ -262,6 +261,34 @@ downloadProfileCsv() {
          csv.push(row.join(","));
      }
      this.utilityService.saveAsCSV(csv.join("\n"),"Profile_Report")
+    
+}
+
+downloadGradeCsv() {
+    
+    let csvHeader=['Employee Name(ID)',"Grade", "Designation"];
+    let filedList=['empName',"gradeName", "designation"];
+    let csv=[];
+    let row = [];
+    console.log("emp grade data : ", this.empGradeData);
+    
+    csv.push(csvHeader.join(","));
+     for (var i = 0; i < this.empGradeData.result.message.length; i++) {
+        let row = [];
+         for (var index in filedList) {//array[i]
+            let head = filedList[index];
+            if(head.indexOf('.') > -1)
+            {
+              let columnArr= head.split('.')
+              row.push(this.empGradeData.result.message[i][columnArr[0]][columnArr[1]])  
+            }
+            else{
+               row.push(this.empGradeData.result.message[i][head]);
+            }
+         }
+         csv.push(row.join(","));
+     }
+     this.utilityService.saveAsCSV(csv.join("\n"),"Grade_Report")
     
 }
 
@@ -368,6 +395,19 @@ getDashboard() {
     //         }
     //     })
     // }
+}
+
+async getEmpDetailsByGrade(){
+
+    
+    this._hrService.getEmpByGrade().subscribe(res => {
+        if (res.ok) {
+            this.empGradeData = res.json() || [];
+        }
+    })
+
+    await this.downloadGradeCsv();
+    
 }
 
 gotoPostLeave(){

@@ -4,7 +4,7 @@ import { ScriptLoaderService } from "../../../../../_services/script-loader.serv
 
 @Component({
     selector: "app-my-grades-chart-monthly",
-    // templateUrl: "./monthly-leave-chart.component.html",
+    // templateUrl: "./monthly-grade-chart.component.html",
     template: `<div id="chartdiv"></div>`,
     encapsulation: ViewEncapsulation.None
 })
@@ -30,14 +30,12 @@ export class MonthlyGradeChartComponent implements OnChanges {
     ngAfterViewInit() {
         this.createChart();
         this.clearJsTag();
-        console.log("chart data : ", this.chartData);
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.chartData.currentValue.length > 0) {
-            changes.chartData.currentValue.forEach((leave, i) => {
-                leave.color = this.colors[i];
+            changes.chartData.currentValue.forEach((grade, i) => {
+                grade.color = this.colors[i];
             });
             this.createChart();
         }
@@ -54,16 +52,15 @@ export class MonthlyGradeChartComponent implements OnChanges {
     ]
 
     createChart() {
-        console.log("chart data : ", this.chartData);
         let chartOptions = {
             "type": "serial",
             "theme": "light",
-            "marginRight": 70,
+            "marginRight": 10,
             "dataProvider": this.chartData,
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "Leaves Taken",
+                "title": "Grade Count",
                 "precision": 0
             }],
             "startDuration": 1,
