@@ -8,8 +8,8 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DocumentService {
-    CONTENT_API_BASE = environment.content_api_base.apiBase;
-    CONTENT_PPT_BASE = environment.content_api_base.pptBase;
+    CONTENT_API_BASE = "";
+    CONTENT_PPT_BASE = "";
 
     constructor(private _http: Http) {
     }
