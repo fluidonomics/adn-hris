@@ -60,7 +60,8 @@
                                 </div>
                             </div>
                             <pap-details-grid [empId]="papEmployeeId" [papMasterId]="papMasterId"
-                                [papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
+                                [papChanges]="papChanges" [type]="'supervisor'" (showDetails)="showPAPDetails($event)">
+                            </pap-details-grid>
                             <br>
                             <!-- </form> -->
                         </div><br><br>

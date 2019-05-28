@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let papInfo of papInfoData;let i=index"
-                [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved':papInfoData[i].status =='Approved','pending':papInfoData[i].status=='Pending'}">
+                [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved': (papInfoData[i].status =='Approved') || (papInfo.sup_ratingScaleId && type == 'supervisor'),'pending':papInfoData[i].status=='Pending'}">
                 <th scope="row">
                     {{i+1}}
                 </th>
