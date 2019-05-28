@@ -73,12 +73,12 @@ export class PapBatchViewComponent implements OnInit {
     initData() {
         this.loadBatch();
     }
+
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._papService.getPAPBatches(this._currentEmpId)
+        this._papService.getPAPBatches(this._currentEmpId, this.search)
             .subscribe(
             res => {
-                debugger;
                 this.utilityService.hideLoader('#batch-loader');
                 this.batchData = res;
                 this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
@@ -160,6 +160,29 @@ export class PapBatchViewComponent implements OnInit {
         })
     }
 
+    terminatePap(pap) {
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9a9caf',
+            confirmButtonText: 'Terminate'
+        }).then((result) => {
+            if (result.value) {
+                this.utilityService.showLoader('#batch-loader');
+                pap.updatedBy = this._currentEmpId;
+                this._papService.terminatePap(pap).subscribe(res => {
+                    this.loadBatch();
+                    swal('Success', 'PAP Terminated Successfully', 'success');
+                    this.utilityService.hideLoader('#batch-loader');
+                }, error => {
+                    this.utilityService.hideLoader('#batch-loader');
+                    console.error(error);
+                });
+            }
+        });
+    }
 
     sort(key) {
         this.key = key;
