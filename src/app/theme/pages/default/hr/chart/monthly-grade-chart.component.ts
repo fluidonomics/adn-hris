@@ -48,7 +48,8 @@ export class MonthlyGradeChartComponent implements OnChanges {
     }
 
     colors = [
-        "#FF0F00", "#FF6600", "#FF9E01"
+        "#FF0F00", "#FF6600", "#FF9E01", "#825b32", "#a83005", "#ce06a9", "#9e17d3", "#4517d2",
+        "#4dc9e2", "#04f729", "#f70450", "#7504f7", "#877d85", "#a994e0", "#856ec1", "#04bcef"
     ]
 
     createChart() {

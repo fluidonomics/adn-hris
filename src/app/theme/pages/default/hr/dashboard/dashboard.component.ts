@@ -31,6 +31,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     empGradeData:any={
 
     }
+    empPerGrade:any={
+
+    }
     empCount: number;
     hrCount: number;
     supCount: number;
@@ -172,8 +175,10 @@ getOverviewChartData() {
 
         this._hrService.getEmployeeByGrade().subscribe(res => {
             if (res.ok) {
-                var data = res.json() || [];
+                let data = res.json() || [];
+                this.empPerGrade = res.json() || [];
                 data = data.result.message;
+                
                 
                 data.sort((a, b) => a._id > b._id);
                 let chartData = [];
@@ -270,7 +275,6 @@ downloadGradeCsv() {
     let filedList=['empName',"gradeName", "designation"];
     let csv=[];
     let row = [];
-    console.log("emp grade data : ", this.empGradeData);
     
     csv.push(csvHeader.join(","));
      for (var i = 0; i < this.empGradeData.result.message.length; i++) {
@@ -283,13 +287,42 @@ downloadGradeCsv() {
               row.push(this.empGradeData.result.message[i][columnArr[0]][columnArr[1]])  
             }
             else{
-               row.push(this.empGradeData.result.message[i][head]);
+                if(head == 'empName' && this.empGradeData.result.message[i][head]) {
+                    row.push(this.empGradeData.result.message[i][head] + "(" + this.empGradeData.result.message[i]["empId"] + ")");
+                } else {
+                    row.push(this.empGradeData.result.message[i][head]);
+                }
             }
          }
          csv.push(row.join(","));
      }
      this.utilityService.saveAsCSV(csv.join("\n"),"Grade_Report")
     
+}
+
+downloadEmpPerGradeCsv() {
+
+    let csvHeader = ["Grade Name", "No Of Employee"];
+    let filedList = ["gradeName", "count"];
+    let csv=[];
+    let row = [];
+    csv.push(csvHeader.join(","));
+     for (var i = 0; i < this.empPerGrade.result.message.length; i++) {
+        let row = [];
+         for (var index in filedList) {//array[i]
+            let head = filedList[index];
+            if(head.indexOf('.') > -1)
+            {
+              let columnArr= head.split('.')
+              row.push(this.empPerGrade.result.message[i][columnArr[0]][columnArr[1]])  
+            }
+            else{
+               row.push(this.empPerGrade.result.message[i][head]);
+            }
+         }
+         csv.push(row.join(","));
+     }
+     this.utilityService.saveAsCSV(csv.join("\n"),"Employee_Grade")
 }
 
 getLeaveStatuses() {
@@ -397,18 +430,31 @@ getDashboard() {
     // }
 }
 
-async getEmpDetailsByGrade(){
+getEmpDetailsByGrade() {
 
-    
     this._hrService.getEmpByGrade().subscribe(res => {
         if (res.ok) {
             this.empGradeData = res.json() || [];
         }
+    }, null, () => {
+        this.downloadGradeCsv();
     })
 
-    await this.downloadGradeCsv();
     
 }
+
+// getEmpPerGrade() {
+
+//     this._hrService.getEmployeeByGrade().subscribe(res => {
+//         if(res.ok) {
+//             this.empPerGrade = res.json() || [];
+//             console.log("grade data : ", this.empGradeData);
+            
+//         }
+//     }, null, () => {
+//         this.downloadEmpPerGradeCsv();
+//     })
+// }
 
 gotoPostLeave(){
     this.router.navigate(["./hr/post/leave"]);
