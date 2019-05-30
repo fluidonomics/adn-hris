@@ -256,7 +256,8 @@
                                                                 class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
                                                                 <i class="la la-eye"></i>
                                                             </a>
-                                                            <a (click)="terminatePap(kraRow)"
+                                                            <a *ngIf="kraRow.status != 'Terminated'"
+                                                                (click)="terminatePap(kraRow)"
                                                                 class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                                                 title="Terminate PAP">
                                                                 <i class="la la-remove"></i>
