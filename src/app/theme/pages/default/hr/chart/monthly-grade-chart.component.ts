@@ -61,7 +61,7 @@ export class MonthlyGradeChartComponent implements OnChanges {
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "Grade Count",
+                "title": "Count",
                 "precision": 0
             }],
             "startDuration": 1,

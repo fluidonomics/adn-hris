@@ -34,6 +34,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     empPerGrade:any={
 
     }
+    empAbtToRet:any={
+
+    }
     empCount: number;
     hrCount: number;
     supCount: number;
@@ -49,12 +52,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     leaveBalance: any = [];
     overviewChartData: any = [];
+    retirementDetails: any = [];
 
     leaveStatuses: any = [];
     dashboardType: any = [];
+    chartDashboardType: any = [];
 
     transactionFilter: any = {
         status: 'HR-Emp Ratio'
+    };
+    chartDashboard: any = {
+        dashboardChart: 'Emp Per Grade'
     };
     dashboardFilter: any = {
         dashboard: 'KRA',
@@ -98,6 +106,7 @@ initData()
     this.getDashboardType();
     this.getTransactions();
     this.getDashboard();
+    this.getChartDashboardType();
     this.getOverviewChartData();
 }
 
@@ -171,7 +180,13 @@ downloadKraCsv() {
     
 }
 
+getChartDashboardType() {
+    this.chartDashboardType = ['Emp Per Grade', 'emp abt to retire']
+}
+
 getOverviewChartData() {
+
+    if(this.chartDashboard.dashboardChart && this.chartDashboard.dashboardChart == "Emp Per Grade") {
 
         this._hrService.getEmployeeByGrade().subscribe(res => {
             if (res.ok) {
@@ -195,6 +210,36 @@ getOverviewChartData() {
                 
             }
         })
+    } else if (this.chartDashboard.dashboardChart && this.chartDashboard.dashboardChart == "emp abt to retire") {
+
+        this._hrService.getNumOfEmpAboutToRetire().subscribe(res => {
+
+            if (res.ok) {
+                let data = res.json() || [];
+                this.empAbtToRet = res.json() || [];
+                data = data.result.message;
+                
+                data.sort((a, b) => a._id > b._id);
+                let chartData = [];
+                //data.forEach((grade, i) => {
+                    //let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leave.leaveTypeId);
+                    chartData.push({
+                        "gradeName": "All",
+                        "count": this.empCount
+                    })
+                    if (data[0].retire) {
+                        chartData.push({
+                            "gradeName": "Retire",
+                            "count": data[0].retire
+                        })
+                    }
+                //});
+                this.retirementDetails = chartData;
+                
+            }
+        })
+
+    }
 }
 
 downloadMtrCsv() {
@@ -298,6 +343,21 @@ downloadGradeCsv() {
      }
      this.utilityService.saveAsCSV(csv.join("\n"),"Grade_Report")
     
+}
+
+downloadEmpRetire() {
+
+    let csvHeader = ["All", "Employee about to retire"];
+    let filedList = ["all", "retire"];
+    let csv=[];
+    let row = [];
+    csv.push(csvHeader.join(","));
+
+        row.push(this.empCount);
+        row.push(this.empAbtToRet.result.message[0].retire);
+        csv.push(row.join(","));
+     this.utilityService.saveAsCSV(csv.join("\n"),"Employee_Retirements_Details")
+
 }
 
 downloadEmpPerGradeCsv() {
@@ -442,19 +502,6 @@ getEmpDetailsByGrade() {
 
     
 }
-
-// getEmpPerGrade() {
-
-//     this._hrService.getEmployeeByGrade().subscribe(res => {
-//         if(res.ok) {
-//             this.empPerGrade = res.json() || [];
-//             console.log("grade data : ", this.empGradeData);
-            
-//         }
-//     }, null, () => {
-//         this.downloadEmpPerGradeCsv();
-//     })
-// }
 
 gotoPostLeave(){
     this.router.navigate(["./hr/post/leave"]);

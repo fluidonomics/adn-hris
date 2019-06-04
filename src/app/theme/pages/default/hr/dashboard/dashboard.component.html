@@ -322,34 +322,62 @@
 			</div>
 			<!-- hjhjvfjjgjffhjffhjfj -->
 			<div class="col-xl-6">
-				<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
-					<div class="m-portlet__head">
-						<div class="m-portlet__head-caption">
-							<div class="m-portlet__head-title">
-								<span class="m-portlet__head-icon m--hide">
-									<i class="la la-gear"></i>
-								</span>
-							<h3 class="m-portlet__head-text">
-								Overview
-							</h3>
+					<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+						<div class="m-portlet__head">
+							<div class="m-portlet__head-caption">
+								<div class="m-portlet__head-title">
+									<h3 class="m-portlet__head-text">
+										Overview
+									</h3>
+								</div>
+							</div>
+							<div class="m-portlet__head-tools">
+									<ul class="m-portlet__nav">
+											<li class="m-portlet__nav-item">
+													<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+														<div class="btn-group" role="group">
+															<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+																aria-expanded="false">
+																{{chartDashboard.dashboardChart}}
+															</button>
+															<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+																<a class="dropdown-item" href="#" *ngFor="let dashboardChart of chartDashboardType" (click)="chartDashboard.dashboardChart = dashboardChart; getOverviewChartData();">
+																	{{dashboardChart}}
+																</a>
+															</div>
+														</div>
+													</div>
+											</li>
+									</ul>
+							</div>
+						</div>
+						<div class="m-portlet__body">
+								<div *ngIf="chartDashboard.dashboardChart=='Emp Per Grade'">
+										<span class="alignLeft">
+												<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadEmpPerGradeCsv();">
+													Download Count
+												</a>
+										</span>
+										<span class="alignRight">
+												<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="getEmpDetailsByGrade();">
+													Download Status Report
+												</a>
+										</span>
+									<app-my-grades-chart-monthly [chartData]="overviewChartData"></app-my-grades-chart-monthly>
+								</div>
+								<div *ngIf="chartDashboard.dashboardChart=='emp abt to retire'">
+										<span class="alignRight">
+												<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadEmpRetire();">
+													Download Report
+												</a>
+										</span>
+									<app-my-grades-chart-monthly [chartData]="retirementDetails"></app-my-grades-chart-monthly>
+								</div>
 						</div>
 					</div>
 				</div>
-				<div class="m-portlet__body">
-						<span class="alignLeft">
-								<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadEmpPerGradeCsv();">
-									Download Count
-								</a>
-						</span>
-						<span class="alignRight">
-								<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="getEmpDetailsByGrade();">
-									Download Status Report
-								</a>
-						</span>
-					<app-my-grades-chart-monthly [chartData]="overviewChartData"></app-my-grades-chart-monthly>
-				</div>
-			</div>
-		</div>
+			
+			
 <!-- jhfjdffvjfvjfvjvjjvjvj -->
 			<!-- new code added end -->
 			<!-- <div class="col-xl-4">

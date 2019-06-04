@@ -46,6 +46,11 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getNumOfEmpAboutToRetire() {
+        let url = "dashboard/empabouttoretire";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     saveBulkKra(data: any) {
         let url = "kra/addBulkKra";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
