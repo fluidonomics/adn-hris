@@ -68,7 +68,7 @@ export class MyTeamReviewerComponent implements OnInit {
     goToAllLearning() {
         this.router.navigate(['/my/team/workflows/reveiwer/learning/list']);
     }
-    goToAllPip(){
+    goToAllPip() {
         this.router.navigate(['/my/team/workflows/reveiwer/pip/list']);
     }
     ngOnInit() {
@@ -171,7 +171,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     goToPapReview(pap) {
-        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
+        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id + '/false');
     }
 
     goToPipReview(pip) {

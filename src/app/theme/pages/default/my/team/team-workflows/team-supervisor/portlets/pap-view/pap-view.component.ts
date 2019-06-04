@@ -40,7 +40,7 @@ export class PapViewComponent implements OnInit {
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
-                    if (p.papmasters.isRatingCommunicated == false) {
+                    if (p.papmasters.isRatingCommunicated == false && p.papmasters.isSentToSupervisor == true) {
                         this.showReleaseFeedback = true;
                     }
                     return p.papmasters.reviewerStatus == 'Approved' || p.papmasters.reviewerStatus == 'Pending';
@@ -59,7 +59,7 @@ export class PapViewComponent implements OnInit {
                 return !pap.papmasters.isRatingCommunicated;
             }).map(pap => pap.papmasters.emp_id),
             updatedBy: this.authService.currentUserData._id,
-            action_link: window.location.origin + '/my/team/workflows/supervisor'
+            action_link: window.location.origin + '/my/workflows/pap'
         }
         swal({
             title: 'Are you sure?',

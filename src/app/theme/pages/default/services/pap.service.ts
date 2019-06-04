@@ -29,12 +29,21 @@ export class PapService {
         let url = "pap/initiatePapProcess";
         return this.authService.post(url, data).catch(this.handleError);
     }
+
+    terminatePap(data) {
+        let url = "pap/terminatePap";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
     raiseGreivance(data) {
         let url = "pap/initiateGrievance";
         return this.authService.post(url, data).catch(this.handleError);
     }
-    getPAPBatches(emp_id?: number): Observable<Response> {
+    getPAPBatches(emp_id?: number, empName?: string): Observable<Response> {
         let url = "pap/getPapBatches?currentUserId=" + emp_id;
+        if (empName) {
+            url += '&empName=' + empName;
+        }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     papUpdate(data: any): Observable<Response> {
@@ -92,6 +101,11 @@ export class PapService {
     initGrievancePhase(data) {
         let url = "pap/initGrievancePhase";
         return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    getAllPap() {
+        let url = "pap/getAllPap";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
     private extractData(res: Response) {

@@ -20,7 +20,7 @@
                             <div class="col-md-4">
                                 <div class="m-input-icon m-input-icon--left">
                                     <input type="text" class="form-control m-input m-input--solid"
-                                        placeholder="Search..." [(ngModel)]="search">
+                                        placeholder="Search..." [(ngModel)]="search" (ngModelChange)="loadBatch()">
                                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                         <span>
                                             <i class="la la-search"></i>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
-                [ngClass]="{'m-datatable--error': (batchData | orderBy: key : reverse | filter:search)?.length==0 }">
+                [ngClass]="{'m-datatable--error': (batchData | orderBy: key : reverse)?.length==0 }">
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
@@ -161,7 +161,7 @@
                     </thead>
                     <tbody class="m-datatable__body" id="batch-loader">
                         <ng-container
-                            *ngFor="let batch of batchData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: loadBatchFilter.page };let i=index ;let even=even;">
+                            *ngFor="let batch of batchData | orderBy: key : reverse | paginate: { itemsPerPage: itemPerPage, currentPage: loadBatchFilter.page };let i=index ;let even=even;">
                             <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}">
                                 <td class="m-datatable__cell" width="10%"
                                     [ngClass]="batch._id==activeRowNumber? 'td-active-color':''">
@@ -223,12 +223,14 @@
                                                     <th class="m-datatable__cell" width="15%">
                                                         STATUS
                                                     </th>
-
+                                                    <th class="m-datatable__cell" width="15%">
+                                                        ACTIONS
+                                                    </th>
                                                 <tr>
                                             </thead>
                                             <tbody class="m-datatable__body">
                                                 <ng-container
-                                                    *ngFor="let kraRow of batch?.pap_master |paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
+                                                    *ngFor="let kraRow of batch?.pap_master | paginate: { itemsPerPage: 6, currentPage: batchdatafilter.page };let j=index">
                                                     <tr class="m-datatable__row">
                                                         <td class="m-datatable__cell" width="62%">
                                                             <span>
@@ -240,7 +242,7 @@
                                                                                 <span>{{kraRow.timeline_id}}</span>
                                                                         </td> -->
                                                         <td class="m-datatable__cell overallRating" width="15%">
-                                                            <span *ngIf="kraRow.status == 'Approved'">
+                                                            <span *ngIf="kraRow.reviewerStatus == 'Approved'">
                                                                 {{kraRow?.overallRating}}
                                                             </span>
                                                         </td>
@@ -249,9 +251,20 @@
                                                                     class="m-badge m-badge--success m-badge--wide"
                                                                     [ngClass]="{'m-badge--warning':kraRow.status=='Initiated','m-badge--brand':kraRow.status=='Submitted','m-badge--danger':kraRow.status=='SendBack','m-badge--success':kraRow.status=='Approved','m-badge--secondary':kraRow.status=='Terminated'}">{{kraRow.status}}</span></span>
                                                         </td>
-
+                                                        <td class="m-datatable__cell" width="15%">
+                                                            <a routerLink="/my/team/workflows/pap-review/{{kraRow._id}}/{{kraRow.emp_id}}/true"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+                                                                <i class="la la-eye"></i>
+                                                            </a>
+                                                            <a *ngIf="kraRow.status != 'Terminated'"
+                                                                (click)="terminatePap(kraRow)"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Terminate PAP">
+                                                                <i class="la la-remove"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
-                                                    <span *ngIf="batch?.batchData?.length==0"
+                                                    <span *ngIf="(batch?.pap_master)?.length==0"
                                                         class="m-datatable--error">No records found</span>
                                                 </ng-container>
                                             </tbody>
@@ -306,8 +319,8 @@
                                 </td>
                             </tr>
                         </ng-container>
-                        <span *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length==0"
-                            class="m-datatable--error">No records found</span>
+                        <span *ngIf="(batchData | orderBy: key : reverse)?.length==0" class="m-datatable--error">No
+                            records found</span>
                     </tbody>
                 </table>
                 <pagination-template #p="paginationApi" (pageChange)="loadBatchFilter.page = $event"
@@ -350,7 +363,7 @@
                         </ul>
                     </div>
                 </pagination-template>
-                <div class="pager-display-size" *ngIf="(batchData | orderBy: key : reverse | filter:search)?.length!=0">
+                <div class="pager-display-size" *ngIf="(batchData | orderBy: key : reverse)?.length!=0">
                     <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size"
                         title="Select page size" data-width="70px" data-selected="50" tabindex="1">
                         <option value=10>10</option>
@@ -361,8 +374,8 @@
                     </select>
                     <span class="pager-display-title"> Displaying
                         {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ? this.itemPerPage * (this.p2 - 1) + 1:1}} -
-                        {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (batchData | orderBy: key : reverse | filter:search)?.length ? (batchData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }}
-                        of {{(batchData | orderBy: key : reverse | filter:search)?.length}} </span>
+                        {{(this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 > (batchData | orderBy: key : reverse )?.length ? (batchData | orderBy: key : reverse)?.length : (this.itemPerPage * (this.p2 - 1) + 1) + this.itemPerPage - 1 }}
+                        of {{(batchData | orderBy: key : reverse)?.length}} </span>
                 </div>
             </div>
         </div>
@@ -403,6 +416,23 @@
                                     #batchEndDate="ngModel" placement="top" required>
                                 <div class="form-control-feedback has-danger"
                                     *ngIf="feditBatch.submitted && !batchEndDate.valid">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 adn-form__group">
+                            <div class="m-form__group form-group">
+                                <label for="batchEndDate">Batch Status
+                                </label>
+                                <span class="required" aria-required="true"> * </span>
+                                <ng-select class="m-input m-input--air" name="batchstatus" [items]="statusTypes"
+                                    bindLabel="name" bindValue="_id" placeholder="Select Status"
+                                    [(ngModel)]="editBatch.status" #batchstatus="ngModel" [clearable]="false">
+                                </ng-select>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="feditBatch.submitted && !batchstatus.valid">
                                     This field is required.
                                 </div>
                             </div>

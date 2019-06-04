@@ -14,6 +14,7 @@ export class PapDetailsGridComponent implements OnInit {
 
     @Input() empId;
     @Input() papMasterId;
+    @Input() type;
     @Input() papChanges: Subject<any>;
 
     @Output() showDetails = new EventEmitter();
@@ -32,6 +33,7 @@ export class PapDetailsGridComponent implements OnInit {
     ) { }
 
     ngOnChanges(changes) {
+        debugger;
         this.loadPapDetails();
         this.loadSupervisorData();
     }
@@ -57,11 +59,11 @@ export class PapDetailsGridComponent implements OnInit {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
     loadRatingScaleData() {
         this._commonService.getPapRatingScale().subscribe(

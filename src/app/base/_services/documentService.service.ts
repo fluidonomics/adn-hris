@@ -8,7 +8,8 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DocumentService {
-    CONTENT_API_BASE = environment.content_api_base.apiBase;
+    CONTENT_API_BASE = "";
+    CONTENT_PPT_BASE = "";
 
     constructor(private _http: Http) {
     }
@@ -17,6 +18,13 @@ export class DocumentService {
         let headers = new Headers();
         headers.append('Accept', 'application/pdf');
         let url = this.CONTENT_API_BASE + fileUrl;
+        return this._http.get(url, { headers: headers, responseType: ResponseContentType.Blob }).catch(this.handleError);
+    }
+
+    downloadPpt(fileUrl?: number): Observable<Response> {
+        let headers = new Headers();
+        headers.append('Accept', 'application/pptx');
+        let url = this.CONTENT_PPT_BASE + fileUrl;
         return this._http.get(url, { headers: headers, responseType: ResponseContentType.Blob }).catch(this.handleError);
     }
 

@@ -580,7 +580,10 @@
             <div class="m-widget6 ">
                 <div class="row">
                     <div class="col-md-3">
-                        <img class="img" [src]="leaveDetails?.leave?.emp_name?.profileImage">
+                        <img *ngIf="leaveDetails.leave.emp_name.profileImage" class="img"
+                            [src]="leaveDetails?.leave?.emp_name?.profileImage">
+                        <img *ngIf="!leaveDetails.leave.emp_name.profileImage" class="img"
+                            src="./assets/app/media/img/custom/users/user6.jpg">
                     </div>
                     <div class="col-md-9">
                         <span class="name">
@@ -646,32 +649,32 @@
                             <table class="m-datatable__table">
                                 <thead class="m-datatable__head">
                                     <tr class="m-datatable__row">
-                                        <th class="m-datatable__cell m-datatable__cell--sort">
+                                        <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
                                             <span>Leave Type</span>
                                         </th>
-                                        <th class="m-datatable__cell m-datatable__cell--sort">
+                                        <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
                                             <span>From</span>
                                         </th>
-                                        <th class="m-datatable__cell m-datatable__cell--sort">
+                                        <th class="m-datatable__cell m-datatable__cell--sort" width="25%">
                                             <span>To</span>
                                         </th>
-                                        <th class="m-datatable__cell m-datatable__cell--sort text-center">
+                                        <th class="m-datatable__cell m-datatable__cell--sort text-center" width="25%">
                                             <span>Days</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="m-datatable__body">
                                     <tr class="m-datatable__row" *ngFor="let leave of leaveDetails.leave.leaveDetails">
-                                        <td class="m-datatable__cell">
+                                        <td class="m-datatable__cell" width="25%" width="25%">
                                             <span>{{leave.leaveType.type}}</span>
                                         </td>
-                                        <td class="m-datatable__cell">
+                                        <td class="m-datatable__cell" width="25%">
                                             <span>{{leave.fromDate | date:'dd MMM yyy'}}</span>
                                         </td>
-                                        <td class="m-datatable__cell">
+                                        <td class="m-datatable__cell" width="25%">
                                             <span>{{leave.toDate | date:'dd MMM yyy'}}</span>
                                         </td>
-                                        <td class="m-datatable__cell text-center">
+                                        <td class="m-datatable__cell text-center" width="25%">
                                             <span>{{leave.days}}</span>
                                         </td>
                                     </tr>

@@ -31,7 +31,10 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     itemPerPage: number = 10;
     param_emp_id;
     showGrievancePhase: boolean = false;
-
+    grievanceEndDate;
+    currentDate = new Date();
+    allPapData = [];
+    showGrievanceInitForm: boolean = false;
 
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
@@ -43,14 +46,11 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._authService.validateToken().subscribe(
-            res => {
-                this._currentEmpId = this._authService.currentUserData._id;
-                this.loadAllEmployee();
-
-            });
-
-
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.loadAllEmployee();
+            this.getAllPap();
+        });
     }
 
     ngAfterViewInit() {
@@ -69,6 +69,20 @@ export class GrievanceAllEmployeeComponent implements OnInit {
             this.utilityService.hideLoader('#allEmployee-loader');
         }, error => {
             this.utilityService.hideLoader('#allEmployee-loader');
+        });
+    }
+
+    getAllPap() {
+        this._papService.getAllPap().subscribe(res => {
+            this.allPapData = res || [];
+            let grievancePap = this.allPapData.filter(pap => {
+                if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.grievanceRaiseEndDate == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            this.showGrievanceInitForm = grievancePap.length > 0;
         });
     }
 
@@ -93,26 +107,30 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
     }
 
-    initGrievancePhase() {
-        let data = {
-            updatedBy: this._currentEmpId
-        };
+    initGrievancePhase(form) {
+        if (form.valid) {
+            let data = {
+                updatedBy: this._currentEmpId,
+                grievanceEndDate: this.grievanceEndDate
+            };
 
-        swal({
-            title: 'Are you sure?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-        }).then((result) => {
-            if (result.value) {
-                this._papService.initGrievancePhase(data).subscribe(res => {
-                    swal("Feedback Released", "", "success");
-                    this.loadAllEmployee();
-                });
-            }
-        });
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this._papService.initGrievancePhase(data).subscribe(res => {
+                        swal("Grievance Phase Initiated", "", "success");
+                        this.loadAllEmployee();
+                        this.getAllPap();
+                        form.resetForm();
+                    });
+                }
+            });
+        }
     }
-
 }

@@ -64,6 +64,7 @@ export class PapReviewComponent implements OnInit {
     papChanges: Subject<any> = new Subject<any>();
     papEmployeeId;
     papMasterId;
+    isView: boolean = false;
 
     constructor(
         public _authService: AuthService,
@@ -82,6 +83,9 @@ export class PapReviewComponent implements OnInit {
                         this.papEmployeeId = parseInt(params['emp_id']);
                         this.papMasterId = parseInt(params['id']);
                         this.loadData();
+                    }
+                    if (params['isView'] && params['isView'] == "true") {
+                        this.isView = true;
                     }
                 });
             }
@@ -129,11 +133,11 @@ export class PapReviewComponent implements OnInit {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
     loadRatingScaleData() {
         this._commonService.getPapRatingScale().subscribe(
@@ -158,7 +162,11 @@ export class PapReviewComponent implements OnInit {
         this.papData.no = index + 1;
 
         console.log(this.papData);
-        this.isDisabled = this.papData.status == "SendBack" || this.papData.status == "Approved" ? true : false;
+        if (this.isView) {
+            this.isDisabled = true;
+        } else {
+            this.isDisabled = this.papData.status == "SendBack" || this.papData.status == "Approved" ? true : false;
+        }
     }
     saveKRADetails(form, id: number, isApproved: boolean) {
         if (form.valid) {
@@ -172,7 +180,6 @@ export class PapReviewComponent implements OnInit {
                 "grievanceStatus": this.papWorkFlowData[0].grievanceStatus
             }
             this.papService.papUpdateReviewer(request).subscribe(res => {
-                debugger;
                 if (res.ok) {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);

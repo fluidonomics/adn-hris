@@ -389,7 +389,10 @@
             <div class="m-widget6 ">
                 <div class="row">
                     <div class="col-md-3">
-                        <img class="img" src="./assets/app/media/img/custom/users/user6.jpg">
+                        <img *ngIf="leaveDetails.leave.emp_name.profileImage" class="img"
+                            [src]="leaveDetails?.leave?.emp_name?.profileImage">
+                        <img *ngIf="!leaveDetails.leave.emp_name.profileImage" class="img"
+                            src="./assets/app/media/img/custom/users/user6.jpg">
                     </div>
                     <div class="col-md-9">
                         <span class="name">
@@ -441,6 +444,13 @@
                         *ngIf="leaveDetails?.leave?.supervisorReason2 != null && leaveDetails?.leave?.supervisorReason2 != ''">
                         <span class="key">Approval Authority Withdrawal Remarks</span>
                         <span class="value">{{leaveDetails?.leave?.supervisorReason2}}</span>
+                    </div>
+                    <div class="col-md-12 form-group" *ngIf="leaveDetails.leave && leaveDetails.leave.attachment">
+                        <span class="key">Attachement</span>
+                        <span class="value link">
+                            <a rel="javascript(void);" (click)="viewAttachement(leaveDetails.leave)">View
+                                Attachement</a>
+                        </span>
                     </div>
                     <div class="col-md-12 adn-form__group">
                         <div class="m-form__group form-group">
