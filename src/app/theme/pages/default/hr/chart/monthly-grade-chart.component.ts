@@ -1,14 +1,14 @@
 import { AmChart, AmChartsService } from "@amcharts/amcharts3-angular";
 import { ViewEncapsulation, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { ScriptLoaderService } from "../../../../../../../_services/script-loader.service";
+import { ScriptLoaderService } from "../../../../../_services/script-loader.service";
 
 @Component({
-    selector: "app-my-leaves-chart-monthly-leave",
-    // templateUrl: "./monthly-leave-chart.component.html",
+    selector: "app-my-grades-chart-monthly",
+    // templateUrl: "./monthly-grade-chart.component.html",
     template: `<div id="chartdiv"></div>`,
     encapsulation: ViewEncapsulation.None
 })
-export class MonthlyLeaveChartComponent implements OnChanges {
+export class MonthlyGradeChartComponent implements OnChanges {
 
     @Input() chartData: any = [];
     @Input() options: AmChartOptions = {};
@@ -34,8 +34,8 @@ export class MonthlyLeaveChartComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.chartData.currentValue.length > 0) {
-            changes.chartData.currentValue.forEach((leave, i) => {
-                leave.color = this.colors[i];
+            changes.chartData.currentValue.forEach((grade, i) => {
+                grade.color = this.colors[i];
             });
             this.createChart();
         }
@@ -48,21 +48,20 @@ export class MonthlyLeaveChartComponent implements OnChanges {
     }
 
     colors = [
-        "#FF0F00", "#FF6600", "#FF9E01"
+        "#FF0F00", "#FF6600", "#FF9E01", "#825b32", "#a83005", "#ce06a9", "#9e17d3", "#4517d2",
+        "#4dc9e2", "#04f729", "#f70450", "#7504f7", "#877d85", "#a994e0", "#856ec1", "#04bcef"
     ]
 
     createChart() {
-
-        console.log("chart data : ", this.chartData);
         let chartOptions = {
             "type": "serial",
             "theme": "light",
-            "marginRight": 70,
+            "marginRight": 10,
             "dataProvider": this.chartData,
             "valueAxes": [{
                 "axisAlpha": 0,
                 "position": "left",
-                "title": "Leaves Taken",
+                "title": "Count",
                 "precision": 0
             }],
             "startDuration": 1,
@@ -72,14 +71,14 @@ export class MonthlyLeaveChartComponent implements OnChanges {
                 "fillAlphas": 0.9,
                 "lineAlpha": 0.2,
                 "type": "column",
-                "valueField": "leaveCount"
+                "valueField": "count"
             }],
             "chartCursor": {
                 "categoryBalloonEnabled": false,
                 "cursorAlpha": 0,
                 "zoomable": false
             },
-            "categoryField": "leaveType",
+            "categoryField": "gradeName",
             "categoryAxis": {
                 "gridPosition": "start",
                 "labelRotation": 45
