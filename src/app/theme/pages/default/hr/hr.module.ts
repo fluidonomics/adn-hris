@@ -103,7 +103,7 @@ import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.componen
         FeedbackInitiateComponent,
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
-        QuotaProviderComponent
+        QuotaProviderComponent,
         MonthlyGradeChartComponent
         //DocumentsViewComponent
         
