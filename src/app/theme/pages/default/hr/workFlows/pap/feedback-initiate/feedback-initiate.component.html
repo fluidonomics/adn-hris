@@ -177,3 +177,197 @@
         </div>
     </div>
 </div>
+
+<div class="m-content" id="initiate-loader">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Grievance Feedback Release
+                        <small>
+                        </small>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-3">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                        placeholder="Search..." [(ngModel)]="grievanceSearch">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                [ngClass]="{'m-datatable--error': (grievanceFilteredEmployees | orderBy: grievanceKey : grievanceReverse | filter:grievanceSearch)?.length==0 }">
+                <table class="m-datatable__table">
+                    <thead class="m-datatable__head">
+                        <tr class="m-datatable__row">
+                            <th class="m-datatable__cell" width="5%">
+                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+                                    <input type="checkbox" [(ngModel)]="grievanceIsCheckAll"
+                                        [disabled]="pGrievance.pages.length==0"
+                                        (change)="selectGrievanceAllEmployee($event)">
+                                    <span></span>
+                                </label>
+                            </th>
+                            <th class="m-datatable__cell" width="10%"></th>
+                            <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="25%">
+                                <span>
+                                    NAME
+                                    <i class="la" *ngIf="key == 'fullName'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
+                                <span>
+                                    EMAIL
+                                    <i class="la" *ngIf="key == 'officeEmail'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
+                                <span>
+                                    DESIGNATION
+                                    <i class="la" *ngIf="key == 'designation'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('overallRating')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="20%">
+                                <span>
+                                    OVERALL RATING
+                                    <i class="la" *ngIf="key == 'overallRating'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="m-datatable__body">
+                        <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+                            *ngFor="let employee of grievanceFilteredEmployees | orderBy: grievanceKey : grievanceReverse | filter:grievanceSearch | paginate: { itemsPerPage: itemPerPage, currentPage: grievanceP2 };let even=even;">
+                            <td class="m-datatable__cell" width="5%">
+                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+                                    <input type="checkbox" [(ngModel)]="employee.checked" #employeeCheckBox>
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td class="m-datatable__cell" width="10%">
+                                <img *ngIf="employeedetails?.profileImage; else noImage"
+                                    src="{{imageBase+employeedetails?.profileImage}}"
+                                    onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+                                    class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
+                                <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"
+                                        class="directory_image m--img-rounded m--marginless m--img-centered">
+                                </ng-template>
+                            </td>
+                            <td class="m-datatable__cell" width="25%">
+                                <span>{{employee.employeedetails.fullName}}
+                                    [{{employee.employeedetails.userName}}]</span>
+                            </td>
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.employeeofficedetails.officeEmail}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.designations.designationName}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="20%">
+                                <span>{{employee.overallRating}}</span>
+                            </td>
+                        </tr>
+
+                        <span
+                            *ngIf="(grievanceFilteredEmployees | orderBy: grievanceKey : grievanceReverse | filter:grievanceSearch)?.length==0"
+                            class="m-datatable--error">No
+                            records found</span>
+                    </tbody>
+                </table>
+                <pagination-template #pGrievance="paginationApi" (pageChange)="grievanceP2 = $event"
+                    class="paginationtemplate">
+                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                        <ul class="m-datatable__pager-nav" *ngIf="pGrievance.pages.length != 0">
+                            <li>
+                                <a class="m-datatable__pager-link m-datatable__pager-link--first"
+                                    [class.m-datatable__pager-link--disabled]="pGrievance.isFirstPage()"
+                                    (click)="pGrievance.setCurrent(1)">
+                                    <i class="la la-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="m-datatable__pager-link m-datatable__pager-link--prev"
+                                    [class.m-datatable__pager-link--disabled]="pGrievance.isFirstPage()"
+                                    (click)="pGrievance.previous()">
+                                    <i class="la la-angle-left"></i>
+                                </a>
+                            </li>
+                            <li *ngFor="let page of pGrievance.pages">
+                                <a (click)="pGrievance.setCurrent(page.value)"
+                                    class="m-datatable__pager-link m-datatable__pager-link-number "
+                                    [class.m-datatable__pager-link--active]="pGrievance.getCurrent() === page.value">
+                                    {{ page.label }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="m-datatable__pager-link m-datatable__pager-link--next"
+                                    [class.m-datatable__pager-link--disabled]="pGrievance.isLastPage()"
+                                    (click)="pGrievance.next()">
+                                    <i class="la la-angle-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+                                    [class.m-datatable__pager-link--disabled]="pGrievance.isLastPage()"
+                                    (click)="pGrievance.setCurrent(pGrievance.pages.length + 1)">
+                                    <i class="la la-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </pagination-template>
+            </div>
+            <div class="pager-display-size" *ngIf="pGrievance.pages?.length!=0">
+                <select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px"
+                    data-selected="50">
+                    <option value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=30>30</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option>
+                </select>
+                <span class="pager-display-title"> Displaying {{this.itemPerPage * (this.grievanceP2 - 1) + 1 > 1 ?
+                    this.itemPerPage * (this.grievanceP2 - 1) + 1:1}} - {{(this.itemPerPage * (this.grievanceP2 - 1) + 1) +
+                    this.itemPerPage - 1 > (grievanceFilteredEmployees | orderBy: key : reverse | filter:grievanceSearch)?.length ?
+                    (grievanceFilteredEmployees | orderBy: key : reverse | filter:grievanceSearch)?.length : (this.itemPerPage * (this.grievanceP2 - 1)
+                    + 1) + this.itemPerPage - 1 }} of {{(grievanceFilteredEmployees | orderBy: key : reverse |
+                    filter:grievanceSearch)?.length}} </span>
+            </div>
+            <div class="row m--margin-top-20 m--margin-bottom-30">
+                <div class="col-md-4">
+                    <div class="m-form__actions">
+                        <button class="btn btn-success submitForm" (click)="initGrievanceFeedback()">Initiate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

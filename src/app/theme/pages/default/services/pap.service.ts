@@ -108,6 +108,21 @@ export class PapService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
+    getEmployeesForGrievanceFeedbackInit() {
+        let url = "pap/getEmployeesForGrievanceFeedbackInit";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    papInitiateGrievanceFeedback(data: any): Observable<Response> {
+        let url = "pap/initiateGrievanceFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    releaseGrievanceFeedback(data: any) {
+        let url = "pap/releaseGrievanceFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let data = res.json() || {};
         if (data.result && data.result.message) {

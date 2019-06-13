@@ -225,8 +225,8 @@
 							</form>
 						</div>
 					</div>
-					<div class="row overallRatingBlock"
-						*ngIf="papWorkFlowData[0] && papWorkFlowData[0].isRatingCommunicated == true">
+					<div class="row overallRatingBlock" *ngIf="(papWorkFlowData[0] && papWorkFlowData[0].isRatingCommunicated == true && papWorkFlowData[0].grievanceStatus != 'Initiated') || 
+						(papWorkFlowData[0]?.grievanceStatus == 'Initiated' && papWorkFlowData[0]?.isGrievanceFeedbackReleased == true)">
 						<div class="col-md-8">
 							<span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
 						</div>
