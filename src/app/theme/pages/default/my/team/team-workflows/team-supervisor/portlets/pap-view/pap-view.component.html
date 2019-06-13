@@ -58,7 +58,7 @@
                                     {{papView.updatedAt | date:"dd-MMM-yyyy hh:mm aa"}}
                                 </span>
                             </div>
-                            <span class="m-widget4__ext">
+                            <span class="m-widget4__ext" *ngIf="papView.papmasters.grievanceStatus != 'Initiated'">
                                 <span *ngIf="!papView.papmasters.isRatingCommunicated"
                                     class="m-widget4__number m--font-brand">
                                     Feedback Pending
@@ -66,6 +66,17 @@
                                 <span *ngIf="papView.papmasters.isRatingCommunicated"
                                     class="m-widget4__number m--font-success">
                                     Feedback Released
+                                </span>
+                            </span>
+                            <span class="m-widget4__ext" *ngIf="papView.papmasters.grievanceStatus == 'Initiated'">
+                                <span
+                                    *ngIf="papView.papmasters.isGrievanceFeedbackSentToSupervisor == true && papView.papmasters.isGrievanceFeedbackReleased != true"
+                                    class="m-widget4__number m--font-brand">
+                                    Grievance Feedback Pending
+                                </span>
+                                <span *ngIf="papView.papmasters.isGrievanceFeedbackReleased == true"
+                                    class="m-widget4__number m--font-success">
+                                    Grievance Feedback Released
                                 </span>
                             </span>
                         </div>
@@ -76,6 +87,10 @@
 
         <div *ngIf="papData?.length > 0 && showReleaseFeedback">
             <button class="btn btn-success pull-right" (click)="releaseFeedback()">Release Feedback</button>
+        </div>
+        <div *ngIf="papData?.length > 0 && showReleaseGrievanceFeedback">
+            <button class="btn btn-success pull-right" (click)="releaseGrievanceFeedback()">Release Grievance
+                Feedback</button>
         </div>
     </div>
 </div>

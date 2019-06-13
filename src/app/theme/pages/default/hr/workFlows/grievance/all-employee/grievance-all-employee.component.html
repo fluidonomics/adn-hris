@@ -41,7 +41,7 @@
                                         #grievanceEndDateModel="ngModel" placeholder="Enter Batch End Date"
                                         [(ngModel)]="grievanceEndDate" bsDatepicker [readonly]="true"
                                         [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-                                        #grievanceEndDateModel="ngModel" placement="top" required>
+                                        #grievanceEndDateModel="ngModel" placement="bottom" required>
                                     <div class="form-control-feedback has-danger"
                                         *ngIf="fGrievanceInitPhase.submitted && grievanceEndDateModel.invalid">
                                         This field is required.

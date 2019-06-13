@@ -33,7 +33,6 @@ export class PapDetailsGridComponent implements OnInit {
     ) { }
 
     ngOnChanges(changes) {
-        debugger;
         this.loadPapDetails();
         this.loadSupervisorData();
     }
