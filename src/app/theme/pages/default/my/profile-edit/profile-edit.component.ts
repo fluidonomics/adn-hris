@@ -41,6 +41,8 @@ export class ProfileEditComponent implements OnInit {
     positionDetails: any = {}
     performanceDiary: any = []
     bankDetails: any = {}
+    separationDetails: any = {};
+    stateDetails: any = {};
     salaryDetails: any = {}
     carDetails: any = {};
 
@@ -89,12 +91,14 @@ export class ProfileEditComponent implements OnInit {
 
     //Bank Details Tab Dropdown Variable
     currencyArrData = [];
+    separationTypeArrData = [];
 
     //Salary Details Tab Dropdown Variable
     providentFundMemberShipData = [];
     groupLifeInsuranceData = [];
     festivalAllowanceData = [];
     hospitalizationSchemeData = [];
+    toggleAccess = [];
 
     relationData = [];
     countryData = [];
@@ -179,6 +183,9 @@ export class ProfileEditComponent implements OnInit {
                 break;
             case "payroll":
                 this.loadPayrollDetails();
+                break;
+            case "separation":
+                this.getSeparationDetails();
                 break;
 
             default:
@@ -676,6 +683,26 @@ export class ProfileEditComponent implements OnInit {
                     mApp.unblock('#m_accordion_5_item_16_body');
                     swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                     this.bankDetails = data.json();
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
+                });
+    }
+
+    //add employee separation
+    addSeparation() {
+
+        this.separationDetails.emp_id = this.separationDetails.emp_id != null ? this.separationDetails.emp_id : (this._currentEmpId || this.param_emp_id);
+        this.separationDetails.separationType = this.separationDetails.separationType;
+        this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation;
+        this.separationDetails.effectiveDate = this.separationDetails.effectiveDate;
+        this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation;
+        this._myService.saveSeparationDetails(this.separationDetails)
+            .subscribe(
+                data => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    this.separationDetails = data.json();
                 },
                 error => {
                     mApp.unblock('#m_accordion_5_item_16_body');
@@ -1577,6 +1604,62 @@ export class ProfileEditComponent implements OnInit {
                 },
                 error => {
                     this.bankDetails = {};
+                });
+
+    }
+
+    getSeparationDetails() {
+
+        this.toggleAccess = this._commonService.getPermissionData();
+        this.separationTypeArrData = this._commonService.getSeparationData();
+        this._myService.getSeparationInfo(this.param_emp_id)
+            .subscribe(
+                data => {
+                    this.separationDetails = data.json() || {};
+                    this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation ? new Date(this.separationDetails.dateOfResignation) : this.separationDetails.dateOfResignation;
+                    this.separationDetails.effectiveDate = this.separationDetails.effectiveDate ? new Date(this.separationDetails.effectiveDate) : this.separationDetails.effectiveDate;
+                    this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation ? new Date(this.separationDetails.dateOfSeparation) : this.separationDetails.dateOfSeparation;
+                },
+                error => {
+                    this.separationDetails = {};
+                });
+                
+        this.getEmpStates();      
+    }
+
+    getEmpStates() {
+
+        this._myService.getStatesInfo(this.param_emp_id)
+            .subscribe(
+                data => {
+                    this.stateDetails = data.json() || {};
+                    // this.stateDetails.isActive = "Activate" ? this.stateDetails.isAccountActive : "Deactivate"
+                    if(this.stateDetails.isAccountActive) {
+                        this.stateDetails.isActive = "Activate";
+                    } else {
+                        this.stateDetails.isActive = "Deactivate";
+                    }
+
+                },
+                error => {
+                    this.stateDetails = {};
+                });
+
+    }
+
+    onToggleChanges() {
+
+        this.stateDetails.emp_id = this.stateDetails.emp_id != null ? this.stateDetails.emp_id : (this._currentEmpId || this.param_emp_id);
+        this.stateDetails.isActive = this.stateDetails.isActive;
+        this._myService.updateState(this.stateDetails)
+            .subscribe(
+                data => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
+                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                    //this.separationDetails.isActive = data.json().isAccountActive;
+                },
+                error => {
+                    mApp.unblock('#m_accordion_5_item_16_body');
                 });
     }
 

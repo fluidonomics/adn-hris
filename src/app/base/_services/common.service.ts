@@ -19,7 +19,7 @@ import {
     confirmationStatus,
     religion,
     country,
-    levelofEducation, examDegreeTitle
+    levelofEducation, examDegreeTitle, separationData, permissionData
 } from "../_jsonData/dropDownData";
 import { AuthService } from "./authService.service"
 

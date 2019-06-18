@@ -140,6 +140,10 @@
                                         [ngClass]="{'active':tabName=='payroll'}">
                                         Payroll
                                     </a>
+                                    <a class="dropdown-item" data-toggle="tab" routerLink="/my/profile-edit" [queryParams]="{'id':param_emp_id,'tabName':'separation'}"
+                                        [ngClass]="{'active':tabName=='separation'}">
+                                        Separation
+                                    </a>
                                     <!-- <a class="dropdown-item" data-toggle="tab" href="#m_tabs_9_8" ng-reflect-href="#m_tabs_9_8">
                                 Separation
                                 </a> -->
@@ -2603,7 +2607,109 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- separation begins here -->
 
+                        <div class="tab-pane" [ngClass]="{'active show':tabName=='separation'}" *ngIf="tabName=='separation'">
+                            <div class="m-accordion m-accordion--default m-accordion--toggle-arrow" id="m_accordion_5" role="tablist">
+                                <div class="m-accordion__item m-accordion__item--success">
+                                    <div class="m-accordion__item-head collapsed" srole="tab" id="m_accordion_5_item_16_head" data-toggle="collapse" href="#m_accordion_5_item_16_body"
+                                        aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-university"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title">Separation Details</span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse" id="m_accordion_5_item_16_body" role="tabpanel" aria-labelledby="m_accordion_5_item_16_head"
+                                        data-parent="#m_accordion_5">
+                                        <div class="row">
+                                            <div class="col-md-10"> </div>
+                                            <div class="col-md-2 accordian-refresh">
+                                                <button class="btn btn-secondary" type="button" (click)="getSeparationDetails();showSpin()">
+                                                    <i class="fa fa-refresh" [ngClass]="{'fa-spin': isSpin}"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="m-accordion__item-content">
+                                            <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="fseparationDetails.valid && addSeparation()" #fseparationDetails="ngForm"
+                                                novalidate="novalidate">
+                                                <div class="form-group m-form__group m--margin-top-10">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group" hidden="true">
+                                                        <div class="form-group m-form__group">
+                                                            <input type="text" name="separationDetails_id" [(ngModel)]="separationDetails._id" #separationDetails_id="ngModel" class="form-control m-input m-input--air"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group" hidden="true">
+                                                        <div class="form-group m-form__group">
+                                                            <input type="text" name="separationDetailsemp_id" [(ngModel)]="separationDetails.emp_id" #separationDetailsemp_id="ngModel" class="form-control m-input m-input--air"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="separationType">Separation Type
+                                                            </label>
+                                                            <ng-select name="separationType" [items]="separationTypeArrData" bindLabel="text" bindValue="id" [clearable]="false" placeholder="Select separation type"
+                                                                [(ngModel)]="separationDetails.separationType">
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="dateOfResignation">Date of Resignation</label>
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfResignation"
+                                                                [(ngModel)]="separationDetails.dateOfResignation" #dateOfResignation="ngModel"
+                                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="effectiveDate">Effective Date</label>
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="effectiveDate"
+                                                                [(ngModel)]="separationDetails.effectiveDate" #effectiveDate="ngModel"
+                                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="dateOfSeparation">Date of Separation</label>
+                                                            <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfSeparation"
+                                                                [(ngModel)]="separationDetails.dateOfSeparation" #dateOfSeparation="ngModel"
+                                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-form__actions">
+                                                    <button type="submit" class="btn btn-success">{{separationDetails._id ? 'Update':'Save'}}</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>	
+                        <!-- separation ends here -->
+                        <div class="col-md-6 adn-form__group" *ngIf="tabName=='separation'">
+                            <div class="form-group m-form__group">
+                                <label for="isActive">Activate/Deactivate account
+                                    <span class="required" aria-required="true"> * </span>
+                                </label>
+                                <ng-select class="m-input m-input--air" name="isActive" [items]="toggleAccess" bindLabel="text"
+                                    bindValue="id" placeholder="Select" [(ngModel)]="stateDetails.isActive"
+                                    #isActive="ngModel" [clearable]="false" (change)="onToggleChanges()"
+                                ></ng-select>
+                                <!-- <div class="form-control-feedback has-danger" *ngIf="fsalaryDetails.submitted && hospitalizationScheme.errors?.required ">
+                                    This field is required.
+                                </div> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
