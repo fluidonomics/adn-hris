@@ -120,6 +120,8 @@ export class ProfileEditComponent implements OnInit {
     savedOfficeEmailId: string;
     imageBase: string;
 
+
+
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -692,21 +694,39 @@ export class ProfileEditComponent implements OnInit {
     //add employee separation
     addSeparation() {
 
-        this.separationDetails.emp_id = this.separationDetails.emp_id != null ? this.separationDetails.emp_id : (this._currentEmpId || this.param_emp_id);
-        this.separationDetails.separationType = this.separationDetails.separationType;
-        this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation;
-        this.separationDetails.effectiveDate = this.separationDetails.effectiveDate;
-        this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation;
-        this._myService.saveSeparationDetails(this.separationDetails)
-            .subscribe(
-                data => {
-                    mApp.unblock('#m_accordion_5_item_16_body');
-                    swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
-                    this.separationDetails = data.json();
-                },
-                error => {
-                    mApp.unblock('#m_accordion_5_item_16_body');
-                });
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+
+            if(result.value) {
+
+                this.separationDetails.emp_id = this.separationDetails.emp_id != null ? this.separationDetails.emp_id : (this._currentEmpId || this.param_emp_id);
+                this.separationDetails.separationType = this.separationDetails.separationType;
+                this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation;
+                this.separationDetails.effectiveDate = this.separationDetails.effectiveDate;
+                this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation;
+                this._myService.saveSeparationDetails(this.separationDetails)
+                    .subscribe(
+                        data => {
+                            mApp.unblock('#m_accordion_5_item_16_body');
+                            swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
+                            this.separationDetails = data.json();
+                            this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation ? new Date(this.separationDetails.dateOfResignation) : this.separationDetails.dateOfResignation;
+                            this.separationDetails.effectiveDate = this.separationDetails.effectiveDate ? new Date(this.separationDetails.effectiveDate) : this.separationDetails.effectiveDate;
+                            this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation ? new Date(this.separationDetails.dateOfSeparation) : this.separationDetails.dateOfSeparation;
+                        },
+                        error => {
+                            mApp.unblock('#m_accordion_5_item_16_body');
+                        });
+                    }
+        });
+        
     }
     //save Salary Info
     saveSalaryDetails() {
@@ -1651,8 +1671,20 @@ export class ProfileEditComponent implements OnInit {
 
         this.stateDetails.emp_id = this.stateDetails.emp_id != null ? this.stateDetails.emp_id : (this._currentEmpId || this.param_emp_id);
         this.stateDetails.isActive = this.stateDetails.isActive;
-        this._myService.updateState(this.stateDetails)
-            .subscribe(
+        swal({
+            title: 'Are you sure?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+
+            if(result.value) {
+
+                this._myService.updateState(this.stateDetails)
+                .subscribe(
                 data => {
                     mApp.unblock('#m_accordion_5_item_16_body');
                     swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
@@ -1661,6 +1693,16 @@ export class ProfileEditComponent implements OnInit {
                 error => {
                     mApp.unblock('#m_accordion_5_item_16_body');
                 });
+            } else {
+                if(this.stateDetails.isActive === "Activate") {
+                    this.stateDetails.isActive = "Deactivate";
+                } else {
+                    this.stateDetails.isActive = "Activate";
+                }
+            }
+        });
+        console.log("gyggdgh: ", this.stateDetails.isActive);
+        
     }
 
     loadSalaryInfoDropdownData() {
