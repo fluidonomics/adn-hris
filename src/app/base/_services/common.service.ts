@@ -268,7 +268,14 @@ export class CommonService {
         // return this.http.get(url).map((response: Response) => response.json());
     }
 
+    getPermissionData() {
+        return separationData;
+    }
 
+    getSeparationData() {
+        return permissionData;
+    }
+    
     getEducation(parent_id?: number) {
         let url = "common/getEducation";
         if (parent_id) {
