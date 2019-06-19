@@ -269,11 +269,11 @@ export class CommonService {
     }
 
     getPermissionData() {
-        return separationData;
+        return permissionData;
     }
 
     getSeparationData() {
-        return permissionData;
+        return separationData;
     }
     
     getEducation(parent_id?: number) {
