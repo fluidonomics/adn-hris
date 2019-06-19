@@ -9,6 +9,34 @@ export const currency = [
     }
 ]
 
+
+export const separationData = [
+
+    {
+        "id": "Resigned",
+        "text": "Resigned",
+    },
+    {
+        "id": "Terminated",
+        "text": "Terminated",
+    },
+    {
+        "id": "Absconding",
+        "text": "Absconding",
+    }
+]
+
+export const permissionData = [
+
+    {
+        "id": "Activate",
+        "text": "Activate"
+    },
+    {
+        "id": "Deactivate",
+        "text": "Deactivate"
+    }
+]
 export const nationality = [
     {
         "id": "Bangladeshi",

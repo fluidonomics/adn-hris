@@ -19,7 +19,7 @@ import {
     confirmationStatus,
     religion,
     country,
-    levelofEducation, examDegreeTitle
+    levelofEducation, examDegreeTitle, separationData, permissionData
 } from "../_jsonData/dropDownData";
 import { AuthService } from "./authService.service"
 
@@ -268,7 +268,14 @@ export class CommonService {
         // return this.http.get(url).map((response: Response) => response.json());
     }
 
+    getPermissionData() {
+        return separationData;
+    }
 
+    getSeparationData() {
+        return permissionData;
+    }
+    
     getEducation(parent_id?: number) {
         let url = "common/getEducation";
         if (parent_id) {
