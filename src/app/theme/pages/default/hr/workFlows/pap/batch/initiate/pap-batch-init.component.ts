@@ -68,7 +68,7 @@ export class PapBatchInitComponent implements OnInit {
                     mtr_master_id: item.mtr_master_id,
                     supervisor_id: item.supervisor_id,
                     officeEmail: item.emp_emailId,
-
+                    type: item.type
                 }
             });
 
