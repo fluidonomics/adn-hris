@@ -13,8 +13,8 @@ export const currency = [
 export const separationData = [
 
     {
-        "id": "Resigned",
-        "text": "Resigned",
+        "id": "Resignation",
+        "text": "Resignation",
     },
     {
         "id": "Terminated",
@@ -23,7 +23,28 @@ export const separationData = [
     {
         "id": "Absconding",
         "text": "Absconding",
+    },
+    {
+        "id": "Retirement",
+        "text": "Retirement",
+    },
+    {
+        "id": "Retrenchment",
+        "text": "Retrenchment",
+    },
+    {
+        "id": "Discharge",
+        "text": "Discharge",
+    },
+    {
+        "id": "Dismissal",
+        "text": "Dismissal",
+    },
+    {
+        "id": "Death",
+        "text": "Death",
     }
+    
 ]
 
 export const permissionData = [

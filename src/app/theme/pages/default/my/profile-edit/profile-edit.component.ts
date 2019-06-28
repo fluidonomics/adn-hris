@@ -705,12 +705,13 @@ export class ProfileEditComponent implements OnInit {
         }).then((result) => {
 
             if(result.value) {
-
+                this.separationDetails._id = this.separationDetails._id;
                 this.separationDetails.emp_id = this.separationDetails.emp_id != null ? this.separationDetails.emp_id : (this._currentEmpId || this.param_emp_id);
                 this.separationDetails.separationType = this.separationDetails.separationType;
                 this.separationDetails.dateOfResignation = this.separationDetails.dateOfResignation;
                 this.separationDetails.effectiveDate = this.separationDetails.effectiveDate;
                 this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation;
+                this.separationDetails.remarks = this.separationDetails.remarks;
                 this._myService.saveSeparationDetails(this.separationDetails)
                     .subscribe(
                         data => {
@@ -1701,7 +1702,6 @@ export class ProfileEditComponent implements OnInit {
                 }
             }
         });
-        console.log("gyggdgh: ", this.stateDetails.isActive);
         
     }
 
