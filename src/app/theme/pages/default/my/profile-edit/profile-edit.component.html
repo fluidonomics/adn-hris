@@ -2655,13 +2655,17 @@
                                                             <label for="separationType">Separation Type
                                                             </label>
                                                             <ng-select name="separationType" [items]="separationTypeArrData" bindLabel="text" bindValue="id" [clearable]="false" placeholder="Select separation type"
-                                                                [(ngModel)]="separationDetails.separationType">
+                                                                [(ngModel)]="separationDetails.separationType" #separationType="ngModel" required>
                                                             </ng-select>
+                                                            <div class="form-control-feedback has-danger"
+								                                *ngIf="fseparationDetails.submitted && separationType.invalid">
+								                                This field is required.
+							                                </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
-                                                            <label for="dateOfResignation">Date of Resignation</label>
+                                                            <label for="dateOfResignation">Date of {{separationDetails.separationType || "Separation"}}</label>
                                                             <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfResignation"
                                                                 [(ngModel)]="separationDetails.dateOfResignation" #dateOfResignation="ngModel"
                                                                 bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
@@ -2669,9 +2673,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 adn-form__group">
+                                                    <div class="col-md-6 adn-form__group" *ngIf="separationDetails.separationType === 'Resignation'">
                                                         <div class="form-group m-form__group">
-                                                            <label for="effectiveDate">Effective Date</label>
+                                                            <label for="effectiveDate">Acceptance Date</label>
                                                             <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="effectiveDate"
                                                                 [(ngModel)]="separationDetails.effectiveDate" #effectiveDate="ngModel"
                                                                 bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
@@ -2679,10 +2683,22 @@
                                                     </div>
                                                     <div class="col-md-6 adn-form__group">
                                                         <div class="form-group m-form__group">
-                                                            <label for="dateOfSeparation">Date of Separation</label>
+                                                            <label for="dateOfSeparation">Last Working Day</label>
                                                             <input class="form-control m-input m-input--air" placeholder="DD/MM/YYYY" [readonly]="true" name="dateOfSeparation"
                                                                 [(ngModel)]="separationDetails.dateOfSeparation" #dateOfSeparation="ngModel"
-                                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" required>
+                                                        </div>
+                                                        <div class="form-control-feedback has-danger"
+								                            *ngIf="fseparationDetails.submitted && dateOfSeparation.invalid">
+								                            This field is required.
+							                            </div>
+                                                    </div>
+                                                    <div class="col-md-6 adn-form__group">
+                                                        <div class="form-group m-form__group">
+                                                            <label for="remarks">Remarks
+                                                            </label>
+                                                            <input name="remarks" id="remarks" [(ngModel)]="separationDetails.remarks" #remarks="ngModel" type="text" class="form-control m-input m-input--air"
+                                                            placeholder="Enter remarks" style="height:90px;">
                                                         </div>
                                                     </div>
                                                 </div>
