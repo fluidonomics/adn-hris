@@ -43,7 +43,6 @@ export class PapBatchInitComponent implements OnInit {
         Object.assign(this.filterBy, filterBy);
     }
     OnemployeeChecked(selectedEmployee) {
-        console.log(selectedEmployee);
         this.selectedEmployees = selectedEmployee;
     }
 
@@ -52,9 +51,9 @@ export class PapBatchInitComponent implements OnInit {
             this.employees = res || [];
             this.employees = this.employees.filter(e => {
                 if (e.type == 'pap') {
-                    return e.pap_master.length == 0;
+                    return e.pap_master.length == 0 && e.grade_id < 13;
                 } else {
-                    return true;
+                    return true && e.grade_id < 13;
                 }
             });
         });
