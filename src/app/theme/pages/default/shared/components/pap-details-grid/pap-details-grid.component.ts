@@ -21,6 +21,7 @@ export class PapDetailsGridComponent implements OnInit {
 
     papDetails = [];
     papInfoData = [];
+    papMaster: any = {};
 
     supervisorData: any = [];
     weightageData: any = [];
@@ -92,6 +93,7 @@ export class PapDetailsGridComponent implements OnInit {
                     return v[0];
                 }).value();
                 this.papInfoData = papWorkFlowData[0].papdetails;
+                this.papMaster = papWorkFlowData[0];
                 console.log(papWorkFlowData);
             }
         });

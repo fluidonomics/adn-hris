@@ -44,8 +44,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let papInfo of papInfoData;let i=index"
-                [ngClass]="{'sendBack':papInfoData[i].status=='SendBack','approved': (papInfoData[i].status =='Approved') || (papInfo.sup_ratingScaleId && type == 'supervisor'),'pending':papInfoData[i].status=='Pending'}">
+            <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{
+                    'sendBack':papInfoData[i].status=='SendBack' || papInfoData[i].grievanceStatus=='SendBack',
+                    'approved': (((papInfoData[i].status =='Approved' || papInfoData[i].status =='Pending Reviewer') 
+                                || (papInfoData[i].status !='SendBack' && papInfo.sup_ratingScaleId && type == 'supervisor')) && papMaster?.grievanceStatus == null)
+                                || ((papInfoData[i].grievanceStatus == 'Approved' && type != 'supervisor') 
+                                || (papInfoData[i].grievanceStatus !='SendBack' && papInfo.grievance_ratingScaleId && type == 'supervisor')
+                                && papMaster?.grievanceStatus == 'Initiated'),
+                    'pending':papInfoData[i].status=='Pending'}">
                 <th scope="row">
                     {{i+1}}
                 </th>

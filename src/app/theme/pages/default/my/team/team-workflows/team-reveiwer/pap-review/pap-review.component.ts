@@ -169,6 +169,7 @@ export class PapReviewComponent implements OnInit {
         }
     }
     saveKRADetails(form, id: number, isApproved: boolean) {
+        debugger;
         if (form.valid) {
             this.modalRef.hide();
             let request = {
@@ -184,9 +185,13 @@ export class PapReviewComponent implements OnInit {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);
                     });
+                    let text = "PAP approved succesfully";
+                    if (!isApproved) {
+                        text = "PAP sentback succesfully";
+                    }
                     swal({
                         title: 'Success',
-                        text: "PAP has been Saved.",
+                        text: text,
                         type: 'success',
                         showCancelButton: false,
                         confirmButtonColor: '#66BB6A',
