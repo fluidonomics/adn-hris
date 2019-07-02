@@ -85,11 +85,11 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
     loadAllEmployee() {
         if (this.filterBy && (this.filterBy.grades || this.filterBy.departments)) {
             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                this.employeeFilterData = this.employeeData.filter(obj => this.filterBy.departments.includes(obj.emp_department_id) && obj.emp_grade_id < 13);
+                this.employeeFilterData = this.employeeData.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                 //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
             }
             if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                this.employeeFilterData = this.employeeData.filter(obj => this.filterBy.grades.includes(obj.emp_grade_id));
+                this.employeeFilterData = this.employeeData.filter(obj => this.filterBy.grades.includes(obj.grade_id));
                 //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
             }
             if (this.filterBy.grades.length == 0 && this.filterBy.departments.length == 0) {
