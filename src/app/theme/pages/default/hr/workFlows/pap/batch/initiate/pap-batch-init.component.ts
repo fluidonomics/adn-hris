@@ -48,6 +48,7 @@ export class PapBatchInitComponent implements OnInit {
 
     getEmployeesForPap() {
         this.papService.getEmployeesForPapInitiate().subscribe(res => {
+            debugger;
             this.employees = res || [];
             this.employees = this.employees.filter(e => {
                 if (e.type == 'pap') {
