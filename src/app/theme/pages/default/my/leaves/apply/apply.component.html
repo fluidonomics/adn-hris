@@ -22,6 +22,18 @@
 			</div>
 		</div>
 	</div>
+	<div class="row justify-content-end">
+		<div class="col-md-3 adn-form__group pull-right">
+			<div class="m-form__group form-group">
+				<!-- <label for="form_control_1">Financial Year</label> -->
+				<ng-select #ddFiscalYear class="m-input m-input--air" name="fiscalYear" bindValue="_id"
+					bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId"
+					id="fiscalYearId" #fiscalYear="ngModel" placeholder="Select Fiscal Year"
+					(ngModelChange)="onfiscalYearChange($event)" [clearable]="false">
+				</ng-select>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
@@ -72,8 +84,8 @@
 													[(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel"
 													bsDatepicker [readonly]="true"
 													[bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
-													[minDate]="leaveapplication.fYear?.startDate" id="fromDate"
-													required>
+													[minDate]="leaveapplication.fYear?.startDate"
+													[maxDate]="leaveapplication.fYear?.endDate" id="fromDate" required>
 												<div class="form-control-feedback has-danger"
 													*ngIf="fleaveapplication.submitted && leavetype.valid">
 													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This

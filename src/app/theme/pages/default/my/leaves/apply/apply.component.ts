@@ -50,6 +50,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     supervisorPresent: boolean = false;
 
     additionalLeaves: any = [];
+    financialYearList: any = [];
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -64,9 +65,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
-            this.fiscalYearId = 3;
             this.getFinancialYear().then(res => {
-
                 this.InitValues();
                 this.getEmployeeDetails();
                 // this.getAllEmailListOfEmployee();
@@ -184,9 +183,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
             this._commonService.getFinancialYear().subscribe(res => {
                 debugger;
                 if (res.ok) {
-                    let data = res.json() || [];
-                    if (data && data.length > 0) {
-                        let fYear = data.filter(d => d._id === this.fiscalYearId);
+                    this.financialYearList = res.json() || [];
+                    if (this.financialYearList && this.financialYearList.length > 0) {
+                        this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                        let fYear = this.financialYearList.filter(d => d._id === this.fiscalYearId);
                         if (fYear["0"]) {
                             this.leaveapplication.fYear = {
                                 startDate: new Date(fYear["0"].starDate),
@@ -742,6 +742,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     addMore() {
         this.additionalLeaves.push({});
+    }
+
+    onfiscalYearChange(e) {
+        this.InitValues();
     }
 
     ngOnDestroy(): void {

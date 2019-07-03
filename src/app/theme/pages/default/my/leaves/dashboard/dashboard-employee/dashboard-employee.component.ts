@@ -89,21 +89,20 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getFinancialYearDetails() {
-        this.fiscalYearId = "3";
-        this.loadDashboard();
-        // this.commonService.getFinancialYear().subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.financialYearList = res.json() || [];
-        //             this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-        //             this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-        //             this.loadDashboard();
-        //         }
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    debugger;
+                    this.financialYearList = res.json() || [];
+                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
+                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.loadDashboard();
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     loadDashboard() {
@@ -162,7 +161,7 @@ export class DashboardEmployeeComponent implements OnInit {
                     });
                     this.overviewChartData = chartData;
                     console.log("over chart data : ", this.overviewChartData);
-                    
+
                 }
             })
         }
@@ -270,6 +269,10 @@ export class DashboardEmployeeComponent implements OnInit {
 
     refresh() {
         this.isSpin = true;
+        this.loadDashboard();
+    }
+
+    onfiscalYearChange(e) {
         this.loadDashboard();
     }
 }
