@@ -64,6 +64,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
+            this.fiscalYearId = 3;
             this.getFinancialYear().then(res => {
 
                 this.InitValues();
@@ -181,16 +182,17 @@ export class ApplyComponent implements OnInit, OnDestroy {
     getFinancialYear() {
         return new Promise((resolve, reject) => {
             this._commonService.getFinancialYear().subscribe(res => {
+                debugger;
                 if (res.ok) {
                     let data = res.json() || [];
                     if (data && data.length > 0) {
-                        let fYear = data.filter(d => d.isYearActive);
+                        let fYear = data.filter(d => d._id === this.fiscalYearId);
                         if (fYear["0"]) {
                             this.leaveapplication.fYear = {
                                 startDate: new Date(fYear["0"].starDate),
                                 endDate: new Date(fYear["0"].endDate)
                             };
-                            this.fiscalYearId = fYear["0"]._id;
+                            // this.fiscalYearId = fYear["0"]._id;
                             resolve(true);
                         }
                     }
