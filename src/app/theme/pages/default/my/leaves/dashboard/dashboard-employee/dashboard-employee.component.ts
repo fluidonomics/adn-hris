@@ -92,7 +92,6 @@ export class DashboardEmployeeComponent implements OnInit {
         this.commonService.getFinancialYear().subscribe(
             res => {
                 if (res.ok) {
-                    debugger;
                     this.financialYearList = res.json() || [];
                     this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
