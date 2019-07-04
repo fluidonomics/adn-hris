@@ -14,12 +14,14 @@ export class PapDetailsGridComponent implements OnInit {
 
     @Input() empId;
     @Input() papMasterId;
+    @Input() type;
     @Input() papChanges: Subject<any>;
 
     @Output() showDetails = new EventEmitter();
 
     papDetails = [];
     papInfoData = [];
+    papMaster: any = {};
 
     supervisorData: any = [];
     weightageData: any = [];
@@ -57,11 +59,11 @@ export class PapDetailsGridComponent implements OnInit {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
     loadRatingScaleData() {
         this._commonService.getPapRatingScale().subscribe(
@@ -84,13 +86,14 @@ export class PapDetailsGridComponent implements OnInit {
     }
 
     loadPapDetails() {
-        this.papService.getPapDetailsSingleEmployee(this.empId).subscribe(res => {            
+        this.papService.getPapDetailsSingleEmployee(this.empId).subscribe(res => {
             let papDetails = res || [];
             if (papDetails.length > 0) {
                 let papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
                     return v[0];
                 }).value();
                 this.papInfoData = papWorkFlowData[0].papdetails;
+                this.papMaster = papWorkFlowData[0];
                 console.log(papWorkFlowData);
             }
         });

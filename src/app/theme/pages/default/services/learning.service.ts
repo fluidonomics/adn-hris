@@ -104,7 +104,6 @@ export class LearningService {
         return res || {};
     }
     private handleError(err: Response | any) {
-        debugger;
         if (err.status == 300) {
             let error = err.json() || {};
             swal("Error", error.title, "error");

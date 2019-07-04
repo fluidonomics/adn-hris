@@ -8,7 +8,7 @@ import { HrService } from "../../../hr.service";
 import { environment } from '../../../../../../../../environments/environment';
 import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
 import { CommonService } from "../../../../../../../base/_services/common.service";
-import {  Router  } from "@angular/router";
+import { Router } from "@angular/router";
 
 import { EmployeeInfo } from "../../../../../../../base/_interface/user.model";
 
@@ -22,7 +22,7 @@ import { EmployeeInfo } from "../../../../../../../base/_interface/user.model";
 
 export class GrievanceAllEmployeeComponent implements OnInit {
     employeesData: any = [];
-    employee:any={};
+    employee: any = {};
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
@@ -30,12 +30,15 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     _currentEmpId: number;
     itemPerPage: number = 10;
     param_emp_id;
-    
- 
+    showGrievancePhase: boolean = false;
+    grievanceEndDate;
+    currentDate = new Date();
+    allPapData = [];
+    showGrievanceInitForm: boolean = false;
 
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
-        private _commonService:CommonService,
+        private _commonService: CommonService,
         public _authService: AuthService,
         private _router: Router,
         public utilityService: UtilityService,
@@ -43,35 +46,45 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     }
     ngOnInit() {
-        this._authService.validateToken().subscribe(
-            res => {
-                this._currentEmpId = this._authService.currentUserData._id;
-                this.loadAllEmployee();
-               
+        this._authService.validateToken().subscribe(res => {
+            this._currentEmpId = this._authService.currentUserData._id;
+            this.loadAllEmployee();
+            this.getAllPap();
         });
-        
-       
     }
 
     ngAfterViewInit() {
     }
 
     loadAllEmployee() {
+        this.showGrievancePhase = false;
         this.utilityService.showLoader('#allEmployee-loader');
-        this._papService.getEmployeesForGrievance()
-            .subscribe(
-            res => {                
-                let data = res.json().result.message || [];                
-                //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                this.employeesData = data || [];
-                this.utilityService.hideLoader('#allEmployee-loader');               
-            },
-            error => {
-                this.utilityService.hideLoader('#allEmployee-loader');
-            });
+        this._papService.getEmployeesForGrievance().subscribe(res => {
+            let data = res.json().result.message || [];
+            //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+            this.employeesData = data || [];
+            // this.employeesData.forEach(emp => {
+            //     debugger;
+            // });
+            this.utilityService.hideLoader('#allEmployee-loader');
+        }, error => {
+            this.utilityService.hideLoader('#allEmployee-loader');
+        });
     }
 
-    
+    getAllPap() {
+        this._papService.getAllPap().subscribe(res => {
+            this.allPapData = res || [];
+            let grievancePap = this.allPapData.filter(pap => {
+                if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.grievanceRaiseEndDate == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            this.showGrievanceInitForm = grievancePap.length > 0;
+        });
+    }
 
 
     sort(key) {
@@ -89,9 +102,35 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     }
 
 
-    grievanceEmployeeDetail(employee: any) {    
+    grievanceEmployeeDetail(employee: any) {
         console.log(employee);
-        this._router.navigate(['/hr/workflows/grievance/detail/4/'+employee.employeedetails._id])//('/user');
+        this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
     }
-   
+
+    initGrievancePhase(form) {
+        if (form.valid) {
+            let data = {
+                updatedBy: this._currentEmpId,
+                grievanceEndDate: this.grievanceEndDate
+            };
+
+            swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this._papService.initGrievancePhase(data).subscribe(res => {
+                        swal("Grievance Phase Initiated", "", "success");
+                        this.loadAllEmployee();
+                        this.getAllPap();
+                        form.resetForm();
+                    });
+                }
+            });
+        }
+    }
 }

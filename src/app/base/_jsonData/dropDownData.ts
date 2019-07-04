@@ -9,6 +9,55 @@ export const currency = [
     }
 ]
 
+
+export const separationData = [
+
+    {
+        "id": "Resignation",
+        "text": "Resignation",
+    },
+    {
+        "id": "Terminated",
+        "text": "Terminated",
+    },
+    {
+        "id": "Absconding",
+        "text": "Absconding",
+    },
+    {
+        "id": "Retirement",
+        "text": "Retirement",
+    },
+    {
+        "id": "Retrenchment",
+        "text": "Retrenchment",
+    },
+    {
+        "id": "Discharge",
+        "text": "Discharge",
+    },
+    {
+        "id": "Dismissal",
+        "text": "Dismissal",
+    },
+    {
+        "id": "Death",
+        "text": "Death",
+    }
+    
+]
+
+export const permissionData = [
+
+    {
+        "id": "Activate",
+        "text": "Activate"
+    },
+    {
+        "id": "Deactivate",
+        "text": "Deactivate"
+    }
+]
 export const nationality = [
     {
         "id": "Bangladeshi",

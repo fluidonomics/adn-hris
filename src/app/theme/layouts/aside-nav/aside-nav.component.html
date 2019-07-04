@@ -3,7 +3,7 @@
 </button>
 <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-light">
 	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light"
-	 data-menu-vertical="true" data-menu-scrollable="false" data-menu-dropdown-timeout="500">
+		data-menu-vertical="true" data-menu-scrollable="false" data-menu-dropdown-timeout="500">
 		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
 			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('Admin') >-1">
 				<h4 class="m-menu__section-text m--font-boldest">
@@ -13,8 +13,9 @@
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" *ngIf="authService.atCurrentUserData?.roles.indexOf('Admin') >-1"
-			 routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover">
+			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Admin') >-1" routerLinkActiveOptions="{ exact: true }"
+				aria-haspopup="true" data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-user-circle"></i>
 					<span class="m-menu__link-text">
@@ -25,8 +26,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/admin/masterData" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-inbox">
 									<span></span>
@@ -36,8 +37,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/admin/configure" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-cog">
 									<span></span>
@@ -50,14 +51,16 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__section" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1">
+			<li class="m-menu__section"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1">
 				<h4 class="m-menu__section-text">
 					HR Panel
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
-			<li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+			<li class="m-menu__item"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 				<a routerLink="/hr/dashboard" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-th"></i>
 					<span class="m-menu__link-title">
@@ -69,9 +72,10 @@
 					</span>
 				</a>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
-			 data-menu-submenu-toggle="hover">
+			<li class="m-menu__item  m-menu__item--submenu"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+				data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-gear"></i>
 					<span class="m-menu__link-text">
@@ -82,8 +86,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/initiate" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-reply">
 									<span></span>
@@ -93,8 +97,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/batch" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -104,7 +108,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/mtr/batch-init" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-reply">
 									<span></span>
@@ -114,7 +119,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/mtr/batch" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -124,8 +130,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/learning" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-reply">
 									<span></span>
@@ -135,8 +141,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/learn/batch" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -146,18 +152,20 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/workflows/pap/batch-init" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-reply">
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
-									PAP	Initiate
+									PAP Initiate
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/pap/batch" class="m-menu__link">								
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pap/batch" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
 								</i>
@@ -166,8 +174,42 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/pap/feedback-init" class="m-menu__link">									
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pip" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-reply">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PIP Initiate
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pip/batch" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PIP Batch
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/view" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PIP View
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/pap/feedback-init" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
 								</i>
@@ -176,8 +218,9 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/hr/workflows/grievance/all-employee" class="m-menu__link">									
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/hr/workflows/grievance/all-employee" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
 								</i>
@@ -186,13 +229,14 @@
 								</span>
 							</a>
 						</li>
-						
+
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
-			 data-menu-submenu-toggle="hover">
+			<li class="m-menu__item  m-menu__item--submenu"
+				*ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+				data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-envelope-open"></i>
 					<span class="m-menu__link-text">
@@ -203,8 +247,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/email/bulk" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-envelope">
 									<span></span>
@@ -217,9 +261,10 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
-			 data-menu-submenu-toggle="hover">
+			<li class="m-menu__item  m-menu__item--submenu"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+				data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-group"></i>
 					<span class="m-menu__link-text">
@@ -230,8 +275,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/employee" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-users">
 									<span></span>
@@ -241,8 +286,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/hr/employee/add" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-user-plus">
 									<span></span>
@@ -256,8 +301,9 @@
 					</ul>
 				</div>
 			</li>
-			<li class="m-menu__item" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+			<li class="m-menu__item"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('HR') >-1 || authService.atCurrentUserData?.roles.indexOf('HR2') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 				<a routerLink="/hr/transferresponsiblity" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-th"></i>
 					<span class="m-menu__link-title">
@@ -270,11 +316,21 @@
 				</a>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') > -1">
+				aria-haspopup="true" data-menu-submenu-toggle="hover"
+				*ngIf="false && authService.atCurrentUserData?.roles.indexOf('HR') > -1">
 				<a routerLink="/my/leaves/dashboard/hr" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
 						Leaves
+					</span>
+				</a>
+			</li>
+			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+			 data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('HR') > -1">
+				<a routerLink="/hr/quotaProvider" class="m-menu__link m-menu__toggle">
+					<i class="m-menu__link-icon fa fa-calendar-plus-o"></i>
+					<span class="m-menu__link-text">
+						Quota Provider
 					</span>
 				</a>
 			</li>
@@ -284,10 +340,11 @@
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
-			
-			<li class="m-menu__item  m-menu__item--submenu" *ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1"
-			 routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
-			 data-menu-submenu-toggle="hover">
+
+			<li class="m-menu__item  m-menu__item--submenu"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Reviewer') >-1 ||authService.atCurrentUserData?.roles.indexOf('Supervisor') >-1"
+				routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true"
+				data-menu-submenu-toggle="hover">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-gear"></i>
 					<span class="m-menu__link-text">
@@ -298,8 +355,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/team/workflows/supervisor" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-male">
 									<span></span>
@@ -309,8 +366,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/team/workflows/reveiwer" class="m-menu__link">
 								<i class="m-menu__link-bullet fa fa-street-view">
 									<span></span>
@@ -325,7 +382,8 @@
 				</div>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
+				aria-haspopup="true" data-menu-submenu-toggle="hover"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
 				<a routerLink="/my/leaves/dashboard/supervisor" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
@@ -334,7 +392,8 @@
 				</a>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
+				aria-haspopup="true" data-menu-submenu-toggle="hover"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Supervisor') > -1">
 				<a routerLink="/my/team/subordinate/employee/list" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
@@ -348,8 +407,9 @@
 				</h4>
 				<i class="m-menu__section-icon flaticon-more-v3"></i>
 			</li>
-			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+			<li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--active"
+				routerLinkActiveOptions="{ exact: true }" aria-haspopup="true" data-menu-submenu-toggle="hover"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a href="#" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-gear"></i>
 					<span class="m-menu__link-text">
@@ -360,8 +420,8 @@
 				<div class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						 aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/workflows/kra" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -371,7 +431,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/workflows/mtr" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -381,7 +442,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/workflows/pap" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -391,7 +453,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
 							<a routerLink="/my/learning" class="m-menu__link">
 								<i class="m-menu__link-bullet la la-tasks">
 									<span></span>
@@ -401,11 +464,23 @@
 								</span>
 							</a>
 						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active"
+							routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+							<a routerLink="/my/workflows/pip" class="m-menu__link">
+								<i class="m-menu__link-bullet la la-tasks">
+									<span></span>
+								</i>
+								<span class="m-menu__link-text">
+									PIP
+								</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" data-menu-submenu-toggle="hover" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				aria-haspopup="true" data-menu-submenu-toggle="hover"
+				*ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a routerLink="/my/leaves/dashboard/employee" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon fa fa-bed"></i>
 					<span class="m-menu__link-text">
@@ -414,7 +489,7 @@
 				</a>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a routerLink="/my/profile" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-user"></i>
 					<span class="m-menu__link-title">
@@ -427,7 +502,7 @@
 				</a>
 			</li>
 			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-			 aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
+				aria-haspopup="true" *ngIf="authService.atCurrentUserData?.roles.indexOf('Employee') >-1">
 				<a routerLink="/my/documents" class="m-menu__link">
 					<i class="m-menu__link-icon fa fa-file"></i>
 					<span class="m-menu__link-title">

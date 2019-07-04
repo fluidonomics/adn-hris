@@ -320,6 +320,47 @@
 							</table>
 						</div>
 					</div>
+					<div class="col-md-12 pendingLeave">
+						<h3>Pending PIP</h3>
+						<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': employeeOpenPipgRequest?.length==0 }">
+							<table class="m-datatable__table">
+								<thead class="m-datatable__head">
+									<tr class="m-datatable__row">
+										<!-- <th class="m-datatable__cell" width="5%" ></th> -->
+										<!-- <th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Total Learning Agendas</span>
+										</th> -->
+										<th class="m-datatable__cell m-datatable__cell--sort" width="30%">
+											<span>PIP Created On</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="30%">
+											<span>PIP Last Updated On</span>
+										</th>
+										<th class="m-datatable__cell m-datatable__cell--sort" width="20%">
+											<span>Status</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody class="m-datatable__body">
+									<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let pip of employeeOpenPipgRequest;let even=even;">
+										<!-- <td class="m-datatable__cell" width="20%">
+											<span>{{learn?.learningDetailCount}}</span>
+										</td> -->
+										<td class="m-datatable__cell" width="30%">
+											<span>{{pip?.createdAt | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="30%">
+											<span>{{pip?.updatedAt | date:"dd-MMM-yyyy hh:mm"}}</span>
+										</td>
+										<td class="m-datatable__cell" width="20%">
+											<span>{{pip?.status}}</span>
+										</td>
+									</tr>
+									<span *ngIf="employeeOpenPipgRequest?.length==0" class="m-datatable--error">No records found</span>
+								</tbody>
+							</table>
+						</div>
+					</div>
 					<div class="col-md-12 msg">
 						<span class="">This employee has some pending requests to be considered by previous supervisor. Do you still
 							want to transfer the supervisor</span>

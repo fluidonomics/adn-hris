@@ -1,0 +1,15 @@
+@import '../../../../../../../../../../assets/colors.scss';
+
+.m-widget4__ext {
+
+    .sendBack {
+        color: $status-drop !important;
+        border: 0px !important;
+    }
+
+
+    .approved {
+        color: $status-approved !important;
+        border: 0px !important;
+    }
+}

@@ -43,17 +43,20 @@ export class PapBatchInitComponent implements OnInit {
         Object.assign(this.filterBy, filterBy);
     }
     OnemployeeChecked(selectedEmployee) {
-        console.log(selectedEmployee);
         this.selectedEmployees = selectedEmployee;
     }
 
     getEmployeesForPap() {
         this.papService.getEmployeesForPapInitiate().subscribe(res => {
             debugger;
-            let employees = res || [];
-            if (employees.length > 0) {
-                this.employees = employees.filter(obj => obj.hrspoc_id == this._currentEmpId && !obj.pap_master_id);
-            }
+            this.employees = res || [];
+            this.employees = this.employees.filter(e => {
+                if (e.type == 'pap') {
+                    return e.pap_master.length == 0 && e.grade_id < 13;
+                } else {
+                    return true && e.grade_id < 13;
+                }
+            });
         });
     }
 
@@ -69,7 +72,7 @@ export class PapBatchInitComponent implements OnInit {
                     mtr_master_id: item.mtr_master_id,
                     supervisor_id: item.supervisor_id,
                     officeEmail: item.emp_emailId,
-
+                    type: item.type
                 }
             });
 
@@ -85,9 +88,11 @@ export class PapBatchInitComponent implements OnInit {
                 }).then((result) => {
                     if (result.value) {
                         data.createdBy = this._currentEmpId;
+                        data.batchEndDate = this.batchData.batchEndDate;
+                        data.action_link = window.location.origin + '/my/workflows/pap';
                         this.utilityService.showLoader('#initiate-loader');
                         this.papService.initiatePapProcess(data).subscribe(res => {
-                            if (res.ok) {
+                            if (res) {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");
                                 form.resetForm();

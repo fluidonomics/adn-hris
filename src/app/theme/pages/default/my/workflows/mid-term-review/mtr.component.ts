@@ -77,7 +77,6 @@ export class MyMtrComponent {
     }
 
     ngOnInit() {
-        //debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;

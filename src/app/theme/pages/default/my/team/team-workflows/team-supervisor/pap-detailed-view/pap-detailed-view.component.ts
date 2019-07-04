@@ -105,7 +105,6 @@ export class PapDetailedViewComponent implements OnInit {
         this.loadRatingScaleData();
     }
     loadPapDetails() {
-        debugger;
         return new Promise((resolve, reject) => {
             this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
                 let papDetails = res || [];
@@ -114,7 +113,13 @@ export class PapDetailedViewComponent implements OnInit {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Pending Reviewer").length == this.papInfoData.length ? false : true;
+                    if (this.papInfoData.filter(obj => obj.status == "Submitted").length > 0 || this.papInfoData.filter(obj => obj.status == "SendBack").length > 0) {
+                        this.isChangable = true;
+                    } else if (this.papWorkFlowData[0].grievanceStatus == 'Initiated' && this.papWorkFlowData[0].reviewerStatus != 'Approved' && this.papWorkFlowData[0].reviewerStatus != 'Pending') {
+                        this.isChangable = true;
+                    } else {
+                        this.isChangable = false;
+                    }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
@@ -159,49 +164,65 @@ export class PapDetailedViewComponent implements OnInit {
         this.papData.no = index + 1;
 
         console.log(this.papData);
-        this.isDisabled = this.papData.status == "Pending Reviewer" ? true : false;
+        if (this.papData.status == "Submitted" || this.papData.status == "SendBack") {
+            this.isDisabled = false;
+        }
+        else if (this.papData.status == "Pending Reviewer") {
+            this.isDisabled = true;
+        }
     }
     saveKRADetails(form, id: number) {
-        this.modalRef.hide();
-        let request = {
-            "papDetailsId": this.papData._id,
-            "updatedBy": this._currentEmpId,
-            "supRemark": this.papData.supRemark,
-            "sup_ratingScaleId": this.papData.sup_ratingScaleId
-        }
-        console.log(request);
-        this.papService.papUpdateSupervisor(request).subscribe(res => {
-            debugger;
-            if (res.ok) {
-                // this.papGridInput = {};
-                // let gridInput = {
-                //     empId: this._currentEmpId,
-                //     param_id: this.param_id
-                // }
-                // Object.assign(this.papGridInput, gridInput)
-                this.loadPapDetails().then(res => {
-                    this.papChanges.next(res);
-                });
-                swal({
-                    title: 'Success',
-                    text: "PAP has been Saved.",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+        if (form.valid) {
+            this.modalRef.hide();
+            let request = {
+                "papDetailsId": this.papData._id,
+                "updatedBy": this._currentEmpId,
+                "supRemark": this.papData.supRemark,
+                "sup_ratingScaleId": this.papData.sup_ratingScaleId,
+                "grievance_ratingScaleId": this.papData.grievance_ratingScaleId,
+                "grievanceSupRemark": this.papData.grievanceSupRemark,
+                "grievanceStatus": this.papWorkFlowData[0].grievanceStatus
             }
-        }, error => {
+            console.log(request);
+            this.papService.papUpdateSupervisor(request).subscribe(res => {
+                if (res.ok) {
+                    // this.papGridInput = {};
+                    // let gridInput = {
+                    //     empId: this._currentEmpId,
+                    //     param_id: this.param_id
+                    // }
+                    // Object.assign(this.papGridInput, gridInput)
+                    this.loadPapDetails().then(res => {
+                        this.papChanges.next(res);
+                    });
+                    swal({
+                        title: 'Success',
+                        text: "PAP has been Saved.",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }, error => {
 
-        })
+            })
+        }
     }
     submitPapWorkFlow() {
-        let dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.sup_ratingScaleId == null || obj.supRemark == null);
+        let dataWithoutPendingStatus = [];
+        if (this.papWorkFlowData[0].grievanceStatus == 'Initiated') {
+            dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.grievance_ratingScaleId == null || obj.grievanceSupRemark == null);
+        } else {
+            dataWithoutPendingStatus = this.papInfoData.filter(obj => obj.sup_ratingScaleId == null || obj.supRemark == null);
+        }
 
         if (dataWithoutPendingStatus.length == 0) {
             let request = {
                 papMasterId: this.papMasterId,
-                updatedBy: this._currentEmpId
+                updatedBy: this._currentEmpId,
+                grievanceStatus: this.papWorkFlowData[0].grievanceStatus,
+                action_link: window.location.origin + '/my/team/workflows/pap-review/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId
             }
             swal({
                 title: 'Are you sure?',

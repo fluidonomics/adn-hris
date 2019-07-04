@@ -53,6 +53,7 @@ export class MonthlyLeaveChartComponent implements OnChanges {
 
     createChart() {
 
+        console.log("chart data : ", this.chartData);
         let chartOptions = {
             "type": "serial",
             "theme": "light",

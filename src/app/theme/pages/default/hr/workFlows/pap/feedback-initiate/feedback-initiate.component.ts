@@ -6,6 +6,7 @@ import { UtilityService } from "../../../../../../../base/_services/utilityServi
 import { AuthService } from "../../../../../../../base/_services/authService.service";
 import { HrService } from "../../../hr.service";
 import { environment } from '../../../../../../../../environments/environment'
+import { forkJoin } from "rxjs/observable/forkJoin";
 
 
 @Component({
@@ -35,6 +36,14 @@ export class FeedbackInitiateComponent implements OnInit {
     isCheckAll;
     employeeData;
 
+    grievanceEmployees = [];
+    grievanceFilteredEmployees = [];
+    grievanceSearch: any;
+    grievanceIsCheckAll;
+    grievanceKey = "";
+    grievanceReverse: any;
+    grievanceP2 = 1;
+
 
     constructor(
         private papService: PapService,
@@ -52,9 +61,16 @@ export class FeedbackInitiateComponent implements OnInit {
         this.imageBase = environment.content_api_base.imgBase;
     }
     getAllEmployee() {
-        this.papService.getEmployeesForFeedbackInit().subscribe(res => {
-            this.employees = res;
-        })
+        forkJoin([
+            this.papService.getEmployeesForFeedbackInit(),
+            this.papService.getEmployeesForGrievanceFeedbackInit()
+        ]).subscribe(res => {
+            this.employees = res[0];
+            this.employeeFilterData = res[0];
+
+            this.grievanceEmployees = res[1];
+            this.grievanceFilteredEmployees = res[1];
+        });
     }
 
 
@@ -62,16 +78,17 @@ export class FeedbackInitiateComponent implements OnInit {
         this.filterBy = {};
         Object.assign(this.filterBy, filterBy);
         this.filterEmployee();
-
     }
+
     filterEmployee() {
         if (this.filterBy && (this.filterBy.grades || this.filterBy.departments)) {
             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.emp_department_id) && obj.emp_grade_id < 13);
+                // this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.employeeofficedetails.department_id) && obj.emp_grade_id < 13);
+                this.employeeFilterData = this.employees.filter(obj => this.filterBy.departments.includes(obj.employeeofficedetails.department_id));
                 //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
             }
             if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                this.employeeFilterData = this.employees.filter(obj => this.filterBy.grades.includes(obj.emp_grade_id));
+                this.employeeFilterData = this.employees.filter(obj => this.filterBy.grades.includes(obj.employeedetails.grade_id));
                 //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
             }
             if (this.filterBy.grades.length == 0 && this.filterBy.departments.length == 0) {
@@ -82,10 +99,28 @@ export class FeedbackInitiateComponent implements OnInit {
             this.employeeFilterData = this.employees;
         }
     }
+
+    filterGrievanceEmployee() {
+        if (this.filterBy && (this.filterBy.grades || this.filterBy.departments)) {
+            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                this.grievanceFilteredEmployees = this.grievanceEmployees.filter(obj => this.filterBy.departments.includes(obj.employeeofficedetails.department_id));
+            }
+            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                this.grievanceFilteredEmployees = this.grievanceEmployees.filter(obj => this.filterBy.grades.includes(obj.employeedetails.grade_id));
+            }
+            if (this.filterBy.grades.length == 0 && this.filterBy.departments.length == 0) {
+                this.grievanceFilteredEmployees = this.grievanceEmployees;
+            }
+        }
+        else {
+            this.grievanceFilteredEmployees = this.grievanceEmployees;
+        }
+    }
+
     initFeedback() {
         let selectedData = this.employeeFilterData.filter(obj => obj.checked == true);
         let selectedIds = selectedData.map(item => {
-            return item._id
+            return item.emp_id
         })
         if (selectedIds.length != 0) {
             let request = {
@@ -105,6 +140,7 @@ export class FeedbackInitiateComponent implements OnInit {
                     this.papService.papInitiateFeedback(request).subscribe(res => {
                         if (res.ok) {
                             swal("Success", "Feedback Initiated Successfully", "success");
+                            this.getAllEmployee();
                         }
                     });
                 }
@@ -113,6 +149,51 @@ export class FeedbackInitiateComponent implements OnInit {
             swal('Oops!', 'No employee selected', 'warning')
         }
 
+    }
+
+    initGrievanceFeedback() {
+        let selectedData = this.grievanceFilteredEmployees.filter(obj => obj.checked == true);
+        let selectedIds = selectedData.map(item => {
+            return item.emp_id
+        })
+        if (selectedIds.length != 0) {
+            let request = {
+                "updatedBy": this._currentEmpId,
+                "empIds": selectedIds
+            }
+            swal({
+                title: 'Are you sure?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.papService.papInitiateGrievanceFeedback(request).subscribe(res => {
+                        if (res.ok) {
+                            swal("Success", "Grievnace Feedback Initiated Successfully", "success");
+                            this.getAllEmployee();
+                        }
+                    });
+                }
+            })
+        } else {
+            swal('Oops!', 'No employee selected', 'warning')
+        }
+    }
+
+    selectAllEmployee($event) {
+        this.employeeFilterData.forEach(element => {
+            element.checked = $event.target.checked;
+        });
+    }
+
+    selectGrievanceAllEmployee($event) {
+        this.grievanceFilteredEmployees.forEach(element => {
+            element.checked = $event.target.checked;
+        });
     }
 
     sort(key) {

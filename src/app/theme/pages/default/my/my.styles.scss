@@ -1,4 +1,38 @@
 @import "workflows/mid-term-review/mtr.component";
 @import "workflows/pap/pap.component.scss";
+@import "workflows/pip/pip.component.scss";
+@import "learning/learning.component.scss";
 
-@import "learning/learning.component.scss"
+
+modal-container {
+    .m-portlet__body {
+        .flex {
+            display: flex;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .img {
+            width: 100% !important;
+        }
+
+        .name {
+            display: block;
+            font-size: 1.5rem;
+        }
+
+        .empId {
+            display: block;
+        }
+
+        .details {
+            padding-top: 2rem;
+
+            .value {
+                margin-left: 1rem;
+            }
+        }
+    }
+}

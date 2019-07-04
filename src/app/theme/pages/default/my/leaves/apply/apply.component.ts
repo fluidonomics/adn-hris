@@ -34,15 +34,12 @@ export class ApplyComponent implements OnInit, OnDestroy {
     leaveTypeList: any = [];
     leaveTypesDetails: any = [];
     emailDetails: any;
-    areDaysValid: boolean = true;
-    isBalanceValid: boolean = true;
     isAttachmentRequired: boolean = false;
     isAttachmentAdded: boolean = false;
     currentUser: UserData;
     fromDateValidation: any = {};
     inProbation: boolean = false;
-    isMaternity: boolean = false;
-    fiscalYearId: number = 2;
+    fiscalYearId: number;
     leaveBalance: any = [];
     employeeDetails: any = {};
     primarySupervisor: any = {};
@@ -50,8 +47,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
     leavesList: any = [];
     holidayList: any = [];
     isSandwichValid: boolean = false;
-    daysValidationMsg: string;
     supervisorPresent: boolean = false;
+
+    additionalLeaves: any = [];
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -66,16 +64,19 @@ export class ApplyComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
-            this.InitValues();
-            this.getEmployeeDetails();
-            // this.getAllEmailListOfEmployee();
-            this.getEmployeeProbationDetails();
-            this.fleaveapplication.valueChanges.subscribe(val => {
-                this.areDaysValid = true;
-                this.isBalanceValid = true;
-                this.isAttachmentAdded = false;
+            this.getFinancialYear().then(res => {
+
+                this.InitValues();
+                this.getEmployeeDetails();
+                // this.getAllEmailListOfEmployee();
+                this.getEmployeeProbationDetails();
+                // this.fleaveapplication.valueChanges.subscribe(val => {
+                //     this.areDaysValid = true;
+                //     this.isBalanceValid = true;
+                //     this.isAttachmentAdded = false;
+                // });
+                this.getHolidays();
             });
-            this.getHolidays();
         });
     }
 
@@ -87,10 +88,9 @@ export class ApplyComponent implements OnInit, OnDestroy {
             isValid: true,
             msg: ''
         }
-        this.fiscalYearId = 2;
+        this.additionalLeaves = [];
         this.clearAttachment();
         this.getEmployeeLeaves();
-        this.getFinancialYear();
     }
 
     getLeaveTypes() {
@@ -121,21 +121,21 @@ export class ApplyComponent implements OnInit, OnDestroy {
     getEmployeeDetails() {
         this.leaveService.getEmployeeDetails(this.currentUser._id)
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeDetails = res.json().data[0] || {};
-                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
-                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
-                            this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
-                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
-                                this.supervisorPresent = true;
-                            }
+            res => {
+                if (res.ok) {
+                    this.employeeDetails = res.json().data[0] || {};
+                    if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                        this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                        this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
+                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
+                            this.supervisorPresent = true;
                         }
                     }
-                },
-                error => {
-                    console.log(error);
-                });
+                }
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     getAllEmailListOfEmployee() {
@@ -179,54 +179,38 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     getFinancialYear() {
-        this._commonService.getFinancialYear().subscribe(res => {
-            if (res.ok) {
-                let data = res.json() || [];
-                if (data && data.length > 0) {
-                    let fYear = data.filter(d => d.isYearActive);
-                    if (fYear["0"]) {
-                        this.leaveapplication.fYear = {
-                            startDate: new Date(fYear["0"].starDate),
-                            endDate: new Date(fYear["0"].endDate)
-                        };
+        return new Promise((resolve, reject) => {
+            this._commonService.getFinancialYear().subscribe(res => {
+                if (res.ok) {
+                    let data = res.json() || [];
+                    if (data && data.length > 0) {
+                        let fYear = data.filter(d => d.isYearActive);
+                        if (fYear["0"]) {
+                            this.leaveapplication.fYear = {
+                                startDate: new Date(fYear["0"].starDate),
+                                endDate: new Date(fYear["0"].endDate)
+                            };
+                            this.fiscalYearId = fYear["0"]._id;
+                            resolve(true);
+                        }
                     }
                 }
-            }
-        })
+            })
+        });
     }
 
-    onChangeLeaveType() {
-        if (this.leaveapplication.leaveType === 3) {
-            this.leaveService.getMaternityLeaveDetails(this.currentUser._id).subscribe(res => {
-                if (res.ok) {
-                    let startDate = new Date(res.json().result[0].startDate);
-                    let endDate = new Date(res.json().result[0].endDate);
-                    this.leaveapplication.fromDate = startDate;
-                    this.leaveapplication.toDate = endDate;
-                    this.leaveapplication.days = Number(res.json().result[0].balance);
-                }
-            })
-        }
-        else {
-            this.leaveapplication.days = 0;
-        }
-
+    onChangeLeaveType(e, leave, isMain) {
+        leave.days = 0;
         let empBal = this.leaveBalance.find(bal => {
             if (bal) {
-                return bal.leaveTypeId == this.leaveapplication.leaveType;
+                return bal.leaveTypeId == leave.leaveType;
             }
         });
-        this.leaveapplication.balance = empBal ? empBal.leaveBalance : 0;
-
-        // Maternity Leave
-        if (this.leaveapplication.leaveType == 3) {
-            this.isMaternity = true;
-            this.leaveapplication.fromDate = "";
-            this.leaveapplication.toDate = "";
-        } else {
-            this.isMaternity = false;
-            this.leaveapplication.fromDate = null;
-            this.leaveapplication.toDate = null;
+        leave.balance = empBal ? empBal.leaveBalance : 0;
+        leave.fromDate = null;
+        leave.toDate = null;
+        if (isMain) {
+            this.additionalLeaves = [];
         }
     }
 
@@ -246,98 +230,238 @@ export class ApplyComponent implements OnInit, OnDestroy {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
-        if (data.days <= 0) {
-            this.areDaysValid = false;
-        } else {
-            this.areDaysValid = true;
-        }
-        this.isBalanceValid = !(data.balance <= 0 || data.balance < data.days);
-        if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3) {
-            this.isAttachmentRequired = true;
-        } else {
-            this.isAttachmentRequired = false;
-        }
-        if (this.uploadEvent && this.uploadEvent.data) {
-            this.isAttachmentAdded = true;
-        } else {
-            this.isAttachmentAdded = false;
-        }
-
-        // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-        if (data.leaveType == 1 && data.days >= 3) {
-            var new_date = moment(new Date()).add(7, 'days');
-            if (data.fromDate < new_date._d) {
-                this.fromDateValidation = {
-                    isValid: false,
-                    msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
+        debugger;
+        this.validate().then((res) => {
+            if (res == true) {
+                if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3 || data.leaveType == 4) {
+                    this.isAttachmentRequired = true;
+                } else {
+                    this.isAttachmentRequired = false;
                 }
-                return;
-            } else {
-                this.resetFromDateValidation();
-            }
-        }
-
-        if (form.valid && this.areDaysValid && this.isBalanceValid) {
-            if (this.isAttachmentRequired && !this.isAttachmentAdded) {
-                return;
-            }
-            // let ccToMail = [];
-            // if (data.ccTo) {
-            //     data.ccTo.forEach(cc => {
-            //         let mail = this.emailDetails.find(email => {
-            //             return email._id == cc;
-            //         });
-            //         if (mail)
-            //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
-            //     });
-            // }
-            let _postData: any = {};
-            if (this.primarySupervisor && this.primarySupervisor._id) {
-                _postData.supervisor_id = this.primarySupervisor._id;
-                this.supervisorPresent = true;
-            } else {
-                this.supervisorPresent = false;
-                return;
-            }
-            _postData.fromDate = moment(data.fromDate).format('L');
-            _postData.toDate = moment(data.toDate).format('L');
-            _postData.leave_type = data.leaveType;
-            _postData.reason = data.reason;
-            // _postData.contactDetails = data.contactDetail;
-            // _postData.ccTo = ccToMail;
-            _postData.emp_id = this.currentUser._id;
-            _postData.apply_by_id = this.currentUser._id;
-            _postData.updatedBy = this.currentUser._id;
-            _postData.session_id = '1';
-            _postData.status = 'Applied';
-            _postData.days = this.leaveapplication.days;
-
-            // Data for Email purpose
-            _postData.supervisorEmail = this.primarySupervisor.email;
-            _postData.empName = this.currentUser.fullName;
-            let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
-            _postData.leaveTypeName = leaveType.type;
-            _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
-
-            let text = '';
-            if (this.inProbation) {
-                text = 'Leave during probabtion are not encouraged until unless its an emergency case';
-            }
-
-            swal({
-                title: 'Are you sure?',
-                text: text,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    this.postApply(_postData, form);
+                if (this.uploadEvent && this.uploadEvent.data) {
+                    this.isAttachmentAdded = true;
+                } else {
+                    this.isAttachmentAdded = false;
                 }
-            });
-        }
+
+                // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
+                if (data.leaveType == 1 && data.days >= 3) {
+                    var new_date = moment(new Date()).add(7, 'days');
+                    if (data.fromDate < new_date._d) {
+                        this.fromDateValidation = {
+                            isValid: false,
+                            msg: 'Annual leave for more than 3 days should be applied before 7 days.\r\nTo Add Post leave Transaction, Contact Your HR'
+                        }
+                        return;
+                    } else {
+                        this.resetFromDateValidation();
+                    }
+                }
+
+                if (form.valid) {
+                    if (this.isAttachmentRequired && !this.isAttachmentAdded) {
+                        swal("Attachement Required", "", "error");
+                        return;
+                    }
+                    // let ccToMail = [];
+                    // if (data.ccTo) {
+                    //     data.ccTo.forEach(cc => {
+                    //         let mail = this.emailDetails.find(email => {
+                    //             return email._id == cc;
+                    //         });
+                    //         if (mail)
+                    //             ccToMail.push(mail.personalEmail + '~' + mail.emp_name);
+                    //     });
+                    // }
+                    let _postData: any = {};
+                    if (this.primarySupervisor && this.primarySupervisor._id) {
+                        _postData.supervisor_id = this.primarySupervisor._id;
+                        this.supervisorPresent = true;
+                    } else {
+                        this.supervisorPresent = false;
+                        return;
+                    }
+                    _postData.fromDate = moment(data.fromDate).format('L');
+                    _postData.toDate = moment(data.toDate).format('L');
+                    _postData.leave_type = data.leaveType;
+                    _postData.reason = data.reason;
+                    // _postData.contactDetails = data.contactDetail;
+                    // _postData.ccTo = ccToMail;
+                    _postData.emp_id = this.currentUser._id;
+                    _postData.apply_by_id = this.currentUser._id;
+                    _postData.updatedBy = this.currentUser._id;
+                    _postData.session_id = '1';
+                    _postData.status = 'Applied';
+                    _postData.days = this.leaveapplication.days;
+
+                    // Data for Email purpose
+                    _postData.supervisorEmail = this.primarySupervisor.email;
+                    _postData.empName = this.currentUser.fullName;
+                    let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
+                    _postData.leaveTypeName = leaveType.type;
+                    _postData.fiscalYearId = this.fiscalYearId;
+                    _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
+                    this.additionalLeaves.forEach(leave => {
+                        leave.fromDate = moment(leave.fromDate).format('L');
+                        leave.toDate = moment(leave.toDate).format('L');
+                    });
+                    _postData.additionalLeaves = this.additionalLeaves;
+
+                    let text = '';
+                    if (this.inProbation) {
+                        text = 'Leave during probabtion are not encouraged until unless its an emergency case';
+                    }
+
+                    swal({
+                        title: 'Are you sure?',
+                        text: text,
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.postApply(_postData, form);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    validate() {
+        return new Promise((resolve, reject) => {
+            if (this.leaveapplication.days <= 0) {
+                this.leaveapplication.areDaysValid = false;
+                resolve(false);
+            } else {
+                this.leaveapplication.areDaysValid = true;
+            }
+
+            if (this.leaveapplication.balance <= 0 || this.leaveapplication.balance < this.leaveapplication.days) {
+                this.leaveapplication.isBalanceValid = false;
+            } else {
+                this.leaveapplication.isBalanceValid = true;
+            }
+
+
+            // Validations for maternity and special leaves, if it is accompanied by annual or sick leave
+            if (this.leaveapplication.leaveType == 3 || this.leaveapplication.leaveType == 4 && this.additionalLeaves.length > 0) {
+                let dates = [this.leaveapplication];
+                this.additionalLeaves.forEach(leave => {
+                    if (leave.days <= 0) {
+                        leave.areDaysValid = false;
+                        resolve(false);
+                    } else {
+                        leave.areDaysValid = true;
+                    }
+
+                    if (this.leaveapplication.balance <= 0 || leave.balance < leave.days) {
+                        leave.isBalanceValid = false;
+                        resolve(false);
+                    } else {
+                        leave.isBalanceValid = true;
+                    }
+
+                    // Check if no two leaves of same leaveType exist
+                    if (this.leaveapplication.leaveType == leave.leaveType) {
+                        swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                        resolve(false);
+                    }
+                    let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == leave.leaveType).length;
+                    if (count > 1) {
+                        swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                        resolve(false);
+                    }
+                    // --------------------------------------------------------------------------------------------------------
+
+                    //Check if maternity and special are not applied together
+                    // if (this.leaveapplication.leaveType == 3) {
+                    //     let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 4).length;
+                    //     if (count > 0) {
+                    //         swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                    //         resolve(false);
+                    //     }
+                    // } else if (this.leaveapplication.leaveType == 4) {
+                    //     let count = this.additionalLeaves.filter(addLeave => addLeave.leaveType == 3).length;
+                    //     if (count > 0) {
+                    //         swal('Error', 'Cannot add two leaves of same leave type', 'error');
+                    //         resolve(false);
+                    //     }
+                    // }
+                    // --------------------------------------------------------------------------------------------------------
+
+                    //Check if no two leaves overlap each other
+                    if (this.checkLeaveOverlap(this.leaveapplication, leave)) {
+                        swal('Error', 'Dates are overlapping', 'error');
+                        resolve(false);
+                    }
+
+                    dates.forEach(checkLeave => {
+                        if (checkLeave.leaveType != leave.leaveType) {
+                            if (this.checkLeaveOverlap(checkLeave, leave)) {
+                                swal('Error', 'Dates are overlapping', 'error');
+                                resolve(false);
+                            }
+                        }
+                    });
+                    // --------------------------------------------------------------------------------------------------------
+
+                    dates.push(leave);
+                });
+
+                // Sorting the dates in ascending order to further apply validations
+                for (let i = 0; i < dates.length - 1; i++) {
+                    for (let j = 0; j < dates.length - i - 1; j++) {
+                        const pivotLeave = dates[j];
+                        const leave = dates[j + 1];
+                        if (moment(leave.fromDate).isBefore(moment(pivotLeave.fromDate))) {
+                            this.swapLeaves(dates[j], dates[j + 1]);
+                        }
+                    }
+                }
+                // --------------------------------------------------------------------------------------------------------
+
+                // Check that there should be no gap between dates
+                for (let i = 0; i < dates.length - 1; i++) {
+                    const leave1 = dates[i];
+                    const leave2 = dates[i + 1];
+                    let diff = moment(leave2.fromDate).diff(moment(leave1.toDate), 'days');
+                    if (diff > 1) {
+                        swal('Gaps between dates are not allowed', moment(leave1.toDate).format("DD-MM-YYYY") + ' and ' + moment(leave2.fromDate).format("DD-MM-YYYY") + ' has a gap of ' + diff + ' days', 'error');
+                        resolve(false);
+                    }
+                }
+                // --------------------------------------------------------------------------------------------------------
+
+                // Check that fromDate and endate should not  be on weekends
+                if (moment(dates[0].fromDate).day() == 5 || moment(dates[dates.length - 1].toDate).day() == 5 ||
+                    moment(dates[0].fromDate).day() == 6 || moment(dates[dates.length - 1].toDate).day() == 6) {
+                    swal('Error', 'Start Date & End Date cannot be on weekends', 'error');
+                    resolve(false);
+                }
+                // --------------------------------------------------------------------------------------------------------
+
+            }
+            resolve(true);
+        });
+    }
+
+    swapLeaves(leave1, leave2) {
+        let a = JSON.parse(JSON.stringify(leave1));
+        leave1 = JSON.parse(JSON.stringify(leave2));
+        leave2 = JSON.parse(JSON.stringify(a));
+    }
+
+    checkLeaveOverlap(leave1, leave2) {
+        let isleave1FromDateBetween = moment(leave1.fromDate).isBetween(moment(leave2.fromDate), moment(leave2.toDate), null, '[]');
+        let isleave1ToDateBetween = moment(leave1.toDate).isBetween(moment(leave2.fromDate), moment(leave2.toDate), null, '[]');
+
+        let isleave2FromDateBetween = moment(leave2.fromDate).isBetween(moment(leave1.fromDate), moment(leave1.toDate), null, '[]');
+        let isleave2ToDateBetween = moment(leave2.toDate).isBetween(moment(leave1.fromDate), moment(leave1.toDate), null, '[]');
+
+        return isleave1FromDateBetween || isleave1ToDateBetween || isleave2FromDateBetween || isleave2ToDateBetween;
     }
 
     uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
@@ -430,39 +554,43 @@ export class ApplyComponent implements OnInit, OnDestroy {
     resetForm(form) {
         form.resetForm();
         form.submitted = false;
-        this.areDaysValid = true;
-        this.isBalanceValid = true;
+        this.leaveapplication.isBalanceValid = true;
         this.isAttachmentAdded = false;
+        this.additionalLeaves = [];
         this.clearAttachment();
         this.getLeaveBalance();
     }
 
-    calculateDays(e: any, type: string) {
-        this.isSandwichValid = false;
-        this.leaveapplication.days = 0;
+    calculateDays(e: any, type: string, leave) {
+        leave.isSandwichValid = false;
+        leave.days = 0;
         this.sandwichDates = [];
-        if (type === 'fromDate') {
-            this.leaveapplication.toDate = null;
-            // this.leaveapplication.days = this.utilityService.subtractDates(e, this.leaveapplication.toDate);
-        }
-        else {
-            // this.leaveapplication.days = this.utilityService.subtractDates(this.leaveapplication.fromDate, e);
+        if (leave.leaveType == 3 || leave.leaveType == 4) {
+            if (type === 'fromDate') {
+                leave.toDate = moment(e).add(leave.balance - 1, 'days').toDate();
+            } else {
+                leave.fromDate = moment(e).add((leave.balance - 1) * -1, 'days').toDate();
+            }
+        } else {
+            if (type === 'fromDate') {
+                leave.toDate = null;
+            }
         }
         this.resetFromDateValidation();
     }
 
     sandwichDates: any = []; // L - Leave, W - Weekend, H - Holiday, N - No Leave
-    processSandwich() {
-        this.isSandwichValid = false;
-        this.leaveapplication.days = 0;
+    processSandwich(leave) {
+        leave.isSandwichValid = false;
+        leave.days = 0;
         this.sandwichDates = [];
-        if (this.leaveapplication.fromDate && this.leaveapplication.toDate) {
-            let originalDays = moment(moment(this.leaveapplication.toDate).format('L')).diff(moment(this.leaveapplication.fromDate).format('L'), 'days') + 1;
-            let isAlreadyAppleid = this.leavesList.filter(f => {
+        if (leave.fromDate && leave.toDate) {
+            let originalDays = moment(moment(leave.toDate).format('L')).diff(moment(leave.fromDate).format('L'), 'days') + 1;
+            let isAlreadyApplied = this.leavesList.filter(f => {
                 let lFromDate = moment(f.fromDate).format('L');
                 let lToDate = moment(f.toDate).format('L');
-                let fromDate = moment(this.leaveapplication.fromDate).format('L');
-                let toDate = moment(this.leaveapplication.toDate).format('L');
+                let fromDate = moment(leave.fromDate).format('L');
+                let toDate = moment(leave.toDate).format('L');
 
                 let isBetween = f.status == 'Applied'
                     && (moment(lFromDate).isBetween(fromDate, toDate, null, '[]')
@@ -471,50 +599,50 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 return isBetween;
             });
 
-            if (isAlreadyAppleid.length > 0) {
-                this.areDaysValid = false;
-                this.daysValidationMsg = "Leave Already applied for these dates";
+            if (isAlreadyApplied.length > 0) {
+                leave.areDaysValid = false;
+                leave.daysValidationMsg = "Leave Already applied for these dates";
                 return;
             } else {
-                this.areDaysValid = true;
+                leave.areDaysValid = true;
             }
 
             let isBetweenHolidays = this.holidayList.filter(f => {
                 let holiday = moment(f.date).format('L');
-                let fromDate = moment(this.leaveapplication.fromDate).format('L');
-                let toDate = moment(this.leaveapplication.toDate).format('L');
+                let fromDate = moment(leave.fromDate).format('L');
+                let toDate = moment(leave.toDate).format('L');
 
                 let isBetween = moment(holiday).isBetween(fromDate, toDate, null, '[]');
                 return isBetween;
             });
 
             if (isBetweenHolidays.length > 0) {
-                this.areDaysValid = false;
-                this.daysValidationMsg = "Cannot Apply leave on holidays";
+                leave.areDaysValid = false;
+                leave.daysValidationMsg = "Cannot Apply leave on holidays";
                 return;
             } else {
-                this.areDaysValid = true;
+                leave.areDaysValid = true;
             }
 
-            this.isSandwichValid = true;
-            for (let i = this.leaveapplication.fromDate; i <= this.leaveapplication.toDate;) {
+            leave.isSandwichValid = true;
+            for (let i = leave.fromDate; i <= leave.toDate;) {
                 this.addSandwichDates(i, 'L', 1)
                 i = moment(i).add(1, 'd')._d;
             }
-            this.sandwichDates
-            let fromDate = this.getSandwichDate(this.leaveapplication.fromDate, -1);
-            let toDate = this.getSandwichDate(this.leaveapplication.toDate, +1);
+            // this.sandwichDates
+            let fromDate = this.getSandwichDate(leave.fromDate, -1);
+            let toDate = this.getSandwichDate(leave.toDate, +1);
 
             let startDate, endDate;
             let leaveDates = this.sandwichDates.filter(sd => sd.type == 'L');
 
-            let sdIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(this.leaveapplication.fromDate).format('L'));
-            let edIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(this.leaveapplication.toDate).format('L'));
-            startDate = this.getSandwichFinalDates(sdIndex, -1, this.leaveapplication.fromDate);
-            endDate = this.getSandwichFinalDates(edIndex, +1, this.leaveapplication.toDate);
+            let sdIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.fromDate).format('L'));
+            let edIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.toDate).format('L'));
+            startDate = this.getSandwichFinalDates(sdIndex, -1, leave.fromDate);
+            endDate = this.getSandwichFinalDates(edIndex, +1, leave.toDate);
 
             let days = moment(endDate).diff(startDate, 'days') + 1;
-            this.leaveapplication.days = days;
+            leave.days = days;
 
         }
     }
@@ -606,11 +734,15 @@ export class ApplyComponent implements OnInit, OnDestroy {
         swal("An Error Occured", msg, "error");
     }
 
-    ngOnDestroy(): void {
-        this.getLeaveTypeByEmpIdSubs.unsubscribe();
-    }
-
     goToDashboard() {
         this.router.navigate(['my/leaves/dashboard/employee']);
+    }
+
+    addMore() {
+        this.additionalLeaves.push({});
+    }
+
+    ngOnDestroy(): void {
+        this.getLeaveTypeByEmpIdSubs.unsubscribe();
     }
 }

@@ -9,6 +9,8 @@ import swal from 'sweetalert2';
 import { ignoreElements } from 'rxjs/operator/ignoreElements';
 import { Subject } from 'rxjs';
 
+declare var moment;
+
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.mypap",
     templateUrl: "./pap.component.html",
@@ -21,7 +23,7 @@ export class MyPapComponent {
 
     papWorkFlowData: any = [];
     isPapAvaliable: boolean = false;
-    isChangable: boolean = true;
+    isChangable: boolean = false;
 
     supervisorData: any = [];
     weightageData: any = [];
@@ -31,7 +33,7 @@ export class MyPapComponent {
     papData: any = {};
     papGridInput: any = {};
     isDisabled: boolean = true;
-    raiseGreivance = false;
+    showGreivanceActions = false;
 
     progressStatuses = [
         {
@@ -93,11 +95,11 @@ export class MyPapComponent {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
 
     loadRatingScaleData() {
@@ -139,43 +141,64 @@ export class MyPapComponent {
             this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
-                    this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
+                    this.papWorkFlowData = _.chain(papDetails).groupBy('_id').map(function (v, i) {
                         return v[0];
                     }).value();
                     this.papInfoData = this.papWorkFlowData[0].papdetails;
-                    this.isChangable = this.papInfoData.filter(obj => obj.status == "Submitted").length != 0 ? false : true;
-                    debugger;
-                    this.raiseGreivance = this.papWorkFlowData[0].isRatingCommunicated;
-                    debugger;
-                    if (this.raiseGreivance && this.papWorkFlowData[0].grievanceStatus == "Initiated") {
-                        this.raiseGreivance = false
+                    if (this.papInfoData.filter(obj => obj.status == "Pending").length == this.papInfoData.length) {
+                        this.isChangable = true;
+                    } else {
+                        this.isChangable = false;
                     }
+                    if (moment(new Date()).isBefore(this.papWorkFlowData[0].grievanceRaiseEndDate) && !(this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated')) {
+                        this.showGreivanceActions = true;
+                    } else {
+                        this.showGreivanceActions = false;
+                    }
+                    // if (this.papWorkFlowData[0].status == 'Approved' && this.papWorkFlowData[0].isRatingCommunicated == true) {
+                    //     this.showGreivanceActions = true;
+                    // }
+                    // if (this.papWorkFlowData[0].grievanceStatus == 'Satisfied' || this.papWorkFlowData[0].grievanceStatus == 'Initiated') {
+                    //     this.showGreivanceActions = false;
+                    // }
                     console.log(this.papWorkFlowData);
                     resolve(this.papInfoData);
                 }
             });
         })
     }
-    raiseGreivanceClicked() {
+    raiseGreivance(flag) {
         let request = {
             updatedBy: this._currentEmpId,
             empId: this._currentEmpId,
-            papMasterId: this.papWorkFlowData[0]._id
+            papMasterId: this.papWorkFlowData[0]._id,
+            raiseGreivance: flag
         }
-        this.papService.raiseGreivance(request).subscribe((res => {
-            debugger;
-            console.log(res);
-            if (res.ok) {
-                swal({
-                    title: 'Success',
-                    text: "Greivance has been raised",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+        swal({
+            title: 'Are you sure?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                this.papService.raiseGreivance(request).subscribe((res => {
+                    console.log(res);
+                    if (res.ok) {
+                        this.loadPapDetails();
+                        swal({
+                            title: 'Success',
+                            text: flag ? "Greivance has been raised" : "Saved",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                }))
             }
-        }))
+        });
     }
 
     showPAPDetails(index) {
@@ -187,8 +210,6 @@ export class MyPapComponent {
         if (this.papData.status == "Submitted") {
             this.isDisabled = true;
         } else if (this.papData.status == "Initiated" || this.papData.status == "Pending") {
-            this.isDisabled = false;
-        } else {
             this.isDisabled = false;
         }
     }
@@ -238,7 +259,8 @@ export class MyPapComponent {
         if (dataWithoutPendingStatus.length == 0) {
             let request = {
                 pap_master_id: this.param_id,
-                updatedBy: this._currentEmpId
+                updatedBy: this._currentEmpId,
+                action_link: window.location.origin + '/my/team/workflows/pap-detailed-view/' + this.papWorkFlowData[0]._id + '/' + this.papGridInput.empId
             }
             swal({
                 title: 'Are you sure?',

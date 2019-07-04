@@ -64,6 +64,7 @@ export class PapReviewComponent implements OnInit {
     papChanges: Subject<any> = new Subject<any>();
     papEmployeeId;
     papMasterId;
+    isView: boolean = false;
 
     constructor(
         public _authService: AuthService,
@@ -82,6 +83,9 @@ export class PapReviewComponent implements OnInit {
                         this.papEmployeeId = parseInt(params['emp_id']);
                         this.papMasterId = parseInt(params['id']);
                         this.loadData();
+                    }
+                    if (params['isView'] && params['isView'] == "true") {
+                        this.isView = true;
                     }
                 });
             }
@@ -105,7 +109,7 @@ export class PapReviewComponent implements OnInit {
         })
     }
 
-    loadPapDetails() {       
+    loadPapDetails() {
         return new Promise((resolve, reject) => {
             this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
                 let papDetails = res || [];
@@ -129,11 +133,11 @@ export class PapReviewComponent implements OnInit {
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
     loadRatingScaleData() {
         this._commonService.getPapRatingScale().subscribe(
@@ -153,44 +157,50 @@ export class PapReviewComponent implements OnInit {
         });
     }
     showPAPDetails(index) {
-        debugger;
         this.modalRef = this.modalService.show(this.papDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.papData = JSON.parse(JSON.stringify(this.papInfoData[index]));
         this.papData.no = index + 1;
 
         console.log(this.papData);
-        this.isDisabled = this.papData.status == "SendBack" || this.papData.status == "Approved" ? true : false;
+        if (this.isView) {
+            this.isDisabled = true;
+        } else {
+            this.isDisabled = this.papData.status == "SendBack" || this.papData.status == "Approved" ? true : false;
+        }
     }
-    saveKRADetails(form, id: number,isApproved :boolean){
-        this.modalRef.hide();
-        let request = {
-            "papDetailsId": this.papData._id,
-            "updatedBy": this._currentEmpId,
-            "isApproved":isApproved,
-            "reviewerRemark": this.papData.reviewerRemark
-        }    
-        this.papService.papUpdateReviewer(request).subscribe(res => {           
-            if (res.ok) {
-                // this.papGridInput = {};
-                // let gridInput = {
-                //     empId: this._currentEmpId,
-                //     param_id: this.param_id
-                // }
-                // Object.assign(this.papGridInput, gridInput)
-                this.loadPapDetails().then(res => {
-                    this.papChanges.next(res);
-                });
-                swal({
-                    title: 'Success',
-                    text: "PAP has been Saved.",
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#66BB6A',
-                    confirmButtonText: 'OK'
-                });
+    saveKRADetails(form, id: number, isApproved: boolean) {
+        debugger;
+        if (form.valid) {
+            this.modalRef.hide();
+            let request = {
+                "papDetailsId": this.papData._id,
+                "updatedBy": this._currentEmpId,
+                "isApproved": isApproved,
+                "reviewerRemark": this.papData.reviewerRemark,
+                "grievanceRevRemark": this.papData.grievanceRevRemark,
+                "grievanceStatus": this.papWorkFlowData[0].grievanceStatus
             }
-        }, error => {
+            this.papService.papUpdateReviewer(request).subscribe(res => {
+                if (res.ok) {
+                    this.loadPapDetails().then(res => {
+                        this.papChanges.next(res);
+                    });
+                    let text = "PAP approved succesfully";
+                    if (!isApproved) {
+                        text = "PAP sentback succesfully";
+                    }
+                    swal({
+                        title: 'Success',
+                        text: text,
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }, error => {
 
-        })       
+            });
+        }
     }
 }

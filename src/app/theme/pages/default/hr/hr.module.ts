@@ -25,9 +25,13 @@ import { LearningBatchComponent } from './workFlows/learning/batch/batch.compone
 import { HrInitiateComponent } from './workFlows/initiate/initiate.component';
 import { HrBatchComponent } from './workFlows/batch/batch.component';
 import { HrPipComponent } from './workFlows/pip/pip.component';
+import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
+import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { DirectoryComponent } from './directory/directory.component';
 import { TransferResponsibilityComponent } from './transferRespnsibility/transferResponsibility.component';
+import { QuotaProviderComponent } from './quotaProvider/quotaProvider.component';
 //import { DocumentsViewComponent } from './employee/documents-view/documents-view.component';
+import { AmChartsService, AmChartsModule } from '@amcharts/amcharts3-angular';
 
 import { HrService } from './hr.service';
 
@@ -47,7 +51,10 @@ import { GrievanceAllEmployeeComponent } from './workFlows/grievance/all-employe
 import { GrievanceDetailComponent } from './workFlows/grievance/grievance-details/grievance-detail.component';
 import { PapDetailsGridComponent } from '../shared/components/pap-details-grid/pap-details-grid.component';
 import { LearningService } from '../services/learning.service';
+import { PipService } from '../services/pip.service';
+import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { SharedModule } from '../shared/shared.module';
+import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
 
 
 @NgModule({
@@ -63,6 +70,7 @@ import { SharedModule } from '../shared/shared.module';
         BaseModule,
         NgUploaderModule,
         HttpClientModule,
+        AmChartsModule,
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
         SharedModule
@@ -77,6 +85,9 @@ import { SharedModule } from '../shared/shared.module';
         LearningBatchComponent,
         HrBatchComponent,
         HrPipComponent,
+        PipBatchComponent,
+        PipViewComponent,
+        PipDetailView,
         DirectoryComponent,
         EditEmployeeComponent,
         HrInitiateComponent,
@@ -92,9 +103,12 @@ import { SharedModule } from '../shared/shared.module';
         FeedbackInitiateComponent,
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
+        QuotaProviderComponent,
+        MonthlyGradeChartComponent
         //DocumentsViewComponent
+        
     ],
-    providers: [HrService, HrGuard, LeaveService, LearningService]
+    providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })
 export class HrModule {
 }

@@ -3,7 +3,7 @@ import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { HrService } from '../../hr.service';
-import {environment} from '../../../../../../../environments/environment'
+import { environment } from '../../../../../../../environments/environment'
 import swal from 'sweetalert2';
 
 @Component({
@@ -40,12 +40,12 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     search: any;
     isCheckAll: boolean = false;
 
-    imageBase:any;
+    imageBase: any;
 
-    batchTypes:any=[
-       {_id:"KRA" ,batchTypeName:"KRA", },
-       {_id:"Learning" ,batchTypeName:"Learning",disabled: true},
-       {_id:"PIP" ,batchTypeName:"PIP",disabled: true},
+    batchTypes: any = [
+        { _id: "KRA", batchTypeName: "KRA", },
+        { _id: "Learning", batchTypeName: "Learning", disabled: true },
+        { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
 
     constructor(
@@ -62,7 +62,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initDropdown();
             });
-        this.imageBase=environment.content_api_base.imgBase;
+        this.imageBase = environment.content_api_base.imgBase;
     }
 
     initDropdown() {
@@ -78,30 +78,30 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.employeeData = [];
-                    this.deparmentData = res.json();
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.employeeData = [];
+                        this.deparmentData = res.json();
+                    }
+                },
+                error => {
+                });
     }
 
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
-            res => {
-                if (res.ok) {
-                    this.employeeData = [];
-                    this.gradeData = res.json();
-                    this.gradeData=this.gradeData.filter(item=>
-                        item._id < 13
-                    );
-                }
-            },
-            error => {
-            });
+                res => {
+                    if (res.ok) {
+                        this.employeeData = [];
+                        this.gradeData = res.json();
+                        this.gradeData = this.gradeData.filter(item =>
+                            item._id < 13
+                        );
+                    }
+                },
+                error => {
+                });
     }
 
     loadAllEmployee() {
@@ -109,31 +109,31 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
                 .subscribe(
-                res => {
-                    let data = res.json().data || [];
-                    if (data.length > 0) {
-                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                            //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
+                    res => {
+                        let data = res.json().data || [];
+                        if (data.length > 0) {
+                            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                                data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
+                                //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
+                            }
+                            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                                data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
+                                //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
+                            }
+                            data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                            // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
+                            this.employeeData = data || [];
+                            this.utilityService.hideLoader('#initiate-loader');
                         }
-                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                            //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
+                        else {
+                            this.employeeData = data.json().data || [];
+                            this.utilityService.hideLoader('#initiate-loader');
                         }
-                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                       // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
-                        this.employeeData = data || [];
+
+                    },
+                    error => {
                         this.utilityService.hideLoader('#initiate-loader');
-                    }
-                    else{
-                        this.employeeData = data.json().data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
-                    }
-                        
-                },
-                error => {
-                    this.utilityService.hideLoader('#initiate-loader');
-                });
+                    });
         }
         else {
             this.employeeData = [];
@@ -141,31 +141,39 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     saveBulkKra(form) {
-        this.batchData.emp_id = this.employeeData.filter(function(employee, index, array) {
+        this.batchData.emp_id = this.employeeData.filter(function (employee, index, array) {
             return employee.checked;
         }).map(item => {
             return item._id
         });
 
-        if(this.batchData.emp_id.length > 0)
-        {
-            this.utilityService.showLoader('#initiate-loader');
-            this._hrService.saveBulkKra(this.batchData)
-                .subscribe(
-                res => {
-                    if (res.ok) {
+        if (this.batchData.emp_id.length > 0) {
+            swal({
+                title: 'Are you sure?',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    this.utilityService.showLoader('#initiate-loader');
+                    this._hrService.saveBulkKra(this.batchData).subscribe(res => {
+                        if (res.ok) {
+                            this.utilityService.hideLoader('#initiate-loader');
+                            swal("Success", "Batch Initiated Successfully", "success");
+                            form.resetForm();
+                            this.clearForm();
+                        }
+                    }, error => {
                         this.utilityService.hideLoader('#initiate-loader');
-                        swal("Success", "Batch Initiated Successfully", "success");
-                        form.resetForm();
-                        this.clearForm();
-                    }
-                },
-                error => {
-                    this.utilityService.hideLoader('#initiate-loader');
+                    });
+                }
             });
         }
-        else{
-            swal('Oops!','No employee selected','warning')
+        else {
+            swal('Oops!', 'No employee selected', 'warning')
         }
     }
 

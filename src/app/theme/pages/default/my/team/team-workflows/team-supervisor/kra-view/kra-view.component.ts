@@ -50,7 +50,8 @@ export class MyTeamKraComponent {
         public _authService: AuthService,
         private _commonService: CommonService,
         private _kraService: KraViewService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        private myTeamService: MyTeamService
     ) {
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
@@ -83,6 +84,7 @@ export class MyTeamKraComponent {
         this.loadSupervisorData();
         this.loadKraInfo();
         this.getEmployee();
+        this.getAllEmployees();
     }
 
     loadKraInfo() {
@@ -117,13 +119,17 @@ export class MyTeamKraComponent {
     }
 
     loadSupervisorData() {
-        this._commonService.getKraSupervisor(this.param_emp_id)
-            .subscribe(
-                data => {
-                    this.supervisorData = data.json();
-                },
-                error => {
-                });
+        this._commonService.getKraSupervisor(this.param_emp_id).subscribe(data => {
+            this.supervisorData = data.json();
+        }, error => {
+        });
+    }
+
+    getAllEmployees() {
+        this.myTeamService.getAllEmployee().subscribe(data => {
+            this.employees = data.json().data || [];
+        }, error => {
+        });
     }
 
     getEmployee() {
@@ -138,7 +144,7 @@ export class MyTeamKraComponent {
         let swalOption = {}
         let index = this.kraData.no - 1;
         this.kraInfoData[index].sendBackComment = this.kraData.sendBackComment;
-        if (status == 'SendBack' && (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "")) {
+        if (!this.kraInfoData[index].sendBackComment || this.kraInfoData[index].sendBackComment == "") {
             swal({
                 title: 'Please specify the reason!',
                 type: 'warning',
@@ -215,6 +221,4 @@ export class MyTeamKraComponent {
         this.kraData.weightage = this.weightageData.find(f => f._id == this.kraData.weightage_id);
         this.kraData.category = this.kraCategoryData.find(f => f._id == this.kraData.category_id);
     }
-
-
 }

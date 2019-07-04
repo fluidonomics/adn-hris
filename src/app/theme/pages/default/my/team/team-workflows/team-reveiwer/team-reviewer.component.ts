@@ -9,12 +9,13 @@ import { tree } from 'd3';
 import { KraService } from '../../../workflows/kra/kra.service';
 import { LearningService } from '../../../../services/learning.service';
 import { PapService } from '../../../../services/pap.service';
+import { PipService } from '../../../../services/pip.service';
 declare var moment;
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./team-reviewer.component.html",
     encapsulation: ViewEncapsulation.None,
-    providers: [LearningService, PapService]
+    providers: [LearningService, PapService, PipService]
 })
 export class MyTeamReviewerComponent implements OnInit {
 
@@ -26,7 +27,8 @@ export class MyTeamReviewerComponent implements OnInit {
         private router: Router,
         private kraService: KraService,
         private learningService: LearningService,
-        private papService: PapService
+        private papService: PapService,
+        private pipService: PipService
     ) {
     }
     employees: any = [];
@@ -50,6 +52,11 @@ export class MyTeamReviewerComponent implements OnInit {
     learningSearch: any;
     learningReverse: boolean = true;
 
+    pipData: any = [];
+    pipSearch: any;
+    pipReverse: boolean = true;
+
+
     papEmployeeReverse: boolean = true;
     papEmployeeSearch: any;
     papData: any = [];
@@ -61,11 +68,15 @@ export class MyTeamReviewerComponent implements OnInit {
     goToAllLearning() {
         this.router.navigate(['/my/team/workflows/reveiwer/learning/list']);
     }
+    goToAllPip() {
+        this.router.navigate(['/my/team/workflows/reveiwer/pip/list']);
+    }
     ngOnInit() {
         this.getallemployees();
         this.loadMTRInfo();
         this.getEmployeesLearning();
         this.getPapByReviewer();
+        this.getPipByReviewer();
         this.imageBase = environment.content_api_base.apiBase;
     }
 
@@ -100,8 +111,16 @@ export class MyTeamReviewerComponent implements OnInit {
     getEmployeesLearning() {
         this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.learningData = res.json().result.message || [];
-            //debugger;
             // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    getPipByReviewer() {
+        this.pipService.getPipByReviewer(this.authService.currentUserData._id).subscribe(res => {
+            this.pipData = res.json().result.message || [];
+            this.pipData = this.pipData.filter(a => a.pip_master_details.status == 'Approved' || a.pip_master_details.status == 'Completed');
         }, error => {
             console.log(error);
         });
@@ -116,20 +135,19 @@ export class MyTeamReviewerComponent implements OnInit {
                 this.papData = papData.filter(p => {
                     let submittedCount = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
-                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer").length;
+                        submittedCount = p.kra_details.filter(pDetails => pDetails.status == "Pending Reviewer" || pDetails.grievanceStatus == "Pending Reviewer").length;
                     }
-                    return submittedCount == p.kra_details.length;
+                    return submittedCount > 0;
                 })
                 this.papData = this.papData.sort((a, b) => {
                     if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;
                     else if (!moment(a.updatedAt).isBefore(b.updatedAt)) return -1;
                     else return 0;
                 });
-
                 this.papViewData = papData.filter(p => {
                     let count = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
-                        count = p.kra_details.filter(pDetails => pDetails.status == "Approved").length;
+                        count = p.kra_details.filter(pDetails => (pDetails.status == "Approved" && pDetails.grievanceStatus == null) || (pDetails.status == "Approved" && pDetails.grievanceStatus == 'Approved')).length;
                     }
                     return count == p.kra_details.length;
                 })
@@ -143,7 +161,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     goToKraReview(kra) {
-        this.router.navigateByUrl('my/team/workflows/kra-review/' + kra._id + '/' + kra.emp_id);
+        this.router.navigateByUrl('my/team/workflows/kra-review/' + kra.kra._id + '/' + kra.kra.emp_id);
     }
     goToMtrReview(employee) {
         this.router.navigateByUrl('my/team/workflows/mtr-review/' + employee.mtr_master_details._id + '/' + employee.emp_details._id);
@@ -153,8 +171,11 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     goToPapReview(pap) {
-        debugger;
-        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id);
+        this.router.navigateByUrl('my/team/workflows/pap-review/' + pap.pap_master_id + '/' + pap._id + '/false');
+    }
+
+    goToPipReview(pip) {
+        this.router.navigateByUrl('my/team/workflows/pip-review/' + pip.pip_master_details._id + "/" + pip.emp_details._id);
     }
 }
 

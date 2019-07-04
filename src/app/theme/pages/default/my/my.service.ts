@@ -20,6 +20,14 @@ export class MyService {
         let url = "user/getBankInfo?emp_id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getSeparationInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getseparation?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+    getStatesInfo(emp_id?: number): Observable<Response> {
+        let url = "user/getstates?emp_id=" + emp_id;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     getMTRByReviewer(emp_id:number) : Observable<Response>{
         let url = "midterm/getMtrByReviewer?reviewerId=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
@@ -200,6 +208,25 @@ export class MyService {
         }
     }
 
+    saveSeparationDetails(data: any): Observable<Response> {
+
+        {
+            let url = "user/addseparation";
+            // if (data._id != null && data._id != "" && data._id != undefined) {
+            //     url = "user/updateBankInfo";
+            // }
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
+    updateState(data: any): Observable<Response> {
+
+        {
+            let url = "user/changestate";
+            return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+        }
+    }
+
     savePerformanceRatingInfo(data: any): Observable<Response> {
         {
             let url = "user/saveBulkPerformanceRating"
@@ -271,6 +298,7 @@ export class MyService {
         let url = "user/getAllEmployeeByReviewerId?id=" + emp_id;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    
 
     private extractData(res: Response) {
         return res || {};

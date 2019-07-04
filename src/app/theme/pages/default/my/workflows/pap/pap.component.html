@@ -25,51 +25,63 @@
 					</div>
 				</div>
 			</div>
-			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded" [ngClass]="{'m-datatable--error': (papWorkFlowData | orderBy: key : reverse | filter:search)?.length==0 }">
+			<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+				[ngClass]="{'m-datatable--error': (papWorkFlowData | orderBy: key : reverse | filter:search)?.length==0 }">
 				<table class="m-datatable__table">
 					<thead class="m-datatable__head">
 						<tr class="m-datatable__row">
 							<!-- <th class="m-datatable__cell" width="5%" ></th> -->
-							<th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+							<th (click)="sort('batchName')" class="m-datatable__cell m-datatable__cell--sort"
+								width="20%">
 								<span>
 									TITLE
-									<i class="la" *ngIf="key == 'batchName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'batchName'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
-							<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+							<th (click)="sort('createdAt')" class="m-datatable__cell m-datatable__cell--sort"
+								width="20%">
 								<span>
 									INITIATED ON
-									<i class="la" *ngIf="key == 'createdAt'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'createdAt'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
-							<th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+							<th (click)="sort('createdBy')" class="m-datatable__cell m-datatable__cell--sort"
+								width="20%">
 								<span>
 									INITIATED BY
-									<i class="la" *ngIf="key == 'createdBy'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'createdBy'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
-							<th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+							<th (click)="sort('batchEndDate')" class="m-datatable__cell m-datatable__cell--sort"
+								width="20%">
 								<span>
 									LAST DATE
-									<i class="la" *ngIf="key == 'batchEndDate'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'batchEndDate'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="10%">
 								<span>
 									STATUS
-									<i class="la" *ngIf="key == 'status'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'status'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 							<th class="m-datatable__cell m-datatable__cell--sort" width="10%">
 								<span>
 									ACTIONS
-									<i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+									<i class="la" *ngIf="key == 'actions'"
+										[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 								</span>
 							</th>
 						</tr>
 					</thead>
 					<tbody class="m-datatable__body">
-						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let papworkflow of papWorkFlowData | orderBy: key : reverse | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+						<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+							*ngFor="let papworkflow of papWorkFlowData | orderBy: key : reverse | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
 							<!-- <td class="m-datatable__cell" width="3%" >
                                 <span class="m-widget4__icon">
                                                 <i class="fa fa-circle m--font-success"></i>
@@ -87,18 +99,33 @@
 							<td class="m-datatable__cell" width="20%">
 								<span>{{papworkflow.papbatches.batchEndDate | date:"dd-MMM-yyyy hh:mm"}}</span>
 							</td>
-							<td class="m-datatable__cell" width="10%">
+							<td class="m-datatable__cell" width="10%"
+								*ngIf="papworkflow.grievanceStatus != 'Initiated'">
 								<span style="width: 100px;">
-									<span class="m-badge  m-badge--success m-badge--wide" [ngClass]="{'m-badge--warning':papworkflow.status=='Initiated','m-badge--brand':papworkflow.status=='Submitted','m-badge--danger':papworkflow.status=='SendBack','m-badge--success':papworkflow.status=='Approved','m-badge--secondary':papworkflow.status=='Terminated'}">{{papworkflow.status}}</span>
+									<span class="m-badge  m-badge--success m-badge--wide"
+										[ngClass]="{'m-badge--warning':papworkflow.status=='Initiated','m-badge--brand':papworkflow.status=='Submitted','m-badge--danger':papworkflow.status=='SendBack','m-badge--success':papworkflow.status=='Approved','m-badge--secondary':papworkflow.status=='Terminated'}">{{papworkflow.status}}</span>
+								</span>
+							</td>
+							<td class="m-datatable__cell" width="10%"
+								*ngIf="papworkflow.grievanceStatus == 'Initiated'">
+								<span style="width: 100px;" *ngIf="papworkflow.reviewerStatus != 'Approved'">
+									<span class="m-badge  m-badge--success m-badge--wide m-badge--danger">Grievance
+										Raised</span>
+								</span>
+								<span style="width: 100px;" *ngIf="papworkflow.reviewerStatus == 'Approved'">
+									<span class="m-badge  m-badge--success m-badge--wide">Approved</span>
 								</span>
 							</td>
 							<td class="m-datatable__cell" width="15%">
-								<a routerLink="/my/workflows/pap" [queryParams]="{ id: papworkflow.mtr_master_id}" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
-									<i class="la" [ngClass]="papworkflow.status=='Initiated' || papworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
+								<a routerLink="/my/workflows/pap" [queryParams]="{ id: papworkflow._id}"
+									class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+									<i class="la"
+										[ngClass]="papworkflow.status=='Initiated' || papworkflow.status=='SendBack' ? 'la-edit':'la-eye'"></i>
 								</a>
 							</td>
 						</tr>
-						<span *ngIf="(papWorkFlowData | orderBy: key : reverse)?.length==0" class="m-datatable--error">No
+						<span *ngIf="(papWorkFlowData | orderBy: key : reverse)?.length==0"
+							class="m-datatable--error">No
 							records found</span>
 					</tbody>
 				</table>
@@ -106,41 +133,45 @@
 					<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
 						<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--first" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								 (click)="p.setCurrent(1)">
+								<span class="m-datatable__pager-link m-datatable__pager-link--first"
+									[class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+									(click)="p.setCurrent(1)">
 									<i class="la la-angle-double-left"></i>
 								</span>
 							</li>
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--prev" [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-								 (click)="p.previous()">
+								<span class="m-datatable__pager-link m-datatable__pager-link--prev"
+									[class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
 									<i class="la la-angle-left"></i>
 								</span>
 							</li>
 							<li *ngFor="let page of p.pages">
-								<span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
-								 [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+								<span (click)="p.setCurrent(page.value)"
+									class="m-datatable__pager-link m-datatable__pager-link-number "
+									[class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
 									{{ page.label }}
 								</span>
 							</li>
 							<li>
-								<span class="m-datatable__pager-link m-datatable__pager-link--next" [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-								 (click)="p.next()">
+								<span class="m-datatable__pager-link m-datatable__pager-link--next"
+									[class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
 									<i class="la la-angle-right"></i>
 								</span>
 							</li>
 							<li>
 								<span title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
-								 [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+									[class.m-datatable__pager-link--disabled]="p.isLastPage()"
+									(click)="p.setCurrent(p.pages.length + 1)">
 									<i class="la la-angle-double-right"></i>
 								</span>
 							</li>
 						</ul>
 					</div>
 				</pagination-template>
-				<div class="pager-display-size" *ngIf="(papWorkFlowData | orderBy: key : reverse | filter:search)?.length!=0">
-					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size" data-width="70px"
-					 data-selected="50" tabindex="1">
+				<div class="pager-display-size"
+					*ngIf="(papWorkFlowData | orderBy: key : reverse | filter:search)?.length!=0">
+					<select [(ngModel)]="itemPerPage" class="m-datatable__pager-size" title="Select page size"
+						data-width="70px" data-selected="50" tabindex="1">
 						<option value=10>10</option>
 						<option value=20>20</option>
 						<option value=30>30</option>
@@ -175,14 +206,13 @@
 						</div>
 					</div>
 					<div class="m-portlet__head-tools">
-						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
+							role="tablist">
 							<li class="nav-item m-tabs__item" *ngIf="isChangable">
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="submitPapWorkFlow(fmtrInfo.form.dirty)">Submit</button>
+								<button type="button" class="btn m-btn--pill pulldown btn-secondary"
+									(click)="submitPapWorkFlow(fmtrInfo.form.dirty)">Submit</button>
 							</li>
-							<li class="nav-item m-tabs__item" *ngIf="raiseGreivance">
-								<button type="button" class="btn m-btn--pill pulldown btn-secondary" (click)="raiseGreivanceClicked()">Raise
-									Greivance</button>
-							</li>
+							<li class="nav-item m-tabs__item"></li>
 						</ul>
 					</div>
 				</div>
@@ -190,151 +220,184 @@
 					<div class="m-section">
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
-								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id" [papChanges]="papChanges"
-								 (showDetails)="showPAPDetails($event)"></pap-details-grid>
+								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id"
+									[papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
 							</form>
+						</div>
+					</div>
+					<div class="row overallRatingBlock" *ngIf="(papWorkFlowData[0] && papWorkFlowData[0].isRatingCommunicated == true && papWorkFlowData[0].grievanceStatus != 'Initiated') || 
+						(papWorkFlowData[0]?.grievanceStatus == 'Initiated' && papWorkFlowData[0]?.isGrievanceFeedbackReleased == true)">
+						<div class="col-md-8">
+							<span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
+						</div>
+						<div *ngIf="showGreivanceActions" class="col-md-4">
+							<button type="button" class="btn m-btn btn-success"
+								(click)="raiseGreivance(false)">Satisfied</button>
+							<button type="button" class="btn m-btn btn-warning" (click)="raiseGreivance(true)">Raise
+								Greivance</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<ng-template #papDetailModal>
-	<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text">
-						PAP
-					</h3>
+
+	<ng-template #papDetailModal>
+		<div
+			class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+			<div class="m-portlet__head">
+				<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">
+							PAP
+						</h3>
+					</div>
+				</div>
+				<div class="m-portlet__head-tools">
+					<ul class="m-portlet__nav">
+						<li class="m-portlet__nav-item">
+							<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+								<div class="btn-group" role="group">
+									<button type="button" class="close pull-right" aria-label="Close"
+										(click)="modalRef.hide()">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
-			<div class="m-portlet__head-tools">
-				<ul class="m-portlet__nav">
-					<li class="m-portlet__nav-item">
-						<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-							<div class="btn-group" role="group">
-								<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
 
-		<div class="m-portlet__body">
-			<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveKRADetails(PAPDataForm,papData._id)" id="PAPDataForm"
-			 #PAPDataForm="ngForm">
-				<div class="m-widget6 ">
-					<div class="row">
-						<div class="col-md-6">
-							<span>PAP No. {{papData.no}}</span>
-						</div>
-						<div class="col-md-2 ">
-							KRA Category
-						</div>
-						<div class="col-md-4">
-							<ng-select class="m-input m-input--air" name="papCategoryData" id="papCategoryData" [items]="papCategoryData"
-							 bindLabel="kraCategoryName" bindValue="_id" placeholder="Select KRA Category" [(ngModel)]="papData.midtermdetails.category_id"
-							 [clearable]="false" #papCategory="ngModel" disabled [required]="!papData.mtr_master_kraDetailId"></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && papCategory.invalid">
-								This field is required.
+			<div class="m-portlet__body">
+				<form class="m-form m-form--fit m-form--label-align-right"
+					(ngSubmit)="saveKRADetails(PAPDataForm,papData._id)" id="PAPDataForm" #PAPDataForm="ngForm">
+					<div class="m-widget6 ">
+						<div class="row">
+							<div class="col-md-6">
+								<span>PAP No. {{papData.no}}</span>
+							</div>
+							<div class="col-md-2 ">
+								KRA Category
+							</div>
+							<div class="col-md-4">
+								<ng-select class="m-input m-input--air" name="papCategoryData" id="papCategoryData"
+									[items]="papCategoryData" bindLabel="kraCategoryName" bindValue="_id"
+									placeholder="Select KRA Category" [(ngModel)]="papData.midtermdetails.category_id"
+									[clearable]="false" #papCategory="ngModel" disabled
+									[required]="!papData.mtr_master_kraDetailId"></ng-select>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && papCategory.invalid">
+									This field is required.
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row details">
-						<div class="col-md-2">
-							PAP Weightage
-						</div>
-						<div class="col-md-4">
-							<ng-select class="m-input m-input--air" name="papWeightagedata" id="papWeightagedata" [items]="weightageData"
-							 bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
-							 [clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && papWeightage.invalid">
-								This field is required.
+						<div class="row details">
+							<div class="col-md-2">
+								PAP Weightage
 							</div>
-						</div>
-						<div class="col-md-2">
-							Supervisor
-						</div>
-						<div class="col-md-4">
-							<!-- <ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
+							<div class="col-md-4">
+								<ng-select class="m-input m-input--air" name="papWeightagedata" id="papWeightagedata"
+									[items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
+									placeholder="Weightage" [(ngModel)]="papData.midtermdetails.weightage_id"
+									[clearable]="false" #papWeightage="ngModel" disabled required></ng-select>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && papWeightage.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-2">
+								Supervisor
+							</div>
+							<div class="col-md-4">
+								<!-- <ng-select class="m-input m-input--air " name="supervisordata" id="supervisordata" [items]="supervisorData"
 							 bindLabel="fullName" bindValue="_id" placeholder="Select Supervisor" [(ngModel)]="papData.midtermdetails.supervisor_id"
 							 [clearable]="false" #supervisorOne="ngModel" disabled required></ng-select>
 							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && supervisorOne.invalid">
 								This field is required.
 							</div> -->
-							<input class="m-input m-input--air customError" name="supervisordata" id="supervisor" placeholder="Supervisor"
-							 [(ngModel)]="papData.mtr_supervisorDetails.fullName" #supervisorOne="ngModel" disabled />
-						</div>
-						<div class="col-md-12 details">
-							<span>KRA</span>
-							<textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra" #pap_kra="ngModel" class="form-control m-input m-input--air"
-							 disabled [required]="!papData.pap_master_kraDetailId"></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && pap_kra.invalid">
-								This field is required.
+								<input class="m-input m-input--air customError" name="supervisordata" id="supervisor"
+									placeholder="Supervisor" [(ngModel)]="papData.pap_supervisorDetails.fullName"
+									#supervisorOne="ngModel" disabled />
+							</div>
+							<div class="col-md-12 details">
+								<span>KRA</span>
+								<textarea name="pap_kra" id="pap_kra" [(ngModel)]="papData.midtermdetails.mtr_kra"
+									#pap_kra="ngModel" class="form-control m-input m-input--air" disabled
+									[required]="!papData.pap_master_kraDetailId"></textarea>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && pap_kra.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-6 details">
+								<span>Unit of Success</span>
+								<textarea name="unitOfSuccessdata" id="unitOfSuccessdata"
+									[(ngModel)]="papData.midtermdetails.unitOfSuccess" #unitOfSuccess="ngModel"
+									class="form-control m-input m-input--air" disabled required></textarea>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && unitOfSuccess.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-6 details">
+								<span>Measure of Success</span>
+								<textarea name="measureOfSuccessdata" id="measureOfSuccessdata"
+									[(ngModel)]="papData.midtermdetails.measureOfSuccess" #measureOfSuccess="ngModel"
+									class="form-control m-input m-input--air" disabled required></textarea>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && measureOfSuccess.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-6 details">
+								<span>Status</span>
+								<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus"
+									[items]="progressStatuses" bindLabel="label" bindValue="id"
+									placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus"
+									[clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && progressStatus.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-6 details">
+								<span>Rating Scale</span>
+								<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus"
+									[items]="papRatingScaleData" bindLabel="displayName" bindValue="_id"
+									placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
+									[clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled" required>
+								</ng-select>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && colorStatus.invalid">
+									This field is required.
+								</div>
+							</div>
+							<div class="col-md-12 details">
+								<span>Employee Remarks</span>
+								<textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.empRemark"
+									#employeeComment="ngModel" class="form-control m-input m-input--air"
+									[disabled]="isDisabled" required></textarea>
+								<div class="form-control-feedback has-danger"
+									*ngIf="PAPDataForm.submitted && employeeComment.invalid">
+									This field is required.
+								</div>
 							</div>
 						</div>
-						<div class="col-md-6 details">
-							<span>Unit of Success</span>
-							<textarea name="unitOfSuccessdata" id="unitOfSuccessdata" [(ngModel)]="papData.midtermdetails.unitOfSuccess"
-							 #unitOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && unitOfSuccess.invalid">
-								This field is required.
-							</div>
-						</div>
-						<div class="col-md-6 details">
-							<span>Measure of Success</span>
-							<textarea name="measureOfSuccessdata" id="measureOfSuccessdata" [(ngModel)]="papData.midtermdetails.measureOfSuccess"
-							 #measureOfSuccess="ngModel" class="form-control m-input m-input--air" disabled required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && measureOfSuccess.invalid">
-								This field is required.
-							</div>
-						</div>
-						<div class="col-md-6 details">
-							<span>Status</span>
-							<ng-select class="m-input m-input--air" name="progressStatus" id="progressStatus" [items]="progressStatuses"
-							 bindLabel="label" bindValue="id" placeholder="Select Status" [(ngModel)]="papData.midtermdetails.progressStatus"
-							 [clearable]="false" #progressStatus="ngModel" disabled required></ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && progressStatus.invalid">
-								This field is required.
-							</div>
-						</div>
-						<div class="col-md-6 details">
-							<span>Rating Scale</span>
-							<ng-select class="m-input m-input--air" name="colorStatus" id="colorStatus" [items]="papRatingScaleData"
-							 bindLabel="displayName" bindValue="_id" placeholder="Select Rating" [(ngModel)]="papData.emp_ratingScaleId"
-							 [clearable]="false" #colorStatus="ngModel" [disabled]="isDisabled" required>
-							</ng-select>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && colorStatus.invalid">
-								This field is required.
-							</div>
-						</div>
-						<div class="col-md-12 details">
-							<span>Employee Remarks</span>
-							<textarea name="employeeComment" id="employeeComment" [(ngModel)]="papData.empRemark" #employeeComment="ngModel"
-							 class="form-control m-input m-input--air" [disabled]="isDisabled" required></textarea>
-							<div class="form-control-feedback has-danger" *ngIf="PAPDataForm.submitted && employeeComment.invalid">
-								This field is required.
-							</div>
-						</div>
-					</div>
-					<div class="form-actions details">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="m-form__actions">
-									<button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
-									<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+						<div class="form-actions details">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="m-form__actions">
+										<button *ngIf="!isDisabled" class="btn btn-success submitForm" type="submit"
+											id="submitForm">Save</button>
+										<button class="btn btn-secondary" type="button"
+											(click)="modalRef.hide()">Close</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
-
-	</div>
-</ng-template>
+	</ng-template>

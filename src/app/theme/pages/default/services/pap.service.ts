@@ -20,7 +20,7 @@ export class PapService {
         let url = "pap/getEmployeesForGrievance";
         return this.authService.get(url).catch(this.handleError);
     }
-    getEmployeesForFeedbackInit(){
+    getEmployeesForFeedbackInit() {
         let url = "pap/getEmployeesForFeedbackInit";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
@@ -29,12 +29,21 @@ export class PapService {
         let url = "pap/initiatePapProcess";
         return this.authService.post(url, data).catch(this.handleError);
     }
+
+    terminatePap(data) {
+        let url = "pap/terminatePap";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
     raiseGreivance(data) {
         let url = "pap/initiateGrievance";
         return this.authService.post(url, data).catch(this.handleError);
     }
-    getPAPBatches(emp_id?: number): Observable<Response> {
+    getPAPBatches(emp_id?: number, empName?: string): Observable<Response> {
         let url = "pap/getPapBatches?currentUserId=" + emp_id;
+        if (empName) {
+            url += '&empName=' + empName;
+        }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     papUpdate(data: any): Observable<Response> {
@@ -57,7 +66,7 @@ export class PapService {
         let url = "pap/papSubmitToReviewer";
         return this.authService.post(url, data).catch(this.handleError);
     }
-    papInitiateFeedback(data:any):Observable<Response>{        
+    papInitiateFeedback(data: any): Observable<Response> {
         let url = "pap/initiateFeedback";
         return this.authService.post(url, data).catch(this.handleError);
     }
@@ -77,6 +86,41 @@ export class PapService {
     getPapByReviewer(empId: number) {
         let url = "pap/getPapByReviewer?empId=" + empId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    updateBatch(data: any): Observable<Response> {
+        let url = "pap/updateBatch";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    releaseFeedback(data: any) {
+        let url = "pap/releaseFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    initGrievancePhase(data) {
+        let url = "pap/initGrievancePhase";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    getAllPap() {
+        let url = "pap/getAllPap";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    getEmployeesForGrievanceFeedbackInit() {
+        let url = "pap/getEmployeesForGrievanceFeedbackInit";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
+    papInitiateGrievanceFeedback(data: any): Observable<Response> {
+        let url = "pap/initiateGrievanceFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
+    }
+
+    releaseGrievanceFeedback(data: any) {
+        let url = "pap/releaseGrievanceFeedback";
+        return this.authService.post(url, data).catch(this.handleError);
     }
 
     private extractData(res: Response) {

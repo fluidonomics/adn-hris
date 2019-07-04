@@ -184,4 +184,10 @@ export class MtrBatchInitComponent implements OnInit {
 
     }
 
+    selectAllEmployee($event) {
+        this.employeeFilterData.forEach(element => {
+            element.checked = $event.target.checked;
+        });
+    }
+
 }

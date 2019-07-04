@@ -1,0 +1,730 @@
+<div class="m-content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								Approve PIP
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
+					<div class="m-portlet__head-tools">
+						<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger"
+							role="tablist">
+							<li class="nav-item m-tabs__item">
+								<!-- <a class="nav-link m-tabs__link" (click)="window.print();" role="tab" >
+                        <i class="la la-print"></i>
+                        Print
+                        </a> -->
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="m-section">
+						<div class="m-section__content">
+							<div class="row">
+								<div class="col-md-12">
+									<h3>{{user?.fullName}}</h3>
+									<h4>{{user?.userName}}</h4>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover" #print_div>
+									<thead>
+										<tr>
+											<th>
+												#
+											</th>
+
+											<th>
+												Area of Improvement
+											</th>
+											<th>
+												Action Plan
+											</th>
+											<th>
+												Measure of Success
+											</th>
+
+											<!-- <th>
+                                            Comments
+                                        </th> -->
+
+											<th>
+												Status
+											</th>
+
+											<th>
+												Action
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let pipInfo of pipInfoData;let i=index">
+											<th scope="row">
+												{{i+1}}
+											</th>
+											<td>
+												<textarea name="areaofImprovement{{i}}" id="areaofImprovement"
+													#areaofImprovement="ngModel" [(ngModel)]="pipInfo.areaofImprovement"
+													class="form-control m-input m-input--air" disabled></textarea>
+											</td>
+											<td>
+												<textarea name="actionPlan{{i}}" id="actionPlan" #actionPlan="ngModel"
+													[(ngModel)]="pipInfo.actionPlan"
+													class="form-control m-input m-input--air" disabled></textarea>
+											</td>
+											<td>
+												<textarea name="measureOfSuccess{{i}}" id="measureOfSuccess"
+													#measureOfSuccess="ngModel" [(ngModel)]="pipInfo.measureOfSuccess"
+													class="form-control m-input m-input--air" disabled></textarea>
+											</td>
+											<!-- <td>
+													<textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
+													 class="form-control m-input m-input--air" disabled></textarea>
+												</td> -->
+
+											<td>
+												<textarea name="status{{i}}" id="status" #status="ngModel"
+													[(ngModel)]="pipInfo.status"
+													class="form-control m-input m-input--air" disabled></textarea>
+											</td>
+
+
+											<td>
+												<button type="button"
+													class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+													title="Edit" (click)="showPipDetails(i)">
+													<i class="la la-info"></i>
+												</button>
+
+											</td>
+										</tr>
+										<!-- <tr colspan="9">
+											<button type="button" class="accordian-refresh td-active-button-color"><i class="m-menu__link-bullet la la-tasks" (click)="showPipDetails(i)">
+												<span>Completion Information</span>
+											</i></button>
+										</tr> -->
+
+										<tr *ngIf="masterStatus === 'Completed' && primarySupervisorId===_currentEmpId">
+											<td colspan="6">
+												<button
+													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
+													(click)="showCompletionDetails()">
+													<i class="la la-bar-chart"></i>
+												</button>
+											</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+
+							</div>
+							<br>
+							<!-- </form> -->
+						</div><br><br>
+						<!-- <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
+                           *ngIf="isKraAvaliable">
+                           <div class="tab-content">
+                               <div class="m-widget3">
+                                   <div class="m-widget3__item">
+                                       <div class="m-widget3__header">
+                                           <div class="m-widget3__user-img">
+                                               <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                   alt="">
+                                           </div>
+                                           <div class="m-widget3__info">
+                                               <span class="m-widget3__username" id="hrName">
+                                                   Test HR
+                                               </span>
+                                               <br>
+                                               <span class="m-widget3__time" id="dateTime">
+                                                   2 day ago
+                                               </span>
+                                           </div>
+                                           <span class="m-badge m-badge--success m-badge--wide" id="kraStatus">
+                                               accepted
+                                           </span>
+                                       </div>
+                                       <div class="m-widget3__body">
+                                           <p class="m-widget3__text m--font-success" id="kraTimeline">
+                                               Your KRA has been Accepted.
+                                           </p>
+                                       </div>
+                                   </div>
+                                   <div class="m-widget3__item">
+                                       <div class="m-widget3__header">
+                                           <div class="m-widget3__user-img">
+                                               <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                   alt="">
+                                           </div>
+                                           <div class="m-widget3__info">
+                                               <span class="m-widget3__username" id="supervisorName">
+                                                   Test Supervisor
+                                               </span>
+                                               <br>
+                                               <span class="m-widget3__time">
+                                                   1 weeks ago
+                                               </span>
+                                           </div>
+                                           <span class="m-badge m-badge--info m-badge--wide">
+                                               initiated
+                                           </span>
+                                       </div>
+                                       <div class="m-widget3__body">
+                                           <p class="m-widget3__text m--font-info">
+                                               Your KRA has been Initiated.
+                                           </p>
+                                       </div>
+                                   </div>
+                                   <div class="m-widget3__item">
+                                       <div class="m-widget3__header">
+                                           <div class="m-widget3__user-img">
+                                               <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                   alt="">
+                                           </div>
+                                           <div class="m-widget3__info">
+                                               <span class="m-widget3__username" id="hrName">
+                                                   Test HR
+                                               </span>
+                                               <br>
+                                               <span class="m-widget3__time">
+                                                   2 weeks ago
+                                               </span>
+                                           </div>
+                                           <span class="m-badge m-badge--danger m-badge--wide">
+                                               rejected
+                                           </span>
+                                       </div>
+                                       <div class="m-widget3__body">
+                                           <p class="m-widget3__text m--font-danger">
+                                               Your KRA has been rejected.
+                                           </p>
+                                       </div>
+                                   </div>
+                                   <div class="m-widget3__item">
+                                       <div class="m-widget3__header">
+                                           <div class="m-widget3__user-img">
+                                               <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
+                                                   alt="">
+                                           </div>
+                                           <div class="m-widget3__info">
+                                               <span class="m-widget3__username" id="supervisorName">
+                                                   Test Supervisor
+                                               </span>
+                                               <br>
+                                               <span class="m-widget3__time">
+                                                   3 weeks ago
+                                               </span>
+                                           </div>
+                                           <span class="m-badge m-badge--info m-badge--wide">
+                                               initiated
+                                           </span>
+                                       </div>
+                                       <div class="m-widget3__body">
+                                           <p class="m-widget3__text m--font-info">
+                                               Your KRA has been Initiated.
+                                           </p>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div> -->
+
+						<ng-template #pipDetailModal>
+							<div
+								class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+								<div class="m-portlet__head">
+									<div class="m-portlet__head-caption">
+										<div class="m-portlet__head-title">
+											<h3 class="m-portlet__head-text">
+												PIP
+											</h3>
+										</div>
+									</div>
+									<div class="m-portlet__head-tools">
+										<ul class="m-portlet__nav">
+											<li class="m-portlet__nav-item">
+												<div class="btn-group" role="group"
+													aria-label="Button group with nested dropdown">
+													<div class="btn-group" role="group">
+														<button type="button" class="close pull-right"
+															aria-label="Close" (click)="modalRef.hide()">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="m-portlet__body">
+									<form class="m-form m-form--fit m-form--label-align-right" id="PipDataForm"
+										#PipDataForm="ngForm">
+										<div class="m-widget6 ">
+											<div class="row">
+												<div class="col-md-6">
+													<span><b>PIP No. {{pipData.no}}</b></span>
+												</div>
+
+											</div>
+											<div class="row details">
+												<div class="col-md-2">
+													<span>Area of Improvement</span>
+												</div>
+												<div class="col-md-10">
+
+													<textarea name="areaofImprovement" id="areaofImprovement"
+														[(ngModel)]="pipData.areaofImprovement"
+														#areaofImprovement="ngModel"
+														class="form-control m-input m-input--air" required
+														disabled></textarea>
+
+												</div>
+
+												<div class="col-md-2 details">
+													<span>Action Plan</span>
+												</div>
+												<div class="col-md-10 details">
+
+													<textarea name="actionPlan" id="actionPlan"
+														[(ngModel)]="pipData.actionPlan" #actionPlan="ngModel"
+														class="form-control m-input m-input--air" required
+														disabled></textarea>
+
+
+
+												</div>
+												<div class="col-md-6 details">
+													<span>Supervisor</span>
+													<textarea name="supervisorName" id="supervisorName"
+														[(ngModel)]="pipData.supervisor_name"
+														#supervisorName="ngModel"
+														class="form-control m-input m-input--air" disabled
+														required></textarea>
+
+												</div>
+												<!-- <div class="col-md-6 details">
+													<span>Supervisor</span>
+													<ng-select class="m-input m-input--air customError"
+														name="supervisordata{{i}}" id="supervisordata"
+														[items]="supervisorData" bindLabel="fullName" bindValue="_id"
+														placeholder="Select Supervisor"
+														[(ngModel)]="pipData.supervisor_id" [clearable]="false"
+														#supervisor="ngModel" required disabled>
+													</ng-select>
+
+												</div> -->
+												<!-- <div class="col-md-6 details">
+													<span>Timelines</span>
+													<ng-select class="m-input m-input--air customError"
+														name="timelines{{i}}" id="timelines" [items]="timelinesData"
+														bindLabel="timeline" bindValue="_id"
+														placeholder="Select Timeline"
+														[(ngModel)]="pipData.master_timelines" [clearable]="false"
+														#timelines="ngModel" required (change)="onStatusChange($event)"
+														[disabled]="istsix"></ng-select>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && timelines.invalid && pipData.timelines != 6">
+														This field is required.
+													</div>
+												</div> -->
+
+												<div class="col-md-6 details">
+													<span>Employee Initial Comments</span>
+													<textarea name="employeeInitialComment" id="employeeInitialComment"
+														[(ngModel)]="pipData.employeeInitialComment"
+														#employeeInitialComment="ngModel"
+														class="form-control m-input m-input--air" required
+														disabled></textarea>
+
+												</div>
+												<div class="col-md-6 details">
+													<span>Measure of Success</span>
+													<textarea name="measureOfSuccess" id="measureOfSuccess"
+														[(ngModel)]="pipData.measureOfSuccess"
+														#measureOfSuccess="ngModel"
+														class="form-control m-input m-input--air" disabled
+														required></textarea>
+
+												</div>
+												<div class="col-md-6 details">
+													<span>Status</span>
+													<textarea name="status" id="status" [(ngModel)]="pipData.status"
+														#status="ngModel" class="form-control m-input m-input--air"
+														required disabled></textarea>
+
+												</div>
+												<div class="col-md-6 details">
+													<span>Supervisor Approval Comments</span>
+													<textarea name="superviserInitialComment"
+														id="superviserInitialComment"
+														[(ngModel)]="pipData.superviserInitialComment"
+														#superviserInitialComment="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="isDisabled || !isSup"></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && superviserInitialComment.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<div class="col-md-6 details">
+													<span>Timelines</span>
+													<textarea name="timeline"
+														id="timeline"
+														[(ngModel)]="pipData.master_timelines"
+														#timeline="ngModel"
+														class="form-control m-input m-input--air"
+														disabled></textarea>
+												</div>
+
+												<!-- <div class="col-md-12" *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month1">
+													<span><b>Month 1</b></span>
+												</div>
+
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month1">
+													<span>Employee Comments #1</span>
+													<textarea name="empComment_month1" id="empComment_month1"
+														[(ngModel)]="pipData.empComment_month1"
+														#empComment_month1="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month1 && isCommentOfMonth1Enable) || pipData.supComment_month1">
+													<span>Supervisor Comments #1</span>
+													<textarea name="supComment_month1" id="supComment_month1"
+														[(ngModel)]="pipData.supComment_month1"
+														#supComment_month1="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="(isDisabled && !isCommentOfMonth1Enable) || !isSup"></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month1.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+												<!-- <div *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month2">
+													<span><b>Month 2</b></span>
+												</div>
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month2">
+													<span>Employee Comments #2</span>
+													<textarea name="empComment_month2" id="empComment_month2"
+														[(ngModel)]="pipData.empComment_month2"
+														#empComment_month2="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month2 && isCommentOfMonth2Enable) || pipData.supComment_month2">
+													<span>Supervisor Comments #2</span>
+													<textarea name="supComment_month2" id="supComment_month2"
+														[(ngModel)]="pipData.supComment_month2"
+														#supComment_month2="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="(isDisabled && !isCommentOfMonth2Enable) || !isSup"
+													></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month2.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+
+												<!-- <div *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month3">
+													<span><b>Month 3</b></span>
+												</div>
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month3">
+													<span>Employee Comments #3</span>
+													<textarea name="empComment_month3" id="empComment_month3"
+														[(ngModel)]="pipData.empComment_month3"
+														#empComment_month3="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month3 && isCommentOfMonth3Enable) || pipData.supComment_month3">
+													<span>Supervisor Comments #3</span>
+													<textarea name="supComment_month3" id="supComment_month3"
+														[(ngModel)]="pipData.supComment_month3"
+														#supComment_month3="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="!isCommentOfMonth3Enable || !isSup"
+													></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month3.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+
+												<!-- <div *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+													<span><b>Month 4</b></span>
+												</div>
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+													<span>Employee Comments #4</span>
+													<textarea name="empComment_month4" id="empComment_month4"
+														[(ngModel)]="pipData.empComment_month4"
+														#empComment_month4="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month4 && isCommentOfMonth4Enable) || pipData.supComment_month4">
+													<span>Supervisor Comments #4</span>
+													<textarea name="supComment_month4" id="supComment_month4"
+														[(ngModel)]="pipData.supComment_month4"
+														#supComment_month4="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="(isDisabled && !isCommentOfMonth4Enable) || !isSup"
+													></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month4.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+
+												<!-- <div *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+													<span><b>Month 5</b></span>
+												</div>
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+													<span>Employee Comments #5</span>
+													<textarea name="empComment_month5" id="empComment_month5"
+														[(ngModel)]="pipData.empComment_month5"
+														#empComment_month5="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month5 && isCommentOfMonth5Enable) || pipData.supComment_month5">
+													<span>Supervisor Comments #5</span>
+													<textarea name="supComment_month5" id="supComment_month5"
+														[(ngModel)]="pipData.supComment_month5"
+														#supComment_month5="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="(isDisabled && !isCommentOfMonth5Enable) || !isSup"></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month5.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+
+												<!-- <div *ngIf="true"> -->
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month6 && pipData.master_timelines===6">
+													<span><b>Month 6</b></span>
+												</div>
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month6 && pipData.master_timelines===6">
+													<span>Employee Comments #6</span>
+													<textarea name="empComment_month6" id="empComment_month6"
+														[(ngModel)]="pipData.empComment_month6"
+														#empComment_month6="ngModel"
+														class="form-control m-input m-input--air" disabled></textarea>
+
+												</div>
+												<div class="col-md-6 month"
+													*ngIf="(pipData.empComment_month6 && isCommentOfMonth6Enable) || pipData.supComment_month6">
+													<span>Supervisor Comments #6</span>
+													<textarea name="supComment_month6" id="supComment_month6"
+														[(ngModel)]="pipData.supComment_month6"
+														#supComment_month6="ngModel"
+														class="form-control m-input m-input--air"
+														[disabled]="(isDisabled && !isCommentOfMonth6Enable) || !isSup"
+													></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supComment_month6.invalid">
+														This field is required.
+													</div>
+												</div>
+
+												<div class="col-md-6 details" *ngIf="pipData.dateDifference >= pipData.master_timelines">
+													<span>Final Performance rating</span>
+													<ng-select class="m-input m-input--air customError"
+														name="supervisorPerformanceRating{{i}}" id="supervisorrating"
+														[items]="supervisorPerformanceRating"
+														bindLabel="supervisorRating" bindValue="_id"
+														placeholder="Select Rating"
+														[(ngModel)]="pipData.supervisorPerformanceRating"
+														[clearable]="false"
+														[disabled]="!finalReviewEnable || !isSup" required
+														#supervisorrating="ngModel">
+													</ng-select>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && supervisorPerformanceRating.invalid">
+														This field is required.
+													</div>
+
+												</div>
+												<div class="col-md-6 details" *ngIf="pipData.dateDifference >= pipData.master_timelines">
+													<span>Final Review</span>
+													<textarea name="superviserFinalReview" id="superviserFinalReview"
+														[(ngModel)]="pipData.superviserFinalReview"
+														#superviserFinalReview="ngModel"
+														class="form-control m-input m-input--air" required
+														[disabled]="!finalReviewEnable || !isSup"></textarea>
+													<div class="form-control-feedback has-danger"
+														*ngIf="PipDataForm.submitted && !superviserFinalReview.valid">
+														This field is required.
+													</div>
+												</div>
+
+												<!-- </div> -->
+
+											</div>
+											<div class="form-actions details">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="m-form__actions">
+															<button class="btn btn-success"
+																(click)="preSaveLearningDetails(pipData,'Approved')"
+																*ngIf="!isDisabled && isSup">Approve</button>
+															<button class="btn btn-danger"
+																(click)="preSaveLearningDetails(pipData,'SendBack')"
+																type="button" *ngIf="!isDisabled && isSup"> Send
+																Back</button>
+															<button class="btn btn-success" (click)="saveLearningDetails(pipData,'Approved', PipDataForm)"
+																*ngIf="saveEnabled && pipData.status == 'Approved' && isSup">Save</button>
+															<button class="btn btn-secondary" type="button"
+																(click)="modalRef.hide()">Back</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</ng-template>
+						<ng-template #pipCompletionModal>
+							<div
+								class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
+								<div class="m-portlet__head">
+									<div class="m-portlet__head-caption">
+										<div class="m-portlet__head-title">
+											<h3 class="m-portlet__head-text">
+												PIP Agenda
+											</h3>
+										</div>
+									</div>
+									<div class="m-portlet__head-tools">
+										<ul class="m-portlet__nav">
+											<li class="m-portlet__nav-item">
+												<div class="btn-group" role="group"
+													aria-label="Button group with nested dropdown">
+													<div class="btn-group" role="group">
+														<button type="button" class="close pull-right"
+															aria-label="Close" (click)="modalRef.hide()">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="m-portlet__body">
+									<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveComments(pipData)"
+										id="PipDataForm" #PipDataForm="ngForm">
+										<div class="m-widget6 ">
+											<div class="row">
+												<div class="col-md-6">
+													<span><b>PIP Agenda Completion Information</b></span>
+												</div>
+
+											</div>
+											<div class="row details">
+												<div class="col-md-2">
+													<span>Employee Comments</span>
+												</div>
+												<div class="col-md-10">
+													<textarea name="empcom" id="empcom"
+														[(ngModel)]="pipData.pip_master_details.emp_final_com"
+														#empcom="ngModel" class="form-control m-input m-input--air"
+														required disabled></textarea>
+												</div>
+
+												<div class="col-md-2 details">
+													<span>Supervisor Comments</span>
+												</div>
+												<div class="col-md-10 details">
+													<textarea name="sup_final_com" id="sup_final_com"
+														[(ngModel)]="pipData.pip_master_details.sup_final_com"
+														#supcom="ngModel" class="form-control m-input m-input--air"
+														required></textarea>
+												</div>
+												<div class="form-control-feedback has-danger"
+													*ngIf="PipDataForm.submitted && !sup_final_com.valid">
+													This field is required.
+												</div>
+												<div class="col-md-2 details">
+													<span>Reviewer Comments</span>
+												</div>
+												<div class="col-md-10 details">
+													<textarea name="rev_final_com" id="rev_final_com"
+														[(ngModel)]="pipData.pip_master_details.rev_final_com"
+														#revcom="ngModel" class="form-control m-input m-input--air"
+														required disabled></textarea>
+												</div>
+												<div class="col-md-2 details">
+													<span>HR Comments</span>
+												</div>
+												<div class="col-md-10 details">
+													<textarea name="hr_final_com" id="hr_final_com"
+														[(ngModel)]="pipData.pip_master_details.hr_final_com"
+														#hrcom="ngModel" class="form-control m-input m-input--air"
+														required disabled></textarea>
+												</div>
+
+												<div class="col-md-6 details">
+													<span>Final Recommendation</span>
+													<ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"
+													   id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
+													   bindValue="_id" placeholder="Final Recommendation"
+													   [(ngModel)]="pipData.pip_master_details.final_recommendation" [clearable]="false"
+													   #final_recommendation="ngModel" disabled>
+													</ng-select>
+												 </div>
+
+											</div>
+											<div class="form-actions details">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="m-form__actions">
+															<button class="btn btn-success submitForm" type="submit" id="submitForm">Save</button>
+															<button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</ng-template>

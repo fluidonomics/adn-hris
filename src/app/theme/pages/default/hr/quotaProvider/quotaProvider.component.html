@@ -1,0 +1,345 @@
+<!-- <div class="m-subheader">
+		<div class="d-flex align-items-center">
+			<div class="mr-auto">
+				<h3 class="m-subheader__title">
+					Leave Quota Provider
+				</h3>
+			</div>			
+		</div>
+</div> -->
+
+
+<div class="m-content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text flaticon-user-add">
+								Leave Quota Provider
+								<small>
+								</small>
+							</h3>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="tab-content">
+						<div class="tab-pane active show" id="applyLeavePanel" role="tabpanel">
+							<form class="m-form m-form--fit m-form--label-align-right" id="leaveQuota"
+								(ngSubmit)="provideLeave(leaveQuota)" #leaveQuota="ngForm">
+								<div class="form-body">
+									<div class="row" style="margin-top:20px">
+										<div class="col-md-6">
+											<label>Select Leave Type</label>
+											<ng-select class="m-input m-input--air" name="leaveType" id="leaveType"
+												[items]="leaveTypes" bindLabel="type" bindValue="_id"
+												placeholder="Select leaveType" [(ngModel)]="request.leave_type"
+												[clearable]="false" (change)="leaveTypeSelect($event)"
+												#leaveType="ngModel" required></ng-select>
+											<div class="form-control-feedback has-danger"
+												*ngIf="leaveType.invalid && leaveQuota.submitted">
+												This field is required.
+											</div>
+										</div>
+										<div class="col-md-6" style="margin-top:30px">
+											<span> Quota (in days)</span>
+											<span>
+												<input type="text" name="quota" id="quota"
+													class="form-control m-input m-input--air"
+													style="width: 25%;display: inherit;" [(ngModel)]="request.balance"
+													#quota="ngModel" required>
+											</span>
+											<span>days</span>
+											<div class="form-control-feedback has-danger"
+												*ngIf="quota.invalid && leaveQuota.submitted">
+												This field is required.
+											</div>
+										</div>
+									</div>
+									<!-- <div class="row" *ngIf="isSpecial">
+										<div class="col-md-6">
+											<label>Select Employee Selection Type</label>
+											<ng-select class="m-input m-input--air" name="selectionType" id="selectionType" [items]="selectionType"
+											 bindLabel="selectionType" bindValue="_id" placeholder="Select Employee selection type" [clearable]="false"
+											 (change)="onSelectionTypeChange($event)" [(ngModel)]="request.empSelectionType" #empSelType="ngModel"
+											 required></ng-select>
+											<div class="form-control-feedback has-danger" *ngIf="empSelType.invalid && leaveQuota.submitted">
+												This field is required.
+											</div>
+										</div>
+									</div> -->
+									<div *ngIf="isMaternity" class="row">
+										<div class="col-md-6">
+											<label>Select Employee</label>
+											<ng-select class="m-input m-input--air" name="allemployee" id="allemployee"
+												[items]="employeesListToShow" bindLabel="displayName" bindValue="_id"
+												placeholder="Select Employee (emp Id)" [(ngModel)]="request._id"
+												[clearable]="false" #allemployee="ngModel"
+												(change)="onEmployeeSelect($event)" required></ng-select>
+											<div class="form-control-feedback has-danger"
+												*ngIf="allemployee.invalid && leaveQuota.submitted">
+												This field is required.
+											</div>
+										</div>
+										<div class="col-md-6" *ngIf="isMaternity">
+											<br />
+											<label class="btn btn-default browse">Attachements
+												<input type="file" accept="application/pdf" hidden="hidden"
+													name="attachement" #documentsPdf ngFileSelect [options]="options"
+													(uploadOutput)="onUploadOutput($event, document)"
+													[uploadInput]="uploadInput" (click)="documentsPdf.click()">
+											</label>
+										</div>
+									</div>
+									<div class="row" *ngIf="displaySelection ==='Department' && isSpecial">
+										<div class="col-md-6">
+											<label>Select Department</label>
+											<ng-select class="m-input m-input--air" name="departmentData"
+												id="departmentData" [items]="departmentData" bindLabel="departmentName"
+												bindValue="_id" placeholder="Select Department"
+												[(ngModel)]="departmentId" #depId="ngModel" [clearable]="false"
+												(change)="onDepartmentSelect($event)" required></ng-select>
+											<div class="form-control-feedback has-danger"
+												*ngIf="depId.invalid && leaveQuota.submitted">
+												This field is required.
+											</div>
+										</div>
+										<div class="col-md-6" *ngIf="isMaternity">
+											<br />
+											<label>Attachements</label>
+											<button class="btn btn-secondary">Browse</button>
+											<input type="file" name="" id="">
+										</div>
+									</div>
+									<div *ngIf="isMaternity" class="row" style="margin-top:20px">
+										<div class="col-md-12">
+											<label>
+												Leave Balance's
+											</label>
+											<div>
+												<label>
+													Annual: <span
+														style="margin-left: 5px;margin-right: 5px;font-weight: 500">{{annualLeaveBalance}}</span>
+												</label>
+												<label>
+													Sick: <span
+														style="margin-left: 5px;margin-right: 5px;font-weight: 500">{{sickLeaveBalance}}</span>
+												</label>
+												<label>
+													Special: <span
+														style="margin-left: 5px;margin-right: 5px;font-weight: 500">{{specialLeaveBalance}}</span>
+												</label>
+												<label>
+													Maternity: <span
+														style="margin-left: 5px;margin-right: 5px;font-weight: 500">{{maternityLeaveBalance}}</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<br />
+									<!-- employee grid -->
+									<div *ngIf="isSpecial">
+										<div
+											class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+											<div class="row align-items-center">
+												<div class="col-xl-8 order-2 order-xl-1">
+													<div class="form-group m-form__group row align-items-center">
+														<div class="col-md-4">
+															<div class="m-input-icon m-input-icon--left">
+																<input type="text"
+																	class="form-control m-input m-input--solid"
+																	name="employeeSearch" placeholder="Search..."
+																	[(ngModel)]="search">
+																<span
+																	class="m-input-icon__icon m-input-icon__icon--left">
+																	<span>
+																		<i class="la la-search"></i>
+																	</span>
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+											[ngClass]="{'m-datatable--error': (employeeGridData | orderBy: key : reverse | filter:search)?.length==0 }">
+											<table class="m-datatable__table">
+												<thead class="m-datatable__head">
+													<tr class="m-datatable__row">
+														<th class="m-datatable__cell" width="5%">
+															<label
+																class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+																<input type="checkbox" name="checkAll"
+																	[(ngModel)]="isCheckAll"
+																	[disabled]="p.pages.length==0"
+																	(change)="selectAllEmployee($event)">
+																<span></span>
+															</label>
+														</th>
+														<th (click)="sort('userName')"
+															class="m-datatable__cell m-datatable__cell--sort"
+															width="5%">
+															<span>
+																<i class="la" *ngIf="key == 'userName'"
+																	[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+															</span>
+														</th>
+														<th (click)="sort('fullName')"
+															class="m-datatable__cell m-datatable__cell--sort"
+															width="20%">
+															<span>
+																NAME
+																<i class="la" *ngIf="key == 'fullName'"
+																	[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+															</span>
+														</th>
+														<th (click)="sort('officeEmail')"
+															class="m-datatable__cell m-datatable__cell--sort"
+															width="15%">
+															<span>
+																EMAIL
+																<i class="la" *ngIf="key == 'officeEmail'"
+																	[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+															</span>
+														</th>
+														<th (click)="sort('designation')"
+															class="m-datatable__cell m-datatable__cell--sort"
+															width="15%">
+															<span>
+																DESIGNATION
+																<i class="la" *ngIf="key == 'officeEmail'"
+																	[ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+															</span>
+														</th>
+													</tr>
+												</thead>
+												<tbody class="m-datatable__body" id="allEmployee-loader">
+													<tr class="m-datatable__row"
+														[ngClass]="{'m-datatable__row--even':!even}"
+														*ngFor="let employee of employeesListToShow | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+														<td class="m-datatable__cell" width="5%">
+															<label
+																class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
+																<input type="checkbox" name="checked"
+																	[(ngModel)]="employee.checked">
+																<span></span>
+															</label>
+														</td>
+														<td class="m-datatable__cell" width="5%">
+															<img *ngIf="employee?.profileImage; else noImage"
+																src="{{imageBase+employee?.profileImage}}"
+																onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
+																class="directory_image m--img-rounded m--marginless m--img-centered"
+																alt="">
+															<ng-template #noImage><img
+																	src="./assets/app/media/img/custom/users/user6.jpg"
+																	class="directory_image m--img-rounded m--marginless m--img-centered">
+															</ng-template>
+														</td>
+														<td class="m-datatable__cell" width="5%">
+															<span>{{employee.userName}}</span>
+														</td>
+														<td class="m-datatable__cell" width="20%">
+															<span>{{employee.fullName}}</span>
+														</td>
+														<td class="m-datatable__cell" width="15%">
+															<span>{{employee.office.officeEmail}}</span>
+														</td>
+														<td class="m-datatable__cell" width="15%">
+															<span>{{employee.designation.designationName}}</span>
+														</td>
+													</tr>
+													<span
+														*ngIf="(employeesListToShow | orderBy: key : reverse | filter:search)?.length==0"
+														class="m-datatable--error">No
+														records found</span>
+												</tbody>
+											</table>
+											<pagination-template #p="paginationApi" (pageChange)="p2 = $event"
+												class="paginationtemplate">
+												<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+													<ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
+														<li>
+															<span
+																class="m-datatable__pager-link m-datatable__pager-link--first"
+																[class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+																(click)="p.setCurrent(1)">
+																<i class="la la-angle-double-left"></i>
+															</span>
+														</li>
+														<li>
+															<span
+																class="m-datatable__pager-link m-datatable__pager-link--prev"
+																[class.m-datatable__pager-link--disabled]="p.isFirstPage()"
+																(click)="p.previous()">
+																<i class="la la-angle-left"></i>
+															</span>
+														</li>
+														<li *ngFor="let page of p.pages">
+															<span (click)="p.setCurrent(page.value)"
+																class="m-datatable__pager-link m-datatable__pager-link-number "
+																[class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+																{{ page.label }}
+															</span>
+														</li>
+														<li>
+															<span
+																class="m-datatable__pager-link m-datatable__pager-link--next"
+																[class.m-datatable__pager-link--disabled]="p.isLastPage()"
+																(click)="p.isLastPage()?'null':p.next()">
+																<i class="la la-angle-right"></i>
+															</span>
+														</li>
+														<li>
+															<span
+																class="m-datatable__pager-link m-datatable__pager-link--last"
+																[class.m-datatable__pager-link--disabled]="p.isLastPage()"
+																(click)="p.setCurrent(p.pages.length + 1)">
+																<i class="la la-angle-double-right"></i>
+															</span>
+														</li>
+													</ul>
+												</div>
+											</pagination-template>
+											<div class="pager-display-size"
+												*ngIf="(employeeGridData | orderBy: key : reverse | filter:search)?.length!=0">
+
+												<select class="selectpicker m-datatable__pager-size"
+													title="Select page size" data-width="70px" data-selected="50"
+													tabindex="1">
+													<option value=10>10</option>
+													<option value=20>20</option>
+													<option value=30>30</option>
+													<option value=50>50</option>
+													<option value=100>100</option>
+												</select>
+												<span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeeGridData | orderBy: key :
+												reverse | filter:search)?.length)}} of {{(employeeGridData | orderBy: key : reverse |
+												filter:search)?.length}}</span>
+											</div>
+										</div>
+									</div>
+									<!-- employee grid -->
+									<div class="form-actions " style="margin-top:20px">
+										<div class="row">
+											<div class="col-md-11">
+												<div class="m-form__actions pull-right">
+													<button class="btn btn-success" type="submit">Provide</button>
+													<button class="btn btn-secondary" (click)="clear()"
+														type="button">Clear</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

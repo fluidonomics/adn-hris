@@ -1,0 +1,118 @@
+@import "../../../../../../../../../assets/colors.scss";
+
+.btn-circle.btn-lg {
+    width: 100px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+.bgColor {
+    &.Green, &.green {
+        color: $status-green;
+    }
+
+    &.Amber, &.amber {
+        color: $status-amber;
+    }
+
+    &.Yellow, &.yellow {
+        color: $status-yellow;
+    }
+
+    &.Dropped, &.drop {
+        color: $status-drop;
+    }
+}
+
+.mtr-detailed-view {
+    .gridColorStatus {
+        text-align: center;
+
+        i.fa.fa-circle {
+            @extend .bgColor;
+        }
+    }
+
+    .newKRA {
+        background-color: $status-newKra !important;
+        border: 0px !important;
+    }
+
+    .newKRA:hover {
+        background-color: $status-newKra !important;
+        border: 0px !important;
+    }
+
+    .sendBack {
+        background-color: $status-sendBack !important;
+        border: 0px !important;
+    }
+
+    .sendBack:hover {
+        background-color: $status-sendBack !important;
+        border: 0px !important;
+    }
+
+    .dropped {
+        background-color: $status-dropped !important;
+        border: 0px !important;
+    }
+
+    .dropped:hover {
+        background-color: $status-dropped !important;
+        border: 0px !important;
+    }
+
+    .approved {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
+
+    .approved :hover {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
+
+    .instructions {
+        margin-bottom: 2rem;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+
+        .points {
+            span {
+                display: block;
+            }
+        }
+
+        .flags {
+            i {
+                padding: 0px 10px;
+
+                @extend .bgColor;
+            }
+        }
+    }
+
+    #mtrOne {
+        height: 8rem;
+    }
+}
+
+.mtrDetailsPortlet {
+    img {
+        width: 100%;
+    }
+
+    .value {
+        padding-left: 5px;
+        font-weight: bold;
+    }
+
+    .colorStatus {
+        .value {
+            @extend .bgColor;
+        }
+    }
+}
