@@ -33,21 +33,13 @@ export class DashboardEmployeeComponent implements OnInit {
     isHr: boolean = false;
     isSpin: boolean = false;
     financialYearList: any = [];
-    currentFinancialYear: string;
+    currentFinancialYear: any;
     fiscalYearId: string;
 
-    holidayFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        page: 1
-    };
-    transactionFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        status: 'All',
-        page: 1
-    };
-    overviewChartFilter: any = {
-        date: this.leaveService.getCurrentMonthDates()
-    };
+    holidayFilter: any = {};
+    transactionFilter: any = {};
+    overviewChartFilter: any = {};
+
     overviewChartData: any = [];
     leaveStatuses: any = [];
     modalRef: BsModalRef;
@@ -93,7 +85,7 @@ export class DashboardEmployeeComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0];
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                     this.loadDashboard();
                 }
@@ -105,10 +97,26 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     loadDashboard() {
+        this.setFilters();
         this.getLeaveStatuses();
         this.getLeaveBalance();
         this.getHolidays();
         this.getTransactions();
+    }
+
+    setFilters() {
+        this.holidayFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            page: 1
+        };
+        this.transactionFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            status: 'All',
+            page: 1
+        };
+        this.overviewChartFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear)
+        };
     }
 
     getLeaveBalance() {
@@ -272,6 +280,7 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     onfiscalYearChange(e) {
+        this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
         this.loadDashboard();
     }
 }
