@@ -1,5 +1,25 @@
 @import "../../../../../../../../assets/colors";
 
+.dark-border {
+    background-color: #198F4A;
+    border-color: #198F4A;
+    margin: 0 0 30px;
+    padding-right: 35px; 
+    .combine-element {
+        float: right;
+       .text-format {
+           display: table-cell;
+           font-size: 1.3rem;
+           font-weight: 500;
+           font-family: Roboto;
+           color: #ffffff;
+           padding-right: 10px;
+       }
+       .dd-format {
+           display: table-cell;
+       }
+    }
+}
 app-my-leaves-dashboard-employee {
     width: 100%;
 

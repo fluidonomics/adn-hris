@@ -50,6 +50,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
     supervisorPresent: boolean = false;
 
     additionalLeaves: any = [];
+    financialYearList: any = [];
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -65,7 +66,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
             this.getFinancialYear().then(res => {
-
                 this.InitValues();
                 this.getEmployeeDetails();
                 // this.getAllEmailListOfEmployee();
@@ -181,16 +181,18 @@ export class ApplyComponent implements OnInit, OnDestroy {
     getFinancialYear() {
         return new Promise((resolve, reject) => {
             this._commonService.getFinancialYear().subscribe(res => {
+                debugger;
                 if (res.ok) {
-                    let data = res.json() || [];
-                    if (data && data.length > 0) {
-                        let fYear = data.filter(d => d.isYearActive);
+                    this.financialYearList = res.json() || [];
+                    if (this.financialYearList && this.financialYearList.length > 0) {
+                        this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                        let fYear = this.financialYearList.filter(d => d._id === this.fiscalYearId);
                         if (fYear["0"]) {
                             this.leaveapplication.fYear = {
                                 startDate: new Date(fYear["0"].starDate),
                                 endDate: new Date(fYear["0"].endDate)
                             };
-                            this.fiscalYearId = fYear["0"]._id;
+                            // this.fiscalYearId = fYear["0"]._id;
                             resolve(true);
                         }
                     }
@@ -740,6 +742,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     addMore() {
         this.additionalLeaves.push({});
+    }
+
+    onfiscalYearChange(e) {
+        this.InitValues();
     }
 
     ngOnDestroy(): void {

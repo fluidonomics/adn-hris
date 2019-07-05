@@ -80,7 +80,7 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getEmployeeLeavesByMonth(empId: number, month?: number, year?: number, fromDate?: Date, toDate?: Date) {
+    getEmployeeLeavesByMonth(empId: number, month?: number, year?: number, fromDate?: Date, toDate?: Date, fiscalYearId?: string) {
         let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
         if (month) {
             url += "&month=" + month;
@@ -93,6 +93,9 @@ export class LeaveService {
         }
         if (toDate) {
             url += "&toDate=" + toDate;
+        }
+        if (fiscalYearId) {
+            url += "&fiscalYearId=" + fiscalYearId;
         }
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
@@ -211,12 +214,20 @@ export class LeaveService {
     // ------------------------------------------------------------------------------------------------------------------------------
 
 
-    getCurrentMonthDates() {
+    getCurrentMonthDates(fiscalYear?: any) {
         let dateRange = [];
         let startDate = new Date();
         startDate.setDate(1);
         let y = moment(startDate).endOf('month');
         let endDate = y._d;
+
+        if (fiscalYear) {
+            let startYear = moment(fiscalYear.starDate).year();
+            let endYear = moment(fiscalYear.endDate).year();
+
+            startDate = moment(startDate).year(startYear).toDate();
+            endDate = moment(endDate).year(endYear).toDate();
+        }
         dateRange = [startDate, endDate];
         return dateRange;
     }
@@ -375,7 +386,7 @@ export class LeaveService {
     }
     provideLeaveQuota(data: any) {
         let url = "leave/provideLeaveQuota";
-        return this.authService.post(url,data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+        return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 }
 

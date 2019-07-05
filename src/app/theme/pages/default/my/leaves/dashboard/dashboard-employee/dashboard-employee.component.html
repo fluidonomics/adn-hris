@@ -1,4 +1,19 @@
 <div class="m-content">
+    <div class="row justify-content-end dark-border">
+        <div class="col-md-3 adn-form__group pull-right">
+            <div class="m-form__group form-group">
+                <span class="combine-element">
+                    <h3 class="text-format">Fiscal year</h3>
+                    <!-- <label for="form_control_1">Financial Year</label> -->
+                    <ng-select #ddFiscalYear class="m-input m-input--air dd-format" name="fiscalYear" bindValue="_id"
+                        bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId" id="fiscalYearId"
+                        #fiscalYear="ngModel" placeholder="Select Fiscal Year" (ngModelChange)="onfiscalYearChange($event)"
+                        [clearable]="false">
+                    </ng-select>
+                </span>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-10">
             <div class="m-portlet leave-balance-portlet">
@@ -297,7 +312,8 @@
                                                     </td>
                                                 </tr>
                                                 <span *ngIf="recentTransactions?.length==0"
-                                                    class="m-datatable--error">No records found</span>
+                                                    class="m-datatable--error">No
+                                                    records found</span>
                                             </tbody>
                                         </table>
                                         <pagination-template #p="paginationApi"
