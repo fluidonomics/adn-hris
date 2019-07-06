@@ -9,6 +9,7 @@ app-my-leaves-dashboard-supervisor {
         padding-right: 35px; 
         .combine-element {
             float: right;
+            width: 80%;
            .text-format {
                display: table-cell;
                font-size: 1.3rem;
@@ -16,9 +17,12 @@ app-my-leaves-dashboard-supervisor {
                font-family: Roboto;
                color: #ffffff;
                padding-right: 10px;
+               overflow: hidden;
+               white-space: nowrap;
            }
            .dd-format {
                display: table-cell;
+               width: inherit;
            }
         }
     }
