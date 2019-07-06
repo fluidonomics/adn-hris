@@ -38,33 +38,14 @@ export class DashboardSupervisorComponent implements OnInit {
     isHr: boolean = false;
     isSpin: boolean = false;
     currentFinancialYear: string;
-    fiscalYearId: string;
+    fiscalYearId: any;
     isSelectedEmployeeOnProbation = false;
 
     overviewChartData: any = [];
-    overviewChartDataFilter: any = {
-        date: this.leaveService.getCurrentMonthDates()
-    };
-
-    teamLeavesFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        page: 1
-    };
-
-    leaveApprovalFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        employeeId: null,
-        leaveTypeId: null,
-        page: 1
-    };
-
-    leaveTransactionsFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        employeeId: null,
-        leaveTypeId: null,
-        status: null,
-        page: 1
-    };
+    overviewChartDataFilter: any = {};
+    teamLeavesFilter: any = {};
+    leaveApprovalFilter: any = {};
+    leaveTransactionsFilter: any = {};
 
     leavesForApproval: any = [];
     leavesTransactions: any = [];
@@ -107,8 +88,9 @@ export class DashboardSupervisorComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.fiscalYearId = 3;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
                     this.loadDashboard();
                     this.loadFilterData();
                 }
@@ -120,10 +102,37 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     loadDashboard() {
+        this.setFilters();
         this.getOverviewChartData();
         this.getTeamLeaves();
         this.getTeamLeavesForApproval();
         this.getTeamLeavesTransactions();
+    }
+
+    setFilters() {
+        this.overviewChartDataFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear)
+        };
+
+        this.teamLeavesFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            page: 1
+        };
+
+        this.leaveApprovalFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            employeeId: null,
+            leaveTypeId: null,
+            page: 1
+        };
+
+        this.leaveTransactionsFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            employeeId: null,
+            leaveTypeId: null,
+            status: null,
+            page: 1
+        };
     }
 
     loadFilterData() {
@@ -364,7 +373,7 @@ export class DashboardSupervisorComponent implements OnInit {
                         this.btnRejectText = 'Reject Leave';
                     }
                     if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, this.fiscalYearId).subscribe(res => {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
@@ -472,6 +481,11 @@ export class DashboardSupervisorComponent implements OnInit {
                 });
             }
         })
+    }
+
+    onfiscalYearChange(e) {
+        this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+        this.loadDashboard();
     }
 
     refresh() {

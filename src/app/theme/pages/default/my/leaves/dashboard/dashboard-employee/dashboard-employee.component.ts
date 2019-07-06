@@ -33,21 +33,13 @@ export class DashboardEmployeeComponent implements OnInit {
     isHr: boolean = false;
     isSpin: boolean = false;
     financialYearList: any = [];
-    currentFinancialYear: string;
-    fiscalYearId: string;
+    currentFinancialYear: any;
+    fiscalYearId: any;
 
-    holidayFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        page: 1
-    };
-    transactionFilter: any = {
-        date: this.leaveService.getCurrentMonthDates(),
-        status: 'All',
-        page: 1
-    };
-    overviewChartFilter: any = {
-        date: this.leaveService.getCurrentMonthDates()
-    };
+    holidayFilter: any = {};
+    transactionFilter: any = {};
+    overviewChartFilter: any = {};
+
     overviewChartData: any = [];
     leaveStatuses: any = [];
     modalRef: BsModalRef;
@@ -89,28 +81,43 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     getFinancialYearDetails() {
-        this.fiscalYearId = "2";
-        this.loadDashboard();
-        // this.commonService.getFinancialYear().subscribe(
-        //     res => {
-        //         if (res.ok) {
-        //             this.financialYearList = res.json() || [];
-        //             this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-        //             this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-        //             this.loadDashboard();
-        //         }
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
+        this.commonService.getFinancialYear().subscribe(
+            res => {
+                if (res.ok) {
+                    this.financialYearList = res.json() || [];
+                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.fiscalYearId = 3;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+                    this.loadDashboard();
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     loadDashboard() {
+        this.setFilters();
         this.getLeaveStatuses();
         this.getLeaveBalance();
         this.getHolidays();
         this.getTransactions();
+    }
+
+    setFilters() {
+        this.holidayFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            page: 1
+        };
+        this.transactionFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear),
+            status: 'All',
+            page: 1
+        };
+        this.overviewChartFilter = {
+            date: this.leaveService.getCurrentMonthDates(this.currentFinancialYear)
+        };
     }
 
     getLeaveBalance() {
@@ -146,7 +153,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getOverviewChartData() {
         if (this.overviewChartFilter) {
-            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, null, null, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1]).subscribe(res => {
+            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, null, null, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1], this.fiscalYearId).subscribe(res => {
                 if (res.ok) {
                     var data = res.json() || [];
                     data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
@@ -162,7 +169,7 @@ export class DashboardEmployeeComponent implements OnInit {
                     });
                     this.overviewChartData = chartData;
                     console.log("over chart data : ", this.overviewChartData);
-                    
+
                 }
             })
         }
@@ -189,7 +196,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
                     this.leaveDetails.leave = body.data[0];
                     if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, this.fiscalYearId).subscribe(res => {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
@@ -270,6 +277,11 @@ export class DashboardEmployeeComponent implements OnInit {
 
     refresh() {
         this.isSpin = true;
+        this.loadDashboard();
+    }
+
+    onfiscalYearChange(e) {
+        this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
         this.loadDashboard();
     }
 }
