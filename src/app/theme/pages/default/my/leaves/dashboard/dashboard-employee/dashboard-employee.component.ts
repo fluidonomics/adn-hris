@@ -34,7 +34,7 @@ export class DashboardEmployeeComponent implements OnInit {
     isSpin: boolean = false;
     financialYearList: any = [];
     currentFinancialYear: any;
-    fiscalYearId: string;
+    fiscalYearId: any;
 
     holidayFilter: any = {};
     transactionFilter: any = {};
@@ -85,8 +85,9 @@ export class DashboardEmployeeComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0];
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.fiscalYearId = 3;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
                     this.loadDashboard();
                 }
             },
@@ -195,7 +196,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
                     this.leaveDetails.leave = body.data[0];
                     if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, this.fiscalYearId).subscribe(res => {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
