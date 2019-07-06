@@ -195,7 +195,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
                     this.leaveDetails.leave = body.data[0];
                     if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, this.fiscalYearId).subscribe(res => {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
