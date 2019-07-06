@@ -372,7 +372,7 @@ export class DashboardSupervisorComponent implements OnInit {
                         this.btnRejectText = 'Reject Leave';
                     }
                     if (this.leaveDetails.leave.emp_id) {
-                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, 1).subscribe(res => {
+                        this.leaveService.getEmployeeLeaveBalance(this.leaveDetails.leave.emp_id, this.fiscalYearId).subscribe(res => {
                             if (res.ok) {
                                 let balances = res.json() || [];
                                 if (balances.length > 0) {
