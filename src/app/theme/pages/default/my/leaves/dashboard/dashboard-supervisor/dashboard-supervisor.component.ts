@@ -38,7 +38,7 @@ export class DashboardSupervisorComponent implements OnInit {
     isHr: boolean = false;
     isSpin: boolean = false;
     currentFinancialYear: string;
-    fiscalYearId: string;
+    fiscalYearId: any;
     isSelectedEmployeeOnProbation = false;
 
     overviewChartData: any = [];
@@ -88,8 +88,9 @@ export class DashboardSupervisorComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0];
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.fiscalYearId = 3;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
                     this.loadDashboard();
                     this.loadFilterData();
                 }

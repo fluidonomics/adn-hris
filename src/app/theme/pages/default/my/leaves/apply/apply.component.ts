@@ -185,6 +185,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                     this.financialYearList = res.json() || [];
                     if (this.financialYearList && this.financialYearList.length > 0) {
                         this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                        this.fiscalYearId = 3;
                         let fYear = this.financialYearList.filter(d => d._id === this.fiscalYearId);
                         if (fYear["0"]) {
                             this.leaveapplication.fYear = {
@@ -745,8 +746,8 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     onfiscalYearChange(e) {
         this.InitValues();
-         let fYear = this.financialYearList.find(f => f._id === this.fiscalYearId);
-         if (fYear) {
+        let fYear = this.financialYearList.find(f => f._id === this.fiscalYearId);
+        if (fYear) {
             this.leaveapplication.fYear = {
                 startDate: new Date(fYear.starDate),
                 endDate: new Date(fYear.endDate)
