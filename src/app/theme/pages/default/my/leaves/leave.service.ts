@@ -222,17 +222,19 @@ export class LeaveService {
         let endDate = y._d;
 
         if (fiscalYear) {
-            let startYear = moment(fiscalYear.starDate).year();
-            let endYear = moment(fiscalYear.endDate).year();
+            startDate = moment(fiscalYear.starDate).toDate();
+            endDate = moment(fiscalYear.endDate).toDate();
+            // let startYear = moment(fiscalYear.starDate).year();
+            // let endYear = moment(fiscalYear.endDate).year();
 
-            let currentMonth = moment(startDate).month() + 1;
-            if (currentMonth >= 7 && currentMonth <= 12) {
-                startDate = moment(startDate).year(startYear).toDate();
-                endDate = moment(endDate).year(startYear).toDate();
-            } else {
-                startDate = moment(startDate).year(endYear).toDate();
-                endDate = moment(endDate).year(endYear).toDate();
-            }
+            // let currentMonth = moment(startDate).month() + 1;
+            // if (currentMonth >= 7 && currentMonth <= 12) {
+            //     startDate = moment(startDate).year(startYear).toDate();
+            //     endDate = moment(endDate).year(startYear).toDate();
+            // } else {
+            //     startDate = moment(startDate).year(endYear).toDate();
+            //     endDate = moment(endDate).year(endYear).toDate();
+            // }
         }
         dateRange = [startDate, endDate];
         return dateRange;
