@@ -52,6 +52,7 @@ export class ProfileEditComponent implements OnInit {
 
     _currentEmpId: number;
     param_emp_id: number;
+    currentId: number;
 
     //Personal Info Tav Dropdown Variable
     bloodGropData: any = [];
@@ -155,6 +156,7 @@ export class ProfileEditComponent implements OnInit {
                 res => {
                     //Do not uncomment if profile-edit
                     //this._currentEmpId = this._authService.currentUserData._id;
+                    this.currentId = this._authService.currentUserData._id;
                     this.initData();
 
                 });
@@ -712,6 +714,7 @@ export class ProfileEditComponent implements OnInit {
                 this.separationDetails.effectiveDate = this.separationDetails.effectiveDate;
                 this.separationDetails.dateOfSeparation = this.separationDetails.dateOfSeparation;
                 this.separationDetails.remarks = this.separationDetails.remarks;
+                this.separationDetails.updatedBy = this.currentId;
                 this._myService.saveSeparationDetails(this.separationDetails)
                     .subscribe(
                         data => {
