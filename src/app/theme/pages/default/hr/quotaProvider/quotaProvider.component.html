@@ -49,7 +49,7 @@
 												<input type="text" name="quota" id="quota"
 													class="form-control m-input m-input--air"
 													style="width: 25%;display: inherit;" [(ngModel)]="request.balance"
-													#quota="ngModel" required>
+													#quota="ngModel" [disabled]="isSpecial" required>
 											</span>
 											<span>days</span>
 											<div class="form-control-feedback has-danger"
@@ -57,6 +57,36 @@
 												This field is required.
 											</div>
 										</div>
+										<ng-container *ngIf="isSpecial">
+											<div class="col-md-3" style="margin-top:30px">
+												<span>Paid</span>
+												<span>
+													<input type="text" name="paidLeave" id="paidLeave"
+														class="form-control m-input m-input--air"
+														[(ngModel)]="request.paid"
+														(ngModelChange)="onChangePaidLeaveCount($event)"
+														#paidLeave="ngModel" OnlyNumber="true" required>
+												</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="paidLeave.invalid && leaveQuota.submitted">
+													This field is required.
+												</div>
+											</div>
+											<div class="col-md-3" style="margin-top:30px">
+												<span>Un-Paid</span>
+												<span>
+													<input type="text" name="unpaidLeave" id="unpaidLeave"
+														class="form-control m-input m-input--air"
+														[(ngModel)]="request.unpaid"
+														(ngModelChange)="onChangePaidLeaveCount($event)"
+														#unpaidLeave="ngModel" OnlyNumber="true" required>
+												</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="unpaidLeave.invalid && leaveQuota.submitted">
+													This field is required.
+												</div>
+											</div>
+										</ng-container>
 									</div>
 									<!-- <div class="row" *ngIf="isSpecial">
 										<div class="col-md-6">
