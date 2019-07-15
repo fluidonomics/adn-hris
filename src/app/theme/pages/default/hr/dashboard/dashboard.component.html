@@ -320,6 +320,149 @@
 				</div>
 				
 			</div>
+
+
+			<!-- leave dashboard begins -->
+			<div class="col-xl-6">
+				<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">
+									Leave dashboard
+								</h3>
+							</div>
+						</div>
+						<div class="m-portlet__head-tools">
+								<ul class="m-portlet__nav">
+										<li class="m-portlet__nav-item">
+												<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+													<div class="btn-group" role="group">
+														<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" [multiple]="true" bindLabel="departmentName"  bindValue="_id" placeholder="Select Department" [(ngModel)]="filterBy.departments" [clearable]="false" (change)="loadAllEmployeeOnLeave()"></ng-select>
+													</div>
+												</div>
+										</li>
+								</ul>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+							<div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+									<table class="m-datatable__table">
+										<thead class="m-datatable__head">
+											<tr class="m-datatable__row">
+					
+												
+												<th class="m-datatable__cell" width="5%"></th>
+												<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+													<span>
+														NAME
+														<i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												<th (click)="sort('departmentName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+													<span>
+														DEPARTMENT
+														<i class="la" *ngIf="key == 'departmentName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												<th (click)="sort('leaveType')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+													<span>
+														Leave Type
+														<i class="la" *ngIf="key == 'leaveType'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												<th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+													<span>
+														Leave Duration
+														<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+													</span>
+												</th>
+												
+											</tr>
+										</thead>
+										<tbody class="m-datatable__body">
+											<tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesLeaveData | orderBy: key : reverse | filter:search | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+
+												<td class="m-datatable__cell" width="20%">
+													<span>{{employee.fullName}} [{{employee.userName}}]</span>
+												</td>
+												<td class="m-datatable__cell" width="20%">
+													<span>{{employee.departmentName}}</span>
+												</td>
+												<td class="m-datatable__cell" width="20%">
+													<span>{{employee.leaveType}}</span>
+												</td>
+												<td class="m-datatable__cell" width="20%">
+													<div>{{employee.fromDate | date}} to {{employee.toDate | date}}</div>
+												</td>
+											</tr>
+					
+											<span *ngIf="(employeesLeaveData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
+												records found</span>
+										</tbody>
+									</table>
+									<pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+										<div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+											<ul class="m-datatable__pager-nav" *ngIf="p.pages.length != 0">
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--first"
+														[class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+														<i class="la la-angle-double-left"></i>
+													</a>
+												</li>
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--prev"
+														[class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
+														<i class="la la-angle-left"></i>
+													</a>
+												</li>
+												<li *ngFor="let page of p.pages">
+													<a (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
+														[class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
+														{{ page.label }}
+													</a>
+												</li>
+												<li>
+													<a class="m-datatable__pager-link m-datatable__pager-link--next"
+														[class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.next()">
+														<i class="la la-angle-right"></i>
+													</a>
+												</li>
+												<li>
+													<a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last"
+														[class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
+														<i class="la la-angle-double-right"></i>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</pagination-template>
+								</div>
+								<div class="pager-display-size" *ngIf="p.pages?.length!=0">
+									<select [(ngModel)]="itemPerPage" class="" title="Select page size" data-width="70px" data-selected="50">
+										<option value=10>10</option>
+										<option value=20>20</option>
+										<option value=30>30</option>
+										<option value=50>50</option>
+										<!-- <option value=100>100</option> -->
+									</select>
+									<span class="pager-display-title"> Displaying {{this.itemPerPage * (this.p2 - 1) + 1 > 1 ?
+										this.itemPerPage * (this.p2 - 1) + 1:1}} - {{((this.itemPerPage * (this.p2 - 1) + 1) +
+										(this.itemPerPage - 1)) > (employeesLeaveData | orderBy: key : reverse | filter:search)?.length ?
+										(employeesLeaveData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage * (this.p2 - 1)
+										+ 1) + this.itemPerPage - 1 }} of {{(employeesLeaveData | orderBy: key : reverse |
+										filter:search)?.length}} </span>
+								</div>
+								<div class="alignRight" *ngIf="employeesLeaveData.length > 0">
+									<a class="btn btn-outline-success m-btn m-btn--pill m-btn--wide btn-sm" (click)="downloadLeaveCsv();">
+										Download Status Report
+									</a>
+								</div>			
+					</div>
+				</div>
+			</div>
+			<!-- leave dashboard end -->
+
 			<!-- hjhjvfjjgjffhjffhjfj -->
 			<div class="col-xl-6">
 					<div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm m-portlet--full-height">
@@ -375,8 +518,7 @@
 								</div>
 						</div>
 					</div>
-				</div>
-			
+			</div>
 			
 <!-- jhfjdffvjfvjfvjvjjvjvj -->
 			<!-- new code added end -->
