@@ -146,6 +146,8 @@ export class QuotaProviderComponent implements OnInit {
                 this.employeesListToShow = this.employeeEligibleForSpecialUnpaidLeave;
             this.isMaternity = false;
             this.isSpecial = true;
+            this.request.paid = null;
+            this.request.unpaid = null;
         }
         this.request._id = null;
     }
@@ -214,8 +216,10 @@ export class QuotaProviderComponent implements OnInit {
             fiscalYearId: this.currentFiscalYear._id,
             createdBy: this.currentUser._id,
             createdAt: new Date(),
-            action_link: window.location.origin + '/my/leaves/dashboard/employee'
-
+            action_link: window.location.origin + '/my/leaves/dashboard/employee',
+            paid: this.request.paid,
+            unpaid: this.request.unpaid,
+            remarks: this.request.remarks
         };
         if (this.request.leave_type == 3) {
             data.emp_id = this.request._id;
@@ -344,6 +348,11 @@ export class QuotaProviderComponent implements OnInit {
     }
     onUploadOutput($event, name) {
         console.log($event, name);
+    }
+
+    onChangePaidLeaveCount(event) {
+        let quota = parseInt(this.request.paid || 0) + parseInt(this.request.unpaid || 0);
+        this.request.balance = quota;
     }
 
     // grid functions
