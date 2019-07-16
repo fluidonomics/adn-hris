@@ -1,6 +1,6 @@
 <div id="initiate-loader">
-    <department-grade-filter (onSearch)="onFilterSelected($event)"></department-grade-filter>
-    <employee-batch-selection-grid [(employeeData)]="employees" (employeeChecked)="OnemployeeChecked($event)"
+    <department-grade-filter #filter (onSearch)="onFilterSelected($event)"></department-grade-filter>
+    <employee-batch-selection-grid #grid [(employeeData)]="employees" (employeeChecked)="OnemployeeChecked($event)"
         [filterBy]="filterBy"></employee-batch-selection-grid>
 
     <div class="m-content">

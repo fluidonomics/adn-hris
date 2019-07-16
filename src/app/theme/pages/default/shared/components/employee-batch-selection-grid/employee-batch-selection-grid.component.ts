@@ -119,4 +119,9 @@ export class EmployeeBatchSelectionGridComponent implements OnInit {
     sort(key) {
 
     }
+
+    public clear() {
+        this.checkedEmployees = [];
+        this.isCheckAll = false;
+    }
 }

@@ -28,8 +28,8 @@ export class DepartmentGradeFilterComponent implements OnInit {
     deparmentData: any = [];
     gradeData: any = [];
     filterBy: any = {
-        departments:[],
-        grades:[]
+        departments: [],
+        grades: []
     };
 
     loadDepartment() {
@@ -55,5 +55,12 @@ export class DepartmentGradeFilterComponent implements OnInit {
     }
     loadAllEmployee() {
         this.onSearch.emit(this.filterBy);
+    }
+
+    public clear() {
+        this.filterBy = {
+            departments: [],
+            grades: []
+        };
     }
 }
