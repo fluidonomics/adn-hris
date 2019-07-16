@@ -19,7 +19,7 @@ declare var moment;
 
 
 @Component({
-    selector: "app-my-leaves-apply",
+    selector: "app-hr-leaves-apply",
     templateUrl: "./post.component.html",
     encapsulation: ViewEncapsulation.None,
 })
@@ -92,21 +92,21 @@ export class PostComponent implements OnInit {
     loadAllEmployee() {
         this._hrService.getAllEmployee()
             .subscribe(
-                res => {
-                    let data = res.json().data || [];
-                    if (data.length > 0) {
-                        data = data.filter(obj => obj.hrScope_id == this.currentUser._id);
-                        this.employeesData = data || [];
-                    }
-                    else {
-                        this.employeesData = data.json().data || [];
-                    }
-                    this.employeesData.forEach(emp => {
-                        emp.ddLabel = emp.fullName + emp.userName;
-                    });
-                },
-                error => {
+            res => {
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    data = data.filter(obj => obj.hrScope_id == this.currentUser._id);
+                    this.employeesData = data || [];
+                }
+                else {
+                    this.employeesData = data.json().data || [];
+                }
+                this.employeesData.forEach(emp => {
+                    emp.ddLabel = emp.fullName + emp.userName;
                 });
+            },
+            error => {
+            });
     }
 
     InitValues() {
@@ -159,21 +159,21 @@ export class PostComponent implements OnInit {
         if (this.employee) {
             this.leaveService.getEmployeeDetails(this.employee._id)
                 .subscribe(
-                    res => {
-                        if (res.ok) {
-                            this.employeeDetails = res.json().data[0] || {};
-                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
-                                this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
-                                this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
-                                if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
-                                    this.supervisorPresent = true;
-                                }
+                res => {
+                    if (res.ok) {
+                        this.employeeDetails = res.json().data[0] || {};
+                        if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                            this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
+                            this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
+                            if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
+                                this.supervisorPresent = true;
                             }
                         }
-                    },
-                    error => {
-                        console.log(error);
-                    });
+                    }
+                },
+                error => {
+                    console.log(error);
+                });
         }
     }
 
@@ -361,6 +361,7 @@ export class PostComponent implements OnInit {
             let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
             _postData.leaveTypeName = leaveType.type;
             _postData.link = window.location.origin + '/my/leaves/dashboard/supervisor';
+            _postData.additionalLeaves = [];
 
             let text = '';
             if (this.inProbation) {
