@@ -58,7 +58,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     filterBy: any = {};
     employeeData: any = [];
     employeesLeaveData: any = [];
-    p2: number = 1;
 
     leaveStatuses: any = [];
     dashboardType: any = [];
@@ -76,23 +75,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     };
     itemPerPage: number = 5;
 
+    key: string = ''; //set default
+    reverse: boolean = false;
+    p2: number = 1;
+    search: any;
+
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
-    meta: Meta, title: Title,
-    private _script: ScriptLoaderService,
-    private utilityService: UtilityService,
-    private _hrService: HrService,
-    private router: Router,
-    public _authService: AuthService,
-    private _commonService: CommonService
-    
-) {
-    title.setTitle('ADN Dashbord | Dashboard');
-    meta.addTags([
-        { name: 'author', content: '' },
-        { name: 'keywords', content: 'Dashboard' },
-        { name: 'description', content: 'Dashboard.' }
-    ]);
-}
+        meta: Meta, title: Title,
+        private _script: ScriptLoaderService,
+        private utilityService: UtilityService,
+        private _hrService: HrService,
+        private router: Router,
+        public _authService: AuthService,
+        private _commonService: CommonService
 
     ) {
         title.setTitle('ADN Dashbord | Dashboard');
@@ -116,18 +111,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             'assets/app/js/dashboard.js');
     }
 
-initData()
-{
-    this.loadAllEmployee();
-    this.loadLeaveEmployee();
-    this.getLeaveStatuses();
-    this.getDashboardType();
-    this.getTransactions();
-    this.getDashboard();
-    this.getChartDashboardType();
-    this.getOverviewChartData();
-    this.loadDepartment();
-}
+    initData() {
+        this.loadAllEmployee();
+        this.loadLeaveEmployee();
+        this.getLeaveStatuses();
+        this.getDashboardType();
+        this.getTransactions();
+        this.getDashboard();
+        this.getChartDashboardType();
+        this.getOverviewChartData();
+        this.loadDepartment();
+    }
 
     loadAllEmployee() {
         this.utilityService.showLoader('#stats-loader');
@@ -355,38 +349,38 @@ initData()
         }
         this.utilityService.saveAsCSV(csv.join("\n"), "Grade_Report")
 
-downloadLeaveCsv() {
-    
-    let csvHeader=['Employee Name(ID)',"Department", "LeaveType", "FromDate", "ToDate"];
-    let filedList=['fullName',"departmentName", "leaveType", "fromDate", "toDate"];
-    let csv=[];
-    let row = [];
-    
-    csv.push(csvHeader.join(","));
-     for (var i = 0; i < this.employeesLeaveData.length; i++) {
+    }
+
+    downloadLeaveCsv() {
+
+        let csvHeader = ['Employee Name(ID)', "Department", "LeaveType", "FromDate", "ToDate"];
+        let filedList = ['fullName', "departmentName", "leaveType", "fromDate", "toDate"];
+        let csv = [];
         let row = [];
-         for (var index in filedList) {//array[i]
-            let head = filedList[index];
-            if(head.indexOf('.') > -1)
-            {
-              let columnArr= head.split('.')
-              row.push(this.employeesLeaveData[i][columnArr[0]][columnArr[1]])  
-            }
-            else{
-                if(head == 'fullName' && this.employeesLeaveData[i][head]) {i
-                    row.push(this.employeesLeaveData[i][head] + "(" + this.employeesLeaveData[i]["userName"] + ")");
-                } else {
-                    row.push(this.employeesLeaveData[i][head]);
+
+        csv.push(csvHeader.join(","));
+        for (var i = 0; i < this.employeesLeaveData.length; i++) {
+            let row = [];
+            for (var index in filedList) {//array[i]
+                let head = filedList[index];
+                if (head.indexOf('.') > -1) {
+                    let columnArr = head.split('.')
+                    row.push(this.employeesLeaveData[i][columnArr[0]][columnArr[1]])
+                }
+                else {
+                    if (head == 'fullName' && this.employeesLeaveData[i][head]) {
+                        i
+                        row.push(this.employeesLeaveData[i][head] + "(" + this.employeesLeaveData[i]["userName"] + ")");
+                    } else {
+                        row.push(this.employeesLeaveData[i][head]);
+                    }
                 }
             }
-         }
-         csv.push(row.join(","));
-     }
-     this.utilityService.saveAsCSV(csv.join("\n"),"Leave_Report")
-    
-}
+            csv.push(row.join(","));
+        }
+        this.utilityService.saveAsCSV(csv.join("\n"), "Leave_Report")
 
-downloadEmpRetire() {
+    }
 
     downloadEmpRetire() {
 
@@ -549,15 +543,9 @@ downloadEmpRetire() {
         this.router.navigate(["./hr/post/leave"]);
     }
 
-}
-
-gotoPostLeave(){
-    this.router.navigate(["./hr/post/leave"]);
-}
-
-loadDepartment(division_id?: number) {
-    this._commonService.getDepartment()
-        .subscribe(
+    loadDepartment(division_id?: number) {
+        this._commonService.getDepartment()
+            .subscribe(
             res => {
                 if (res.ok) {
                     //this.employeesLeaveData = [];
@@ -566,36 +554,36 @@ loadDepartment(division_id?: number) {
             },
             error => {
             });
-}
+    }
 
 
-loadLeaveEmployee(){
-    this.utilityService.showLoader('#stats-loader');
-    this._hrService.getAllLeaveEmployee()
-    .subscribe(
-    res => {
-        let data = res.json().data || [];
-        if (data.length > 0) {
-            //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-            this.employeesLeaveData = data || [];
-            // this.employeesLeaveData.fromDate = this.employeesLeaveData.fromDate ? new Date(this.employeesLeaveData.fromDate) : this.employeesLeaveData.fromDate;
-            //this.employeesLeaveData.toDate = new Date();
-        }
-        this.utilityService.hideLoader('#stats-loader');
-       
-    },
-    error => {
-        this.utilityService.hideLoader('#stats-loader');
-    });
-    
-}
-
-
-loadAllEmployeeOnLeave() {
-    if (this.filterBy.departments) {
-        this.utilityService.showLoader('#initiate-loader');
+    loadLeaveEmployee() {
+        this.utilityService.showLoader('#stats-loader');
         this._hrService.getAllLeaveEmployee()
             .subscribe(
+            res => {
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                    this.employeesLeaveData = data || [];
+                    // this.employeesLeaveData.fromDate = this.employeesLeaveData.fromDate ? new Date(this.employeesLeaveData.fromDate) : this.employeesLeaveData.fromDate;
+                    //this.employeesLeaveData.toDate = new Date();
+                }
+                this.utilityService.hideLoader('#stats-loader');
+
+            },
+            error => {
+                this.utilityService.hideLoader('#stats-loader');
+            });
+
+    }
+
+
+    loadAllEmployeeOnLeave() {
+        if (this.filterBy.departments) {
+            this.utilityService.showLoader('#initiate-loader');
+            this._hrService.getAllLeaveEmployee()
+                .subscribe(
                 res => {
                     let data = res.json().data || [];
                     if (data.length > 0) {
@@ -621,10 +609,16 @@ loadAllEmployeeOnLeave() {
                 error => {
                     this.utilityService.hideLoader('#initiate-loader');
                 });
+        }
+        else {
+            this.employeesLeaveData = [];
+        }
     }
-    else {
-        this.employeesLeaveData = [];
+
+
+    sort(key) {
+        this.key = key;
+        this.reverse = !this.reverse;
     }
-}
 
 }
