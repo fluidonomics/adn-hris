@@ -51,6 +51,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
 
     additionalLeaves: any = [];
     financialYearList: any = [];
+    specialLeaveBalance: any = {};
 
     getLeaveTypeByEmpIdSubs: Subscription;
     constructor(
@@ -115,7 +116,14 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
                 this.getLeaveTypes();
             }
-        })
+        });
+        this.leaveService.getAllLeaveBalances(this.currentUser._id).subscribe(res => {
+            if (res.ok) {
+                let balances = res.json() || [];
+                balances = balances.filter(b => b.leave_type == 4);
+                this.specialLeaveBalance = balances[0];
+            }
+        });
     }
 
     getEmployeeDetails() {
@@ -308,6 +316,12 @@ export class ApplyComponent implements OnInit, OnDestroy {
                         leave.toDate = moment(leave.toDate).format('L');
                     });
                     _postData.additionalLeaves = this.additionalLeaves;
+
+                    if (data.leaveType == 4) {
+                        _postData.leaveBalanceId = this.specialLeaveBalance._id;
+                        _postData.paid = this.specialLeaveBalance.paid;
+                        _postData.unpaid = this.specialLeaveBalance.unpaid;
+                    }
 
                     let text = '';
                     if (this.inProbation) {

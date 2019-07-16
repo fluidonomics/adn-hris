@@ -87,6 +87,17 @@
 												</div>
 											</div>
 										</ng-container>
+										<div class="col-md-6">
+											<label for="form_control_1">Remarks</label>
+											<!-- <span class="required" aria-required="true"> * </span> -->
+											<textarea name="remarks" id="remarks"
+												class="form-control m-input m-input--air" rows="3" placeholder="Remarks"
+												[(ngModel)]="request.remarks" #remarks="ngModel"></textarea>
+											<!-- <div class="form-control-feedback has-danger"
+													*ngIf="fleaveapplication.submitted && !remarks.valid && leavetype.valid">
+													This field is required.
+												</div> -->
+										</div>
 									</div>
 									<!-- <div class="row" *ngIf="isSpecial">
 										<div class="col-md-6">

@@ -134,6 +134,11 @@ export class LeaveService {
         return this.authService.post(url, body).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
+    getAllLeaveBalances(empId: number) {
+        let url = "leave/getAllLeaveBalances?emp_id=" + empId;
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
     getLeaveStatuses() {
         let statuses = [
             LeaveStatus.Applied,

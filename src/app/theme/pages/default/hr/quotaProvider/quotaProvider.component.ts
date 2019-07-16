@@ -218,7 +218,8 @@ export class QuotaProviderComponent implements OnInit {
             createdAt: new Date(),
             action_link: window.location.origin + '/my/leaves/dashboard/employee',
             paid: this.request.paid,
-            unpaid: this.request.unpaid
+            unpaid: this.request.unpaid,
+            remarks: this.request.remarks
         };
         if (this.request.leave_type == 3) {
             data.emp_id = this.request._id;
