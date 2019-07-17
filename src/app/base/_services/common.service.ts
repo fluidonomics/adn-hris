@@ -372,8 +372,8 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getBatchInfo(): Observable<Response> {
-        let url = "batch/getBatchInfo";
+    getBatchInfo(fiscalYearId): Observable<Response> {
+        let url = "batch/getBatchInfo?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
