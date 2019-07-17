@@ -64,7 +64,7 @@
 												<input type="text" class="form-control m-input m-input--air" name="fromDate" (ngModelChange)="calculateDays($event, 'fromDate')"
 												 placeholder="Select From Date" [(ngModel)]="leaveapplication.fromDate" #fromDate="ngModel" bsDatepicker [readonly]="true"
 												 [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [disabled]="isMaternity" [minDate]="leaveapplication.fYear?.startDate"
-												 id="fromDate" required>
+												 [maxDate]="leaveapplication.fYear?.endDate" id="fromDate" required>
 												<div class="form-control-feedback has-danger" *ngIf="fleaveapplication.submitted && leavetype.valid">
 													<span *ngIf="fleaveapplication.submitted && !fromDate.valid">This field is required.</span>
 													<!--<span *ngIf="fleaveapplication.submitted && !fromDateValidation.isValid">{{fromDateValidation.msg}}</span>-->

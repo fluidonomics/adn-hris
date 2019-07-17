@@ -485,6 +485,7 @@ export class DashboardSupervisorComponent implements OnInit {
 
     onfiscalYearChange(e) {
         this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+        this.setFilters();
         this.loadDashboard();
     }
 
