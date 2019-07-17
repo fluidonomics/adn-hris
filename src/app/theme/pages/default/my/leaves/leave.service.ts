@@ -80,14 +80,14 @@ export class LeaveService {
         return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 
-    getEmployeeLeavesByMonth(empId: number, month?: number, year?: number, fromDate?: Date, toDate?: Date, fiscalYearId?: string) {
+    getEmployeeLeavesByMonth(empId: number, fromDate?: Date, toDate?: Date, fiscalYearId?: string) {
         let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
-        if (month) {
-            url += "&month=" + month;
-        }
-        if (year) {
-            url += "&year=" + year;
-        }
+        // if (month) {
+        //     url += "&month=" + month;
+        // }
+        // if (year) {
+        //     url += "&year=" + year;
+        // }
         if (fromDate) {
             url += "&fromDate=" + fromDate;
         }
