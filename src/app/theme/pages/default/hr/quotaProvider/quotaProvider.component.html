@@ -49,13 +49,54 @@
 												<input type="text" name="quota" id="quota"
 													class="form-control m-input m-input--air"
 													style="width: 25%;display: inherit;" [(ngModel)]="request.balance"
-													#quota="ngModel" required>
+													#quota="ngModel" [disabled]="isSpecial" required>
 											</span>
 											<span>days</span>
 											<div class="form-control-feedback has-danger"
 												*ngIf="quota.invalid && leaveQuota.submitted">
 												This field is required.
 											</div>
+										</div>
+										<ng-container *ngIf="isSpecial">
+											<div class="col-md-3" style="margin-top:30px">
+												<span>Paid</span>
+												<span>
+													<input type="text" name="paidLeave" id="paidLeave"
+														class="form-control m-input m-input--air"
+														[(ngModel)]="request.paid"
+														(ngModelChange)="onChangePaidLeaveCount($event)"
+														#paidLeave="ngModel" OnlyNumber="true" required>
+												</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="paidLeave.invalid && leaveQuota.submitted">
+													This field is required.
+												</div>
+											</div>
+											<div class="col-md-3" style="margin-top:30px">
+												<span>Un-Paid</span>
+												<span>
+													<input type="text" name="unpaidLeave" id="unpaidLeave"
+														class="form-control m-input m-input--air"
+														[(ngModel)]="request.unpaid"
+														(ngModelChange)="onChangePaidLeaveCount($event)"
+														#unpaidLeave="ngModel" OnlyNumber="true" required>
+												</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="unpaidLeave.invalid && leaveQuota.submitted">
+													This field is required.
+												</div>
+											</div>
+										</ng-container>
+										<div class="col-md-6">
+											<label for="form_control_1">Remarks</label>
+											<!-- <span class="required" aria-required="true"> * </span> -->
+											<textarea name="remarks" id="remarks"
+												class="form-control m-input m-input--air" rows="3" placeholder="Remarks"
+												[(ngModel)]="request.remarks" #remarks="ngModel"></textarea>
+											<!-- <div class="form-control-feedback has-danger"
+													*ngIf="fleaveapplication.submitted && !remarks.valid && leavetype.valid">
+													This field is required.
+												</div> -->
 										</div>
 									</div>
 									<!-- <div class="row" *ngIf="isSpecial">

@@ -1,9 +1,11 @@
-import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { PapService } from "../../../../../services/pap.service";
 
 import swal from 'sweetalert2';
 import { UtilityService } from "../../../../../../../../base/_services/utilityService.service";
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
+import { EmployeeBatchSelectionGridComponent } from "../../../../../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component";
+import { DepartmentGradeFilterComponent } from "../../../../../shared/components/department-grade-filter/department-grade-filter.component";
 
 
 @Component({
@@ -23,6 +25,9 @@ export class PapBatchInitComponent implements OnInit {
     selectedEmployees = [];
     currentDate = new Date();
     _currentEmpId: number;
+
+    @ViewChild('grid') employeeBatchSelectionGrid: EmployeeBatchSelectionGridComponent;
+    @ViewChild('filter') departmentGradeFilterComponent: DepartmentGradeFilterComponent;
 
     constructor(
         private papService: PapService,
@@ -48,7 +53,6 @@ export class PapBatchInitComponent implements OnInit {
 
     getEmployeesForPap() {
         this.papService.getEmployeesForPapInitiate().subscribe(res => {
-            debugger;
             this.employees = res || [];
             this.employees = this.employees.filter(e => {
                 if (e.type == 'pap') {
@@ -96,6 +100,7 @@ export class PapBatchInitComponent implements OnInit {
                                 this.utilityService.hideLoader('#initiate-loader');
                                 swal("Success", "Batch Initiated Successfully", "success");
                                 form.resetForm();
+                                this.clearForm();
                             }
                             this.getEmployeesForPap();
                         }, error => {
@@ -108,5 +113,15 @@ export class PapBatchInitComponent implements OnInit {
                 swal('Oops!', 'No employee selected', 'warning')
             }
         }
+    }
+
+    clearForm() {
+        this.selectedEmployees = [];
+        this.batchData = {
+            "emp_id_array": []
+        };
+        this.filterBy = {};
+        this.employeeBatchSelectionGrid.clear();
+        this.departmentGradeFilterComponent.clear();
     }
 }

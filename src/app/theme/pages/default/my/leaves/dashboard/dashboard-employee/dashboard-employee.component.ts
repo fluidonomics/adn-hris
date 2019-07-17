@@ -153,7 +153,7 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getOverviewChartData() {
         if (this.overviewChartFilter) {
-            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, null, null, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1], this.fiscalYearId).subscribe(res => {
+            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1], this.fiscalYearId).subscribe(res => {
                 if (res.ok) {
                     var data = res.json() || [];
                     data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
