@@ -118,7 +118,7 @@
                                 <tbody class="m-datatable__body ps ps--active-x ps--active-y"
                                     style="max-height: 324.727px;">
                                     <tr data-row="0" class="m-datatable__row" style="left: 0px;"
-                                        *ngFor="let holiday of upcomingHolidays | paginate: { itemsPerPage: 6, currentPage: holidayFilter.page };let even=even;">
+                                        *ngFor="let holiday of upcomingHolidays">
                                         <td data-field="ShipName" class="m-datatable__cell">
                                             <span>{{holiday.occasion}}</span>
                                         </td>
@@ -272,7 +272,7 @@
                                             </thead>
                                             <tbody class="m-datatable__body">
                                                 <tr class="m-datatable__row"
-                                                    *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };let even=even;">
+                                                    *ngFor="let tran of recentTransactions | paginate: { itemsPerPage: 6, currentPage: transactionFilter.page };">
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span>{{tran.leaveTypeName}}</span>
                                                     </td>
