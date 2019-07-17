@@ -91,6 +91,7 @@ export class DashboardSupervisorComponent implements OnInit {
                     this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                     this.fiscalYearId = 3;
                     this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+                    this.setFilters();
                     this.loadDashboard();
                     this.loadFilterData();
                 }
@@ -102,7 +103,6 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     loadDashboard() {
-        this.setFilters();
         this.getOverviewChartData();
         this.getTeamLeaves();
         this.getTeamLeavesForApproval();
