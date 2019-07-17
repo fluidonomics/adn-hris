@@ -6,9 +6,9 @@
                     <h3 class="text-format">Fiscal year</h3>
                     <!-- <label for="form_control_1">Financial Year</label> -->
                     <ng-select #ddFiscalYear class="m-input m-input--air dd-format" name="fiscalYear" bindValue="_id"
-                        bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId" id="fiscalYearId"
-                        #fiscalYear="ngModel" placeholder="Select Fiscal Year" (ngModelChange)="onfiscalYearChange($event)"
-                        [clearable]="false">
+                        bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId"
+                        id="fiscalYearId" #fiscalYear="ngModel" placeholder="Select Fiscal Year"
+                        (ngModelChange)="onfiscalYearChange($event)" [clearable]="false">
                     </ng-select>
                 </span>
             </div>
@@ -290,6 +290,9 @@
                                                     </td>
                                                     <td class="m-datatable__cell" width="15%">
                                                         <span>{{tran.applyToFullName}}</span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" width="10%">
+                                                        <span>{{tran.createdByFullName}}</span>
                                                     </td>
                                                     <td class="m-datatable__cell" width="10%">
                                                         <span class="span-scroll">{{tran.supervisorReason}}</span>
