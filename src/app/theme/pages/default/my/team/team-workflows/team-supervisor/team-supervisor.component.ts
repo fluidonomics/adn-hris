@@ -24,14 +24,14 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     imageBase: any;
     kraReverse: boolean = true;
     employeeReverse: boolean = true;
-
+    fiscalYearId: Number;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
         private _utilityService: UtilityService,
         private router: Router
     ) {
-
+        this.fiscalYearId = 3;
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(
@@ -55,7 +55,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                         let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved");
                         this.employeeData = profileData || [];
                         this._utilityService.hideLoader("#employeeApproval");
-                        this._myteamService.getKraForApproval(this._currentEmpId).subscribe(
+                        this._myteamService.getKraForApproval(this._currentEmpId, this.fiscalYearId).subscribe(
                             resApproval => {
                                 this.loadKraData(resApproval.json().data);
                             },
