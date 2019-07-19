@@ -19,7 +19,7 @@ import swal from 'sweetalert2';
 export class HrBatchComponent implements OnInit {
     batchData: any = [];
     activeRowNumber: number = -1;
-
+    fiscalYearId: number;
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
@@ -64,6 +64,8 @@ export class HrBatchComponent implements OnInit {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.fiscalYearId = 3;
+
                 this.initData();
             });
     }
@@ -74,7 +76,7 @@ export class HrBatchComponent implements OnInit {
 
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._commonService.getBatchInfo()
+        this._commonService.getBatchInfo(this.fiscalYearId)
             .subscribe(
                 res => {
                     this.utilityService.hideLoader('#batch-loader');

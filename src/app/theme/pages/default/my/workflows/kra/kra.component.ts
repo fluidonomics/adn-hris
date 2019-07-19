@@ -57,7 +57,7 @@ export class MyKraComponent {
     modalRef: BsModalRef;
     kraData: any = {};
     kraWorkflowStatus: string = '';
-
+    fiscalYearId: number;
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -67,13 +67,13 @@ export class MyKraComponent {
         private _kraService: KraService,
         private modalService: BsModalService
     ) {
+        this.fiscalYearId = 3;
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
             { name: 'author', content: '' },
             { name: 'keywords', content: 'Add new employee' },
             { name: 'description', content: 'Add new employee.' }
         ]);
-
     }
 
     ngOnInit() {
@@ -96,7 +96,7 @@ export class MyKraComponent {
     }
 
     loadKraWorkFlowDetails() {
-        this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId).subscribe(res => {
+        this._kraService.getEmployeeKraWorkFlowInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             this.kraWorkFlowData = res.json();
             this.kraWorkFlowData = this.kraWorkFlowData.sort((a, b) => {
                 if (moment(a.updatedAt).isBefore(b.updatedAt)) return 1;

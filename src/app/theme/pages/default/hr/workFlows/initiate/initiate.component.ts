@@ -30,7 +30,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     };
 
 
-    key: string = ''; //set default
+    key: string = '';
     reverse: boolean = false;
     p2: number = 1;
 
@@ -53,7 +53,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         private _commonService: CommonService,
         private utilityService: UtilityService,
         public _authService: AuthService) {
-        //this.batchData.emp_id=[];
     }
 
     ngOnInit() {
@@ -66,7 +65,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     initDropdown() {
-        //this.loadDivision();
         this.loadDepartment();
         this.loadGrade();
     }
@@ -114,14 +112,11 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                         if (data.length > 0) {
                             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
                                 data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                                //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
                             }
                             if (this.filterBy.grades && this.filterBy.grades.length > 0) {
                                 data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                                //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
                             }
                             data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                            // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                             this.employeeData = data || [];
                             this.utilityService.hideLoader('#initiate-loader');
                         }
@@ -159,6 +154,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             }).then((result) => {
                 if (result.value) {
                     this.utilityService.showLoader('#initiate-loader');
+                    this.batchData.fiscalYearId = 3;
                     this._hrService.saveBulkKra(this.batchData).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#initiate-loader');
@@ -177,10 +173,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         }
     }
 
-    // getColumnName(column) {
-    //     return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
-    // }
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
@@ -194,7 +186,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
 
     clearForm() {
-        this.key = ''; //set default
+        this.key = '';
         this.reverse = false;
         this.p2 = 1;
         this.isCheckAll = false;
