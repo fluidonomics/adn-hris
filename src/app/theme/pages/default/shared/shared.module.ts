@@ -8,6 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
 import { SharedService } from './shared.service';
+import { FiscalYearDropdownComponent } from "./components/fiscal-year-dropdown/fiscal-year-dropdown.component";
 
 
 
@@ -21,10 +22,12 @@ import { SharedService } from './shared.service';
         BsDatepickerModule.forRoot(),
     ],
     exports: [
-        PapDetailsGridComponent
+        PapDetailsGridComponent,
+        FiscalYearDropdownComponent
     ],
     declarations: [
-        PapDetailsGridComponent
+        PapDetailsGridComponent,
+        FiscalYearDropdownComponent
     ],
     providers: [
         SharedService

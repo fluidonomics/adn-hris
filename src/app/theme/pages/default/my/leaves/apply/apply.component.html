@@ -5,11 +5,12 @@
 				<span class="combine-element">
 					<h3 class="text-format">Fiscal year</h3>
 					<!-- <label for="form_control_1">Financial Year</label> -->
-					<ng-select #ddFiscalYear class="m-input m-input--air  dd-format" name="fiscalYear" bindValue="_id"
+					<!-- <ng-select #ddFiscalYear class="m-input m-input--air  dd-format" name="fiscalYear" bindValue="_id"
 						bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId"
 						id="fiscalYearId" #fiscalYear="ngModel" placeholder="Select Fiscal Year"
 						(ngModelChange)="onfiscalYearChange($event)" [clearable]="false">
-					</ng-select>
+					</ng-select> -->
+					<fiscal-year-dropdown (onfiscalYearChange)="onfiscalYearChange($event)"></fiscal-year-dropdown>
 				</span>
 			</div>
 		</div>

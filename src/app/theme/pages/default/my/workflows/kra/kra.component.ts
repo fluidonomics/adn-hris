@@ -58,7 +58,7 @@ export class MyKraComponent {
     kraData: any = {};
     kraWorkflowStatus: string = '';
     fiscalYearId: number;
-    constructor(@Inject(PLATFORM_ID) private platformId: Object,
+    constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
         private _router: Router,
@@ -67,7 +67,7 @@ export class MyKraComponent {
         private _kraService: KraService,
         private modalService: BsModalService
     ) {
-        this.fiscalYearId = 3;
+        this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
         title.setTitle('ADN HRIS | My Profile');
         meta.addTags([
             { name: 'author', content: '' },
@@ -118,11 +118,11 @@ export class MyKraComponent {
     loadEmployee() {
         this._commonService.getEmployee(this._currentEmpId)
             .subscribe(
-                res => {
-                    this.employee = res.json() || {};
-                },
-                error => {
-                });
+            res => {
+                this.employee = res.json() || {};
+            },
+            error => {
+            });
     }
 
     loadKraInfo() {
@@ -179,31 +179,31 @@ export class MyKraComponent {
     loadKraCategoryData() {
         this._commonService.getKraCategory()
             .subscribe(
-                data => {
-                    this.kraCategoryData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.kraCategoryData = data.json();
+            },
+            error => {
+            });
     }
 
     loadWeightAgeData() {
         this._commonService.getKraWeightage()
             .subscribe(
-                data => {
-                    this.weightageData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.weightageData = data.json();
+            },
+            error => {
+            });
     }
 
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId)
             .subscribe(
-                data => {
-                    this.supervisorData = data.json();
-                },
-                error => {
-                });
+            data => {
+                this.supervisorData = data.json();
+            },
+            error => {
+            });
     }
 
     sort(key) {
@@ -276,46 +276,46 @@ export class MyKraComponent {
     deleteKra(_id: number, index: number) {
         this._kraService.deleteKra(_id)
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.kraInfoData = this.kraInfoData.filter(x => x._id != _id);
-                        //delete this.kraInfoData[index];
-                        if (this.kraInfoData.length == 0) {
-                            this.addKraHtml();
-                        }
-                        swal({
-                            title: 'Deleted',
-                            text: "KRA has been deleted successfully.",
-                            type: 'warning',
-                            showCancelButton: false,
-                            confirmButtonColor: '#D33',
-                            confirmButtonText: 'OK'
-                        });
+            res => {
+                if (res.ok) {
+                    this.kraInfoData = this.kraInfoData.filter(x => x._id != _id);
+                    //delete this.kraInfoData[index];
+                    if (this.kraInfoData.length == 0) {
+                        this.addKraHtml();
                     }
-                },
-                error => {
-                });
+                    swal({
+                        title: 'Deleted',
+                        text: "KRA has been deleted successfully.",
+                        type: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#D33',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error => {
+            });
     }
 
     saveKraDetails(index: number) {
         this.kraInfoData[index].supervisorStatus = null;
         this._kraService.saveKra(this.kraInfoData[index])
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.kraInfoData[index] = res.json();
-                        swal({
-                            title: 'Success',
-                            text: "KRA has been Saved.",
-                            type: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#66BB6A',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    this.kraInfoData[index] = res.json();
+                    swal({
+                        title: 'Success',
+                        text: "KRA has been Saved.",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#66BB6A',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error => {
+            });
     }
 
     isWeightage() {
@@ -424,21 +424,21 @@ export class MyKraComponent {
             if (result.value) {
                 this._kraService.saveKraWorkFlow({ _id: this.param_id, status: 'Submitted' })
                     .subscribe(
-                        res => {
-                            if (res.ok) {
-                                swal({
-                                    title: 'Submitted Successfully!',
-                                    text: "KRA has been submitted for Supervisor Approval.",
-                                    type: 'success',
-                                    showCancelButton: false,
-                                    confirmButtonColor: '#66BB6A',
-                                    confirmButtonText: 'OK'
-                                });
-                                this.loadKraInfo();
-                            }
-                        },
-                        error => {
-                        });
+                    res => {
+                        if (res.ok) {
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text: "KRA has been submitted for Supervisor Approval.",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                            this.loadKraInfo();
+                        }
+                    },
+                    error => {
+                    });
             }
         });
     }

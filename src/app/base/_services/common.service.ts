@@ -275,7 +275,7 @@ export class CommonService {
     getSeparationData() {
         return separationData;
     }
-    
+
     getEducation(parent_id?: number) {
         let url = "common/getEducation";
         if (parent_id) {
@@ -420,6 +420,14 @@ export class CommonService {
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
         return this.authService.post(url, { emp_id: emp_id }).map(this.extractData).catch(this.handleError);
+    }
+
+    setFiscalYearIdLocal(fiscalYearId) {
+        sessionStorage.setItem('fiscalYearId', fiscalYearId);
+    }
+
+    getFiscalYearIdLocal() {
+        return sessionStorage.getItem('fiscalYearId');
     }
 
     private extractData(res: Response) {

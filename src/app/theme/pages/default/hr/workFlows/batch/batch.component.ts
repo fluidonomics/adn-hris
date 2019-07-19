@@ -64,7 +64,7 @@ export class HrBatchComponent implements OnInit {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
-                this.fiscalYearId = 3;
+                this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
 
                 this.initData();
             });
@@ -78,24 +78,24 @@ export class HrBatchComponent implements OnInit {
         this.utilityService.showLoader('#batch-loader');
         this._commonService.getBatchInfo(this.fiscalYearId)
             .subscribe(
-                res => {
-                    this.utilityService.hideLoader('#batch-loader');
-                    this.batchData = res.json().data;
-                    this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
-                },
-                error => {
-                    this.utilityService.hideLoader('#batch-loader');
-                });
+            res => {
+                this.utilityService.hideLoader('#batch-loader');
+                this.batchData = res.json().data;
+                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+            },
+            error => {
+                this.utilityService.hideLoader('#batch-loader');
+            });
     }
 
     loadkraWorkFlowDetails(batch_id: number) {
         this._commonService.getKraWorkFlowInfoByBatch(batch_id)
             .subscribe(
-                res => {
-                    this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData = res.json().data;
-                },
-                error => {
-                });
+            res => {
+                this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData = res.json().data;
+            },
+            error => {
+            });
     }
 
     saveKraWorkFlow(batch_id, kraRow, status) {

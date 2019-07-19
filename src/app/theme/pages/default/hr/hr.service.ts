@@ -40,8 +40,8 @@ export class HrService {
     //     return this.authService.get(url).map(this.extractData).catch(this.handleError);
     // }
 
-    getEmployeeLeaveBalance(empId: number) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=2";
+    getEmployeeLeaveBalance(empId: number, fiscalYearId: any) {
+        let url = "leave/getEmployeeLeaveBalance?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -55,7 +55,7 @@ export class HrService {
     }
 
     getEmployeeByGrade() {
-        let url="dashboard/empcountbygrade";
+        let url = "dashboard/empcountbygrade";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

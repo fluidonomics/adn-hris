@@ -85,6 +85,7 @@ export class DashboardHrComponent implements OnInit {
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
+            this.fiscalYearId = this.commonService.getFiscalYearIdLocal();
             this.getFinancialYearDetails();
         });
 
@@ -111,10 +112,8 @@ export class DashboardHrComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.currentFinancialYear = this.financialYearList.filter(f => f.isYearActive === true)[0].financialYearName;
-                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
+                    this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0].financialYearName;
                     this.loadDashboard();
-
                 }
             },
             error => {

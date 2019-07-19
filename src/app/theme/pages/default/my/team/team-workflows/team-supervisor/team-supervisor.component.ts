@@ -29,9 +29,10 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
         private _myteamService: MyTeamService,
         public _authService: AuthService,
         private _utilityService: UtilityService,
-        private router: Router
+        private router: Router,
+        private commonService: CommonService
     ) {
-        this.fiscalYearId = 3;
+        this.fiscalYearId = parseInt(this.commonService.getFiscalYearIdLocal());
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(
@@ -48,59 +49,59 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
         this._utilityService.showLoader("#kraApprovalView");
         this._myteamService.getAllEmployee()
             .subscribe(
-                res => {
-                    let data = res.json().data || [];
-                    data = data.filter(obj => obj.supervisor_id == this._currentEmpId);
-                    if (data.length > 0) {
-                        let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved");
-                        this.employeeData = profileData || [];
-                        this._utilityService.hideLoader("#employeeApproval");
-                        this._myteamService.getKraForApproval(this._currentEmpId, this.fiscalYearId).subscribe(
-                            resApproval => {
-                                this.loadKraData(resApproval.json().data);
-                            },
-                            error => {
+            res => {
+                let data = res.json().data || [];
+                data = data.filter(obj => obj.supervisor_id == this._currentEmpId);
+                if (data.length > 0) {
+                    let profileData = data.filter(obj => obj.profileProcessDetails.hrStatus == "Submitted" && obj.profileProcessDetails.supervisorStatus != "Approved");
+                    this.employeeData = profileData || [];
+                    this._utilityService.hideLoader("#employeeApproval");
+                    this._myteamService.getKraForApproval(this._currentEmpId, this.fiscalYearId).subscribe(
+                        resApproval => {
+                            this.loadKraData(resApproval.json().data);
+                        },
+                        error => {
 
-                            }
-                        )
-                        //this.loadKraData(res.json().data);
+                        }
+                    )
+                    //this.loadKraData(res.json().data);
 
-                        //    for (var i = 0; i < data.length; i++) { 
-                        //             if(data[i].kraWorkflow)
-                        //             {
-                        //               let objkraSubmitted= data[i].kraWorkflow.filter(obj=>obj.status=="Submitted");
-                        //               if(objkraSubmitted.length >0)
-                        //               {
-                        //                 for (var j = 0; j < objkraSubmitted.length; j++)
-                        //                 {
-                        //                     objkraSubmitted[j].fullName= data[i].fullName;
-                        //                     objkraSubmitted[j].profileImage= data[i].profileImage;
-                        //                     this.kraData.push(objkraSubmitted[j]);
-                        //                 }
-                        //               }
-                        //               //data[i].kraWorkflow=kraWorkFlowData;
-                        //             //   else
-                        //             //   data[i].kraWorkflow=null;
-                        //             }
-                        //     }
+                    //    for (var i = 0; i < data.length; i++) { 
+                    //             if(data[i].kraWorkflow)
+                    //             {
+                    //               let objkraSubmitted= data[i].kraWorkflow.filter(obj=>obj.status=="Submitted");
+                    //               if(objkraSubmitted.length >0)
+                    //               {
+                    //                 for (var j = 0; j < objkraSubmitted.length; j++)
+                    //                 {
+                    //                     objkraSubmitted[j].fullName= data[i].fullName;
+                    //                     objkraSubmitted[j].profileImage= data[i].profileImage;
+                    //                     this.kraData.push(objkraSubmitted[j]);
+                    //                 }
+                    //               }
+                    //               //data[i].kraWorkflow=kraWorkFlowData;
+                    //             //   else
+                    //             //   data[i].kraWorkflow=null;
+                    //             }
+                    //     }
 
-                        // let kraData = data.filter(obj =>  obj.kraWorkflow && obj.kraWorkflow.filter(d=>d.kraWorkflow=='Submitted'));
+                    // let kraData = data.filter(obj =>  obj.kraWorkflow && obj.kraWorkflow.filter(d=>d.kraWorkflow=='Submitted'));
 
-                    }
-                    else {
-                        this.employeeData = [];
-                        this._utilityService.hideLoader("#employeeApproval");
-                        this._utilityService.hideLoader("#kraApproval");
-                        this._utilityService.hideLoader("#kraApprovalView");
-
-                    }
-                },
-                error => {
+                }
+                else {
+                    this.employeeData = [];
                     this._utilityService.hideLoader("#employeeApproval");
                     this._utilityService.hideLoader("#kraApproval");
                     this._utilityService.hideLoader("#kraApprovalView");
 
-                });
+                }
+            },
+            error => {
+                this._utilityService.hideLoader("#employeeApproval");
+                this._utilityService.hideLoader("#kraApproval");
+                this._utilityService.hideLoader("#kraApprovalView");
+
+            });
     }
 
 
@@ -117,7 +118,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     element.fullName = element.emp_name;
                     // for (var i = 0; i < 3; i++) {
 
-                        __this.kraDataView.push(element);
+                    __this.kraDataView.push(element);
                     // }
                 }
             }

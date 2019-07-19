@@ -1,0 +1,5 @@
+<ng-select #ddFiscalYear class="m-input m-input--air  dd-format" name="fiscalYear" bindValue="_id"
+    bindLabel="financialYearName" [items]="financialYearList" [(ngModel)]="fiscalYearId" id="fiscalYearId"
+    #fiscalYear="ngModel" placeholder="Select Fiscal Year" (ngModelChange)="onfiscalYearChange($event)"
+    [clearable]="false">
+</ng-select>

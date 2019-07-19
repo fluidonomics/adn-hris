@@ -44,7 +44,7 @@ export class PostComponent implements OnInit {
     fromDateValidation: any = {};
     inProbation: boolean = false;
     isMaternity: boolean = false;
-    fiscalYearId: number = 2;
+    fiscalYearId: number;
     leaveBalance: any = [];
     employeeDetails: any = {};
     primarySupervisor: any = {};
@@ -121,7 +121,7 @@ export class PostComponent implements OnInit {
             isValid: true,
             msg: ''
         }
-        this.fiscalYearId = 2;
+        this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
         this.clearAttachment();
         this.getEmployeeLeaves();
         this.getFinancialYear();
