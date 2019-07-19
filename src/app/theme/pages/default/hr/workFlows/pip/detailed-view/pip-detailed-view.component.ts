@@ -61,6 +61,14 @@ export class PipDetailView {
           'timeline' : "3 Months"
       },
       {
+         '_id': 4,
+         'timeline' : "4 Months"
+      },
+      {
+         '_id': 5,
+         'timeline' : "5 Months"
+      },
+      {
           '_id': 6,
           'timeline' : "6 Months"
       }
@@ -78,8 +86,29 @@ export class PipDetailView {
    {
        '_id':3,
        'final_recommendation': "Remedial action"
+   },
+   {
+      '_id':4,
+      'final_recommendation': "Extend PIP"
    }
 ];
+
+extendPIP = [
+   {
+       '_id':1,
+       'extendedBy': "1 Months"
+   },
+   {
+       '_id':2,
+       'extendedBy': "2 Months"
+   },
+   {
+       '_id':3,
+       'extendedBy': "3 Months"
+   },
+];
+
+
 
 
    constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -201,8 +230,18 @@ export class PipDetailView {
                      empFinalCom: pipData.emp_final_com,
                      revFinalCom: pipData.rev_final_com,
                      supFinalCom: pipData.sup_final_com,
-                     finalRecommendation: pipData.final_recommendation
+                     finalRecommendation: pipData.final_recommendation,
+                     //...(pipData.final_recommendation === 4 && {extendedBy: pipData.extendedBy})
+                     ...(pipData.final_recommendation === 4 && {timelines: this.pipData.master_timelines + pipData.extendedBy})
                   }
+
+                  // if(pipData.final_recommendation === 4) {
+                  //    request.extendedBy = pipData.extendedBy;
+                  //    let requestNew = {
+                  //       extendedBy: pipData.extendedBy
+                  //    }
+                  //    Object.assign(request, requestNew);
+                  // }
                   
                   this.utilityService.showLoader('.mtrDetailsPortlet');
                   this._pipService.updateMaster(request).subscribe(res => {
