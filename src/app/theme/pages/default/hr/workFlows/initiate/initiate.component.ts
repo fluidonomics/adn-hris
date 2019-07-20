@@ -62,6 +62,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
+        this.loadAllEmployee();
     }
 
     initDropdown() {
@@ -103,7 +104,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     loadAllEmployee() {
-        if (this.filterBy.grades || this.filterBy.departments) {
+        // if (this.filterBy.grades || this.filterBy.departments) {
             this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
                 .subscribe(
@@ -129,10 +130,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 error => {
                     this.utilityService.hideLoader('#initiate-loader');
                 });
-        }
-        else {
-            this.employeeData = [];
-        }
+        // }
+        // else {
+        //     this.employeeData = [];
+        // }
     }
 
     saveBulkKra(form) {
