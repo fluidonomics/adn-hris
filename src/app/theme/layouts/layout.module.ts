@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HrefPreventDefaultDirective } from '../../_directives/href-prevent-default.directive';
 import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
+import { SharedModule } from "../pages/default/shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
     imports: [
         CommonModule,
         RouterModule,
+        SharedModule
     ],
 })
 export class LayoutModule {

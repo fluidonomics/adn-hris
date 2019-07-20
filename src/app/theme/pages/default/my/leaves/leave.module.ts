@@ -39,6 +39,7 @@ import { SupervisorGuard } from '../../../../../base/_guard/supervisor.guard';
 import { DashboardHrComponent } from './dashboard/dashboard-hr/dashboard-hr.component';
 import { HttpClientModule } from '../../../../../../../node_modules/@angular/common/http';
 import { NgUploaderModule } from 'ngx-uploader';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { NgUploaderModule } from 'ngx-uploader';
         BaseModule,
         AmChartsModule,
         HttpClientModule,
-        NgUploaderModule
+        NgUploaderModule,
+        SharedModule
     ], declarations: [
         LeaveComponent,
         DashboardEmployeeComponent,

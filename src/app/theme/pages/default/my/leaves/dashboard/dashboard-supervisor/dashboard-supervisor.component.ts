@@ -77,6 +77,7 @@ export class DashboardSupervisorComponent implements OnInit {
         });
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
+            this.fiscalYearId = this.commonService.getFiscalYearIdLocal();
             this.getFinancialYearDetails();
             if (this.showModal) {
                 this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, true);
@@ -88,8 +89,6 @@ export class DashboardSupervisorComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-                    this.fiscalYearId = 3;
                     this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
                     this.setFilters();
                     this.loadDashboard();
@@ -484,7 +483,7 @@ export class DashboardSupervisorComponent implements OnInit {
     }
 
     onfiscalYearChange(e) {
-        this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+        // this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
         this.setFilters();
         this.loadDashboard();
     }

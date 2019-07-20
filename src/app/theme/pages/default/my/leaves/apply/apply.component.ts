@@ -50,7 +50,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
     supervisorPresent: boolean = false;
 
     additionalLeaves: any = [];
-    financialYearList: any = [];
     specialLeaveBalance: any = {};
 
     getLeaveTypeByEmpIdSubs: Subscription;
@@ -66,18 +65,11 @@ export class ApplyComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
-            this.getFinancialYear().then(res => {
-                this.InitValues();
-                this.getEmployeeDetails();
-                // this.getAllEmailListOfEmployee();
-                this.getEmployeeProbationDetails();
-                // this.fleaveapplication.valueChanges.subscribe(val => {
-                //     this.areDaysValid = true;
-                //     this.isBalanceValid = true;
-                //     this.isAttachmentAdded = false;
-                // });
-                this.getHolidays();
-            });
+            this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
+            this.InitValues();
+            this.getEmployeeDetails();
+            this.getEmployeeProbationDetails();
+            this.getHolidays();
         });
     }
 
@@ -101,7 +93,7 @@ export class ApplyComponent implements OnInit, OnDestroy {
                 this.leaveTypesDetails = [];
                 data.forEach(leaveType => {
                     let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leaveType._id);
-                    if (bal.allotedLeave > 0) {
+                    if (bal && bal.allotedLeave > 0) {
                         this.leaveTypesDetails.push(leaveType);
                     }
                 });
@@ -183,29 +175,6 @@ export class ApplyComponent implements OnInit, OnDestroy {
             if (res.ok) {
                 this.holidayList = res.json() || [];
             }
-        });
-    }
-
-    getFinancialYear() {
-        return new Promise((resolve, reject) => {
-            this._commonService.getFinancialYear().subscribe(res => {
-                if (res.ok) {
-                    this.financialYearList = res.json() || [];
-                    if (this.financialYearList && this.financialYearList.length > 0) {
-                        this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-                        this.fiscalYearId = 3;
-                        let fYear = this.financialYearList.filter(d => d._id === this.fiscalYearId);
-                        if (fYear["0"]) {
-                            this.leaveapplication.fYear = {
-                                startDate: new Date(fYear["0"].starDate),
-                                endDate: new Date(fYear["0"].endDate)
-                            };
-                            // this.fiscalYearId = fYear["0"]._id;
-                            resolve(true);
-                        }
-                    }
-                }
-            })
         });
     }
 
@@ -758,9 +727,11 @@ export class ApplyComponent implements OnInit, OnDestroy {
         this.additionalLeaves.push({});
     }
 
-    onfiscalYearChange(e) {
+    onfiscalYearChange(data) {
+        debugger;
+
         this.InitValues();
-        let fYear = this.financialYearList.find(f => f._id === this.fiscalYearId);
+        let fYear = data.currentFiscalYear;
         if (fYear) {
             this.leaveapplication.fYear = {
                 startDate: new Date(fYear.starDate),
