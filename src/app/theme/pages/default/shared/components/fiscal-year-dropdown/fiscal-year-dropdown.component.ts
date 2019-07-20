@@ -21,6 +21,7 @@ export class FiscalYearDropdownComponent {
         // Temporary code, Remove it once the year transition has happened.
         if (!this.fiscalYearId) {
             this.fiscalYearId = 3;
+            this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
         }
         // ----------------------------------------------------------------
         this.getFinancialYears();
