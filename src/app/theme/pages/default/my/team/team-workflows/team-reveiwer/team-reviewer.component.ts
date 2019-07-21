@@ -28,9 +28,11 @@ export class MyTeamReviewerComponent implements OnInit {
         private kraService: KraService,
         private learningService: LearningService,
         private papService: PapService,
-        private pipService: PipService
+        private pipService: PipService,
+        private commonService: CommonService
     ) {
     }
+    fiscalYearId: any;
     employees: any = [];
     mtrEmployees: any = [];
     imageBase: any;
@@ -71,7 +73,8 @@ export class MyTeamReviewerComponent implements OnInit {
     goToAllPip() {
         this.router.navigate(['/my/team/workflows/reveiwer/pip/list']);
     }
-    ngOnInit() {
+    async ngOnInit() {
+        this.fiscalYearId = 3
         this.getallemployees();
         this.loadMTRInfo();
         this.getEmployeesLearning();
@@ -85,15 +88,13 @@ export class MyTeamReviewerComponent implements OnInit {
             if (res.ok) {
                 let data = res.json();
                 this.mtrEmployees = data.result.message;
-                console.log(data);
             }
-
         })
     }
 
     getallemployees() {
         this.utilityService.showLoader("#employeeList");
-        this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id).subscribe(res => {
+        this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
             if (res.ok) {
                 this.utilityService.hideLoader("#employeeList");
                 this.employees = res.json() || [];

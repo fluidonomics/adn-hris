@@ -293,9 +293,13 @@ export class MyService {
             return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
         }
     }
-    getAllEmployeeByReviewerId(emp_id:number)
+    getAllEmployeeByReviewerId(emp_id:number, fiscalYearId: any = '')
     {
-        let url = "user/getAllEmployeeByReviewerId?id=" + emp_id;
+        let url = '';
+        if(fiscalYearId == '') 
+            url = "user/getAllEmployeeByReviewerId?id=" + emp_id+ "&fiscalYearId=2" ;
+        else
+            url = "user/getAllEmployeeByReviewerId?id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     
