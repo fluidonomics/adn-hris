@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { HrService } from '../../hr.service';
 import { environment } from '../../../../../../../environments/environment'
 import swal from 'sweetalert2';
+import { FiscalYearDropdownComponent } from "../../../shared/components/fiscal-year-dropdown/fiscal-year-dropdown.component";
+import { HeaderNavComponent } from "../../../../../layouts/header-nav/header-nav.component";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--krainitiate",
@@ -47,6 +49,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         { _id: "Learning", batchTypeName: "Learning", disabled: true },
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
+    currentFiscalYear: any;
+
 
     constructor(
         private _hrService: HrService,
@@ -56,6 +60,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -63,6 +68,9 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             });
         this.imageBase = environment.content_api_base.imgBase;
         this.loadAllEmployee();
+        this._commonService.currentFinancialYear.subscribe(res => {
+            this.currentFiscalYear = res;
+        });
     }
 
     initDropdown() {
@@ -105,31 +113,31 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
     loadAllEmployee() {
         // if (this.filterBy.grades || this.filterBy.departments) {
-            this.utilityService.showLoader('#initiate-loader');
-            this._hrService.getAllEmployee()
-                .subscribe(
-                res => {
-                    let data = res.json().data || [];
-                    if (data.length > 0) {
-                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                        }
-                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                        }
-                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                        this.employeeData = data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
+        this.utilityService.showLoader('#initiate-loader');
+        this._hrService.getAllEmployee()
+            .subscribe(
+            res => {
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                        data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                     }
-                    else {
-                        this.employeeData = data.json().data || [];
-                        this.utilityService.hideLoader('#initiate-loader');
+                    if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                        data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
                     }
-
-                },
-                error => {
+                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                    this.employeeData = data || [];
                     this.utilityService.hideLoader('#initiate-loader');
-                });
+                }
+                else {
+                    this.employeeData = data.json().data || [];
+                    this.utilityService.hideLoader('#initiate-loader');
+                }
+
+            },
+            error => {
+                this.utilityService.hideLoader('#initiate-loader');
+            });
         // }
         // else {
         //     this.employeeData = [];
@@ -144,9 +152,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         });
 
         if (this.batchData.emp_id.length > 0) {
+            debugger;
             swal({
                 title: 'Are you sure?',
-                text: "",
+                text: "This will initiate KRA Batch for " + this.currentFiscalYear.financialYearName,
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -156,6 +165,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                 if (result.value) {
                     this.utilityService.showLoader('#initiate-loader');
                     this.batchData.fiscalYearId = this._commonService.getFiscalYearIdLocal();
+                    this.batchData.link = window.location.origin + "/my/workflows/kra?fiscalYearId=" + this.currentFiscalYear._id;
                     this._hrService.saveBulkKra(this.batchData).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#initiate-loader');

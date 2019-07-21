@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID, OnInit, ViewEncapsulation } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, ChildActivationStart } from '@angular/router';
 import { Helpers } from "./helpers";
 import { AuthService } from "./base/_services/authService.service";
 import { environment } from '../environments/environment';
@@ -39,6 +39,11 @@ export class AppComponent implements OnInit {
             }
             if (route instanceof NavigationEnd) {
                 Helpers.setLoading(false);
+            }
+            if (route instanceof ChildActivationStart) {
+                if (route.snapshot.queryParams && route.snapshot.queryParams.fiscalYearId) {
+                    sessionStorage.setItem('fiscalYearId', route.snapshot.queryParams.fiscalYearId);
+                }
             }
         });
     }
