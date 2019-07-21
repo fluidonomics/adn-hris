@@ -37,15 +37,7 @@ export class FiscalYearDropdownComponent {
                         this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
                         this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
                     }
-                    // let fYear = this.financialYearList.filter(d => d._id === this.fiscalYearId);
-                    // if (fYear["0"]) {
-                    //     this.leaveapplication.fYear = {
-                    //         startDate: new Date(fYear["0"].starDate),
-                    //         endDate: new Date(fYear["0"].endDate)
-                    //     };
-                    //     // this.fiscalYearId = fYear["0"]._id;
-                    //     resolve(true);
-                    // }
+                    this._commonService.currentFinancialYear.next(this.getCurrentFiscalYear());
                 }
             }
         })
@@ -57,5 +49,10 @@ export class FiscalYearDropdownComponent {
         this.fiscalYearChangeEvent.emit({ event: event, fiscalYearId: this.fiscalYearId, currentFiscalYear: fYear });
         this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
         window.location.reload();
+    }
+
+    public getCurrentFiscalYear() {
+        let fyear = this.financialYearList.find(f => f._id == this.fiscalYearId);
+        return fyear;
     }
 }

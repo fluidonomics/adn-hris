@@ -22,11 +22,16 @@ import {
     levelofEducation, examDegreeTitle, separationData, permissionData
 } from "../_jsonData/dropDownData";
 import { AuthService } from "./authService.service"
+import { Subject } from "rxjs/Subject";
+import { ReplaySubject } from "rxjs/ReplaySubject";
 
 
 
 @Injectable()
 export class CommonService {
+
+    currentFinancialYear: ReplaySubject<any> = new ReplaySubject<any>(1);
+
     constructor(private authService: AuthService,
         private http: Http) {
     }
