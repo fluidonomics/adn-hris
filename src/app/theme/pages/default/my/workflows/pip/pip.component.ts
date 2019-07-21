@@ -257,7 +257,7 @@ export class MyPipComponent {
             let data = res.json();
             this.pipInfoData = data.result.message;
             if(this.pipInfoData.length > 0){
-                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
+                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed" && pip.master_status != "Extended").length > 0;
                 this.loadprevsupervisor();
             } 
             else {

@@ -478,10 +478,10 @@
 												<!-- </div> -->
 
 												<!-- <div *ngIf="true"> -->
-												<div class="col-md-12 heading" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month4 && pipData.master_timelines>=4">
 													<span><b>Month 4</b></span>
 												</div>
-												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines>=4">
 													<span>Employee Comments #4</span>
 													<textarea name="empComment_month4" id="empComment_month4"
 														[(ngModel)]="pipData.empComment_month4"
@@ -507,10 +507,10 @@
 												<!-- </div> -->
 
 												<!-- <div *ngIf="true"> -->
-												<div class="col-md-12 heading" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month5 && pipData.master_timelines>=5">
 													<span><b>Month 5</b></span>
 												</div>
-												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines>=5">
 													<span>Employee Comments #5</span>
 													<textarea name="empComment_month5" id="empComment_month5"
 														[(ngModel)]="pipData.empComment_month5"
@@ -607,7 +607,7 @@
 																type="button" *ngIf="!isDisabled && isSup"> Send
 																Back</button>
 															<button class="btn btn-success" (click)="saveLearningDetails(pipData,'Approved', PipDataForm)"
-																*ngIf="saveEnabled && pipData.status == 'Approved' && isSup">Save</button>
+																*ngIf="saveEnabled && (pipData.status == 'Approved' || pipData.status == 'Extended') && isSup">Save</button>
 															<button class="btn btn-secondary" type="button"
 																(click)="modalRef.hide()">Back</button>
 														</div>

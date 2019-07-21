@@ -96,15 +96,15 @@ export class PipDetailView {
 extendPIP = [
    {
        '_id':1,
-       'extendedBy': "1 Months"
+       'extended_by': "1 Months"
    },
    {
        '_id':2,
-       'extendedBy': "2 Months"
+       'extended_by': "2 Months"
    },
    {
        '_id':3,
-       'extendedBy': "3 Months"
+       'extended_by': "3 Months"
    },
 ];
 
@@ -231,8 +231,7 @@ extendPIP = [
                      revFinalCom: pipData.rev_final_com,
                      supFinalCom: pipData.sup_final_com,
                      finalRecommendation: pipData.final_recommendation,
-                     //...(pipData.final_recommendation === 4 && {extendedBy: pipData.extendedBy})
-                     ...(pipData.final_recommendation === 4 && {timelines: this.pipData.master_timelines + pipData.extendedBy})
+                     ...(pipData.final_recommendation === 4 && {timelines: this.pipData.master_timelines + pipData.extended_by, extendedBy: pipData.extended_by})
                   }
 
                   // if(pipData.final_recommendation === 4) {
@@ -241,7 +240,7 @@ extendPIP = [
                   //       extendedBy: pipData.extendedBy
                   //    }
                   //    Object.assign(request, requestNew);
-                  // }
+                  // }sss
                   
                   this.utilityService.showLoader('.mtrDetailsPortlet');
                   this._pipService.updateMaster(request).subscribe(res => {
@@ -298,7 +297,7 @@ extendPIP = [
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[0]));
 
-      if(this.pipData.rev_final_com && this.pipData.hr_final_com) {
+      if(this.pipData.rev_final_com && this.pipData.hr_final_com && this.pipData.status != "Extended") {
 
          $("#hr_final_com").attr('disabled', 'disabled');
          $("#submitForm").remove();
