@@ -70,6 +70,7 @@ export class DashboardEmployeeComponent implements OnInit {
         this.authService.validateToken().subscribe(res => {
             this.currentUser = this.authService.currentUserData;
             this.getFinancialYearDetails();
+            this.fiscalYearId = this.commonService.getFiscalYearIdLocal();
             if (this.showModal) {
                 this.showLeaveDetail(this.modalLeaveId, this.leaveDetailModal, null);
             }
@@ -85,8 +86,6 @@ export class DashboardEmployeeComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.financialYearList = res.json() || [];
-                    this.fiscalYearId = this.financialYearList.filter(f => f.isYearActive === true)[0]._id;
-                    this.fiscalYearId = 3;
                     this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
                     this.loadDashboard();
                 }
@@ -281,7 +280,7 @@ export class DashboardEmployeeComponent implements OnInit {
     }
 
     onfiscalYearChange(e) {
-        this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
-        this.loadDashboard();
+        // this.currentFinancialYear = this.financialYearList.filter(f => f._id == this.fiscalYearId)[0];
+        // this.loadDashboard();
     }
 }

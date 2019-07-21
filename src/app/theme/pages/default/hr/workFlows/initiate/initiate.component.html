@@ -80,7 +80,7 @@
 													<span></span>
 												</label>
 										</th>
-										<th class="m-datatable__cell" width="5%" ></th>
+										<th class="m-datatable__cell" width="2%" ></th>
 										<th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%" >
 											<span>
 											 NAME
@@ -93,16 +93,28 @@
 											<i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+										<th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
 											<span>
 											DESIGNATION 
 											<i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
 										</th>
-										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
+										<th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
 											<span>
 													SUPERVISOR  
 											<i class="la" *ngIf="key == 'supervisor'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sort('departmentName')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+											<span>
+												Department  
+											<i class="la" *ngIf="key == 'departmentName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+											</span>
+										</th>
+										<th (click)="sort('grade')" class="m-datatable__cell m-datatable__cell--sort" width="8%">
+											<span>
+												Grade  
+											<i class="la" *ngIf="key == 'grade'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
 											</span>
                                         </th>
 									</tr>
@@ -115,7 +127,7 @@
 											<span></span>
 										</label>
 									</td>	
-									<td class="m-datatable__cell" width="5%" >
+									<td class="m-datatable__cell" width="2%" >
 										  <img *ngIf="employee?.profileImage; else noImage" src="{{imageBase+employee?.profileImage}}" onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
 									      <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
 									</td>
@@ -125,11 +137,17 @@
 									<td class="m-datatable__cell" width="20%" >
 										<span>{{employee.officeEmail}}</span>
 									</td>
-									<td class="m-datatable__cell" width="20%" >
+									<td class="m-datatable__cell" width="15%" >
 										<span>{{employee.designation}}</span>
 									</td>
-								    <td class="m-datatable__cell" width="25%" >
+								    <td class="m-datatable__cell" width="15%" >
 										<span>{{employee.supervisor}}</span>
+									</td>
+									<td class="m-datatable__cell" width="15%" >
+										<span>{{employee.departmentName}}</span>
+									</td>
+									<td class="m-datatable__cell" width="8%" >
+										<span>{{employee.grade}}</span>
 									</td>
 							  </tr>
 

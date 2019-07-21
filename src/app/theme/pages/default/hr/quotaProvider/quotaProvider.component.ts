@@ -62,7 +62,7 @@ export class QuotaProviderComponent implements OnInit {
     employeeNotEligibleForSpecialUnpaidLeave: any[];
     // data for grid
     currentUser: any = {};
-    currentFiscalYear: any;
+    fiscalYearId: any;
 
     constructor(
         private _router: Router,
@@ -77,9 +77,7 @@ export class QuotaProviderComponent implements OnInit {
     }
     ngOnInit() {
         this.currentUser = this._authService.currentUserData;
-        this._commonService.getCurrentFinancialYear().subscribe(res => {
-            this.currentFiscalYear = res;
-        });
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this.isMaternity = false;
         this.isSpecial = false;
         this.selectionType = [
@@ -158,7 +156,7 @@ export class QuotaProviderComponent implements OnInit {
         // this.sickLeaveBalance = _.find(empData, (e) => e.leave_type === 2) ? _.find(empData, (e) => e.leave_type === 2).remaining_balance : 0;
         // this.maternityLeaveBalance = _.find(empData, (e) => e.leave_type === 3) ? _.find(empData, (e) => e.leave_type === 3).remaining_balance : 0;
         // this.specialLeaveBalance = _.find(empData, (e) => e.leave_type === 4) ? _.find(empData, (e) => e.leave_type === 4).remaining_balance : 0;
-        this._leaveService.getEmployeeLeaveBalance($event._id, this.currentFiscalYear._id).subscribe(res => {
+        this._leaveService.getEmployeeLeaveBalance($event._id, this.fiscalYearId).subscribe(res => {
             let balances = res.json() || [];
             if (balances && balances.length > 0) {
                 this.annualLeaveBalance = balances.find(b => b.leaveTypeId == 1).leaveBalance;
@@ -213,7 +211,7 @@ export class QuotaProviderComponent implements OnInit {
         let data: any = {
             leave_type: this.request.leave_type,
             balance: this.request.balance,
-            fiscalYearId: this.currentFiscalYear._id,
+            fiscalYearId: this.fiscalYearId,
             createdBy: this.currentUser._id,
             createdAt: new Date(),
             action_link: window.location.origin + '/my/leaves/dashboard/employee',
@@ -274,7 +272,7 @@ export class QuotaProviderComponent implements OnInit {
             emp_id: this.request._id,
             leave_type: this.request.leave_type,
             balance: this.request.balance,
-            fiscalYearId: this.currentFiscalYear._id,
+            fiscalYearId: this.fiscalYearId,
             createdBy: this.currentUser._id
         }
 
@@ -288,7 +286,7 @@ export class QuotaProviderComponent implements OnInit {
                 emp_id_array: emp_array,
                 leave_type: this.request.leave_type,
                 balance: this.request.balance,
-                fiscalYearId: this.currentFiscalYear._id,
+                fiscalYearId: this.fiscalYearId,
                 createdBy: this.currentUser._id
             }
             this._leaveService.addSpecialLeaveBulkQuota(data).subscribe((res) => this.handleSuccess(res), (err) => this.handleError(err));
@@ -303,7 +301,7 @@ export class QuotaProviderComponent implements OnInit {
                 emp_id: this.request._id,
                 leave_type: this.request.leave_type,
                 balance: this.request.balance,
-                fiscalYearId: this.currentFiscalYear._id,
+                fiscalYearId: this.fiscalYearId,
                 createdBy: this.currentUser._id
             }
             this._leaveService.addSpecialLeaveQuota(data).subscribe((res) => this.handleSuccess(res), (err) => this.handleError(err));

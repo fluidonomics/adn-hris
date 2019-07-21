@@ -22,11 +22,16 @@ import {
     levelofEducation, examDegreeTitle, separationData, permissionData
 } from "../_jsonData/dropDownData";
 import { AuthService } from "./authService.service"
+import { Subject } from "rxjs/Subject";
+import { ReplaySubject } from "rxjs/ReplaySubject";
 
 
 
 @Injectable()
 export class CommonService {
+
+    currentFinancialYear: ReplaySubject<any> = new ReplaySubject<any>(1);
+
     constructor(private authService: AuthService,
         private http: Http) {
     }
@@ -275,7 +280,7 @@ export class CommonService {
     getSeparationData() {
         return separationData;
     }
-    
+
     getEducation(parent_id?: number) {
         let url = "common/getEducation";
         if (parent_id) {
@@ -372,8 +377,8 @@ export class CommonService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getBatchInfo(): Observable<Response> {
-        let url = "batch/getBatchInfo";
+    getBatchInfo(fiscalYearId): Observable<Response> {
+        let url = "batch/getBatchInfo?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -420,6 +425,14 @@ export class CommonService {
     resetPasswordByHr(emp_id: number): Observable<Response> {
         let url = "common/resetPasswordByHr";
         return this.authService.post(url, { emp_id: emp_id }).map(this.extractData).catch(this.handleError);
+    }
+
+    setFiscalYearIdLocal(fiscalYearId) {
+        sessionStorage.setItem('fiscalYearId', fiscalYearId);
+    }
+
+    getFiscalYearIdLocal() {
+        return sessionStorage.getItem('fiscalYearId');
     }
 
     private extractData(res: Response) {

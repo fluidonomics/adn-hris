@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from "../../../../../../base/_services/authService.service";
 import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { HrService } from '../../hr.service';
 import { environment } from '../../../../../../../environments/environment'
 import swal from 'sweetalert2';
+import { FiscalYearDropdownComponent } from "../../../shared/components/fiscal-year-dropdown/fiscal-year-dropdown.component";
+import { HeaderNavComponent } from "../../../../../layouts/header-nav/header-nav.component";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper--krainitiate",
@@ -30,7 +32,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     };
 
 
-    key: string = ''; //set default
+    key: string = '';
     reverse: boolean = false;
     p2: number = 1;
 
@@ -47,26 +49,31 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         { _id: "Learning", batchTypeName: "Learning", disabled: true },
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
+    currentFiscalYear: any;
+
 
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
         private utilityService: UtilityService,
         public _authService: AuthService) {
-        //this.batchData.emp_id=[];
     }
 
     ngOnInit() {
+        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
+        this.loadAllEmployee();
+        this._commonService.currentFinancialYear.subscribe(res => {
+            this.currentFiscalYear = res;
+        });
     }
 
     initDropdown() {
-        //this.loadDivision();
         this.loadDepartment();
         this.loadGrade();
     }
@@ -78,66 +85,63 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.deparmentData = res.json();
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+            });
     }
 
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.gradeData = res.json();
-                        this.gradeData = this.gradeData.filter(item =>
-                            item._id < 13
-                        );
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.gradeData = res.json();
+                    this.gradeData = this.gradeData.filter(item =>
+                        item._id < 13
+                    );
+                }
+            },
+            error => {
+            });
     }
 
     loadAllEmployee() {
-        if (this.filterBy.grades || this.filterBy.departments) {
-            this.utilityService.showLoader('#initiate-loader');
-            this._hrService.getAllEmployee()
-                .subscribe(
-                    res => {
-                        let data = res.json().data || [];
-                        if (data.length > 0) {
-                            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                                data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                                //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
-                            }
-                            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                                data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                                //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
-                            }
-                            data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                            // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
-                            this.employeeData = data || [];
-                            this.utilityService.hideLoader('#initiate-loader');
-                        }
-                        else {
-                            this.employeeData = data.json().data || [];
-                            this.utilityService.hideLoader('#initiate-loader');
-                        }
+        // if (this.filterBy.grades || this.filterBy.departments) {
+        this.utilityService.showLoader('#initiate-loader');
+        this._hrService.getAllEmployee()
+            .subscribe(
+            res => {
+                let data = res.json().data || [];
+                if (data.length > 0) {
+                    if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                        data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
+                    }
+                    if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                        data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
+                    }
+                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                    this.employeeData = data || [];
+                    this.utilityService.hideLoader('#initiate-loader');
+                }
+                else {
+                    this.employeeData = data.json().data || [];
+                    this.utilityService.hideLoader('#initiate-loader');
+                }
 
-                    },
-                    error => {
-                        this.utilityService.hideLoader('#initiate-loader');
-                    });
-        }
-        else {
-            this.employeeData = [];
-        }
+            },
+            error => {
+                this.utilityService.hideLoader('#initiate-loader');
+            });
+        // }
+        // else {
+        //     this.employeeData = [];
+        // }
     }
 
     saveBulkKra(form) {
@@ -148,9 +152,10 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         });
 
         if (this.batchData.emp_id.length > 0) {
+            debugger;
             swal({
                 title: 'Are you sure?',
-                text: "",
+                text: "This will initiate KRA Batch for " + this.currentFiscalYear.financialYearName,
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -159,6 +164,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             }).then((result) => {
                 if (result.value) {
                     this.utilityService.showLoader('#initiate-loader');
+                    this.batchData.fiscalYearId = this._commonService.getFiscalYearIdLocal();
+                    this.batchData.link = window.location.origin + "/my/workflows/kra?fiscalYearId=" + this.currentFiscalYear._id;
                     this._hrService.saveBulkKra(this.batchData).subscribe(res => {
                         if (res.ok) {
                             this.utilityService.hideLoader('#initiate-loader');
@@ -177,10 +184,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         }
     }
 
-    // getColumnName(column) {
-    //     return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
-    // }
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
@@ -194,7 +197,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
 
 
     clearForm() {
-        this.key = ''; //set default
+        this.key = '';
         this.reverse = false;
         this.p2 = 1;
         this.isCheckAll = false;
