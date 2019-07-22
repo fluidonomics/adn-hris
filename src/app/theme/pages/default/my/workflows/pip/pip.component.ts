@@ -69,6 +69,10 @@ export class MyPipComponent {
         {
             '_id':3,
             'final_recommendation': "Remedial action"
+        },
+        {
+            '_id':4,
+            'final_recommendation': "Extended"
         }
     ];
     suparr = [];
@@ -588,7 +592,7 @@ export class MyPipComponent {
         this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
         this.pipData.no = index + 1;
 
-        if(this.pipData.emp_final_com) {
+        if(this.pipData.emp_final_com && !this.pipData.extended_by) {
 
             $("#empcom").attr('disabled', 'disabled');
             $("#submitFormPostPip").remove();

@@ -537,6 +537,8 @@ export class PipDetailedViewComponent {
         } else if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
             this.pipData.empComment_month6 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
                 this.finalReviewEnable = true;
+        } else if(this.pipData.status === "Extended" && this.pipData.dateDifference >= this.pipData.master_timelines) {
+            this.finalReviewEnable = true;
         } else {
             this.finalReviewEnable = false;
         }

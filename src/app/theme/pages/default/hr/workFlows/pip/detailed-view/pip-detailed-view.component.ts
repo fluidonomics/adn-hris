@@ -200,6 +200,9 @@ extendPIP = [
    }
 
    saveComments(pipData: any) {
+      debugger;
+      let remainingExtendBy = 6 - this.pipData.master_timelines;
+      let monthVar = (remainingExtendBy > 1) ? " months" : " month"
       if (!pipData.hr_final_com || !pipData.final_recommendation) {
           swal({
               title: 'Please fill remarks!',
@@ -208,9 +211,15 @@ extendPIP = [
               confirmButtonColor: '#66BB6A',
               confirmButtonText: 'OK'
           });
-      }
-      else {
-
+      } else if ((this.pipData.master_timelines + this.pipData.extended_by) > 6) {
+         swal({
+             title: 'Value of extend by can not be greater than ' + remainingExtendBy + monthVar,
+             type: 'warning',
+             showCancelButton: false,
+             confirmButtonColor: '#66BB6A',
+             confirmButtonText: 'OK'
+         });
+     } else {
           swal({
               title: 'Are you sure?',
               // text: text,
@@ -243,7 +252,7 @@ extendPIP = [
                   // }sss
                   
                   this.utilityService.showLoader('.mtrDetailsPortlet');
-                  this._pipService.updateMaster(request).subscribe(res => {
+                  this._pipService.updateMasterHr(request).subscribe(res => {
                       if (res.ok) {
                           this.modalRef.hide();
                           this.utilityService.hideLoader('.mtrDetailsPortlet');
@@ -297,7 +306,7 @@ extendPIP = [
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[0]));
 
-      if(this.pipData.rev_final_com && this.pipData.hr_final_com && this.pipData.status != "Extended") {
+      if(this.pipData.rev_final_com && this.pipData.hr_final_com && this.pipData.status != "Extended" && this.pipData.status != "Completed") {
 
          $("#hr_final_com").attr('disabled', 'disabled');
          $("#submitForm").remove();
