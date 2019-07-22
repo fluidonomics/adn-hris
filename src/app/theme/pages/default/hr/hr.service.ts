@@ -147,17 +147,6 @@ export class HrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getCurrentMonthDates() {
-        let dateRange = [];
-        let startDate = new Date();
-        let cur_date = new Date();
-        cur_date.setFullYear(startDate.getFullYear() - 1);
-        // let y = moment(startDate).endOf('month');
-        // let endDate = y._d;
-        dateRange = [cur_date, new Date()];
-        return dateRange;
-    }
-
     getEmpTypeRatio() {
         let url = "dashboard/emptyperatio";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);

@@ -74,7 +74,7 @@ export class MyTeamReviewerComponent implements OnInit {
         this.router.navigate(['/my/team/workflows/reveiwer/pip/list']);
     }
     async ngOnInit() {
-        this.fiscalYearId = 3
+        this.fiscalYearId = this.commonService.getFiscalYearIdLocal();
         this.getallemployees();
         this.loadMTRInfo();
         this.getEmployeesLearning();
