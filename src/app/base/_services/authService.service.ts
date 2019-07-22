@@ -18,6 +18,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/of';
 
 import {
     SignInData,
@@ -234,19 +235,23 @@ export class AuthService implements CanActivate {
     }
 
     // Validate token request
-    validateToken(): Observable<Response> {
-        let observ = this.get(this.getUserPath() + "auth/validateToken");
-        observ.subscribe(
-            res => {
-                this.atCurrentUserData = res.json()
-            },
-            error => {
-                if (error.status === 401 && this.atOptions.signOutFailedValidate) {
-                    this.signOut();
-                }
-            });
+    validateToken(): Observable<any> {
+        if (!this.atCurrentUserData) {
+            let observ = this.get(this.getUserPath() + "auth/validateToken");
+            observ.subscribe(
+                res => {
+                    this.atCurrentUserData = res.json()
+                },
+                error => {
+                    if (error.status === 401 && this.atOptions.signOutFailedValidate) {
+                        this.signOut();
+                    }
+                });
 
-        return observ;
+            return observ;
+        } else {
+            return Observable.of(this.atCurrentUserData);
+        }
     }
 
     reset(reset: any): Observable<Response> {
