@@ -519,11 +519,9 @@ export class AuthService implements CanActivate {
 
     // Write auth data to storage
     private setAuthData(authData: AuthData): void {
-
         if (this.checkAuthData(authData)) {
-
             this.atCurrentAuthData = authData;
-
+            this.cookieService.deleteAll();
             this.cookieService.set('accessToken', authData.accessToken);
             this.cookieService.set('client', authData.client);
             this.cookieService.set('expiry', authData.expiry);
@@ -532,7 +530,6 @@ export class AuthService implements CanActivate {
 
             if (this.atCurrentUserType != null)
                 this.cookieService.set('userType', this.atCurrentUserType.name);
-
         }
     }
 
