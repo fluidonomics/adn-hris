@@ -25,7 +25,7 @@ import { AuthService } from "./authService.service"
 import { Subject } from "rxjs/Subject";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 
-
+declare var moment;
 
 @Injectable()
 export class CommonService {
@@ -433,6 +433,32 @@ export class CommonService {
 
     getFiscalYearIdLocal() {
         return sessionStorage.getItem('fiscalYearId');
+    }
+
+    getCurrentMonthDates(fiscalYear?: any) {
+        let dateRange = [];
+        let startDate = new Date();
+        startDate.setDate(1);
+        let y = moment(startDate).endOf('month');
+        let endDate = y._d;
+
+        if (fiscalYear) {
+            startDate = moment(fiscalYear.starDate).toDate();
+            endDate = moment(fiscalYear.endDate).toDate();
+            // let startYear = moment(fiscalYear.starDate).year();
+            // let endYear = moment(fiscalYear.endDate).year();
+
+            // let currentMonth = moment(startDate).month() + 1;
+            // if (currentMonth >= 7 && currentMonth <= 12) {
+            //     startDate = moment(startDate).year(startYear).toDate();
+            //     endDate = moment(endDate).year(startYear).toDate();
+            // } else {
+            //     startDate = moment(startDate).year(endYear).toDate();
+            //     endDate = moment(endDate).year(endYear).toDate();
+            // }
+        }
+        dateRange = [startDate, endDate];
+        return dateRange;
     }
 
     private extractData(res: Response) {
