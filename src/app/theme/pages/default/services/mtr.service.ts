@@ -48,8 +48,8 @@ export class MtrService {
     constructor(private authService: AuthService) {
     }
 
-    getEmployeeMtrWorkFlowInfo(emp_id?: number): Observable<Response> {
-        let url = "midterm/getMtrDetailsSingleEmployee?emp_id=" + emp_id;
+    getEmployeeMtrWorkFlowInfo(emp_id?: number, fiscalYearId?: number): Observable<Response> {
+        let url = "midterm/getMtrDetailsSingleEmployee?emp_id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -59,8 +59,8 @@ export class MtrService {
     }
 
 
-    getMtrBatches(emp_id?: number): Observable<Response> {
-        let url = "midterm/getMtrBatches?empId=" + emp_id;
+    getMtrBatches(emp_id?: number, fiscalYearId?: number): Observable<Response> {
+        let url = "midterm/getMtrBatches?empId=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
