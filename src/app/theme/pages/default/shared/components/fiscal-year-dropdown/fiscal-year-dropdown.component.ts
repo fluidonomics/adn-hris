@@ -48,7 +48,7 @@ export class FiscalYearDropdownComponent {
         let fYear = this.financialYearList.find(f => f._id === event);
         this.fiscalYearChangeEvent.emit({ event: event, fiscalYearId: this.fiscalYearId, currentFiscalYear: fYear });
         this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
-        window.location.reload();
+        window.location.href = window.location.origin + '/dashboard';
     }
 
     public getCurrentFiscalYear() {
