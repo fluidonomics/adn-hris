@@ -71,7 +71,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     };
     dashboardFilter: any = {
         dashboard: 'KRA',
-        date: this._hrService.getCurrentMonthDates()
     };
     itemPerPage: number = 5;
 
@@ -79,6 +78,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     reverse: boolean = false;
     p2: number = 1;
     search: any;
+    fiscalYearId: any;
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -102,6 +102,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
+                this._commonService.currentFinancialYear.subscribe(res => {
+                    this.dashboardFilter.date = this._commonService.getCurrentMonthDates(res);
+                });
                 this.initData();
             });
     }
