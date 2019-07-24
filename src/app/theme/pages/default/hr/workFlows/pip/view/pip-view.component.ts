@@ -29,7 +29,7 @@ export class PipViewComponent implements OnInit {
    pipCommData : any = [];
    pipViewData: any =[];
    pipSearch: any;
-   pipReverse: boolean = true;
+   pipReverse: boolean = false;
 
    constructor(
       public authService: AuthService,
@@ -50,7 +50,7 @@ export class PipViewComponent implements OnInit {
    };
    ngOnInit() {
       this.getEmployeesPip();
-      this.imageBase = environment.content_api_base.apiBase;
+      this.imageBase = environment.content_api_base.imgBase;
       // debugger;
    }
    getEmployeesPip() {

@@ -75,6 +75,20 @@ export class MyPipComponent {
             'final_recommendation': "Extended"
         }
     ];
+    extendPIP = [
+        {
+            '_id':1,
+            'extended_by': "1 Months"
+        },
+        {
+            '_id':2,
+            'extended_by': "2 Months"
+        },
+        {
+            '_id':3,
+            'extended_by': "3 Months"
+        },
+     ];
     suparr = [];
 
     showSub:boolean = false;

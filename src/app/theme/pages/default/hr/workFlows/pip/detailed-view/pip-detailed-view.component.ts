@@ -200,7 +200,6 @@ extendPIP = [
    }
 
    saveComments(pipData: any) {
-      debugger;
       let remainingExtendBy = 6 - this.pipData.master_timelines;
       let monthVar = (remainingExtendBy > 1) ? " months" : " month"
       if (!pipData.hr_final_com || !pipData.final_recommendation) {

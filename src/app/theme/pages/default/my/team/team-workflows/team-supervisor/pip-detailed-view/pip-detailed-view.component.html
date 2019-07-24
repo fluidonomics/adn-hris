@@ -709,6 +709,15 @@
 													   [(ngModel)]="pipData.pip_master_details.final_recommendation" [clearable]="false"
 													   #final_recommendation="ngModel" disabled>
 													</ng-select>
+												</div>
+												<div class="col-md-6 details" *ngIf="pipData.pip_master_details.final_recommendation == 4">
+													<span>Extend by</span>
+													<ng-select class="m-input m-input--air customError" name="extended_by{{i}}"
+													   id="extended_by" [items]="extendPIP" bindLabel="extended_by"
+													   bindValue="_id" placeholder="Extend PIP"
+													   [(ngModel)]="pipData.pip_master_details.extended_by" [clearable]="false"
+													   #extended_by="ngModel" disabled>
+													</ng-select>
 												 </div>
 
 											</div>
