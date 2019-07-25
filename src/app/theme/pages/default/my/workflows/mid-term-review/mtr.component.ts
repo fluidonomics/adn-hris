@@ -168,7 +168,7 @@ export class MyMtrComponent {
         });
     }
     loadMTRInfo() {
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.mtrInfoData = data.result.message;
             this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;

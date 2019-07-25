@@ -53,8 +53,8 @@ export class MtrService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getMtrBySupervisor(supervisorId: number, mtrStatus: string): Observable<Response> {
-        let url = "midterm/getMtrBySupervisor?supervisorId=" + supervisorId + '&status=' + mtrStatus;
+    getMtrBySupervisor(supervisorId: number, mtrStatus: string, fiscalYearId: number): Observable<Response> {
+        let url = "midterm/getMtrBySupervisor?supervisorId=" + supervisorId + '&status=' + mtrStatus + '&fiscalYearId=' + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
