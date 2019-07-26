@@ -456,7 +456,7 @@ export class PipDetailedViewComponent {
         }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed" || this.pipData.status == "Extended") {
+        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed" || this.pipData.status == "Extended" || this.pipData.status == "PIP Completed") {
             this.isDisabled = true;
         }
         else {

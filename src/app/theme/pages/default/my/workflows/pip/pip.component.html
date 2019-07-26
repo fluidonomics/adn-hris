@@ -137,7 +137,7 @@
 								</a>
 								<button type="button"
 									class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-									title="Post PIP Process" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Completed'">
+									title="Post PIP Process" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Completed' || pip.status=='PIP Completed' pip.status=='Extended'">
 									<i class="la la-info"></i>
 								</button>
 							</td>

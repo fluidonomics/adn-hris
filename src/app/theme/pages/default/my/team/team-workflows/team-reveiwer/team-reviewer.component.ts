@@ -121,7 +121,7 @@ export class MyTeamReviewerComponent implements OnInit {
     getPipByReviewer() {
         this.pipService.getPipByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.pipData = res.json().result.message || [];
-            this.pipData = this.pipData.filter(a => a.pip_master_details.status == 'Approved' || a.pip_master_details.status == 'Completed');
+            this.pipData = this.pipData.filter(a => a.pip_master_details.status == 'Approved' || a.pip_master_details.status == 'Completed' || a.pip_master_details.status == 'Extended' || a.pip_master_details.status == 'PIP Completed');
         }, error => {
             console.log(error);
         });

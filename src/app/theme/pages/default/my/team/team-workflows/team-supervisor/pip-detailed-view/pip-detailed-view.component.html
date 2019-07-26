@@ -111,7 +111,7 @@
 											</i></button>
 										</tr> -->
 
-										<tr *ngIf="masterStatus === 'Completed' && primarySupervisorId===_currentEmpId">
+										<tr *ngIf="(masterStatus === 'Completed' || masterStatus === 'PIP Completed' || masterStatus === 'Extended') && primarySupervisorId===_currentEmpId">
 											<td colspan="6">
 												<button
 													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "

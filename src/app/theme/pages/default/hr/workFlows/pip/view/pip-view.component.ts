@@ -56,7 +56,7 @@ export class PipViewComponent implements OnInit {
    getEmployeesPip() {
       this.pipService.getPipByHr(this.authService.currentUserData._id).subscribe(res => {
          this.pipData = res.json().result.message || [];
-         this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed" || pip.pip_master.status==="Extended");
+         this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed" || pip.pip_master.status==="Extended" || pip.pip_master.status==="PIP Completed");
          this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com === null);
          this.pipViewData =  this.pipData.filter(pip => pip.pip_master.hr_final_com !="" && pip.pip_master.hr_final_com !== null);
       }, error => {
