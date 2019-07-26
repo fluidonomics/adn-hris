@@ -77,7 +77,7 @@ export class MyMtrComponent {
     }
 
     ngOnInit() {
-        this.fiscalYearId = 3;
+        this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;

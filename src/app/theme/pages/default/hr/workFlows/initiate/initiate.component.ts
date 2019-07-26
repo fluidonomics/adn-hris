@@ -60,7 +60,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;

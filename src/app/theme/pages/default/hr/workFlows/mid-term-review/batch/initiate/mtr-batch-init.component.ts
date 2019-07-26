@@ -44,7 +44,7 @@ export class MtrBatchInitComponent implements OnInit {
         public _authService: AuthService) { }
 
     ngOnInit() {
-        this.currentFiscalYear = 3;
+        this.currentFiscalYear =  parseInt(this._commonService.getFiscalYearIdLocal());
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -91,7 +91,7 @@ export class MtrBatchInitComponent implements OnInit {
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
-        this._hrService.getAllEmployeeForMTR().subscribe(res => {
+        this._hrService.getAllEmployeeForMTR(this.currentFiscalYear).subscribe(res => {
             let data = res.json();
             if (data.result.length > 0) {
                 data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId && !obj.mtr_batch_id);
@@ -105,6 +105,7 @@ export class MtrBatchInitComponent implements OnInit {
                 this.utilityService.hideLoader('#initiate-loader');
             }
             else {
+                
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
@@ -161,6 +162,7 @@ export class MtrBatchInitComponent implements OnInit {
                     if (result.value) {
                         this.batchData.createdBy = this._currentEmpId;
                         this.batchData.fiscalYearId = this.currentFiscalYear;
+                        this.batchData.link = window.location.origin + "/my/workflows/kra?fiscalYearId=" + this.currentFiscalYear;
                         this.utilityService.showLoader('#initiate-loader');
                         this._hrService.saveBulkMtr(this.batchData).subscribe(res => {
                             if (res.ok) {

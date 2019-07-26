@@ -30,8 +30,8 @@ export class HrService {
         let url = "user/getEmployeeDetails?emp_id=" + empId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    getAllEmployeeForMTR() {
-        let url = "midterm/getEmpDetailsForMidTermInitiate";
+    getAllEmployeeForMTR(fiscalYearId: any) {
+        let url = "midterm/getEmpDetailsForMidTermInitiate?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
