@@ -210,7 +210,7 @@ extendPIP = [
               confirmButtonColor: '#66BB6A',
               confirmButtonText: 'OK'
           });
-      } else if ((this.pipData.master_timelines + this.pipData.extended_by) > 6) {
+      } else if ((pipData.final_recommendation ===4) && (pipData.master_timelines + pipData.extended_by) > 6) {
          swal({
              title: 'Value of extend by can not be greater than ' + remainingExtendBy + monthVar,
              type: 'warning',
