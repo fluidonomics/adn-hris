@@ -3,6 +3,7 @@ import { AuthService } from "../../../../../../../../base/_services/authService.
 import { MtrService } from '../../../../../services/mtr.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../../../../../../../environments/environment';
+import { CommonService } from '../../../../../../../../base/_services/common.service';
 
 @Component({
     selector: 'mtr-view',
@@ -15,11 +16,15 @@ export class MtrViewComponent implements OnInit {
     mtrViewSearch: any;
     mtrViewReverse: boolean = true;
     imageBase: any;
+    fiscalYearId: number;
 
     constructor(private _mtrService: MtrService,
         public _authService: AuthService,
-        private router: Router
-    ) { }
+        private router: Router,
+        private commonService: CommonService
+    ) { 
+        this.fiscalYearId = parseInt(commonService.getFiscalYearIdLocal());
+    }
 
     ngOnInit() {
         this.imageBase = environment.content_api_base.apiBase;
@@ -30,7 +35,7 @@ export class MtrViewComponent implements OnInit {
     }
 
     loadMtrBySupervisor(emp_Id: number) {
-        this._mtrService.getMtrBySupervisor(emp_Id, 'Approved').subscribe(res => {
+        this._mtrService.getMtrBySupervisor(emp_Id, 'Approved', this.fiscalYearId).subscribe(res => {
             this.mtrViewData = res.json().result.message || [];
         }, error => {
         });

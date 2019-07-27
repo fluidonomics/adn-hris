@@ -43,7 +43,7 @@ export class MTRBatchComponent implements OnInit {
     ]
 
     _currentEmpId: number;
-
+    currentFiscalYear: any;
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
@@ -63,6 +63,7 @@ export class MTRBatchComponent implements OnInit {
     };
 
     ngOnInit() {
+        this.currentFiscalYear = 3;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -75,7 +76,7 @@ export class MTRBatchComponent implements OnInit {
     }
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._mtrService.getMtrBatches(this._currentEmpId)
+        this._mtrService.getMtrBatches(this._currentEmpId, this.currentFiscalYear)
             .subscribe(
                 res => {
                     this.utilityService.hideLoader('#batch-loader');

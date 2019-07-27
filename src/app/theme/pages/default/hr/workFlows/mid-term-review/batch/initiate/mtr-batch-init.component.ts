@@ -6,6 +6,7 @@ import { HrService } from '../../../../hr.service';
 import { environment } from '../../../../../../../../../environments/environment'
 import swal from 'sweetalert2';
 
+
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-wrapper--mtrinitiate',
     templateUrl: 'mtr-batch-init.component.html',
@@ -36,14 +37,14 @@ export class MtrBatchInitComponent implements OnInit {
     reverse: any;
     currentDate = new Date();
     isCheckAll: any;
-
+    currentFiscalYear: any;
     constructor(private _hrService: HrService,
         private _commonService: CommonService,
         private utilityService: UtilityService,
         public _authService: AuthService) { }
 
     ngOnInit() {
-
+        this.currentFiscalYear =  parseInt(this._commonService.getFiscalYearIdLocal());
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -90,7 +91,7 @@ export class MtrBatchInitComponent implements OnInit {
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
-        this._hrService.getAllEmployeeForMTR().subscribe(res => {
+        this._hrService.getAllEmployeeForMTR(this.currentFiscalYear).subscribe(res => {
             let data = res.json();
             if (data.result.length > 0) {
                 data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId && !obj.mtr_batch_id);
@@ -104,6 +105,7 @@ export class MtrBatchInitComponent implements OnInit {
                 this.utilityService.hideLoader('#initiate-loader');
             }
             else {
+                
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
@@ -159,6 +161,8 @@ export class MtrBatchInitComponent implements OnInit {
                 }).then((result) => {
                     if (result.value) {
                         this.batchData.createdBy = this._currentEmpId;
+                        this.batchData.fiscalYearId = this.currentFiscalYear;
+                        this.batchData.link = window.location.origin + "/my/workflows/kra?fiscalYearId=" + this.currentFiscalYear;
                         this.utilityService.showLoader('#initiate-loader');
                         this._hrService.saveBulkMtr(this.batchData).subscribe(res => {
                             if (res.ok) {
