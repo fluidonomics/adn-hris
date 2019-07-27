@@ -6,6 +6,7 @@ import { UtilityService } from "../../../../../../../../base/_services/utilitySe
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
 import { EmployeeBatchSelectionGridComponent } from "../../../../../shared/components/employee-batch-selection-grid/employee-batch-selection-grid.component";
 import { DepartmentGradeFilterComponent } from "../../../../../shared/components/department-grade-filter/department-grade-filter.component";
+import { CommonService } from "../../../../../../../../base/_services/common.service";
 
 
 @Component({
@@ -25,18 +26,20 @@ export class PapBatchInitComponent implements OnInit {
     selectedEmployees = [];
     currentDate = new Date();
     _currentEmpId: number;
-
+    fiscalYearId: string;
     @ViewChild('grid') employeeBatchSelectionGrid: EmployeeBatchSelectionGridComponent;
     @ViewChild('filter') departmentGradeFilterComponent: DepartmentGradeFilterComponent;
 
     constructor(
         private papService: PapService,
         private utilityService: UtilityService,
-        public _authService: AuthService
+        public _authService: AuthService,
+        private _commonService: CommonService
     ) {
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
             this.getEmployeesForPap();
@@ -52,7 +55,7 @@ export class PapBatchInitComponent implements OnInit {
     }
 
     getEmployeesForPap() {
-        this.papService.getEmployeesForPapInitiate().subscribe(res => {
+        this.papService.getEmployeesForPapInitiate(this.fiscalYearId).subscribe(res => {
             this.employees = res || [];
             this.employees = this.employees.filter(e => {
                 if (e.type == 'pap') {
@@ -68,7 +71,8 @@ export class PapBatchInitComponent implements OnInit {
         if (form.valid) {
             let data: any = {
                 batchName: this.batchData.batchName,
-                batchEndDate: this.batchData.batchEndDate
+                batchEndDate: this.batchData.batchEndDate,
+                fiscalYearId: this.fiscalYearId
             };
             data.emp_id_array = this.selectedEmployees.map(item => {
                 return {
