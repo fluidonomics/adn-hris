@@ -12,8 +12,8 @@ export class PapService {
         private authService: AuthService
     ) { }
 
-    getEmployeesForPapInitiate() {
-        let url = "pap/getEmployeesForPapInitiate";
+    getEmployeesForPapInitiate(fiscalYearId: any) {
+        let url = "pap/getEmployeesForPapInitiate?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
     getEmployeesForGrievance(): Observable<Response> {
