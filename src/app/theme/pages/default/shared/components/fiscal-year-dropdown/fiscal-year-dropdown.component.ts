@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonService } from "../../../../../../base/_services/common.service";
 
+import swal from 'sweetalert2';
+
 @Component({
     moduleId: module.id,
     selector: 'fiscal-year-dropdown',
@@ -10,6 +12,7 @@ import { CommonService } from "../../../../../../base/_services/common.service";
 export class FiscalYearDropdownComponent {
 
     public fiscalYearId: any;
+    oldFiscalYearId: any;
     financialYearList: any = [];
 
     @Output('onfiscalYearChange') fiscalYearChangeEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -25,6 +28,7 @@ export class FiscalYearDropdownComponent {
         }
         // ----------------------------------------------------------------
         this.getFinancialYears();
+        this.oldFiscalYearId = this.fiscalYearId;
     }
 
 
@@ -39,16 +43,32 @@ export class FiscalYearDropdownComponent {
                     }
                     this._commonService.currentFinancialYear.next(this.getCurrentFiscalYear());
                 }
+                this.oldFiscalYearId = this.fiscalYearId;
             }
         })
     }
 
 
     onfiscalYearChange(event) {
-        let fYear = this.financialYearList.find(f => f._id === event);
-        this.fiscalYearChangeEvent.emit({ event: event, fiscalYearId: this.fiscalYearId, currentFiscalYear: fYear });
-        this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
-        window.location.href = window.location.origin + '/dashboard';
+        swal({
+            title: 'Are you sure?',
+            text: "You want to change fiscal year",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                let fYear = this.financialYearList.find(f => f._id === event);
+                this.fiscalYearChangeEvent.emit({ event: event, fiscalYearId: this.fiscalYearId, currentFiscalYear: fYear });
+                this._commonService.setFiscalYearIdLocal(this.fiscalYearId);
+                this.oldFiscalYearId = this.fiscalYearId;
+                window.location.href = window.location.origin + '/dashboard';
+            } else {
+                this.fiscalYearId = this.oldFiscalYearId;
+            }
+        });
     }
 
     public getCurrentFiscalYear() {
