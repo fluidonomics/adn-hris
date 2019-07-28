@@ -39,8 +39,8 @@ export class PapService {
         let url = "pap/initiateGrievance";
         return this.authService.post(url, data).catch(this.handleError);
     }
-    getPAPBatches(emp_id?: number, empName?: string): Observable<Response> {
-        let url = "pap/getPapBatches?currentUserId=" + emp_id;
+    getPAPBatches(emp_id?: number, empName?: string, fiscalYearId?: string): Observable<Response> {
+        let url = "pap/getPapBatches?currentUserId=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         if (empName) {
             url += '&empName=' + empName;
         }
