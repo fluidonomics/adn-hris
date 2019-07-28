@@ -73,18 +73,18 @@ export class PapService {
 
 
 
-    getPapDetailsSingleEmployee(emp_id: number) {
-        let url = "pap/getPapDetailsSingleEmployee?emp_id=" + emp_id;
+    getPapDetailsSingleEmployee(emp_id: number, fiscalYearId?: string ) {
+        let url = "pap/getPapDetailsSingleEmployee?emp_id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getPapBySupervisor(empId: number) {
-        let url = "pap/getPapBySupervisor?empId=" + empId;
+    getPapBySupervisor(empId: number, fiscalYearId?: string) {
+        let url = "pap/getPapBySupervisor?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getPapByReviewer(empId: number) {
-        let url = "pap/getPapByReviewer?empId=" + empId;
+    getPapByReviewer(empId: number, fiscalYearId: string) {
+        let url = "pap/getPapByReviewer?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
