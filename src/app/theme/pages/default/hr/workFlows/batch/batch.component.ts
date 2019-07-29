@@ -112,6 +112,7 @@ export class HrBatchComponent implements OnInit {
                 let batch = this.batchData.find(batch => batch._id == batch_id);
                 let kra = batch.kraWorkFlowData.find(k => k._id == kraRow._id);
                 kra.status = status;
+                kra.link = window.location.origin + '/my/workflows/kra?fiscalYearId=' + this.fiscalYearId;
                 this._batchService.saveKraWorkFlow(kra).subscribe(res => {
                     swal('Success', 'Employee Workflow Terminated Successfully', 'success')
                 }, error => {
