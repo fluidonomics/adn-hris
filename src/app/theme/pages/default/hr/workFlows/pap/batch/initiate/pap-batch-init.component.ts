@@ -97,7 +97,7 @@ export class PapBatchInitComponent implements OnInit {
                     if (result.value) {
                         data.createdBy = this._currentEmpId;
                         data.batchEndDate = this.batchData.batchEndDate;
-                        data.action_link = window.location.origin + '/my/workflows/pap';
+                        data.action_link = window.location.origin + '/my/workflows/pap?fiscalYearId=' + this.fiscalYearId;
                         this.utilityService.showLoader('#initiate-loader');
                         this.papService.initiatePapProcess(data).subscribe(res => {
                             if (res) {

@@ -64,6 +64,7 @@ export class MyPapComponent {
     papMasterData = [];
     papInfoData: any = [];
     papChanges: Subject<any> = new Subject<any>();
+    fiscalYearId: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -75,6 +76,7 @@ export class MyPapComponent {
     ) { }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
             this._route.queryParams.subscribe(params => {
@@ -138,7 +140,7 @@ export class MyPapComponent {
 
     loadPapDetails() {
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this._currentEmpId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this._currentEmpId, this.fiscalYearId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('_id').map(function (v, i) {
@@ -260,7 +262,7 @@ export class MyPapComponent {
             let request = {
                 pap_master_id: this.param_id,
                 updatedBy: this._currentEmpId,
-                action_link: window.location.origin + '/my/team/workflows/pap-detailed-view/' + this.papWorkFlowData[0]._id + '/' + this.papGridInput.empId
+                action_link: window.location.origin + '/my/team/workflows/pap-``detailed``-view/' + this.papWorkFlowData[0]._id + '/' + this.papGridInput.empId + '&fiscalYearId=' + this.fiscalYearId
             }
             swal({
                 title: 'Are you sure?',

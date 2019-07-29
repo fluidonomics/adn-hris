@@ -22,7 +22,7 @@ export class PapDetailsGridComponent implements OnInit {
     papDetails = [];
     papInfoData = [];
     papMaster: any = {};
-
+    fiscalYearId: string;
     supervisorData: any = [];
     weightageData: any = [];
     papCategoryData: any = [];
@@ -31,7 +31,9 @@ export class PapDetailsGridComponent implements OnInit {
     constructor(
         private papService: PapService,
         private _commonService: CommonService
-    ) { }
+    ) { 
+        this.fiscalYearId = _commonService.getFiscalYearIdLocal();
+    }
 
     ngOnChanges(changes) {
         this.loadPapDetails();
@@ -86,7 +88,7 @@ export class PapDetailsGridComponent implements OnInit {
     }
 
     loadPapDetails() {
-        this.papService.getPapDetailsSingleEmployee(this.empId).subscribe(res => {
+        this.papService.getPapDetailsSingleEmployee(this.empId, this.fiscalYearId).subscribe(res => {
             let papDetails = res || [];
             if (papDetails.length > 0) {
                 let papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
