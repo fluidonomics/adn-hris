@@ -170,7 +170,6 @@ export class PapReviewComponent implements OnInit {
         }
     }
     saveKRADetails(form, id: number, isApproved: boolean) {
-        debugger;
         if (form.valid) {
             this.modalRef.hide();
             let request = {
