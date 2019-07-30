@@ -6,10 +6,8 @@ import { BatchService } from "../../batch/batchService.service";
 import { environment } from '../../../../../../../../environments/environment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
 import swal from 'sweetalert2';
 import { LearningService } from '../../../../services/learning.service';
-
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -24,18 +22,15 @@ export class LearningBatchComponent implements OnInit {
     batchData: any = [];
     termData: any = [];
     activeRowNumber: number = -1;
-
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
     masterItemPerPage: number = 6;
-
     editBatch: any = {};
     modalRef: BsModalRef;
     currentDate: Date = new Date();
-
     batchTypes: any = [
         { _id: "KRA", batchTypeName: "KRA", disabled: true },
         { _id: "Learning", batchTypeName: "Learning" },
@@ -82,9 +77,7 @@ export class LearningBatchComponent implements OnInit {
         this.loadBatch();
     }
 
-
     loadBatch() {
-
         this.utilityService.showLoader('#batch-loader');
         this._learningService.getLearningBatches(this._currentEmpId)
             .subscribe(
@@ -98,9 +91,8 @@ export class LearningBatchComponent implements OnInit {
                 });
     }
 
-
     terminatelearning(batch_id, learningIndex, page, status) {
-        
+
         let index = (this.masterItemPerPage * page) - (this.masterItemPerPage - learningIndex);
         swal({
             title: 'Are you sure?',
@@ -122,7 +114,7 @@ export class LearningBatchComponent implements OnInit {
                 this._learningService.updateLearningMaster(data)
                     .subscribe(
                         res => {
-                            this.batchData[this.batchData.findIndex(x => x._id==batch_id)].learning_master[index].status=status;
+                            this.batchData[this.batchData.findIndex(x => x._id == batch_id)].learning_master[index].status = status;
                             swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
                         },
                         error => {
@@ -140,16 +132,13 @@ export class LearningBatchComponent implements OnInit {
     }
 
     saveBatch() {
-        //debugger;
         let data = {
             "batchId": this.editBatch._id,
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
         this._learningService.updateBatch(data).subscribe(res => {
-            //debugger;
             this.activeRowNumber = -1;
-            //this.loadBatch();
             this.modalRef.hide();
             if (this.editBatch.status == 'Terminated') {
                 swal('Success', 'Batch Terminated Successfully', 'success')
@@ -161,10 +150,8 @@ export class LearningBatchComponent implements OnInit {
         });
     }
 
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
     }
-
 }
