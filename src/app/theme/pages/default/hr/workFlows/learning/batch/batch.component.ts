@@ -53,19 +53,20 @@ export class LearningBatchComponent implements OnInit {
         status: 'All',
         page: 1
     };
-
+    fiscalYearId: string;
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
         private _batchService: BatchService,
         public utilityService: UtilityService,
         public _authService: AuthService,
-        public _learningService: LearningService
+        public learningService: LearningService
     ) {
 
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -79,7 +80,7 @@ export class LearningBatchComponent implements OnInit {
 
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._learningService.getLearningBatches(this._currentEmpId)
+        this.learningService.getLearningBatches(this._currentEmpId, this.fiscalYearId)
             .subscribe(
                 res => {
                     this.utilityService.hideLoader('#batch-loader');
@@ -111,7 +112,7 @@ export class LearningBatchComponent implements OnInit {
                     updatedBy: this._currentEmpId,
                     status: status
                 }
-                this._learningService.updateLearningMaster(data)
+                this.learningService.updateLearningMaster(data)
                     .subscribe(
                         res => {
                             this.batchData[this.batchData.findIndex(x => x._id == batch_id)].learning_master[index].status = status;
@@ -138,7 +139,7 @@ export class LearningBatchComponent implements OnInit {
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
-        this._learningService.updateBatch(data).subscribe(res => {
+        this.learningService.updateBatch(data).subscribe(res => {
             this.activeRowNumber = -1;
             this.modalRef.hide();
             if (this.editBatch.status == 'Terminated') {

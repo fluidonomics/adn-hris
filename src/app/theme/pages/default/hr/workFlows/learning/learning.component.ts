@@ -39,6 +39,7 @@ export class HrLearningComponent {
         { _id: "Learning", batchTypeName: "Learning", disabled: true },
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
+    fiscalYearId: string;
 
     constructor(
         private _hrService: HrService,
@@ -50,6 +51,7 @@ export class HrLearningComponent {
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -173,10 +175,9 @@ export class HrLearningComponent {
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
                 if (result.value) {
-
                     this.batchData.createdBy = this._currentEmpId;
                     this.batchData.createdByName = this.currentEmpname;
-
+                    this.batchData.fiscalYearId = this.fiscalYearId;
                     this.utilityService.showLoader('#initiate-loader');
                     this.learningService.initBatch(this.batchData)
                         .subscribe(res => {
