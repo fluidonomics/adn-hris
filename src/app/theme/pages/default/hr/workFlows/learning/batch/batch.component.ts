@@ -118,6 +118,7 @@ export class LearningBatchComponent implements OnInit {
                             swal('Success', 'Employee Learning Agenda Terminated Successfully', 'success')
                         },
                         error => {
+                            console.log(error);
                         });
             }
         })
@@ -147,6 +148,7 @@ export class LearningBatchComponent implements OnInit {
                 swal('Success', 'Batch Saved Successfully', 'success')
             }
         }, error => {
+            console.log(error);
         });
     }
 

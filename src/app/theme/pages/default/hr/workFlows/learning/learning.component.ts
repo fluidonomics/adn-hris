@@ -14,20 +14,15 @@ import { LearningService } from '../../../services/learning.service';
 })
 export class HrLearningComponent {
     employeeData: any = [];
-
     filterBy: any = {};
-
     checkAll: any = {};
     currentDate = new Date();
-
     divisionData: any = [];
     deparmentData: any = [];
     gradeData: any = [];
-
     batchData: any = {
         "emp_id": []
     };
-
 
     key: string = ''; //set default
     reverse: boolean = false;
@@ -36,12 +31,9 @@ export class HrLearningComponent {
     _currentEmpId: number;
     currentEmpname: string;
     itemPerPage: number = 20;
-
     search: any;
     isCheckAll: boolean = false;
-
     imageBase: any;
-
     batchTypes: any = [
         { _id: "KRA", batchTypeName: "KRA", },
         { _id: "Learning", batchTypeName: "Learning", disabled: true },
@@ -73,9 +65,6 @@ export class HrLearningComponent {
         this.getAllEmployee();
     }
 
-    ngAfterViewInit() {
-    }
-
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
@@ -86,6 +75,7 @@ export class HrLearningComponent {
                     }
                 },
                 error => {
+                    console.log(error);
                 });
     }
 
@@ -102,6 +92,7 @@ export class HrLearningComponent {
                     }
                 },
                 error => {
+                    console.log(error);
                 });
     }
 
