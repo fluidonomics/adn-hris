@@ -151,7 +151,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         });
 
         if (this.batchData.emp_id.length > 0) {
-            debugger;
             swal({
                 title: 'Are you sure?',
                 text: "This will initiate KRA Batch for " + this.currentFiscalYear.financialYearName,

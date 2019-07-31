@@ -438,6 +438,26 @@ export class MyKraComponent {
                         }
                     },
                     error => {
+                        if(error.includes("300")) {
+                            swal({
+                                title: 'Submitted Successfully!',
+                                text: "KRA has been submitted for Supervisor Approval, but there is an error while sending email",
+                                type: 'warning',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes'
+                            });
+                            this.loadKraInfo();
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: "KRA not submitted",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonColor: '#66BB6A',
+                                confirmButtonText: 'OK'
+                            });
+                        }
                     });
             }
         });
