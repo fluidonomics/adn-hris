@@ -457,6 +457,7 @@ export class MyKraComponent {
                                 confirmButtonColor: '#66BB6A',
                                 confirmButtonText: 'OK'
                             });
+                            this.loadKraInfo();
                         }
                     });
             }
