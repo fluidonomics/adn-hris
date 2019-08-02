@@ -129,7 +129,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                     this.utilityService.hideLoader('#initiate-loader');
                 }
                 else {
-                    this.employeeData = data.json().data || [];
+                    this.employeeData = [];
                     this.utilityService.hideLoader('#initiate-loader');
                 }
 
