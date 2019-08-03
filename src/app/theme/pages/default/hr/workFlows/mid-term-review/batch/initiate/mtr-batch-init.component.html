@@ -82,7 +82,7 @@
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
 
-                            <th class="m-datatable__cell" width="5%">
+                            <th class="m-datatable__cell" width="2%">
                                 <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--success">
                                     <input type="checkbox" [(ngModel)]="isCheckAll" [disabled]="p.pages.length==0"
                                         (change)="selectAllEmployee($event)">
@@ -99,7 +99,7 @@
                                 </span>
                             </th>
                             <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="15%">
                                 <span>
                                     EMAIL
                                     <i class="la" *ngIf="key == 'officeEmail'"
@@ -107,7 +107,7 @@
                                 </span>
                             </th>
                             <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="10%">
                                 <span>
                                     DESIGNATION
                                     <i class="la" *ngIf="key == 'designation'"
@@ -115,9 +115,25 @@
                                 </span>
                             </th>
                             <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="25%">
+                                width="20%">
                                 <span>
                                     SUPERVISOR
+                                    <i class="la" *ngIf="key == 'supervisor'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="13%">
+                                <span>
+                                    DEPARTMENT
+                                    <i class="la" *ngIf="key == 'supervisor'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('supervisor')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="10%">
+                                <span>
+                                    GRADE
                                     <i class="la" *ngIf="key == 'supervisor'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
@@ -133,8 +149,8 @@
                                     <span></span>
                                 </label>
                             </td>
-                            <td class="m-datatable__cell" width="5%">
-                                <img *ngIf="employee?.profileImage; else noImage"
+                            <td class="m-datatable__cell" width="2%">
+                                <img *ngIf="employee?.emp_profileImage; else noImage"
                                     src="{{imageBase+employee?.emp_profileImage}}"
                                     onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                     class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
@@ -145,14 +161,20 @@
                             <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.emp_full_name}} [{{employee.emp_userName}}]</span>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.emp_officeEmail}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <td class="m-datatable__cell" width="10%">
                                 <span>{{employee.emp_designation_name}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="25%">
+                            <td class="m-datatable__cell" width="20%">
                                 <span>{{employee.emp_supervisor_name}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="13%">
+                                <span>{{employee.emp_department_name}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="10%">
+                                <span>{{employee.emp_grade_name}}</span>
                             </td>
                         </tr>
 

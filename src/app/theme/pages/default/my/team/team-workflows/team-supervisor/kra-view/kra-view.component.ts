@@ -207,8 +207,35 @@ export class MyTeamKraComponent {
 
     saveKraWorkFlow(data) {
         this._kraService.saveKraWorkFlow(data).subscribe(res => {
+                swal({
+                    title: data.status + ' Successfully!',
+                    text: "KRA has been " + data.status + " Successfully!",
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
         }, error => {
-            console.log(error);
+            if (error.includes("300")) {
+                swal({
+                    title: data.status + ' Successfully!',
+                    text: "KRA has been " + data.status + " Successfully, but there is an error while sending email",
+                    type: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                });
+                this.loadKraInfo();
+            } else {
+                swal({
+                    title: 'Error',
+                    text: "Error while " + data.status + " Kra",
+                    type: 'error',
+                    showCancelButton: false,
+                    confirmButtonColor: '#66BB6A',
+                    confirmButtonText: 'OK'
+                });
+            }
         });
     }
 
