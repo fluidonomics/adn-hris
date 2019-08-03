@@ -65,7 +65,7 @@ export class PapReviewComponent implements OnInit {
     papEmployeeId;
     papMasterId;
     isView: boolean = false;
-
+    fiscalYearId: string;
     constructor(
         public _authService: AuthService,
         private _commonService: CommonService,
@@ -75,6 +75,7 @@ export class PapReviewComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -111,7 +112,7 @@ export class PapReviewComponent implements OnInit {
 
     loadPapDetails() {
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this.papEmployeeId, this.fiscalYearId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
@@ -169,7 +170,6 @@ export class PapReviewComponent implements OnInit {
         }
     }
     saveKRADetails(form, id: number, isApproved: boolean) {
-        debugger;
         if (form.valid) {
             this.modalRef.hide();
             let request = {

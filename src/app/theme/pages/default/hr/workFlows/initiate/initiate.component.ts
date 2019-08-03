@@ -60,7 +60,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        debugger;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -130,7 +129,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
                     this.utilityService.hideLoader('#initiate-loader');
                 }
                 else {
-                    this.employeeData = data.json().data || [];
+                    this.employeeData = [];
                     this.utilityService.hideLoader('#initiate-loader');
                 }
 
@@ -152,7 +151,6 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         });
 
         if (this.batchData.emp_id.length > 0) {
-            debugger;
             swal({
                 title: 'Are you sure?',
                 text: "This will initiate KRA Batch for " + this.currentFiscalYear.financialYearName,

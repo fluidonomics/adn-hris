@@ -44,7 +44,7 @@ export class PapBatchViewComponent implements OnInit {
     modalRef: BsModalRef;
     currentDate: Date = new Date();
     _currentEmpId: number;
-
+    fiscalYearId: string;
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
@@ -64,6 +64,7 @@ export class PapBatchViewComponent implements OnInit {
     };
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -76,7 +77,7 @@ export class PapBatchViewComponent implements OnInit {
 
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._papService.getPAPBatches(this._currentEmpId, this.search)
+        this._papService.getPAPBatches(this._currentEmpId, this.search, this.fiscalYearId)
             .subscribe(
             res => {
                 this.utilityService.hideLoader('#batch-loader');

@@ -66,7 +66,7 @@ export class PapDetailedViewComponent implements OnInit {
     papChanges: Subject<any> = new Subject<any>();
     papEmployeeId;
     papMasterId;
-
+    fiscalYearId: string;
     constructor(
         public _authService: AuthService,
         private _commonService: CommonService,
@@ -75,6 +75,7 @@ export class PapDetailedViewComponent implements OnInit {
         private papService: PapService
     ) { }
     ngOnInit() {
+        this.fiscalYearId =  this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -106,7 +107,7 @@ export class PapDetailedViewComponent implements OnInit {
     }
     loadPapDetails() {
         return new Promise((resolve, reject) => {
-            this.papService.getPapDetailsSingleEmployee(this.papEmployeeId).subscribe(res => {
+            this.papService.getPapDetailsSingleEmployee(this.papEmployeeId, this.fiscalYearId).subscribe(res => {
                 let papDetails = res || [];
                 if (papDetails.length > 0) {
                     this.papWorkFlowData = _.chain(papDetails).groupBy('pap_master_id').map(function (v, i) {
@@ -222,7 +223,7 @@ export class PapDetailedViewComponent implements OnInit {
                 papMasterId: this.papMasterId,
                 updatedBy: this._currentEmpId,
                 grievanceStatus: this.papWorkFlowData[0].grievanceStatus,
-                action_link: window.location.origin + '/my/team/workflows/pap-review/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId
+                action_link: window.location.origin + '/my/team/workflows/pap-review/' + this.papWorkFlowData[0]._id + '/' + this.papEmployeeId + '?fiscalYearId=' + this.fiscalYearId
             }
             swal({
                 title: 'Are you sure?',

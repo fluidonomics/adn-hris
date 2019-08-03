@@ -55,7 +55,7 @@ export class MyMtrComponent {
     currentEmployee: any = {};
     progressStatuses = [];
     colorStatuses = [];
-
+    fiscalYearId: any;
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -77,6 +77,7 @@ export class MyMtrComponent {
     }
 
     ngOnInit() {
+        this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -167,7 +168,7 @@ export class MyMtrComponent {
         });
     }
     loadMTRInfo() {
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.mtrInfoData = data.result.message;
             this.isChangable = this.mtrInfoData.filter(mtr => mtr.status != "Submitted" && mtr.status != "Approved" && mtr.status != "Dropped").length > 0;
@@ -214,7 +215,7 @@ export class MyMtrComponent {
 
     loadMTRWorkFlowDetails() {
         this.utilityService.showLoader('.m-datatable');
-        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId).subscribe(res => {
+        this._mtrService.getEmployeeMtrWorkFlowInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             this.utilityService.hideLoader('.m-datatable');
             let data = res.json();
             this.mtrWorkFlowData = data.result.message;

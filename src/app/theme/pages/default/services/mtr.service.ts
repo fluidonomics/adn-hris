@@ -48,19 +48,19 @@ export class MtrService {
     constructor(private authService: AuthService) {
     }
 
-    getEmployeeMtrWorkFlowInfo(emp_id?: number): Observable<Response> {
-        let url = "midterm/getMtrDetailsSingleEmployee?emp_id=" + emp_id;
+    getEmployeeMtrWorkFlowInfo(emp_id?: number, fiscalYearId?: number): Observable<Response> {
+        let url = "midterm/getMtrDetailsSingleEmployee?emp_id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getMtrBySupervisor(supervisorId: number, mtrStatus: string): Observable<Response> {
-        let url = "midterm/getMtrBySupervisor?supervisorId=" + supervisorId + '&status=' + mtrStatus;
+    getMtrBySupervisor(supervisorId: number, mtrStatus: string, fiscalYearId: number): Observable<Response> {
+        let url = "midterm/getMtrBySupervisor?supervisorId=" + supervisorId + '&status=' + mtrStatus + '&fiscalYearId=' + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
 
-    getMtrBatches(emp_id?: number): Observable<Response> {
-        let url = "midterm/getMtrBatches?empId=" + emp_id;
+    getMtrBatches(emp_id?: number, fiscalYearId?: number): Observable<Response> {
+        let url = "midterm/getMtrBatches?empId=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

@@ -43,7 +43,7 @@ export class MTRBatchComponent implements OnInit {
     ]
 
     _currentEmpId: number;
-
+    currentFiscalYear: any;
     constructor(
         private modalService: BsModalService,
         private _commonService: CommonService,
@@ -63,6 +63,7 @@ export class MTRBatchComponent implements OnInit {
     };
 
     ngOnInit() {
+        this.currentFiscalYear = 3;
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -75,16 +76,16 @@ export class MTRBatchComponent implements OnInit {
     }
     loadBatch() {
         this.utilityService.showLoader('#batch-loader');
-        this._mtrService.getMtrBatches(this._currentEmpId)
+        this._mtrService.getMtrBatches(this._currentEmpId, this.currentFiscalYear)
             .subscribe(
-                res => {
-                    this.utilityService.hideLoader('#batch-loader');
-                    this.batchData = res.json().result.message;
-                    this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
-                },
-                error => {
-                    this.utilityService.hideLoader('#batch-loader');
-                });
+            res => {
+                this.utilityService.hideLoader('#batch-loader');
+                this.batchData = res.json().result.message;
+                this.batchData = this.batchData.filter(obj => obj.createdBy == this._currentEmpId);
+            },
+            error => {
+                this.utilityService.hideLoader('#batch-loader');
+            });
     }
 
     loadkraWorkFlowDetails(batch_id: number) {
@@ -110,13 +111,12 @@ export class MTRBatchComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex].status = status;
-                this._batchService.saveKraWorkFlow(this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex])
-                    .subscribe(
-                        res => {
-                            swal('Success', 'Employee Workflow Terminated Successfully', 'success')
-                        },
-                        error => {
-                        });
+                let data = this.batchData[this.batchData.findIndex(x => x._id == batch_id)].kraWorkFlowData[kraWorkFlowIndex];
+                data.link = window.location.origin + '/my/workflows/mtr';
+                this._batchService.saveKraWorkFlow(data).subscribe(res => {
+                    swal('Success', 'Employee Workflow Terminated Successfully', 'success')
+                }, error => {
+                });
             }
         })
     }

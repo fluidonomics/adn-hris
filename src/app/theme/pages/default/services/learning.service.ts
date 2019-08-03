@@ -75,8 +75,8 @@ export class LearningService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getLearningBatches(empId?: number): Observable<Response> {
-        let url = "learning/getlearningbatch?empId=" + empId;
+    getLearningBatches(empId?: number, fiscalYearId?: string): Observable<Response> {
+        let url = "learning/getlearningbatch?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
