@@ -21,7 +21,6 @@ export class LearningService {
         }
     ];
 
-    // Red(learning completed ), Amber(sent back by supervisor) and Green(approved by sup), default - nothing
     colorStatuses = [
         {
             id: "Green",
@@ -49,24 +48,18 @@ export class LearningService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-
-    // getLearningBatches(emp_id?: number): Observable<Response> {
-    //    let url = "learning/getlearningmaster?empId=" + emp_id;
-    //    return this.authService.get(url).map(this.extractData).catch(this.handleError);
-    // }
-
     saveLearning(data: any): Observable<Response> {
         let url = "learning/postlearning";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getEmployeeLearningInfo(emp_id?: number): Observable<Response> {
-        let url = "learning/getlearningmaster?emp_id=" + emp_id;
+    getEmployeeLearningInfo(emp_id?: number, fiscalYearId?: string): Observable<Response> {
+        let url = "learning/getlearningmaster?emp_id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getEmployeeLearningDetails(master_id?: number): Observable<Response> {
-        let url = "learning/lerningdetails?master_id=" + master_id;
+    getEmployeeLearningDetails(master_id?: number, fiscalYearId?: string): Observable<Response> {
+        let url = "learning/lerningdetails?master_id=" + master_id + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -85,13 +78,13 @@ export class LearningService {
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
-    getLearningBySupervisor(supervisorId: number, status: string): Observable<Response> {
-        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId + '&status=' + status;
+    getLearningBySupervisor(supervisorId: number, status: string, fiscalYearId?: string): Observable<Response> {
+        let url = "learning/learningbysuperviser?supervisorId=" + supervisorId + '&status=' + status + '&fiscalYearId=' + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getLearningByReviewer(reviewerId: number): Observable<Response> {
-        let url = "learning/learningbyreviewer?reviewerId=" + reviewerId;
+    getLearningByReviewer(reviewerId: number, fiscalYearId?: string): Observable<Response> {
+        let url = "learning/learningbyreviewer?reviewerId=" + reviewerId + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -108,9 +101,6 @@ export class LearningService {
             let error = err.json() || {};
             swal("Error", error.title, "error");
         }
-
         return Observable.throw(err);
     }
-
-
 }

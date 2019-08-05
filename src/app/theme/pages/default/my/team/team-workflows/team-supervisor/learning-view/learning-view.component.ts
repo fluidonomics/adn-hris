@@ -20,16 +20,18 @@ export class LearningViewComponent implements OnInit {
     learningSearch: any;
     learningReverse: boolean = true;
     imageBase: any;
-
+    fiscalYearId: string;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
         private _utilityService: UtilityService,
         private router: Router,
-        private _learningService: LearningService
+        private _learningService: LearningService,
+        private _commonService: CommonService
     ) { }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
@@ -39,7 +41,7 @@ export class LearningViewComponent implements OnInit {
 
     loadLearningBySupervisor(sup_Id: number,status:string) {
 
-        this._learningService.getLearningBySupervisor(sup_Id,status).subscribe(res => {
+        this._learningService.getLearningBySupervisor(sup_Id,status, this.fiscalYearId).subscribe(res => {
             this.learningData = res.json().result.message || [];
         }, error => {
             console.log(error);
