@@ -63,7 +63,7 @@ export class MTRBatchComponent implements OnInit {
     };
 
     ngOnInit() {
-        this.currentFiscalYear = 3;
+        this.currentFiscalYear = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
