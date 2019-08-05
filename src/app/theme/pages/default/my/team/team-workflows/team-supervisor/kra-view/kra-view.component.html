@@ -55,29 +55,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index">
+                                        <tr *ngFor="let kraInfo of kraInfoData;let i=index"
+                                            [ngClass]="{'sendBack':kraInfoData[i].supervisorStatus=='SendBack','approved':kraInfoData[i].supervisorStatus =='Approved'}">
                                             <th scope="row">
                                                 {{i+1}}
                                             </th>
                                             <td>
-                                                <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra" #kra="ngModel"
-                                                    class="form-control m-input m-input--air" disabled></textarea>
+                                                <textarea name="kraOne" id="kraOne" [(ngModel)]="kraInfo.kra"
+                                                    #kra="ngModel" class="form-control m-input m-input--air"
+                                                    disabled></textarea>
                                             </td>
                                             <td>
-                                                <ng-select class="m-input m-input--air" name="kraCategory" id="kraCategory"
-                                                    [items]="kraCategoryData" bindLabel="kraCategoryName" bindValue="_id"
+                                                <ng-select class="m-input m-input--air" name="kraCategory"
+                                                    id="kraCategory" [items]="kraCategoryData"
+                                                    bindLabel="kraCategoryName" bindValue="_id"
                                                     placeholder="Select KRA Category" [(ngModel)]="kraInfo.category_id"
                                                     [clearable]="false" #kraCategory="ngModel" disabled></ng-select>
                                             </td>
                                             <td>
-                                                <ng-select class="m-input m-input--air" name="kraWeightage" id="kraWeightage"
-                                                    [items]="weightageData" bindLabel="kraWeightageName" bindValue="_id"
-                                                    placeholder="Weightage" [(ngModel)]="kraInfo.weightage_id"
-                                                    [clearable]="false" #kraWeightage="ngModel" disabled></ng-select>
+                                                <ng-select class="m-input m-input--air" name="kraWeightage"
+                                                    id="kraWeightage" [items]="weightageData"
+                                                    bindLabel="kraWeightageName" bindValue="_id" placeholder="Weightage"
+                                                    [(ngModel)]="kraInfo.weightage_id" [clearable]="false"
+                                                    #kraWeightage="ngModel" disabled></ng-select>
                                             </td>
                                             <td class="text-center" style="width: 70px;">
                                                 <span>
-                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                                                    <a href="#"
+                                                        class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                                         title="KRA Detail" (click)="showKraDetail(i, $event)">
                                                         <i class="la la-info"></i>
                                                     </a>
@@ -98,7 +103,8 @@
 </div>
 
 <ng-template #kraDetailModal>
-    <div class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
+    <div
+        class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height kraDetailsPortlet">
         <div class="m-portlet__head">
             <div class="m-portlet__head-caption">
                 <div class="m-portlet__head-title">
@@ -112,7 +118,8 @@
                     <li class="m-portlet__nav-item">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                             <div class="btn-group" role="group">
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <button type="button" class="close pull-right" aria-label="Close"
+                                    (click)="modalRef.hide()">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -134,7 +141,8 @@
                                 <span class="block"> {{user?.designationDetails?.designationName}}</span>
                             </div>
                             <div class="col-md-3">
-                                <img class="img" [src]="user.profileImage ? imageBase+user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
+                                <img class="img"
+                                    [src]="user.profileImage ? imageBase+user.profileImage : './assets/app/media/img/custom/users/user6.jpg'">
                             </div>
                         </div>
                     </div>
@@ -151,12 +159,13 @@
                     <div class="col-md-6 form-group">
                         <span class="key">Supervisor</span>
                         <ng-select class="m-input m-input--air" name="supervisor" id="supervisor" [items]="employees"
-                            bindLabel="fullName" bindValue="_id" placeholder="Supervisor" [(ngModel)]="kraData.supervisor_id"
-                            #supervisorId="ngModel" disabled></ng-select>
+                            bindLabel="fullName" bindValue="_id" placeholder="Supervisor"
+                            [(ngModel)]="kraData.supervisor_id" #supervisorId="ngModel" disabled></ng-select>
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Key Responsibility Area (K.R.A)</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.kra}}" disabled="true"></textarea>
+                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.kra}}"
+                            disabled="true"></textarea>
                     </div>
 
                     <div class="col-md-6 form-group">
@@ -166,12 +175,13 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <span class="key">Measure Of Success</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" value="{{kraData?.measureOfSuccess}}"
-                            disabled="true"></textarea>
+                        <textarea class="form-control m-input m-input--air" rows="3"
+                            value="{{kraData?.measureOfSuccess}}" disabled="true"></textarea>
                     </div>
                     <div class="col-md-12 form-group">
                         <span class="key">Remarks</span>
-                        <textarea class="form-control m-input m-input--air" rows="3" [(ngModel)]="kraData.sendBackComment"
+                        <textarea class="form-control m-input m-input--air" rows="3"
+                            [(ngModel)]="kraData.sendBackComment"
                             [disabled]="kraData.supervisor_id!=_authService.atCurrentUserData._id || kraData.supervisorStatus"></textarea>
                     </div>
                 </div>
@@ -179,10 +189,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="m-form__actions">
-                                <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                    class="btn btn-success" (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
-                                <button *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
-                                    class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')" type="button">Send
+                                <button
+                                    *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                    class="btn btn-success"
+                                    (click)="preSaveKraDetails(kraData._id,'Approved')">Approve</button>
+                                <button
+                                    *ngIf="kraData.supervisor_id == _authService.atCurrentUserData._id && !kraData.supervisorStatus"
+                                    class="btn btn-danger" (click)="preSaveKraDetails(kraData._id,'SendBack')"
+                                    type="button">Send
                                     Back</button>
                                 <button class="btn btn-secondary" (click)="modalRef.hide()">Back</button>
                             </div>

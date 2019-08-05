@@ -90,6 +90,7 @@ export class MyTeamKraComponent {
     loadKraInfo() {
         this._kraService.getKraInfo(this.param_id).subscribe(
             res => {
+                debugger;
                 this.kraInfoData = res.json().data;
                 this.isDisabled = res.json().status == 'Approved' ? true : false;
                 this.status = res.json().status;
