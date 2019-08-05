@@ -23,9 +23,11 @@ export class AllLearningReviewer implements OnInit {
         private route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
-        private learningService: LearningService
+        private learningService: LearningService,
+        private _commonService: CommonService
     ) {
     }
+    fiscalYearId: string;
     learningData: any = [];
     imageBase: any;
     employeesFilter: any = {
@@ -34,11 +36,12 @@ export class AllLearningReviewer implements OnInit {
         page: 1
     };
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this.getEmployeesLearning();
         this.imageBase = environment.content_api_base.apiBase;
     }
     getEmployeesLearning() {
-      this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
+      this.learningService.getLearningByReviewer(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
           this.learningData = res.json().result.message || [];
           //debugger;
           // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');

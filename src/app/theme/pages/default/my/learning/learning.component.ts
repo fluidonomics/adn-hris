@@ -72,7 +72,7 @@ export class MyLearningComponent {
     colorStatuses = [];
 
     showStat = false;
-
+    fiscalYearId: any;
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -96,6 +96,7 @@ export class MyLearningComponent {
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -171,7 +172,6 @@ export class MyLearningComponent {
                         confirmButtonColor: '#66BB6A',
                         confirmButtonText: 'OK'
                     });
-                    debugger;
                     this.modalRef.hide();
                 }
                 this.loadData();
@@ -194,12 +194,9 @@ export class MyLearningComponent {
     }
 
     loadLearningAgendaInfo() {
-        this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
+        this._learningService.getEmployeeLearningInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
-            // console.log("agenda info: " + this.LearningAgendaData);
-            // this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved").length > 0;
-            // debugger;
         }, error => {
         });;
 
@@ -225,7 +222,7 @@ export class MyLearningComponent {
     }
 
     loadLearningDetailsInfo() {
-        this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
+        this._learningService.getEmployeeLearningDetails(this.param_id, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.learningInfoData = data.result.message;
             console.log("details info: " + this.learningInfoData);

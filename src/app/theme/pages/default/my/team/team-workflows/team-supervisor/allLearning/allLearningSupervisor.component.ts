@@ -23,9 +23,11 @@ export class AllLearningSupervisor implements OnInit {
         private _route: ActivatedRoute,
         private myService: MyService,
         private router: Router,
-        private learningService: LearningService
+        private learningService: LearningService,
+        private _commonService: CommonService
     ) {
     }
+    fiscalYearId: string;
     learningData: any = [];
     param_from: string;
     imageBase: any;
@@ -35,6 +37,7 @@ export class AllLearningSupervisor implements OnInit {
         page: 1
     };
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._route.params.subscribe(params => {
                 this.param_from = params['from'];
         });
@@ -44,17 +47,15 @@ export class AllLearningSupervisor implements OnInit {
     getEmployeesLearning() {
 
         if(this.param_from == "approve") {
-            this.learningService.getLearningBySupervisor(this.authService.currentUserData._id,"Submitted").subscribe(res => {
+            this.learningService.getLearningBySupervisor(this.authService.currentUserData._id,"Submitted", this.fiscalYearId).subscribe(res => {
                 this.learningData = res.json().result.message || [];
-                //debugger;
             }, error => {
                 console.log(error);
             });
         }
         else {
-            this.learningService.getLearningBySupervisor(this.authService.currentUserData._id,"Approved").subscribe(res => {
+            this.learningService.getLearningBySupervisor(this.authService.currentUserData._id,"Approved", this.fiscalYearId).subscribe(res => {
                 this.learningData = res.json().result.message || [];
-                //debugger;
             }, error => {
                 console.log(error);
             });
