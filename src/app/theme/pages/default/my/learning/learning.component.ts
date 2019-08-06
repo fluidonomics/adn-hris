@@ -24,6 +24,7 @@ export class MyLearningComponent {
     @ViewChild('mylearningDetailModal') mylearningDetailModal: TemplateRef<any>;
 
     param_id: number;
+    userStatus: any;
     _currentEmpId: number;
 
     isLearningAvaliable: boolean = false;
@@ -103,6 +104,7 @@ export class MyLearningComponent {
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
                         this.param_id = params['id'];
+                        this.userStatus = params['status'];
                         this.loadData();
                     }
                     else {
@@ -225,7 +227,6 @@ export class MyLearningComponent {
         this._learningService.getEmployeeLearningDetails(this.param_id, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.learningInfoData = data.result.message;
-            console.log("details info: " + this.learningInfoData);
             if (this.learningInfoData.length > 0) {
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
                 this.loadprevsupervisor();
@@ -253,6 +254,11 @@ export class MyLearningComponent {
 
                     }
                 ];
+                if(this.userStatus === 'Terminated') {
+                    this.showSub = false;
+                } else {
+                    this.showSub = true;
+                }
             }
 
         }, error => {
@@ -326,7 +332,8 @@ export class MyLearningComponent {
                         supervisorId: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/team/workflows/supervisor'
+                        action_link: window.location.origin + '/my/team/workflows/supervisor',
+                        fiscalYearId: this.fiscalYearId
                     }
                     this.utilityService.showLoader('.m-content');
                     this._learningService.submitLearningAgendas(data).subscribe(res => {

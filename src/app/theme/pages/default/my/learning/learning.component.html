@@ -136,7 +136,7 @@
 								</span>
 							</td>
 							<td class="m-datatable__cell" width="15%">
-								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id}"
+								<a routerLink="/my/learning" [queryParams]="{ id: learnData._id, status: learnData.status}"
 									class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
 									<i class="la"
 										[ngClass]="learningData.status=='Initiated' || learningData.status=='SendBack' ? 'la-edit':'la-eye'"></i>
