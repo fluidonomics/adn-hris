@@ -68,7 +68,7 @@
                               (click)="goToPipDetailView(pip)">
                               <div class="m-widget4__img m-widget4__img--logo">
                                  <a align="center">
-                                    <img *ngIf="pip.emp_details?.profileImage; else noImage"
+                                    <img *ngIf="pip?.profileImage; else noImage"
                                        src="{{imageBase+pip.emp_details.profileImage}}"
                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                        class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
@@ -159,8 +159,8 @@
                               (click)="goToPipDetailView(pip)">
                               <div class="m-widget4__img m-widget4__img--logo">
                                  <a align="center">
-                                    <img *ngIf="pip.emp_details?.profileImage; else noImage"
-                                       src="{{imageBase+pip.emp_details?.profileImage}}"
+                                    <img *ngIf="pip?.profileImage; else noImage"
+                                       src="{{imageBase+pip.emp_details.profileImage}}"
                                        onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                        class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                     <ng-template #noImage>

@@ -68,25 +68,7 @@ export class PipReview {
       {
           '_id':3,
           'final_recommendation': "Remedial action"
-      },
-      {
-         '_id':4,
-         'final_recommendation': "Extended"
-     }
-   ];
-   extendPIP = [
-      {
-          '_id':1,
-          'extended_by': "1 Months"
-      },
-      {
-          '_id':2,
-          'extended_by': "2 Months"
-      },
-      {
-          '_id':3,
-          'extended_by': "3 Months"
-      },
+      }
    ];
 
    timelinesData = [
@@ -282,7 +264,7 @@ export class PipReview {
       this.pipData = this.pipMasterData[0];
       this.pipData.no = 1;
 
-      if(this.pipData.pip_master_details.sup_final_com && this.pipData.pip_master_details.rev_final_com && !this.pipData.pip_master_details.extended_by) {
+      if(this.pipData.pip_master_details.sup_final_com && this.pipData.pip_master_details.rev_final_com) {
 
          $("#rev_final_com").attr('disabled', 'disabled');
          $("#submitForm").remove();

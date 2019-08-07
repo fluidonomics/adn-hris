@@ -109,25 +109,7 @@ export class PipDetailedViewComponent {
         {
             '_id':3,
             'final_recommendation': "Remedial action"
-        },
-        {
-            '_id':4,
-            'final_recommendation': "Extended"
         }
-     ];
-     extendPIP = [
-        {
-            '_id':1,
-            'extended_by': "1 Months"
-        },
-        {
-            '_id':2,
-            'extended_by': "2 Months"
-        },
-        {
-            '_id':3,
-            'extended_by': "3 Months"
-        },
      ];
 
 
@@ -456,7 +438,7 @@ export class PipDetailedViewComponent {
         }
         // this.learnData.weightage = this.weightageData.find(f => f._id == this.learnData.weightage_id);
         // this.learnData.category = this.kraCategoryData.find(f => f._id == this.learnData.category_id);
-        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed" || this.pipData.status == "Extended" || this.pipData.status == "PIP Completed") {
+        if (this.pipData.status == "Approved" || this.pipData.status == "SendBack" || this.pipData.status == "Completed") {
             this.isDisabled = true;
         }
         else {
@@ -485,7 +467,7 @@ export class PipDetailedViewComponent {
         this.pipData = this.pipMasterData[0];
         this.pipData.no = 1;
 
-        if(this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com && !this.pipData.pip_master_details.extended_by) {
+        if(this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com) {
 
             $("#sup_final_com").attr('disabled', 'disabled');
             $("#submitForm").remove();
@@ -555,8 +537,6 @@ export class PipDetailedViewComponent {
         } else if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
             this.pipData.empComment_month6 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
                 this.finalReviewEnable = true;
-        } else if(this.pipData.status === "Extended" && this.pipData.dateDifference >= this.pipData.master_timelines) {
-            this.finalReviewEnable = true;
         } else {
             this.finalReviewEnable = false;
         }

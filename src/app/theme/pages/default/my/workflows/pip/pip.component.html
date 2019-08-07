@@ -137,7 +137,7 @@
 								</a>
 								<button type="button"
 									class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
-									title="Post PIP Process" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Completed' || pip.status=='PIP Completed' pip.status=='Extended'">
+									title="Post PIP Process" (click)="showCompletionDetails(i)" *ngIf="pip.status=='Completed'">
 									<i class="la la-info"></i>
 								</button>
 							</td>
@@ -644,10 +644,10 @@
 						<!-- </div> -->
 
 						<!-- <div *ngIf="true"> -->
-						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines >= 4">
+						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines === 6">
 							<span><b>Month 4</b></span>
 						</div>
-						<div class="col-md-6 month" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines >= 4">
+						<div class="col-md-6 month" *ngIf="(pipData.empComment_month4 || isCommentOfMonth4Enable) && pipData.master_timelines === 6">
 							<span>Employee Comments #4</span>
 							<textarea name="empComment_month4" id="empComment_month4" [(ngModel)]="pipData.empComment_month4"
 								#empComment_month4="ngModel" class="form-control m-input m-input--air"
@@ -658,7 +658,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 month" *ngIf="pipData.supComment_month4 && pipData.master_timelines >= 4">
+						<div class="col-md-6 month" *ngIf="pipData.supComment_month4 && pipData.master_timelines === 6">
 							<span>Supervisor Comments #4</span>
 							<textarea name="supComment_month4" id="supComment_month4" [(ngModel)]="pipData.supComment_month4"
 								#supComment_month4="ngModel" class="form-control m-input m-input--air" disabled
@@ -668,10 +668,10 @@
 						<!-- </div> -->
 
 						<!-- <div *ngIf="true"> -->
-						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines >= 5">
+						<div class="col-md-12 heading" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines === 6">
 							<span><b>Month 5</b></span>
 						</div>
-						<div class="col-md-6 month" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines >= 5">
+						<div class="col-md-6 month" *ngIf="(pipData.empComment_month5 || isCommentOfMonth5Enable) && pipData.master_timelines === 6">
 							<span>Employee Comments #5</span>
 							<textarea name="empComment_month5" id="empComment_month5" [(ngModel)]="pipData.empComment_month5"
 								#empComment_month5="ngModel" class="form-control m-input m-input--air"
@@ -682,7 +682,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 month" *ngIf="pipData.supComment_month5 && pipData.master_timelines >= 5">
+						<div class="col-md-6 month" *ngIf="pipData.supComment_month5 && pipData.master_timelines === 6">
 							<span>Supervisor Comments #5</span>
 							<textarea name="supComment_month5" id="supComment_month5" [(ngModel)]="pipData.supComment_month5"
 								#supComment_month5="ngModel" class="form-control m-input m-input--air" disabled
@@ -848,16 +848,6 @@
 								#final_recommendation="ngModel" disabled>
 							</ng-select>
 						</div>
-
-						<div class="col-md-6 details" *ngIf="pipData.final_recommendation == 4">
-							<span>Extend by</span>
-							<ng-select class="m-input m-input--air customError" name="extended_by{{i}}"
-							   id="extended_by" [items]="extendPIP" bindLabel="extended_by"
-							   bindValue="_id" placeholder="Extend PIP"
-							   [(ngModel)]="pipData.extended_by" [clearable]="false"
-							   #extended_by="ngModel" disabled>
-							</ng-select>
-						 </div>
 
 					</div>
 					<div class="form-actions details">
