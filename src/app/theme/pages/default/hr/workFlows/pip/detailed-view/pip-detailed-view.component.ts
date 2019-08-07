@@ -61,6 +61,14 @@ export class PipDetailView {
           'timeline' : "3 Months"
       },
       {
+         '_id': 4,
+         'timeline' : "4 Months"
+      },
+      {
+         '_id': 5,
+         'timeline' : "5 Months"
+      },
+      {
           '_id': 6,
           'timeline' : "6 Months"
       }
@@ -78,8 +86,29 @@ export class PipDetailView {
    {
        '_id':3,
        'final_recommendation': "Remedial action"
+   },
+   {
+      '_id':4,
+      'final_recommendation': "Extend PIP"
    }
 ];
+
+extendPIP = [
+   {
+       '_id':1,
+       'extended_by': "1 Months"
+   },
+   {
+       '_id':2,
+       'extended_by': "2 Months"
+   },
+   {
+       '_id':3,
+       'extended_by': "3 Months"
+   },
+];
+
+
 
 
    constructor(@Inject(PLATFORM_ID) private platformId: Object,
@@ -171,6 +200,8 @@ export class PipDetailView {
    }
 
    saveComments(pipData: any) {
+      let remainingExtendBy = 6 - this.pipData.master_timelines;
+      let monthVar = (remainingExtendBy > 1) ? " months" : " month"
       if (!pipData.hr_final_com || !pipData.final_recommendation) {
           swal({
               title: 'Please fill remarks!',
@@ -179,9 +210,15 @@ export class PipDetailView {
               confirmButtonColor: '#66BB6A',
               confirmButtonText: 'OK'
           });
-      }
-      else {
-
+      } else if ((pipData.final_recommendation ===4) && (pipData.master_timelines + pipData.extended_by) > 6) {
+         swal({
+             title: 'Value of extend by can not be greater than ' + remainingExtendBy + monthVar,
+             type: 'warning',
+             showCancelButton: false,
+             confirmButtonColor: '#66BB6A',
+             confirmButtonText: 'OK'
+         });
+     } else {
           swal({
               title: 'Are you sure?',
               // text: text,
@@ -201,11 +238,20 @@ export class PipDetailView {
                      empFinalCom: pipData.emp_final_com,
                      revFinalCom: pipData.rev_final_com,
                      supFinalCom: pipData.sup_final_com,
-                     finalRecommendation: pipData.final_recommendation
+                     finalRecommendation: pipData.final_recommendation,
+                     ...(pipData.final_recommendation === 4 && {timelines: this.pipData.master_timelines + pipData.extended_by, extendedBy: pipData.extended_by})
                   }
+
+                  // if(pipData.final_recommendation === 4) {
+                  //    request.extendedBy = pipData.extendedBy;
+                  //    let requestNew = {
+                  //       extendedBy: pipData.extendedBy
+                  //    }
+                  //    Object.assign(request, requestNew);
+                  // }sss
                   
                   this.utilityService.showLoader('.mtrDetailsPortlet');
-                  this._pipService.updateMaster(request).subscribe(res => {
+                  this._pipService.updateMasterHr(request).subscribe(res => {
                       if (res.ok) {
                           this.modalRef.hide();
                           this.utilityService.hideLoader('.mtrDetailsPortlet');
@@ -259,7 +305,7 @@ export class PipDetailView {
       this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
       this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[0]));
 
-      if(this.pipData.rev_final_com && this.pipData.hr_final_com) {
+      if(this.pipData.rev_final_com && this.pipData.hr_final_com && this.pipData.status != "Extended" && this.pipData.status != "Completed") {
 
          $("#hr_final_com").attr('disabled', 'disabled');
          $("#submitForm").remove();

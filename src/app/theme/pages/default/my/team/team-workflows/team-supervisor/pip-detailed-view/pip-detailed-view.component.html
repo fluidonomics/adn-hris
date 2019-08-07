@@ -111,7 +111,7 @@
 											</i></button>
 										</tr> -->
 
-										<tr *ngIf="masterStatus === 'Completed' && primarySupervisorId===_currentEmpId">
+										<tr *ngIf="(masterStatus === 'Completed' || masterStatus === 'PIP Completed' || masterStatus === 'Extended') && primarySupervisorId===_currentEmpId">
 											<td colspan="6">
 												<button
 													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
@@ -478,10 +478,10 @@
 												<!-- </div> -->
 
 												<!-- <div *ngIf="true"> -->
-												<div class="col-md-12 heading" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month4 && pipData.master_timelines>=4">
 													<span><b>Month 4</b></span>
 												</div>
-												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines>=4">
 													<span>Employee Comments #4</span>
 													<textarea name="empComment_month4" id="empComment_month4"
 														[(ngModel)]="pipData.empComment_month4"
@@ -507,10 +507,10 @@
 												<!-- </div> -->
 
 												<!-- <div *ngIf="true"> -->
-												<div class="col-md-12 heading" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+												<div class="col-md-12 heading" *ngIf="pipData.empComment_month5 && pipData.master_timelines>=5">
 													<span><b>Month 5</b></span>
 												</div>
-												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
+												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines>=5">
 													<span>Employee Comments #5</span>
 													<textarea name="empComment_month5" id="empComment_month5"
 														[(ngModel)]="pipData.empComment_month5"
@@ -607,7 +607,7 @@
 																type="button" *ngIf="!isDisabled && isSup"> Send
 																Back</button>
 															<button class="btn btn-success" (click)="saveLearningDetails(pipData,'Approved', PipDataForm)"
-																*ngIf="saveEnabled && pipData.status == 'Approved' && isSup">Save</button>
+																*ngIf="saveEnabled && (pipData.status == 'Approved' || pipData.status == 'Extended') && isSup">Save</button>
 															<button class="btn btn-secondary" type="button"
 																(click)="modalRef.hide()">Back</button>
 														</div>
@@ -679,7 +679,7 @@
 														required></textarea>
 												</div>
 												<div class="form-control-feedback has-danger"
-													*ngIf="PipDataForm.submitted && !sup_final_com.valid">
+													*ngIf="PipDataForm.submitted && sup_final_com.invalid">
 													This field is required.
 												</div>
 												<div class="col-md-2 details">
@@ -708,6 +708,15 @@
 													   bindValue="_id" placeholder="Final Recommendation"
 													   [(ngModel)]="pipData.pip_master_details.final_recommendation" [clearable]="false"
 													   #final_recommendation="ngModel" disabled>
+													</ng-select>
+												</div>
+												<div class="col-md-6 details" *ngIf="pipData.pip_master_details.final_recommendation == 4">
+													<span>Extend by</span>
+													<ng-select class="m-input m-input--air customError" name="extended_by{{i}}"
+													   id="extended_by" [items]="extendPIP" bindLabel="extended_by"
+													   bindValue="_id" placeholder="Extend PIP"
+													   [(ngModel)]="pipData.pip_master_details.extended_by" [clearable]="false"
+													   #extended_by="ngModel" disabled>
 													</ng-select>
 												 </div>
 

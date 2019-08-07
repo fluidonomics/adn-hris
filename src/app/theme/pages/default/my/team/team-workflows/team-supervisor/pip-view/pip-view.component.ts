@@ -17,6 +17,9 @@ export class PipViewComponent implements OnInit {
 
     _currentEmpId: number;
     pipData: any = [];
+    pipApprovedData: any = [];
+    pipExtendedData: any = [];
+    pipCompletedData: any = [];
     pipSearch: any;
     pipReverse: boolean = true;
     imageBase: any;
@@ -40,11 +43,33 @@ export class PipViewComponent implements OnInit {
     loadPipBySupervisor(sup_Id: number,status:string) {
       
         this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
-            this.pipData = res.json().result.message || [];
+            this.pipApprovedData = res.json().result.message || [];
         }, error => {
             console.log(error);
-        });
+        }, () => this.loadExtendedData(this._currentEmpId,"Extended"));
     } 
+
+    loadExtendedData(sup_Id: number,status:string) {
+        this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
+            this.pipExtendedData = res.json().result.message || [];
+        }, error => {
+            console.log(error);
+        }, () => this.loadPipCompletedData(this._currentEmpId,"PIP Completed"));
+    }
+
+    loadPipCompletedData(sup_Id: number,status:string) {
+        this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
+            this.pipCompletedData = res.json().result.message || [];
+        }, error => {
+            console.log(error);
+        }, () => this.mergeExtendedAndApprovedData());
+    }
+
+    mergeExtendedAndApprovedData() {
+        console.log("pip approved data", this.pipApprovedData);
+        console.log("pip extended data", this.pipExtendedData);
+        this.pipData = [...this.pipApprovedData, ...this.pipExtendedData, ...this.pipCompletedData];
+    }
 
     gotoPipData(pip) {
         console.log("pip : ", pip);

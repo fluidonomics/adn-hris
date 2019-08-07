@@ -69,8 +69,26 @@ export class MyPipComponent {
         {
             '_id':3,
             'final_recommendation': "Remedial action"
+        },
+        {
+            '_id':4,
+            'final_recommendation': "Extended"
         }
     ];
+    extendPIP = [
+        {
+            '_id':1,
+            'extended_by': "1 Months"
+        },
+        {
+            '_id':2,
+            'extended_by': "2 Months"
+        },
+        {
+            '_id':3,
+            'extended_by': "3 Months"
+        },
+     ];
     suparr = [];
 
     showSub:boolean = false;
@@ -257,7 +275,7 @@ export class MyPipComponent {
             let data = res.json();
             this.pipInfoData = data.result.message;
             if(this.pipInfoData.length > 0){
-                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
+                this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed" && pip.master_status != "Extended" && pip.master_status != "PIP Completed").length > 0;
                 this.loadprevsupervisor();
             } 
             else {
@@ -588,7 +606,7 @@ export class MyPipComponent {
         this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
         this.pipData.no = index + 1;
 
-        if(this.pipData.emp_final_com) {
+        if(this.pipData.emp_final_com && !this.pipData.extended_by) {
 
             $("#empcom").attr('disabled', 'disabled');
             $("#submitFormPostPip").remove();

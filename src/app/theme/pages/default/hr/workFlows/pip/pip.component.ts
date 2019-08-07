@@ -50,16 +50,16 @@ export class HrPipComponent {
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
 
-    timelinesData = [
-        {
-            '_id': 3,
-            'timeline' : "3 Months"
-        },
-        {
-            '_id': 6,
-            'timeline' : "6 Months"
-        }
-    ];
+    // timelinesData = [
+    //     {
+    //         '_id': 3,
+    //         'timeline' : "3 Months"
+    //     },
+    //     {
+    //         '_id': 6,
+    //         'timeline' : "6 Months"
+    //     }
+    // ];
 
     constructor(
         private _hrService: HrService,

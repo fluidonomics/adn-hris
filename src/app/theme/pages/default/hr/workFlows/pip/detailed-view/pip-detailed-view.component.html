@@ -80,9 +80,8 @@
                                        disabled></textarea>
                                  </td>
                                  <td>
-                                    <textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel"
-                                       [(ngModel)]="pipInfo.master_timelines" class="form-control m-input m-input--air"
-                                       disabled></textarea>
+                                    <textarea name="Timelines{{i}}" id="timelines" class="form-control m-input m-input--air"
+                                       disabled>{{pipInfo.master_timelines}} Months</textarea>
                                  </td>
                                  <!-- <td>
                                           <textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
@@ -578,6 +577,15 @@
                                           bindValue="_id" placeholder="Final Recommendation"
                                           [(ngModel)]="pipData.final_recommendation" [clearable]="false"
                                           #final_recommendation="ngModel" [disabled]="isDisabled">
+                                       </ng-select>
+                                    </div>
+                                    <div class="col-md-6 details" *ngIf="pipData.final_recommendation == 4">
+                                       <span>Extend by</span>
+                                       <ng-select class="m-input m-input--air customError" name="extended_by{{i}}"
+                                          id="extended_by" [items]="extendPIP" bindLabel="extended_by"
+                                          bindValue="_id" placeholder="Extend PIP"
+                                          [(ngModel)]="pipData.extended_by" [clearable]="false"
+                                          #extended_by="ngModel" [disabled]="isDisabled">
                                        </ng-select>
                                     </div>
 

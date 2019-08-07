@@ -29,7 +29,7 @@ export class PipViewComponent implements OnInit {
    pipCommData : any = [];
    pipViewData: any =[];
    pipSearch: any;
-   pipReverse: boolean = true;
+   pipReverse: boolean = false;
 
    constructor(
       public authService: AuthService,
@@ -50,13 +50,13 @@ export class PipViewComponent implements OnInit {
    };
    ngOnInit() {
       this.getEmployeesPip();
-      this.imageBase = environment.content_api_base.apiBase;
+      this.imageBase = environment.content_api_base.imgBase;
       // debugger;
    }
    getEmployeesPip() {
       this.pipService.getPipByHr(this.authService.currentUserData._id).subscribe(res => {
          this.pipData = res.json().result.message || [];
-         this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed");
+         this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed" || pip.pip_master.status==="Extended" || pip.pip_master.status==="PIP Completed");
          this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com === null);
          this.pipViewData =  this.pipData.filter(pip => pip.pip_master.hr_final_com !="" && pip.pip_master.hr_final_com !== null);
       }, error => {
