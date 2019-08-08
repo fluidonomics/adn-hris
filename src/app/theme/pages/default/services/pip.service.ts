@@ -75,11 +75,15 @@ export class PipService {
       return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
    }
 
-   getPipBatches(empId?: number): Observable<Response> {
-      let url = "pip/getpipbatch?empId=" + empId;
+   getPipBatches(empId?: number, fiscalYearId?: string): Observable<Response> {
+      let url = "pip/getpipbatch?empId=" + empId + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
+   getPipEmployeeForInitiate(fiscalYearId?: number): Observable<Response> {
+      let url = "pip/getPipEmployee?fiscalYearId="+ fiscalYearId;
+      return this.authService.get(url).map(this.extractData).catch(this.handleError);
+   }
    initBatch(data) {
       let url = "pip/initiatepip";
       return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
