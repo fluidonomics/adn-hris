@@ -39,7 +39,7 @@ export class MyLearningComponent {
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
-
+    isTerminatedVisible: boolean;
     DevAreaData = [
         'Individual Development',
         'Functional Development'
@@ -97,6 +97,7 @@ export class MyLearningComponent {
     }
 
     ngOnInit() {
+        this.isTerminatedVisible = true;
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
@@ -229,7 +230,8 @@ export class MyLearningComponent {
             this.learningInfoData = data.result.message;
             if (this.learningInfoData.length > 0) {
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
-                this.loadprevsupervisor();
+                    this.isTerminatedVisible = true;
+                    this.loadprevsupervisor();
             }
             else {
                 this.learningInfoData = [
@@ -256,8 +258,10 @@ export class MyLearningComponent {
                 ];
                 if(this.userStatus === 'Terminated') {
                     this.showSub = false;
+                    this.isTerminatedVisible = false;
                 } else {
                     this.showSub = true;
+                    this.isTerminatedVisible = true;
                 }
             }
 
@@ -417,9 +421,6 @@ export class MyLearningComponent {
         this.modalRef = this.modalService.show(this.mylearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.learningData = JSON.parse(JSON.stringify(this.learningInfoData[index]));
         this.learningData.no = index + 1;
-        console.log("Index: " + index);
-
-
         this.changedtoComp = false;
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;
