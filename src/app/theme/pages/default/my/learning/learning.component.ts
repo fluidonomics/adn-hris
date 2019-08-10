@@ -24,6 +24,7 @@ export class MyLearningComponent {
     @ViewChild('mylearningDetailModal') mylearningDetailModal: TemplateRef<any>;
 
     param_id: number;
+    userStatus: any;
     _currentEmpId: number;
 
     isLearningAvaliable: boolean = false;
@@ -38,7 +39,7 @@ export class MyLearningComponent {
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
-
+    isTerminatedVisible: boolean;
     DevAreaData = [
         'Individual Development',
         'Functional Development'
@@ -72,7 +73,7 @@ export class MyLearningComponent {
     colorStatuses = [];
 
     showStat = false;
-
+    fiscalYearId: any;
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -96,12 +97,15 @@ export class MyLearningComponent {
     }
 
     ngOnInit() {
+        this.isTerminatedVisible = true;
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
                         this.param_id = params['id'];
+                        this.userStatus = params['status'];
                         this.loadData();
                     }
                     else {
@@ -171,7 +175,6 @@ export class MyLearningComponent {
                         confirmButtonColor: '#66BB6A',
                         confirmButtonText: 'OK'
                     });
-                    debugger;
                     this.modalRef.hide();
                 }
                 this.loadData();
@@ -194,12 +197,9 @@ export class MyLearningComponent {
     }
 
     loadLearningAgendaInfo() {
-        this._learningService.getEmployeeLearningInfo(this._currentEmpId).subscribe(res => {
+        this._learningService.getEmployeeLearningInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.LearningAgendaData = data.result.message;
-            // console.log("agenda info: " + this.LearningAgendaData);
-            // this.showSub = this.LearningAgendaData.filter(learn => learn.status != "Submitted" && learn.status != "Approved").length > 0;
-            // debugger;
         }, error => {
         });;
 
@@ -225,13 +225,13 @@ export class MyLearningComponent {
     }
 
     loadLearningDetailsInfo() {
-        this._learningService.getEmployeeLearningDetails(this.param_id).subscribe(res => {
+        this._learningService.getEmployeeLearningDetails(this.param_id, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.learningInfoData = data.result.message;
-            console.log("details info: " + this.learningInfoData);
             if (this.learningInfoData.length > 0) {
                 this.showSub = this.learningInfoData.filter(learn => learn.status != "Submitted" && learn.status != "Approved" && learn.status != "Initiated").length > 0;
-                this.loadprevsupervisor();
+                    this.isTerminatedVisible = true;
+                    this.loadprevsupervisor();
             }
             else {
                 this.learningInfoData = [
@@ -256,6 +256,13 @@ export class MyLearningComponent {
 
                     }
                 ];
+                if(this.userStatus === 'Terminated') {
+                    this.showSub = false;
+                    this.isTerminatedVisible = false;
+                } else {
+                    this.showSub = true;
+                    this.isTerminatedVisible = true;
+                }
             }
 
         }, error => {
@@ -329,7 +336,8 @@ export class MyLearningComponent {
                         supervisorId: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/team/workflows/supervisor'
+                        action_link: window.location.origin + '/my/team/workflows/supervisor',
+                        fiscalYearId: this.fiscalYearId
                     }
                     this.utilityService.showLoader('.m-content');
                     this._learningService.submitLearningAgendas(data).subscribe(res => {
@@ -413,9 +421,6 @@ export class MyLearningComponent {
         this.modalRef = this.modalService.show(this.mylearningDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.learningData = JSON.parse(JSON.stringify(this.learningInfoData[index]));
         this.learningData.no = index + 1;
-        console.log("Index: " + index);
-
-
         this.changedtoComp = false;
         if (this.learningData.status == "SendBack" || this.learningData.status == "initiated") {
             this.isDisabled = false;

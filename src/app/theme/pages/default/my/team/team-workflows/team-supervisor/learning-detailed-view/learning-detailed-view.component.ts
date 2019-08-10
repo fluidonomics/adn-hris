@@ -55,7 +55,7 @@ export class LearningDetailedViewComponent {
     _currentEmpId: number;
 
     imageBase: any;
-
+    fiscalYearId: string
     devArea: [
         'Individual Development',
         'Functional Development'
@@ -83,6 +83,7 @@ export class LearningDetailedViewComponent {
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
@@ -197,7 +198,8 @@ export class LearningDetailedViewComponent {
                         action_link: window.location.origin + '/my/learning',
                         isApproved: isApproved,
                         supervisorComment: learningData.supervisorComment,
-                        progressStatus: learningData.progressStatus
+                        progressStatus: learningData.progressStatus,
+                        fiscalYearId: this.fiscalYearId
                     }
                     //debugger;
                     this.utilityService.showLoader('.mtrDetailsPortlet');

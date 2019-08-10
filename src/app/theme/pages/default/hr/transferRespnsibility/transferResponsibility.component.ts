@@ -54,7 +54,7 @@ export class TransferResponsibilityComponent implements OnInit {
     employeeOpenPipgRequest: any[] = [];
     oldPrimarySupervisor: any;
     oldSecondarySupervisor: any;
-
+    fiscalYearId: any;
     constructor(
         private _commonService: CommonService,
         private _hrService: HrService,
@@ -72,6 +72,7 @@ export class TransferResponsibilityComponent implements OnInit {
 
     ngOnInit() {
         this._currentEmpId = this._authService.currentUserData._id;
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this.initDropdown();
     }
 

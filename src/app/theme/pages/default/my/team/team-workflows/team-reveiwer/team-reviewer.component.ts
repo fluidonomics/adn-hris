@@ -110,7 +110,7 @@ export class MyTeamReviewerComponent implements OnInit {
     }
 
     getEmployeesLearning() {
-        this.learningService.getLearningByReviewer(this.authService.currentUserData._id).subscribe(res => {
+        this.learningService.getLearningByReviewer(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
             this.learningData = res.json().result.message || [];
             // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
         }, error => {
