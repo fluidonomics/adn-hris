@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../../../../../../../environments/environment';
 
 import swal from 'sweetalert2';
+import { CommonService } from "../../../../../../../../../base/_services/common.service";
 
 @Component({
     selector: 'pap-view',
@@ -19,12 +20,15 @@ export class PapViewComponent implements OnInit {
     imageBase: any;
     showReleaseFeedback: boolean = false;
     showReleaseGrievanceFeedback: boolean = false;
+    fiscalYearId: string;
 
     constructor(
         private authService: AuthService,
         private papService: PapService,
-        private router: Router
+        private router: Router,
+        private _commonService: CommonService
     ) {
+        this.fiscalYearId = _commonService.getFiscalYearIdLocal();
         this.imageBase = environment.content_api_base.apiBase;
         this.authService.validateToken().subscribe(res => {
             let _currentEmpId = this.authService.currentUserData._id;
@@ -38,7 +42,7 @@ export class PapViewComponent implements OnInit {
     loadPapBySupervisor(currentEmpId) {
         this.showReleaseFeedback = false;
         this.showReleaseGrievanceFeedback = false;
-        this.papService.getPapBySupervisor(currentEmpId).subscribe(res => {
+        this.papService.getPapBySupervisor(currentEmpId, this.fiscalYearId).subscribe(res => {
             let papData = res || [];
             if (papData.length > 0) {
                 this.papData = papData.filter(p => {
