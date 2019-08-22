@@ -22,8 +22,8 @@ export class PipDetailedViewService {
     //     return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     // }
 
-    getPipBySupervisor(supervisor_id: number,status: string): Observable<Response> {
-        let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status;
+    getPipBySupervisor(supervisor_id: number,status: string, fiscalYearId: string): Observable<Response> {
+        let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status + "&fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
      }
 
