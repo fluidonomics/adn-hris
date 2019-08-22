@@ -20,26 +20,28 @@ export class PipViewComponent implements OnInit {
     pipSearch: any;
     pipReverse: boolean = true;
     imageBase: any;
-
+    fiscalYearId: string;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
         private _utilityService: UtilityService,
         private router: Router,
-        private _pipService: PipService
+        private _pipService: PipService,
+        private _commonService: CommonService
     ) { }
 
     ngOnInit() {
         this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
+            this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
             this.loadPipBySupervisor(this._currentEmpId,"Approved");
         });
     }
 
     loadPipBySupervisor(sup_Id: number,status:string) {
       
-        this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
+        this._pipService.getPipBySupervisor(sup_Id,status, this.fiscalYearId).subscribe(res => {
             this.pipData = res.json().result.message || [];
         }, error => {
             console.log(error);

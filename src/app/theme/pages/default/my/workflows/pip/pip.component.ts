@@ -13,7 +13,6 @@ import * as _ from 'lodash';
 import { UtilityService } from "../../../../../../base/_services/utilityService.service";
 import { PipService } from "../../../services/pip.service"
 import { PARAMETERS } from "@angular/core/src/util/decorators";
-
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper.my-pip",
     templateUrl: "./pip.component.html",
@@ -27,7 +26,6 @@ export class MyPipComponent {
 
     param_id: number;
     _currentEmpId: number;
-
     isLearningAvaliable: boolean = false;
     agenda_arraynum: number;
     PipAgendaData: any = [];
@@ -36,13 +34,11 @@ export class MyPipComponent {
     pipDetails: any = [];
     currentIndex: number;
     saveEnable: boolean = false;
-
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
-
     timelinesData = [
         {
             '_id': 3,
@@ -72,11 +68,8 @@ export class MyPipComponent {
         }
     ];
     suparr = [];
-
     showSub:boolean = false;
-
     supervisorData: any = [];
-
     isDisabled: boolean = false;
     isCompleted: boolean = false;
     isVisible: boolean = true;
@@ -92,19 +85,12 @@ export class MyPipComponent {
     isCommentOfMonth5Enable: boolean = false;
     isCommentOfMonth6Enable: boolean = false;
     saveEnabled: boolean = false;
-
-
-
-
-
-
     modalRef: BsModalRef;
     currentEmployee: any = {};
     progressStatuses = [];
     colorStatuses = [];
-
     showStat = false;
-
+    fiscalYearId: string;
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
         private _route: ActivatedRoute,
@@ -124,11 +110,11 @@ export class MyPipComponent {
         this.colorStatuses = this._pipService.colorStatuses;
 
     }
-
     ngOnInit() {
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
+                this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
                 this._route.queryParams.subscribe(params => {
                     if (params['id']) {
                         this.param_id = params['id'];
@@ -141,8 +127,6 @@ export class MyPipComponent {
                 });
             });
     }
-
-
     savePipAgendas(form, id: number) {
 
         if (form.valid) {
@@ -212,33 +196,24 @@ export class MyPipComponent {
         }
 
     }
-
-
-
     loadData() {
         this.loadPipAgendaInfo();
         this.loadSupervisorData();
         this.loadPipDetailsInfo();
         this.loadEmployeeDetails();
     }
-
     loadPipAgendaInfo() {
-        this._pipService.getPipInfo(this._currentEmpId).subscribe(res => {
+        this._pipService.getPipInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
             //this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" && pip.status != "Completed" ).length > 0;
         }, error => {
             swal("Error", error.title, "error");
         });;
-
-        
     }
-
     loadprevsupervisor() {
         for (let pip of this.pipInfoData) {
-            debugger;
             if (pip.supervisor_id != "") {
-
                 var found = this.supervisorData.some(function (el) {
                     return el._id === pip.supervisor_id;
                 });
@@ -246,12 +221,9 @@ export class MyPipComponent {
                     this.supervisorData.push({ _id: pip.supervisor_id, fullName: pip.supervisor_name, canSelect: false });
                  //   debugger;
                 }
-
             }
-
         }
     }
-
     loadPipDetailsInfo() {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
@@ -302,7 +274,6 @@ export class MyPipComponent {
 
         
     }
-
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
         
@@ -310,13 +281,11 @@ export class MyPipComponent {
         }, error => {
         });
     }
-
     loadEmployeeDetails() {
         this._commonService.getEmployee(this._currentEmpId).subscribe(res => {
             this.currentEmployee = res.json() || {};
         });
     }
-
     addPipHtml() {
         //let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
         //if (learnA && learnA.length < 3) {
@@ -356,8 +325,6 @@ export class MyPipComponent {
         this.pipInfoData.push(data);
 
     }
-
-
     submitPipAgenda(isFormDirty) {
         if (this.pipInfoData.length > 0) {
             swal({
@@ -412,8 +379,6 @@ export class MyPipComponent {
         }
 
     }
-
-
     saveComments(pipData: any) {
 
         if (pipData.emp_final_com === null || pipData.emp_final_com === "") {
@@ -480,9 +445,6 @@ export class MyPipComponent {
         }
   
     }
-
-
-
     onStatusChange(event) {
 
         if (event == "Completed") {
@@ -491,35 +453,6 @@ export class MyPipComponent {
             this.isCompleted = false;
         }
     }
-    // onColorStatusChange(event) {
-    //     if (event.id == "Dropped") {
-    //         swal({
-    //             title: 'Are you sure?',
-    //             text: "Selecting Dropped will automatically select the progress status as Dropped. Do you wish to continue",
-    //             type: 'warning',
-    //             showCancelButton: true,
-    //             confirmButtonColor: '#3085d6',
-    //             cancelButtonColor: '#d33',
-    //             confirmButtonText: 'Yes',
-    //             width: "45rem"
-    //         }).then((result) => {
-    //             if (result.value) {
-    //                 this.learningData.progressStatus = "Dropped"
-    //             } else {
-    //                 this.learningData.colorStatus = null;
-    //             }
-    //         });
-    //     }
-    // }
-
-
-
-    //-------------------FOR VALIDATIONS---------------------------------------------------------
-
-
-
-
-
     showPipDetails(index: number) {
 
         this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
@@ -580,7 +513,6 @@ export class MyPipComponent {
         // }
 
     }
-
     showCompletionDetails(index: number) {
 
         this.currentIndex = index;
@@ -594,7 +526,6 @@ export class MyPipComponent {
             $("#submitFormPostPip").remove();
         }
     }
-
     monthlyCommentValidation() {
 
         if(this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
@@ -619,8 +550,6 @@ export class MyPipComponent {
             this.isCommentOfMonth6Enable = false;
         }
     }
-
-
     isSaveEnabled() {
 
         
@@ -635,6 +564,5 @@ export class MyPipComponent {
         }
             
     }
-    
 }
 

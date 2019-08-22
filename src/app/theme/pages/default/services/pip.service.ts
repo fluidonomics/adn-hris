@@ -60,13 +60,13 @@ export class PipService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipInfo(emp_id?: number): Observable<Response> {
-      let url = "pip/getpipmaster?emp_id=" + emp_id;
+   getPipInfo(emp_id?: number, fiscalYearId?: string): Observable<Response> {
+      let url = "pip/getpipmaster?emp_id=" + emp_id + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipBySupervisor(supervisor_id: number, status: string): Observable<Response> {
-      let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status;
+   getPipBySupervisor(supervisor_id: number, status: string, fiscalYearId ?: string): Observable<Response> {
+      let url = "pip/supervisorgetpipdetails?supervisor_id=" + supervisor_id + "&status=" + status + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
@@ -109,12 +109,10 @@ export class PipService {
       return res || {};
    }
    private handleError(err: Response | any) {
-      debugger;
       if (err.status == 300) {
          let error = err.json() || {};
          swal("Error", error.title, "error");
       }
-
       return Observable.throw(err);
    }
 
