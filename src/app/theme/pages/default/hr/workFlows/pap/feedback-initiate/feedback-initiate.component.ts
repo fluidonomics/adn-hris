@@ -7,6 +7,7 @@ import { AuthService } from "../../../../../../../base/_services/authService.ser
 import { HrService } from "../../../hr.service";
 import { environment } from '../../../../../../../../environments/environment'
 import { forkJoin } from "rxjs/observable/forkJoin";
+import { CommonService } from "../../../../../../../base/_services/common.service";
 
 
 @Component({
@@ -35,7 +36,7 @@ export class FeedbackInitiateComponent implements OnInit {
     p2 = 1;
     isCheckAll;
     employeeData;
-
+    fiscalYearId: any;
     grievanceEmployees = [];
     grievanceFilteredEmployees = [];
     grievanceSearch: any;
@@ -49,11 +50,13 @@ export class FeedbackInitiateComponent implements OnInit {
         private papService: PapService,
         private utilityService: UtilityService,
         public _authService: AuthService,
-        private hrService: HrService
+        private hrService: HrService,
+        private _commonService: CommonService
     ) {
     }
 
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
             this.getAllEmployee();
@@ -62,8 +65,8 @@ export class FeedbackInitiateComponent implements OnInit {
     }
     getAllEmployee() {
         forkJoin([
-            this.papService.getEmployeesForFeedbackInit(),
-            this.papService.getEmployeesForGrievanceFeedbackInit()
+            this.papService.getEmployeesForFeedbackInit(this.fiscalYearId),
+            this.papService.getEmployeesForGrievanceFeedbackInit(this.fiscalYearId)
         ]).subscribe(res => {
             this.employees = res[0];
             this.employeeFilterData = res[0];

@@ -20,8 +20,8 @@ export class PapService {
         let url = "pap/getEmployeesForGrievance";
         return this.authService.get(url).catch(this.handleError);
     }
-    getEmployeesForFeedbackInit() {
-        let url = "pap/getEmployeesForFeedbackInit";
+    getEmployeesForFeedbackInit(fiscalYearId: string) {
+        let url = "pap/getEmployeesForFeedbackInit?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
@@ -108,8 +108,8 @@ export class PapService {
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
-    getEmployeesForGrievanceFeedbackInit() {
-        let url = "pap/getEmployeesForGrievanceFeedbackInit";
+    getEmployeesForGrievanceFeedbackInit(fiscalYearId: string) {
+        let url = "pap/getEmployeesForGrievanceFeedbackInit?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 
