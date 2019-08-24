@@ -71,42 +71,7 @@ export class PostComponent implements OnInit {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
-            // this.InitValues();
-            // this.getEmployeeDetails();
-            this.loadAllEmployee();
-            // this.getAllEmailListOfEmployee();
-            this.getEmployeeProbationDetails();
-            this.fleaveapplication.valueChanges.subscribe(val => {
-                this.areDaysValid = true;
-                this.isBalanceValid = true;
-                this.isAttachmentAdded = false;
-            });
-            this.getHolidays();
         });
-    }
-    onChangedEmployee() {
-        this.employee = this.employeesData.filter(obj => obj._id == this.leaveapplication.emp_id)[0];
-        this.InitValues();
-        this.getEmployeeDetails();
-    }
-    loadAllEmployee() {
-        this._hrService.getAllEmployee()
-            .subscribe(
-            res => {
-                let data = res.json().data || [];
-                if (data.length > 0) {
-                    data = data.filter(obj => obj.hrScope_id == this.currentUser._id);
-                    this.employeesData = data || [];
-                }
-                else {
-                    this.employeesData = data.json().data || [];
-                }
-                this.employeesData.forEach(emp => {
-                    emp.ddLabel = emp.fullName + emp.userName;
-                });
-            },
-            error => {
-            });
     }
 
     InitValues() {

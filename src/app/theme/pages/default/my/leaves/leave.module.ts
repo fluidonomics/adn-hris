@@ -40,6 +40,7 @@ import { DashboardHrComponent } from './dashboard/dashboard-hr/dashboard-hr.comp
 import { HttpClientModule } from '../../../../../../../node_modules/@angular/common/http';
 import { NgUploaderModule } from 'ngx-uploader';
 import { SharedModule } from "../../shared/shared.module";
+import { ApplyLeavePanelComponent } from "./apply-leave-panel/apply-leave-panel.component";
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { SharedModule } from "../../shared/shared.module";
         PostLeaveTransactionComponent,
         EmployeeLeavesComponent,
         GrantLeaveComponent,
-        MonthlyLeaveChartComponent
+        MonthlyLeaveChartComponent,
+        ApplyLeavePanelComponent
     ],
     providers: [LeaveService, CommonService, EmployeeGuard, HrGuard, SupervisorGuard, AmChartsService]
 })
