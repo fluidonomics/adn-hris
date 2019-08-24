@@ -104,9 +104,8 @@ import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.componen
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
         QuotaProviderComponent,
-        MonthlyGradeChartComponent
+        MonthlyGradeChartComponent,
         //DocumentsViewComponent
-        
     ],
     providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })

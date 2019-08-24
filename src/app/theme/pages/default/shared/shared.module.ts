@@ -9,6 +9,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
 import { SharedService } from './shared.service';
 import { FiscalYearDropdownComponent } from "./components/fiscal-year-dropdown/fiscal-year-dropdown.component";
+import { ApplyLeavePanelComponent } from "./components/apply-leave-panel/apply-leave-panel.component";
+import { HrService } from "../hr/hr.service";
 
 
 
@@ -23,14 +25,17 @@ import { FiscalYearDropdownComponent } from "./components/fiscal-year-dropdown/f
     ],
     exports: [
         PapDetailsGridComponent,
-        FiscalYearDropdownComponent
+        FiscalYearDropdownComponent,
+        ApplyLeavePanelComponent
     ],
     declarations: [
         PapDetailsGridComponent,
-        FiscalYearDropdownComponent
+        FiscalYearDropdownComponent,
+        ApplyLeavePanelComponent
     ],
     providers: [
-        SharedService
+        SharedService,
+        HrService
     ],
 })
 export class SharedModule { }
