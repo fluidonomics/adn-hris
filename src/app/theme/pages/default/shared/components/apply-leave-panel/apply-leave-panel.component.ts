@@ -4,7 +4,6 @@ import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
 import swal from 'sweetalert2';
 import { UserData } from '../../../../../../base/_interface/auth.model';
-import { LeaveService } from '../leave.service';
 import { UtilityService } from '../../../../../../base/_services/utilityService.service';
 import { Subscription } from 'rxjs';
 import { NgSelectComponent } from '@ng-select/ng-select';
@@ -13,6 +12,7 @@ import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions }
 import { environment } from '../../../../../../../environments/environment';
 import { Router } from '../../../../../../../../node_modules/@angular/router';
 import { HrService } from "../../../hr/hr.service";
+import { LeaveService } from "../../../my/leaves/leave.service";
 
 
 declare var mApp;

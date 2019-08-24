@@ -55,7 +55,6 @@ import { PipService } from '../services/pip.service';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { SharedModule } from '../shared/shared.module';
 import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
-import { ApplyLeavePanelComponent } from "../my/leaves/apply-leave-panel/apply-leave-panel.component";
 
 
 @NgModule({
@@ -107,7 +106,6 @@ import { ApplyLeavePanelComponent } from "../my/leaves/apply-leave-panel/apply-l
         QuotaProviderComponent,
         MonthlyGradeChartComponent,
         //DocumentsViewComponent
-        ApplyLeavePanelComponent
     ],
     providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })
