@@ -290,7 +290,6 @@ export class MyPipComponent {
         //let learnA = this.learningInfoData.filter(learn => learn.status != 'Initiated');
         //if (learnA && learnA.length < 3) {
         let data = {
-
             _id: null,
             master_id: this.param_id,
             supervisor_id: "",
@@ -319,11 +318,9 @@ export class MyPipComponent {
             supComment_month6: "",
             employeeInitialComment: "",
             superviserInitialComment: ""
-
         };
 
         this.pipInfoData.push(data);
-
     }
     submitPipAgenda(isFormDirty) {
         if (this.pipInfoData.length > 0) {
@@ -462,35 +459,23 @@ export class MyPipComponent {
         this.monthlyCommentValidation();
         this.isSaveEnabled();
         
-        
         for(let x=0;x<this.PipAgendaData.length;x++) {
             if(this.PipAgendaData[x]._id == this.param_id) {
                 this.agenda_arraynum = x;
             }
         }
-
-
         if (this.pipData.status == "SendBack" || this.pipData.status == "Initiated") {
             this.isDisabled = false;
         }
         else {
             this.isDisabled = true;
         }
-
-
         if (this.pipData.progressStatus == "Completed") {
             this.isCompleted = true;
         }
         else {
             this.isCompleted = false;
         }
-
-        // if (this.learningData.status == "Approved" || this.learningData.status == "SendBack") {
-        //     this.showStat = true;
-        // }
-        // else {
-        //     this.showStat = false;
-        // }
         if (this.pipData.status === "Initiated" || this.pipData.status === "SendBack") {
             this.isInitiated = true;
         }
@@ -498,20 +483,12 @@ export class MyPipComponent {
             this.isInitiated = false;
             this.loadprevsupervisor();
         }
-        
         if (this.pipData.status == "Approved") {
             this.isApproved = true;
         }
         else {
             this.isApproved = false;
         }
-        // if (this.pipData.status == "Approved" || this.pipData.status == "Submitted" ) {
-        //     this.showSub = false;
-        // }
-        // else {
-        //     this.showSub = true;
-        // }
-
     }
     showCompletionDetails(index: number) {
 
@@ -527,9 +504,7 @@ export class MyPipComponent {
         }
     }
     monthlyCommentValidation() {
-
         if(this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
-
             this.isCommentOfMonth1Enable = true;
         } else if(this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.empComment_month2) {
             this.isCommentOfMonth2Enable = true;
