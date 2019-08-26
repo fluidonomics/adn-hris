@@ -25,7 +25,7 @@ declare var moment;
 })
 export class ApplyLeavePanelComponent {
 
-    @Input('userType') userType: string = 'employee';
+    @Input('userType') userType: 'hr' | 'employee' = 'employee';
 
     @ViewChild('ddLeaveType') ddLeaveType: NgSelectComponent;
     @ViewChild('fleaveapplication') fleaveapplication: NgForm;
@@ -58,6 +58,7 @@ export class ApplyLeavePanelComponent {
     getLeaveTypeByEmpIdSubs: Subscription;
 
     employeesData: any = [];
+    employee: any = {};
 
     constructor(
         private leaveService: LeaveService,
@@ -73,6 +74,9 @@ export class ApplyLeavePanelComponent {
     ngOnInit(): void {
         this._authService.validateToken().subscribe(res => {
             this.currentUser = this._authService.currentUserData;
+            if (this.userType == 'employee') {
+                this.employee = Object.create(this.currentUser);
+            }
             this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
             this.InitValues();
             this.getEmployeeDetails();
@@ -119,8 +123,8 @@ export class ApplyLeavePanelComponent {
     }
 
     onChangedEmployee() {
-        this.currentUser = this.employeesData.filter(obj => obj._id == this.leaveapplication.emp_id)[0];
-        if (this.currentUser) {
+        this.employee = this.employeesData.filter(obj => obj._id == this.leaveapplication.emp_id)[0];
+        if (this.employee) {
             this.getEmployeeDetails();
             this.getLeaveBalance();
             this.getEmployeeLeaves();
@@ -128,8 +132,8 @@ export class ApplyLeavePanelComponent {
     }
 
     getLeaveBalance() {
-        if (this.currentUser) {
-            this.leaveService.getEmployeeLeaveBalance(this.currentUser._id, this.fiscalYearId).subscribe(res => {
+        if (this.employee) {
+            this.leaveService.getEmployeeLeaveBalance(this.employee._id, this.fiscalYearId).subscribe(res => {
                 if (res.ok) {
                     this.leaveBalance = res.json() || [];
                     this.leaveBalance.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
@@ -155,11 +159,11 @@ export class ApplyLeavePanelComponent {
     }
 
     getEmployeeDetails() {
-        if (this.currentUser) {
-            this.leaveService.getEmployeeDetails(this.currentUser._id).subscribe(res => {
+        if (this.employee) {
+            this.leaveService.getEmployeeDetails(this.employee._id).subscribe(res => {
                 if (res.ok) {
                     this.employeeDetails = res.json().data[0] || {};
-                    if (this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
+                    if (this.employeeDetails.supervisorDetails && this.employeeDetails.supervisorDetails.primarySupervisorDetails) {
                         this.primarySupervisor = this.employeeDetails.supervisorDetails.primarySupervisorDetails;
                         this.primarySupervisor.email = this.employeeDetails.supervisorDetails.leaveSupervisorEmailDetails.personalEmail;
                         if (this.employeeDetails.supervisorDetails.primarySupervisorDetails._id) {
@@ -187,7 +191,7 @@ export class ApplyLeavePanelComponent {
     }
 
     getEmployeeProbationDetails() {
-        this.leaveService.getEmployeeProbationDetails(this.currentUser._id).subscribe(res => {
+        this.leaveService.getEmployeeProbationDetails(this.employee._id).subscribe(res => {
             if (res.ok) {
                 let data = res.json();
                 if (data) {
@@ -198,7 +202,7 @@ export class ApplyLeavePanelComponent {
     }
 
     getEmployeeLeaves() {
-        this.leaveService.getLeaveTransactionDetails(this.currentUser._id).subscribe(res => {
+        this.leaveService.getLeaveTransactionDetails(this.employee._id).subscribe(res => {
             if (res.ok) {
                 this.leavesList = res.json() || [];
             }
@@ -225,15 +229,14 @@ export class ApplyLeavePanelComponent {
         leave.toDate = null;
         if (isMain) {
             this.additionalLeaves = [];
+            this.leaveService.getAllLeaveBalances(this.employee._id).subscribe(res => {
+                if (res.ok) {
+                    let balances = res.json() || [];
+                    balances = balances.filter(b => b.leave_type == leave.leaveType);
+                    this.specialLeaveBalance = balances[0];
+                }
+            });
         }
-
-        this.leaveService.getAllLeaveBalances(this.currentUser._id).subscribe(res => {
-            if (res.ok) {
-                let balances = res.json() || [];
-                balances = balances.filter(b => b.leave_type == leave.leaveType);
-                this.specialLeaveBalance = balances[0];
-            }
-        });
     }
 
     onFilePick(event) {
@@ -267,7 +270,7 @@ export class ApplyLeavePanelComponent {
                 }
 
                 // If Annual Leave more than 3 days then restrict user to select date range after 7 days from now
-                if (data.leaveType == 1 && data.days >= 3) {
+                if (data.leaveType == 1 && data.days >= 3 && this.userType == 'employee') {
                     var new_date = moment(new Date()).add(7, 'days');
                     if (data.fromDate < new_date._d) {
                         this.fromDateValidation = {
@@ -309,16 +312,20 @@ export class ApplyLeavePanelComponent {
                     _postData.reason = data.reason;
                     // _postData.contactDetails = data.contactDetail;
                     // _postData.ccTo = ccToMail;
-                    _postData.emp_id = this.currentUser._id;
-                    _postData.apply_by_id = this.currentUser._id;
-                    _postData.updatedBy = this.currentUser._id;
+                    _postData.emp_id = this.employee._id;
+                    if (this.userType == 'employee') {
+                        _postData.apply_by_id = this.employee._id;
+                    } else {
+                        _postData.apply_by_id = this.currentUser._id;
+                    }
+                    _postData.updatedBy = this.employee._id;
                     _postData.session_id = '1';
                     _postData.status = 'Applied';
                     _postData.days = this.leaveapplication.days;
 
                     // Data for Email purpose
                     _postData.supervisorEmail = this.primarySupervisor.email;
-                    _postData.empName = this.currentUser.fullName;
+                    _postData.empName = this.employee.fullName;
                     let leaveType = this.leaveTypesDetails.find(leave => leave._id == data.leaveType);
                     _postData.leaveTypeName = leaveType.type;
                     _postData.fiscalYearId = this.fiscalYearId;
@@ -334,6 +341,7 @@ export class ApplyLeavePanelComponent {
                         _postData.paid = this.specialLeaveBalance.paid;
                         _postData.unpaid = this.specialLeaveBalance.unpaid;
                     }
+                    _postData.userType = this.userType;
 
                     let text = '';
                     if (this.inProbation) {
