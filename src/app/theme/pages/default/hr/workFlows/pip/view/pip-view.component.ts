@@ -30,31 +30,33 @@ export class PipViewComponent implements OnInit {
    pipViewData: any =[];
    pipSearch: any;
    pipReverse: boolean = true;
-
+   fiscalYearId: string;
    constructor(
       public authService: AuthService,
       private utilityService: UtilityService,
       private route: ActivatedRoute,
       private myService: MyService,
       private router: Router,
-      private pipService: PipService
+      private pipService: PipService,
+      private _commonService: CommonService
    ) {
-
+     
    }
    //pipData: any = [];
    imageBase: any;
-   employeesFilter: any = {
-      date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
-      status: 'All',
-      page: 1
-   };
+   employeesFilter: any;
    ngOnInit() {
+      this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
+      this.employeesFilter = {
+         date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id, this.fiscalYearId),
+         status: 'All',
+         page: 1
+      };
       this.getEmployeesPip();
       this.imageBase = environment.content_api_base.apiBase;
-      // debugger;
    }
    getEmployeesPip() {
-      this.pipService.getPipByHr(this.authService.currentUserData._id).subscribe(res => {
+      this.pipService.getPipByHr(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
          this.pipData = res.json().result.message || [];
          this.pipData = this.pipData.filter(pip => pip.pip_master.status==="Completed");
          this.pipCommData =  this.pipData.filter(pip => pip.pip_master.hr_final_com =="" || pip.pip_master.hr_final_com === null);

@@ -94,8 +94,8 @@ export class PipService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipByHr(hrId: number): Observable<Response> {
-      let url = "pip/getpipbyhr?hrId=" + hrId;
+   getPipByHr(hrId: number, fiscalYearId: string): Observable<Response> {
+      let url = "pip/getpipbyhr?hrId=" + hrId + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 

@@ -42,7 +42,7 @@
                                  </th>
 
                                  <th>
-                                    Area of Improvement
+                                    Areas of Improvement with Metrics for Measurement
                                  </th>
                                  <th>
                                     Action Plan
@@ -274,7 +274,7 @@
                                  </div>
                                  <div class="row details">
                                     <div class="col-md-2">
-                                       <span>Area of Improvement</span>
+                                       <span>Areas of Improvement with Metrics for Measurement</span>
                                     </div>
                                     <div class="col-md-10">
 
@@ -327,7 +327,7 @@
                                     </div>
 
                                     <div class="col-md-6 details">
-                                       <span>Employee Initial Comments</span>
+                                       <span>Employee Comment</span>
                                        <textarea name="employeeInitialComment" id="employeeInitialComment"
                                           [(ngModel)]="pipData.employeeInitialComment" #employeeInitialComment="ngModel"
                                           class="form-control m-input m-input--air" required disabled></textarea>
@@ -348,7 +348,7 @@
 
                                     </div>
                                     <div class="col-md-6 details">
-                                       <span>Supervisor Approval Comments</span>
+                                       <span>Supervisor Remark</span>
                                        <textarea name="superviserInitialComment" id="superviserInitialComment"
                                           [(ngModel)]="pipData.superviserInitialComment"
                                           #superviserInitialComment="ngModel" class="form-control m-input m-input--air"
@@ -572,10 +572,10 @@
 								                  class="form-control m-input m-input--air" required></textarea>
 						                  </div>
                                     <div class="col-md-6 details">
-                                       <span>Final Recommendation</span>
+                                       <span>Action Taken</span>
                                        <ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"
                                           id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
-                                          bindValue="_id" placeholder="Final Recommendation"
+                                          bindValue="_id" placeholder="Action Taken"
                                           [(ngModel)]="pipData.final_recommendation" [clearable]="false"
                                           #final_recommendation="ngModel" [disabled]="isDisabled">
                                        </ng-select>
