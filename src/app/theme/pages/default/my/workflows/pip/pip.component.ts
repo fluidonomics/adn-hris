@@ -156,7 +156,6 @@ export class MyPipComponent {
             empComment_month4: this.pipInfoData[index].empComment_month4,
             empComment_month5: this.pipInfoData[index].empComment_month5,
             empComment_month6: this.pipInfoData[index].empComment_month6
-
         }
         let isError: boolean = false;
 
