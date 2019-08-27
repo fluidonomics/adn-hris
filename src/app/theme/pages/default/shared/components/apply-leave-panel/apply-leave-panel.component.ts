@@ -78,6 +78,7 @@ export class ApplyLeavePanelComponent {
                 this.employee = Object.create(this.currentUser);
             }
             this.fiscalYearId = parseInt(this._commonService.getFiscalYearIdLocal());
+            this.getFiscalYear();
             this.InitValues();
             this.getEmployeeDetails();
             this.getEmployeeProbationDetails();
@@ -236,6 +237,12 @@ export class ApplyLeavePanelComponent {
                     this.specialLeaveBalance = balances[0];
                 }
             });
+        } else {
+            if (leave.balance <= 0 || leave.balance < leave.days) {
+                leave.isBalanceValid = false;
+            } else {
+                leave.isBalanceValid = true;
+            }
         }
     }
 
@@ -463,7 +470,7 @@ export class ApplyLeavePanelComponent {
                 for (let i = 0; i < dates.length - 1; i++) {
                     const leave1 = dates[i];
                     const leave2 = dates[i + 1];
-                    let diff = moment(leave2.fromDate).diff(moment(leave1.toDate), 'days');
+                    let diff = Math.abs(moment(leave2.fromDate).diff(moment(leave1.toDate), 'days'));
                     if (diff > 1) {
                         swal('Gaps between dates are not allowed', moment(leave1.toDate).format("DD-MM-YYYY") + ' and ' + moment(leave2.fromDate).format("DD-MM-YYYY") + ' has a gap of ' + diff + ' days', 'error');
                         resolve(false);
@@ -660,26 +667,29 @@ export class ApplyLeavePanelComponent {
                 leave.areDaysValid = true;
             }
 
-            leave.isSandwichValid = true;
-            for (let i = leave.fromDate; i <= leave.toDate;) {
-                this.addSandwichDates(i, 'L', 1)
-                i = moment(i).add(1, 'd')._d;
+            if (leave.leaveType != 3 && leave.leaveType != 4) {
+                leave.isSandwichValid = true;
+                for (let i = leave.fromDate; i <= leave.toDate;) {
+                    this.addSandwichDates(i, 'L', 1)
+                    i = moment(i).add(1, 'd')._d;
+                }
+                // this.sandwichDates
+                let fromDate = this.getSandwichDate(leave.fromDate, -1);
+                let toDate = this.getSandwichDate(leave.toDate, +1);
+
+                let startDate, endDate;
+                let leaveDates = this.sandwichDates.filter(sd => sd.type == 'L');
+
+                let sdIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.fromDate).format('L'));
+                let edIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.toDate).format('L'));
+                startDate = this.getSandwichFinalDates(sdIndex, -1, leave.fromDate);
+                endDate = this.getSandwichFinalDates(edIndex, +1, leave.toDate);
+
+                let days = moment(endDate).diff(startDate, 'days') + 1;
+                leave.days = days;
+            } else {
+                leave.days = originalDays;
             }
-            // this.sandwichDates
-            let fromDate = this.getSandwichDate(leave.fromDate, -1);
-            let toDate = this.getSandwichDate(leave.toDate, +1);
-
-            let startDate, endDate;
-            let leaveDates = this.sandwichDates.filter(sd => sd.type == 'L');
-
-            let sdIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.fromDate).format('L'));
-            let edIndex = this.sandwichDates.findIndex(s => moment(s.date).format('L') == moment(leave.toDate).format('L'));
-            startDate = this.getSandwichFinalDates(sdIndex, -1, leave.fromDate);
-            endDate = this.getSandwichFinalDates(edIndex, +1, leave.toDate);
-
-            let days = moment(endDate).diff(startDate, 'days') + 1;
-            leave.days = days;
-
         }
     }
 
@@ -778,17 +788,17 @@ export class ApplyLeavePanelComponent {
         this.additionalLeaves.push({});
     }
 
-    onfiscalYearChange(data) {
-        debugger;
-
-        this.InitValues();
-        let fYear = data.currentFiscalYear;
-        if (fYear) {
-            this.leaveapplication.fYear = {
-                startDate: new Date(fYear.starDate),
-                endDate: new Date(fYear.endDate)
-            };
-        }
+    getFiscalYear() {
+        this._commonService.getFinancialYear().subscribe(res => {
+            let fiscalYears = res.json() || [];
+            let fYear = fiscalYears.find(f => f._id == this.fiscalYearId);
+            if (fYear) {
+                this.leaveapplication.fYear = {
+                    startDate: new Date(fYear.starDate),
+                    endDate: new Date(fYear.endDate)
+                };
+            }
+        });
     }
 
     ngOnDestroy(): void {

@@ -352,6 +352,7 @@ export class DashboardSupervisorComponent implements OnInit {
     btnRejectText: string = 'Reject Leave';
     showLeaveModalActionTools: boolean = true;
     showLeaveDetail(leaveId, templateRef, showActionTools) {
+        debugger;
         this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
 
@@ -382,6 +383,9 @@ export class DashboardSupervisorComponent implements OnInit {
                                 }
                             }
                         })
+                    }
+                    if (!showActionTools) {
+                        this.leaveDetails.remarks = this.leaveDetails.leave.supervisorReason;
                     }
                     this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                 }
