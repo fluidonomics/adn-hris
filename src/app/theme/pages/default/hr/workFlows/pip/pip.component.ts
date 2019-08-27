@@ -106,15 +106,15 @@ export class HrPipComponent {
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
-        this._hrService.getAllEmployee().subscribe(res => {
+        this._pipService.getPipEmployeeForInitiate(this.fiscalYearId).subscribe(res => {
             let data = res.json().data || [];
             if (data.length > 0) {
                 data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
                 this.employeeData = data;
                 this.showdetail();
-                this.utilityService.hideLoader('#initiate-loader');
             }
-        }, error => {
+            this.utilityService.hideLoader('#initiate-loader');
+            }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
     }
@@ -129,7 +129,7 @@ export class HrPipComponent {
             this.utilityService.showLoader('#initiate-loader');
             // later need to uncomment when pip data will be ready
             // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
-            this._hrService.getAllEmployee()
+            this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
                 .subscribe(
                     res => {
                         let data = res.json().data || [];
@@ -227,9 +227,7 @@ export class HrPipComponent {
         this.getAllEmployee();
     }
     showdetail() {
-
         let i, j;
-
         for (i = 0; i < this.employeeData.length; i++) {
             for (j = 0; j < this.deparmentData.length; j++) {
                 if (this.employeeData[i].department_id == this.deparmentData[j]._id) {
