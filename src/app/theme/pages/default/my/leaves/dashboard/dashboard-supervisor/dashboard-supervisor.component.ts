@@ -352,7 +352,6 @@ export class DashboardSupervisorComponent implements OnInit {
     btnRejectText: string = 'Reject Leave';
     showLeaveModalActionTools: boolean = true;
     showLeaveDetail(leaveId, templateRef, showActionTools) {
-        debugger;
         this.showLeaveModalActionTools = showActionTools;
         this.leaveDetails = {};
 

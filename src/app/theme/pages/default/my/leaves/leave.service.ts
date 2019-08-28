@@ -81,7 +81,8 @@ export class LeaveService {
     }
 
     getEmployeeLeavesByMonth(empId: number, fromDate?: Date, toDate?: Date, fiscalYearId?: string) {
-        let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
+        // let url = "leave/getEmployeeLeaveBalance?empId=" + empId;
+        let url = "leave/getLeaveDetailsByFilter?empId=" + empId;
         // if (month) {
         //     url += "&month=" + month;
         // }
@@ -400,6 +401,26 @@ export class LeaveService {
     provideLeaveQuota(data: any) {
         let url = "leave/provideLeaveQuota";
         return this.authService.post(url, data).map(this.utilityService.extractData).catch(this.utilityService.handleError);
+    }
+
+    getOverviewChartData(empId: number, fromDate?: Date, toDate?: Date, fiscalYearId?: string) {
+        let url = "leave/getOverviewChartData?empId=" + empId;
+        // if (month) {
+        //     url += "&month=" + month;
+        // }
+        // if (year) {
+        //     url += "&year=" + year;
+        // }
+        if (fromDate) {
+            url += "&fromDate=" + fromDate;
+        }
+        if (toDate) {
+            url += "&toDate=" + toDate;
+        }
+        if (fiscalYearId) {
+            url += "&fiscalYearId=" + fiscalYearId;
+        }
+        return this.authService.get(url).map(this.utilityService.extractData).catch(this.utilityService.handleError);
     }
 }
 
