@@ -262,7 +262,6 @@ export class ApplyLeavePanelComponent {
     }
 
     postEmployeeLeaveDetails(form, data: any) {
-        debugger;
         this.validate().then((res) => {
             if (res == true) {
                 if ((data.days >= 3 && data.leaveType == 2) || data.leaveType == 3 || data.leaveType == 4) {

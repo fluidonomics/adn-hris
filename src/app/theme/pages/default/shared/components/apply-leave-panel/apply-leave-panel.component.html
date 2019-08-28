@@ -4,8 +4,8 @@
         <div class="row" *ngIf="userType == 'hr'">
             <div class="col-md-6  adn-form__group">
                 <div class="m-form__group form-group">
-                    <span class="required" aria-required="true"> * </span>
                     <label for="form_control_1">Employee</label>
+                    <span class="required" aria-required="true"> * </span>
                     <ng-select #allemployee="ngModel" id="allemployee" class="m-input m-input--air" name="allemployee"
                         [items]="employeesData" bindLabel="ddLabel" bindValue="_id" placeholder="Select Employee"
                         [(ngModel)]="leaveapplication.emp_id" (ngModelChange)="onChangedEmployee()" [clearable]="false"
@@ -271,10 +271,10 @@
                         <!-- <input type="file" name="attachment" (change)="onFilePick($event)" value="Upload Document" /> -->
                     </label>
                     <!-- <span>max size 300kb</span> -->
-                    <div class="form-control-feedback has-danger"
+                    <!-- <div class="form-control-feedback has-danger"
                         *ngIf="fleaveapplication.submitted && leavetype.valid">
                         <span *ngIf="isAttachmentAdded">This field is required.</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

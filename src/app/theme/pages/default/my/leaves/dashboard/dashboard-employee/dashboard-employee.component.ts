@@ -152,19 +152,16 @@ export class DashboardEmployeeComponent implements OnInit {
 
     getOverviewChartData() {
         if (this.overviewChartFilter) {
-            this.leaveService.getEmployeeLeavesByMonth(this.currentUser._id, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1], this.fiscalYearId).subscribe(res => {
+            this.leaveService.getOverviewChartData(this.currentUser._id, this.overviewChartFilter.date[0], this.overviewChartFilter.date[1], this.fiscalYearId).subscribe(res => {
                 if (res.ok) {
                     var data = res.json() || [];
-                    data.sort((a, b) => a.leaveTypeId > b.leaveTypeId);
+                    Array.from(data).sort((a: any, b: any) => a.leaveTypeId > b.leaveTypeId ? 1 : 0);
                     let chartData = [];
                     data.forEach((leave, i) => {
-                        let bal = this.leaveBalance.find(bal => bal.leaveTypeId == leave.leaveTypeId);
-                        if (bal.allotedLeave > 0) {
-                            chartData.push({
-                                "leaveType": leave.leaveType,
-                                "leaveCount": leave.appliedLeave
-                            })
-                        }
+                        chartData.push({
+                            "leaveType": leave.leaveTypeName.type,
+                            "leaveCount": leave.totalAppliedLeaves
+                        });
                     });
                     this.overviewChartData = chartData;
                     console.log("over chart data : ", this.overviewChartData);
