@@ -109,6 +109,10 @@ export class ApplyComponent implements OnInit, OnDestroy {
         });
     }
 
+    onLeaveApply() {
+        this.InitValues();
+    }
+
 
     ngOnDestroy(): void {
         this.getLeaveTypeByEmpIdSubs.unsubscribe();
