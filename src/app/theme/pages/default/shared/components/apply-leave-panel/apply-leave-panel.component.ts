@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, OnDestroy, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, NgForm } from "@angular/forms";
 import { CommonService } from '../../../../../../base/_services/common.service';
 import { AuthService } from '../../../../../../base/_services/authService.service';
@@ -26,6 +26,8 @@ declare var moment;
 export class ApplyLeavePanelComponent {
 
     @Input('userType') userType: 'hr' | 'employee' = 'employee';
+
+    @Output('onLeaveApply') onLeaveApply: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('ddLeaveType') ddLeaveType: NgSelectComponent;
     @ViewChild('fleaveapplication') fleaveapplication: NgForm;
@@ -575,6 +577,7 @@ export class ApplyLeavePanelComponent {
                     mApp.unblock('#applyLeavePanel');
                     this.resetForm(form);
                     this.getEmployeeLeaves();
+                    this.onLeaveApply.emit();
                 }
             },
             error => {
@@ -780,7 +783,11 @@ export class ApplyLeavePanelComponent {
     }
 
     goToDashboard() {
-        this.router.navigate(['my/leaves/dashboard/employee']);
+        if (this.userType == 'employee') {
+            this.router.navigate(['my/leaves/dashboard/employee']);
+        } else {
+            this.router.navigate(['hr/dashboard']);
+        }
     }
 
     addMore() {
@@ -801,6 +808,8 @@ export class ApplyLeavePanelComponent {
     }
 
     ngOnDestroy(): void {
-        this.getLeaveTypeByEmpIdSubs.unsubscribe();
+        if (this.getLeaveTypeByEmpIdSubs) {
+            this.getLeaveTypeByEmpIdSubs.unsubscribe();
+        }
     }
 }
