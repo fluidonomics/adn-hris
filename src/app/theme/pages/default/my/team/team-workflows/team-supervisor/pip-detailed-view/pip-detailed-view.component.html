@@ -97,12 +97,15 @@
 
 
 											<td>
-												<button type="button"
+												<!-- <button type="button"
 													class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
 													title="Edit" (click)="showPipDetails(i)">
 													<i class="la la-info"></i>
-												</button>
-
+												</button> -->
+												<a (click)="showPipDetails(i)"
+													class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+													view
+												</a>
 											</td>
 										</tr>
 										<!-- <tr colspan="9">
@@ -398,7 +401,7 @@
 												</div>
 
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month1">
-													<span>Employee Comments #1</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month1" id="empComment_month1"
 														[(ngModel)]="pipData.empComment_month1"
 														#empComment_month1="ngModel"
@@ -406,7 +409,7 @@
 												</div>
 												<div class="col-md-6 month"
 													*ngIf="(pipData.empComment_month1 && isCommentOfMonth1Enable) || pipData.supComment_month1">
-													<span>Supervisor Comments #1</span>
+													<span>Supervisor Comments</span>
 													<textarea name="supComment_month1" id="supComment_month1"
 														[(ngModel)]="pipData.supComment_month1"
 														#supComment_month1="ngModel"
@@ -425,7 +428,7 @@
 													<span><b>Month 2</b></span>
 												</div>
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month2">
-													<span>Employee Comments #2</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month2" id="empComment_month2"
 														[(ngModel)]="pipData.empComment_month2"
 														#empComment_month2="ngModel"
@@ -434,7 +437,7 @@
 												</div>
 												<div class="col-md-6 month"
 													*ngIf="(pipData.empComment_month2 && isCommentOfMonth2Enable) || pipData.supComment_month2">
-													<span>Supervisor Comments #2</span>
+													<span>Supervisor Comments</span>
 													<textarea name="supComment_month2" id="supComment_month2"
 														[(ngModel)]="pipData.supComment_month2"
 														#supComment_month2="ngModel"
@@ -455,7 +458,7 @@
 													<span><b>Month 3</b></span>
 												</div>
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month3">
-													<span>Employee Comments #3</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month3" id="empComment_month3"
 														[(ngModel)]="pipData.empComment_month3"
 														#empComment_month3="ngModel"
@@ -464,7 +467,7 @@
 												</div>
 												<div class="col-md-6 month"
 													*ngIf="(pipData.empComment_month3 && isCommentOfMonth3Enable) || pipData.supComment_month3">
-													<span>Supervisor Comments #3</span>
+													<span>Supervisor Comments</span>
 													<textarea name="supComment_month3" id="supComment_month3"
 														[(ngModel)]="pipData.supComment_month3"
 														#supComment_month3="ngModel"
@@ -485,7 +488,7 @@
 													<span><b>Month 4</b></span>
 												</div>
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month4 && pipData.master_timelines===6">
-													<span>Employee Comments #4</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month4" id="empComment_month4"
 														[(ngModel)]="pipData.empComment_month4"
 														#empComment_month4="ngModel"
@@ -494,7 +497,7 @@
 												</div>
 												<div class="col-md-6 month"
 													*ngIf="(pipData.empComment_month4 && isCommentOfMonth4Enable) || pipData.supComment_month4">
-													<span>Supervisor Comments #4</span>
+													<span>Supervisor Comments</span>
 													<textarea name="supComment_month4" id="supComment_month4"
 														[(ngModel)]="pipData.supComment_month4"
 														#supComment_month4="ngModel"
@@ -515,7 +518,7 @@
 													<span><b>Month 5</b></span>
 												</div>
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month5 && pipData.master_timelines===6">
-													<span>Employee Comments #5</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month5" id="empComment_month5"
 														[(ngModel)]="pipData.empComment_month5"
 														#empComment_month5="ngModel"
@@ -524,7 +527,7 @@
 												</div>
 												<div class="col-md-6 month"
 													*ngIf="(pipData.empComment_month5 && isCommentOfMonth5Enable) || pipData.supComment_month5">
-													<span>Supervisor Comments #5</span>
+													<span>Supervisor Comments</span>
 													<textarea name="supComment_month5" id="supComment_month5"
 														[(ngModel)]="pipData.supComment_month5"
 														#supComment_month5="ngModel"
@@ -544,7 +547,7 @@
 													<span><b>Month 6</b></span>
 												</div>
 												<div class="col-md-6 month" *ngIf="pipData.empComment_month6 && pipData.master_timelines===6">
-													<span>Employee Comments #6</span>
+													<span>Employee Comments</span>
 													<textarea name="empComment_month6" id="empComment_month6"
 														[(ngModel)]="pipData.empComment_month6"
 														#empComment_month6="ngModel"

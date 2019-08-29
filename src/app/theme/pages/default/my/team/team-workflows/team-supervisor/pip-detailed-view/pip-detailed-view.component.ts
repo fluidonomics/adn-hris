@@ -178,10 +178,12 @@ export class PipDetailedViewComponent {
                     }
                     
                 }
-                this.masterStatus = this.pipInfoData[0].master_status;
-                this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
-                this.isDis = res.json().status == 'Approved' ? true : false;
-                this.statusq = res.json().status;
+                if (this.pipInfoData.length > 0) {
+                    this.masterStatus = this.pipInfoData[0].master_status;
+                    this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
+                    this.isDis = res.json().status == 'Approved' ? true : false;
+                    this.statusq = res.json().status;
+                }
             },
             error => {
 
@@ -274,6 +276,7 @@ export class PipDetailedViewComponent {
                             });
                             this.loadPipEmployee();
                         }
+                        this.utilityService.hideLoader('.m-content');
                     }, err => {
                         if (err.status == 300) {
                             let error = err.json() || {};
