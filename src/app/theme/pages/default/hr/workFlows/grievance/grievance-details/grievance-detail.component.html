@@ -23,7 +23,8 @@
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
 								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id"
-									[papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
+									[papChanges]="papChanges" [userType]="'hr'" (showDetails)="showPAPDetails($event)">
+								</pap-details-grid>
 							</form>
 						</div>
 						<div class="row overallRatingBlock"

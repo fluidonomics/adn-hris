@@ -221,7 +221,8 @@
 						<div class="m-section__content">
 							<form #fmtrInfo="ngForm" novalidate="novalidate">
 								<pap-details-grid [empId]="papGridInput.empId" [papMasterId]="papGridInput.param_id"
-									[papChanges]="papChanges" (showDetails)="showPAPDetails($event)"></pap-details-grid>
+									[papChanges]="papChanges" [userType]="'emp'" (showDetails)="showPAPDetails($event)">
+								</pap-details-grid>
 							</form>
 						</div>
 					</div>

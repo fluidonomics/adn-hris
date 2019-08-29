@@ -46,12 +46,27 @@
         <tbody>
             <tr *ngFor="let papInfo of papInfoData;let i=index" [ngClass]="{
                     'sendBack':papInfoData[i].status=='SendBack' || papInfoData[i].grievanceStatus=='SendBack',
-                    'approved': (((papInfoData[i].status =='Approved' || papInfoData[i].status =='Pending Reviewer') 
-                                || (papInfoData[i].status !='SendBack' && papInfo.sup_ratingScaleId && type == 'supervisor')) && papMaster?.grievanceStatus == null)
-                                || ((papInfoData[i].grievanceStatus == 'Approved' && type != 'supervisor') 
-                                || (papInfoData[i].grievanceStatus !='SendBack' && papInfo.grievance_ratingScaleId && type == 'supervisor')
-                                && papMaster?.grievanceStatus == 'Initiated'),
-                    'pending':papInfoData[i].status=='Pending'}">
+                    'approved': (
+                        (   ( (papInfoData[i].status =='Approved' || papInfoData[i].status == 'Pending Reviewer') && userType == 'sup') 
+                            || (papInfoData[i].status != 'SendBack' && papInfo.sup_ratingScaleId && userType == 'sup')
+                        ) && papMaster?.grievanceStatus == null
+                                )
+                            || (
+                        (papInfoData[i].grievanceStatus == 'Approved' && userType != 'sup') 
+                        || (papInfoData[i].grievanceStatus !='SendBack' && papInfo.grievance_ratingScaleId && userType == 'sup') && papMaster?.grievanceStatus == 'Initiated'
+                                ),
+                    'pending':papInfoData[i].status=='Pending',
+                    'pendingReviewer':(
+                        userType == 'rev' && (
+                            papInfoData[i].status == 'Pending Reviewer'
+                        )
+                    ),
+                    'approvedReviewer':(
+                        userType == 'rev' && (
+                            papInfoData[i].status == 'Approved'
+                        )
+                    )
+                }">
                 <th scope="row">
                     {{i+1}}
                 </th>

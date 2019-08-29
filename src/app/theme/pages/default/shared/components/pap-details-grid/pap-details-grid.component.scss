@@ -25,6 +25,26 @@
         background-color: $status-approved !important;
         border: 0px !important;
     }
+
+    .pendingReviewer {
+        background-color: #a1dbfd !important;
+        border: 0px !important;
+    }
+
+    .pendingReviewer :hover {
+        background-color: #a1dbfd !important;
+        border: 0px !important;
+    }
+
+    .approvedReviewer {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
+
+    .approvedReviewer :hover {
+        background-color: $status-approved !important;
+        border: 0px !important;
+    }
 }
 
 .pending {

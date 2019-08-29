@@ -14,7 +14,7 @@ export class PapDetailsGridComponent implements OnInit {
 
     @Input() empId;
     @Input() papMasterId;
-    @Input() type;
+    @Input() userType: 'hr' | 'emp' | 'sup' | 'rev' = 'emp';
     @Input() papChanges: Subject<any>;
 
     @Output() showDetails = new EventEmitter();
@@ -31,7 +31,7 @@ export class PapDetailsGridComponent implements OnInit {
     constructor(
         private papService: PapService,
         private _commonService: CommonService
-    ) { 
+    ) {
         this.fiscalYearId = _commonService.getFiscalYearIdLocal();
     }
 
