@@ -124,7 +124,7 @@
 												This field is required.
 											</div>
 										</div>
-										<div class="col-md-6" *ngIf="isMaternity">
+										<!-- <div class="col-md-6" *ngIf="isMaternity">
 											<br />
 											<label class="btn btn-default browse">Attachements
 												<input type="file" accept="application/pdf" hidden="hidden"
@@ -132,7 +132,7 @@
 													(uploadOutput)="onUploadOutput($event, document)"
 													[uploadInput]="uploadInput" (click)="documentsPdf.click()">
 											</label>
-										</div>
+										</div> -->
 									</div>
 									<div class="row" *ngIf="displaySelection ==='Department' && isSpecial">
 										<div class="col-md-6">
@@ -147,12 +147,12 @@
 												This field is required.
 											</div>
 										</div>
-										<div class="col-md-6" *ngIf="isMaternity">
+										<!-- <div class="col-md-6" *ngIf="isMaternity">
 											<br />
 											<label>Attachements</label>
 											<button class="btn btn-secondary">Browse</button>
 											<input type="file" name="" id="">
-										</div>
+										</div> -->
 									</div>
 									<div *ngIf="isMaternity" class="row" style="margin-top:20px">
 										<div class="col-md-12">
