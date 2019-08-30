@@ -5,7 +5,7 @@
                 <div class="m-portlet__head-title">
                     <h3 class="m-portlet__head-text">
                         <i class="fa fa-list"></i>
-                        All Employees
+                        Initiate Grievance Phase
                         <small>
                         </small>
                     </h3>
@@ -17,8 +17,9 @@
                 <div class="row align-items-center">
                     <div class="col-xl-6 order-2 order-xl-1">
                         <div class="form-group m-form__group row align-items-center">
-                            <div class="col-md-12">
-                                <div class="m-input-icon m-input-icon--left">
+                            <div class="col-md-8">
+                                <!-- Search Box -->
+                                <!-- <div class="m-input-icon m-input-icon--left">
                                     <input type="text" class="form-control m-input m-input--solid"
                                         placeholder="Search..." [(ngModel)]="search">
                                     <span class="m-input-icon__icon m-input-icon__icon--left">
@@ -26,14 +27,25 @@
                                             <i class="la la-search"></i>
                                         </span>
                                     </span>
+                                </div> -->
+                                <div class="m-form__group form-group">
+                                    <label for="form_control_1">Department</label>
+                                    <ng-select class="m-input m-input--air" name="department" [items]="deparmentData"
+                                        [multiple]="true" bindLabel="departmentName" bindValue="_id"
+                                        placeholder="Select Department" [(ngModel)]="filterBy.departments"
+                                        [clearable]="false"></ng-select>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-success btnFilter" type="button"
+                                    (click)="filterEmployees()">Filter</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
-                [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+                [ngClass]="{'m-datatable--error': (filteredGrievancePap | orderBy: key : reverse | filter:search)?.length==0 }">
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
@@ -69,10 +81,11 @@
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                            <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="15%">
                                 <span>
-                                    GRIEVANCE STATUS
-                                    <i class="la" *ngIf="key == 'status'"
+                                    DEPARTMENT
+                                    <i class="la" *ngIf="key == 'department'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
@@ -84,10 +97,18 @@
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
-                            <th class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                            <th (click)="sort('overallRating')" class="m-datatable__cell m-datatable__cell--sort"
+                                width="10%">
                                 <span>
-                                    ACTIONS
-                                    <i class="la" *ngIf="key == 'actions'"
+                                    GRIEVANCE END DATE
+                                    <i class="la" *ngIf="key == 'overallRating'"
+                                        [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                </span>
+                            </th>
+                            <th (click)="sort('status')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                                <span>
+                                    STATUS
+                                    <i class="la" *ngIf="key == 'status'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
                             </th>
@@ -95,7 +116,7 @@
                     </thead>
                     <tbody class="m-datatable__body" id="allEmployee-loader">
                         <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-                            *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                            *ngFor="let employee of filteredGrievancePap | orderBy: key : reverse | filter:search ;let even=even;">
                             <td class="m-datatable__cell" width="5%">
                                 <span>{{employee.employeedetails.userName}}</span>
                             </td>
@@ -109,90 +130,56 @@
                                 <span>{{employee.designations?.designationName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
-                                <!-- <span>{{employee.reviewerStatus}}</span> -->
-                                <span style="width: 100px;">
-                                    <span *ngIf="employee.reviewerStatus" class="m-badge m-badge--wide"
-                                        [ngClass]="{'m-badge--success':employee.reviewerStatus=='Approved','m-badge--secondary':employee.reviewerStatus=='SendBack','m-badge--warning':employee.reviewerStatus=='Pending'}">{{employee.reviewerStatus}}</span>
-                                    <span *ngIf="!employee.reviewerStatus"
-                                        class="m-badge m-badge--wide m-badge--brand">{{employee.grievanceStatus}}</span>
-                                </span>
+                                <span>{{employee.department?.departmentName}}</span>
                             </td>
                             <td class="m-datatable__cell" width="10%">
                                 <span>{{employee.overallRating}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="5%">
-                                <button type="button"
-                                    class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
-                                    title="Edit" (click)="grievanceEmployeeDetail(employee)">
-                                    <i class="la la-eye"></i>
-                                </button>
+                            <td class="m-datatable__cell" width="10%">
+                                <span>{{employee.grievanceRaiseEndDate | date:'dd-MMM-yyyy'}}</span>
+                            </td>
+                            <td class="m-datatable__cell" width="15%">
+                                <!-- <span>{{employee.reviewerStatus}}</span> -->
+                                <span style="width: 100px;">
+                                    <span *ngIf="employee.grievanceRaiseEndDate != null"
+                                        class="m-badge m-badge--wide m-badge--success">Initiated</span>
+                                </span>
                             </td>
                         </tr>
-                        <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0"
+                        <span *ngIf="(filteredGrievancePap | orderBy: key : reverse | filter:search)?.length==0"
                             class="m-datatable--error">No
                             records found</span>
                     </tbody>
                 </table>
-                <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
-                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                        <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                            <li>
-                                <span class="m-datatable__pager-link m-datatable__pager-link--first"
-                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()"
-                                    (click)="p.setCurrent(1)">
-                                    <i class="la la-angle-double-left"></i>
-                                </span>
-                            </li>
-                            <li>
-                                <span class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                    [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
-                                    <i class="la la-angle-left"></i>
-                                </span>
-                            </li>
-                            <li *ngFor="let page of p.pages">
-                                <span (click)="p.setCurrent(page.value)"
-                                    class="m-datatable__pager-link m-datatable__pager-link-number "
-                                    [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                    {{ page.label }}
-                                </span>
-                            </li>
-                            <li>
-                                <span class="m-datatable__pager-link m-datatable__pager-link--next"
-                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                    (click)="p.isLastPage()?'null':p.next()">
-                                    <i class="la la-angle-right"></i>
-                                </span>
-                            </li>
-                            <li>
-                                <span class="m-datatable__pager-link m-datatable__pager-link--last"
-                                    [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                    (click)="p.setCurrent(p.pages.length + 1)">
-                                    <i class="la la-angle-double-right"></i>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </pagination-template>
-                <div class="pager-display-size"
-                    *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-
-                    <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size"
-                        title="Select page size" data-width="70px" data-selected="50" tabindex="1">
-                        <option value=10>10</option>
-                        <option value=20>20</option>
-                        <option value=30>30</option>
-                        <option value=50>50</option>
-                        <option value=100>100</option>
-                    </select>
-                    <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-        {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-                    <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy:
-                        key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse |
-                        filter:search)?.length}}</span>
+            </div>
+        </div>
+        <div class="m-portlet__foot">
+            <div class="row">
+                <div class="col-xl-6 order-2 order-xl-2">
+                    <form id="grievanceInitPhase" #fGrievanceInitPhase="ngForm"
+                        (ngSubmit)="initGrievancePhase(fGrievanceInitPhase)">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="grievanceEndDateName">Grievance End Date </label>
+                                <span class="required" aria-required="true"> * </span>
+                                <input name="grievanceEndDateName" class="form-control m-input m-input--air"
+                                    #grievanceEndDateModel="ngModel" placeholder="Enter Grievance End Date"
+                                    [(ngModel)]="grievanceEndDate" bsDatepicker [readonly]="true"
+                                    [minDate]="currentDate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                                    #grievanceEndDateModel="ngModel" placement="bottom" required>
+                                <div class="form-control-feedback has-danger"
+                                    *ngIf="fGrievanceInitPhase.submitted && grievanceEndDateModel.invalid">
+                                    This field is required.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-success" type="submit">Initiate Grievance
+                                    Phase</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<grievance-phase-initiate></grievance-phase-initiate>

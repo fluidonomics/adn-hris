@@ -106,31 +106,4 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         console.log(employee);
         this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
     }
-
-    initGrievancePhase(form) {
-        if (form.valid) {
-            let data = {
-                updatedBy: this._currentEmpId,
-                grievanceEndDate: this.grievanceEndDate
-            };
-
-            swal({
-                title: 'Are you sure?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then((result) => {
-                if (result.value) {
-                    this._papService.initGrievancePhase(data).subscribe(res => {
-                        swal("Grievance Phase Initiated", "", "success");
-                        this.loadAllEmployee();
-                        this.getAllPap();
-                        form.resetForm();
-                    });
-                }
-            });
-        }
-    }
 }
