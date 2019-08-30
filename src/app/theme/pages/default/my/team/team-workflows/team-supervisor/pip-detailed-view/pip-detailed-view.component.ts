@@ -56,6 +56,7 @@ export class PipDetailedViewComponent {
     //showStat = false;
     masterStatus: string;
     primarySupervisorId: number; 
+    showPIPApprovalMessage: boolean;
     finalReviewEnable: boolean = false;
 
     dateDifference: number;
@@ -124,6 +125,7 @@ export class PipDetailedViewComponent {
     }
 
     ngOnInit() {
+        this.showPIPApprovalMessage = false;
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
@@ -181,8 +183,16 @@ export class PipDetailedViewComponent {
                 if (this.pipInfoData.length > 0) {
                     this.masterStatus = this.pipInfoData[0].master_status;
                     this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
+                    if (this.pipInfoData[0].master_status != "Submitted")
+                        this.showPIPApprovalMessage = this.pipInfoData[0].sup_final_com == null;
+                    else
+                        this.showPIPApprovalMessage = false;
+
                     this.isDis = res.json().status == 'Approved' ? true : false;
                     this.statusq = res.json().status;
+                }
+                else {
+                    this.showPIPApprovalMessage = false;
                 }
             },
             error => {
@@ -535,7 +545,4 @@ export class PipDetailedViewComponent {
         }
 
     }
-
-
-
 }

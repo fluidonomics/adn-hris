@@ -50,11 +50,6 @@
                                  <th>
                                     Timelines
                                  </th>
-
-                                 <!-- <th>
-                                               Comments
-                                           </th> -->
-
                                  <th>
                                     Status
                                  </th>
@@ -84,23 +79,16 @@
                                        [(ngModel)]="pipInfo.master_timelines" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-                                 <!-- <td>
-                                          <textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
-                                           class="form-control m-input m-input--air" disabled></textarea>
-                                       </td> -->
-
                                  <td>
                                     <textarea name="status{{i}}" id="status" #status="ngModel"
                                        [(ngModel)]="pipInfo.status" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-
-
                                  <td>
                                     <button type="button"
                                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                                        title="Edit" (click)="showPipDetails(i)">
-                                       <i class="la la-info"></i>
+                                       view
                                     </button>
 
                                  </td>
@@ -110,7 +98,7 @@
 												<button
 													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
 													(click)="showCompletionDetails()">
-													<i class="la la-bar-chart"></i>
+													Pip detail view
 												</button>
 											</td>
 										</tr>
@@ -530,7 +518,7 @@
                   
                         <div class="m-portlet__body">
                            <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveComments(pipData)"
-				                  id="PipDataForm" #PipDataForm="ngForm">
+				                  id="PipDataForm1" #PipDataForm1="ngForm">
 				                  <div class="m-widget6 ">
 					                  <div class="row">
 						                  <div class="col-md-6">
@@ -544,7 +532,7 @@
 						                  </div>
 						                  <div class="col-md-10">
 							                  <textarea name="empcom" id="empcom" [(ngModel)]="pipData.emp_final_com"
-								                  #empcom="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+								                  #empcom="ngModel" class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 
 						                  <div class="col-md-2 details">
@@ -553,7 +541,7 @@
 						                  <div class="col-md-10 details">
 							                  <textarea name="sup_final_com" id="sup_final_com"
 								                  [(ngModel)]="pipData.sup_final_com" #supcom="ngModel"
-								                  class="form-control m-input m-input--air" required disabled></textarea>
+								                  class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 						                  <div class="col-md-2 details">
 							                  <span>Reviewer Comments</span>
@@ -561,16 +549,19 @@
 						                  <div class="col-md-10 details">
 							                  <textarea name="rev_final_com" id="rev_final_com"
 								               [(ngModel)]="pipData.rev_final_com" #revcom="ngModel"
-								               class="form-control m-input m-input--air" required disabled></textarea>
+								               class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 						                  <div class="col-md-2 details">
 							                  <span>HR Comments</span>
 						                  </div>
 						                  <div class="col-md-10 details">
-							                  <textarea name="hr_final_com" id="hr_final_com"
-								                  [(ngModel)]="pipData.hr_final_com" #hrcom="ngModel"
-								                  class="form-control m-input m-input--air" required></textarea>
-						                  </div>
+                                       <textarea name="hr_final_com" id="hr_final_com" [(ngModel)]="pipData.hr_final_com" #hr_final_com="ngModel"
+                                          class="form-control m-input m-input--air" required></textarea>
+                                       <div class="form-control-feedback has-danger" *ngIf="PipDataForm1.submitted && hr_final_com.invalid">
+                                          This field is required.
+                                       </div>
+                                    </div>
+                                    
                                     <div class="col-md-6 details">
                                        <span>Action Taken</span>
                                        <ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"

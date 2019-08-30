@@ -183,6 +183,7 @@ export class HrPipComponent {
                     this.batchData.createdBy = this._currentEmpId;
                     this.batchData.createdByName = this.currentEmpname;
                     this.batchData.fiscalYearId = this.fiscalYearId;
+                    this.batchData.timelines = 3; // default 3 month timeline
                     this.utilityService.showLoader('#initiate-loader');
                     this._pipService.initBatch(this.batchData)
                         .subscribe(res => {

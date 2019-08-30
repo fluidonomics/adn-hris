@@ -84,23 +84,16 @@
                                        [(ngModel)]="pipInfo.measureOfSuccess" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-                                 <!-- <td>
-                                          <textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
-                                           class="form-control m-input m-input--air" disabled></textarea>
-                                       </td> -->
-
                                  <td>
                                     <textarea name="status{{i}}" id="status" #status="ngModel"
                                        [(ngModel)]="pipInfo.status" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-
-
                                  <td>
                                     <button type="button"
                                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                                        title="Edit" (click)="showPipDetails(i)">
-                                       <i class="la la-info"></i>
+                                       view
                                     </button>
 
                                  </td>
@@ -110,7 +103,7 @@
                                     <button
                                        class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
                                        (click)="showCompletionDetails()">
-                                       <i class="la la-bar-chart"></i>
+                                       Pip Details View
                                     </button>
                                  </td>
                               </tr>
@@ -121,120 +114,6 @@
                      <br>
                      <!-- </form> -->
                   </div><br><br>
-                  <!-- <div class="row m-portlet__body m-portlet m-portlet--tabs  m-portlet--head-solid-bg m-portlet--bordered"
-                              *ngIf="isKraAvaliable">
-                              <div class="tab-content">
-                                  <div class="m-widget3">
-                                      <div class="m-widget3__item">
-                                          <div class="m-widget3__header">
-                                              <div class="m-widget3__user-img">
-                                                  <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
-                                                      alt="">
-                                              </div>
-                                              <div class="m-widget3__info">
-                                                  <span class="m-widget3__username" id="hrName">
-                                                      Test HR
-                                                  </span>
-                                                  <br>
-                                                  <span class="m-widget3__time" id="dateTime">
-                                                      2 day ago
-                                                  </span>
-                                              </div>
-                                              <span class="m-badge m-badge--success m-badge--wide" id="kraStatus">
-                                                  accepted
-                                              </span>
-                                          </div>
-                                          <div class="m-widget3__body">
-                                              <p class="m-widget3__text m--font-success" id="kraTimeline">
-                                                  Your KRA has been Accepted.
-                                              </p>
-                                          </div>
-                                      </div>
-                                      <div class="m-widget3__item">
-                                          <div class="m-widget3__header">
-                                              <div class="m-widget3__user-img">
-                                                  <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
-                                                      alt="">
-                                              </div>
-                                              <div class="m-widget3__info">
-                                                  <span class="m-widget3__username" id="supervisorName">
-                                                      Test Supervisor
-                                                  </span>
-                                                  <br>
-                                                  <span class="m-widget3__time">
-                                                      1 weeks ago
-                                                  </span>
-                                              </div>
-                                              <span class="m-badge m-badge--info m-badge--wide">
-                                                  initiated
-                                              </span>
-                                          </div>
-                                          <div class="m-widget3__body">
-                                              <p class="m-widget3__text m--font-info">
-                                                  Your KRA has been Initiated.
-                                              </p>
-                                          </div>
-                                      </div>
-                                      <div class="m-widget3__item">
-                                          <div class="m-widget3__header">
-                                              <div class="m-widget3__user-img">
-                                                  <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
-                                                      alt="">
-                                              </div>
-                                              <div class="m-widget3__info">
-                                                  <span class="m-widget3__username" id="hrName">
-                                                      Test HR
-                                                  </span>
-                                                  <br>
-                                                  <span class="m-widget3__time">
-                                                      2 weeks ago
-                                                  </span>
-                                              </div>
-                                              <span class="m-badge m-badge--danger m-badge--wide">
-                                                  rejected
-                                              </span>
-                                          </div>
-                                          <div class="m-widget3__body">
-                                              <p class="m-widget3__text m--font-danger">
-                                                  Your KRA has been rejected.
-                                              </p>
-                                          </div>
-                                      </div>
-                                      <div class="m-widget3__item">
-                                          <div class="m-widget3__header">
-                                              <div class="m-widget3__user-img">
-                                                  <img class="m-widget3__img" src="./assets/app/media/img/users/user6.jpg"
-                                                      alt="">
-                                              </div>
-                                              <div class="m-widget3__info">
-                                                  <span class="m-widget3__username" id="supervisorName">
-                                                      Test Supervisor
-                                                  </span>
-                                                  <br>
-                                                  <span class="m-widget3__time">
-                                                      3 weeks ago
-                                                  </span>
-                                              </div>
-                                              <span class="m-badge m-badge--info m-badge--wide">
-                                                  initiated
-                                              </span>
-                                          </div>
-                                          <div class="m-widget3__body">
-                                              <p class="m-widget3__text m--font-info">
-                                                  Your KRA has been Initiated.
-                                              </p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-   </div> -->
-
                   <ng-template #pipDetailModal>
                      <div
                         class="m-portlet m-portlet--warning m-portlet--head-solid-bg m-portlet--head-sm  m-portlet--full-height mtrDetailsPortlet">
@@ -588,13 +467,13 @@
                                     </div>
                                     <div class="col-md-10 details">
                                        <textarea name="rev_final_com" id="rev_final_com"
-                                          [(ngModel)]="pipData.pip_master_details.rev_final_com" #revcom="ngModel"
+                                          [(ngModel)]="pipData.pip_master_details.rev_final_com" #rev_final_com="ngModel"
                                           class="form-control m-input m-input--air" required></textarea>
+                                          <div class="form-control-feedback has-danger" *ngIf="PipDataForm.submitted && rev_final_com.invalid">
+                                             This field is required.
+                                          </div>
                                     </div>
-                                    <div class="form-control-feedback has-danger"
-													*ngIf="PipDataForm.submitted && rev_final_com.invalid">
-													This field is required.
-												</div>
+                                    
                                     <div class="col-md-2 details">
                                        <span>HR Comments</span>
                                     </div>
@@ -603,7 +482,6 @@
                                           [(ngModel)]="pipData.pip_master_details.hr_final_com" #hrcom="ngModel"
                                           class="form-control m-input m-input--air" required disabled></textarea>
                                     </div>
-
                                     <div class="col-md-6 details">
                                        <span>Action Taken</span>
                                        <ng-select class="m-input m-input--air customError"
