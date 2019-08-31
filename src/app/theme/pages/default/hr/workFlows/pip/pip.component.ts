@@ -194,6 +194,11 @@ export class HrPipComponent {
                                 this.clearForm();
                             }
                         }, error => {
+                            if(error.status == 301) {
+                                swal("Oops!", error.json().title, "warning");
+                                form.resetForm();
+                                this.clearForm();
+                            }
                             this.utilityService.hideLoader('#initiate-loader');
                         });
                 }
