@@ -128,8 +128,8 @@ export class HrPipComponent {
         if (this.filterBy.grades || this.filterBy.departments) {
             this.utilityService.showLoader('#initiate-loader');
             // later need to uncomment when pip data will be ready
-            // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
             this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
+            // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
                 .subscribe(
                     res => {
                         let data = res.json().data || [];

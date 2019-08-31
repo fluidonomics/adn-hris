@@ -34,13 +34,11 @@ export class PipDetailedViewService {
 
     approvePip(data: any): Observable<Response> {
         let url = "pip/pipapproval"
-
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 
     savePip(data: any): Observable<Response> {
         let url = "pip/updatepipdetails"
-
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     }
 

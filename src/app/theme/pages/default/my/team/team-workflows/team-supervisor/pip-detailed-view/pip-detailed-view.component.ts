@@ -252,7 +252,7 @@ export class PipDetailedViewComponent {
                         empId: this.user._id,
                         supervisorId: this._currentEmpId,
                         supervisor_name: this.user.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/pip',
+                        action_link: window.location.origin + '/my/pip?fiscalYearId=' + this.fiscalYearId,
                         isApproved: isApproved,
                         superviserInitialComment: pipData.superviserInitialComment,
                     }
@@ -271,7 +271,6 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             this.loadPipEmployee();
-
                         }
                         else {
                             this.modalRef.hide();
@@ -288,12 +287,14 @@ export class PipDetailedViewComponent {
                         }
                         this.utilityService.hideLoader('.m-content');
                     }, err => {
-                        if (err.status == 300) {
-                            let error = err.json() || {};
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
                             swal("Error", error.title, "error");
-                            this.loadPipEmployee();
-                            this.modalRef.hide();
                         }
+                        this.loadPipEmployee();
+                        this.modalRef.hide();
                         this.utilityService.hideLoader('.m-content');
                     })
                 }

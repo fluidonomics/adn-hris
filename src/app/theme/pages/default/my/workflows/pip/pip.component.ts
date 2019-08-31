@@ -360,7 +360,7 @@ export class MyPipComponent {
                         supervisor_id: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/team/workflows/supervisor'
+                        action_link: window.location.origin + '/my/team/workflows/supervisor?fiscalYearId=' + this.fiscalYearId
                     }
                     this.utilityService.showLoader('.m-content');
                     this._pipService.submitPip(data).subscribe(res => {
@@ -376,7 +376,13 @@ export class MyPipComponent {
                             });
                             this.loadPipDetailsInfo();
                         }
-                    }, error => {
+                    }, err => {
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
+                            swal("Error", error.title, "error");
+                        }
                         this.loadPipDetailsInfo();
                         this.utilityService.hideLoader('.m-content');
                     });
@@ -445,17 +451,18 @@ export class MyPipComponent {
                                 confirmButtonColor: '#66BB6A',
                                 confirmButtonText: 'OK'
                             });
-                            //this.loadPipEmployee();
                             this.loadPipAgendaInfo();
 
                         }
                     }, err => {
-                        if (err.status == 300) {
-                            let error = err.json() || {};
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
                             swal("Error", error.title, "error");
-                            //this.loadPipEmployee();
-                            this.modalRef.hide();
                         }
+                        this.loadPipAgendaInfo();
+                        this.modalRef.hide();
                         this.utilityService.hideLoader('.m-content');
                     })
                 }
