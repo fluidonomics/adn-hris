@@ -6,7 +6,6 @@ import { BatchService } from "../../batch/batchService.service";
 import { environment } from '../../../../../../../../environments/environment';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
 import swal from 'sweetalert2';
 import { PipService } from '../../../../services/pip.service';
 
@@ -23,26 +22,21 @@ export class PipBatchComponent implements OnInit {
 
     batchData: any = [];
     activeRowNumber: number = -1;
-
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
     search: any;
     itemPerPage: number = 10;
-
     editBatch: any = {};
     modalRef: BsModalRef;
     currentDate: Date = new Date();
-
+    fiscalYearId: string;
     statusTypes: any = [
         { _id: "Active", name: "Active", },
         { _id: "Terminated", name: "Terminated" },
     ]
-
     _currentEmpId: number;
-
     loadBatchFilter: any = {
-        //date:  this.loadBatch(),
         status: 'All',
         page: 1
     };
@@ -61,25 +55,20 @@ export class PipBatchComponent implements OnInit {
     ) {
 
     }
-
     ngOnInit() {
-        // debugger;
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
                 this.initData();
             });
     }
-
     initData() {
         this.loadBatch();
     }
-
-
     loadBatch() {
-        // debugger;
         this.utilityService.showLoader('#batch-loader');
-        this._pipService.getPipBatches(this._currentEmpId)
+        this._pipService.getPipBatches(this._currentEmpId, this.fiscalYearId)
             .subscribe(
                 res => {
                     this.utilityService.hideLoader('#batch-loader');
@@ -90,7 +79,6 @@ export class PipBatchComponent implements OnInit {
                     this.utilityService.hideLoader('#batch-loader');
                 });
     }
-
     openEditModal(template: TemplateRef<any>, batch, index) {
         this.modalRef = this.modalService.show(template);
         this.editBatch = Object.assign({}, batch);
@@ -98,18 +86,14 @@ export class PipBatchComponent implements OnInit {
             this.editBatch.batchEndDate = new Date(this.editBatch.batchEndDate);
         }
     }
-
     saveBatch() {
-        //debugger;
         let data = {
             "batchId": this.editBatch._id,
             "updatedBy": this._currentEmpId,
             "batchEndDate": this.editBatch.batchEndDate
         }
         this._pipService.updateBatch(data).subscribe(res => {
-            //debugger;
             this.activeRowNumber = -1;
-            //this.loadBatch();
             this.modalRef.hide();
             if (this.editBatch.status == 'Terminated') {
                 swal('Success', 'Batch Terminated Successfully', 'success')
@@ -122,8 +106,6 @@ export class PipBatchComponent implements OnInit {
 
         this.loadBatch();
     }
-
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;

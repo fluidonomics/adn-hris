@@ -383,6 +383,9 @@ export class DashboardSupervisorComponent implements OnInit {
                             }
                         })
                     }
+                    if (!showActionTools) {
+                        this.leaveDetails.remarks = this.leaveDetails.leave.supervisorReason;
+                    }
                     this.modalRef = this.modalService.show(templateRef, Object.assign({}, { class: 'gray modal-lg' }));
                 }
             }

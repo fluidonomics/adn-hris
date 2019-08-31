@@ -20,11 +20,12 @@ export class PipApprovalComponent implements OnInit {
     pipSearch: any;
     pipReverse: boolean = true;
     imageBase: any;
-
+    fiscalYearId: string;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
         private _utilityService: UtilityService,
+        private _commonService: CommonService,
         private router: Router,
         private _pipService: PipService
     ) { }
@@ -33,13 +34,12 @@ export class PipApprovalComponent implements OnInit {
         this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
+            this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
             this.loadPipBySupervisor(this._currentEmpId,"Submitted");
         });
     }
-
     loadPipBySupervisor(sup_Id: number,status:string) {
-      //debugger;
-        this._pipService.getPipBySupervisor(sup_Id,status).subscribe(res => {
+        this._pipService.getPipBySupervisor(sup_Id,status, this.fiscalYearId).subscribe(res => {
             this.pipData = res.json().result.message || [];
             this.pipData = this.pipData.filter(pip => {
                 return pip.pip_master_details.status === "Submitted";
@@ -48,13 +48,8 @@ export class PipApprovalComponent implements OnInit {
         }, error => {
             console.log(error);
         });
-        //debugger;
     } 
-
     gotoPipData(pip) {
-        console.log("pip : ", pip);
-        //debugger;
         this.router.navigateByUrl("/my/team/workflows/pip-detailed-view/" + "approval/" + pip.pip_master_details._id + "/" + pip.emp_details._id);
-        
     }
 }

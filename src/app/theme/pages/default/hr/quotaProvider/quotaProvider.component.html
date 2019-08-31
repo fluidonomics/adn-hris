@@ -59,7 +59,7 @@
 										</div>
 										<ng-container *ngIf="isSpecial">
 											<div class="col-md-3" style="margin-top:30px">
-												<span>Paid</span>
+												<label for="form_control_1">Paid</label>
 												<span>
 													<input type="text" name="paidLeave" id="paidLeave"
 														class="form-control m-input m-input--air"
@@ -73,7 +73,7 @@
 												</div>
 											</div>
 											<div class="col-md-3" style="margin-top:30px">
-												<span>Un-Paid</span>
+												<label for="form_control_1">Un-Paid</label>
 												<span>
 													<input type="text" name="unpaidLeave" id="unpaidLeave"
 														class="form-control m-input m-input--air"
@@ -87,7 +87,7 @@
 												</div>
 											</div>
 										</ng-container>
-										<div class="col-md-6">
+										<div class="col-md-6" style="margin-top:30px">
 											<label for="form_control_1">Remarks</label>
 											<!-- <span class="required" aria-required="true"> * </span> -->
 											<textarea name="remarks" id="remarks"
@@ -124,7 +124,7 @@
 												This field is required.
 											</div>
 										</div>
-										<div class="col-md-6" *ngIf="isMaternity">
+										<!-- <div class="col-md-6" *ngIf="isMaternity">
 											<br />
 											<label class="btn btn-default browse">Attachements
 												<input type="file" accept="application/pdf" hidden="hidden"
@@ -132,7 +132,7 @@
 													(uploadOutput)="onUploadOutput($event, document)"
 													[uploadInput]="uploadInput" (click)="documentsPdf.click()">
 											</label>
-										</div>
+										</div> -->
 									</div>
 									<div class="row" *ngIf="displaySelection ==='Department' && isSpecial">
 										<div class="col-md-6">
@@ -147,12 +147,12 @@
 												This field is required.
 											</div>
 										</div>
-										<div class="col-md-6" *ngIf="isMaternity">
+										<!-- <div class="col-md-6" *ngIf="isMaternity">
 											<br />
 											<label>Attachements</label>
 											<button class="btn btn-secondary">Browse</button>
 											<input type="file" name="" id="">
-										</div>
+										</div> -->
 									</div>
 									<div *ngIf="isMaternity" class="row" style="margin-top:20px">
 										<div class="col-md-12">

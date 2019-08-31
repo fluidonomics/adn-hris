@@ -7,60 +7,49 @@ import { PipService } from '../../../services/pip.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../../../environments/environment'
 
-
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: "./pip.component.html",
     encapsulation: ViewEncapsulation.None,
 })
+
 export class HrPipComponent {
 
     employeeData: any = [];
-
     filterBy: any = {};
-
     checkAll: any = {};
     currentDate = new Date();
-
     divisionData: any = [];
     deparmentData: any = [];
     gradeData: any = [];
-
     batchData: any = {
-        "emp_id" : []
+        "emp_id": []
     };
-
-
     key: string = ''; //set default
     reverse: boolean = false;
     p2: number = 1;
-
     _currentEmpId: number;
     currentEmpname: string;
     itemPerPage: number = 20;
-
     search: any;
     isCheckAll: boolean = false;
-
     imageBase: any;
-
+    fiscalYearId: string;
     batchTypes: any = [
         { _id: "KRA", batchTypeName: "KRA", },
         { _id: "Learning", batchTypeName: "Learning", disabled: true },
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
-
     timelinesData = [
         {
             '_id': 3,
-            'timeline' : "3 Months"
+            'timeline': "3 Months"
         },
         {
             '_id': 6,
-            'timeline' : "6 Months"
+            'timeline': "6 Months"
         }
     ];
-
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -68,11 +57,10 @@ export class HrPipComponent {
         public _authService: AuthService,
         public _pipService: PipService
     ) {
-        //this.batchData.emp_id=[];
     }
 
     ngOnInit() {
-
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -80,20 +68,14 @@ export class HrPipComponent {
                 this.initDropdown();
             });
         this.imageBase = environment.content_api_base.imgBase;
-        //debugger;
     }
-
     initDropdown() {
-        //this.loadDivision();
         this.loadDepartment();
         this.loadGrade();
         this.getAllEmployee();
     }
-
-
     ngAfterViewInit() {
     }
-
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
@@ -106,7 +88,6 @@ export class HrPipComponent {
                 error => {
                 });
     }
-
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
@@ -122,9 +103,7 @@ export class HrPipComponent {
                 error => {
                 });
     }
-
     getAllEmployee() {
-        
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
         this._hrService.getAllEmployee().subscribe(res => {
@@ -138,19 +117,18 @@ export class HrPipComponent {
         }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
-
     }
-
     onSelectAll($event) {
         this.employeeData.forEach(emp => {
             emp.checked = $event.target.checked;
         });
         this.showdetail();
     }
-
     loadAllEmployee() {
         if (this.filterBy.grades || this.filterBy.departments) {
             this.utilityService.showLoader('#initiate-loader');
+            // later need to uncomment when pip data will be ready
+            // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
             this._hrService.getAllEmployee()
                 .subscribe(
                     res => {
@@ -158,14 +136,11 @@ export class HrPipComponent {
                         if (data.length > 0) {
                             if (this.filterBy.departments && this.filterBy.departments.length > 0) {
                                 data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                                //data=data.filter(obj=>obj.department_id.some(e=>this.filterBy.departments.some(ele=>ele==e)))
                             }
                             if (this.filterBy.grades && this.filterBy.grades.length > 0) {
                                 data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                                //data=data.filter(obj=>obj.grade_id.some(e=>this.filterBy.grades.some(ele=>ele==e)))
                             }
                             data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                            // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                             this.employeeData = data || [];
                             this.showdetail();
                             this.utilityService.hideLoader('#initiate-loader');
@@ -185,14 +160,12 @@ export class HrPipComponent {
             this.employeeData = [];
         }
     }
-
     initBatch(form) {
-        //debugger;
         this.batchData.emp_id_array = this.employeeData.filter(function (employee, index, array) {
             return employee.checked;
         }).map(item => {
             return {
-                emp_id : item._id
+                emp_id: item._id
             }
         });
 
@@ -206,12 +179,10 @@ export class HrPipComponent {
             confirmButtonText: 'Yes'
         }).then((result) => {
             if (this.batchData.emp_id_array.length > 0) {
-                
-                if(result.value) {
-
+                if (result.value) {
                     this.batchData.createdBy = this._currentEmpId;
                     this.batchData.createdByName = this.currentEmpname;
-    
+                    this.batchData.fiscalYearId = this.fiscalYearId;
                     this.utilityService.showLoader('#initiate-loader');
                     this._pipService.initBatch(this.batchData)
                         .subscribe(res => {
@@ -232,25 +203,17 @@ export class HrPipComponent {
         });
 
 
-        
+
     }
-
-    // getColumnName(column) {
-    //     return column.replace(/([A-Z][a-z])/g, " $1").replace("_", " ").toUpperCase();
-    // }
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
     }
-
     selectAllEmployee($event) {
         this.employeeData.forEach(element => {
             element.checked = $event.target.checked;
         });
     }
-
-
     clearForm() {
         this.key = ''; //set default
         this.reverse = false;
@@ -263,31 +226,24 @@ export class HrPipComponent {
         };
         this.getAllEmployee();
     }
-
     showdetail() {
 
-        let i,j;
+        let i, j;
 
-        for(i=0;i<this.employeeData.length;i++) {
-            for(j=0;j<this.deparmentData.length;j++) {
-                if(this.employeeData[i].department_id == this.deparmentData[j]._id){
+        for (i = 0; i < this.employeeData.length; i++) {
+            for (j = 0; j < this.deparmentData.length; j++) {
+                if (this.employeeData[i].department_id == this.deparmentData[j]._id) {
                     this.employeeData[i].departmentName = this.deparmentData[j].departmentName;
-                    //debugger
                 }
             }
         }
-        //debugger;
 
-        for(i=0;i<this.employeeData.length;i++) {
-            for(j=0;j<this.gradeData.length;j++) {
-                if(this.employeeData[i].grade_id == this.gradeData[j]._id){
+        for (i = 0; i < this.employeeData.length; i++) {
+            for (j = 0; j < this.gradeData.length; j++) {
+                if (this.employeeData[i].grade_id == this.gradeData[j]._id) {
                     this.employeeData[i].gradeName = this.gradeData[j].gradeName;
-                    //debugger
                 }
             }
         }
-        //debugger;
     }
-
 }
-

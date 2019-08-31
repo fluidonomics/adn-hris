@@ -66,7 +66,7 @@ export class PipDetailedViewComponent {
     isCommentOfMonth5Enable: boolean = false;
     isCommentOfMonth6Enable: boolean = false;
     saveEnabled: boolean = false;
-
+    fiscalYearId: string;
     learningData: any;
     _currentEmpId: number;
 
@@ -74,18 +74,7 @@ export class PipDetailedViewComponent {
 
     agenda_arraynum: number;
 
-    // timelinesData = [
-    //     {
-    //         '_id': 3,
-    //         'timeline' : "3 Months"
-    //     },
-    //     {
-    //         '_id': 6,
-    //         'timeline' : "6 Months"
-    //     }
-    // ];
-
-    supervisorPerformanceRating = [
+   supervisorPerformanceRating = [
         {
             '_id': 1,
             'supervisorRating': "Met Expectation"
@@ -138,6 +127,7 @@ export class PipDetailedViewComponent {
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
+                this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
                 this._route.params.subscribe(params => {
                     if (params['id'] && params['emp_id']) {
                         this.param_id = params['id'];
@@ -167,7 +157,7 @@ export class PipDetailedViewComponent {
 
     loadPipBySupervisor(sup_Id: number, status: string) {
 
-        this._pipService.getPipBySupervisor(sup_Id, status).subscribe(res => {
+        this._pipService.getPipBySupervisor(sup_Id, status, this.fiscalYearId).subscribe(res => {
             this.pipMasterData = res.json().result.message || [];
             this.pipMasterData = this.pipMasterData.filter(pip => pip._id == this.param_id);
         }, error => {

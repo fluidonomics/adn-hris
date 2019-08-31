@@ -148,6 +148,8 @@ export class QuotaProviderComponent implements OnInit {
             this.request.unpaid = null;
         }
         this.request._id = null;
+        this.resetBalance();
+        this.request.balance = null;
     }
     //show leave balance for single employee 
     onEmployeeSelect($event) {
@@ -196,16 +198,21 @@ export class QuotaProviderComponent implements OnInit {
             emp_id: null,
             _id: null
         }
-        this.annualLeaveBalance = 0;
-        this.sickLeaveBalance = 0;
-        this.specialLeaveBalance = 0;
-        this.maternityLeaveBalance = 0;
+        this.resetBalance();
         this.isMaternity = false;
         this.isSpecial = false;
         this.employeeGridData = [];
         this.displaySelection = "";
 
     }
+
+    resetBalance() {
+        this.annualLeaveBalance = 0;
+        this.sickLeaveBalance = 0;
+        this.specialLeaveBalance = 0;
+        this.maternityLeaveBalance = 0;
+    }
+
     // on submit
     provideLeave(form) {
         let data: any = {

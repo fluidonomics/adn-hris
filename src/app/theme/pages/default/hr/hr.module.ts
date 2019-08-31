@@ -55,6 +55,7 @@ import { PipService } from '../services/pip.service';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { SharedModule } from '../shared/shared.module';
 import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
+import { GrievancePhaseInitiateComponent } from "./workFlows/grievance/grievance-phase-initiate/grievance-phase-initiate.component";
 
 
 @NgModule({
@@ -104,9 +105,9 @@ import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.componen
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
         QuotaProviderComponent,
-        MonthlyGradeChartComponent
-        //DocumentsViewComponent
-        
+        MonthlyGradeChartComponent,
+        //DocumentsViewComponent,
+        GrievancePhaseInitiateComponent
     ],
     providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })
