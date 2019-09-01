@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { AuthService } from "../../../../../../../../base/_services/authService.service";
+import swal from 'sweetalert2';
 
 @Injectable()
 export class PipDetailedViewService {
@@ -51,16 +52,12 @@ export class PipDetailedViewService {
         return res || {};
     }
 
-    private handleError(error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return Observable.throw(errMsg);
+    private handleError(err: Response | any) {
+        if (err.status == 300) {
+            let error = err.json() || {};
+            swal("Error", error.title, "error");
+         }
+         return Observable.throw(err);
     }
 
 }

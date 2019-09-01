@@ -143,8 +143,9 @@ export class MyPipComponent {
             isDeleted: false,
             createdBy: this._currentEmpId,
             updatedBy: this.pipInfoData[index].updatedBy,
-            //progressStatus: this.pipInfoData[index].progressStatus,
+            action_link: window.location.origin + '/my/team/workflows/supervisor?fiscalYearId=' + this.fiscalYearId,
             areaofImprovement: this.pipInfoData[index].areaofImprovement,
+            empId: this._authService.currentUserData._id,
             actionPlan: this.pipInfoData[index].actionPlan,
             timelines: this.pipInfoData[index].timelines,
             fiscalYearId: this.fiscalYearId,
@@ -172,7 +173,6 @@ export class MyPipComponent {
             this._pipService.savePip(request).subscribe(res => {
                 this.utilityService.hideLoader('.m-content');
                 if (res.ok) {
-                    //this.mtrInfoData[index] = res.json();
                     let data = res.json();
                     this.pipInfoData[index] = data.result.message
                     swal({
@@ -186,7 +186,6 @@ export class MyPipComponent {
                     this.modalRef.hide();
                 }
                 this.loadData();
-                //this.loadSupervisorData();
             }, error => {
                 this.utilityService.hideLoader('.m-content');
                 this.modalRef.hide();
