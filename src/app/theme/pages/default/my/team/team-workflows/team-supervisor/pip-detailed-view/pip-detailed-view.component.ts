@@ -56,6 +56,7 @@ export class PipDetailedViewComponent {
     //showStat = false;
     masterStatus: string;
     primarySupervisorId: number; 
+    showPIPApprovalMessage: boolean;
     finalReviewEnable: boolean = false;
 
     dateDifference: number;
@@ -124,6 +125,7 @@ export class PipDetailedViewComponent {
     }
 
     ngOnInit() {
+        this.showPIPApprovalMessage = false;
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
@@ -178,10 +180,20 @@ export class PipDetailedViewComponent {
                     }
                     
                 }
-                this.masterStatus = this.pipInfoData[0].master_status;
-                this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
-                this.isDis = res.json().status == 'Approved' ? true : false;
-                this.statusq = res.json().status;
+                if (this.pipInfoData.length > 0) {
+                    this.masterStatus = this.pipInfoData[0].master_status;
+                    this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
+                    if (this.pipInfoData[0].master_status != "Submitted")
+                        this.showPIPApprovalMessage = this.pipInfoData[0].sup_final_com == null;
+                    else
+                        this.showPIPApprovalMessage = false;
+
+                    this.isDis = res.json().status == 'Approved' ? true : false;
+                    this.statusq = res.json().status;
+                }
+                else {
+                    this.showPIPApprovalMessage = false;
+                }
             },
             error => {
 
@@ -240,7 +252,7 @@ export class PipDetailedViewComponent {
                         empId: this.user._id,
                         supervisorId: this._currentEmpId,
                         supervisor_name: this.user.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/pip',
+                        action_link: window.location.origin + '/my/pip?fiscalYearId=' + this.fiscalYearId,
                         isApproved: isApproved,
                         superviserInitialComment: pipData.superviserInitialComment,
                     }
@@ -259,7 +271,6 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             this.loadPipEmployee();
-
                         }
                         else {
                             this.modalRef.hide();
@@ -274,13 +285,16 @@ export class PipDetailedViewComponent {
                             });
                             this.loadPipEmployee();
                         }
+                        this.utilityService.hideLoader('.m-content');
                     }, err => {
-                        if (err.status == 300) {
-                            let error = err.json() || {};
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
                             swal("Error", error.title, "error");
-                            this.loadPipEmployee();
-                            this.modalRef.hide();
                         }
+                        this.loadPipEmployee();
+                        this.modalRef.hide();
                         this.utilityService.hideLoader('.m-content');
                     })
                 }
@@ -532,7 +546,4 @@ export class PipDetailedViewComponent {
         }
 
     }
-
-
-
 }

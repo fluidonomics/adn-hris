@@ -22,7 +22,7 @@ import { PARAMETERS } from "@angular/core/src/util/decorators";
 export class MyPipComponent {
 
     @ViewChild('myPipDetailModal') myPipDetailModal: TemplateRef<any>;
-    @ViewChild('myPipCompletionModal') myPipCompletionModal: TemplateRef<any>;    
+    @ViewChild('myPipCompletionModal') myPipCompletionModal: TemplateRef<any>;
 
     param_id: number;
     _currentEmpId: number;
@@ -42,11 +42,11 @@ export class MyPipComponent {
     timelinesData = [
         {
             '_id': 3,
-            'timeline' : "3 Months"
+            'timeline': "3 Months"
         },
         {
             '_id': 6,
-            'timeline' : "6 Months"
+            'timeline': "6 Months"
         }
     ];
     progressStatusData = [
@@ -55,20 +55,20 @@ export class MyPipComponent {
     ];
     finalRecommendation = [
         {
-            '_id':1,
+            '_id': 1,
             'final_recommendation': "Continue in current role"
         },
         {
-            '_id':2,
+            '_id': 2,
             'final_recommendation': "Internal Movement"
         },
         {
-            '_id':3,
+            '_id': 3,
             'final_recommendation': "Remedial action"
         }
     ];
     suparr = [];
-    showSub:boolean = false;
+    showSub: boolean = false;
     supervisorData: any = [];
     isDisabled: boolean = false;
     isCompleted: boolean = false;
@@ -77,7 +77,7 @@ export class MyPipComponent {
     isApproved: boolean = false;
     isInitiated: boolean = false;
     employee: any = {};
-    dateDifference:number;
+    dateDifference: number;
     isCommentOfMonth1Enable: boolean = false;
     isCommentOfMonth2Enable: boolean = false;
     isCommentOfMonth3Enable: boolean = false;
@@ -128,7 +128,6 @@ export class MyPipComponent {
             });
     }
     savePipAgendas(form, id: number) {
-
         if (form.valid) {
             this.pipInfoData[this.pipData.no - 1] = JSON.parse(JSON.stringify(this.pipData));
             this.savePipDetails(this.pipData.no - 1);
@@ -136,7 +135,6 @@ export class MyPipComponent {
     }
     savePipDetails(index: number) {
         let request = {
-
             _id: this.pipInfoData[index]._id,
             master_id: this.param_id,
             supervisor_id: this.pipInfoData[index].supervisor_id,
@@ -145,10 +143,12 @@ export class MyPipComponent {
             isDeleted: false,
             createdBy: this._currentEmpId,
             updatedBy: this.pipInfoData[index].updatedBy,
-            //progressStatus: this.pipInfoData[index].progressStatus,
+            action_link: window.location.origin + '/my/team/workflows/supervisor?fiscalYearId=' + this.fiscalYearId,
             areaofImprovement: this.pipInfoData[index].areaofImprovement,
+            empId: this._authService.currentUserData._id,
             actionPlan: this.pipInfoData[index].actionPlan,
             timelines: this.pipInfoData[index].timelines,
+            fiscalYearId: this.fiscalYearId,
             employeeInitialComment: this.pipInfoData[index].employeeInitialComment,
             empComment_month1: this.pipInfoData[index].empComment_month1,
             empComment_month2: this.pipInfoData[index].empComment_month2,
@@ -156,7 +156,6 @@ export class MyPipComponent {
             empComment_month4: this.pipInfoData[index].empComment_month4,
             empComment_month5: this.pipInfoData[index].empComment_month5,
             empComment_month6: this.pipInfoData[index].empComment_month6
-
         }
         let isError: boolean = false;
 
@@ -174,7 +173,6 @@ export class MyPipComponent {
             this._pipService.savePip(request).subscribe(res => {
                 this.utilityService.hideLoader('.m-content');
                 if (res.ok) {
-                    //this.mtrInfoData[index] = res.json();
                     let data = res.json();
                     this.pipInfoData[index] = data.result.message
                     swal({
@@ -188,7 +186,6 @@ export class MyPipComponent {
                     this.modalRef.hide();
                 }
                 this.loadData();
-                //this.loadSupervisorData();
             }, error => {
                 this.utilityService.hideLoader('.m-content');
                 this.modalRef.hide();
@@ -206,7 +203,6 @@ export class MyPipComponent {
         this._pipService.getPipInfo(this._currentEmpId, this.fiscalYearId).subscribe(res => {
             let data = res.json();
             this.PipAgendaData = data.result.message;
-            //this.showSub = this.PipAgendaData.filter(pip => pip.status != "Submitted" && pip.status != "Approved" && pip.status != "Completed" ).length > 0;
         }, error => {
             swal("Error", error.title, "error");
         });;
@@ -219,64 +215,87 @@ export class MyPipComponent {
                 });
                 if (!found) {
                     this.supervisorData.push({ _id: pip.supervisor_id, fullName: pip.supervisor_name, canSelect: false });
-                 //   debugger;
                 }
             }
         }
     }
+    showPIPApprovalMessage: boolean;
+    showPIPApprovalMessageButton: boolean;
     loadPipDetailsInfo() {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
             this.pipInfoData = data.result.message;
-            if(this.pipInfoData.length > 0){
+            if (this.pipInfoData.length > 0) {
                 this.showSub = this.pipInfoData.filter(pip => pip.master_status != "Submitted" && pip.master_status != "Approved" && pip.master_status != "Completed").length > 0;
+
+                if (this.pipInfoData[0].master_timelines == 3 && this.pipInfoData.filter(f => f.empComment_month3 != null).length == this.pipInfoData.length) {
+                    this.showPIPApprovalMessage = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com == null;
+                    this.showPIPApprovalMessageButton = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com != null;
+                }
+                else if (this.pipInfoData[0].master_timelines == 4 && this.pipInfoData.filter(f => f.empComment_month4 != null).length == this.pipInfoData.length) {
+                    this.showPIPApprovalMessage = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com == null;
+                    this.showPIPApprovalMessageButton = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com != null;
+                }
+                else if (this.pipInfoData[0].master_timelines == 5 && this.pipInfoData.filter(f => f.empComment_month5 != null).length == this.pipInfoData.length) {
+                    this.showPIPApprovalMessage = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com == null;
+                    this.showPIPApprovalMessageButton = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com != null;
+                }
+                else if (this.pipInfoData[0].master_timelines == 6 && this.pipInfoData.filter(f => f.empComment_month6 != null).length == this.pipInfoData.length) {
+                    this.showPIPApprovalMessage = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com == null;
+                    this.showPIPApprovalMessageButton = this.pipInfoData[0].master_status == "Approved" && this.pipInfoData[0].emp_final_com != null;
+                }
+                else {
+                    this.showPIPApprovalMessage = false;
+                    this.showPIPApprovalMessageButton = false
+                }
                 this.loadprevsupervisor();
-            } 
+            }
             else {
+                this.showPIPApprovalMessage = false;
                 this.pipInfoData = [
                     {
-            
+
                         _id: null,
-            master_id: this.param_id,
-            supervisor_id: "",
-            status: "Initiated",
-            measureOfSuccess: "",
-            isDeleted: false,
-            createdBy: "",
-            updatedBy: this._currentEmpId,
-            //progressStatus: this.pipInfoData[index].progressStatus,
-            areaofImprovement: "",
-            actionPlan: "",
-            timelines: "",
-            finalReview: "",
-            finalRating: "",
-            empComment_month1: "",
-            empComment_month2: "",
-            empComment_month3: "",
-            empComment_month4: "",
-            empComment_month5: "",
-            empComment_month6: "",
-            supComment_month1: "",
-            supComment_month2: "",
-            supComment_month3: "",
-            supComment_month4: "",
-            supComment_month5: "",
-            supComment_month6: "",
-            employeeInitialComment: "",
-            superviserInitialComment: ""
-            
+                        master_id: this.param_id,
+                        supervisor_id: "",
+                        status: "Initiated",
+                        measureOfSuccess: "",
+                        isDeleted: false,
+                        createdBy: "",
+                        updatedBy: this._currentEmpId,
+                        //progressStatus: this.pipInfoData[index].progressStatus,
+                        areaofImprovement: "",
+                        actionPlan: "",
+                        timelines: "",
+                        finalReview: "",
+                        finalRating: "",
+                        empComment_month1: "",
+                        empComment_month2: "",
+                        empComment_month3: "",
+                        empComment_month4: "",
+                        empComment_month5: "",
+                        empComment_month6: "",
+                        supComment_month1: "",
+                        supComment_month2: "",
+                        supComment_month3: "",
+                        supComment_month4: "",
+                        supComment_month5: "",
+                        supComment_month6: "",
+                        employeeInitialComment: "",
+                        superviserInitialComment: ""
+
                     }
                 ];
             }
-           
+
         }, error => {
         });;
 
-        
+
     }
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this._currentEmpId).subscribe(data => {
-        
+
             this.supervisorData = data.json();
         }, error => {
         });
@@ -340,7 +359,7 @@ export class MyPipComponent {
                         supervisor_id: this.currentEmployee.supervisorDetails._id,
                         emp_name: this.currentEmployee.fullName,
                         supervisor_name: this.currentEmployee.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/team/workflows/supervisor'
+                        action_link: window.location.origin + '/my/team/workflows/supervisor?fiscalYearId=' + this.fiscalYearId
                     }
                     this.utilityService.showLoader('.m-content');
                     this._pipService.submitPip(data).subscribe(res => {
@@ -356,7 +375,13 @@ export class MyPipComponent {
                             });
                             this.loadPipDetailsInfo();
                         }
-                    }, error => {
+                    }, err => {
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
+                            swal("Error", error.title, "error");
+                        }
                         this.loadPipDetailsInfo();
                         this.utilityService.hideLoader('.m-content');
                     });
@@ -380,7 +405,7 @@ export class MyPipComponent {
 
         if (pipData.emp_final_com === null || pipData.emp_final_com === "") {
             swal({
-                title: 'Please fill remarks!',
+                title: 'Please Fill Employee Comments!',
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',
@@ -388,7 +413,7 @@ export class MyPipComponent {
             });
         }
         else {
-  
+
             swal({
                 title: 'Are you sure?',
                 // text: text,
@@ -399,22 +424,23 @@ export class MyPipComponent {
                 // confirmButtonText: confirmButtonText
             }).then((result) => {
                 if (result.value) {
-                   
+
                     let request = {
-                       masterId: this.PipAgendaData[this.currentIndex]._id,
-                       updatedAt: new Date(),
-                       updatedBy: this._currentEmpId,
-                       hrFinalCom: pipData.hr_final_com,
-                       empFinalCom: pipData.emp_final_com,
-                       revFinalCom: pipData.rev_final_com,
-                       supFinalCom: pipData.sup_final_com,
-                       finalRecommendation: pipData.final_recommendation
+                        masterId: this.PipAgendaData[this.currentIndex]._id,
+                        updatedAt: new Date(),
+                        updatedBy: this._currentEmpId,
+                        hrFinalCom: pipData.hr_final_com,
+                        empFinalCom: pipData.emp_final_com,
+                        revFinalCom: pipData.rev_final_com,
+                        supFinalCom: pipData.sup_final_com,
+                        finalRecommendation: pipData.final_recommendation
                     }
 
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.updateMaster(request).subscribe(res => {
                         if (res.ok) {
                             this.modalRef.hide();
+                            this.showPIPApprovalMessage = false;
                             this.utilityService.hideLoader('.mtrDetailsPortlet');
                             swal({
                                 title: 'Submitted Successfully!',
@@ -424,23 +450,24 @@ export class MyPipComponent {
                                 confirmButtonColor: '#66BB6A',
                                 confirmButtonText: 'OK'
                             });
-                            //this.loadPipEmployee();
                             this.loadPipAgendaInfo();
-  
+
                         }
                     }, err => {
-                        if (err.status == 300) {
-                            let error = err.json() || {};
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
                             swal("Error", error.title, "error");
-                            //this.loadPipEmployee();
-                            this.modalRef.hide();
                         }
+                        this.loadPipAgendaInfo();
+                        this.modalRef.hide();
                         this.utilityService.hideLoader('.m-content');
                     })
                 }
             });
         }
-  
+
     }
     onStatusChange(event) {
 
@@ -455,12 +482,12 @@ export class MyPipComponent {
         this.modalRef = this.modalService.show(this.myPipDetailModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = JSON.parse(JSON.stringify(this.pipInfoData[index]));
         this.pipData.no = index + 1;
-        
+
         this.monthlyCommentValidation();
         this.isSaveEnabled();
-        
-        for(let x=0;x<this.PipAgendaData.length;x++) {
-            if(this.PipAgendaData[x]._id == this.param_id) {
+
+        for (let x = 0; x < this.PipAgendaData.length; x++) {
+            if (this.PipAgendaData[x]._id == this.param_id) {
                 this.agenda_arraynum = x;
             }
         }
@@ -492,29 +519,29 @@ export class MyPipComponent {
     }
     showCompletionDetails(index: number) {
 
-        this.currentIndex = index;
+        this.currentIndex = index === undefined ? 0 : index;
         this.modalRef = this.modalService.show(this.myPipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
-        this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[index]));
-        this.pipData.no = index + 1;
+        this.pipData = JSON.parse(JSON.stringify(this.PipAgendaData[this.currentIndex]));
+        this.pipData.no = this.currentIndex + 1;
 
-        if(this.pipData.emp_final_com) {
+        if (this.pipData.emp_final_com) {
 
             $("#empcom").attr('disabled', 'disabled');
             $("#submitFormPostPip").remove();
         }
     }
     monthlyCommentValidation() {
-        if(this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
+        if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
             this.isCommentOfMonth1Enable = true;
-        } else if(this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.empComment_month2) {
+        } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.empComment_month2) {
             this.isCommentOfMonth2Enable = true;
-        } else if(this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.empComment_month3) {
+        } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.empComment_month3) {
             this.isCommentOfMonth3Enable = true;
-        } else if(this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.empComment_month4) {
+        } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.empComment_month4) {
             this.isCommentOfMonth4Enable = true;
-        } else if(this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.empComment_month5) {
+        } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.empComment_month5) {
             this.isCommentOfMonth5Enable = true;
-        } else if(this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
+        } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
             this.isCommentOfMonth6Enable = true;
         } else {
             this.isCommentOfMonth1Enable = false;
@@ -527,17 +554,17 @@ export class MyPipComponent {
     }
     isSaveEnabled() {
 
-        
-        if((this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable || 
+
+        if ((this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable ||
             this.isCommentOfMonth4Enable || this.isCommentOfMonth5Enable || this.isCommentOfMonth6Enable) && this.pipData.status != "Completed") {
 
-                // this.saveEnabled = true;
+            // this.saveEnabled = true;
             this.saveEnable = true;
         } else {
 
             this.saveEnable = false;
         }
-            
+
     }
 }
 
