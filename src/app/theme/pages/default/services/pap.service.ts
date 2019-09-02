@@ -103,8 +103,8 @@ export class PapService {
         return this.authService.post(url, data).catch(this.handleError);
     }
 
-    getAllPap() {
-        let url = "pap/getAllPap";
+    getAllPap(fiscalYearId: string) {
+        let url = "pap/getAllPap?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

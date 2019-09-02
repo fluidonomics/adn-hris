@@ -35,7 +35,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     currentDate = new Date();
     allPapData = [];
     showGrievanceInitForm: boolean = false;
-
+    fiscalYearId: string;
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
         private _commonService: CommonService,
@@ -47,6 +47,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
+            this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
             this._currentEmpId = this._authService.currentUserData._id;
             this.loadAllEmployee();
             this.getAllPap();
@@ -73,7 +74,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     }
 
     getAllPap() {
-        this._papService.getAllPap().subscribe(res => {
+        this._papService.getAllPap(this.fiscalYearId).subscribe(res => {
             this.allPapData = res || [];
             let grievancePap = this.allPapData.filter(pap => {
                 if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.grievanceRaiseEndDate == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
