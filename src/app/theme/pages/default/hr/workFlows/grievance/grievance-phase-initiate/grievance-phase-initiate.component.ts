@@ -113,7 +113,8 @@ export class GrievancePhaseInitiateComponent {
             let data = {
                 updatedBy: this._currentEmpId,
                 grievanceEndDate: this.grievanceEndDate,
-                employees: employees
+                employees: employees,
+                action_link: window.location.origin + '/my/workflows/pap?fiscalYearId=' + this.fiscalYearId,
             };
 
             swal({
