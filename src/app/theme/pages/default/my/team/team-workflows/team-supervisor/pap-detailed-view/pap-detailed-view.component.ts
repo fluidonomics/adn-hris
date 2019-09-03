@@ -196,14 +196,25 @@ export class PapDetailedViewComponent implements OnInit {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);
                     });
-                    swal({
-                        title: 'Success',
-                        text: "PAP has been Saved.",
-                        type: 'success',
-                        showCancelButton: false,
-                        confirmButtonColor: '#66BB6A',
-                        confirmButtonText: 'OK'
-                    });
+                    if (this.papData.grievanceSupRemark == null) {
+                        swal({
+                            title: 'Success',
+                            text: "PAP has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        swal({
+                            title: 'Success',
+                            text: "Grievance Remark has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 }
             }, error => {
 
