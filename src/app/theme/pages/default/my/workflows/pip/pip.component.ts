@@ -155,7 +155,8 @@ export class MyPipComponent {
             empComment_month3: this.pipInfoData[index].empComment_month3,
             empComment_month4: this.pipInfoData[index].empComment_month4,
             empComment_month5: this.pipInfoData[index].empComment_month5,
-            empComment_month6: this.pipInfoData[index].empComment_month6
+            empComment_month6: this.pipInfoData[index].empComment_month6,
+            shouldSendEmail: this.shouldSendEmail
         }
         let isError: boolean = false;
 
@@ -170,6 +171,8 @@ export class MyPipComponent {
             });
         }
         else {
+            // if(this.shouldSendEmail)
+            //     this.utilityService.showLoader('.m-content');
             this._pipService.savePip(request).subscribe(res => {
                 this.utilityService.hideLoader('.m-content');
                 if (res.ok) {
@@ -184,11 +187,15 @@ export class MyPipComponent {
                         confirmButtonText: 'OK'
                     });
                     this.modalRef.hide();
+                    // if(this.shouldSendEmail)
+                    //     this.utilityService.hideLoader('.m-content');
                 }
                 this.loadData();
             }, error => {
                 this.utilityService.hideLoader('.m-content');
                 this.modalRef.hide();
+                // if(this.shouldSendEmail)
+                //         this.utilityService.hideLoader('.m-content');
             });
         }
 
@@ -221,6 +228,7 @@ export class MyPipComponent {
     }
     showPIPApprovalMessage: boolean;
     showPIPApprovalMessageButton: boolean;
+    shouldSendEmail: boolean;
     loadPipDetailsInfo() {
         this._pipService.getPipDetails(this.param_id).subscribe(res => {
             let data = res.json();
@@ -531,17 +539,24 @@ export class MyPipComponent {
         }
     }
     monthlyCommentValidation() {
+        this.shouldSendEmail = false;
         if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2 && !this.pipData.empComment_month1) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month1 != null).length - 1) == 0;
             this.isCommentOfMonth1Enable = true;
         } else if (this.pipData.dateDifference >= 2 && this.pipData.dateDifference < 3 && !this.pipData.empComment_month2) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month2 != null).length - 1) == 0;
             this.isCommentOfMonth2Enable = true;
         } else if (this.pipData.dateDifference >= 3 && this.pipData.dateDifference < 4 && !this.pipData.empComment_month3) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month3 != null).length - 1) == 0;
             this.isCommentOfMonth3Enable = true;
         } else if (this.pipData.dateDifference >= 4 && this.pipData.dateDifference < 5 && !this.pipData.empComment_month4) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month4 != null).length - 1) == 0;
             this.isCommentOfMonth4Enable = true;
         } else if (this.pipData.dateDifference >= 5 && this.pipData.dateDifference < 6 && !this.pipData.empComment_month5) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month5 != null).length - 1) == 0;
             this.isCommentOfMonth5Enable = true;
         } else if (this.pipData.dateDifference >= 6 && this.pipData.dateDifference < 7 && !this.pipData.empComment_month6) {
+            this.shouldSendEmail = (this.pipInfoData.length - this.pipInfoData.filter(f => f.empComment_month6 != null).length - 1) == 0;
             this.isCommentOfMonth6Enable = true;
         } else {
             this.isCommentOfMonth1Enable = false;
