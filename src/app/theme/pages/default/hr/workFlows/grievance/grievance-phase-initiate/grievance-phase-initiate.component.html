@@ -17,7 +17,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-6 order-2 order-xl-1">
                         <div class="form-group m-form__group row align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <!-- Search Box -->
                                 <!-- <div class="m-input-icon m-input-icon--left">
                                     <input type="text" class="form-control m-input m-input--solid"
@@ -49,7 +49,7 @@
                 <table class="m-datatable__table">
                     <thead class="m-datatable__head">
                         <tr class="m-datatable__row">
-                            <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="10%">
+                            <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%">
                                 <span>
                                     ID
                                     <i class="la" *ngIf="key == 'userName'"
@@ -57,7 +57,7 @@
                                 </span>
                             </th>
                             <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="20%">
+                                width="15%">
                                 <span>
                                     NAME
                                     <i class="la" *ngIf="key == 'fullName'"
@@ -65,7 +65,7 @@
                                 </span>
                             </th>
 
-                            <!-- <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                            <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
                                 width="15%">
                                 <span>
                                     EMAIL
@@ -80,7 +80,7 @@
                                     <i class="la" *ngIf="key == 'designation'"
                                         [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                 </span>
-                            </th> -->
+                            </th>
                             <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort"
                                 width="15%">
                                 <span>
@@ -90,7 +90,7 @@
                                 </span>
                             </th>
                             <th (click)="sort('overallRating')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="15%">
+                                width="10%">
                                 <span>
                                     OVERALL RATING
                                     <i class="la" *ngIf="key == 'overallRating'"
@@ -98,7 +98,7 @@
                                 </span>
                             </th>
                             <th (click)="sort('overallRating')" class="m-datatable__cell m-datatable__cell--sort"
-                                width="25%">
+                                width="10%">
                                 <span>
                                     GRIEVANCE END DATE
                                     <i class="la" *ngIf="key == 'overallRating'"
@@ -117,25 +117,25 @@
                     <tbody class="m-datatable__body" id="allEmployee-loader">
                         <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
                             *ngFor="let employee of filteredGrievancePap | orderBy: key : reverse | filter:search ;let even=even;">
-                            <td class="m-datatable__cell" width="10%">
+                            <td class="m-datatable__cell" width="5%">
                                 <span>{{employee.employeedetails.userName}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="20%">
+                            <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.employeedetails.fullName}}</span>
                             </td>
-                            <!-- <td class="m-datatable__cell" width="15%">
+                            <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.employeeofficedetails.officeEmail}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.designations?.designationName}}</span>
-                            </td> -->
+                            </td>
                             <td class="m-datatable__cell" width="15%">
                                 <span>{{employee.department?.departmentName}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="15%">
+                            <td class="m-datatable__cell" width="10%">
                                 <span>{{employee.overallRating}}</span>
                             </td>
-                            <td class="m-datatable__cell" width="25%">
+                            <td class="m-datatable__cell" width="10%">
                                 <span>{{employee.grievanceRaiseEndDate | date:'dd-MMM-yyyy'}}</span>
                             </td>
                             <td class="m-datatable__cell" width="15%">
