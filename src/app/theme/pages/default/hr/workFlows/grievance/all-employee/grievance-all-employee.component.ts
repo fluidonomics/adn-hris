@@ -60,7 +60,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     loadAllEmployee() {
         this.showGrievancePhase = false;
         this.utilityService.showLoader('#allEmployee-loader');
-        this._papService.getEmployeesForGrievance().subscribe(res => {
+        this._papService.getEmployeesForGrievance(this.fiscalYearId).subscribe(res => {
             let data = res.json().result.message || [];
             //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
             this.employeesData = data || [];
@@ -87,7 +87,6 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         });
     }
 
-
     sort(key) {
         this.key = key;
         this.reverse = !this.reverse;
@@ -102,9 +101,8 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 
-
     grievanceEmployeeDetail(employee: any) {
-        console.log(employee);
-        this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
+        let papMasterId = employee._id;
+        this._router.navigate(['/my/team/workflows/pap-review/'+ papMasterId + '/' + employee.emp_id+'/true']);
     }
 }
