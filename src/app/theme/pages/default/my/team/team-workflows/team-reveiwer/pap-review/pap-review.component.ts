@@ -185,9 +185,9 @@ export class PapReviewComponent implements OnInit {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);
                     });
-                    let text = "PAP approved succesfully";
+                    let text = this.papWorkFlowData[0].grievanceStatus == 'Initiated'? "Grievance approved succesfully" : "PAP approved succesfully";
                     if (!isApproved) {
-                        text = "PAP sentback succesfully";
+                        text = this.papWorkFlowData[0].grievanceStatus == 'Initiated'? "Grievance sentback succesfully" : "PAP sentback succesfully";
                     }
                     swal({
                         title: 'Success',
