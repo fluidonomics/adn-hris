@@ -46,8 +46,8 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(res => {
-            this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
             this._currentEmpId = this._authService.currentUserData._id;
             this.loadAllEmployee();
             this.getAllPap();
