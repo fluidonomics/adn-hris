@@ -141,6 +141,7 @@ export class FeedbackInitiateComponent implements OnInit {
                         if (res.ok) {
                             swal("Success", "Feedback Initiated Successfully", "success");
                             this.getAllEmployee();
+                            this.isCheckAll = false;
                         }
                     });
                 }
@@ -175,6 +176,7 @@ export class FeedbackInitiateComponent implements OnInit {
                         if (res.ok) {
                             swal("Success", "Grievnace Feedback Initiated Successfully", "success");
                             this.getAllEmployee();
+                            this.grievanceIsCheckAll = false;
                         }
                     });
                 }
