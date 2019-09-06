@@ -66,7 +66,7 @@
                             <!-- </form> -->
                         </div><br><br>
                         <div class="row overallRatingBlock"
-                            *ngIf="papWorkFlowData[0] && papWorkFlowData[0].reviewerStatus == 'Approved' && papWorkFlowData[0].isSentToSupervisor">
+                            *ngIf="(papWorkFlowData[0] && papWorkFlowData[0].reviewerStatus == 'Approved' && papWorkFlowData[0].isSentToSupervisor && papWorkFlowData[0].grievanceStatus != 'Initiated') || papWorkFlowData[0].isGrievanceFeedbackSentToSupervisor">
                             <div class="col-md-8">
                                 <span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
                             </div>
