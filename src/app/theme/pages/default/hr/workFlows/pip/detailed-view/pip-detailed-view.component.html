@@ -42,7 +42,7 @@
                                  </th>
 
                                  <th>
-                                    Area of Improvement
+                                    Areas of Improvement with Metrics for Measurement
                                  </th>
                                  <th>
                                     Action Plan
@@ -50,11 +50,6 @@
                                  <th>
                                     Timelines
                                  </th>
-
-                                 <!-- <th>
-                                               Comments
-                                           </th> -->
-
                                  <th>
                                     Status
                                  </th>
@@ -84,23 +79,16 @@
                                        [(ngModel)]="pipInfo.master_timelines" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-                                 <!-- <td>
-                                          <textarea name="Timelines{{i}}" id="timelines" #Timeline="ngModel" [(ngModel)]="learningInfo.timelines"
-                                           class="form-control m-input m-input--air" disabled></textarea>
-                                       </td> -->
-
                                  <td>
                                     <textarea name="status{{i}}" id="status" #status="ngModel"
                                        [(ngModel)]="pipInfo.status" class="form-control m-input m-input--air"
                                        disabled></textarea>
                                  </td>
-
-
                                  <td>
                                     <button type="button"
                                        class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                                        title="Edit" (click)="showPipDetails(i)">
-                                       <i class="la la-info"></i>
+                                       view
                                     </button>
 
                                  </td>
@@ -110,7 +98,7 @@
 												<button
 													class="btn btn-success m-btn m-btn--wide m-btn--icon-only m-btn--custom m-btn--pill m-btn--air pull-right "
 													(click)="showCompletionDetails()">
-													<i class="la la-bar-chart"></i>
+													Pip detail view
 												</button>
 											</td>
 										</tr>
@@ -274,7 +262,7 @@
                                  </div>
                                  <div class="row details">
                                     <div class="col-md-2">
-                                       <span>Area of Improvement</span>
+                                       <span>Areas of Improvement with Metrics for Measurement</span>
                                     </div>
                                     <div class="col-md-10">
 
@@ -327,7 +315,7 @@
                                     </div>
 
                                     <div class="col-md-6 details">
-                                       <span>Employee Initial Comments</span>
+                                       <span>Employee Comment</span>
                                        <textarea name="employeeInitialComment" id="employeeInitialComment"
                                           [(ngModel)]="pipData.employeeInitialComment" #employeeInitialComment="ngModel"
                                           class="form-control m-input m-input--air" required disabled></textarea>
@@ -348,7 +336,7 @@
 
                                     </div>
                                     <div class="col-md-6 details">
-                                       <span>Supervisor Approval Comments</span>
+                                       <span>Supervisor Remark</span>
                                        <textarea name="superviserInitialComment" id="superviserInitialComment"
                                           [(ngModel)]="pipData.superviserInitialComment"
                                           #superviserInitialComment="ngModel" class="form-control m-input m-input--air"
@@ -361,14 +349,14 @@
                                     </div>
 
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month1">
-                                       <span>Employee Comments #1</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month1" id="empComment_month1"
                                           [(ngModel)]="pipData.empComment_month1" #empComment_month1="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
 
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month1">
-                                       <span>Supervisor Comments #1</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month1" id="supComment_month1"
                                           [(ngModel)]="pipData.supComment_month1" #supComment_month1="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -382,14 +370,14 @@
                                        <span><b>Month 2</b></span>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month2">
-                                       <span>Employee Comments #2</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month2" id="empComment_month2"
                                           [(ngModel)]="pipData.empComment_month2" #empComment_month2="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
                                        
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month2">
-                                       <span>Supervisor Comments #2</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month2" id="supComment_month2"
                                           [(ngModel)]="pipData.supComment_month2" #supComment_month2="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -404,14 +392,14 @@
                                        <span><b>Month 3</b></span>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month3">
-                                       <span>Employee Comments #3</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month3" id="empComment_month3"
                                           [(ngModel)]="pipData.empComment_month3" #empComment_month3="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
                                       
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month3">
-                                       <span>Supervisor Comments #3</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month3" id="supComment_month3"
                                           [(ngModel)]="pipData.supComment_month3" #supComment_month3="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -426,13 +414,13 @@
                                        <span><b>Month 4</b></span>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month4">
-                                       <span>Employee Comments #4</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month4" id="empComment_month4"
                                           [(ngModel)]="pipData.empComment_month4" #empComment_month4="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month4">
-                                       <span>Supervisor Comments #4</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month4" id="supComment_month4"
                                           [(ngModel)]="pipData.supComment_month4" #supComment_month4="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -447,14 +435,14 @@
                                        <span><b>Month 5</b></span>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month5">
-                                       <span>Employee Comments #5</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month5" id="empComment_month5"
                                           [(ngModel)]="pipData.empComment_month5" #empComment_month5="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
                                        
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month5">
-                                       <span>Supervisor Comments #5</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month5" id="supComment_month5"
                                           [(ngModel)]="pipData.supComment_month5" #supComment_month5="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -469,14 +457,14 @@
                                        <span><b>Month 6</b></span>
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.empComment_month6">
-                                       <span>Employee Comments #6</span>
+                                       <span>Employee Comments</span>
                                        <textarea name="empComment_month6" id="empComment_month6"
                                           [(ngModel)]="pipData.empComment_month6" #empComment_month6="ngModel"
                                           class="form-control m-input m-input--air" disabled></textarea>
                                        
                                     </div>
                                     <div class="col-md-6 month" *ngIf="pipData.supComment_month6">
-                                       <span>Supervisor Comments #6</span>
+                                       <span>Supervisor Comments</span>
                                        <textarea name="supComment_month6" id="supComment_month6"
                                           [(ngModel)]="pipData.supComment_month6" #supComment_month6="ngModel"
                                           class="form-control m-input m-input--air" disabled
@@ -530,7 +518,7 @@
                   
                         <div class="m-portlet__body">
                            <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="saveComments(pipData)"
-				                  id="PipDataForm" #PipDataForm="ngForm">
+				                  id="PipDataForm1" #PipDataForm1="ngForm">
 				                  <div class="m-widget6 ">
 					                  <div class="row">
 						                  <div class="col-md-6">
@@ -544,7 +532,7 @@
 						                  </div>
 						                  <div class="col-md-10">
 							                  <textarea name="empcom" id="empcom" [(ngModel)]="pipData.emp_final_com"
-								                  #empcom="ngModel" class="form-control m-input m-input--air" required disabled></textarea>
+								                  #empcom="ngModel" class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 
 						                  <div class="col-md-2 details">
@@ -553,7 +541,7 @@
 						                  <div class="col-md-10 details">
 							                  <textarea name="sup_final_com" id="sup_final_com"
 								                  [(ngModel)]="pipData.sup_final_com" #supcom="ngModel"
-								                  class="form-control m-input m-input--air" required disabled></textarea>
+								                  class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 						                  <div class="col-md-2 details">
 							                  <span>Reviewer Comments</span>
@@ -561,23 +549,35 @@
 						                  <div class="col-md-10 details">
 							                  <textarea name="rev_final_com" id="rev_final_com"
 								               [(ngModel)]="pipData.rev_final_com" #revcom="ngModel"
-								               class="form-control m-input m-input--air" required disabled></textarea>
+								               class="form-control m-input m-input--air" disabled></textarea>
 						                  </div>
 						                  <div class="col-md-2 details">
 							                  <span>HR Comments</span>
 						                  </div>
 						                  <div class="col-md-10 details">
-							                  <textarea name="hr_final_com" id="hr_final_com"
-								                  [(ngModel)]="pipData.hr_final_com" #hrcom="ngModel"
-								                  class="form-control m-input m-input--air" required></textarea>
-						                  </div>
+                                       <textarea name="hr_final_com" id="hr_final_com" [(ngModel)]="pipData.hr_final_com" #hr_final_com="ngModel"
+                                          class="form-control m-input m-input--air" required></textarea>
+                                       <div class="form-control-feedback has-danger" *ngIf="PipDataForm1.submitted && hr_final_com.invalid">
+                                          This field is required.
+                                       </div>
+                                    </div>
+                                    
                                     <div class="col-md-6 details">
-                                       <span>Final Recommendation</span>
+                                       <span>Action Taken</span>
                                        <ng-select class="m-input m-input--air customError" name="final_recommendation{{i}}"
                                           id="final_recommendation" [items]="finalRecommendation" bindLabel="final_recommendation"
-                                          bindValue="_id" placeholder="Final Recommendation"
+                                          bindValue="_id" placeholder="Action Taken"
                                           [(ngModel)]="pipData.final_recommendation" [clearable]="false"
                                           #final_recommendation="ngModel" [disabled]="isDisabled">
+                                       </ng-select>
+                                    </div>
+                                    <div class="col-md-6 details" *ngIf="pipData.final_recommendation == 4">
+                                       <span>Extend by</span>
+                                       <ng-select class="m-input m-input--air customError" name="extended_by{{i}}"
+                                          id="extended_by" [items]="extendPIP" bindLabel="extended_by"
+                                          bindValue="_id" placeholder="Extend PIP"
+                                          [(ngModel)]="pipData.extended_by" [clearable]="false"
+                                          #extended_by="ngModel" [disabled]="isDisabled">
                                        </ng-select>
                                     </div>
 

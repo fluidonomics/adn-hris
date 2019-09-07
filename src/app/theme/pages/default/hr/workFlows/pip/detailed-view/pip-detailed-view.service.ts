@@ -38,7 +38,10 @@ export class PipReviewService {
    private extractData(res: Response) {
       return res || {};
    }
-
+   updateMasterHr(data) {
+      let url = "pip/updatepipmasterhr";
+      return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
+   }
    private handleError(error: Response | any) {
       let errMsg: string;
       if (error instanceof Response) {

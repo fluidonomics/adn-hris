@@ -196,14 +196,25 @@ export class PapDetailedViewComponent implements OnInit {
                     this.loadPapDetails().then(res => {
                         this.papChanges.next(res);
                     });
-                    swal({
-                        title: 'Success',
-                        text: "PAP has been Saved.",
-                        type: 'success',
-                        showCancelButton: false,
-                        confirmButtonColor: '#66BB6A',
-                        confirmButtonText: 'OK'
-                    });
+                    if (this.papData.grievanceSupRemark == null) {
+                        swal({
+                            title: 'Success',
+                            text: "PAP has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        swal({
+                            title: 'Success',
+                            text: "Grievance Remark has been Saved.",
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#66BB6A',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 }
             }, error => {
 
@@ -227,7 +238,7 @@ export class PapDetailedViewComponent implements OnInit {
             }
             swal({
                 title: 'Are you sure?',
-                text: "You want to submit PAP to supervisor",
+                text: this.papWorkFlowData[0].grievanceStatus == 'Initiated'? "You want to submit Grievance to supervisor" : "You want to submit PAP to supervisor",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -241,7 +252,7 @@ export class PapDetailedViewComponent implements OnInit {
                                 this.loadPapDetails()
                                 swal({
                                     title: 'Success',
-                                    text: "PAP has been submited.",
+                                    text: this.papWorkFlowData[0].grievanceStatus == 'Initiated'? "Grievance remarks has been submited" : "PAP has been submited.",
                                     type: 'success',
                                     showCancelButton: false,
                                     confirmButtonColor: '#66BB6A',
@@ -257,7 +268,7 @@ export class PapDetailedViewComponent implements OnInit {
         else {
             swal({
                 title: 'Oops!',
-                text: 'All PAP need to be saved before submitting',
+                text: this.papWorkFlowData[0].grievanceStatus == 'Initiated'? 'All Grievance remark need to be saved before submitting' : 'All PAP need to be saved before submitting',
                 type: 'warning',
                 showCancelButton: false,
                 confirmButtonColor: '#66BB6A',

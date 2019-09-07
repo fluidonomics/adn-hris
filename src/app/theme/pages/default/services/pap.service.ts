@@ -16,8 +16,8 @@ export class PapService {
         let url = "pap/getEmployeesForPapInitiate?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
-    getEmployeesForGrievance(): Observable<Response> {
-        let url = "pap/getEmployeesForGrievance";
+    getEmployeesForGrievance(fiscalYearId: string): Observable<Response> {
+        let url = "pap/getEmployeesForGrievance?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).catch(this.handleError);
     }
     getEmployeesForFeedbackInit() {
@@ -103,8 +103,8 @@ export class PapService {
         return this.authService.post(url, data).catch(this.handleError);
     }
 
-    getAllPap() {
-        let url = "pap/getAllPap";
+    getAllPap(fiscalYearId: string) {
+        let url = "pap/getAllPap?fiscalYearId=" + fiscalYearId;
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
 

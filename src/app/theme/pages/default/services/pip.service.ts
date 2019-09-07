@@ -80,7 +80,7 @@ export class PipService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipEmployeeForInitiate(fiscalYearId?: number): Observable<Response> {
+   getPipEmployeeForInitiate(fiscalYearId?: string): Observable<Response> {
       let url = "pip/getPipEmployee?fiscalYearId="+ fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
@@ -94,8 +94,8 @@ export class PipService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipByHr(hrId: number): Observable<Response> {
-      let url = "pip/getpipbyhr?hrId=" + hrId;
+   getPipByHr(hrId: number, fiscalYearId: string): Observable<Response> {
+      let url = "pip/getpipbyhr?hrId=" + hrId + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 

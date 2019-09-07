@@ -35,7 +35,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     currentDate = new Date();
     allPapData = [];
     showGrievanceInitForm: boolean = false;
-
+    fiscalYearId: string;
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
         private _commonService: CommonService,
@@ -46,6 +46,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
             this.loadAllEmployee();
@@ -59,7 +60,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     loadAllEmployee() {
         this.showGrievancePhase = false;
         this.utilityService.showLoader('#allEmployee-loader');
-        this._papService.getEmployeesForGrievance().subscribe(res => {
+        this._papService.getEmployeesForGrievance(this.fiscalYearId).subscribe(res => {
             let data = res.json().result.message || [];
             //data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
             this.employeesData = data || [];
@@ -73,7 +74,7 @@ export class GrievanceAllEmployeeComponent implements OnInit {
     }
 
     getAllPap() {
-        this._papService.getAllPap().subscribe(res => {
+        this._papService.getAllPap(this.fiscalYearId).subscribe(res => {
             this.allPapData = res || [];
             let grievancePap = this.allPapData.filter(pap => {
                 if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.grievanceRaiseEndDate == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
@@ -85,7 +86,6 @@ export class GrievanceAllEmployeeComponent implements OnInit {
             this.showGrievanceInitForm = grievancePap.length > 0;
         });
     }
-
 
     sort(key) {
         this.key = key;
@@ -101,9 +101,8 @@ export class GrievanceAllEmployeeComponent implements OnInit {
         return Math.min(start + this.itemPerPage - 1, filterCount);
     }
 
-
     grievanceEmployeeDetail(employee: any) {
-        console.log(employee);
-        this._router.navigate(['/hr/workflows/grievance/detail/4/' + employee.employeedetails._id])//('/user');
+        let papMasterId = employee._id;
+        this._router.navigate(['/my/team/workflows/pap-review/'+ papMasterId + '/' + employee.emp_id+'/true']);
     }
 }

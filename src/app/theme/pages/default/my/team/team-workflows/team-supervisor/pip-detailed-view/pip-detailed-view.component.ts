@@ -21,43 +21,28 @@ import { environment } from '../../../../../../../../../environments/environment
 })
 
 export class PipDetailedViewComponent {
-
     @ViewChild('pipDetailModal') pipDetailModal: TemplateRef<any>;
     @ViewChild('pipCompletionModal') pipCompletionModal: TemplateRef<any>;
 
     window: any = window;
-    //kraCategoryData: any[];
-    //weightageData: any = [];
     supervisorData: any = [];
-
-    //kraInfoData: any = [];
     PipAgendaData: any = [];
     pipInfoData: any = [];
     pipMasterData: any = [];
-
-    //isSubmitted: boolean = false;
-
-
-    // isKraAvaliable: boolean = false;
     istsix: boolean = false;
-
     param_emp_id: number;
     param_master_id: number;
     param_id: number;
     param_from: string;
-    //kraWorkFlowData: any = [];
-
-    //status: any;
     statusq: any;
     isDisabled: boolean = false;
     isSup: boolean = true;
     isDis: boolean = true;
     user: any;
-    //showStat = false;
     masterStatus: string;
-    primarySupervisorId: number; 
+    primarySupervisorId: number;
+    showPIPApprovalMessage: boolean;
     finalReviewEnable: boolean = false;
-
     dateDifference: number;
     isCommentOfMonth1Enable: boolean = false;
     isCommentOfMonth2Enable: boolean = false;
@@ -69,12 +54,10 @@ export class PipDetailedViewComponent {
     fiscalYearId: string;
     learningData: any;
     _currentEmpId: number;
-
     imageBase: any;
-
     agenda_arraynum: number;
 
-   supervisorPerformanceRating = [
+    supervisorPerformanceRating = [
         {
             '_id': 1,
             'supervisorRating': "Met Expectation"
@@ -84,25 +67,20 @@ export class PipDetailedViewComponent {
             'supervisorRating': "Not Met Expectation"
         }
     ];
-
-
     finalRecommendation = [
         {
-            '_id':1,
+            '_id': 1,
             'final_recommendation': "Continue in current role"
         },
         {
-            '_id':2,
+            '_id': 2,
             'final_recommendation': "Internal Movement"
         },
         {
-            '_id':3,
+            '_id': 3,
             'final_recommendation': "Remedial action"
         }
-     ];
-
-
-
+    ];
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -122,8 +100,8 @@ export class PipDetailedViewComponent {
         ]);
 
     }
-
     ngOnInit() {
+        this.showPIPApprovalMessage = false;
         this._currentEmpId = this._authService.currentUserData._id;
         this._authService.validateToken().subscribe(
             res => {
@@ -142,19 +120,12 @@ export class PipDetailedViewComponent {
 
 
     }
-
     initData() {
-
         this.loadPipEmployee();
-        //   this.loadKraCategoryData();
-        //   this.loadWeightAgeData();
         this.loadSupervisorData();
-        //   this.loadKraInfo();
         this.getEmployee();
         this.loadPipBySupervisor(this._currentEmpId, "Approved");
     }
-
-
     loadPipBySupervisor(sup_Id: number, status: string) {
 
         this._pipService.getPipBySupervisor(sup_Id, status, this.fiscalYearId).subscribe(res => {
@@ -164,7 +135,6 @@ export class PipDetailedViewComponent {
             swal("Error", error.title, "error");
         });
     }
-
     loadPipEmployee() {
 
         this._pipService.getPipDetails(this.param_master_id).subscribe(
@@ -176,12 +146,22 @@ export class PipDetailedViewComponent {
                     if (this.pipInfoData.length == 0) {
                         this._router.navigateByUrl("/my/team/workflows/supervisor");
                     }
-                    
+
                 }
-                this.masterStatus = this.pipInfoData[0].master_status;
-                this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
-                this.isDis = res.json().status == 'Approved' ? true : false;
-                this.statusq = res.json().status;
+                if (this.pipInfoData.length > 0) {
+                    this.masterStatus = this.pipInfoData[0].master_status;
+                    this.primarySupervisorId = this.pipInfoData[0].primary_supervisor;
+                    if (this.pipInfoData[0].master_status != "Submitted")
+                        this.showPIPApprovalMessage = this.pipInfoData[0].sup_final_com == null;
+                    else
+                        this.showPIPApprovalMessage = false;
+
+                    this.isDis = res.json().status == 'Approved' ? true : false;
+                    this.statusq = res.json().status;
+                }
+                else {
+                    this.showPIPApprovalMessage = false;
+                }
             },
             error => {
 
@@ -189,7 +169,6 @@ export class PipDetailedViewComponent {
             }
         );
     }
-
     loadSupervisorData() {
         this._commonService.getKraSupervisor(this.param_emp_id)
             .subscribe(
@@ -199,7 +178,6 @@ export class PipDetailedViewComponent {
                 error => {
                 });
     }
-
     getEmployee() {
         this._commonService.getEmployee(this.param_emp_id).subscribe(res => {
             if (res.ok) {
@@ -207,7 +185,6 @@ export class PipDetailedViewComponent {
             }
         })
     }
-
     preSaveLearningDetails(pipData: any, Remarks: String) {
         if (!pipData.superviserInitialComment) {
             swal({
@@ -240,11 +217,11 @@ export class PipDetailedViewComponent {
                         empId: this.user._id,
                         supervisorId: this._currentEmpId,
                         supervisor_name: this.user.supervisorDetails.fullName,
-                        action_link: window.location.origin + '/my/pip',
+                        action_link: window.location.origin + '/my/pip?fiscalYearId=' + this.fiscalYearId,
                         isApproved: isApproved,
                         superviserInitialComment: pipData.superviserInitialComment,
                     }
-                    
+
                     this.utilityService.showLoader('.mtrDetailsPortlet');
                     this._pipService.approvePip(request).subscribe(res => {
                         if (res.ok && isApproved) {
@@ -259,7 +236,6 @@ export class PipDetailedViewComponent {
                                 confirmButtonText: 'OK'
                             });
                             this.loadPipEmployee();
-
                         }
                         else {
                             this.modalRef.hide();
@@ -274,13 +250,16 @@ export class PipDetailedViewComponent {
                             });
                             this.loadPipEmployee();
                         }
+                        this.utilityService.hideLoader('.m-content');
                     }, err => {
-                        if (err.status == 300) {
-                            let error = err.json() || {};
+                        let error = err.json() || {};
+                        if (err.status == 301) {
+                            swal("Oops!", error.title, "warning");
+                        } else {
                             swal("Error", error.title, "error");
-                            this.loadPipEmployee();
-                            this.modalRef.hide();
                         }
+                        this.loadPipEmployee();
+                        this.modalRef.hide();
                         this.utilityService.hideLoader('.m-content');
                     })
                 }
@@ -288,7 +267,6 @@ export class PipDetailedViewComponent {
         }
 
     }
-
     saveLearningDetails(pipData: any, Remarks: String, form) {
 
         let request = {
@@ -344,7 +322,6 @@ export class PipDetailedViewComponent {
         }
 
     }
-
     saveComments(pipData: any) {
         if (pipData.hr_final_com) {
             swal({
@@ -408,7 +385,6 @@ export class PipDetailedViewComponent {
         }
 
     }
-
     modalRef: BsModalRef;
     pipData: any = {};
     showPipDetails(index, event) {
@@ -437,7 +413,7 @@ export class PipDetailedViewComponent {
 
         if (this.pipData.supervisor_id == this._currentEmpId) {
             this.isSup = true;
-            
+
         }
         else {
             this.isSup = false;
@@ -451,26 +427,24 @@ export class PipDetailedViewComponent {
             this.istsix = false;
         }
     }
-
     showCompletionDetails() {
         this.modalRef = this.modalService.show(this.pipCompletionModal, Object.assign({}, { class: 'gray modal-lg' }));
         this.pipData = this.pipMasterData[0];
         this.pipData.no = 1;
 
-        if(this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com) {
+        if (this.pipData.pip_master_details.emp_final_com && this.pipData.pip_master_details.sup_final_com) {
 
             $("#sup_final_com").attr('disabled', 'disabled');
             $("#submitForm").remove();
         }
 
-        if(!this.pipData.pip_master_details.emp_final_com) {
+        if (!this.pipData.pip_master_details.emp_final_com) {
 
             $("#sup_final_com").attr('disabled', 'disabled');
             $("#submitForm").remove();
         }
 
     }
-
     monthlyCommentValidation() {
 
         if (this.pipData.dateDifference >= 1 && this.pipData.dateDifference < 2
@@ -506,7 +480,6 @@ export class PipDetailedViewComponent {
             this.isCommentOfMonth6Enable = false;
         }
     }
-
     isSaveEnabled() {
 
         if (this.isCommentOfMonth1Enable || this.isCommentOfMonth2Enable || this.isCommentOfMonth3Enable ||
@@ -518,7 +491,6 @@ export class PipDetailedViewComponent {
         }
 
     }
-
     isFinalreviewEnabled() {
 
         if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 3 &&
@@ -526,13 +498,10 @@ export class PipDetailedViewComponent {
             this.finalReviewEnable = true;
         } else if (this.pipData.dateDifference >= this.pipData.master_timelines && this.pipData.master_timelines == 6 &&
             this.pipData.empComment_month6 && !this.pipData.supervisorPerformanceRating && !this.pipData.superviserFinalReview) {
-                this.finalReviewEnable = true;
+            this.finalReviewEnable = true;
         } else {
             this.finalReviewEnable = false;
         }
 
     }
-
-
-
 }

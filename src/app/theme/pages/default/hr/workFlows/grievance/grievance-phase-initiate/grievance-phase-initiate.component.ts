@@ -35,7 +35,7 @@ export class GrievancePhaseInitiateComponent {
     filterBy: any = {
         departments: []
     };
-
+    fiscalYearId: string;
     constructor(private _script: ScriptLoaderService,
         private _papService: PapService,
         private _commonService: CommonService,
@@ -47,7 +47,7 @@ export class GrievancePhaseInitiateComponent {
     ngOnInit() {
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
-            // this.loadAllEmployee();
+            this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
             this.getAllPap();
             this.loadDepartment();
         });
@@ -68,7 +68,7 @@ export class GrievancePhaseInitiateComponent {
 
 
     getAllPap() {
-        this._papService.getAllPap().subscribe(res => {
+        this._papService.getAllPap(this.fiscalYearId).subscribe(res => {
             this.allPapData = res || [];
             this.grievancePap = this.allPapData.filter(pap => {
                 if (pap.reviewerStatus == 'Approved' && pap.grievanceStatus == null && pap.isDeleted == false && pap.isSentToSupervisor == true && pap.isRatingCommunicated == true && pap.status == 'Approved') {
@@ -113,7 +113,8 @@ export class GrievancePhaseInitiateComponent {
             let data = {
                 updatedBy: this._currentEmpId,
                 grievanceEndDate: this.grievanceEndDate,
-                employees: employees
+                employees: employees,
+                action_link: window.location.origin + '/my/workflows/pap?fiscalYearId=' + this.fiscalYearId,
             };
 
             swal({

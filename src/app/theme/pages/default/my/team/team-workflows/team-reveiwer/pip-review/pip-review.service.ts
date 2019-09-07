@@ -26,8 +26,8 @@ export class PipReviewService {
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
 
-   getPipByReviewer(reviewerId: number): Observable<Response> {
-      let url = "pip/pipbyreviewer?reviewerId=" + reviewerId;
+   getPipByReviewer(reviewerId: number, fiscalYearId ?: string): Observable<Response> {
+      let url = "pip/pipbyreviewer?reviewerId=" + reviewerId + "&fiscalYearId=" + fiscalYearId;
       return this.authService.get(url).map(this.extractData).catch(this.handleError);
    }
    updateMaster(data) {

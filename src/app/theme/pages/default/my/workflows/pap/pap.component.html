@@ -232,9 +232,9 @@
 							<span class="rating">Overall Rating: {{papWorkFlowData[0]?.overallRating}}</span>
 						</div>
 						<div *ngIf="showGreivanceActions" class="col-md-4">
-							<button type="button" class="btn m-btn btn-success"
+							<button type="button" class="btn m-btn pull-right btn-success"
 								(click)="raiseGreivance(false)">Satisfied</button>
-							<button type="button" class="btn m-btn btn-warning" (click)="raiseGreivance(true)">Raise
+							<button type="button" style="margin-right: 8px;" class="btn m-btn pull-right btn-warning" (click)="raiseGreivance(true)">Raise
 								Greivance</button>
 						</div>
 					</div>

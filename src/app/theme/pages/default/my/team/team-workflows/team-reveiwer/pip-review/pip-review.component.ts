@@ -47,7 +47,7 @@ export class PipReview {
    isDis: boolean = true;
    user: any;
    showStat = false;
-
+   fiscalYearId: string;
    _currentEmpId: number;
    masterStatus: string;
 
@@ -103,7 +103,7 @@ export class PipReview {
    }
 
    ngOnInit() {
-
+      this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
       this._currentEmpId = this._authService.currentUserData._id;
       this._authService.validateToken().subscribe(
          res => {
@@ -163,7 +163,7 @@ export class PipReview {
    }
 
    loadMasterData() {
-      this._pipService.getPipByReviewer(this._currentEmpId).subscribe(
+      this._pipService.getPipByReviewer(this._currentEmpId, this.fiscalYearId).subscribe(
          res => {
 
             this.pipMasterData = res.json().result.message;

@@ -244,10 +244,10 @@
                                         <button *ngIf="!isDisabled || papData.grievanceStatus == 'Pending Reviewer'"
                                             class="btn btn-success submitForm"
                                             (click)="saveKRADetails(PAPDataForm,papData._id,true)"
-                                            id="submitForm">Approved</button>
+                                            id="submitForm">Approve</button>
                                         <button *ngIf="!isDisabled || papData.grievanceStatus == 'Pending Reviewer'"
                                             class="btn btn-danger" type="button"
-                                            (click)="saveKRADetails(PAPDataForm,papData._id,false)">Send Back</button>
+                                            (click)="saveKRADetails(PAPDataForm,papData._id,false)" id="submitForm" >Send Back</button>
                                         <button *ngIf="isDisabled" class="btn btn-secondary" type="button"
                                             (click)="modalRef.hide()">Close</button>
                                     </div>

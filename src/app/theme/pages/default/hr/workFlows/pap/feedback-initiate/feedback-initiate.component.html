@@ -1,6 +1,6 @@
 <department-grade-filter (onSearch)="onFilterSelected($event)" [showGradeFilter]="false"
     [filterHeading]="'Initiate Feedback'"></department-grade-filter>
-<div class="m-content" id="initiate-loader">
+<div class="m-content" id="initiate-loader" style="padding: 0 30px 0 30px">
     <div class="m-portlet m-portlet--mobile">
         <div class="m-portlet__body">
             <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
@@ -83,8 +83,8 @@
                                 </label>
                             </td>
                             <td class="m-datatable__cell" width="10%">
-                                <img *ngIf="employeedetails?.profileImage; else noImage"
-                                    src="{{imageBase+employeedetails?.profileImage}}"
+                                <img *ngIf="employee?.employeedetails?.profileImage; else noImage"
+                                    src="{{imageBase+employee?.employeedetails?.profileImage}}"
                                     onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';"
                                     class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                                 <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"
