@@ -430,11 +430,15 @@ export class CommonService {
     setFiscalYearIdLocal(fiscalYearId) {
         sessionStorage.setItem('fiscalYearId', fiscalYearId);
     }
-
+    setCompanyIdLocal(company_id) {
+        sessionStorage.setItem('company_id', company_id);
+    }
     getFiscalYearIdLocal() {
         return sessionStorage.getItem('fiscalYearId');
     }
-
+    getCompanyIdLocal() {
+        return sessionStorage.getItem('company_id');
+    }
     getCurrentMonthDates(fiscalYear?: any) {
         let dateRange = [];
         let startDate = new Date();
