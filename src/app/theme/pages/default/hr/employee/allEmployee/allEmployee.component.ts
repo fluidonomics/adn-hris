@@ -64,11 +64,12 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         //         this._currentEmpId = this._authService.currentUserData._id;
         //         this.loadAllEmployee();
         // });
+        this.company_id = Number(this._commonService.getCompanyIdLocal());
         this._route.params.subscribe(params => {
             if (params['id']) {
                 this.param_emp_id = params['id'];
             }
-            this.company_id = Number(this._commonService.getCompanyIdLocal());
+            
             this._authService.validateToken().subscribe(
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
