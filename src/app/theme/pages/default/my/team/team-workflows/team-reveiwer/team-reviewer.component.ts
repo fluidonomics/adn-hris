@@ -138,7 +138,6 @@ export class MyTeamReviewerComponent implements OnInit {
     getPapByReviewer() {
         this.utilityService.showLoader("#papApprovalList");
         this.papService.getPapByReviewer(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
-            debugger;
             this.utilityService.hideLoader("#papApprovalList");
             let papData = res;
             if (papData.length > 0) {
