@@ -19,37 +19,24 @@ declare var moment;
 })
 export class MyTeamReviewerComponent implements OnInit {
 
-    constructor(
-        public authService: AuthService,
-        private utilityService: UtilityService,
-        private route: ActivatedRoute,
-        private myService: MyService,
-        private router: Router,
-        private kraService: KraService,
-        private learningService: LearningService,
-        private papService: PapService,
-        private pipService: PipService,
-        private commonService: CommonService
-    ) {
-    }
     fiscalYearId: any;
     employees: any = [];
     mtrEmployees: any = [];
     imageBase: any;
     employeeReverse: boolean = true;
     employeeSearch: any;
-    employeesFilter: any = {
-        date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
-        status: 'All',
-        page: 1
-    };
+    // employeesFilter: any = {
+    //     date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
+    //     status: 'All',
+    //     page: 1
+    // };
     mTRemployeeReverse: boolean = true;
     mTRemployeeSearch: any;
-    mTRemployeesFilter: any = {
-        date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
-        status: 'All',
-        page: 1
-    };
+    // mTRemployeesFilter: any = {
+    //     date: this.myService.getAllEmployeeByReviewerId(this.authService.currentUserData._id),
+    //     status: 'All',
+    //     page: 1
+    // };
     learningData: any = [];
     learningSearch: any;
     learningReverse: boolean = true;
@@ -63,6 +50,23 @@ export class MyTeamReviewerComponent implements OnInit {
     papEmployeeSearch: any;
     papData: any = [];
     papViewData: any = [];
+
+    currentCompanyId;
+
+    constructor(
+        public authService: AuthService,
+        private utilityService: UtilityService,
+        private route: ActivatedRoute,
+        private myService: MyService,
+        private router: Router,
+        private kraService: KraService,
+        private learningService: LearningService,
+        private papService: PapService,
+        private pipService: PipService,
+        private commonService: CommonService
+    ) {
+        this.currentCompanyId = this.commonService.getCompanyIdLocal();
+    }
 
     goToAllEmployee() {
         this.router.navigate(['/my/team/workflows/reveiwer/employee/list']);
@@ -88,6 +92,7 @@ export class MyTeamReviewerComponent implements OnInit {
             if (res.ok) {
                 let data = res.json();
                 this.mtrEmployees = data.result.message;
+                this.mtrEmployees = this.mtrEmployees.filter(e => e.emp_details.company_id == this.currentCompanyId);
             }
         })
     }
@@ -98,7 +103,8 @@ export class MyTeamReviewerComponent implements OnInit {
             if (res.ok) {
                 this.utilityService.hideLoader("#employeeList");
                 this.employees = res.json() || [];
-                this.employees = this.employees.data.sort((a, b) => {
+                this.employees = this.employees.data.filter(e => e.company_id == this.currentCompanyId);
+                this.employees = this.employees.sort((a, b) => {
                     if (moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return 1;
                     else if (!moment(a.kra.updatedAt).isBefore(b.kra.updatedAt)) return -1;
                     else return 0;
@@ -112,6 +118,7 @@ export class MyTeamReviewerComponent implements OnInit {
     getEmployeesLearning() {
         this.learningService.getLearningByReviewer(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
             this.learningData = res.json().result.message || [];
+            this.learningData = this.learningData.filter(e => e.emp_details.company_id == this.currentCompanyId);
             // this.learningData = this.learningData.filter(a => a.learning_master_details.status == 'Approved');
         }, error => {
             console.log(error);
@@ -121,6 +128,7 @@ export class MyTeamReviewerComponent implements OnInit {
     getPipByReviewer() {
         this.pipService.getPipByReviewer(this.authService.currentUserData._id).subscribe(res => {
             this.pipData = res.json().result.message || [];
+            this.pipData = this.pipData.filter(e => e.emp_details.company_id == this.currentCompanyId);
             this.pipData = this.pipData.filter(a => a.pip_master_details.status == 'Approved' || a.pip_master_details.status == 'Completed');
         }, error => {
             console.log(error);
@@ -130,9 +138,11 @@ export class MyTeamReviewerComponent implements OnInit {
     getPapByReviewer() {
         this.utilityService.showLoader("#papApprovalList");
         this.papService.getPapByReviewer(this.authService.currentUserData._id, this.fiscalYearId).subscribe(res => {
+            debugger;
             this.utilityService.hideLoader("#papApprovalList");
             let papData = res;
             if (papData.length > 0) {
+                papData = papData.filter(e => e.company_id == this.currentCompanyId);
                 this.papData = papData.filter(p => {
                     let submittedCount = 0;
                     if (p.kra_details && p.kra_details.length > 0) {
