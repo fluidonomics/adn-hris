@@ -21,6 +21,7 @@ export class LearningApprovalComponent implements OnInit {
     learningReverse: boolean = true;
     imageBase: any;
     fiscalYearId: string;
+    companyId: number;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
@@ -32,6 +33,7 @@ export class LearningApprovalComponent implements OnInit {
 
     ngOnInit() {
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
+        this.companyId = Number(this._commonService.getCompanyIdLocal());
         this.imageBase = environment.content_api_base.apiBase;
         this._authService.validateToken().subscribe(res => {
             this._currentEmpId = this._authService.currentUserData._id;
@@ -42,7 +44,8 @@ export class LearningApprovalComponent implements OnInit {
     loadLearningBySupervisor(sup_Id: number,status:string) {
 
         this._learningService.getLearningBySupervisor(sup_Id,status, this.fiscalYearId).subscribe(res => {
-            this.learningData = res.json().result.message || [];
+            let finalData = res.json().result.message || [];
+            this.learningData = finalData.filter(f => f.companyId == this.companyId);
         }, error => {
             console.log(error);
         });

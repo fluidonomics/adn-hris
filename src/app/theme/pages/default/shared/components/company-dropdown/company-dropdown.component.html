@@ -1,0 +1,5 @@
+<span class="title">Company</span>
+<ng-select #ddCompany class="m-input m-input--air  dd-format" name="company" bindValue="_id" bindLabel="companyName"
+    [items]="companyList" [(ngModel)]="companyId" id="company" #company="ngModel" placeholder="Select Company"
+    (ngModelChange)="onCompanyChange($event)" [clearable]="false">
+</ng-select>
