@@ -50,6 +50,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
     currentFiscalYear: any;
+    company_id: number;
 
 
     constructor(
@@ -70,6 +71,7 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
         this._commonService.currentFinancialYear.subscribe(res => {
             this.currentFiscalYear = res;
         });
+        this.company_id = Number(this._commonService.getCompanyIdLocal());
     }
 
     initDropdown() {
@@ -118,6 +120,8 @@ export class HrInitiateComponent implements OnInit, AfterViewInit {
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
+                    data = data.filter(obj => obj.company_id == this.company_id);
+
                     if (this.filterBy.departments && this.filterBy.departments.length > 0) {
                         data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                     }
