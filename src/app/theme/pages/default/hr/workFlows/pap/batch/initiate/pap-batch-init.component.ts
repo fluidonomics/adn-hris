@@ -27,6 +27,8 @@ export class PapBatchInitComponent implements OnInit {
     currentDate = new Date();
     _currentEmpId: number;
     fiscalYearId: string;
+    companyId: any = this._commonService.getCompanyIdLocal();
+
     @ViewChild('grid') employeeBatchSelectionGrid: EmployeeBatchSelectionGridComponent;
     @ViewChild('filter') departmentGradeFilterComponent: DepartmentGradeFilterComponent;
 
@@ -56,7 +58,9 @@ export class PapBatchInitComponent implements OnInit {
 
     getEmployeesForPap() {
         this.papService.getEmployeesForPapInitiate(this.fiscalYearId).subscribe(res => {
+            debugger;
             this.employees = res || [];
+            this.employees = this.employees.filter(obj => obj.hrspoc_id == this._currentEmpId && obj.company_id == this.companyId);
             this.employees = this.employees.filter(e => {
                 if (e.type == 'pap') {
                     return e.pap_master.length == 0 && e.grade_id < 13;

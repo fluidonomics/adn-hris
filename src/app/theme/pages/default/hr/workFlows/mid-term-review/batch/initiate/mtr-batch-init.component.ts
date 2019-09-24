@@ -38,13 +38,15 @@ export class MtrBatchInitComponent implements OnInit {
     currentDate = new Date();
     isCheckAll: any;
     currentFiscalYear: any;
+    companyId: any = this._commonService.getCompanyIdLocal();
+
     constructor(private _hrService: HrService,
         private _commonService: CommonService,
         private utilityService: UtilityService,
         public _authService: AuthService) { }
 
     ngOnInit() {
-        this.currentFiscalYear =  parseInt(this._commonService.getFiscalYearIdLocal());
+        this.currentFiscalYear = parseInt(this._commonService.getFiscalYearIdLocal());
         this._authService.validateToken().subscribe(
             res => {
                 this._currentEmpId = this._authService.currentUserData._id;
@@ -63,38 +65,40 @@ export class MtrBatchInitComponent implements OnInit {
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        // this.employeeData = [];
-                        this.deparmentData = res.json();
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    // this.employeeData = [];
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+            });
     }
 
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
-                res => {
-                    if (res.ok) {
+            res => {
+                if (res.ok) {
 
-                        this.gradeData = res.json();
-                        this.gradeData = this.gradeData.filter(item =>
-                            item._id < 13
-                        );
-                    }
-                },
-                error => {
-                });
+                    this.gradeData = res.json();
+                    this.gradeData = this.gradeData.filter(item =>
+                        item._id < 13
+                    );
+                }
+            },
+            error => {
+            });
     }
+
     getAllEmployee() {
         this.employeeData = [];
         this.utilityService.showLoader('#initiate-loader');
         this._hrService.getAllEmployeeForMTR(this.currentFiscalYear).subscribe(res => {
             let data = res.json();
             if (data.result.length > 0) {
-                data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId && !obj.mtr_batch_id);
+                debugger;
+                data = data.result.filter(obj => obj.emp_HRSpoc_id == this._currentEmpId && !obj.mtr_batch_id && obj.company_id == this.companyId);
                 // data= data.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj['_id']).indexOf(obj['_id']) === pos;});
                 data.forEach(element => {
                     if (this.employeeData.filter(obj => obj.emp_id == element.emp_id).length == 0) {
@@ -105,7 +109,7 @@ export class MtrBatchInitComponent implements OnInit {
                 this.utilityService.hideLoader('#initiate-loader');
             }
             else {
-                
+
                 this.employeeData = data.json().result || [];
                 this.utilityService.hideLoader('#initiate-loader');
             }
