@@ -40,6 +40,7 @@ export class HrLearningComponent {
         { _id: "PIP", batchTypeName: "PIP", disabled: true },
     ]
     fiscalYearId: string;
+    companyId: any = this._commonService.getCompanyIdLocal();
 
     constructor(
         private _hrService: HrService,
@@ -70,32 +71,32 @@ export class HrLearningComponent {
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.deparmentData = res.json();
-                    }
-                },
-                error => {
-                    console.log(error);
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.gradeData = res.json();
-                        this.gradeData = this.gradeData.filter(item =>
-                            item._id < 13
-                        );
-                    }
-                },
-                error => {
-                    console.log(error);
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.gradeData = res.json();
+                    this.gradeData = this.gradeData.filter(item =>
+                        item._id < 13
+                    );
+                }
+            },
+            error => {
+                console.log(error);
+            });
     }
 
     getAllEmployee() {
@@ -104,7 +105,7 @@ export class HrLearningComponent {
         this._hrService.getAllEmployee().subscribe(res => {
             let data = res.json().data || [];
             if (data.length > 0) {
-                data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.companyId);
                 this.employeeData = data;
                 this.showdetail();
                 this.utilityService.hideLoader('#initiate-loader');
@@ -128,30 +129,31 @@ export class HrLearningComponent {
             this.utilityService.showLoader('#initiate-loader');
             this._hrService.getAllEmployee()
                 .subscribe(
-                    res => {
-                        let data = res.json().data || [];
-                        if (data.length > 0) {
-                            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                                data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                            }
-                            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                                data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                            }
-                            data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                            this.employeeData = data || [];
-                            this.showdetail();
-                            this.utilityService.hideLoader('#initiate-loader');
+                res => {
+                    let data = res.json().data || [];
+                    if (data.length > 0) {
+                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.companyId);
+                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                         }
-                        else {
-                            this.employeeData = data.json().data || [];
-                            this.showdetail();
-                            this.utilityService.hideLoader('#initiate-loader');
+                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
                         }
-
-                    },
-                    error => {
+                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                        this.employeeData = data || [];
+                        this.showdetail();
                         this.utilityService.hideLoader('#initiate-loader');
-                    });
+                    }
+                    else {
+                        this.employeeData = data.json().data || [];
+                        this.showdetail();
+                        this.utilityService.hideLoader('#initiate-loader');
+                    }
+
+                },
+                error => {
+                    this.utilityService.hideLoader('#initiate-loader');
+                });
         }
     }
 
