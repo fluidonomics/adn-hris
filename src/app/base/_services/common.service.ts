@@ -31,6 +31,7 @@ declare var moment;
 export class CommonService {
 
     currentFinancialYear: ReplaySubject<any> = new ReplaySubject<any>(1);
+    currentCompany: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private authService: AuthService,
         private http: Http) {
@@ -433,6 +434,14 @@ export class CommonService {
 
     getFiscalYearIdLocal() {
         return sessionStorage.getItem('fiscalYearId');
+    }
+
+    setCompanyIdLocal(companyId) {
+        sessionStorage.setItem('companyId', companyId);
+    }
+
+    getCompanyIdLocal() {
+        return sessionStorage.getItem('companyId');
     }
 
     getCurrentMonthDates(fiscalYear?: any) {

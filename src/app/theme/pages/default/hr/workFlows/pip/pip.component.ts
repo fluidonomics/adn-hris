@@ -50,6 +50,9 @@ export class HrPipComponent {
             'timeline': "6 Months"
         }
     ];
+
+    companyId: any = this._commonService.getCompanyIdLocal();
+
     constructor(
         private _hrService: HrService,
         private _commonService: CommonService,
@@ -79,29 +82,29 @@ export class HrPipComponent {
     loadDepartment(division_id?: number) {
         this._commonService.getDepartment()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.deparmentData = res.json();
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.deparmentData = res.json();
+                }
+            },
+            error => {
+            });
     }
     loadGrade() {
         this._commonService.getGrade()
             .subscribe(
-                res => {
-                    if (res.ok) {
-                        this.employeeData = [];
-                        this.gradeData = res.json();
-                        this.gradeData = this.gradeData.filter(item =>
-                            item._id < 13
-                        );
-                    }
-                },
-                error => {
-                });
+            res => {
+                if (res.ok) {
+                    this.employeeData = [];
+                    this.gradeData = res.json();
+                    this.gradeData = this.gradeData.filter(item =>
+                        item._id < 13
+                    );
+                }
+            },
+            error => {
+            });
     }
     getAllEmployee() {
         this.employeeData = [];
@@ -109,12 +112,12 @@ export class HrPipComponent {
         this._pipService.getPipEmployeeForInitiate(this.fiscalYearId).subscribe(res => {
             let data = res.json().data || [];
             if (data.length > 0) {
-                data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.companyId);
                 this.employeeData = data;
                 this.showdetail();
             }
             this.utilityService.hideLoader('#initiate-loader');
-            }, error => {
+        }, error => {
             this.utilityService.hideLoader('#initiate-loader');
         });
     }
@@ -129,32 +132,33 @@ export class HrPipComponent {
             this.utilityService.showLoader('#initiate-loader');
             // later need to uncomment when pip data will be ready
             this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
-            // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
+                // this._pipService.getPipEmployeeForInitiate(this.fiscalYearId)
                 .subscribe(
-                    res => {
-                        let data = res.json().data || [];
-                        if (data.length > 0) {
-                            if (this.filterBy.departments && this.filterBy.departments.length > 0) {
-                                data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
-                            }
-                            if (this.filterBy.grades && this.filterBy.grades.length > 0) {
-                                data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
-                            }
-                            data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
-                            this.employeeData = data || [];
-                            this.showdetail();
-                            this.utilityService.hideLoader('#initiate-loader');
+                res => {
+                    let data = res.json().data || [];
+                    if (data.length > 0) {
+                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.companyId);
+                        if (this.filterBy.departments && this.filterBy.departments.length > 0) {
+                            data = data.filter(obj => this.filterBy.departments.includes(obj.department_id) && obj.grade_id < 13);
                         }
-                        else {
-                            this.employeeData = data.json().data || [];
-                            this.showdetail();
-                            this.utilityService.hideLoader('#initiate-loader');
+                        if (this.filterBy.grades && this.filterBy.grades.length > 0) {
+                            data = data.filter(obj => this.filterBy.grades.includes(obj.grade_id));
                         }
-
-                    },
-                    error => {
+                        data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                        this.employeeData = data || [];
+                        this.showdetail();
                         this.utilityService.hideLoader('#initiate-loader');
-                    });
+                    }
+                    else {
+                        this.employeeData = data.json().data || [];
+                        this.showdetail();
+                        this.utilityService.hideLoader('#initiate-loader');
+                    }
+
+                },
+                error => {
+                    this.utilityService.hideLoader('#initiate-loader');
+                });
         }
         else {
             this.employeeData = [];
@@ -194,7 +198,7 @@ export class HrPipComponent {
                                 this.clearForm();
                             }
                         }, error => {
-                            if(error.status == 301) {
+                            if (error.status == 301) {
                                 swal("Oops!", error.json().title, "warning");
                                 form.resetForm();
                                 this.clearForm();

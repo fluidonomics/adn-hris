@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
         private _route: ActivatedRoute,
         public _router: Router,
         private _authService: AuthService,
+        private _commonService: CommonService
     ) {
         title.setTitle('ADN HRIS | Login');
         meta.addTags([
@@ -53,6 +54,8 @@ export class LoginComponent implements OnInit {
         this._authService.login(this.loginModel)
             .subscribe(
             data => {
+
+                this._commonService.setCompanyIdLocal(data.json().company_id);
                 this._router.navigate([this.returnUrl]);
             },
             error => {

@@ -25,6 +25,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
     kraReverse: boolean = true;
     employeeReverse: boolean = true;
     fiscalYearId: Number;
+    comapnyId: Number;
     constructor(
         private _myteamService: MyTeamService,
         public _authService: AuthService,
@@ -33,6 +34,7 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
         private commonService: CommonService
     ) {
         this.fiscalYearId = parseInt(this.commonService.getFiscalYearIdLocal());
+        this.comapnyId = parseInt(this.commonService.getCompanyIdLocal());
     }
     ngOnInit() {
         this._authService.validateToken().subscribe(
@@ -58,7 +60,8 @@ export class MyTeamSupervisorComponent implements AfterViewInit {
                     this._utilityService.hideLoader("#employeeApproval");
                     this._myteamService.getKraForApproval(this._currentEmpId, this.fiscalYearId).subscribe(
                         resApproval => {
-                            this.loadKraData(resApproval.json().data);
+                            let finalData = resApproval.json().data;
+                            this.loadKraData(finalData.filter(f => f.companyId == this.comapnyId));
                         },
                         error => {
 

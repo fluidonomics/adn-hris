@@ -25,6 +25,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
     p2: number = 1;
     search: any;
     _currentEmpId: number;
+    company_id: number;
     itemPerPage: number = 10;
 
     param_emp_id:number;
@@ -63,10 +64,12 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         //         this._currentEmpId = this._authService.currentUserData._id;
         //         this.loadAllEmployee();
         // });
+        this.company_id = Number(this._commonService.getCompanyIdLocal());
         this._route.params.subscribe(params => {
             if (params['id']) {
                 this.param_emp_id = params['id'];
             }
+            
             this._authService.validateToken().subscribe(
                 res => {
                     this._currentEmpId = this._authService.currentUserData._id;
@@ -93,7 +96,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
             res => {
                 let data = res.json().data || [];
                 if (data.length > 0) {
-                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId);
+                    data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.company_id);
                     this.employeesData = data || [];
                     this.utilityService.hideLoader('#allEmployee-loader');
                 }

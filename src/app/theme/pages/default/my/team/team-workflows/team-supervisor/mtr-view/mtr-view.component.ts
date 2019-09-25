@@ -17,6 +17,7 @@ export class MtrViewComponent implements OnInit {
     mtrViewReverse: boolean = true;
     imageBase: any;
     fiscalYearId: number;
+    companyId: number;
 
     constructor(private _mtrService: MtrService,
         public _authService: AuthService,
@@ -24,6 +25,7 @@ export class MtrViewComponent implements OnInit {
         private commonService: CommonService
     ) { 
         this.fiscalYearId = parseInt(commonService.getFiscalYearIdLocal());
+        this.companyId = parseInt(commonService.getCompanyIdLocal());
     }
 
     ngOnInit() {
@@ -36,7 +38,8 @@ export class MtrViewComponent implements OnInit {
 
     loadMtrBySupervisor(emp_Id: number) {
         this._mtrService.getMtrBySupervisor(emp_Id, 'Approved', this.fiscalYearId).subscribe(res => {
-            this.mtrViewData = res.json().result.message || [];
+            let data = res.json().result.message || [];
+            this.mtrViewData = data.filter(f => f.companyId == this.companyId);
         }, error => {
         });
     }

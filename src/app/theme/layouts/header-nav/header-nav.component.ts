@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/co
 import { Helpers } from '../../../helpers';
 import { AuthService } from "../../../base/_services/authService.service"
 import { environment } from "../../../../environments/environment";
+import { CommonService } from "../../../base/_services/common.service";
 
 declare let mLayout: any;
 declare let $: any;
@@ -14,13 +15,21 @@ declare let $: any;
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderNavComponent implements OnInit, AfterViewInit {
+
     imageBase: string;
-    constructor(public authService: AuthService
+    companyId: any = this.commonService.getCompanyIdLocal();
+    logoBase: any = "./assets/demo/default/media/img/logo/";
+    companyLogo: any = this.logoBase + "company_1.jpg";
+
+    constructor(
+        public authService: AuthService,
+        private commonService: CommonService
     ) {
         this.imageBase = environment.content_api_base.imgBase;
     }
     ngOnInit() {
         this.imageBase = environment.content_api_base.imgBase;
+        this.setCompanyLogo();
         // this.socket.emit("initData","Hello Form init");
         // this.socket.on('insertedNotification', (data) => {
 
@@ -64,5 +73,23 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
     //     $('script[src$="assets/vendors/base/vendors.bundle.js"]').remove();
     //     $('script[src$="assets/demo/default/base/scripts.bundle.js"]').remove();
     // }
+
+    setCompanyLogo() {
+        if (this.companyId == 1) {
+            this.companyLogo = this.logoBase + "company_1.png";
+        }
+        if (this.companyId == 2) {
+            this.companyLogo = this.logoBase + "company_2.jpg";
+        }
+        else if (this.companyId == 3) {
+            this.companyLogo = this.logoBase + "company_3.jpg";
+        }
+        else if (this.companyId == 4) {
+            this.companyLogo = this.logoBase + "company_4.jpg";
+        }
+        else {
+            this.companyLogo = this.logoBase + "company_1.png";
+        }
+    }
 
 }

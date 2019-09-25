@@ -11,6 +11,7 @@ import { SharedService } from './shared.service';
 import { FiscalYearDropdownComponent } from "./components/fiscal-year-dropdown/fiscal-year-dropdown.component";
 import { ApplyLeavePanelComponent } from "./components/apply-leave-panel/apply-leave-panel.component";
 import { HrService } from "../hr/hr.service";
+import { CompanyDropdownComponent } from "./components/company-dropdown/company-dropdown.component";
 
 
 
@@ -26,12 +27,14 @@ import { HrService } from "../hr/hr.service";
     exports: [
         PapDetailsGridComponent,
         FiscalYearDropdownComponent,
-        ApplyLeavePanelComponent
+        ApplyLeavePanelComponent,
+        CompanyDropdownComponent
     ],
     declarations: [
         PapDetailsGridComponent,
         FiscalYearDropdownComponent,
-        ApplyLeavePanelComponent
+        ApplyLeavePanelComponent,
+        CompanyDropdownComponent
     ],
     providers: [
         SharedService,

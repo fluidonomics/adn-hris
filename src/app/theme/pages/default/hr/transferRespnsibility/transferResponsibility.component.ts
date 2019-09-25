@@ -55,6 +55,8 @@ export class TransferResponsibilityComponent implements OnInit {
     oldPrimarySupervisor: any;
     oldSecondarySupervisor: any;
     fiscalYearId: any;
+    companyId: any = this._commonService.getCompanyIdLocal();
+
     constructor(
         private _commonService: CommonService,
         private _hrService: HrService,
@@ -82,8 +84,10 @@ export class TransferResponsibilityComponent implements OnInit {
     }
     loadAllEmployee() {
         this._hrService.getAllEmployee().subscribe(res => {
+            debugger;
             let data = res.json().data || [];
             if (data.length > 0) {
+                data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.companyId);
                 this.employeesData = data || [];
             }
             else {

@@ -122,7 +122,7 @@
 				</div>
 				<div class="m-portlet__body" id="employeeList">
 					<div class="no-records"
-						*ngIf="employees.length==0 || (employees | orderBy: 'updatedAt' : mTRemployeeReverse | filter:mTRemployeeSearch)?.length==0">
+						*ngIf="mtrEmployees.length==0 || (mtrEmployees | orderBy: 'updatedAt' : mTRemployeeReverse | filter:mTRemployeeSearch)?.length==0">
 						<span class="align--center">No records found</span>
 					</div>
 
