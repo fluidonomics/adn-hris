@@ -76,7 +76,10 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
     setCompanyLogo() {
         if (this.companyId == 1) {
-            this.companyLogo = this.logoBase + "company_1.jpg";
+            this.companyLogo = this.logoBase + "company_1.png";
+        }
+        if (this.companyId == 2) {
+            this.companyLogo = this.logoBase + "company_2.jpg";
         }
         else if (this.companyId == 3) {
             this.companyLogo = this.logoBase + "company_3.jpg";
@@ -85,7 +88,7 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
             this.companyLogo = this.logoBase + "company_4.jpg";
         }
         else {
-            this.companyLogo = this.logoBase + "company_1.jpg";
+            this.companyLogo = this.logoBase + "company_1.png";
         }
     }
 
