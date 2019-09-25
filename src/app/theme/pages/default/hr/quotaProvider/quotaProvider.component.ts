@@ -63,6 +63,8 @@ export class QuotaProviderComponent implements OnInit {
     // data for grid
     currentUser: any = {};
     fiscalYearId: any;
+    _currentEmpId: number;
+    companyId: any = this._commonService.getCompanyIdLocal();
 
     constructor(
         private _router: Router,
@@ -76,6 +78,7 @@ export class QuotaProviderComponent implements OnInit {
     ) {
     }
     ngOnInit() {
+        this._currentEmpId = this._authService.currentUserData._id;
         this.currentUser = this._authService.currentUserData;
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this.isMaternity = false;
@@ -128,6 +131,7 @@ export class QuotaProviderComponent implements OnInit {
             this._leaveService.getEmployeeForQuotaProvide({ type: "maternity" }).subscribe(res => {
                 this.employeesListToShow = res.json() || [];
                 if (this.employeesListToShow && this.employeesListToShow.length > 0) {
+                    this.employeesListToShow = this.employeesListToShow.filter(obj => obj.employeeofficedetails.hrspoc_id == this._currentEmpId && obj.company_id == this.companyId);
                     this.employeesListToShow.forEach(emp => {
                         emp.displayName = emp.fullName + '(' + emp.userName + ')';
                     });
@@ -139,6 +143,7 @@ export class QuotaProviderComponent implements OnInit {
             if (data.type === "Special Leave")
                 this._leaveService.getEmployeeForQuotaProvide({ type: "special" }).subscribe(res => {
                     this.employeesListToShow = res.json() || [];
+                    this.employeesListToShow = this.employeesListToShow.filter(obj => obj.office.hrspoc_id == this._currentEmpId && obj.company_id == this.companyId);
                 });
             else if (data.type === "Special Leave (unpaid)")
                 this.employeesListToShow = this.employeeEligibleForSpecialUnpaidLeave;
