@@ -76,19 +76,19 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
 
     setCompanyLogo() {
         if (this.companyId == 1) {
-            this.companyLogo = this.logoBase + "company_1.png";
+            this.companyLogo = this.logoBase + "company_1_lg.png";
         }
-        if (this.companyId == 2) {
-            this.companyLogo = this.logoBase + "company_2.jpg";
+        else if (this.companyId == 2) {
+            this.companyLogo = this.logoBase + "company_2.png";
         }
         else if (this.companyId == 3) {
-            this.companyLogo = this.logoBase + "company_3.jpg";
+            this.companyLogo = this.logoBase + "company_3.png";
         }
         else if (this.companyId == 4) {
-            this.companyLogo = this.logoBase + "company_4.jpg";
+            this.companyLogo = this.logoBase + "company_4.png";
         }
         else {
-            this.companyLogo = this.logoBase + "company_1.png";
+            this.companyLogo = this.logoBase + "company_5.png";
         }
     }
 
