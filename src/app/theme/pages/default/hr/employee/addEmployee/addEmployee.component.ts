@@ -322,6 +322,8 @@ export class AddEmployeeComponent implements OnInit {
                     if (hrHeads && hrHeads.result && hrHeads.result.length > 0) {
                         this.buisnessHrHeadData = hrHeads.result.filter(h => h.type == 1);
                         this.groupHrHeadData = hrHeads.result.filter(h => h.type == 2);
+                        console.log(this.buisnessHrHeadData);
+                        console.log(this.groupHrHeadData);
                     }
                 }
             },
