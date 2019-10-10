@@ -297,13 +297,7 @@ export class AddEmployeeComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
-                    this.buisnessHrHeadData = [];
-                    this.groupHrHeadData = [];
-
                     this.addemp.hrspoc_id = null;
-                    this.addemp.businessHrHead_id = null;
-                    this.addemp.groupHrHead_id = null;
-
                     this.hrspocData = res.json()
                 }
             },
@@ -312,6 +306,8 @@ export class AddEmployeeComponent implements OnInit {
     }
 
     loadHrHeads(companyId?: number) {
+        this.buisnessHrHeadData = [];
+        this.groupHrHeadData = [];
         this.addemp.businessHrHead_id = null;
         this.addemp.groupHrHead_id = null;
 
@@ -328,6 +324,7 @@ export class AddEmployeeComponent implements OnInit {
                 }
             },
             error => {
+                console.log(error)
             });
     }
 
