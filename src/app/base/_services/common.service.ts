@@ -470,6 +470,14 @@ export class CommonService {
         return dateRange;
     }
 
+    getHrHeads(companyId) {
+        if (!companyId) {
+            companyId = this.getCompanyIdLocal();
+        }
+        let url = "master/getHrHeads?company_id=" + companyId;
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();

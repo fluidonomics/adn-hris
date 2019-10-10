@@ -16,20 +16,24 @@
 				<div class="m-portlet__body">
 					<div class="tab-content">
 						<div class="tab-pane active show" id="m_tabs_9_1" role="tabpanel">
-							<form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="onAddEmpSubmit(faddemp)" id="addEmployee"
-							 #faddemp="ngForm">
+							<form class="m-form m-form--fit m-form--label-align-right"
+								(ngSubmit)="onAddEmpSubmit(faddemp)" id="addEmployee" #faddemp="ngForm">
 								<div class="form-body">
 									<div class="row">
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Full Name</label>
 												<span class="required" aria-required="true">* </span>
-												<input type="text" class="form-control  m-input m-input--air name-input" name="fullName" id="fullName"
-												 [(ngModel)]="addemp.fullName" #fullName="ngModel" [pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
-												 placeholder="Enter full name" required>
+												<input type="text" class="form-control  m-input m-input--air name-input"
+													name="fullName" id="fullName" [(ngModel)]="addemp.fullName"
+													#fullName="ngModel"
+													[pattern]="'^[a-zA-Z]+((([\'\ \.\-]||[\.][\ ])[a-zA-Z\.])?[a-zA-Z]*)*$'"
+													placeholder="Enter full name" required>
 												<div class="form-control-feedback has-danger" *ngIf="!fullName.valid">
-													<span *ngIf="faddemp.submitted && !fullName.valid">This field is required.</span>
-													<span *ngIf="fullName.errors?.pattern">special character is not allowed only space is allowed</span>
+													<span *ngIf="faddemp.submitted && !fullName.valid">This field is
+														required.</span>
+													<span *ngIf="fullName.errors?.pattern">special character is not
+														allowed only space is allowed</span>
 												</div>
 												<!-- <div [hidden]="name.valid || name.pristine ||!name.value"
 									 class="alert alert-danger">
@@ -41,13 +45,20 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Personal Email</label>
 												<span class="required" aria-required="true">* </span>
-												<input class="form-control m-input m-input--air" lowerCase name="personalEmail" id="personalEmail"
-												 [(ngModel)]="addemp.personalEmail" (blur)="validateEmail(personalEmail)" #personalEmail="ngModel"
-												 placeholder="Enter email" type="text" required>
-												<div class="form-control-feedback has-danger" *ngIf="!personalEmail.valid">
-													<span *ngIf="faddemp.submitted && personalEmail.errors?.required">This field is required.</span>
-													<span *ngIf="personalEmail.errors?.pattern">Personal Email not valid.</span>
-													<span *ngIf="personalEmail.errors?.emailExists">Email Address already exists.</span>
+												<input class="form-control m-input m-input--air" lowerCase
+													name="personalEmail" id="personalEmail"
+													[(ngModel)]="addemp.personalEmail"
+													(blur)="validateEmail(personalEmail)" #personalEmail="ngModel"
+													placeholder="Enter email" type="text" required>
+												<div class="form-control-feedback has-danger"
+													*ngIf="!personalEmail.valid">
+													<span
+														*ngIf="faddemp.submitted && personalEmail.errors?.required">This
+														field is required.</span>
+													<span *ngIf="personalEmail.errors?.pattern">Personal Email not
+														valid.</span>
+													<span *ngIf="personalEmail.errors?.emailExists">Email Address
+														already exists.</span>
 												</div>
 											</div>
 										</div>
@@ -64,13 +75,18 @@
 															+880
 														</span>
 													</div>
-													<input type="text" class="form-control m-input m-input--air" name="mobileNumber" id="mobileNumber"
-													 [(ngModel)]="addemp.personalMobileNumber" #mobileNumber="ngModel" OnlyMobileNumber="true" minlength="10"
-													 maxlength="10" placeholder="Enter mobile no" required>
+													<input type="text" class="form-control m-input m-input--air"
+														name="mobileNumber" id="mobileNumber"
+														[(ngModel)]="addemp.personalMobileNumber"
+														#mobileNumber="ngModel" OnlyMobileNumber="true" minlength="10"
+														maxlength="10" placeholder="Enter mobile no" required>
 												</div>
-												<div class="form-control-feedback has-danger" *ngIf="!mobileNumber.valid">
-													<span *ngIf="faddemp.submitted && !mobileNumber.valid">This field is required.</span>
-													<span *ngIf="mobileNumber.errors?.maxlength">Mobile number must be 10 digit max..</span>
+												<div class="form-control-feedback has-danger"
+													*ngIf="!mobileNumber.valid">
+													<span *ngIf="faddemp.submitted && !mobileNumber.valid">This field is
+														required.</span>
+													<span *ngIf="mobileNumber.errors?.maxlength">Mobile number must be
+														10 digit max..</span>
 												</div>
 											</div>
 										</div>
@@ -78,10 +94,14 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Company Name</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="companyName" [items]="companiesData" bindLabel="companyName"
-												 bindValue="_id" placeholder="Select company name" [(ngModel)]="addemp.company_id" #companyName="ngModel"
-												 (change)="loadHRSpoce(addemp.company_id)" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !companyName.valid ">
+												<ng-select class="m-input m-input--air" name="companyName"
+													[items]="companiesData" bindLabel="companyName" bindValue="_id"
+													placeholder="Select company name" [(ngModel)]="addemp.company_id"
+													#companyName="ngModel"
+													(change)="loadHRSpoce(addemp.company_id); this.loadHrHeads(addemp.company_id);"
+													[clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !companyName.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -92,10 +112,15 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Division</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="division" [items]="divisionData" bindLabel="divisionName"
-												 bindValue="_id" placeholder="Select division" (change)="loadDepartment(addemp.division_id)" [(ngModel)]="addemp.division_id"
-												 #division="ngModel" (change)="loadDepartment(addemp.division_id)" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !division.valid ">
+												<ng-select class="m-input m-input--air" name="division"
+													[items]="divisionData" bindLabel="divisionName" bindValue="_id"
+													placeholder="Select division"
+													(change)="loadDepartment(addemp.division_id)"
+													[(ngModel)]="addemp.division_id" #division="ngModel"
+													(change)="loadDepartment(addemp.division_id)" [clearable]="false"
+													required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !division.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -104,10 +129,14 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Department</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="department" [items]="deparmentData" bindLabel="departmentName"
-												 bindValue="_id" placeholder="Select department" (change)="loadVertical(addemp.department_id)" [(ngModel)]="addemp.department_id"
-												 [clearable]="false" #department="ngModel" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !department.valid ">
+												<ng-select class="m-input m-input--air" name="department"
+													[items]="deparmentData" bindLabel="departmentName" bindValue="_id"
+													placeholder="Select department"
+													(change)="loadVertical(addemp.department_id)"
+													[(ngModel)]="addemp.department_id" [clearable]="false"
+													#department="ngModel" required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !department.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -117,16 +146,21 @@
 										<div class="col-md-6 adn-form__group">
 											<div class="form-group m-form__group">
 												<label for="form_control_1">Vertical</label>
-												<ng-select class="m-input m-input--air" name="vertical" [items]="verticalData" bindLabel="verticalName"
-												 bindValue="_id" placeholder="Select vertical" (change)="loadSubVertical(addemp.vertical_id)" [(ngModel)]="addemp.vertical_id"
-												 #vertical="ngModel"></ng-select>
+												<ng-select class="m-input m-input--air" name="vertical"
+													[items]="verticalData" bindLabel="verticalName" bindValue="_id"
+													placeholder="Select vertical"
+													(change)="loadSubVertical(addemp.vertical_id)"
+													[(ngModel)]="addemp.vertical_id" #vertical="ngModel"></ng-select>
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Sub Vertical</label>
-												<ng-select class="m-input m-input--air" name="subVertical" [items]="subverticalData" bindLabel="subVerticalName"
-												 bindValue="_id" placeholder="Select sub vertical" [(ngModel)]="addemp.subVertical_id" #subVertical="ngModel"></ng-select>
+												<ng-select class="m-input m-input--air" name="subVertical"
+													[items]="subverticalData" bindLabel="subVerticalName"
+													bindValue="_id" placeholder="Select sub vertical"
+													[(ngModel)]="addemp.subVertical_id" #subVertical="ngModel">
+												</ng-select>
 											</div>
 										</div>
 									</div>
@@ -135,10 +169,14 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Management Type</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="managementType" [items]="managementTypeData" bindLabel="managementTypeName"
-												 bindValue="_id" placeholder="Select management type" [(ngModel)]="addemp.managementType_id" (change)="loadEmploymentType(addemp.managementType_id)"
-												 #managementType="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !managementType.valid ">
+												<ng-select class="m-input m-input--air" name="managementType"
+													[items]="managementTypeData" bindLabel="managementTypeName"
+													bindValue="_id" placeholder="Select management type"
+													[(ngModel)]="addemp.managementType_id"
+													(change)="loadEmploymentType(addemp.managementType_id)"
+													#managementType="ngModel" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !managementType.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -147,10 +185,14 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Employment Type</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="employmentType" [items]="employmentTypeData" bindLabel="employmentTypeName"
-												 bindValue="_id" placeholder="Select employment type" [(ngModel)]="addemp.employmentType_id" (change)="loadGrade(addemp.managementType_id,addemp.employmentType_id)"
-												 #employmentType="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !employmentType.valid ">
+												<ng-select class="m-input m-input--air" name="employmentType"
+													[items]="employmentTypeData" bindLabel="employmentTypeName"
+													bindValue="_id" placeholder="Select employment type"
+													[(ngModel)]="addemp.employmentType_id"
+													(change)="loadGrade(addemp.managementType_id,addemp.employmentType_id)"
+													#employmentType="ngModel" [clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !employmentType.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -161,21 +203,30 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Employment Status</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="confirmationStatus" [items]="employmentStatusData" bindLabel="employmentStatusName"
-												 bindValue="_id" placeholder="Select confirmation/probation status" [(ngModel)]="addemp.employmentStatus_id"
-												 #confirmationStatus="ngModel" [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !confirmationStatus.valid ">
+												<ng-select class="m-input m-input--air" name="confirmationStatus"
+													[items]="employmentStatusData" bindLabel="employmentStatusName"
+													bindValue="_id" placeholder="Select confirmation/probation status"
+													[(ngModel)]="addemp.employmentStatus_id"
+													#confirmationStatus="ngModel" [clearable]="false" required>
+												</ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !confirmationStatus.valid ">
 													This field is required.
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6 adn-form__group" *ngIf="addemp.employmentType_id == 2 || addemp.employmentType_id== 3 ||addemp.employmentType_id== 5 ||addemp.employmentType_id== 6">
+										<div class="col-md-6 adn-form__group"
+											*ngIf="addemp.employmentType_id == 2 || addemp.employmentType_id== 3 ||addemp.employmentType_id== 5 ||addemp.employmentType_id== 6">
 											<div class="m-form__group form-group">
-												<label for="form_control_1">Tenure of Contract/Internship (in months)</label>
+												<label for="form_control_1">Tenure of Contract/Internship (in
+													months)</label>
 												<span class="required" aria-required="true"> * </span>
-												<input type="text" name="tenure" id="tenure" data-required="1" class="form-control m-input m-input--air"
-												 [(ngModel)]="addemp.tenureOfContract" #tenure="ngModel" OnlyNumber="true">
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !tenure.valid ">
+												<input type="text" name="tenure" id="tenure" data-required="1"
+													class="form-control m-input m-input--air"
+													[(ngModel)]="addemp.tenureOfContract" #tenure="ngModel"
+													OnlyNumber="true">
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !tenure.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -184,11 +235,15 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Grade</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="employeeGrade" [items]="gradeData" bindLabel="gradeName"
-												 bindValue="_id" placeholder="Select grade" (change)="loadDesignation(addemp.grade_id);loadSupervisor(addemp.grade_id)"
-												 [(ngModel)]="addemp.grade_id" #employeeGrade="ngModel" (change)="loadSupervisor(addemp.grade_id)"
-												 [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !employeeGrade.valid ">
+												<ng-select class="m-input m-input--air" name="employeeGrade"
+													[items]="gradeData" bindLabel="gradeName" bindValue="_id"
+													placeholder="Select grade"
+													(change)="loadDesignation(addemp.grade_id);loadSupervisor(addemp.grade_id)"
+													[(ngModel)]="addemp.grade_id" #employeeGrade="ngModel"
+													(change)="loadSupervisor(addemp.grade_id)" [clearable]="false"
+													required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !employeeGrade.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -199,10 +254,13 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Designation</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="designation" [items]="designationData" bindLabel="designationName"
-												 bindValue="_id" placeholder="Select designation" [(ngModel)]="addemp.designation_id" #designation="ngModel"
-												 [clearable]="false" required></ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !designation.valid ">
+												<ng-select class="m-input m-input--air" name="designation"
+													[items]="designationData" bindLabel="designationName"
+													bindValue="_id" placeholder="Select designation"
+													[(ngModel)]="addemp.designation_id" #designation="ngModel"
+													[clearable]="false" required></ng-select>
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !designation.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -210,8 +268,10 @@
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Job Title</label>
-												<input type="text" name="jobTitle" id="jobTitle" data-required="1" class="form-control m-input m-input--air"
-												 [(ngModel)]="addemp.jobTitle" placeholder="Enter job title" [(ngModel)]="addemp.jobTitle" #jobTitle="ngModel">
+												<input type="text" name="jobTitle" id="jobTitle" data-required="1"
+													class="form-control m-input m-input--air"
+													[(ngModel)]="addemp.jobTitle" placeholder="Enter job title"
+													[(ngModel)]="addemp.jobTitle" #jobTitle="ngModel">
 											</div>
 										</div>
 									</div>
@@ -220,9 +280,11 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Supervisor</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="primarySupervisorEmp" [items]="supervisorData" bindLabel="fullName"
-												 bindValue="_id" placeholder="Select supervisor" [(ngModel)]="addemp.primarySupervisorEmp_id"
-												 #primarySupervisorEmp="ngModel" [clearable]="false" required>
+												<ng-select class="m-input m-input--air" name="primarySupervisorEmp"
+													[items]="supervisorData" bindLabel="fullName" bindValue="_id"
+													placeholder="Select supervisor"
+													[(ngModel)]="addemp.primarySupervisorEmp_id"
+													#primarySupervisorEmp="ngModel" [clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
@@ -230,7 +292,8 @@
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
 												</ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !primarySupervisorEmp.valid ">
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !primarySupervisorEmp.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -239,9 +302,10 @@
 											<div class="m-form__group form-group">
 												<label for="form_control_1">HR SPOC</label>
 												<span class="required" aria-required="true"> * </span>
-												<ng-select class="m-input m-input--air" name="hrspoc" [items]="hrspocData" bindLabel="fullName" bindValue="_id"
-												 placeholder="Select HR SPOC" [(ngModel)]="addemp.hrspoc_id" #hrspoc="ngModel" (change)="loadBuisnessHrHead(addemp.hrspoc_id)"
-												 [clearable]="false" required>
+												<ng-select class="m-input m-input--air" name="hrspoc"
+													[items]="hrspocData" bindLabel="fullName" bindValue="_id"
+													placeholder="Select HR SPOC" [(ngModel)]="addemp.hrspoc_id"
+													#hrspoc="ngModel" [clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
@@ -249,7 +313,8 @@
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
 												</ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !hrspoc.valid ">
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !hrspoc.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -261,10 +326,11 @@
 												<label class="control-label">Business HR Head
 												</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="businessHrHead" [items]="buisnessHrHeadData" bindLabel="fullName"
-												 bindValue="_id" placeholder="Select business hr head" [(ngModel)]="addemp.businessHrHead_id"
-												 #businessHrHead="ngModel" (change)="loadGroupHrHead(addemp.businessHrHead_id)" [clearable]="false"
-												 required>
+												<ng-select class="m-input m-input--air" name="businessHrHead"
+													[items]="buisnessHrHeadData" bindLabel="fullName" bindValue="emp_id"
+													placeholder="Select business hr head"
+													[(ngModel)]="addemp.businessHrHead_id" #businessHrHead="ngModel"
+													[clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
@@ -272,7 +338,8 @@
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
 												</ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !businessHrHead.valid ">
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !businessHrHead.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -282,17 +349,21 @@
 												<label class="control-label">Group HR Head
 												</label>
 												<span class="required" aria-required="true">* </span>
-												<ng-select class="m-input m-input--air" name="groupHrHead" [items]="groupHrHeadData" bindLabel="fullName"
-												 bindValue="_id" placeholder="Select group hr head" [(ngModel)]="addemp.groupHrHead_id" #groupHrHead="ngModel"
-												 [clearable]="false" required>
+												<ng-select class="m-input m-input--air" name="groupHrHead"
+													[items]="groupHrHeadData" bindLabel="fullName" bindValue="emp_id"
+													placeholder="Select group hr head"
+													[(ngModel)]="addemp.groupHrHead_id" #groupHrHead="ngModel"
+													[clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
-														<b> {{item.fullName}} [{{item.userName}}]</b>
+														<b> {{item.fullName}}
+															[{{item.userName}}]</b>
 													</ng-template>
 													<ng-template ng-option-tmp let-item="item" let-index="index">
 														<b> {{item.fullName}} [{{item.userName}}]</b>
 													</ng-template>
 												</ng-select>
-												<div class="form-control-feedback has-danger" *ngIf="faddemp.submitted && !groupHrHead.valid ">
+												<div class="form-control-feedback has-danger"
+													*ngIf="faddemp.submitted && !groupHrHead.valid ">
 													This field is required.
 												</div>
 											</div>
@@ -314,22 +385,32 @@
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">User Documents</label>
-												<ng-select class="m-input m-input--air" name="document" [items]="documentsData" [multiple]="true" bindLabel="documentName"
-												 bindValue="_id" placeholder="Select user documents" [(ngModel)]="addemp.documents" #document="ngModel"></ng-select>
+												<ng-select class="m-input m-input--air" name="document"
+													[items]="documentsData" [multiple]="true" bindLabel="documentName"
+													bindValue="_id" placeholder="Select user documents"
+													[(ngModel)]="addemp.documents" #document="ngModel"></ng-select>
 											</div>
 										</div>
 										<div class="col-md-6 adn-form__group">
 											<div class="m-form__group form-group">
 												<label for="form_control_1">Employee ID</label>
 												<span class="required" aria-required="true">* </span>
-												<input class="form-control m-input m-input--air" name="employeeUserName" id="employeeUserName" [(ngModel)]="addemp.employeeUserName"
-												 (blur)="checkUserNameExists(employeeUserName)" #employeeUserName="ngModel" placeholder="Enter Employee ID"
-												 type="text" required onlyNumber="true" minlength="7" maxlength="7">
-												<div class="form-control-feedback has-danger" *ngIf="!employeeUserName.valid">
-													<span *ngIf="faddemp.submitted && employeeUserName.errors?.required">This field is required.</span>
-													<span *ngIf="employeeUserName.errors?.userNameExists">Employee ID already exists.</span>
-													<span *ngIf="employeeUserName.errors?.maxlength">Employee ID must be 7 digit max..</span>
-													<span *ngIf="employeeUserName.errors?.minlength">Employee ID must be 7 digit min..</span>
+												<input class="form-control m-input m-input--air" name="employeeUserName"
+													id="employeeUserName" [(ngModel)]="addemp.employeeUserName"
+													(blur)="checkUserNameExists(employeeUserName)"
+													#employeeUserName="ngModel" placeholder="Enter Employee ID"
+													type="text" required onlyNumber="true" minlength="7" maxlength="7">
+												<div class="form-control-feedback has-danger"
+													*ngIf="!employeeUserName.valid">
+													<span
+														*ngIf="faddemp.submitted && employeeUserName.errors?.required">This
+														field is required.</span>
+													<span *ngIf="employeeUserName.errors?.userNameExists">Employee ID
+														already exists.</span>
+													<span *ngIf="employeeUserName.errors?.maxlength">Employee ID must be
+														7 digit max..</span>
+													<span *ngIf="employeeUserName.errors?.minlength">Employee ID must be
+														7 digit min..</span>
 												</div>
 											</div>
 										</div>
@@ -340,8 +421,11 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="m-form__actions">
-												<button class="btn btn-success submitForm" type="submit" id="submitForm">Submit</button>
-												<button class="btn btn-secondary" (click)="faddemp.resetForm();clearFormData();" type="reset">Reset</button>
+												<button class="btn btn-success submitForm" type="submit"
+													id="submitForm">Submit</button>
+												<button class="btn btn-secondary"
+													(click)="faddemp.resetForm();clearFormData();"
+													type="reset">Reset</button>
 											</div>
 										</div>
 									</div>

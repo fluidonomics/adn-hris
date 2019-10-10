@@ -94,6 +94,7 @@ export class AllEmployeeComponent implements OnInit, AfterViewInit {
         this._hrService.getAllEmployee()
             .subscribe(
             res => {
+                debugger;
                 let data = res.json().data || [];
                 if (data.length > 0) {
                     data = data.filter(obj => obj.hrScope_id == this._currentEmpId && obj.company_id == this.company_id);
