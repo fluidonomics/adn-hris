@@ -111,10 +111,10 @@ export class ProfileViewComponent implements OnInit {
         isSupervisorSendBack: false
     }
 
-    savedPersonalEmailId:string;
-    savedOfficeEmailId:string;
-    imageBase:string;
-    
+    savedPersonalEmailId: string;
+    savedOfficeEmailId: string;
+    imageBase: string;
+
 
     constructor( @Inject(PLATFORM_ID) private platformId: Object,
         meta: Meta, title: Title,
@@ -134,8 +134,8 @@ export class ProfileViewComponent implements OnInit {
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
         this.humanizeBytes = humanizeBytes;
         this.currentDate = new Date();
-        this.imageBase= environment.content_api_base.imgBase;
-        
+        this.imageBase = environment.content_api_base.imgBase;
+
     }
 
     ngOnInit() {
@@ -236,7 +236,7 @@ export class ProfileViewComponent implements OnInit {
     showSpin() {
         var that = this;
         that.isSpin = true;
-        setTimeout(function() {
+        setTimeout(function () {
             that.isSpin = false;
         }, 500);
     }
@@ -405,12 +405,12 @@ export class ProfileViewComponent implements OnInit {
                     if (tabData.isPersonalInfo
                         && tabData.isAddress
                         && tabData.isDocuments
-                       // && tabData.isAcademicInfo
-                       // && tabData.isCertificate
-                       // && tabData.isEmployment
+                        // && tabData.isAcademicInfo
+                        // && tabData.isCertificate
+                        // && tabData.isEmployment
                         && tabData.isFamilyInfo
                         && tabData.isOffice
-                       // && tabData.isBankInfo
+                        // && tabData.isBankInfo
                         && tabData.isSalaryInfo
                         //&& tabData.isCarInfo
                     ) {
@@ -477,22 +477,20 @@ export class ProfileViewComponent implements OnInit {
                 swal({ type: 'success', title: 'Saved', text: 'Successfully', showConfirmButton: false, timer: 800 })
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
-                this.savedPersonalEmailId= this.personalInfo.personalEmail;
+                this.savedPersonalEmailId = this.personalInfo.personalEmail;
             },
             error => {
                 mApp.unblock('#m_accordion_5_item_1_body');
             });
     }
 
-    checkEmailExists(_element,oldValue) {     
+    checkEmailExists(_element, oldValue) {
         if (_element.valid) {
-            if(oldValue && oldValue ==_element.value)
-            {
+            if (oldValue && oldValue == _element.value) {
                 _element.control.setErrors(null)
             }
-            else
-            {
-                this._commonService.checkEmailExists(_element.value,this._currentEmpId)
+            else {
+                this._commonService.checkEmailExists(_element.value, this._currentEmpId)
                     .subscribe(
                     data => {
                         if (data.json())
@@ -500,7 +498,7 @@ export class ProfileViewComponent implements OnInit {
                     },
                     error => {
                         _element.control.setErrors(null)
-                });
+                    });
             }
         }
     }
@@ -955,7 +953,7 @@ export class ProfileViewComponent implements OnInit {
             data => {
                 this.personalInfo = data.json() || {};
                 this.personalInfo.dob = this.personalInfo.dob ? new Date(this.personalInfo.dob) : this.personalInfo.dob;
-                this.savedPersonalEmailId= this.personalInfo.personalEmail;
+                this.savedPersonalEmailId = this.personalInfo.personalEmail;
             },
             error => {
             });
@@ -1231,7 +1229,7 @@ export class ProfileViewComponent implements OnInit {
                 this.officeInfo.dateOfConfirmation = this.officeInfo.dateOfConfirmation ? new Date(this.officeInfo.dateOfConfirmation) : this.officeInfo.dateOfConfirmation;
                 this.officeInfo.workPermitEffectiveDate = this.officeInfo.workPermitEffectiveDate ? new Date(this.officeInfo.workPermitEffectiveDate) : this.officeInfo.workPermitEffectiveDate;
                 this.officeInfo.workPermitExpiryDate = this.officeInfo.workPermitExpiryDate ? new Date(this.officeInfo.workPermitExpiryDate) : this.officeInfo.workPermitExpiryDate;
-                this.savedOfficeEmailId=this.officeInfo.officeEmail;
+                this.savedOfficeEmailId = this.officeInfo.officeEmail;
             },
             error => {
             });
@@ -1303,8 +1301,6 @@ export class ProfileViewComponent implements OnInit {
             res => {
                 if (res.ok) {
                     this.hrspocData = [];
-                    this.buisnessHrHeadData = [];
-                    this.groupHrHeadData = [];
                     this.companiesData = res.json();
                 }
             },
@@ -1342,11 +1338,7 @@ export class ProfileViewComponent implements OnInit {
             res => {
                 if (res.ok) {
                     if (!onLoad) {
-                        this.buisnessHrHeadData = [];
-                        this.groupHrHeadData = [];
                         this.positionDetails.hrspoc_id = null;
-                        this.positionDetails.businessHrHead_id = null;
-                        this.positionDetails.groupHrHead_id = null;
                     }
                     this.hrspocData = res.json() || [];
                 }
@@ -1355,22 +1347,54 @@ export class ProfileViewComponent implements OnInit {
                 this.hrspocData = [];
             });
     }
-    //load Buisness Hr Head By hrspoc_id
-    loadBuisnessHrHead(hrspoc_id?: number, onLoad?: string) {
-        this._commonService.getHrSpoce(this.positionDetails.company_id, hrspoc_id).subscribe(
+
+    loadHrHeads(companyId?: number, onLoad?: string) {
+        debugger;
+        if (!onLoad) {
+            this.buisnessHrHeadData = [];
+            this.groupHrHeadData = [];
+            this.positionDetails.businessHrHead_id = null;
+            this.positionDetails.groupHrHead_id = null;
+        }
+
+        if (!companyId) {
+            companyId = this.positionDetails.company_id;
+        }
+
+        this._commonService.getHrHeads(companyId).subscribe(
             res => {
                 if (res.ok) {
-                    if (!onLoad) {
-                        this.groupHrHeadData = [];
-                        this.positionDetails.businessHrHead_id = null;
-                        this.positionDetails.groupHrHead_id = null;
+                    let hrHeads = res.json() || [];
+                    if (hrHeads && hrHeads.result && hrHeads.result.length > 0) {
+                        this.buisnessHrHeadData = hrHeads.result.filter(h => h.type == 1);
+                        this.groupHrHeadData = hrHeads.result.filter(h => h.type == 2);
+                        console.log(this.buisnessHrHeadData);
+                        console.log(this.groupHrHeadData);
                     }
-                    this.buisnessHrHeadData = res.json()
                 }
             },
             error => {
+                console.log(error)
             });
     }
+
+    // //load Buisness Hr Head By hrspoc_id
+    // loadBuisnessHrHead(hrspoc_id?: number, onLoad?: string) {
+    //     this._commonService.getHrSpoce(this.positionDetails.company_id, hrspoc_id).subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 if (!onLoad) {
+    //                     this.groupHrHeadData = [];
+    //                     this.positionDetails.businessHrHead_id = null;
+    //                     this.positionDetails.groupHrHead_id = null;
+    //                 }
+    //                 this.buisnessHrHeadData = res.json()
+    //             }
+    //         },
+    //         error => {
+    //         });
+    // }
+
     //load Vertical Dropdown By department_id 
     loadVertical(department_id?: number, onLoad?: string) {
         this._commonService.getVertical(department_id)
@@ -1452,20 +1476,21 @@ export class ProfileViewComponent implements OnInit {
             error => {
             });
     }
-    //load Group Hr Head By hrspoc_id
-    loadGroupHrHead(businessHrHead_id?: number, onLoad?: string) {
-        this._commonService.getHrSpoce(this.positionDetails.company_id, businessHrHead_id).subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.positionDetails.groupHrHead_id = null;
-                    }
-                    this.groupHrHeadData = res.json()
-                }
-            },
-            error => {
-            });
-    }
+
+    // //load Group Hr Head By hrspoc_id
+    // loadGroupHrHead(businessHrHead_id?: number, onLoad?: string) {
+    //     this._commonService.getHrSpoce(this.positionDetails.company_id, businessHrHead_id).subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 if (!onLoad) {
+    //                     this.positionDetails.groupHrHead_id = null;
+    //                 }
+    //                 this.groupHrHeadData = res.json()
+    //             }
+    //         },
+    //         error => {
+    //         });
+    // }
 
     //load Designation By grade_id
     loadDesignation(grade_id?: number, onLoad?: string) {
@@ -1518,8 +1543,9 @@ export class ProfileViewComponent implements OnInit {
                     this.loadEmploymentType(this.positionDetails.managementType_id, "init")
                     this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
                     this.loadHRSpoce(this.positionDetails.company_id, "init");
-                    this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
-                    this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
+                    this.loadHrHeads(this.positionDetails.company_id, "init")
+                    // this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
+                    // this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")
                     this.loadVertical(this.positionDetails.department_id, "init")
                     this.loadSubVertical(this.positionDetails.vertical_id, "init")
                     this.loadSupervisor(this.positionDetails.grade_id, "init")
