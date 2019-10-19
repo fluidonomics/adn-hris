@@ -2460,7 +2460,7 @@
                                                                 bindValue="_id" placeholder="Select Company Name"
                                                                 [(ngModel)]="positionDetails.company_id"
                                                                 #companyName="ngModel"
-                                                                (change)="loadHRSpoce(positionDetails.company_id);this.loadHrHeads(positionDetails.company_id);"
+                                                                (change)="this.loadHrHeads(positionDetails.company_id);"
                                                                 [clearable]="false" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             </ng-select>
@@ -2692,10 +2692,9 @@
                                                             <span class="required" aria-required="true"> * </span>
                                                             <ng-select class="m-input m-input--air" name="hrspoc"
                                                                 [items]="hrspocData" bindLabel="fullName"
-                                                                bindValue="_id" placeholder="Select HR SPOC"
+                                                                bindValue="emp_id" placeholder="Select HR SPOC"
                                                                 [(ngModel)]="positionDetails.hrspoc_id"
-                                                                #hrspoc="ngModel"
-                                                                [clearable]="false" required
+                                                                #hrspoc="ngModel" [clearable]="false" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             </ng-select>
                                                             <div class="form-control-feedback has-danger"
@@ -2716,8 +2715,7 @@
                                                                 bindLabel="fullName" bindValue="emp_id"
                                                                 placeholder="Select Business HR Head"
                                                                 [(ngModel)]="positionDetails.businessHrHead_id"
-                                                                #businessHrHead="ngModel"
-                                                                [clearable]="false" required
+                                                                #businessHrHead="ngModel" [clearable]="false" required
                                                                 [disabled]="profileProcess.isHrSubmitted && !profileProcess.isSupervisorSendBack">
                                                             </ng-select>
                                                             <div class="form-control-feedback has-danger"

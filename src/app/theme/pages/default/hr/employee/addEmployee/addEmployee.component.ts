@@ -274,7 +274,6 @@ export class AddEmployeeComponent implements OnInit {
             .subscribe(
             res => {
                 if (res.ok) {
-
                     this.hrspocData = [];
                     this.buisnessHrHeadData = [];
                     this.groupHrHeadData = [];
@@ -291,19 +290,19 @@ export class AddEmployeeComponent implements OnInit {
             });
     }
 
-    //load HR Spoce By company_id
-    loadHRSpoce(company_id?: number) {
-        this._commonService.getHrSpoce(company_id)
-            .subscribe(
-            res => {
-                if (res.ok) {
-                    this.addemp.hrspoc_id = null;
-                    this.hrspocData = res.json()
-                }
-            },
-            error => {
-            });
-    }
+    // //load HR Spoce By company_id
+    // loadHRSpoce(company_id?: number) {
+    //     this._commonService.getHrSpoce(company_id)
+    //         .subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 this.addemp.hrspoc_id = null;
+    //                 this.hrspocData = res.json()
+    //             }
+    //         },
+    //         error => {
+    //         });
+    // }
 
     loadHrHeads(companyId?: number) {
         this.buisnessHrHeadData = [];
@@ -318,8 +317,7 @@ export class AddEmployeeComponent implements OnInit {
                     if (hrHeads && hrHeads.result && hrHeads.result.length > 0) {
                         this.buisnessHrHeadData = hrHeads.result.filter(h => h.type == 1);
                         this.groupHrHeadData = hrHeads.result.filter(h => h.type == 2);
-                        console.log(this.buisnessHrHeadData);
-                        console.log(this.groupHrHeadData);
+                        this.hrspocData = hrHeads.result.filter(h => h.type == 3);
                     }
                 }
             },
