@@ -1321,25 +1321,25 @@ export class ProfileComponent implements OnInit {
             error => {
             });
     }
-    //load HR Spoce By company_id
-    loadHRSpoce(company_id?: number, onLoad?: string) {
-        this._commonService.getHrSpoce(company_id)
-            .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.positionDetails.hrspoc_id = null;
-                    }
-                    this.hrspocData = res.json() || [];
-                }
-            },
-            error => {
-                this.hrspocData = [];
-            });
-    }
+
+    // //load HR Spoce By company_id
+    // loadHRSpoce(company_id?: number, onLoad?: string) {
+    //     this._commonService.getHrSpoce(company_id)
+    //         .subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 if (!onLoad) {
+    //                     this.positionDetails.hrspoc_id = null;
+    //                 }
+    //                 this.hrspocData = res.json() || [];
+    //             }
+    //         },
+    //         error => {
+    //             this.hrspocData = [];
+    //         });
+    // }
 
     loadHrHeads(companyId?: number, onLoad?: string) {
-        debugger;
         if (!onLoad) {
             this.buisnessHrHeadData = [];
             this.groupHrHeadData = [];
@@ -1358,8 +1358,7 @@ export class ProfileComponent implements OnInit {
                     if (hrHeads && hrHeads.result && hrHeads.result.length > 0) {
                         this.buisnessHrHeadData = hrHeads.result.filter(h => h.type == 1);
                         this.groupHrHeadData = hrHeads.result.filter(h => h.type == 2);
-                        console.log(this.buisnessHrHeadData);
-                        console.log(this.groupHrHeadData);
+                        this.hrspocData = hrHeads.result.filter(h => h.type == 3);
                     }
                 }
             },
@@ -1532,7 +1531,7 @@ export class ProfileComponent implements OnInit {
                     this.loadDepartment(this.positionDetails.division_id, "init")
                     this.loadEmploymentType(this.positionDetails.managementType_id, "init")
                     this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
-                    this.loadHRSpoce(this.positionDetails.company_id, "init");
+                    // this.loadHRSpoce(this.positionDetails.company_id, "init");
                     this.loadHrHeads(this.positionDetails.company_id, "init")
                     // this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
                     // this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")

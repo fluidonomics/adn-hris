@@ -2436,7 +2436,7 @@
                                                                 bindValue="_id" placeholder="Select Company Name"
                                                                 [(ngModel)]="positionDetails.company_id"
                                                                 #companyName="ngModel"
-                                                                (change)="loadHRSpoce(positionDetails.company_id)"
+                                                                (change)="loadHrHeads(positionDetails.company_id)"
                                                                 [clearable]="false" required disabled></ng-select>
                                                             <div class="form-control-feedback has-danger"
                                                                 *ngIf="fpositionDetails.submitted && !companyName.valid ">
@@ -2651,7 +2651,7 @@
                                                             <span class="required" aria-required="true"> * </span>
                                                             <ng-select class="m-input m-input--air" name="hrspoc"
                                                                 [items]="hrspocData" bindLabel="fullName"
-                                                                bindValue="_id" placeholder="Select HR SPOC"
+                                                                bindValue="emp_id" placeholder="Select HR SPOC"
                                                                 [(ngModel)]="positionDetails.hrspoc_id"
                                                                 #hrspoc="ngModel" [clearable]="false" required disabled>
                                                             </ng-select>
