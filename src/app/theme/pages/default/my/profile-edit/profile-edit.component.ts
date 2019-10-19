@@ -1407,23 +1407,23 @@ export class ProfileEditComponent implements OnInit {
             });
     }
     //load HR Spoce By company_id
-    loadHRSpoce(company_id?: number, onLoad?: string) {
-        this._commonService.getHrSpoce(company_id)
-            .subscribe(
-            res => {
-                if (res.ok) {
-                    if (!onLoad) {
-                        this.positionDetails.hrspoc_id = null;
-                        this.positionDetails.businessHrHead_id = null;
-                        this.positionDetails.groupHrHead_id = null;
-                    }
-                    this.hrspocData = res.json() || [];
-                }
-            },
-            error => {
-                this.hrspocData = [];
-            });
-    }
+    // loadHRSpoce(company_id?: number, onLoad?: string) {
+    //     this._commonService.getHrSpoce(company_id)
+    //         .subscribe(
+    //         res => {
+    //             if (res.ok) {
+    //                 if (!onLoad) {
+    //                     this.positionDetails.hrspoc_id = null;
+    //                     this.positionDetails.businessHrHead_id = null;
+    //                     this.positionDetails.groupHrHead_id = null;
+    //                 }
+    //                 this.hrspocData = res.json() || [];
+    //             }
+    //         },
+    //         error => {
+    //             this.hrspocData = [];
+    //         });
+    // }
 
     loadHrHeads(companyId?: number, onLoad?: string) {
         debugger;
@@ -1445,8 +1445,7 @@ export class ProfileEditComponent implements OnInit {
                     if (hrHeads && hrHeads.result && hrHeads.result.length > 0) {
                         this.buisnessHrHeadData = hrHeads.result.filter(h => h.type == 1);
                         this.groupHrHeadData = hrHeads.result.filter(h => h.type == 2);
-                        console.log(this.buisnessHrHeadData);
-                        console.log(this.groupHrHeadData);
+                        this.hrspocData = hrHeads.result.filter(h => h.type == 3);
                     }
                 }
             },
@@ -1554,7 +1553,7 @@ export class ProfileEditComponent implements OnInit {
             error => {
             });
     }
-   
+
     // //load Group Hr Head By hrspoc_id
     // loadGroupHrHead(businessHrHead_id?: number, onLoad?: string) {
     //     this._commonService.getHrSpoce(this.positionDetails.company_id, businessHrHead_id).subscribe(
@@ -1620,7 +1619,7 @@ export class ProfileEditComponent implements OnInit {
                     this.loadDepartment(this.positionDetails.division_id, "init")
                     this.loadEmploymentType(this.positionDetails.managementType_id, "init")
                     this.loadGrade(this.positionDetails.managementType_id, this.positionDetails.employmentType_id, "init")
-                    this.loadHRSpoce(this.positionDetails.company_id, "init");
+                    // this.loadHRSpoce(this.positionDetails.company_id, "init");
                     this.loadHrHeads(this.positionDetails.company_id, "init")
                     // this.loadBuisnessHrHead(this.positionDetails.hrspoc_id, "init")
                     // this.loadGroupHrHead(this.positionDetails.businessHrHead_id, "init")

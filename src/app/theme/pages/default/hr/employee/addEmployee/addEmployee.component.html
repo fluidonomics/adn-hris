@@ -98,8 +98,8 @@
 													[items]="companiesData" bindLabel="companyName" bindValue="_id"
 													placeholder="Select company name" [(ngModel)]="addemp.company_id"
 													#companyName="ngModel"
-													(change)="loadHRSpoce(addemp.company_id); this.loadHrHeads(addemp.company_id);"
-													[clearable]="false" required></ng-select>
+													(change)="this.loadHrHeads(addemp.company_id);" [clearable]="false"
+													required></ng-select>
 												<div class="form-control-feedback has-danger"
 													*ngIf="faddemp.submitted && !companyName.valid ">
 													This field is required.
@@ -303,7 +303,7 @@
 												<label for="form_control_1">HR SPOC</label>
 												<span class="required" aria-required="true"> * </span>
 												<ng-select class="m-input m-input--air" name="hrspoc"
-													[items]="hrspocData" bindLabel="fullName" bindValue="_id"
+													[items]="hrspocData" bindLabel="fullName" bindValue="emp_id"
 													placeholder="Select HR SPOC" [(ngModel)]="addemp.hrspoc_id"
 													#hrspoc="ngModel" [clearable]="false" required>
 													<ng-template ng-label-tmp let-item="item" let-index="index">
