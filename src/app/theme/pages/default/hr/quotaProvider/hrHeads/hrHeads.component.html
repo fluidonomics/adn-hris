@@ -17,7 +17,7 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text flaticon-user-add">
-                                All HR'S
+                                HR SPOC'S
                                 <small>
                                 </small>
                             </h3>
@@ -79,8 +79,8 @@
                 </thead>
                 <tbody class="m-datatable__body" id="allEmployee-loader">
                     <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-                        *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-                        <td class="m-datatable__cell" width="5%">
+                        *ngFor="let employee of hrspocData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                        <!-- <td class="m-datatable__cell" width="5%">
 
                             <i class="status--icon fa" [ngClass]="
                                         !employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
@@ -103,17 +103,17 @@
                                 class="directory_image m--img-rounded m--marginless m--img-centered" alt="">
                             <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg"
                                     class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-                        </td>
+                        </td> -->
                         <td class="m-datatable__cell" width="5%">
-                            <span>{{employee.userName}}</span>
+                            <span>{{employee.employeedetails.userName}}</span>
                         </td>
                         <td class="m-datatable__cell" width="20%">
-                            <span>{{employee.fullName}}</span>
+                            <span>{{employee.employeedetails.fullName}}</span>
                         </td>
                         <td class="m-datatable__cell" width="15%">
-                            <span>{{employee.officeEmail}}</span>
+                            <span>{{employee.companies.companyName}}</span>
                         </td>
-                        <td class="m-datatable__cell" width="15%">
+                        <!-- <td class="m-datatable__cell" width="15%">
                             <span>{{employee.designation}}</span>
                         </td>
                         <td class="m-datatable__cell" width="15%">
@@ -136,68 +136,13 @@
                                 title="Employee Dashboard">
                                 <i class="la la-gear"></i>
                             </a>
-                        </td>
+                        </td> -->
                     </tr>
                     <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0"
                         class="m-datatable--error">No
                         records found</span>
                 </tbody>
             </table>
-            <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
-                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                    <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--first"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                                <i class="la la-angle-double-left"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
-                                <i class="la la-angle-left"></i>
-                            </span>
-                        </li>
-                        <li *ngFor="let page of p.pages">
-                            <span (click)="p.setCurrent(page.value)"
-                                class="m-datatable__pager-link m-datatable__pager-link-number "
-                                [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                {{ page.label }}
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--next"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                (click)="p.isLastPage()?'null':p.next()">
-                                <i class="la la-angle-right"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--last"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()"
-                                (click)="p.setCurrent(p.pages.length + 1)">
-                                <i class="la la-angle-double-right"></i>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </pagination-template>
-            <div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-
-                <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size"
-                    data-width="70px" data-selected="50" tabindex="1">
-                    <option value=10>10</option>
-                    <option value=20>20</option>
-                    <option value=30>30</option>
-                    <option value=50>50</option>
-                    <option value=100>100</option>
-                </select>
-                <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-    {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-                <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy:
-                    key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse |
-                    filter:search)?.length}}</span>
-            </div>
         </div>
     </div>
     <div class="row">
@@ -221,26 +166,26 @@
                 <thead class="m-datatable__head">
                     <tr class="m-datatable__row">
                         <th class="m-datatable__cell" width="5%"></th>
-                        <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="5%">
+                        <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
                             <span>
                                 ID
                                 <i class="la" *ngIf="key == 'userName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                             </span>
                         </th>
-                        <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="20%">
+                        <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort" width="25%">
                             <span>
                                 NAME
                                 <i class="la" *ngIf="key == 'fullName'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                             </span>
                         </th>
 
-                        <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                        <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort" width="50%">
                             <span>
-                                EMAIL
+                                COMPANY NAME
                                 <i class="la" *ngIf="key == 'officeEmail'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                             </span>
                         </th>
-                        <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
+                        <!-- <th (click)="sort('designation')" class="m-datatable__cell m-datatable__cell--sort" width="15%">
                             <span>
                                 DESIGNATION
                                 <i class="la" *ngIf="key == 'designation'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
@@ -257,12 +202,12 @@
                                 ACTIONS
                                 <i class="la" *ngIf="key == 'actions'" [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                             </span>
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody class="m-datatable__body" id="allEmployee-loader">
-                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-                        <td class="m-datatable__cell" width="5%">
+                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of buisnessHrHeadData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                        <!-- <td class="m-datatable__cell" width="5%">
 
                             <i class="status--icon fa" [ngClass]="
                                         !employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
@@ -284,23 +229,23 @@
                                 onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
                                 alt="">
                             <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
+                        </td> -->
+                        <td class="m-datatable__cell" width="50%">
+                            <span>{{employee.employeedetails.userName}}</span>
                         </td>
-                        <td class="m-datatable__cell" width="5%">
-                            <span>{{employee.userName}}</span>
+                        <td class="m-datatable__cell" width="25%">
+                            <span>{{employee.employeedetails.fullName}}</span>
                         </td>
-                        <td class="m-datatable__cell" width="20%">
-                            <span>{{employee.fullName}}</span>
+                        <td class="m-datatable__cell" width="25%">
+                            <span>{{employee.companies.companyName}}</span>
                         </td>
-                        <td class="m-datatable__cell" width="15%">
-                            <span>{{employee.officeEmail}}</span>
-                        </td>
-                        <td class="m-datatable__cell" width="15%">
+                        <!-- <td class="m-datatable__cell" width="15%">
                             <span>{{employee.designation}}</span>
                         </td>
                         <td class="m-datatable__cell" width="15%">
                             <span>{{employee.supervisor}}</span>
-                        </td>
-                        <td class="m-datatable__cell" width="15%">
+                        </td> -->
+                        <!-- <td class="m-datatable__cell" width="15%">
                             <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved' || employee.profileProcessDetails.employeeStatus=='Submitted' ?'personal':'office' }"
                                 class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                 title="View">
@@ -314,64 +259,12 @@
                                 title="Employee Dashboard">
                                 <i class="la la-gear"></i>
                             </a>
-                        </td>
+                        </td> -->
                     </tr>
                     <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
                         records found</span>
                 </tbody>
             </table>
-            <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
-                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                    <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--first"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                                <i class="la la-angle-double-left"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
-                                <i class="la la-angle-left"></i>
-                            </span>
-                        </li>
-                        <li *ngFor="let page of p.pages">
-                            <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
-                                [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                {{ page.label }}
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--next"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
-                                <i class="la la-angle-right"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--last"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
-                                <i class="la la-angle-double-right"></i>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </pagination-template>
-            <div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-
-                <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size"
-                    data-width="70px" data-selected="50" tabindex="1">
-                    <option value=10>10</option>
-                    <option value=20>20</option>
-                    <option value=30>30</option>
-                    <option value=50>50</option>
-                    <option value=100>100</option>
-                </select>
-                <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-    {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-                <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy:
-                    key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse |
-                    filter:search)?.length}}</span>
-            </div>
         </div>
     </div>
     <div class="row">
@@ -435,8 +328,8 @@
                     </tr>
                 </thead>
                 <tbody class="m-datatable__body" id="allEmployee-loader">
-                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of employeesData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
-                        <td class="m-datatable__cell" width="5%">
+                    <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}" *ngFor="let employee of groupHrHeadData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                        <!-- <td class="m-datatable__cell" width="5%">
 
                             <i class="status--icon fa" [ngClass]="
                                         !employee.isAccountActive ?'fa-exclamation-triangle m--font-danger':
@@ -458,23 +351,23 @@
                                 onerror="this.src ='./assets/app/media/img/custom/users/user6.jpg';" class="directory_image m--img-rounded m--marginless m--img-centered"
                                 alt="">
                             <ng-template #noImage><img src="./assets/app/media/img/custom/users/user6.jpg" class="directory_image m--img-rounded m--marginless m--img-centered"></ng-template>
-                        </td>
+                        </td> -->
                         <td class="m-datatable__cell" width="5%">
-                            <span>{{employee.userName}}</span>
+                            <span>{{employee.employeedetails.userName}}</span>
                         </td>
                         <td class="m-datatable__cell" width="20%">
-                            <span>{{employee.fullName}}</span>
+                            <span>{{employee.employeedetails.fullName}}</span>
                         </td>
                         <td class="m-datatable__cell" width="15%">
-                            <span>{{employee.officeEmail}}</span>
+                            <span>{{employee.companies.companyName}}</span>
                         </td>
-                        <td class="m-datatable__cell" width="15%">
+                        <!-- <td class="m-datatable__cell" width="15%">
                             <span>{{employee.designation}}</span>
                         </td>
                         <td class="m-datatable__cell" width="15%">
                             <span>{{employee.supervisor}}</span>
-                        </td>
-                        <td class="m-datatable__cell" width="15%">
+                        </td> -->
+                        <!-- <td class="m-datatable__cell" width="15%">
                             <a routerLink="/my/profile-edit" [queryParams]="{ id: employee._id , tabName:employee.profileProcessDetails.supervisorStatus=='Approved' || employee.profileProcessDetails.employeeStatus=='Submitted' ?'personal':'office' }"
                                 class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                                 title="View">
@@ -488,64 +381,12 @@
                                 title="Employee Dashboard">
                                 <i class="la la-gear"></i>
                             </a>
-                        </td>
+                        </td> -->
                     </tr>
                     <span *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length==0" class="m-datatable--error">No
                         records found</span>
                 </tbody>
             </table>
-            <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
-                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                    <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--first"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                                <i class="la la-angle-double-left"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--prev"
-                                [class.m-datatable__pager-link--disabled]="p.isFirstPage()" (click)="p.previous()">
-                                <i class="la la-angle-left"></i>
-                            </span>
-                        </li>
-                        <li *ngFor="let page of p.pages">
-                            <span (click)="p.setCurrent(page.value)" class="m-datatable__pager-link m-datatable__pager-link-number "
-                                [class.m-datatable__pager-link--active]="p.getCurrent() === page.value">
-                                {{ page.label }}
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--next"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.isLastPage()?'null':p.next()">
-                                <i class="la la-angle-right"></i>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="m-datatable__pager-link m-datatable__pager-link--last"
-                                [class.m-datatable__pager-link--disabled]="p.isLastPage()" (click)="p.setCurrent(p.pages.length + 1)">
-                                <i class="la la-angle-double-right"></i>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </pagination-template>
-            <div class="pager-display-size" *ngIf="(employeesData | orderBy: key : reverse | filter:search)?.length!=0">
-
-                <select [(ngModel)]="itemPerPage" class="selectpicker m-datatable__pager-size" title="Select page size"
-                    data-width="70px" data-selected="50" tabindex="1">
-                    <option value=10>10</option>
-                    <option value=20>20</option>
-                    <option value=30>30</option>
-                    <option value=50>50</option>
-                    <option value=100>100</option>
-                </select>
-                <!-- {{this.itemPerPage  (this.p2 - 1) + 1 > 1 ? this.itemPerPage  (this.p2 - 1) + 1:1}}
-    {{(this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 > (employeesData | orderBy: key : reverse | filter:search)?.length ? (employeesData | orderBy: key : reverse | filter:search)?.length : (this.itemPerPage  (this.p2 - 1) + 1) + this.itemPerPage - 1 }} -->
-                <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((employeesData | orderBy:
-                    key : reverse | filter:search)?.length)}} of {{(employeesData | orderBy: key : reverse |
-                    filter:search)?.length}}</span>
-            </div>
         </div>
     </div>
 </div>

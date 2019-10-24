@@ -49,6 +49,10 @@ export class HrService {
         let url = "master/getAllDivision";
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }
+    getAllHrHeads() {
+        let url = "master/getAllHrHeads";
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
     updateSupervisortransferInfo(data: any) {
         let url = "user/updateSupervisortransferInfo";
         return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
