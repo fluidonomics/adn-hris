@@ -56,6 +56,7 @@ import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.c
 import { SharedModule } from '../shared/shared.module';
 import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
 import { GrievancePhaseInitiateComponent } from "./workFlows/grievance/grievance-phase-initiate/grievance-phase-initiate.component";
+import { HrHeads } from './quotaProvider/hrHeads/hrHeads.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { GrievancePhaseInitiateComponent } from "./workFlows/grievance/grievance
         GrievanceAllEmployeeComponent,
         GrievanceDetailComponent,
         QuotaProviderComponent,
+        HrHeads,
         MonthlyGradeChartComponent,
         //DocumentsViewComponent,
         GrievancePhaseInitiateComponent
