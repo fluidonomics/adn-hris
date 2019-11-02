@@ -32,7 +32,8 @@ import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 import { QuotaProviderComponent } from './quotaProvider/quotaProvider.component';
-import { HrHeads } from './quotaProvider/hrHeads/hrHeads.component';
+import { HrHeads } from './hrHeads/hrHeads.component';
+
 const routes: Routes = [{
     path: '', component: HrComponent,
     children: [

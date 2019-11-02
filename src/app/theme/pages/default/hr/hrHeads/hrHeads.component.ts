@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { HrService } from '../../hr.service';
+import { HrService } from "../hr.service";
 
 
 @Component({
@@ -14,7 +14,9 @@ export class HrHeads implements OnInit {
     buisnessHrHeadData: any = [];
     groupHrHeadData: any = [];
     hrspocData: any = [];
-    constructor(private _hrService: HrService) {
+    constructor(
+        private _hrService: HrService
+    ) {
 
     }
 
@@ -27,5 +29,5 @@ export class HrHeads implements OnInit {
                 this.hrspocData = hrHeads.result.filter(h => h.type == 3);
             }
         });
-}
+    }
 }
