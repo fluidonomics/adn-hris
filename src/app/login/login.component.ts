@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         let bodyData = [];
         bodyData.push(headerData);
         bodyData.push(subHeaderData);
-
+        bodyData.push(['Sample value 1', '', '', '', '', '', '','','','', '']);
         return bodyData;
     }
     preparePdf(){
@@ -79,6 +79,4 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.preparePdf();
     }
-
-   
 }
