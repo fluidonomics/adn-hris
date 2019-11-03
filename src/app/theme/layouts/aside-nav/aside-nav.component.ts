@@ -12,7 +12,6 @@ declare let mLayout: any;
 export class AsideNavComponent implements OnInit, AfterViewInit {
 
     constructor(public authService: AuthService) {
-
     }
     ngOnInit() {
 
