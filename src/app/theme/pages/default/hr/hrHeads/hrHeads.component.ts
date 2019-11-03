@@ -14,6 +14,14 @@ export class HrHeads implements OnInit {
     buisnessHrHeadData: any = [];
     groupHrHeadData: any = [];
     hrspocData: any = [];
+
+    key: string = ''; //set default
+    reverse: boolean = false;
+    imageBase: any;
+    itemPerPage: number = 10;
+    p2: number = 1;
+    search: any;
+
     constructor(
         private _hrService: HrService
     ) {
@@ -29,5 +37,10 @@ export class HrHeads implements OnInit {
                 this.hrspocData = hrHeads.result.filter(h => h.type == 3);
             }
         });
+    }
+
+    sort(key) {
+        this.key = key;
+        this.reverse = !this.reverse;
     }
 }
