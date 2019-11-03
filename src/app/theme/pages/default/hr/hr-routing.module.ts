@@ -32,6 +32,8 @@ import { PipViewComponent } from './workFlows/pip/view/pip-view.component';
 import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.component';
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 import { QuotaProviderComponent } from './quotaProvider/quotaProvider.component';
+import { HrHeads } from './hrHeads/hrHeads.component';
+
 const routes: Routes = [{
     path: '', component: HrComponent,
     children: [
@@ -50,18 +52,19 @@ const routes: Routes = [{
         { path: 'workflows/pip/batch', component: PipBatchComponent },
         { path: 'workflows/view', component: PipViewComponent },
         { path: 'workflows/view/detailview/:id/:emp_id', component: PipDetailView },
-        { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },        
+        { path: 'workflows/mtr/batch-init', component: MtrBatchInitComponent },
         { path: 'workflows/mtr/batch', component: MTRBatchComponent },
-        { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },        
+        { path: 'workflows/pap/batch-init', component: PapBatchInitComponent },
         { path: 'workflows/pap/batch', component: PapBatchViewComponent },
         { path: 'workflows/pap/feedback-init', component: FeedbackInitiateComponent },
         { path: 'workflows/grievance/all-employee', component: GrievanceAllEmployeeComponent },
         { path: 'workflows/grievance/detail/:id/:emp_id', component: GrievanceDetailComponent },
-        
+
         { path: 'directory', component: DirectoryComponent },
         { path: 'post/leave', component: PostComponent },
         { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
-        { path: 'quotaProvider', component: QuotaProviderComponent }
+        { path: 'quotaProvider', component: QuotaProviderComponent },
+        { path: 'hrHeads', component: HrHeads }
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]

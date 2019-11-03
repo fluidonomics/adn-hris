@@ -1,0 +1,215 @@
+<!-- <div class="m-subheader">
+		<div class="d-flex align-items-center">
+			<div class="mr-auto">
+				<h3 class="m-subheader__title">
+					Leave Quota Provider
+				</h3>
+			</div>			
+		</div>
+</div> -->
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                HR SPOC'S
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                    [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+                    <table class="m-datatable__table">
+                        <thead class="m-datatable__head">
+                            <tr class="m-datatable__row">
+                                <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        ID
+                                        <i class="la" *ngIf="key == 'userName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                                <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        NAME
+                                        <i class="la" *ngIf="key == 'fullName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+
+                                <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="50%">
+                                    <span>
+                                        COMPANY
+                                        <i class="la" *ngIf="key == 'officeEmail'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="m-datatable__body" id="allEmployee-loader">
+                            <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+                                *ngFor="let employee of hrspocData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.userName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.fullName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="50%">
+                                    <span>{{employee.companies.companyName}}</span>
+                                </td>
+                            </tr>
+                            <span *ngIf="(hrspocData | orderBy: key : reverse | filter:search)?.length==0"
+                                class="m-datatable--error">No records found</span>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                Business HR
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                    [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+                    <table class="m-datatable__table">
+                        <thead class="m-datatable__head">
+                            <tr class="m-datatable__row">
+                                <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        ID
+                                        <i class="la" *ngIf="key == 'userName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                                <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        NAME
+                                        <i class="la" *ngIf="key == 'fullName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+
+                                <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="50%">
+                                    <span>
+                                        COMPANY
+                                        <i class="la" *ngIf="key == 'officeEmail'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="m-datatable__body" id="allEmployee-loader">
+                            <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+                                *ngFor="let employee of buisnessHrHeadData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.userName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.fullName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="50%">
+                                    <span>{{employee.companies.companyName}}</span>
+                                </td>
+                            </tr>
+                            <span *ngIf="(buisnessHrHeadData | orderBy: key : reverse | filter:search)?.length==0"
+                                class="m-datatable--error">No records found</span>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text flaticon-user-add">
+                                Group HR
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded"
+                    [ngClass]="{'m-datatable--error': (employeesData | orderBy: key : reverse | filter:search)?.length==0 }">
+                    <table class="m-datatable__table">
+                        <thead class="m-datatable__head">
+                            <tr class="m-datatable__row">
+                                <th (click)="sort('userName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        ID
+                                        <i class="la" *ngIf="key == 'userName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                                <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="25%">
+                                    <span>
+                                        NAME
+                                        <i class="la" *ngIf="key == 'fullName'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+
+                                <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
+                                    width="50%">
+                                    <span>
+                                        COMPANY
+                                        <i class="la" *ngIf="key == 'officeEmail'"
+                                            [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="m-datatable__body" id="allEmployee-loader">
+                            <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
+                                *ngFor="let employee of groupHrHeadData | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.userName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="25%">
+                                    <span>{{employee.employeedetails.fullName}}</span>
+                                </td>
+                                <td class="m-datatable__cell" width="50%">
+                                    <span>{{employee.companies.companyName}}</span>
+                                </td>
+                            </tr>
+                            <span *ngIf="(groupHrHeadData | orderBy: key : reverse | filter:search)?.length==0"
+                                class="m-datatable--error">No records found</span>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
