@@ -33,6 +33,7 @@ import { PipDetailView } from './workFlows/pip/detailed-view/pip-detailed-view.c
 import { PipBatchComponent } from './workFlows/pip/batch/batch.component';
 import { QuotaProviderComponent } from './quotaProvider/quotaProvider.component';
 import { HrHeads } from './hrHeads/hrHeads.component';
+import { PapEvalReport } from "./reports/pap-eval-report/pap-eval-report.component";
 
 const routes: Routes = [{
     path: '', component: HrComponent,
@@ -65,6 +66,7 @@ const routes: Routes = [{
         { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
         { path: 'quotaProvider', component: QuotaProviderComponent },
         { path: 'hrHeads', component: HrHeads }
+        { path: 'reports/pap-eval-report', component: PapEvalReport }
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
 }]

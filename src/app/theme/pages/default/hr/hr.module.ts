@@ -57,6 +57,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MonthlyGradeChartComponent } from './chart/monthly-grade-chart.component';
 import { GrievancePhaseInitiateComponent } from "./workFlows/grievance/grievance-phase-initiate/grievance-phase-initiate.component";
 import { HrHeads } from './hrHeads/hrHeads.component';
+import { PapEvalReport } from "./reports/pap-eval-report/pap-eval-report.component";
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { HrHeads } from './hrHeads/hrHeads.component';
         HrHeads,
         MonthlyGradeChartComponent,
         //DocumentsViewComponent,
-        GrievancePhaseInitiateComponent
+        GrievancePhaseInitiateComponent,
+        PapEvalReport
     ],
     providers: [HrService, HrGuard, LeaveService, LearningService, PipService, AmChartsService]
 })
