@@ -58,7 +58,10 @@ export class LoginComponent implements OnInit {
         bodyData.push(['3', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20','Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...','Good number new clients last year.','Good number new clients last year.', '4']);
         bodyData.push(['4', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20','Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...','Good number new clients last year.','Good number new clients last year.', '4']);
         bodyData.push(['5', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20','Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...','Good number new clients last year.','Good number new clients last year.', '4']);
-        bodyData.push([{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Fill Over All Rating', style: 'tableFooter' }, '', { text: '5', fontSize: 12 }]);
+        // footer
+        let footer = [];
+        footer = [{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Fill Over All Rating', style: 'tableFooter' }, '', { text: '5', fontSize: 12 }];
+        bodyData.push(footer);
         return bodyData;
     }
     preparePdf(){
