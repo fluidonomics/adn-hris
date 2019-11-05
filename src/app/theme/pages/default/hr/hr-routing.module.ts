@@ -65,7 +65,7 @@ const routes: Routes = [{
         { path: 'post/leave', component: PostComponent },
         { path: 'transferresponsiblity', component: TransferResponsibilityComponent },
         { path: 'quotaProvider', component: QuotaProviderComponent },
-        { path: 'hrHeads', component: HrHeads }
+        { path: 'hrHeads', component: HrHeads },
         { path: 'reports/pap-eval-report', component: PapEvalReport }
         //{ path: 'documents-view/:id', component: DocumentsViewComponent },
     ], canActivate: [HrGuard]
