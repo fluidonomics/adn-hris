@@ -35,7 +35,6 @@ export class PapEvalReport implements OnInit {
     }
 
     ngOnInit() {
-        debugger;
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
         this._hrService.getAllEmployee().subscribe(res => {
             let employees = res.json().data || [];
@@ -80,15 +79,17 @@ export class PapEvalReport implements OnInit {
             bodyData.push(subHeaderData);
             this._hrService.getPapEvaluationReport(empId, this.fiscalYearId).subscribe(res => {
                 debugger;
-                bodyData.push(['1', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20', 'Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...', 'Good number new clients last year.', 'Good number new clients last year.', '4']);
-                bodyData.push(['2', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20', 'Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...', 'Good number new clients last year.', 'Good number new clients last year.', '4']);
-                bodyData.push(['3', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20', 'Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...', 'Good number new clients last year.', 'Good number new clients last year.', '4']);
-                bodyData.push(['4', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20', 'Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...', 'Good number new clients last year.', 'Good number new clients last year.', '4']);
-                bodyData.push(['5', 'ADN Group Network Security Manage and Monitor', 'Functional/Customer Deliverables', '15%', '', 'About 88 Tickets closed', '20', '20', 'Approx Invoice Submission BDT 50 Crore; Collection BDT 49.45 Crore; 98...', 'Good number new clients last year.', 'Good number new clients last year.', '4']);
-                // footer
-                let footer = [];
-                footer = [{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Fill Over All Rating', style: 'tableFooter' }, '', { text: '5', fontSize: 12 }];
-                bodyData.push(footer);
+                let papData = res.json().result.message || [];
+                if (papData && papData.length > 0) {
+                    papData.forEach((pap, i) => {
+                        bodyData.push([i + 1, pap.mtr_kra || "", pap.kraCategoryName || "", pap.weightage || "", pap.unitOfSuccess || "", pap.measureOfSuccess || "", pap.empRating || "", pap.supRating || "", pap.empComment || "", pap.empComment || "", pap.reviewerComment || "", pap.finalRating || ""]);
+                    });
+                    // footer
+                    let footer = [];
+                    footer = [{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Final Over All Rating', style: 'tableFooter' }, '', { text: papData[0].overallRating, fontSize: 12 }];
+                    bodyData.push(footer);
+                    resolve(bodyData);
+                }
             });
         });
     }

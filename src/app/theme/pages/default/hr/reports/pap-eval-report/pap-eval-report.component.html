@@ -86,7 +86,7 @@
                             </thead>
                             <tbody class="m-datatable__body" id="allEmployee-loader">
                                 <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-                                    *ngFor="let employee of allEmployees | orderBy: key : reverse | filter:search  | paginate: { itemsPerPage: itemPerPage, currentPage: p2 };let even=even;">
+                                    *ngFor="let employee of allEmployees | orderBy: key : reverse | filter:search ">
                                     <td class="m-datatable__cell" width="25%">
                                         <span>{{employee.userName}}</span>
                                     </td>
@@ -108,7 +108,7 @@
                                     class="m-datatable--error">No records found</span>
                             </tbody>
                         </table>
-                        <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
+                        <!-- <pagination-template #p="paginationApi" (pageChange)="p2 = $event" class="paginationtemplate">
                             <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
                                 <ul class="m-datatable__pager-nav" *ngIf="p.pages.length > 0">
                                     <li>
@@ -161,9 +161,9 @@
                                 <option value=100>100</option>
                             </select>
                             <span class="pager-display-title">Displaying {{getStart()}} - {{getEnd((allEmployees | orderBy:
-                            key : reverse | filter:search)?.length)}} of {{(allEmployees | orderBy: key : reverse |
-                            filter:search)?.length}}</span>
-                        </div>
+                                key : reverse | filter:search)?.length)}} of {{(allEmployees | orderBy: key : reverse |
+                                filter:search)?.length}}</span>
+                        </div> -->
                     </div>
                 </div>
             </div>
