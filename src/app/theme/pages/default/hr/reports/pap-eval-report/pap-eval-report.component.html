@@ -58,7 +58,7 @@
                                         </span>
                                     </th>
                                     <th (click)="sort('fullName')" class="m-datatable__cell m-datatable__cell--sort"
-                                        width="25%">
+                                        width="50%">
                                         <span>
                                             NAME
                                             <i class="la" *ngIf="key == 'fullName'"
@@ -67,9 +67,9 @@
                                     </th>
 
                                     <th (click)="sort('officeEmail')" class="m-datatable__cell m-datatable__cell--sort"
-                                        width="50%">
+                                        width="25%">
                                         <span>
-                                            DEPARTMENT
+                                            PAP STATUS
                                             <i class="la" *ngIf="key == 'officeEmail'"
                                                 [ngClass]="{'la-arrow-up':reverse,'la-arrow-down':!reverse}"></i>
                                         </span>
@@ -86,20 +86,24 @@
                             </thead>
                             <tbody class="m-datatable__body" id="allEmployee-loader">
                                 <tr class="m-datatable__row" [ngClass]="{'m-datatable__row--even':!even}"
-                                    *ngFor="let employee of allEmployees | orderBy: key : reverse | filter:search ">
+                                    *ngFor="let employee of allEmployees | orderBy: key : reverse | filter:search">
                                     <td class="m-datatable__cell" width="25%">
-                                        <span>{{employee.userName}}</span>
-                                    </td>
-                                    <td class="m-datatable__cell" width="25%">
-                                        <span>{{employee.fullName}}</span>
+                                        <span>{{employee.employeedetails.userName}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="50%">
-                                        <span>{{employee.departmentName}}</span>
+                                        <span>{{employee.employeedetails.fullName}}</span>
+                                    </td>
+                                    <td *ngIf="employee.papMaster.reviewerStatus" class="m-datatable__cell" width="25%">
+                                        <span>{{employee.papMaster.reviewerStatus}}</span>
+                                    </td>
+                                    <td *ngIf="!employee.papMaster.reviewerStatus" class="m-datatable__cell"
+                                        width="25%">
+                                        <span>{{employee.papMaster.status}}</span>
                                     </td>
                                     <td class="m-datatable__cell" width="50%">
-                                        <a (click)=preparePdf(employee._id);
+                                        <a (click)=preparePdf(employee);
                                             class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
-                                            title="Reset Password">
+                                            title="Download Report">
                                             <i class="la la-download"></i>
                                         </a>
                                     </td>

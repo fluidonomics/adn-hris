@@ -18,6 +18,7 @@ export class PapEvalReport implements OnInit {
 
     allEmployees: any = [];
     fiscalYearId: any;
+    companyId: any = this._commonService.getCompanyIdLocal();
 
 
     key: string = ''; //set default
@@ -36,17 +37,17 @@ export class PapEvalReport implements OnInit {
 
     ngOnInit() {
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
-        this._hrService.getAllEmployee().subscribe(res => {
-            let employees = res.json().data || [];
+        this._hrService.getPapEvaluationReport(this.companyId, this.fiscalYearId).subscribe(res => {
+            let employees = res.json().result.message || [];
             this.allEmployees = employees;
         })
     }
 
-    prepareBody(empId) {
+    prepareBody(employee) {
         return new Promise<any>((resolve, reject) => {
             let headerData = [];
             headerData = [
-                { text: 'KEY RESPONSIBILITY AREAS (KRAs)', style: 'toptableHeader', colSpan: 12, fillColor: '#cccccc', alignment: 'center' },
+                { text: 'Performance Appraisal Report', style: 'toptableHeader', colSpan: 12, fillColor: '#cccccc', alignment: 'center' },
                 {},
                 {},
                 {},
@@ -77,32 +78,37 @@ export class PapEvalReport implements OnInit {
             let bodyData = [];
             bodyData.push(headerData);
             bodyData.push(subHeaderData);
-            this._hrService.getPapEvaluationReport(empId, this.fiscalYearId).subscribe(res => {
-                debugger;
-                let papData = res.json().result.message || [];
-                if (papData && papData.length > 0) {
-                    papData.forEach((pap, i) => {
-                        bodyData.push([i + 1, pap.mtr_kra || "", pap.kraCategoryName || "", pap.weightage || "", pap.unitOfSuccess || "", pap.measureOfSuccess || "", pap.empRating || "", pap.supRating || "", pap.empComment || "", pap.empComment || "", pap.reviewerComment || "", pap.finalRating || ""]);
-                    });
-                    // footer
-                    let footer = [];
-                    footer = [{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Final Over All Rating', style: 'tableFooter' }, '', { text: papData[0].overallRating, fontSize: 12 }];
-                    bodyData.push(footer);
-                    resolve(bodyData);
-                }
-            });
+            let papData = employee.papData;
+            if (papData && papData.length > 0) {
+                papData.forEach((pap, i) => {
+                    bodyData.push([i + 1, pap.mtr_kra || "", pap.kraCategoryName || "", pap.weightage || "", pap.unitOfSuccess || "", pap.measureOfSuccess || "", pap.empRating || "", pap.supRating || "", pap.empComment || "", pap.empComment || "", pap.reviewerComment || "", pap.finalRating || ""]);
+                });
+                // footer
+                let footer = [];
+                footer = [{ colSpan: 9, text: '' }, '', '', '', '', '', '', '', '', { colSpan: 2, text: 'Final Over All Rating', style: 'tableFooter' }, '', { text: papData[0].overallRating, fontSize: 12 }];
+                bodyData.push(footer);
+                resolve({ bodyData: bodyData, employee: employee });
+            }
         });
     }
 
-    preparePdf(empId) {
-        this.prepareBody(empId).then(res => {
-            debugger;
-            if (res && res.length > 0) {
-                let bodyData = res;
+    preparePdf(employee) {
+        this.prepareBody(employee).then(res => {
+            if (res && res.bodyData && res.bodyData.length > 0) {
+                let bodyData = res.bodyData;
                 var dd = {
                     pageOrientation: 'landscape',
                     pageSize: 'LEGAL',
                     content: [
+                        {
+                            color: '#444',
+                            text: 'Employee ID: ' + employee.employeedetails.userName,
+                        },
+                        {
+                            style: 'employeeDetailsSection',
+                            color: '#444',
+                            text: 'Employee Name: ' + employee.employeedetails.fullName,
+                        },
                         {
                             style: 'tableExample',
                             color: '#444',
@@ -119,6 +125,9 @@ export class PapEvalReport implements OnInit {
                         }
                     ],
                     styles: {
+                        employeeDetailsSection: {
+                            margin: [0, 0, 0, 20]
+                        },
                         toptableHeader: {
                             bold: true,
                             fontSize: 14

@@ -174,10 +174,10 @@ export class HrService {
     //     return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     // }
 
-    getPapEvaluationReport(empId, fiscalYearId) {
+    getPapEvaluationReport(companyId, fiscalYearId) {
         let url = "pap/getPapEvaluationReport";
-        if (empId) {
-            url += "?empId=" + empId
+        if (companyId) {
+            url += "?companyId=" + companyId
         }
         if (fiscalYearId) {
             url += "&fiscalYearId=" + fiscalYearId
