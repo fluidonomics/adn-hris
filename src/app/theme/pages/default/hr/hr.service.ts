@@ -173,6 +173,18 @@ export class HrService {
     //     let url = "leave/grantSpecialLeaveBulk";
     //     return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     // }
+
+    getPapEvaluationReport(companyId, fiscalYearId) {
+        let url = "pap/getPapEvaluationReport";
+        if (companyId) {
+            url += "?companyId=" + companyId
+        }
+        if (fiscalYearId) {
+            url += "&fiscalYearId=" + fiscalYearId
+        }
+        return this.authService.get(url).map(this.extractData).catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         return res || {};
         // let body = res.json();
