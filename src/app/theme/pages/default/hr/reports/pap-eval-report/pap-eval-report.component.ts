@@ -6,6 +6,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { CommonService } from "../../../../../../base/_services/common.service";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { format } from 'date-fns';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper-pap-eval-report",
@@ -101,10 +102,10 @@ export class PapEvalReport implements OnInit {
         ];
         let bodyData = [];
         bodyData.push(headerData);
-        bodyData.push(['ID',employee.employeedetails.userName,'SUPERVISOR', 'Test supervisor']);
-        bodyData.push(['NAME',employee.employeedetails.fullName,'DEPARTMENT','Test department']);
-        bodyData.push(['JOB TITLE','Test job title','UNIT','Test Unit']);
-        bodyData.push(['DATE OF JOINING','21/01/2011','DATE OF REVIEW','20/05/2019']);
+        bodyData.push(['ID', employee.employeedetails.userName, 'SUPERVISOR', employee.employeedetails.supervisor.fullName]);
+        bodyData.push(['NAME', employee.employeedetails.fullName, 'DEPARTMENT', employee.department.departmentName]);
+        bodyData.push(['JOB TITLE', employee.employeedetails.employeeofficedetails.jobTitle || "", 'UNIT', employee.division.divisionName]);
+        bodyData.push(['DATE OF JOINING', employee.employeedetails.employeeofficedetails.dateOfJoining ? format(employee.employeedetails.employeeofficedetails.dateOfJoining, "dd/MM/YYY") : "", 'DATE OF REVIEW', format(new Date(), "dd/MM/YYY")]);
         return bodyData;
     }
     preparePdf(employee) {
@@ -121,7 +122,7 @@ export class PapEvalReport implements OnInit {
                             style: 'employeeHead',
                             color: '#444',
                             table: {
-                                widths: ['auto', 'auto','auto', 'auto'],
+                                widths: ['auto', 'auto', 'auto', 'auto'],
                                 body: employeeData
                             }
                         },
@@ -157,7 +158,7 @@ export class PapEvalReport implements OnInit {
                             fontSize: 12
                         },
                         employeeHead: {
-                            margin: [0,0,0,20]
+                            margin: [0, 0, 0, 20]
                         }
                     }
                 };
