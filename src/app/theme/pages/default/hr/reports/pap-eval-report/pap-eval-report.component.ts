@@ -91,23 +91,39 @@ export class PapEvalReport implements OnInit {
             }
         });
     }
-
+    prepareEmployeeDetails(employee) {
+        let headerData = [];
+        headerData = [
+            { text: 'Employee Details', style: 'toptableHeader', colSpan: 4, fillColor: '#cccccc', alignment: 'center' },
+            {},
+            {},
+            {}
+        ];
+        let bodyData = [];
+        bodyData.push(headerData);
+        bodyData.push(['ID',employee.employeedetails.userName,'SUPERVISOR', 'Test supervisor']);
+        bodyData.push(['NAME',employee.employeedetails.fullName,'DEPARTMENT','Test department']);
+        bodyData.push(['JOB TITLE','Test job title','UNIT','Test Unit']);
+        bodyData.push(['DATE OF JOINING','21/01/2011','DATE OF REVIEW','20/05/2019']);
+        return bodyData;
+    }
     preparePdf(employee) {
         this.prepareBody(employee).then(res => {
             if (res && res.bodyData && res.bodyData.length > 0) {
+                let employeeData = this.prepareEmployeeDetails(employee);
                 let bodyData = res.bodyData;
                 var dd = {
                     pageOrientation: 'landscape',
                     pageSize: 'LEGAL',
                     content: [
                         {
+                            fontSize: 9,
+                            style: 'employeeHead',
                             color: '#444',
-                            text: 'Employee ID: ' + employee.employeedetails.userName,
-                        },
-                        {
-                            style: 'employeeDetailsSection',
-                            color: '#444',
-                            text: 'Employee Name: ' + employee.employeedetails.fullName,
+                            table: {
+                                widths: ['auto', 'auto','auto', 'auto'],
+                                body: employeeData
+                            }
                         },
                         {
                             style: 'tableExample',
@@ -126,7 +142,7 @@ export class PapEvalReport implements OnInit {
                     ],
                     styles: {
                         employeeDetailsSection: {
-                            margin: [0, 0, 0, 20]
+                            margin: [0, 0, 20, 0]
                         },
                         toptableHeader: {
                             bold: true,
@@ -139,6 +155,9 @@ export class PapEvalReport implements OnInit {
                         tableFooter: {
                             bold: true,
                             fontSize: 12
+                        },
+                        employeeHead: {
+                            margin: [0,0,0,20]
                         }
                     }
                 };
