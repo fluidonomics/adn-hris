@@ -38,8 +38,16 @@ export class PapEvalReport implements OnInit {
 
     ngOnInit() {
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
-        this._hrService.getPapEvaluationReport(this.companyId, this.fiscalYearId).subscribe(res => {
-            debugger;
+        this.loadEmployees();
+    }
+
+    filterEmployees(filterData) {
+        debugger;
+        this.loadEmployees(filterData.divisionId, filterData.departmentId);
+    }
+
+    loadEmployees(divisionId?, departmentId?) {
+        this._hrService.getPapEvaluationReport(this.companyId, this.fiscalYearId, divisionId, departmentId).subscribe(res => {
             let employees = res.json().result.message || [];
             this.allEmployees = employees;
         })

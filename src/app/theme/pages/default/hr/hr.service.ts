@@ -174,13 +174,19 @@ export class HrService {
     //     return this.authService.post(url, data).map(this.extractData).catch(this.handleError);
     // }
 
-    getPapEvaluationReport(companyId, fiscalYearId) {
+    getPapEvaluationReport(companyId, fiscalYearId, divisionId?, departmentId?) {
         let url = "pap/getPapEvaluationReport";
         if (companyId) {
-            url += "?companyId=" + companyId
+            url += "?companyId=" + companyId;
         }
         if (fiscalYearId) {
-            url += "&fiscalYearId=" + fiscalYearId
+            url += "&fiscalYearId=" + fiscalYearId;
+        }
+        if (divisionId) {
+            url += "&divisionId=" + divisionId;
+        }
+        if (departmentId) {
+            url += "&departmentId=" + departmentId;
         }
         return this.authService.get(url).map(this.extractData).catch(this.handleError);
     }

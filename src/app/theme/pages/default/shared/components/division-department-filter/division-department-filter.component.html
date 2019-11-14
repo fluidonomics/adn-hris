@@ -1,0 +1,54 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                {{filterHeading}}
+                                <small>
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+                        <div class="m-section__content">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-4 adn-form__group">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Division</label>
+                                            <ng-select class="m-input m-input--air" name="division" [items]="divisions"
+                                                bindLabel="divisionName" bindValue="_id" placeholder="Select division"
+                                                (change)="loadDepartment(divisionId)" [(ngModel)]="divisionId"
+                                                #division="ngModel" [clearable]="true"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 adn-form__group">
+                                        <div class="m-form__group form-group">
+                                            <label for="form_control_1">Department</label>
+                                            <ng-select class="m-input m-input--air" name="department"
+                                                [items]="departments" bindLabel="departmentName" bindValue="_id"
+                                                placeholder="Select department" [(ngModel)]="departmentId"
+                                                [clearable]="true" #department="ngModel"></ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="m--space-25"></div>
+                                        <div class="m-form__actions">
+                                            <button class="btn btn-success submitForm" type="submit" id="search"
+                                                (click)="search()">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
