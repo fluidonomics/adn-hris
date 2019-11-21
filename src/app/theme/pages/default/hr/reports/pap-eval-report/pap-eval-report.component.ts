@@ -6,7 +6,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { CommonService } from "../../../../../../base/_services/common.service";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper-pap-eval-report",
@@ -38,7 +38,16 @@ export class PapEvalReport implements OnInit {
 
     ngOnInit() {
         this.fiscalYearId = this._commonService.getFiscalYearIdLocal();
-        this._hrService.getPapEvaluationReport(this.companyId, this.fiscalYearId).subscribe(res => {
+        this.loadEmployees();
+    }
+
+    filterEmployees(filterData) {
+        debugger;
+        this.loadEmployees(filterData.divisionId, filterData.departmentId);
+    }
+
+    loadEmployees(divisionId?, departmentId?) {
+        this._hrService.getPapEvaluationReport(this.companyId, this.fiscalYearId, divisionId, departmentId).subscribe(res => {
             let employees = res.json().result.message || [];
             this.allEmployees = employees;
         })
@@ -105,7 +114,17 @@ export class PapEvalReport implements OnInit {
         bodyData.push(['ID', employee.employeedetails.userName, 'SUPERVISOR', employee.employeedetails.supervisor.fullName]);
         bodyData.push(['NAME', employee.employeedetails.fullName, 'DEPARTMENT', employee.department.departmentName]);
         bodyData.push(['JOB TITLE', employee.employeedetails.employeeofficedetails.jobTitle || "", 'UNIT', employee.division.divisionName]);
-        bodyData.push(['DATE OF JOINING', employee.employeedetails.employeeofficedetails.dateOfJoining ? format(employee.employeedetails.employeeofficedetails.dateOfJoining, "dd/MM/YYY") : "", 'DATE OF REVIEW', format(new Date(), "dd/MM/YYY")]);
+        let arr = [];
+        arr.push('DATE OF JOINING');
+        if (employee.employeedetails.employeeofficedetails.dateOfJoining) {
+            let doj = format(parseISO(employee.employeedetails.employeeofficedetails.dateOfJoining), "dd/MM/YYY");
+            arr.push(doj)
+        } else {
+            arr.push("");
+        }
+        arr.push('DATE OF REVIEW');
+        arr.push(format(new Date(), "dd/MM/YYY"));
+        bodyData.push(arr);
         return bodyData;
     }
     preparePdf(employee) {
